@@ -1,3 +1,3 @@
 import { Hero } from '@/components/ui';
-export const metadata={title:'Mentions légales'};
+export const metadata={title:'Mentions légales',description:'Mentions légales d’Intégrale Academy : société, SIREN, capital, hébergeur et directeur de publication.'};
 export default function Page(){return <><Hero badge="Légal" title="Mentions légales" subtitle="Informations légales reprises depuis l’inventaire du site actuel."/><section className="mx-auto max-w-4xl px-4 py-12 leading-8 text-stone-700"><p><b>INTEGRALE ACADEMY - INTEGRALE SECURITE FORMATIONS</b>, 54 chemin du Carreou 83480 PUGET SUR ARGENS.</p><p>SASU au capital de 4500 € · SIREN 840 899 884 00026.</p><p>Hébergeur historique mentionné : 1&1 IONOS SARL, 7 place de la Gare, 57200 Sarreguemines.</p><p>Directeur de publication : Clément VAILLANT. Réalisation graphique et développement technique historiques : Wix / Clément VAILLANT.</p></section></>}

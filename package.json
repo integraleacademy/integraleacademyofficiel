@@ -1,10 +1,4 @@
 {
-  "name": "integrale-academy-officiel",
-  "private": true,
-  "engines": {
-    "node": ">=20 <23",
-    "npm": ">=10"
-  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",

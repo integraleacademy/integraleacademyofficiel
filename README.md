@@ -31,21 +31,6 @@ Le fichier `render.yaml` est fourni. Configuration prévue :
 - Start command : `npm start`
 - Runtime : Node
 
-Si Render affiche une erreur du type `Could not open requirements file:
-requirements.txt`, le service a été créé ou configuré comme une application
-Python. Ce projet est une application Next.js/Node.js et ne doit pas utiliser
-`pip install -r requirements.txt`.
-
-Dans Render, corriger les paramètres du service :
-
-1. `Runtime` / `Environment` : `Node`.
-2. `Build Command` : `npm install && npm run build`.
-3. `Start Command` : `npm start`.
-4. Redéployer le service.
-
-Pour éviter toute détection ambiguë, `package.json` déclare aussi les versions
-Node/npm attendues via le champ `engines`.
-
 ## Organisation des données
 
 - `src/data/formations.ts` : formations sécurité, VTC et BTS.
