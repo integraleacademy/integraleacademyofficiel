@@ -131,3 +131,12 @@ Les pages et liens sont repris depuis l'inventaire des pages actuelles : accueil
 - Pages server components simples et rapides.
 - Metadata SEO par page.
 - Déploiement Render via scripts `npm run build` et `npm start`.
+
+## 8. Mise à jour développement complet
+
+- Les données ont été séparées en fichiers dédiés : `src/data/formations.ts`, `src/data/locations.ts`, `src/data/faq.ts` et un fichier de compatibilité `src/data/site.ts`.
+- Les dossiers médias sont prévus : `public/images`, `public/logos`, `public/inspirations`.
+- Le formulaire de contact contient désormais les champs demandés : nom, prénom, téléphone, email, formation souhaitée, lieu souhaité, message, consentement RGPD et confirmation visuelle côté client.
+- Le menu principal inclut une navigation desktop et un menu mobile accessible via un élément natif `details/summary`.
+- Le design est orienté premium SaaS sobre : fond clair quadrillé subtil, halo doré, cartes blanches arrondies, header sticky, transitions douces et contrastes renforcés.
+- Les images d’inspiration doivent rester uniquement dans `public/inspirations` et ne doivent pas être copiées comme assets de production sans autorisation.
