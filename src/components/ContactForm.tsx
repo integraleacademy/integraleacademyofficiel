@@ -16,12 +16,12 @@ export function ContactForm({ type = 'candidat' }: { type?: string }) {
       }}
     >
       <div className="grid gap-4 sm:grid-cols-2">
-        <Field id={`${type}-nom`} label="Nom" placeholder="Votre nom" />
-        <Field id={`${type}-prenom`} label="Prénom" placeholder="Votre prénom" />
+        <Field id={`${type}-nom`} label="Nom" hint="Votre nom" />
+        <Field id={`${type}-prenom`} label="Prénom" hint="Votre prénom" />
       </div>
       <div className="grid gap-4 sm:grid-cols-2">
-        <Field id={`${type}-telephone`} label="Téléphone" placeholder="04 00 00 00 00" type="tel" />
-        <Field id={`${type}-email`} label="Email" placeholder="vous@email.fr" type="email" />
+        <Field id={`${type}-telephone`} label="Téléphone" hint="04 00 00 00 00" type="tel" />
+        <Field id={`${type}-email`} label="Email" hint="vous@email.fr" type="email" />
       </div>
       <label className="grid gap-2 text-sm font-semibold" htmlFor={`${type}-formation`}>
         Formation souhaitée
@@ -40,23 +40,23 @@ export function ContactForm({ type = 'candidat' }: { type?: string }) {
       </label>
       <label className="grid gap-2 text-sm font-semibold" htmlFor={`${type}-message`}>
         Message
-        <textarea id={`${type}-message`} name="message" className="min-h-32 rounded-2xl border border-academy-line px-4 py-3 font-normal text-stone-700" placeholder="Votre demande" />
+        <textarea id={`${type}-message`} name="message" className="min-h-32 rounded-2xl border border-academy-line px-4 py-3 font-normal text-stone-700" aria-label="Votre demande" />
       </label>
       <label className="flex gap-3 rounded-2xl bg-academy-bg p-4 text-sm text-stone-700" htmlFor={`${type}-rgpd`}>
         <input id={`${type}-rgpd`} name="rgpd" type="checkbox" required className="mt-1 h-4 w-4 accent-academy-gold" />
         <span>J’accepte que mes informations soient utilisées pour être recontacté au sujet de ma demande de formation.</span>
       </label>
       <button className="rounded-full bg-academy-ink px-6 py-4 font-bold text-white transition hover:-translate-y-0.5 hover:shadow-soft" type="submit">Envoyer la demande</button>
-      {sent && <p className="rounded-2xl bg-academy-green/10 p-4 text-sm font-semibold text-green-700" role="status">Votre demande est prête à être transmise. L’envoi email réel sera connecté lors de la configuration serveur.</p>}
+      {sent && <p className="rounded-2xl bg-academy-green/10 p-4 text-sm font-semibold text-green-700" role="status">Votre demande est prête à être transmise. Un conseiller prendra contact avec vous dans les meilleurs délais.</p>}
     </form>
   );
 }
 
-function Field({ id, label, placeholder, type = 'text' }: { id: string; label: string; placeholder: string; type?: string }) {
+function Field({ id, label, hint, type = 'text' }: { id: string; label: string; hint: string; type?: string }) {
   return (
     <label className="grid gap-2 text-sm font-semibold" htmlFor={id}>
       {label}
-      <input id={id} name={id} type={type} placeholder={placeholder} required className="rounded-2xl border border-academy-line px-4 py-3 font-normal text-stone-700" />
+      <input id={id} name={id} type={type} aria-label={hint} required className="rounded-2xl border border-academy-line px-4 py-3 font-normal text-stone-700" />
     </label>
   );
 }
