@@ -12,3 +12,50 @@ a, button, input, select, textarea, summary { outline-color: #F4C45A; outline-of
 .grid-soft { background-image: linear-gradient(rgba(17,17,17,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(17,17,17,.045) 1px, transparent 1px); background-size: 44px 44px; }
 .gold-glow { background: radial-gradient(circle at 50% 0%, rgba(244,196,90,.35), transparent 42%); }
 @keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+
+.ai-chat-sequence { opacity: 0; animation: ai-sequence 10s ease-in-out infinite; }
+.ai-chat-sequence-2 { animation-delay: 5s; }
+.ai-chat-message { opacity: 0; transform: translateY(10px); animation: ai-message 10s ease-out infinite; }
+.ai-chat-delay-1 { animation-delay: .45s; }
+.ai-chat-delay-2 { animation-delay: 1.45s; }
+.ai-chat-delay-3 { animation-delay: 2.35s; }
+.ai-chat-delay-4 { animation-delay: 3.55s; }
+.ai-chat-typing { animation-name: ai-typing-bubble; }
+.ai-chat-sequence-2 .ai-chat-delay-1 { animation-delay: 5.45s; }
+.ai-chat-sequence-2 .ai-chat-delay-2 { animation-delay: 6.45s; }
+.ai-chat-sequence-2 .ai-chat-delay-3 { animation-delay: 7.35s; }
+.ai-chat-sequence-2 .ai-chat-delay-4 { animation-delay: 8.55s; }
+.ai-typing-dot { height: .45rem; width: .45rem; border-radius: 9999px; background: #78716c; animation: ai-dot 1s ease-in-out infinite; }
+.ai-typing-dot-2 { animation-delay: .15s; }
+.ai-typing-dot-3 { animation-delay: .3s; }
+
+@keyframes ai-sequence {
+  0%, 4% { opacity: 0; }
+  8%, 46% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+@keyframes ai-message {
+  0%, 4% { opacity: 0; transform: translateY(10px); }
+  8%, 48% { opacity: 1; transform: translateY(0); }
+  52%, 100% { opacity: 0; transform: translateY(0); }
+}
+
+@keyframes ai-typing-bubble {
+  0%, 4% { opacity: 0; transform: translateY(10px); }
+  8%, 18% { opacity: 1; transform: translateY(0); }
+  24%, 100% { opacity: 0; transform: translateY(0); }
+}
+
+@keyframes ai-dot {
+  0%, 80%, 100% { opacity: .35; transform: translateY(0); }
+  40% { opacity: 1; transform: translateY(-3px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .ai-chat-sequence, .ai-chat-message, .ai-typing-dot { animation: none !important; transform: none !important; }
+  .ai-chat-preview { min-height: auto !important; overflow: visible !important; }
+  .ai-chat-sequence { position: static !important; opacity: 1 !important; }
+  .ai-chat-sequence + .ai-chat-sequence { display: none; }
+  .ai-chat-message { opacity: 1 !important; }
+}
