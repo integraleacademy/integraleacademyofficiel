@@ -1,4 +1,4 @@
-import { Badge, Button, ContactBlock, ConversionStrip, FAQ, FeatureCard, Hero, SectionTitle } from '@/components/ui';
+import { Badge, Button, ChatGptAgentBanner, ContactBlock, ConversionStrip, FAQ, FeatureCard, Hero, SectionTitle } from '@/components/ui';
 import { formationFaq } from '@/data/faq';
 import { formations } from '@/data/site';
 
