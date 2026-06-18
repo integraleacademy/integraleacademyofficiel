@@ -67,5 +67,5 @@ L’envoi réel d’email n’est pas encore connecté. Pour le connecter :
 - Importer les brochures/PDF officiels si disponibles.
 - Vérifier les RNCP/RS, agréments, Qualiopi, CNAPS, ADEF, SSIAP, INRS et UAI.
 - Connecter les formulaires et tester l’envoi réel.
-- Remplacer les placeholders éventuels par des images autorisées.
+- Remplacer les textes provisoires éventuels par des images autorisées.
 - Relire `INVENTAIRE_SITE.md` pour garantir qu’aucune information utile n’est perdue.
