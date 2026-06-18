@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import FinancingSimulator from '@/components/FinancingSimulator';
 import { Button, ContactBlock } from '@/components/ui';
 import { allFormations } from '@/data/formations';
 
@@ -98,6 +99,8 @@ export default function Page() {
         </div>
       </div>
     </section>
+
+    <FinancingSimulator />
 
     <section className="px-4 py-12">
       <div className="mx-auto overflow-hidden rounded-[2rem] bg-white shadow-soft ring-1 ring-academy-line md:max-w-7xl">
