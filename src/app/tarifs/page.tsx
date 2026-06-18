@@ -26,7 +26,7 @@ export default function Page() {
         <div>
           <div className="inline-flex rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-black uppercase tracking-[.22em] text-academy-gold backdrop-blur">Grille tarifaire</div>
           <h1 className="mt-7 max-w-4xl text-5xl font-black leading-[.95] tracking-tight md:text-7xl">
-            Des prix clairs, présentés comme un tableau de bord.
+            Tous les tarifs de nos formations, hors BTS.
           </h1>
           <p className="mt-7 max-w-2xl text-lg leading-8 text-stone-200 md:text-xl">
             Toutes les formations professionnelles Intégrale Academy hors BTS, avec le tarif, la durée, le lieu et les options de financement en un coup d’œil.
@@ -57,7 +57,7 @@ export default function Page() {
             <p className="text-xs font-black uppercase tracking-[.25em] text-yellow-700">Catalogue hors BTS</p>
             <h2 className="mt-3 text-3xl font-black tracking-tight md:text-5xl">Choisissez votre formation</h2>
           </div>
-          <p className="max-w-xl text-sm leading-7 text-stone-600">Une mise en page volontairement différente d’un comparateur d’abonnements : ici, chaque parcours est présenté comme une fiche de décision rapide.</p>
+          <p className="max-w-xl text-sm leading-7 text-stone-600">Comparez rapidement les parcours selon leur tarif, leur durée, leur certification et les solutions de financement possibles.</p>
         </div>
 
         <div className="grid gap-5">
