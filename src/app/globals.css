@@ -60,7 +60,6 @@ a, button, input, select, textarea, summary { outline-color: #F4C45A; outline-of
 
 @media (prefers-reduced-motion: reduce) {
   .reveal, .status-dot, .ai-chat-sequence, .ai-chat-message, .ai-typing-dot { animation: none !important; transform: none !important; }
-  .ai-chat-preview { min-height: auto !important; overflow: visible !important; }
   .ai-chat-sequence { position: static !important; opacity: 1 !important; }
   .ai-chat-sequence + .ai-chat-sequence { display: none; }
   .ai-chat-message { opacity: 1 !important; }
