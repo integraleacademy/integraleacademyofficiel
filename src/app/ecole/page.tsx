@@ -1,4 +1,4 @@
-import { Button, ContactBlock, Hero, LocationCard, SectionTitle, StatCard } from '@/components/ui';
+import { Button, Hero, LocationCard, SectionTitle, StatCard } from '@/components/ui';
 import { contact, legalRefs } from '@/data/site';
 
 export const metadata = {
@@ -107,6 +107,5 @@ export default function Page() {
       <div className="grid gap-5 md:grid-cols-3">{contact.locations.map(location => <LocationCard key={location.name} {...location} />)}</div>
     </section>
 
-    <section className="px-4"><ContactBlock /></section>
   </>;
 }
