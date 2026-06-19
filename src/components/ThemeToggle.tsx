@@ -31,11 +31,11 @@ export function ThemeToggle() {
   return <button
     type="button"
     onClick={() => setTheme(nextTheme)}
-    className="group relative grid h-12 w-12 shrink-0 place-items-center rounded-full border border-academy-line bg-white text-stone-500 shadow-[0_14px_35px_rgba(17,17,17,.08)] transition hover:-translate-y-0.5 hover:border-academy-gold hover:text-stone-800 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 dark:bg-white/10 dark:text-stone-200 dark:shadow-[0_18px_45px_rgba(0,0,0,.28)] dark:hover:border-academy-gold dark:hover:text-white dark:focus:ring-offset-stone-950"
+    className="group relative grid h-12 w-12 shrink-0 place-items-center rounded-full border border-academy-line bg-white text-stone-500 shadow-[0_14px_35px_rgba(17,17,17,.08)] transition hover:-translate-y-0.5 hover:border-academy-gold hover:text-stone-800 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 dark:bg-[#211f1a] dark:text-[#f4c45a] dark:shadow-[0_18px_45px_rgba(0,0,0,.3)] dark:hover:border-academy-gold dark:hover:text-[#ffe4a3] dark:focus:ring-offset-[#13120f]"
     aria-label={`Passer en mode ${nextTheme === 'dark' ? 'sombre' : 'clair'}`}
     title={`Mode ${nextTheme === 'dark' ? 'sombre' : 'clair'}`}
   >
-    <span className="absolute inset-1 rounded-full border border-stone-200 transition group-hover:border-stone-300 dark:border-white/10 dark:group-hover:border-white/25" aria-hidden="true" />
+    <span className="absolute inset-1 rounded-full border border-stone-200 transition group-hover:border-stone-300 dark:border-academy-gold/35 dark:group-hover:border-academy-gold/60" aria-hidden="true" />
     <svg className="relative h-6 w-6 transition-transform duration-300 group-hover:-rotate-12 dark:hidden" viewBox="0 0 24 24" fill="none" aria-hidden="true">
       <path d="M20.2 14.3A7.6 7.6 0 0 1 9.7 3.8 8.2 8.2 0 1 0 20.2 14.3Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
