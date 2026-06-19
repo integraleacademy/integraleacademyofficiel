@@ -1,4 +1,4 @@
-import { Button, ChatGptAgentBanner, ContactBlock, ConversionStrip, FAQ, FeatureCard, FinancingCard, FormationCard, FullWidthBand, Hero, LocationCard, ProofBar, SectionTitle, StatCard } from '@/components/ui';
+import { Button, ChatGptAgentBanner, ContactBlock, ConversionStrip, FAQ, FeatureCard, FinancingCard, FormationCard, FullWidthBand, Hero, LocationCard, ProofBar, SectionTitle, StatCard, VisualJourneyShowcase } from '@/components/ui';
 import { globalFaq } from '@/data/faq';
 import { bts, contact, formations } from '@/data/site';
 
@@ -11,6 +11,7 @@ export default function Home(){
     <ProofBar/>
     <ConversionStrip/>
     <ChatGptAgentBanner/>
+    <VisualJourneyShowcase/>
     <FullWidthBand eyebrow="Parcours lisible" title="Un site plus rythmé pour aller vite à l’essentiel" actions={<><Button href="/planning" variant="secondary">Voir le planning</Button><Button href="/tarifs" variant="ghost">Consulter les tarifs</Button></>}>Sécurité, VTC ou BTS : les informations clés sont regroupées par temps forts visuels, avec des bandeaux pleine largeur pour mieux repérer les étapes importantes.</FullWidthBand>
     <section className="mx-auto max-w-7xl px-4 py-12"><SectionTitle eyebrow="Formations principales" title="Des parcours clairs, certifiants et orientés métier">Sécurité, VTC et BTS en alternance, avec des informations utiles pour choisir, financer et préparer son inscription.</SectionTitle><div className="grid gap-5 md:grid-cols-3">{main.map(f=><FormationCard key={f.slug} title={f.title} desc={f.short} href={f.slug} tags={['Lieu','Financement possible']}/>)}</div></section>
     <section className="mx-auto max-w-7xl px-4 py-12"><SectionTitle eyebrow="Pourquoi nous choisir" title="Un organisme rassurant pour candidats, financeurs et entreprises"/><div className="grid gap-5 md:grid-cols-3"><FeatureCard title="Agréments et certifications">Qualiopi, CNAPS, ADEF, SSIAP, INRS SST, UAI et références réglementaires affichées pour faciliter les démarches.</FeatureCard><FeatureCard title="Accompagnement candidat">Aide au choix de formation, financement, devis, rappel et préparation à l’inscription.</FeatureCard><FeatureCard title="Approche professionnelle">Pages longues restructurées, informations utiles visibles, CTA clairs et parcours sans friction.</FeatureCard></div></section>
