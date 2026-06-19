@@ -11,9 +11,9 @@
 }
 
 .dark {
-  --color-academy-bg: 16 18 24;
+  --color-academy-bg: 19 18 15;
   --color-academy-ink: 17 17 17;
-  --color-academy-line: 55 65 81;
+  --color-academy-line: 62 56 45;
   background: rgb(var(--color-academy-bg));
   color: rgb(var(--color-academy-ink));
 }
@@ -21,7 +21,7 @@ html { scroll-behavior: smooth; }
 body { min-height: 100vh; font-feature-settings: "ss01" on; transition: background-color .25s ease, color .25s ease; }
 
 .dark body {
-  color: rgb(248 250 252);
+  color: rgb(246 241 232);
 }
 a, button, input, select, textarea, summary { outline-color: #F4C45A; outline-offset: 3px; }
 ::selection { background: #F4C45A; color: #111111; }
@@ -91,7 +91,7 @@ a, button, input, select, textarea, summary { outline-color: #F4C45A; outline-of
 .dark .bg-white\/95,
 .dark .bg-white\/10,
 .dark .hover\:bg-white\/15:hover {
-  background-color: rgba(30, 41, 59, .92) !important;
+  background-color: rgba(35, 32, 26, .94) !important;
 }
 
 .dark .bg-academy-bg,
@@ -100,12 +100,12 @@ a, button, input, select, textarea, summary { outline-color: #F4C45A; outline-of
 .dark .hover\:bg-yellow-50\/60:hover,
 .dark .focus\:bg-yellow-50\/60:focus,
 .dark .hover\:bg-stone-50:hover {
-  background-color: rgba(15, 23, 42, .88) !important;
+  background-color: rgba(24, 22, 18, .9) !important;
 }
 
 .dark .bg-academy-ink,
 .dark .hover\:bg-black:hover {
-  background-color: rgb(15 23 42) !important;
+  background-color: rgb(18 17 15) !important;
 }
 
 .dark .text-academy-ink:not(.bg-academy-gold):not(.from-academy-gold),
@@ -116,7 +116,7 @@ a, button, input, select, textarea, summary { outline-color: #F4C45A; outline-of
 .dark .bg-white\/95 .text-academy-ink,
 .dark .bg-academy-bg .text-academy-ink,
 .dark .bg-academy-bg\/70 .text-academy-ink {
-  color: rgb(248 250 252) !important;
+  color: rgb(246 241 232) !important;
 }
 
 .dark .bg-academy-gold .text-academy-ink,
@@ -132,17 +132,17 @@ a, button, input, select, textarea, summary { outline-color: #F4C45A; outline-of
 .dark .text-stone-700,
 .dark .text-stone-800,
 .dark .text-stone-900 {
-  color: rgb(203 213 225) !important;
+  color: rgb(218 211 199) !important;
 }
 
 .dark .text-yellow-700 {
-  color: rgb(250 204 21) !important;
+  color: rgb(244 196 90) !important;
 }
 
 .dark .grid-soft {
-  background-image: linear-gradient(rgba(255,255,255,.055) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.055) 1px, transparent 1px);
+  background-image: linear-gradient(rgba(244,196,90,.055) 1px, transparent 1px), linear-gradient(90deg, rgba(244,196,90,.055) 1px, transparent 1px);
 }
 
 .dark .gold-glow {
-  background: radial-gradient(circle at 50% 0%, rgba(244,196,90,.2), transparent 42%);
+  background: radial-gradient(circle at 50% 0%, rgba(244,196,90,.16), transparent 42%);
 }
