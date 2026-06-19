@@ -1,4 +1,4 @@
-import { Button, ChatGptAgentBanner, ContactBlock, ConversionStrip, FAQ, FeatureCard, FinancingCard, FormationCard, FullWidthBand, Hero, LocationCard, ProofBar, SectionTitle, StatCard, VisualJourneyShowcase } from '@/components/ui';
+import { Button, ChatGptAgentBanner, ConversionStrip, FAQ, FeatureCard, FinancingCard, FormationCard, FullWidthBand, Hero, LocationCard, ProofBar, SectionTitle, StatCard, VisualJourneyShowcase } from '@/components/ui';
 import { globalFaq } from '@/data/faq';
 import { bts, contact, formations } from '@/data/site';
 
