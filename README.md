@@ -69,3 +69,20 @@ L’envoi réel d’email n’est pas encore connecté. Pour le connecter :
 - Connecter les formulaires et tester l’envoi réel.
 - Remplacer les textes provisoires éventuels par des images autorisées.
 - Relire `INVENTAIRE_SITE.md` pour garantir qu’aucune information utile n’est perdue.
+
+## Tchat IA Intégrale Academy
+
+Le site embarque un widget de tchat IA connecté à la route serveur `POST /api/chat`. La clé OpenAI reste uniquement côté serveur et ne doit jamais être exposée dans le frontend.
+
+### Variables d’environnement Render
+
+Dans Render, ouvrir le service web puis **Environment** et ajouter :
+
+- `OPENAI_API_KEY` : clé API OpenAI serveur.
+- `OPENAI_MODEL` : modèle utilisé par le tchat, par exemple `gpt-4o-mini` ou un autre modèle compatible Chat Completions.
+
+Après modification, redéployer le service. En local, les mêmes variables peuvent être placées dans un fichier `.env.local` non versionné.
+
+### Évolution leads
+
+Le tchat peut proposer un rappel. Une future route dédiée pourra enregistrer : nom, prénom, téléphone, email, formation souhaitée et message, avec consentement RGPD explicite.
