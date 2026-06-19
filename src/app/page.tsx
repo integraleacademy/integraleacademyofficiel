@@ -1,4 +1,4 @@
-import { Button, ChatGptAgentBanner, ContactBlock, ConversionStrip, FAQ, FeatureCard, FinancingCard, FormationCard, FullWidthBand, Hero, LocationCard, ProofBar, SectionTitle, StatCard } from '@/components/ui';
+import { Button, ChatGptAgentBanner, ConversionStrip, FAQ, FeatureCard, FinancingCard, FormationCard, FullWidthBand, Hero, LocationCard, ProofBar, SectionTitle, StatCard } from '@/components/ui';
 import { globalFaq } from '@/data/faq';
 import { bts, contact, formations } from '@/data/site';
 
@@ -20,6 +20,5 @@ export default function Home(){
     <section className="mx-auto max-w-7xl px-4 py-12"><div className="grid gap-4 md:grid-cols-4"><StatCard value="400 m²" label="Dédiés aux enseignements pratiques et théoriques"/><StatCard value="3" label="Implantations disponibles"/><StatCard value="10" label="Parcours formation et BTS présentés"/><StatCard value="08h-19h" label="Standard du lundi au vendredi"/></div></section>
     <FullWidthBand eyebrow="Inscription" title="Une prochaine session peut correspondre à votre projet" tone="light" actions={<><Button href="/contact">Demander des informations</Button><Button href="tel:0422470768" variant="secondary">Appeler</Button></>}>Indiquez votre formation cible, votre ville et votre mode de financement : l’équipe revient vers vous avec les informations utiles.</FullWidthBand>
     <section className="px-4 py-12"><SectionTitle eyebrow="FAQ" title="Questions fréquentes"/><FAQ items={globalFaq}/></section>
-    <section className="px-4"><ContactBlock/></section>
   </>
 }

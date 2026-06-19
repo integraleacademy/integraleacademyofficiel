@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import FinancingSimulator from '@/components/FinancingSimulator';
-import { Button, ContactBlock } from '@/components/ui';
+import { Button } from '@/components/ui';
 import { allFormations } from '@/data/formations';
 
 export const metadata = {
@@ -120,6 +120,5 @@ export default function Page() {
       </div>
     </section>
 
-    <section className="px-4"><ContactBlock /></section>
   </>;
 }
