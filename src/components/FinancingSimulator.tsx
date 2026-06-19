@@ -1,9 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
-const MAX_FORMATION_AMOUNT = 10000;
 const paymentOptions = [
   { label: 'Paiement comptant', installments: 1 },
   { label: '2 fois', installments: 2 },
@@ -12,7 +11,13 @@ const paymentOptions = [
   { label: '6 fois', installments: 6 },
   { label: '10 fois', installments: 10 },
 ];
-const formationOptions = ['APS', 'SSIAP 1', 'VTC', 'BTS', 'DESP / DSSP', 'Autre formation'];
+const formationOptions = [
+  { label: 'APS', amount: 1650 },
+  { label: 'SSIAP 1', amount: 980 },
+  { label: 'VTC', amount: 1600 },
+  { label: 'BTS en alternance', amount: 0 },
+  { label: 'DESP / DSSP', amount: 4300 },
+];
 
 function clampAmount(value: number, max: number) {
   if (Number.isNaN(value)) return 0;
@@ -80,11 +85,13 @@ function SummaryRow({ label, value, highlight = false }: { label: string; value:
 
 export default function FinancingSimulator() {
   const [formation, setFormation] = useState('APS');
-  const [formationAmount, setFormationAmount] = useState(2500);
   const [cpfAmount, setCpfAmount] = useState(1000);
   const [aidAmount, setAidAmount] = useState(0);
   const [personalAmount, setPersonalAmount] = useState(0);
   const [installments, setInstallments] = useState(1);
+
+  const selectedFormation = formationOptions.find((option) => option.label === formation) ?? formationOptions[0];
+  const formationAmount = selectedFormation.amount;
 
   const cappedCpf = Math.min(cpfAmount, formationAmount);
   const cappedAid = Math.min(aidAmount, formationAmount);
@@ -93,13 +100,11 @@ export default function FinancingSimulator() {
   const remaining = useMemo(() => Math.max(formationAmount - cappedCpf - cappedAid - cappedPersonal, 0), [formationAmount, cappedCpf, cappedAid, cappedPersonal]);
   const monthlyAmount = installments > 1 ? Math.ceil(remaining / installments) : remaining;
 
-  function updateFormationAmount(value: number) {
-    const nextValue = clampAmount(value, MAX_FORMATION_AMOUNT);
-    setFormationAmount(nextValue);
-    setCpfAmount((current) => clampAmount(current, nextValue));
-    setAidAmount((current) => clampAmount(current, nextValue));
-    setPersonalAmount((current) => clampAmount(current, nextValue));
-  }
+  useEffect(() => {
+    setCpfAmount((current) => clampAmount(current, formationAmount));
+    setAidAmount((current) => clampAmount(current, formationAmount));
+    setPersonalAmount((current) => clampAmount(current, formationAmount));
+  }, [formationAmount]);
 
   return <section className="bg-[#080f1f] px-4 py-14 text-white md:py-20">
     <div className="mx-auto max-w-7xl overflow-hidden rounded-[2.25rem] border border-white/10 bg-[radial-gradient(circle_at_8%_10%,rgba(244,196,90,.20),transparent_28%),linear-gradient(135deg,#0b1327,#050814_58%,#101827)] p-5 shadow-[0_34px_120px_rgba(0,0,0,.45)] md:p-8">
@@ -116,10 +121,16 @@ export default function FinancingSimulator() {
             <div className="rounded-3xl border border-white/10 bg-white/[.06] p-4">
               <label htmlFor="formation-choice" className="text-sm font-black text-white">Formation choisie</label>
               <select id="formation-choice" value={formation} onChange={(event) => setFormation(event.target.value)} className="mt-3 w-full rounded-2xl border border-academy-gold/25 bg-[#091123] px-4 py-3 text-sm font-bold text-white outline-none focus:ring-2 focus:ring-academy-gold/70">
-                {formationOptions.map((option) => <option key={option}>{option}</option>)}
+                {formationOptions.map((option) => <option key={option.label}>{option.label}</option>)}
               </select>
             </div>
-            <AmountControl id="formation-amount" label="Montant total de la formation" value={formationAmount} max={MAX_FORMATION_AMOUNT} onChange={updateFormationAmount} />
+            <div className="rounded-3xl border border-white/10 bg-white/[.06] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,.06)]">
+              <p className="text-sm font-black text-white">Montant total de la formation</p>
+              <div className="mt-3 rounded-2xl border border-academy-gold/25 bg-black/25 px-4 py-3">
+                <p className="text-right text-2xl font-black text-academy-gold">{euros(formationAmount)}</p>
+              </div>
+              <p className="mt-2 text-xs font-semibold leading-5 text-stone-400">Montant automatiquement réglé selon la formation choisie, non modifiable dans cette simulation.</p>
+            </div>
             <AmountControl id="cpf-amount" label="Montant disponible sur votre CPF" value={cappedCpf} max={formationAmount} onChange={setCpfAmount} />
             <AmountControl id="aid-amount" label="Aide France Travail / OPCO / employeur" value={cappedAid} max={formationAmount} onChange={setAidAmount} />
             <AmountControl id="personal-amount" label="Apport personnel immédiat" value={cappedPersonal} max={formationAmount} onChange={setPersonalAmount} />
