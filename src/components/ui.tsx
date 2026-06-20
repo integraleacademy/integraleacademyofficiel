@@ -66,6 +66,69 @@ export function ChatGptAgentBanner(){return <section className="px-4 py-12"><div
 export function Badge({children,tone='gold'}:{children:React.ReactNode;tone?:'gold'|'green'|'neutral'}){const c=tone==='green'?'bg-academy-green/10 text-green-700':tone==='gold'?'bg-academy-gold/25 text-stone-900':'bg-white text-stone-700 border border-academy-line';return <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${c}`}>{children}</span>}
 export function Button({href,children,variant='primary'}:{href:string;children:React.ReactNode;variant?:'primary'|'secondary'|'ghost'}){const c=variant==='primary'?'bg-academy-ink text-white hover:bg-black':variant==='secondary'?'bg-academy-gold text-academy-ink hover:brightness-95':'bg-white text-academy-ink ring-1 ring-academy-line hover:bg-stone-50';return <Link className={`inline-flex items-center justify-center rounded-full px-5 py-3 text-sm font-bold transition hover:-translate-y-0.5 ${c}`} href={href}>{children}</Link>}
 export function SectionTitle({eyebrow,title,children}:{eyebrow?:string;title:string;children?:React.ReactNode}){return <div className="mx-auto mb-10 max-w-3xl text-center reveal">{eyebrow&&<Badge>{eyebrow}</Badge>}<h2 className="mt-4 text-3xl font-black tracking-tight md:text-5xl">{title}</h2>{children&&<p className="mt-4 text-lg text-stone-600">{children}</p>}</div>}
+
+type ArtDirectionWorld = 'security' | 'bts' | 'vtc' | 'financement' | 'contact';
+
+const artDirectionCopy: Record<ArtDirectionWorld, { label: string; title: string; chips: string[]; stats: [string, string][]; glyphs: string[] }> = {
+  security: {
+    label: 'Parcours sécurité',
+    title: 'Pré-requis · centre · financement · inscription',
+    chips: ['APS', 'SSIAP', 'SST', 'CNAPS'],
+    stats: [['6', 'formations'], ['2', 'centres'], ['CPF', 'selon éligibilité']],
+    glyphs: ['◆', '✓', '⬟'],
+  },
+  bts: {
+    label: 'Alternance BTS',
+    title: 'Diplôme d’État avec accompagnement entreprise',
+    chips: ['MOS', 'MCO', 'NDRC', 'CI'],
+    stats: [['15j', 'école'], ['15j', 'entreprise'], ['OPCO', 'prise en charge']],
+    glyphs: ['◇', '▱', '✦'],
+  },
+  vtc: {
+    label: 'Préparation VTC',
+    title: 'Formation, examen et projet chauffeur encadrés',
+    chips: ['Examen', 'Carte pro', 'Projet', 'Financement'],
+    stats: [['140h', 'parcours'], ['CPF', 'possible'], ['RDV', 'conseil']],
+    glyphs: ['⌁', '◉', '→'],
+  },
+  financement: {
+    label: 'Solutions financement',
+    title: 'CPF · alternance · entreprise · France Travail',
+    chips: ['CPF', 'OPCO', 'Alternance', 'Devis'],
+    stats: [['6', 'options'], ['OPCO', 'branche'], ['Conseil', 'dossier']],
+    glyphs: ['€', '✓', '↗'],
+  },
+  contact: {
+    label: 'Contact conseiller',
+    title: 'Une réponse claire pour lancer votre dossier',
+    chips: ['Téléphone', 'Email', 'WhatsApp', 'RDV'],
+    stats: [['04', 'appel'], ['24h', 'rappel'], ['3', 'lieux']],
+    glyphs: ['✉', '✓', '●'],
+  },
+};
+
+export function ArtDirectionVisual({ world }: { world: ArtDirectionWorld }) {
+  const copy = artDirectionCopy[world];
+
+  return <div className="relative isolate overflow-hidden rounded-[2rem] bg-academy-ink p-5 text-white shadow-soft ring-1 ring-academy-line reveal">
+    <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,rgba(244,196,90,.35),transparent_34%),linear-gradient(135deg,rgba(17,17,17,.98),rgba(39,54,78,.88)_58%,rgba(17,17,17,.98))]" aria-hidden="true" />
+    <div className="absolute -right-16 -top-20 h-56 w-56 rounded-full bg-academy-gold/25 blur-3xl" aria-hidden="true" />
+    <div className="absolute -bottom-20 -left-16 h-56 w-56 rounded-full bg-white/10 blur-3xl" aria-hidden="true" />
+    <div className="flex items-center justify-between gap-4 border-b border-white/10 pb-5">
+      <span className="rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-black uppercase tracking-[.18em] text-academy-gold">{copy.label}</span>
+      <span className="status-dot" aria-hidden="true" />
+    </div>
+    <div className="mt-6 grid gap-5">
+      <div className="rounded-[1.5rem] border border-white/10 bg-white/10 p-5 backdrop-blur">
+        <div className="flex gap-3" aria-hidden="true">{copy.glyphs.map(glyph => <span key={glyph} className="premium-icon bg-white/10 text-academy-gold"><span>{glyph}</span></span>)}</div>
+        <h3 className="mt-5 text-2xl font-black leading-tight md:text-3xl">{copy.title}</h3>
+        <div className="mt-5 flex flex-wrap gap-2">{copy.chips.map(chip => <span key={chip} className="rounded-full bg-academy-gold/20 px-3 py-1 text-xs font-black text-academy-gold">{chip}</span>)}</div>
+      </div>
+      <div className="grid grid-cols-3 gap-3">{copy.stats.map(([value, label]) => <div key={`${value}-${label}`} className="rounded-2xl border border-white/10 bg-white/10 p-4 text-center backdrop-blur"><b className="block text-xl font-black text-academy-gold">{value}</b><span className="mt-1 block text-[0.7rem] font-bold text-stone-200">{label}</span></div>)}</div>
+    </div>
+  </div>;
+}
+
 export function Hero({badge,title,subtitle,actions,visual}:{badge?:string;title:string;subtitle:string;actions?:React.ReactNode;visual?:React.ReactNode}){return <section className="grid-soft gold-glow overflow-hidden px-4 py-16 md:py-24"><div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1.15fr_.85fr] lg:items-center"><div className="reveal">{badge&&<Badge>{badge}</Badge>}<h1 className="mt-5 text-4xl font-black tracking-tight md:text-6xl">{title}</h1><p className="mt-6 max-w-2xl text-lg leading-8 text-stone-600">{subtitle}</p>{actions&&<div className="mt-8 flex flex-wrap gap-3">{actions}</div>}</div>{visual ?? <div className="relative rounded-[2rem] bg-white/90 p-6 shadow-soft ring-1 ring-academy-line backdrop-blur reveal"><div className="rounded-[1.5rem] bg-academy-bg p-6"><p className="text-sm font-bold text-stone-500">Centres & modalités</p><div className="mt-5 grid gap-3">{contact.locations.map(l=><div key={l.name} className="rounded-2xl bg-white p-4"><b>{l.name}</b><p className="text-sm text-stone-600">{l.address}</p></div>)}</div></div></div>}</div></section>}
 const appointmentFormUrl = 'https://assistance-alw9.onrender.com/demande-informations-formations';
 
