@@ -107,7 +107,7 @@ export function SessionsClient({ initialRows }: { initialRows: SessionRow[] }) {
     const response = await fetch('/api/admin/sessions/excel', { method: 'POST', body: formData });
     const data = await response.json().catch(() => ({}));
     if (!response.ok) {
-      setMessage(data.error || 'Import impossible. Vérifiez que le fichier provient bien du modèle exporté.');
+      setMessage(data.error || 'Import impossible. Vérifiez que le fichier provient bien du modèle exporté et que les dates sont au format DD/MM/YYYY.');
       if (importInputRef.current) importInputRef.current.value = '';
       return;
     }
