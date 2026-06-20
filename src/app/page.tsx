@@ -1,4 +1,4 @@
-import { Button, ChatGptAgentBanner, ConversionStrip, FAQ, FeatureCard, FinancingCard, FormationCard, FullWidthBand, Hero, LocationCard, ProofBar, SectionTitle, StatCard, VisualJourneyShowcase } from '@/components/ui';
+import { Button, ChatGptAgentBanner, ConversionStrip, FAQ, FeatureCard, FinancingCard, FormationCard, FullWidthBand, Hero, LocationCard, ProofBar, SectionTitle, StatCard } from '@/components/ui';
 import { OrientationAssistant } from '@/components/OrientationAssistant';
 import { FloatingBadge, VisualSection, VisualTimeline } from '@/components/visuals';
 import { globalFaq } from '@/data/faq';
@@ -14,7 +14,6 @@ export default function Home(){
     <div className="relative"><FloatingBadge tone="academy" className="right-[8%] top-8"/><ProofBar/></div>
     <ConversionStrip/>
     <ChatGptAgentBanner/>
-    <VisualJourneyShowcase/>
     <FullWidthBand eyebrow="Parcours lisible" title="Trois familles de parcours, sans les mélanger" actions={<><Button href="/planning" variant="secondary">Voir le planning</Button><Button href="/tarifs" variant="ghost">Consulter les tarifs</Button></>}>Les formations professionnelles sécurité privée, la formation chauffeur VTC et les BTS en alternance répondent à des objectifs différents. La page d’accueil les présente donc séparément pour vous orienter plus vite.</FullWidthBand>
     <VisualSection tone="academy" className="py-1"><section className="mx-auto max-w-7xl px-4 py-12">
       <SectionTitle eyebrow="3 parcours distincts" title="Choisissez d’abord votre famille de formation">Chaque bloc correspond à une demande différente : métier de la sécurité privée, chauffeur VTC ou diplôme BTS en alternance.</SectionTitle>
