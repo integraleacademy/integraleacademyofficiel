@@ -181,7 +181,7 @@ function SecurityGroupedSessions({ rows, onRegister }: { rows: Session[]; onRegi
           </div>
           <Link href={`/contact?motif=alerte-planning&formation=${group.key}`} className="inline-flex shrink-0 rounded-full border border-academy-line bg-white px-4 py-2.5 text-sm font-black text-academy-ink transition hover:-translate-y-0.5 hover:border-academy-gold/60 dark:bg-white/10 dark:text-white">Être prévenu</Link>
         </div>
-        {groupRows.length ? <div className="grid gap-5 lg:grid-cols-2">{groupRows.map((session, index) => <SessionCard key={session.id} session={session} isNext={index === 0} onRegister={onRegister} />)}</div> : <div className="rounded-[1.5rem] border border-dashed border-academy-line bg-white/70 p-5 text-sm font-bold text-academy-muted dark:bg-black/20">Aucune date {group.title} disponible actuellement. Demandez une alerte pour être prévenu de la prochaine session.</div>}
+        {groupRows.length ? <div className="grid gap-5">{groupRows.map((session, index) => <SessionCard key={session.id} session={session} isNext={index === 0} onRegister={onRegister} />)}</div> : <div className="rounded-[1.5rem] border border-dashed border-academy-line bg-white/70 p-5 text-sm font-bold text-academy-muted dark:bg-black/20">Aucune date {group.title} disponible actuellement. Demandez une alerte pour être prévenu de la prochaine session.</div>}
       </section>;
     })}
   </div>;
