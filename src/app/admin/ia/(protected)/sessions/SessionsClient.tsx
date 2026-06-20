@@ -22,9 +22,13 @@ export function SessionsClient({ initialRows }: { initialRows: SessionRow[] }) {
   const [draft, setDraft] = useState<SessionRow | null>(null);
   const [health, setHealth] = useState<DbHealth | null>(null);
   const [message, setMessage] = useState('');
+  const [selectedTrainingId, setSelectedTrainingId] = useState('all');
   const autoSeedStarted = useRef(false);
   const canEdit = !!health?.ok;
   const sortedTrainings = [...trainings].sort((a, b) => a.name.localeCompare(b.name, 'fr'));
+  const visibleRows = selectedTrainingId === 'all' ? rows : rows.filter(row => row.trainingId === selectedTrainingId);
+  const selectedTraining = sortedTrainings.find(training => training.id === selectedTrainingId);
+  const trainingCounts = rows.reduce<Record<string, number>>((counts, row) => { counts[row.trainingId] = (counts[row.trainingId] || 0) + 1; return counts; }, {});
   const hasTrainings = trainings.length > 0 || (health?.trainingsCount || 0) > 0;
 
   async function refreshHealth() {
@@ -91,9 +95,11 @@ export function SessionsClient({ initialRows }: { initialRows: SessionRow[] }) {
 
   async function duplicate(row: SessionRow) { setDraft({ ...serialize(row), title: `${row.title} (copie)`, sortOrder: (row.sortOrder || 0) + 1 }); }
 
-  function addSession() {
+  function addSession(training?: TrainingRow) {
     if (!hasTrainings) { setMessage('Veuillez initialiser les formations avant d’ajouter une session.'); return; }
-    setDraft(emptySession(sortedTrainings[0]));
+    const trainingForDraft = training || selectedTraining || sortedTrainings[0];
+    setDraft(emptySession(trainingForDraft));
+    if (trainingForDraft) setSelectedTrainingId(trainingForDraft.id);
   }
 
   const healthMessage = useMemo(() => {
@@ -122,8 +128,23 @@ export function SessionsClient({ initialRows }: { initialRows: SessionRow[] }) {
   return <>
     <div className={`mt-4 rounded-xl border p-3 text-sm ${canEdit ? 'border-emerald-200 bg-emerald-50 text-emerald-800' : 'border-amber-200 bg-amber-50 text-amber-800'}`}>{healthMessage}</div>
     {message ? <p className="mt-3 rounded-xl border bg-white p-3 text-sm text-stone-700">{message}</p> : null}
-    <div className="mt-5 flex flex-wrap gap-3"><button onClick={addSession} disabled={!canEdit} className="rounded-xl bg-academy-gold px-4 py-3 font-bold disabled:cursor-not-allowed disabled:opacity-50">Ajouter</button>{health && health.ok && health.trainingsCount < expectedBaseTrainingsCount ? <button onClick={() => initialize()} className="rounded-xl bg-academy-ink px-4 py-3 font-bold text-white">Initialiser / compléter les formations</button> : null}</div>
+    <div className="mt-5 rounded-2xl border bg-white p-4 shadow-sm">
+      <div className="flex flex-wrap items-end gap-3">
+        <label className="min-w-64 flex-1 text-sm font-semibold">Filtrer par formation
+          <select value={selectedTrainingId} onChange={event => setSelectedTrainingId(event.target.value)} className="mt-1 w-full rounded-xl border p-3">
+            <option value="all">Toutes les formations ({rows.length})</option>
+            {sortedTrainings.map(training => <option key={training.id} value={training.id}>{training.name} ({trainingCounts[training.id] || 0})</option>)}
+          </select>
+        </label>
+        <button type="button" onClick={() => addSession()} disabled={!canEdit} className="rounded-xl bg-academy-gold px-4 py-3 font-bold disabled:cursor-not-allowed disabled:opacity-50">Ajouter une session{selectedTraining ? ` ${selectedTraining.name}` : ''}</button>
+        {health && health.ok && health.trainingsCount < expectedBaseTrainingsCount ? <button type="button" onClick={() => initialize()} className="rounded-xl bg-academy-ink px-4 py-3 font-bold text-white">Initialiser / compléter les formations</button> : null}
+      </div>
+      <div className="mt-4 flex flex-wrap gap-2">
+        <button type="button" onClick={() => setSelectedTrainingId('all')} className={`rounded-full px-3 py-2 text-sm font-bold ${selectedTrainingId === 'all' ? 'bg-academy-ink text-white' : 'border bg-white text-stone-700'}`}>Toutes</button>
+        {sortedTrainings.map(training => <button key={training.id} type="button" onClick={() => setSelectedTrainingId(training.id)} className={`rounded-full px-3 py-2 text-sm font-bold ${selectedTrainingId === training.id ? 'bg-academy-ink text-white' : 'border bg-white text-stone-700'}`}>{training.name} · {trainingCounts[training.id] || 0}</button>)}
+      </div>
+    </div>
     {draft ? <form onSubmit={(event) => { event.preventDefault(); createSession(); }} className="mt-6 rounded-2xl border-2 border-academy-gold bg-white p-5 shadow"><div className="flex items-center justify-between gap-3"><h2 className="text-xl font-bold">Nouvelle session</h2><button className="rounded-xl bg-academy-ink px-4 py-3 font-bold text-white">Créer la session</button></div><div className="mt-4 grid gap-4 md:grid-cols-4">{fields(draft, updateDraft, !canEdit)}</div></form> : null}
-    <div className="mt-6 space-y-4">{rows.map(row => <form key={row.id} onSubmit={(event) => { event.preventDefault(); save(row); }} className="rounded-2xl bg-white p-5 shadow"><div className="flex flex-wrap items-start justify-between gap-3"><div><p className="text-xs font-bold uppercase tracking-[.18em] text-academy-gold">{row.training?.name}</p><input value={row.title} onChange={event => updateLocal(row.id, { title: event.target.value })} className="mt-2 w-full rounded-xl border p-3 text-lg font-bold" disabled={!canEdit}/></div><div className="flex flex-wrap gap-2"><button disabled={!canEdit} className="rounded-xl bg-academy-ink px-4 py-3 font-bold text-white disabled:cursor-not-allowed disabled:opacity-50">Enregistrer</button><button type="button" onClick={() => duplicate(row)} disabled={!canEdit} className="rounded-xl border px-4 py-3 font-bold disabled:opacity-50">Dupliquer</button><button type="button" onClick={() => remove(row)} disabled={!canEdit} className="rounded-xl border border-red-200 px-4 py-3 font-bold text-red-700 disabled:opacity-50">Supprimer</button></div></div><div className="mt-4 grid gap-4 md:grid-cols-4">{fields(row, patch => updateLocal(row.id, patch), !canEdit)}</div><div className="mt-4 flex flex-wrap gap-2"><button type="button" onClick={() => save(row, { status: 'FULL' })} disabled={!canEdit} className="rounded-xl border px-3 py-2 font-bold disabled:opacity-50">Mettre complet</button><button type="button" onClick={() => save(row, { status: 'OPEN' })} disabled={!canEdit} className="rounded-xl border px-3 py-2 font-bold disabled:opacity-50">Mettre ouvert</button><button type="button" onClick={() => save(row, { status: 'HIDDEN' })} disabled={!canEdit} className="rounded-xl border px-3 py-2 font-bold disabled:opacity-50">Masquer</button></div><p className="mt-3 text-xs text-stone-500">Affichage public actuel : du {displayDate(row.startDate)} au {displayDate(row.endDate)} · examen {displayDate(row.examDate) || 'non précisé'} · {row.priceLabel} · {row.seatsLeft ?? '—'} places restantes.</p></form>)}</div>
+    <div className="mt-6 space-y-4">{visibleRows.length === 0 ? <div className="rounded-2xl border border-dashed bg-white p-6 text-center text-stone-600"><p className="font-semibold">Aucune session pour ce filtre.</p><button type="button" onClick={() => addSession()} disabled={!canEdit} className="mt-3 rounded-xl bg-academy-gold px-4 py-3 font-bold disabled:opacity-50">Ajouter la première session</button></div> : null}{visibleRows.map(row => <form key={row.id} onSubmit={(event) => { event.preventDefault(); save(row); }} className="rounded-2xl bg-white p-5 shadow"><div className="flex flex-wrap items-start justify-between gap-3"><div><p className="text-xs font-bold uppercase tracking-[.18em] text-academy-gold">{row.training?.name}</p><input value={row.title} onChange={event => updateLocal(row.id, { title: event.target.value })} className="mt-2 w-full rounded-xl border p-3 text-lg font-bold" disabled={!canEdit}/></div><div className="flex flex-wrap gap-2"><button disabled={!canEdit} className="rounded-xl bg-academy-ink px-4 py-3 font-bold text-white disabled:cursor-not-allowed disabled:opacity-50">Enregistrer</button><button type="button" onClick={() => duplicate(row)} disabled={!canEdit} className="rounded-xl border px-4 py-3 font-bold disabled:opacity-50">Dupliquer</button><button type="button" onClick={() => remove(row)} disabled={!canEdit} className="rounded-xl border border-red-200 px-4 py-3 font-bold text-red-700 disabled:opacity-50">Supprimer</button></div></div><div className="mt-4 grid gap-4 md:grid-cols-4">{fields(row, patch => updateLocal(row.id, patch), !canEdit)}</div><div className="mt-4 flex flex-wrap gap-2"><button type="button" onClick={() => save(row, { status: 'FULL' })} disabled={!canEdit} className="rounded-xl border px-3 py-2 font-bold disabled:opacity-50">Mettre complet</button><button type="button" onClick={() => save(row, { status: 'OPEN' })} disabled={!canEdit} className="rounded-xl border px-3 py-2 font-bold disabled:opacity-50">Mettre ouvert</button><button type="button" onClick={() => save(row, { status: 'HIDDEN' })} disabled={!canEdit} className="rounded-xl border px-3 py-2 font-bold disabled:opacity-50">Masquer</button></div><p className="mt-3 text-xs text-stone-500">Affichage public actuel : du {displayDate(row.startDate)} au {displayDate(row.endDate)} · examen {displayDate(row.examDate) || 'non précisé'} · {row.priceLabel} · {row.seatsLeft ?? '—'} places restantes.</p></form>)}</div>
   </>;
 }
