@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import FinancingSimulator from '@/components/FinancingSimulator';
 import { Button } from '@/components/ui';
-import { FundingVisual, VisualSection } from '@/components/visuals';
 import { allFormations } from '@/data/formations';
 
 export const metadata = {
@@ -37,7 +36,7 @@ export default function Page() {
             {essentials.map((item) => <span key={item} className="rounded-full border border-academy-gold/40 bg-academy-gold-soft/75 px-4 py-2 text-sm font-black text-academy-gold-strong shadow-sm dark:border-white/15 dark:bg-academy-surface/10 dark:text-white/85">{item}</span>)}
           </div>
         </div>
-        <div className="grid gap-5"><FundingVisual/><div className="rounded-[2rem] border border-academy-line bg-academy-surface/90 p-6 shadow-card backdrop-blur dark:border-white/10 dark:bg-academy-surface/10 dark:shadow-[0_28px_90px_rgba(0,0,0,.35)]">
+        <div className="rounded-[2rem] border border-academy-line bg-academy-surface/90 p-6 shadow-card backdrop-blur dark:border-white/10 dark:bg-academy-surface/10 dark:shadow-[0_28px_90px_rgba(0,0,0,.35)]">
           <p className="text-sm font-black uppercase tracking-[.2em] text-academy-gold">À retenir</p>
           <div className="mt-6 grid gap-4">
             <div className="rounded-3xl bg-academy-surface p-5 text-academy-ink">
@@ -48,11 +47,11 @@ export default function Page() {
               <p className="text-sm font-semibold leading-7 text-academy-muted dark:text-stone-200">Les montants restent indicatifs : l’équipe admissions confirme le tarif final selon votre session, votre financement et votre dossier.</p>
             </div>
           </div>
-        </div></div>
+        </div>
       </div>
     </section>
 
-    <VisualSection tone="funding"><section className="bg-academy-bg px-4 py-14 md:py-20">
+    <section className="bg-academy-bg px-4 py-14 md:py-20">
       <div className="mx-auto max-w-7xl">
         <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
@@ -99,7 +98,7 @@ export default function Page() {
           })}
         </div>
       </div>
-    </section></VisualSection>
+    </section>
 
     <FinancingSimulator />
 

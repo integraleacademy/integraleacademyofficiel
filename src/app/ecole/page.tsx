@@ -1,5 +1,4 @@
 import { Button, Hero, LocationCard, SectionTitle, StatCard } from '@/components/ui';
-import { AcademyHeroVisual, TrainingPathVisual, VisualSection } from '@/components/visuals';
 import { contact, legalRefs } from '@/data/site';
 
 export const metadata = {
@@ -68,12 +67,11 @@ export default function Page() {
       title="Une école certifiante, humaine et orientée réussite"
       subtitle="Intégrale Academy accompagne les candidats, alternants et professionnels avec des campus identifiés, des agréments affichés et une équipe disponible à chaque étape du parcours."
       actions={<><Button href="#agrements">Voir les agréments</Button><Button href="#equipe" variant="secondary">Découvrir l’équipe</Button></>}
-      visual={<AcademyHeroVisual/>}
     />
 
-    <VisualSection tone="academy"><section className="mx-auto max-w-7xl px-4 py-12">
-      <div className="grid gap-4 md:grid-cols-4">{indicators.map(item => <StatCard key={item.value} {...item} />)}</div><TrainingPathVisual tone="academy"/>
-    </section></VisualSection>
+    <section className="mx-auto max-w-7xl px-4 py-12">
+      <div className="grid gap-4 md:grid-cols-4">{indicators.map(item => <StatCard key={item.value} {...item} />)}</div>
+    </section>
 
     <section className="mx-auto max-w-7xl px-4 py-12">
       <SectionTitle eyebrow="Campus" title="Un environnement pensé pour apprendre">À Puget-sur-Argens, notre campus Côte d’Azur regroupe salles modernes, espaces pratiques, zone détente et accès facilité.</SectionTitle>
