@@ -1,4 +1,6 @@
 import { academyFallbackResponse, getRelevantKnowledge } from '@/lib/knowledge';
+import { getPrisma } from '@/lib/db';
+import { getRelevantDynamicTrainingData } from '@/lib/training-data';
 
 const PRICE_QUESTION_PATTERN = /\b(combien|cout|coût|coute|coûte|prix|tarif)\b/i;
 const TARIFF_LINE_PATTERN = /Tarif indiqué\s*:\s*(\d[\d\s]*)\s*€/i;
@@ -12,6 +14,10 @@ export type ChatDebugResult = {
   ok: boolean;
   question: string;
   selectedFiles: string[];
+  selectedDynamicTrainings: string[];
+  selectedSessions: string[];
+  stableContextPreview: string;
+  dynamicContextPreview: string;
   contextPreview: string;
   rawOpenAIAnswer: string;
   finalAnswer: string;
@@ -34,10 +40,10 @@ function getReliableExtractedFacts(question: string, context: string) {
   return `Information fiable extraite du contexte : le tarif indiqué est de ${formatEuroAmount(tariffMatch[1])} €.`;
 }
 
-function buildSystemPrompt(context: string, message: string, reliableFacts: string) {
+function buildSystemPrompt(knowledgeContext: string, dynamicTrainingContext: string, message: string, reliableFacts: string) {
   return `INSTRUCTIONS :
 Tu es l’assistant IA officiel d’Intégrale Academy.
-Tu réponds comme un conseiller formation professionnel, clair, rassurant et orienté conversion.
+Tu réponds comme un conseiller formation professionnel, clair, rassurant, humain et orienté conversion.
 
 Objectif :
 - répondre précisément à la question
@@ -70,17 +76,20 @@ Règles strictes :
 - Ne collecte pas de données sensibles dans le chat.
 ${reliableFacts ? `\n${reliableFacts}\nUtilise cette information uniquement comme repère fiable, puis reformule la réponse finale de manière naturelle et commerciale.` : ''}
 
-CONTEXTE :
-${context}
+CONTEXTE STABLE :
+${knowledgeContext}
+
+DONNÉES DYNAMIQUES :
+${dynamicTrainingContext || 'Aucune donnée dynamique pertinente trouvée.'}
 
 QUESTION DU VISITEUR :
 ${message}
 
 CONSIGNE FINALE :
-Réponds uniquement à partir du contexte. Si le contexte contient l’information demandée, réponds de manière complète et commerciale. Utilise la réponse de secours uniquement si l’information n’est vraiment pas présente.`;
+Réponds uniquement à partir du contexte. Si le contexte contient l’information demandée, réponds précisément et naturellement. Si le contexte ne contient pas l’information, dis que l’équipe peut confirmer et donne le téléphone 04 22 47 07 68. Ne jamais utiliser les notes internes dans la réponse.`;
 }
 
-async function getOpenAIAnswer(messages: ChatMessage[], context: string, question: string, reliableFacts: string, model: string) {
+async function getOpenAIAnswer(messages: ChatMessage[], context: string, dynamicTrainingContext: string, question: string, reliableFacts: string, model: string) {
   if (!process.env.OPENAI_API_KEY) return '';
 
   const openaiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -92,8 +101,8 @@ async function getOpenAIAnswer(messages: ChatMessage[], context: string, questio
     body: JSON.stringify({
       model,
       temperature: Number(process.env.OPENAI_TEMPERATURE || 0.4),
-      max_tokens: Number(process.env.OPENAI_MAX_TOKENS || 900),
-      messages: [{ role: 'system', content: buildSystemPrompt(context, question, reliableFacts) }, ...messages],
+      max_tokens: Number(process.env.OPENAI_MAX_TOKENS || 1100),
+      messages: [{ role: 'system', content: buildSystemPrompt(context, dynamicTrainingContext, question, reliableFacts) }, ...messages],
     }),
   });
 
@@ -105,6 +114,29 @@ async function getOpenAIAnswer(messages: ChatMessage[], context: string, questio
 
   const data = await openaiResponse.json();
   return data?.choices?.[0]?.message?.content?.trim() || '';
+}
+
+
+function lineValue(context: string, label: string) {
+  return context.split('\n').find((line) => line.startsWith(`${label}: `))?.slice(label.length + 2);
+}
+
+function buildLocalDynamicAnswer(question: string, dynamicContext: string) {
+  if (!dynamicContext) return '';
+  const q = question.toLowerCase();
+  const price = lineValue(dynamicContext, 'Tarif')?.replace(/\s*\(\d+ centimes\)/, '');
+  const dates = lineValue(dynamicContext, 'Dates');
+  const exam = lineValue(dynamicContext, 'Examen');
+  const location = lineValue(dynamicContext, 'Lieu');
+  const seats = lineValue(dynamicContext, 'Places restantes');
+  const status = lineValue(dynamicContext, 'Statut');
+  const link = lineValue(dynamicContext, 'Inscription');
+  const notes = lineValue(dynamicContext, 'Notes publiques');
+  if (/place|places/.test(q) && seats) return `Il reste actuellement ${seats} place(s) indiquée(s) pour la session APS. La session est au statut ${status || 'non précisé'}${dates ? `, ${dates}` : ''}. Pour bloquer votre place ou vérifier votre dossier, vous pouvez utiliser le lien ${link || 'de la page formation'} ou contacter l’équipe au 04 22 47 07 68.`;
+  if (/quand|prochaine|date|debut|début|examen/.test(q) && dates) return `La prochaine session APS indiquée est prévue ${dates}. L’examen est prévu le ${exam || 'non précisé'}. Le statut actuel est ${status || 'non précisé'}${seats ? ` et il reste ${seats} place(s)` : ''}. La formation se déroule à ${location || 'un lieu à confirmer'}. Vous pouvez consulter l’inscription ici : ${link || 'lien non précisé'}.`;
+  if (/inscri|rendez|rappel|dossier|financement/.test(q)) return `Oui, vous pouvez avancer sur votre inscription APS : la session indiquée est ${status || 'disponible'}${dates ? `, ${dates}` : ''}. Le lien d’inscription est ${link || 'à confirmer avec l’équipe'}. ${price ? `Le tarif indiqué est ${price}.` : ''} Souhaitez-vous laisser vos coordonnées pour être rappelé par notre équipe ?`;
+  if (/combien|coût|cout|coute|coûte|prix|tarif|montant/.test(q) && price) return `Le tarif indiqué pour la formation APS est ${price}. ${notes ? notes + ' ' : ''}La session se déroule à ${location || 'un lieu à confirmer'}${dates ? `, ${dates}` : ''}. Un financement peut être étudié selon votre situation (CPF, France Travail ou financement personnel). Pour vous inscrire ou vérifier votre prise en charge, consultez ${link || 'la page formation'} ou contactez Intégrale Academy au 04 22 47 07 68.`;
+  return '';
 }
 
 function shouldLogDebug() {
@@ -120,6 +152,10 @@ export async function answerChatQuestion(messages: ChatMessage[]): Promise<ChatD
       ok: false,
       question: '',
       selectedFiles: [],
+      selectedDynamicTrainings: [],
+      selectedSessions: [],
+      stableContextPreview: '',
+      dynamicContextPreview: '',
       contextPreview: '',
       rawOpenAIAnswer: '',
       finalAnswer: academyFallbackResponse,
@@ -131,38 +167,47 @@ export async function answerChatQuestion(messages: ChatMessage[]): Promise<ChatD
   }
 
   const { selectedFiles, context } = await getRelevantKnowledge(latestUserMessage.content);
-  const reliableFacts = getReliableExtractedFacts(latestUserMessage.content, context);
+  const dynamicData = await getRelevantDynamicTrainingData(latestUserMessage.content);
+  const dynamicTrainingContext = dynamicData.context;
+  const combinedContext = [context, dynamicTrainingContext].filter(Boolean).join('\n\n--- DONNÉES DYNAMIQUES ---\n\n');
+  const reliableFacts = getReliableExtractedFacts(latestUserMessage.content, combinedContext);
 
   let rawAnswer = '';
   try {
-    rawAnswer = await getOpenAIAnswer(messages, context, latestUserMessage.content, reliableFacts, modelUsed);
+    rawAnswer = await getOpenAIAnswer(messages, context, dynamicTrainingContext, latestUserMessage.content, reliableFacts, modelUsed);
   } catch (error) {
     console.error('[CHAT] OpenAI request failed:', error);
   }
 
-  const finalAnswer = rawAnswer || academyFallbackResponse;
+  const finalAnswer = rawAnswer || buildLocalDynamicAnswer(latestUserMessage.content, dynamicTrainingContext) || academyFallbackResponse;
   const fallbackUsed = finalAnswer === academyFallbackResponse;
 
   if (shouldLogDebug()) {
     console.log('[CHAT DEBUG]', {
       modelUsed,
       selectedFiles,
-      contextLength: context.length,
+      contextLength: combinedContext.length,
       finalAnswerLength: finalAnswer.length,
       fallbackUsed,
     });
   }
 
+  try { const p = await getPrisma(); if (p) await p.chatConversationLog.create({data:{userMessage: latestUserMessage.content, assistantAnswer: finalAnswer, selectedKnowledgeFiles: selectedFiles.join(','), selectedSessions: dynamicData.selectedSessions.join(',')}}); } catch (e) { console.warn('[CHAT] log skipped', e); }
+
   return {
     ok: true,
     question: latestUserMessage.content,
     selectedFiles,
-    contextPreview: context.slice(0, 1000),
+    selectedDynamicTrainings: dynamicData.selectedDynamicTrainings,
+    selectedSessions: dynamicData.selectedSessions,
+    stableContextPreview: context.slice(0, 1000),
+    dynamicContextPreview: dynamicTrainingContext.slice(0, 1000),
+    contextPreview: combinedContext.slice(0, 1000),
     rawOpenAIAnswer: rawAnswer,
     finalAnswer,
     fallbackUsed,
     modelUsed,
-    contextLength: context.length,
+    contextLength: combinedContext.length,
     finalAnswerLength: finalAnswer.length,
   };
 }
