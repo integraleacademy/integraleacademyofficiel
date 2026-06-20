@@ -49,16 +49,15 @@ export function AIChatWidget() {
 
       if (!response.ok) throw new Error(data?.error || 'Une erreur est survenue.');
 
+      if (!data?.reply) throw new Error('Le serveur n’a pas retourné de réponse.');
+
       setMessages((currentMessages) => [
         ...currentMessages,
-        { role: 'assistant', content: data?.reply || 'Je préfère vous orienter vers notre équipe pour une réponse précise. Vous pouvez nous contacter au 04 22 47 07 68.' },
+        { role: 'assistant', content: data.reply },
       ]);
     } catch (requestError) {
       setError(requestError instanceof Error ? requestError.message : 'Le tchat est momentanément indisponible.');
-      setMessages((currentMessages) => [
-        ...currentMessages,
-        { role: 'assistant', content: 'Je préfère vous orienter vers notre équipe pour une réponse précise. Vous pouvez nous contacter au 04 22 47 07 68.' },
-      ]);
+
     } finally {
       setIsLoading(false);
     }

@@ -3,20 +3,35 @@ import 'server-only';
 import { readdir, readFile } from 'node:fs/promises';
 import path from 'node:path';
 
-const KNOWLEDGE_DIR = path.join(process.cwd(), 'src', 'knowledge');
 const MIN_SELECTED_FILES = 3;
 const MAX_SELECTED_FILES = 6;
+const PRICE_QUESTION_TERMS = ['combien', 'cout', 'coût', 'coute', 'coûte', 'prix', 'tarif', 'montant'];
+const PRICE_LINE_TERMS = ['tarif', 'prix', 'coût', 'cout', 'montant'];
 
 export const academyFallbackResponse =
   'Je préfère vous orienter vers notre équipe pour une réponse précise. Vous pouvez nous contacter au 04 22 47 07 68.';
 
-type KnowledgeDocument = {
+export type KnowledgeDocument = {
   filePath: string;
+  absolutePath: string;
   title: string;
   category: string;
   tags: string[];
   updated: string;
   content: string;
+};
+
+export type KnowledgeFilesResult = {
+  cwd: string;
+  knowledgePath: string;
+  files: string[];
+  relativeFiles: string[];
+};
+
+export type RelevantKnowledgeResult = {
+  documents: KnowledgeDocument[];
+  selectedFiles: string[];
+  context: string;
 };
 
 const topicAliases: Record<string, string[]> = {
@@ -31,7 +46,7 @@ const topicAliases: Record<string, string[]> = {
   contact: ['adresse', 'telephone', 'téléphone', 'mail', 'email', 'horaires', 'contacter'],
 };
 
-let knowledgeCache: KnowledgeDocument[] | null = null;
+let knowledgeCache: { knowledgePath: string; documents: KnowledgeDocument[] } | null = null;
 
 function normalize(value: string) {
   return value
@@ -40,7 +55,7 @@ function normalize(value: string) {
     .replace(/[\u0300-\u036f]/g, '');
 }
 
-function parseFrontmatter(raw: string, filePath: string): KnowledgeDocument {
+function parseFrontmatter(raw: string, filePath: string, absolutePath: string): KnowledgeDocument {
   const match = raw.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);
   const frontmatter = match?.[1] || '';
   const content = (match?.[2] || raw).trim();
@@ -54,6 +69,7 @@ function parseFrontmatter(raw: string, filePath: string): KnowledgeDocument {
 
   return {
     filePath,
+    absolutePath,
     title: metadata.title || path.basename(filePath, '.md'),
     category: metadata.category || 'general',
     tags: (metadata.tags || '')
@@ -79,25 +95,55 @@ async function scanMarkdownFiles(directory: string): Promise<string[]> {
   return nested.flat().sort();
 }
 
-export async function getKnowledgeDocuments() {
-  if (knowledgeCache && process.env.NODE_ENV === 'production') return knowledgeCache;
+function getKnowledgePathCandidates(cwd: string) {
+  return [path.join(cwd, 'src', 'knowledge'), path.join(cwd, 'knowledge'), path.join(cwd, 'app', 'knowledge')];
+}
 
-  const files = await scanMarkdownFiles(KNOWLEDGE_DIR);
+export async function getKnowledgeFiles(): Promise<KnowledgeFilesResult> {
+  const cwd = process.cwd();
+  let lastError: unknown;
+
+  for (const candidate of getKnowledgePathCandidates(cwd)) {
+    try {
+      const files = await scanMarkdownFiles(candidate);
+      if (files.length > 0) {
+        return {
+          cwd,
+          knowledgePath: candidate,
+          files,
+          relativeFiles: files.map((file) => path.relative(candidate, file)),
+        };
+      }
+    } catch (error) {
+      lastError = error;
+    }
+  }
+
+  if (lastError instanceof Error) throw lastError;
+  throw new Error('Aucun fichier .md trouvé.');
+}
+
+export async function getKnowledgeDocuments() {
+  const knowledgeFiles = await getKnowledgeFiles();
+  if (knowledgeCache?.knowledgePath === knowledgeFiles.knowledgePath && process.env.NODE_ENV === 'production') {
+    return knowledgeCache.documents;
+  }
+
   const documents = await Promise.all(
-    files.map(async (file) => {
+    knowledgeFiles.files.map(async (file) => {
       const raw = await readFile(file, 'utf8');
-      return parseFrontmatter(raw, path.relative(KNOWLEDGE_DIR, file));
+      return parseFrontmatter(raw, path.relative(knowledgeFiles.knowledgePath, file), file);
     }),
   );
 
-  knowledgeCache = documents;
+  knowledgeCache = { knowledgePath: knowledgeFiles.knowledgePath, documents };
   return documents;
 }
 
 function scoreDocument(document: KnowledgeDocument, question: string) {
   const normalizedQuestion = normalize(question);
   const weightedText = normalize(
-    [document.title, document.category, document.tags.join(' '), document.content].join(' '),
+    [document.filePath, document.title, document.category, document.tags.join(' '), document.content].join(' '),
   );
   const words = normalizedQuestion.match(/[a-z0-9]{3,}/g) || [];
   let score = 0;
@@ -116,25 +162,76 @@ function scoreDocument(document: KnowledgeDocument, question: string) {
     if (topicMentioned && documentRelated) score += 10;
   }
 
+  if (normalizedQuestion.includes('aps') && document.filePath.toLowerCase().includes('aps')) score += 100;
+
   return score;
 }
 
-export async function selectRelevantKnowledge(question: string) {
+function isPriceQuestion(question: string) {
+  const normalizedQuestion = normalize(question);
+  return PRICE_QUESTION_TERMS.some((term) => normalizedQuestion.includes(normalize(term)));
+}
+
+function getPriceLines(content: string) {
+  return content
+    .split('\n')
+    .map((line) => line.trim())
+    .filter((line) => line && PRICE_LINE_TERMS.some((term) => normalize(line).includes(normalize(term))));
+}
+
+export function buildKnowledgeContext(documents: KnowledgeDocument[], question = '') {
+  const priceQuestion = isPriceQuestion(question);
+
+  return documents
+    .map((document) => {
+      const priceLines = priceQuestion ? getPriceLines(document.content) : [];
+      const priorityLines = priceLines.length > 0 ? `Informations tarifaires pertinentes:\n${priceLines.join('\n')}\n\n` : '';
+
+      return `# ${document.title}\nFichier: ${document.filePath}\nCatégorie: ${document.category}\nTags: ${document.tags.join(', ')}\nMise à jour: ${document.updated}\n\n${priorityLines}${document.content}`;
+    })
+    .join('\n\n---\n\n');
+}
+
+export async function getRelevantKnowledge(question: string): Promise<RelevantKnowledgeResult> {
   const documents = await getKnowledgeDocuments();
+  const normalizedQuestion = normalize(question);
+  const apsDocument = documents.find((document) => path.basename(document.filePath).toLowerCase() === '02-formations-aps.md')
+    || documents.find((document) => document.filePath.toLowerCase().includes('aps'));
+
   const ranked = documents
     .map((document) => ({ document, score: scoreDocument(document, question) }))
     .sort((a, b) => b.score - a.score || a.document.filePath.localeCompare(b.document.filePath));
 
-  const positive = ranked.filter((item) => item.score > 0).slice(0, MAX_SELECTED_FILES);
-  const selection = positive.length >= MIN_SELECTED_FILES ? positive : ranked.slice(0, Math.min(MAX_SELECTED_FILES, documents.length));
+  let selected: KnowledgeDocument[];
+  if (normalizedQuestion.includes('aps') && isPriceQuestion(question) && apsDocument) {
+    selected = [apsDocument];
+  } else {
+    const positive = ranked.filter((item) => item.score > 0).slice(0, MAX_SELECTED_FILES);
+    selected = (positive.length >= MIN_SELECTED_FILES ? positive : ranked.slice(0, Math.min(MAX_SELECTED_FILES, documents.length))).map(
+      (item) => item.document,
+    );
 
-  return selection.map((item) => item.document);
+    if (normalizedQuestion.includes('aps') && apsDocument && !selected.some((document) => document.filePath === apsDocument.filePath)) {
+      selected = [apsDocument, ...selected].slice(0, MAX_SELECTED_FILES);
+    }
+  }
+
+  return {
+    documents: selected,
+    selectedFiles: selected.map((document) => document.filePath),
+    context: buildKnowledgeContext(selected, question),
+  };
 }
 
-export function buildKnowledgeContext(documents: KnowledgeDocument[]) {
-  return documents
-    .map(
-      (document) => `# ${document.title}\nFichier: ${document.filePath}\nCatégorie: ${document.category}\nTags: ${document.tags.join(', ')}\nMise à jour: ${document.updated}\n\n${document.content}`,
-    )
-    .join('\n\n---\n\n');
+export async function selectRelevantKnowledge(question: string) {
+  return (await getRelevantKnowledge(question)).documents;
+}
+
+export function getApsPreview(content: string) {
+  const tariffLine = content
+    .split('\n')
+    .map((line) => line.trim())
+    .find((line) => /tarif|1650|1\s*650|€/.test(line.toLowerCase()));
+
+  return tariffLine || content.replace(/\s+/g, ' ').trim().slice(0, 160);
 }
