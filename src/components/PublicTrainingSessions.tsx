@@ -55,8 +55,10 @@ export function isPublicUpcomingSession(session: PublicTrainingSession) {
   return parisDateKey(new Date(session.startDate)) >= parisDateKey();
 }
 
-export function PublicTrainingSessions({ sessions, title = 'Prochaines dates', intro = 'Dates, places et informations issues de l’administration.' }: { sessions: PublicTrainingSession[]; title?: string; intro?: string }) {
+export function PublicTrainingSessions({ sessions, title = 'Prochaines dates', intro = 'Dates, places et informations issues de l’administration.', displayLimit = 3, moreHref = '/planning#sessions' }: { sessions: PublicTrainingSession[]; title?: string; intro?: string; displayLimit?: number; moreHref?: string }) {
   const rows = sessions.filter(isPublicUpcomingSession).sort((a, b) => +new Date(a.startDate) - +new Date(b.startDate));
+  const visibleRows = displayLimit > 0 ? rows.slice(0, displayLimit) : rows;
+  const hiddenCount = Math.max(rows.length - visibleRows.length, 0);
   return <section className="mx-auto max-w-7xl px-4 py-10 sm:py-12">
     <div className="mb-6 max-w-3xl"><p className="text-xs font-black uppercase tracking-[.24em] text-academy-gold">Planning admin</p><h2 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl">{title}</h2><p className="mt-3 text-base leading-7 text-academy-muted">{intro}</p></div>
     {rows.length ? <div className="space-y-3">{rows.map((session, index) => { const badge = seatsBadge(computedSeats(session)); const details = [
