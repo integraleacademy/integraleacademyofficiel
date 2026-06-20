@@ -88,25 +88,29 @@ function SessionCard({ session, isNext, onRegister }: { session: Session; isNext
     session.priceLabel ? { label: 'Prix', value: session.priceLabel } : null,
   ].filter(Boolean) as { label: string; value: string }[];
 
-  return <article className="group reveal relative overflow-hidden rounded-[1.75rem] border border-white/70 bg-white/88 p-4 shadow-[0_22px_62px_rgba(54,40,20,.12)] backdrop-blur transition duration-300 hover:-translate-y-1.5 hover:border-academy-gold/45 hover:shadow-[0_34px_90px_rgba(54,40,20,.22)] dark:border-white/10 dark:bg-white/10 dark:hover:border-academy-gold/40 sm:p-5">
+  return <article className="group reveal relative overflow-hidden rounded-[1.5rem] border border-white/70 bg-white/88 p-4 shadow-[0_18px_46px_rgba(54,40,20,.10)] backdrop-blur transition duration-300 hover:-translate-y-1 hover:border-academy-gold/45 hover:shadow-[0_24px_62px_rgba(54,40,20,.16)] dark:border-white/10 dark:bg-white/10 dark:hover:border-academy-gold/40">
     <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${category?.accent || 'from-academy-gold to-yellow-200'}`} />
-    <div className="flex flex-wrap items-center gap-1.5">
-      {isNext ? <span className="rounded-full bg-academy-ink px-3 py-1 text-[11px] font-black uppercase tracking-[.13em] text-academy-gold">Prochaine session</span> : null}
-      {badge ? <span className={`session-seats-badge rounded-full border px-3 py-1 text-[11px] font-black transition duration-300 hover:-translate-y-0.5 ${badge.className}`}>{badge.label}</span> : null}
-    </div>
-    <h3 className="mt-3 text-[1.35rem] font-black leading-tight tracking-tight text-academy-ink dark:text-white sm:text-2xl">{title}</h3>
-    <p className="mt-0.5 text-sm font-bold text-academy-gold-strong">{category?.title}</p>
-    <div className="mt-4 grid grid-cols-2 gap-2.5 text-sm text-academy-muted">
-      {infoItems.map((item, index) => <p key={item.label} className={`rounded-[1.15rem] border border-white/70 bg-academy-bg/75 px-3 py-2.5 shadow-[inset_0_1px_0_rgba(255,255,255,.55)] dark:border-white/10 dark:bg-black/20 ${index === infoItems.length - 1 && infoItems.length % 2 === 1 ? 'sm:col-span-2 lg:col-span-1' : ''}`}>
-        <span className="block text-[10px] font-black uppercase tracking-[.17em] text-academy-muted/70">{item.label}</span>
-        <span className="mt-0.5 block font-black leading-snug text-academy-ink dark:text-white">{item.value}</span>
-      </p>)}
+    <div className="grid gap-3 xl:grid-cols-[minmax(13rem,.85fr)_minmax(0,1.7fr)_minmax(13rem,.75fr)] xl:items-center">
+      <div className="min-w-0">
+        <div className="flex flex-wrap items-center gap-1.5">
+          {isNext ? <span className="rounded-full bg-academy-ink px-3 py-1 text-[10px] font-black uppercase tracking-[.12em] text-academy-gold">Prochaine session</span> : null}
+          {badge ? <span className={`session-seats-badge rounded-full border px-3 py-1 text-[10px] font-black transition duration-300 hover:-translate-y-0.5 ${badge.className}`}>{badge.label}</span> : null}
+        </div>
+        <h3 className="mt-2 truncate text-xl font-black leading-tight tracking-tight text-academy-ink dark:text-white sm:text-2xl">{title}</h3>
+        <p className="mt-0.5 truncate text-sm font-bold text-academy-gold-strong">{category?.title}</p>
+      </div>
+      <div className="grid gap-2 text-sm text-academy-muted sm:grid-cols-2 lg:grid-cols-3">
+        {infoItems.map((item) => <p key={item.label} className="min-w-0 rounded-[1rem] border border-white/70 bg-academy-bg/75 px-3 py-2 shadow-[inset_0_1px_0_rgba(255,255,255,.55)] dark:border-white/10 dark:bg-black/20">
+          <span className="block text-[10px] font-black uppercase tracking-[.15em] text-academy-muted/70">{item.label}</span>
+          <span className="mt-0.5 block truncate font-black leading-snug text-academy-ink dark:text-white" title={item.value}>{item.value}</span>
+        </p>)}
+      </div>
+      <div className="flex flex-col gap-2 sm:flex-row xl:flex-col">
+        <button type="button" onClick={() => onRegister(session)} className="inline-flex flex-1 items-center justify-center rounded-full bg-academy-ink px-5 py-3 text-sm font-black text-white shadow-[0_12px_28px_rgba(23,19,13,.16)] transition hover:-translate-y-0.5 hover:bg-black hover:shadow-[0_16px_36px_rgba(23,19,13,.22)]">Je souhaite m’inscrire</button>
+        <Link href={infoHref(session)} className="inline-flex flex-1 items-center justify-center rounded-full border border-academy-line bg-white px-5 py-3 text-sm font-black text-academy-ink transition hover:-translate-y-0.5 hover:border-academy-gold/50 hover:bg-stone-50">Demander des infos</Link>
+      </div>
     </div>
     {session.fundingNotes ? <p className="mt-3 rounded-2xl border border-academy-line/70 bg-academy-gold/10 p-3 text-sm font-bold leading-6 text-academy-muted">{session.fundingNotes}</p> : null}
-    <div className="mt-4 flex flex-col gap-2.5 sm:flex-row">
-      <button type="button" onClick={() => onRegister(session)} className="inline-flex flex-1 items-center justify-center rounded-full bg-academy-ink px-5 py-3 text-sm font-black text-white shadow-[0_14px_34px_rgba(23,19,13,.18)] transition hover:-translate-y-0.5 hover:bg-black hover:shadow-[0_18px_44px_rgba(23,19,13,.25)]">Je souhaite m’inscrire</button>
-      <Link href={infoHref(session)} className="inline-flex flex-1 items-center justify-center rounded-full border border-academy-line bg-white px-5 py-3 text-sm font-black text-academy-ink transition hover:-translate-y-0.5 hover:border-academy-gold/50 hover:bg-stone-50">Demander des infos</Link>
-    </div>
   </article>;
 }
 
@@ -208,7 +212,7 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
       </div>
     </section>
     <div id="sessions" className="sticky top-[4.5rem] z-30 border-y border-academy-line bg-academy-surface/86 px-4 py-3 backdrop-blur-xl"><div className="mx-auto flex max-w-7xl gap-2 overflow-x-auto pb-1">{filters.map(filter => <button key={filter.key} onClick={() => setActive(filter.key)} className={`shrink-0 rounded-full px-5 py-3 text-sm font-black transition ${active === filter.key ? 'bg-academy-ink text-white shadow-soft' : 'bg-white text-academy-muted ring-1 ring-academy-line hover:text-academy-ink'}`}>{filter.label}</button>)}</div></div>
-    <section className="mx-auto max-w-7xl space-y-14 px-4 py-14 sm:py-20">{visibleSections.map(section => { const rows = sessionsByCategory[section.key]; return <div key={section.key} className="transition-all duration-300"><div className="mb-7 flex flex-col gap-4 md:flex-row md:items-end md:justify-between"><div><p className="text-xs font-black uppercase tracking-[.22em] text-academy-gold-strong">{section.title}</p><h2 className="mt-3 text-3xl font-black tracking-tight md:text-5xl">{section.title}</h2><p className="mt-4 max-w-3xl text-lg leading-8 text-academy-muted">{section.intro}</p></div></div>{rows.length ? (section.key === 'security' ? <SecurityGroupedSessions rows={rows} onRegister={setSelectedSession} /> : <div className="grid gap-5 lg:grid-cols-2">{rows.map((session, index) => <SessionCard key={session.id} session={session} isNext={index === 0} onRegister={setSelectedSession} />)}</div>) : <EmptyState category={section.key} />}</div>; })}</section>
+    <section className="mx-auto max-w-7xl space-y-14 px-4 py-14 sm:py-20">{visibleSections.map(section => { const rows = sessionsByCategory[section.key]; return <div key={section.key} className="transition-all duration-300"><div className="mb-7 flex flex-col gap-4 md:flex-row md:items-end md:justify-between"><div><p className="text-xs font-black uppercase tracking-[.22em] text-academy-gold-strong">{section.title}</p><h2 className="mt-3 text-3xl font-black tracking-tight md:text-5xl">{section.title}</h2><p className="mt-4 max-w-3xl text-lg leading-8 text-academy-muted">{section.intro}</p></div></div>{rows.length ? <div className="grid gap-3">{rows.map((session, index) => <SessionCard key={session.id} session={session} isNext={index === 0} onRegister={setSelectedSession} />)}</div> : <EmptyState category={section.key} />}</div>; })}</section>
     <RegistrationModal session={selectedSession} onClose={() => setSelectedSession(null)} />
     <div className="fixed inset-x-3 bottom-3 z-40 grid grid-cols-3 gap-2 rounded-[1.5rem] border border-white/70 bg-white/90 p-2 shadow-[0_18px_60px_rgba(17,17,17,.18)] backdrop-blur md:hidden"><Link href="tel:0422470768" className="rounded-2xl bg-academy-ink px-3 py-3 text-center text-xs font-black text-white">Appeler</Link><Link href="/contact" className="rounded-2xl bg-academy-gold px-3 py-3 text-center text-xs font-black text-academy-gold-text">Infos</Link><Link href="/contact?motif=rdv" className="rounded-2xl border border-academy-line bg-white px-3 py-3 text-center text-xs font-black text-academy-ink">RDV</Link></div>
   </main>;
