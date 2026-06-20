@@ -38,6 +38,6 @@ export async function DELETE(_: NextRequest, { params }: { params: Promise<{ id:
   const prisma = await getPrisma();
   if (!prisma) return NextResponse.json({ error: 'Base de données serveur indisponible.' }, { status: 503 });
   const { id } = await params;
-  console.log('[ADMIN_SESSIONS] update session:', id);
+  console.log('[ADMIN_SESSIONS] delete session:', id);
   return NextResponse.json(await prisma.trainingSession.delete({ where: { id } }));
 }
