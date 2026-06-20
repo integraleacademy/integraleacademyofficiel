@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { academyFallbackResponse, buildKnowledgeContext, selectRelevantKnowledge } from '@/lib/knowledge';
+import { academyFallbackResponse, getRelevantKnowledge } from '@/lib/knowledge';
 
 export const runtime = 'nodejs';
 
@@ -82,19 +82,23 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const selectedKnowledge = await selectRelevantKnowledge(latestUserMessage.content);
-  const knowledgeContext = buildKnowledgeContext(selectedKnowledge);
+  const { selectedFiles, context: knowledgeContext } = await getRelevantKnowledge(latestUserMessage.content);
+
+  console.log('[CHAT] Question:', latestUserMessage.content);
+  console.log('[CHAT] Selected files:', selectedFiles);
+  console.log('[CHAT] Context preview:', knowledgeContext.slice(0, 500));
 
   const systemPrompt = `Tu es l'assistant IA d'Intégrale Academy. Réponds en français comme un conseiller professionnel, clair et rassurant.
 Règles strictes :
 - Utilise uniquement la base de connaissances fournie ci-dessous.
 - N'invente jamais de dates, tarifs, conditions, agréments ou modalités.
-- Si l'information n'est pas présente ou incertaine, réponds exactement avec cette réponse de secours : "${academyFallbackResponse}"
+- Réponds obligatoirement à partir du contexte fourni quand il contient l'information demandée, notamment les tarifs.
+- N'utilise la réponse de secours que si le contexte ne contient vraiment pas l'information demandée ou si elle est incertaine. Dans ce cas, réponds exactement avec cette réponse de secours : "${academyFallbackResponse}"
 - Oriente vers une inscription ou une prise de contact quand c'est pertinent.
 - Si l'utilisateur semble intéressé par une formation, tu peux proposer : "Souhaitez-vous laisser vos coordonnées pour être rappelé ?"
 - Ne collecte pas de données sensibles dans le chat.
 
-Base de connaissances Intégrale Academy sélectionnée pour cette question (3 à 6 fichiers maximum) :
+Base de connaissances Intégrale Academy sélectionnée pour cette question :
 ${knowledgeContext}`;
 
   try {
