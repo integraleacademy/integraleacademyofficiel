@@ -1,3 +1,4 @@
+import { OrientationAssistant } from '@/components/OrientationAssistant';
 import { bts } from '@/data/site';
 import { VisualSection, VisualTimeline } from '@/components/visuals';
 import { Button, ChatGptAgentBanner, FeatureCard, FormationCard, Hero, SectionTitle, ArtDirectionVisual } from '@/components/ui';
