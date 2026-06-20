@@ -137,7 +137,7 @@ export default function FinancingSimulator() {
             <div className="rounded-3xl border border-white/10 bg-white/[.06] p-4">
               <p className="text-sm font-black text-white">Paiement en plusieurs fois</p>
               <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3">
-                {paymentOptions.map((option) => <button key={option.installments} type="button" onClick={() => setInstallments(option.installments)} className={`rounded-2xl px-3 py-3 text-sm font-black transition ${installments === option.installments ? 'bg-academy-gold text-academy-ink shadow-gold' : 'bg-black/25 text-stone-200 ring-1 ring-white/10 hover:bg-white/10'}`}>{option.label}</button>)}
+                {paymentOptions.map((option) => <button key={option.installments} type="button" onClick={() => setInstallments(option.installments)} className={`rounded-2xl px-3 py-3 text-sm font-black transition ${installments === option.installments ? 'bg-academy-gold text-academy-gold-text shadow-gold' : 'bg-black/25 text-stone-200 ring-1 ring-white/10 hover:bg-white/10'}`}>{option.label}</button>)}
               </div>
             </div>
           </div>
@@ -145,7 +145,7 @@ export default function FinancingSimulator() {
 
         <aside className="rounded-[2rem] border border-academy-gold/25 bg-black/25 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,.08)] backdrop-blur md:p-6">
           <p className="text-sm font-black uppercase tracking-[.2em] text-academy-gold">Votre reste à charge</p>
-          <div className="mt-5 rounded-[1.75rem] bg-white p-6 text-academy-ink shadow-gold">
+          <div className="mt-5 rounded-[1.75rem] bg-white p-6 text-academy-gold-text shadow-gold">
             <p className="text-sm font-black uppercase tracking-[.16em] text-stone-500">{formation}</p>
             <div className="mt-3 text-5xl font-black tracking-tight md:text-6xl">{euros(remaining)}</div>
             <p className="mt-3 text-sm font-bold text-stone-600">Reste à charge estimé</p>
@@ -162,7 +162,7 @@ export default function FinancingSimulator() {
             {remaining > 0 && installments > 1 && <p className="mt-2 text-sm font-semibold text-stone-300">Soit environ {euros(monthlyAmount)} / mois sur {installments} mensualités</p>}
           </div>
           <div className="mt-6 grid gap-3 sm:grid-cols-2">
-            <Link href="/contact" className="inline-flex items-center justify-center rounded-full bg-academy-gold px-5 py-3 text-sm font-black text-academy-ink transition hover:-translate-y-0.5 hover:brightness-105">Demander une étude de financement</Link>
+            <Link href="/contact" className="inline-flex items-center justify-center rounded-full bg-academy-gold px-5 py-3 text-sm font-black text-academy-gold-text transition hover:-translate-y-0.5 hover:brightness-105">Demander une étude de financement</Link>
             <Link href="tel:0422470768" className="inline-flex items-center justify-center rounded-full border border-white/15 bg-white/10 px-5 py-3 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-white/15">Être rappelé</Link>
           </div>
         </aside>

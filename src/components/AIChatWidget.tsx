@@ -129,7 +129,7 @@ export function AIChatWidget() {
               <button
                 type="submit"
                 disabled={isLoading || !input.trim()}
-                className="rounded-2xl bg-academy-gold px-4 py-2 text-sm font-bold text-academy-ink shadow-gold transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none"
+                className="rounded-2xl bg-academy-gold px-4 py-2 text-sm font-bold text-academy-gold-text shadow-gold transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none"
               >
                 Envoyer
               </button>
@@ -146,7 +146,7 @@ export function AIChatWidget() {
           className="group flex items-center gap-3 rounded-full border border-academy-gold/70 bg-academy-ink px-5 py-4 text-white shadow-2xl transition hover:-translate-y-1 hover:shadow-gold"
           aria-label="Ouvrir le tchat IA Intégrale Academy"
         >
-          <span className="flex h-10 w-10 items-center justify-center rounded-full bg-academy-gold text-xl text-academy-ink">✦</span>
+          <span className="flex h-10 w-10 items-center justify-center rounded-full bg-academy-gold text-xl text-academy-gold-text">✦</span>
           <span className="hidden text-left sm:block">
             <span className="block text-sm font-bold">Assistant IA</span>
             <span className="block text-xs text-stone-300 group-hover:text-white">Une question ?</span>

@@ -22,6 +22,7 @@ export function ThemeToggle() {
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', theme === 'dark');
+    document.documentElement.dataset.theme = theme;
     document.documentElement.style.colorScheme = theme;
     window.localStorage.setItem(storageKey, theme);
   }, [theme]);
@@ -31,7 +32,7 @@ export function ThemeToggle() {
   return <button
     type="button"
     onClick={() => setTheme(nextTheme)}
-    className="group relative grid h-12 w-12 shrink-0 place-items-center rounded-full border border-academy-line bg-white text-stone-500 shadow-[0_14px_35px_rgba(17,17,17,.08)] transition hover:-translate-y-0.5 hover:border-academy-gold hover:text-stone-800 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 dark:bg-[#211f1a] dark:text-[#f4c45a] dark:shadow-[0_18px_45px_rgba(0,0,0,.3)] dark:hover:border-academy-gold dark:hover:text-[#ffe4a3] dark:focus:ring-offset-[#13120f]"
+    className="group relative grid h-12 w-12 shrink-0 place-items-center rounded-full border border-academy-line bg-academy-surface text-academy-muted shadow-soft transition hover:-translate-y-0.5 hover:border-academy-gold hover:text-academy-ink focus:outline-none focus:ring-2 focus:ring-academy-gold focus:ring-offset-2 focus:ring-offset-academy-bg"
     aria-label={`Passer en mode ${nextTheme === 'dark' ? 'sombre' : 'clair'}`}
     title={`Mode ${nextTheme === 'dark' ? 'sombre' : 'clair'}`}
   >
