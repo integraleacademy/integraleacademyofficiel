@@ -5,6 +5,7 @@ import FinancingSimulator from './FinancingSimulator';
 import { VaeEligibilityModal } from './VaeEligibilityModal';
 import { usePathname, useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 type FormationKey = 'aps' | 'a3p' | 'desp' | 'vtc' | 'bts';
 type Step = 1 | 2 | 3 | 4;
@@ -106,7 +107,7 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
             <button type="button" onClick={() => setDespExperience(false)} className={`rounded-2xl px-5 py-4 text-left font-black transition ${despExperience === false ? 'bg-academy-ink text-white shadow-soft' : 'bg-white text-academy-ink ring-1 ring-academy-line hover:ring-academy-gold'}`}>Non</button>
           </div>
           {despExperience === true && <div className="space-y-4">
-            <p className="rounded-2xl border border-academy-gold/40 bg-white p-4 text-sm font-black leading-6 text-academy-ink">Vous êtes peut-être éligible à la VAE DESP (Validation des Acquis de l’expérience)</p>
+            <div className="rounded-2xl border-l-4 border-academy-gold bg-academy-gold-soft/55 px-4 py-3 text-sm font-extrabold leading-6 text-academy-ink shadow-none" role="status"><span className="mr-2" aria-hidden="true">✓</span>Vous êtes peut-être éligible à la VAE DESP (Validation des Acquis de l’expérience)</div>
             <DespActionGrid vae />
           </div>}
           {despExperience === false && <DespActionGrid />}
@@ -126,16 +127,16 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
 }
 
 
-function IframeModalButton({label,url,title}:{label:string;url:string;title:string}){
+function IframeModalButton({label,url,title,featured=false}:{label:string;url:string;title:string;featured?:boolean}){
   const [open,setOpen]=useState(false);
   return <>
-    <button type="button" onClick={()=>setOpen(true)} className="inline-flex min-h-14 items-center justify-center rounded-2xl bg-white px-4 py-3 text-center text-sm font-black text-academy-ink ring-1 ring-academy-line transition hover:-translate-y-0.5 hover:ring-academy-gold">{label}</button>
-    {open&&<div className="fixed inset-0 z-50 grid place-items-center bg-black/70 p-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-label={title}>
+    <button type="button" onClick={()=>setOpen(true)} className={featured ? 'relative inline-flex min-h-14 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-r from-academy-gold via-yellow-300 to-academy-gold px-4 py-3 text-center text-sm font-black text-academy-gold-text shadow-gold ring-2 ring-academy-gold/45 transition hover:-translate-y-1 hover:shadow-[0_22px_55px_rgba(180,124,31,.38)] focus:outline-none focus:ring-4 focus:ring-academy-gold/35 motion-safe:animate-[rdvButtonPulse_2.4s_ease-in-out_infinite]' : 'inline-flex min-h-14 items-center justify-center rounded-2xl bg-white px-4 py-3 text-center text-sm font-black text-academy-ink ring-1 ring-academy-line transition hover:-translate-y-0.5 hover:ring-academy-gold'}><span className={featured ? 'relative z-10' : undefined}>{label}</span>{featured && <span className="absolute inset-y-0 -left-1/2 w-1/2 skew-x-[-18deg] bg-white/35 motion-safe:animate-[rdvButtonShine_2.4s_ease-in-out_infinite]" aria-hidden="true" />}</button>
+    {open && typeof document !== 'undefined' && createPortal(<div className="fixed inset-0 z-[9999] grid place-items-center bg-black/70 p-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-label={title}>
       <div className="flex h-[90vh] w-full max-w-5xl flex-col overflow-hidden rounded-[2rem] bg-academy-surface shadow-[0_30px_90px_rgba(0,0,0,.35)] ring-1 ring-white/20">
         <div className="flex items-center justify-between gap-4 border-b border-academy-line p-4 sm:p-5"><h2 className="text-lg font-black text-academy-ink sm:text-2xl">{title}</h2><button type="button" onClick={()=>setOpen(false)} className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-academy-bg text-xl font-black text-academy-ink transition hover:bg-academy-gold" aria-label="Fermer la modale">×</button></div>
         <iframe src={url} title={title} className="min-h-0 flex-1 bg-academy-surface" />
       </div>
-    </div>}
+    </div>, document.body)}
   </>;
 }
 
@@ -143,12 +144,12 @@ function FinancingModalButton(){
   const [open,setOpen]=useState(false);
   return <>
     <button type="button" onClick={()=>setOpen(true)} className="inline-flex min-h-14 items-center justify-center rounded-2xl bg-white px-4 py-3 text-center text-sm font-black text-academy-ink ring-1 ring-academy-line transition hover:-translate-y-0.5 hover:ring-academy-gold">Simuler mon financement</button>
-    {open&&<div className="fixed inset-0 z-50 grid place-items-center bg-black/70 p-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-label="Simulateur de financement">
+    {open && typeof document !== 'undefined' && createPortal(<div className="fixed inset-0 z-[9999] grid place-items-center bg-black/70 p-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-label="Simulateur de financement">
       <div className="flex h-[90vh] w-full max-w-6xl flex-col overflow-hidden rounded-[2rem] bg-[#080f1f] shadow-[0_30px_90px_rgba(0,0,0,.35)] ring-1 ring-white/20">
         <div className="flex items-center justify-between gap-4 border-b border-white/10 p-4 sm:p-5"><h2 className="text-lg font-black text-white sm:text-2xl">Simuler mon financement</h2><button type="button" onClick={()=>setOpen(false)} className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-white/10 text-xl font-black text-white transition hover:bg-academy-gold hover:text-academy-ink" aria-label="Fermer la modale">×</button></div>
         <div className="min-h-0 flex-1 overflow-y-auto"><FinancingSimulator /></div>
       </div>
-    </div>}
+    </div>, document.body)}
   </>;
 }
 
@@ -156,7 +157,7 @@ function DespActionGrid({vae=false}:{vae?:boolean}){
   return <div className="grid gap-3 sm:grid-cols-2">
     {vae ? <VaeEligibilityModal className="inline-flex min-h-14 items-center justify-center rounded-2xl bg-academy-gold px-4 py-3 text-center text-sm font-black text-academy-gold-text shadow-gold transition hover:-translate-y-0.5" /> : <Link href="/formations-securite/desp-initial" className="inline-flex min-h-14 items-center justify-center rounded-2xl bg-academy-gold px-4 py-3 text-center text-sm font-black text-academy-gold-text shadow-gold transition hover:-translate-y-0.5">En savoir plus sur la formation initiale DESP</Link>}
     {vae && <Link href="/formations-securite/desp-vae" className="inline-flex min-h-14 items-center justify-center rounded-2xl bg-white px-4 py-3 text-center text-sm font-black text-academy-ink ring-1 ring-academy-line transition hover:-translate-y-0.5 hover:ring-academy-gold">En savoir plus sur la VAE Dirigeant</Link>}
-    <IframeModalButton label="Réserver un RDV téléphonique" url={calendlyDirigeantUrl} title="Réserver un RDV téléphonique" />
+    <IframeModalButton label="Réserver un RDV téléphonique" url={calendlyDirigeantUrl} title="Réserver un RDV téléphonique" featured />
     <IframeModalButton label="Demander un devis personnalisé" url={quoteRequestUrl} title="Demander un devis personnalisé" />
     <FinancingModalButton />
   </div>;

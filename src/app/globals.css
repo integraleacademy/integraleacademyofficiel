@@ -92,6 +92,18 @@
 .ai-typing-dot-2 { animation-delay: .15s; }
 .ai-typing-dot-3 { animation-delay: .3s; }
 
+
+@keyframes rdvButtonPulse {
+  0%, 100% { transform: translateY(0) scale(1); box-shadow: var(--shadow-gold); }
+  50% { transform: translateY(-2px) scale(1.025); box-shadow: 0 24px 58px rgba(180, 124, 31, .40); }
+}
+
+@keyframes rdvButtonShine {
+  0% { transform: translateX(-160%) skewX(-18deg); opacity: 0; }
+  35% { opacity: .65; }
+  70%, 100% { transform: translateX(420%) skewX(-18deg); opacity: 0; }
+}
+
 @keyframes statusPulse {
   0% { box-shadow: 0 0 0 0 rgb(var(--success) / .55), 0 0 18px rgb(var(--success) / .42); opacity: 1; }
   70% { box-shadow: 0 0 0 8px rgb(var(--success) / 0), 0 0 18px rgb(var(--success) / .28); opacity: .86; }
@@ -121,7 +133,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .reveal, .status-dot, .ai-chat-sequence, .ai-chat-message, .ai-typing-dot { animation: none !important; transform: none !important; }
+  .reveal, .status-dot, .ai-chat-sequence, .ai-chat-message, .ai-typing-dot, [class*="rdvButton"] { animation: none !important; transform: none !important; }
   .ai-chat-sequence { position: static !important; opacity: 1 !important; }
   .ai-chat-sequence + .ai-chat-sequence { display: none; }
   .ai-chat-message { opacity: 1 !important; }
