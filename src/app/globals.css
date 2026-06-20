@@ -51,6 +51,10 @@
 
   html { scroll-behavior: smooth; background: rgb(var(--background)); color: rgb(var(--text-main)); }
   body { min-height: 100vh; background: rgb(var(--background)); color: rgb(var(--text-main)); font-feature-settings: "ss01" on; transition: background-color .25s ease, color .25s ease; }
+
+  @media (min-width: 1024px) {
+    html { font-size: 80%; }
+  }
   a, button, input, select, textarea, summary { outline-color: rgb(var(--accent)); outline-offset: 3px; }
   input, select, textarea { background: rgb(var(--surface-elevated)); color: rgb(var(--text-main)); border-color: rgb(var(--border)); }
   ::selection { background: rgb(var(--accent)); color: rgb(var(--accent-text)); }
