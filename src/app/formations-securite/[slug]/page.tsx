@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import { OrientationAssistant } from '@/components/OrientationAssistant';
 import { VaeEligibilityModal } from '@/components/VaeEligibilityModal';
-import { Button, ConversionStrip, FAQ, FeatureCard, Hero, SectionTitle } from '@/components/ui';
+import { Badge, Button, ConversionStrip, FAQ, FeatureCard, Hero, SectionTitle } from '@/components/ui';
 import { formationFaq } from '@/data/faq';
 import { apsFaq, apsSessions2026 } from '@/data/formations';
 import { formations } from '@/data/site';
