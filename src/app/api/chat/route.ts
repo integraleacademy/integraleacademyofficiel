@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { academyFallbackResponse, academyKnowledge } from '@/data/academyKnowledge';
+import { academyFallbackResponse, buildKnowledgeContext, selectRelevantKnowledge } from '@/lib/knowledge';
 
 export const runtime = 'nodejs';
 
@@ -82,6 +82,9 @@ export async function POST(request: NextRequest) {
     );
   }
 
+  const selectedKnowledge = await selectRelevantKnowledge(latestUserMessage.content);
+  const knowledgeContext = buildKnowledgeContext(selectedKnowledge);
+
   const systemPrompt = `Tu es l'assistant IA d'Intégrale Academy. Réponds en français comme un conseiller professionnel, clair et rassurant.
 Règles strictes :
 - Utilise uniquement la base de connaissances fournie ci-dessous.
@@ -91,8 +94,8 @@ Règles strictes :
 - Si l'utilisateur semble intéressé par une formation, tu peux proposer : "Souhaitez-vous laisser vos coordonnées pour être rappelé ?"
 - Ne collecte pas de données sensibles dans le chat.
 
-Base de connaissances Intégrale Academy :
-${JSON.stringify(academyKnowledge)}`;
+Base de connaissances Intégrale Academy sélectionnée pour cette question (3 à 6 fichiers maximum) :
+${knowledgeContext}`;
 
   try {
     const openaiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
