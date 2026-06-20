@@ -24,6 +24,7 @@ export function SessionsClient({ initialRows }: { initialRows: SessionRow[] }) {
   const [message, setMessage] = useState('');
   const [selectedTrainingId, setSelectedTrainingId] = useState('all');
   const autoSeedStarted = useRef(false);
+  const importInputRef = useRef<HTMLInputElement>(null);
   const canEdit = !!health?.ok;
   const sortedTrainings = [...trainings].sort((a, b) => a.name.localeCompare(b.name, 'fr'));
   const visibleRows = selectedTrainingId === 'all' ? rows : rows.filter(row => row.trainingId === selectedTrainingId);
@@ -95,6 +96,27 @@ export function SessionsClient({ initialRows }: { initialRows: SessionRow[] }) {
 
   async function duplicate(row: SessionRow) { setDraft({ ...serialize(row), title: `${row.title} (copie)`, sortOrder: (row.sortOrder || 0) + 1 }); }
 
+  async function importExcel(file: File) {
+    if (!confirm('Importer ce fichier va écraser toutes les sessions existantes. Continuer ?')) {
+      if (importInputRef.current) importInputRef.current.value = '';
+      return;
+    }
+    setMessage('Import Excel en cours…');
+    const formData = new FormData();
+    formData.append('file', file);
+    const response = await fetch('/api/admin/sessions/excel', { method: 'POST', body: formData });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      setMessage(data.error || 'Import impossible. Vérifiez que le fichier provient bien du modèle exporté et que les dates sont au format DD/MM/YYYY.');
+      if (importInputRef.current) importInputRef.current.value = '';
+      return;
+    }
+    setDraft(null);
+    setMessage(`Import terminé : ${data.importedCount || 0} session(s) importée(s). Les anciennes sessions ont été remplacées.`);
+    if (importInputRef.current) importInputRef.current.value = '';
+    await refreshAll();
+  }
+
   function addSession(training?: TrainingRow) {
     if (!hasTrainings) { setMessage('Veuillez initialiser les formations avant d’ajouter une session.'); return; }
     const trainingForDraft = training || selectedTraining || sortedTrainings[0];
@@ -137,6 +159,9 @@ export function SessionsClient({ initialRows }: { initialRows: SessionRow[] }) {
           </select>
         </label>
         <button type="button" onClick={() => addSession()} disabled={!canEdit} className="rounded-xl bg-academy-gold px-4 py-3 font-bold disabled:cursor-not-allowed disabled:opacity-50">Ajouter une session{selectedTraining ? ` ${selectedTraining.name}` : ''}</button>
+        <a href="/api/admin/sessions/excel" className="rounded-xl border px-4 py-3 font-bold text-stone-800">Exporter le modèle Excel</a>
+        <input ref={importInputRef} type="file" accept=".xls,.xlsx,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/xml" onChange={event => { const file = event.target.files?.[0]; if (file) importExcel(file); }} className="hidden"/>
+        <button type="button" onClick={() => importInputRef.current?.click()} disabled={!canEdit} className="rounded-xl bg-academy-ink px-4 py-3 font-bold text-white disabled:cursor-not-allowed disabled:opacity-50">Importer Excel et remplacer</button>
         {health && health.ok && health.trainingsCount < expectedBaseTrainingsCount ? <button type="button" onClick={() => initialize()} className="rounded-xl bg-academy-ink px-4 py-3 font-bold text-white">Initialiser / compléter les formations</button> : null}
       </div>
       <div className="mt-4 flex flex-wrap gap-2">
