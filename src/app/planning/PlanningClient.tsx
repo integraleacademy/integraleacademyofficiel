@@ -168,10 +168,13 @@ function RegistrationModal({ session, onClose }: { session: Session | null; onCl
 }
 
 
-function SecurityGroupedSessions({ rows, onRegister }: { rows: Session[]; onRegister: (session: Session) => void }) {
+function SecurityGroupedSessions({ rows, expandedGroups, onToggleMore, onRegister }: { rows: Session[]; expandedGroups: Record<SecurityGroupKey, boolean>; onToggleMore: (group: SecurityGroupKey) => void; onRegister: (session: Session) => void }) {
   return <div className="space-y-8">
     {securityGroups.map(group => {
       const groupRows = rows.filter(session => group.slugs.includes(session.training?.slug)).sort((a, b) => +new Date(a.startDate) - +new Date(b.startDate));
+      const isExpanded = expandedGroups[group.key];
+      const visibleRows = isExpanded ? groupRows : groupRows.slice(0, 3);
+      const hiddenCount = Math.max(groupRows.length - visibleRows.length, 0);
       return <section key={group.key} className="rounded-[2rem] border border-academy-line/70 bg-white/55 p-4 shadow-[0_18px_58px_rgba(54,40,20,.08)] backdrop-blur dark:border-white/10 dark:bg-white/5 sm:p-6">
         <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <div>
@@ -181,7 +184,7 @@ function SecurityGroupedSessions({ rows, onRegister }: { rows: Session[]; onRegi
           </div>
           <Link href={`/contact?motif=alerte-planning&formation=${group.key}`} className="inline-flex shrink-0 rounded-full border border-academy-line bg-white px-4 py-2.5 text-sm font-black text-academy-ink transition hover:-translate-y-0.5 hover:border-academy-gold/60 dark:bg-white/10 dark:text-white">Être prévenu</Link>
         </div>
-        {groupRows.length ? <div className="grid gap-5 lg:grid-cols-2">{groupRows.map((session, index) => <SessionCard key={session.id} session={session} isNext={index === 0} onRegister={onRegister} />)}</div> : <div className="rounded-[1.5rem] border border-dashed border-academy-line bg-white/70 p-5 text-sm font-bold text-academy-muted dark:bg-black/20">Aucune date {group.title} disponible actuellement. Demandez une alerte pour être prévenu de la prochaine session.</div>}
+        {groupRows.length ? <><div className="grid gap-5">{visibleRows.map((session, index) => <SessionCard key={session.id} session={session} isNext={index === 0} onRegister={onRegister} />)}</div>{hiddenCount > 0 ? <div className="mt-5 text-center"><button type="button" onClick={() => onToggleMore(group.key)} className="inline-flex rounded-full border border-academy-line bg-white px-6 py-3 text-sm font-black text-academy-ink shadow-soft transition hover:-translate-y-0.5 hover:border-academy-gold/60 dark:bg-white/10 dark:text-white">Voir plus de dates ({hiddenCount})</button></div> : null}</> : <div className="rounded-[1.5rem] border border-dashed border-academy-line bg-white/70 p-5 text-sm font-bold text-academy-muted dark:bg-black/20">Aucune date {group.title} disponible actuellement. Demandez une alerte pour être prévenu de la prochaine session.</div>}
       </section>;
     })}
   </div>;
@@ -198,6 +201,8 @@ function EmptyState({ category }: { category: CategoryKey }) {
 export function PlanningClient({ initialSessions }: { initialSessions: Session[] }) {
   const [active, setActive] = useState<'all' | CategoryKey>('all');
   const [selectedSession, setSelectedSession] = useState<Session | null>(null);
+  const [expandedSecurityGroups, setExpandedSecurityGroups] = useState<Record<SecurityGroupKey, boolean>>({ aps: false, a3p: false, desp: false });
+  const [expandedCategories, setExpandedCategories] = useState<Record<CategoryKey, boolean>>({ security: false, fire: false, vtc: false, bts: false });
   const sessionsByCategory = useMemo(() => Object.fromEntries(categorySections.map(section => [section.key, initialSessions.filter(session => sessionCategory(session) === section.key).sort((a, b) => +new Date(a.startDate) - +new Date(b.startDate))])) as Record<CategoryKey, Session[]>, [initialSessions]);
   const visibleSections = categorySections.filter(section => active === 'all' || active === section.key);
 
@@ -212,7 +217,7 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
       </div>
     </section>
     <div id="sessions" className="sticky top-[4.5rem] z-30 border-y border-academy-line bg-academy-surface/86 px-4 py-3 backdrop-blur-xl"><div className="mx-auto flex max-w-7xl gap-2 overflow-x-auto pb-1">{filters.map(filter => <button key={filter.key} onClick={() => setActive(filter.key)} className={`shrink-0 rounded-full px-5 py-3 text-sm font-black transition ${active === filter.key ? 'bg-academy-ink text-white shadow-soft' : 'bg-white text-academy-muted ring-1 ring-academy-line hover:text-academy-ink'}`}>{filter.label}</button>)}</div></div>
-    <section className="mx-auto max-w-7xl space-y-14 px-4 py-14 sm:py-20">{visibleSections.map(section => { const rows = sessionsByCategory[section.key]; return <div key={section.key} className="transition-all duration-300"><div className="mb-7 flex flex-col gap-4 md:flex-row md:items-end md:justify-between"><div><p className="text-xs font-black uppercase tracking-[.22em] text-academy-gold-strong">{section.title}</p><h2 className="mt-3 text-3xl font-black tracking-tight md:text-5xl">{section.title}</h2><p className="mt-4 max-w-3xl text-lg leading-8 text-academy-muted">{section.intro}</p></div></div>{section.key === 'security' ? (rows.length ? <SecurityGroupedSessions rows={rows} onRegister={setSelectedSession} /> : <EmptyState category={section.key} />) : (rows.length ? <div className="grid gap-3">{rows.map((session, index) => <SessionCard key={session.id} session={session} isNext={index === 0} onRegister={setSelectedSession} />)}</div> : <EmptyState category={section.key} />)}</div>; })}</section>
+    <section className="mx-auto max-w-7xl space-y-14 px-4 py-14 sm:py-20">{visibleSections.map(section => { const rows = sessionsByCategory[section.key]; return <div key={section.key} className="transition-all duration-300"><div className="mb-7 flex flex-col gap-4 md:flex-row md:items-end md:justify-between"><div><p className="text-xs font-black uppercase tracking-[.22em] text-academy-gold-strong">{section.title}</p><h2 className="mt-3 text-3xl font-black tracking-tight md:text-5xl">{section.title}</h2><p className="mt-4 max-w-3xl text-lg leading-8 text-academy-muted">{section.intro}</p></div></div>{section.key === 'security' ? (rows.length ? <SecurityGroupedSessions rows={rows} expandedGroups={expandedSecurityGroups} onToggleMore={(group) => setExpandedSecurityGroups(current => ({ ...current, [group]: true }))} onRegister={setSelectedSession} /> : <EmptyState category={section.key} />) : (rows.length ? (() => { const visibleRows = expandedCategories[section.key] ? rows : rows.slice(0, 3); const hiddenCount = Math.max(rows.length - visibleRows.length, 0); return <><div className="grid gap-3">{visibleRows.map((session, index) => <SessionCard key={session.id} session={session} isNext={index === 0} onRegister={setSelectedSession} />)}</div>{hiddenCount > 0 ? <div className="mt-6 text-center"><button type="button" onClick={() => setExpandedCategories(current => ({ ...current, [section.key]: true }))} className="inline-flex rounded-full border border-academy-line bg-white px-6 py-3 text-sm font-black text-academy-ink shadow-soft transition hover:-translate-y-0.5 hover:border-academy-gold/60 dark:bg-white/10 dark:text-white">Voir plus de dates ({hiddenCount})</button></div> : null}</>; })() : <EmptyState category={section.key} />)}</div>; })}</section>
     <RegistrationModal session={selectedSession} onClose={() => setSelectedSession(null)} />
     <div className="fixed inset-x-3 bottom-3 z-40 grid grid-cols-3 gap-2 rounded-[1.5rem] border border-white/70 bg-white/90 p-2 shadow-[0_18px_60px_rgba(17,17,17,.18)] backdrop-blur md:hidden"><Link href="tel:0422470768" className="rounded-2xl bg-academy-ink px-3 py-3 text-center text-xs font-black text-white">Appeler</Link><Link href="/contact" className="rounded-2xl bg-academy-gold px-3 py-3 text-center text-xs font-black text-academy-gold-text">Infos</Link><Link href="/contact?motif=rdv" className="rounded-2xl border border-academy-line bg-white px-3 py-3 text-center text-xs font-black text-academy-ink">RDV</Link></div>
   </main>;
