@@ -45,7 +45,7 @@ export function ProjectTrainingPopup() {
 
         <div className="flex items-start gap-4 pr-10">
           <div
-            className="relative grid h-16 w-16 shrink-0 place-items-center overflow-hidden rounded-full bg-gradient-to-br from-academy-gold via-yellow-200 to-white text-xl font-black text-academy-ink shadow-gold ring-4 ring-white"
+            className="relative grid h-16 w-16 shrink-0 place-items-center overflow-hidden rounded-full bg-gradient-to-br from-academy-gold via-yellow-200 to-white text-xl font-black text-academy-gold-text shadow-gold ring-4 ring-white"
             aria-label="Cassandre M., responsable commerciale Intégrale Academy"
           >
             <span className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,.95),transparent_38%)]" aria-hidden="true" />
@@ -67,7 +67,7 @@ export function ProjectTrainingPopup() {
           <Link
             href="tel:0422470768"
             onClick={closePopup}
-            className="inline-flex items-center justify-center rounded-full bg-academy-gold px-5 py-3 text-sm font-black text-academy-ink shadow-gold transition hover:-translate-y-0.5 hover:brightness-95"
+            className="inline-flex items-center justify-center rounded-full bg-academy-gold px-5 py-3 text-sm font-black text-academy-gold-text shadow-gold transition hover:-translate-y-0.5 hover:brightness-95"
           >
             Réserver un RDV téléphonique <span className="ml-3" aria-hidden="true">→</span>
           </Link>
