@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 type Session = any;
 type CategoryKey = 'security' | 'fire' | 'vtc' | 'bts';
@@ -57,14 +57,8 @@ function seatsBadge(seats: number | null) {
   if (seats === 2) return { label: 'Plus que 2 places', className: 'border-rose-300 bg-rose-100 text-rose-800 shadow-[0_0_24px_rgba(244,63,94,.18)]' };
   if (seats === 4) return { label: '4 places restantes', className: 'border-orange-300 bg-orange-100 text-orange-800 shadow-[0_0_22px_rgba(249,115,22,.16)]' };
   if (seats === 5) return { label: '5 places restantes', className: 'border-amber-300 bg-amber-100 text-amber-800' };
-  if (seats === 6) return { label: '6 places disponibles', className: 'border-emerald-300 bg-emerald-100 text-emerald-800' };
+  if (seats === 6) return { label: '6 places restantes', className: 'border-emerald-300 bg-emerald-100 text-emerald-800 shadow-[0_0_22px_rgba(16,185,129,.14)]' };
   return { label: `${seats} places restantes`, className: 'border-amber-300 bg-amber-100 text-amber-800' };
-}
-
-function primaryHref(session: Session) {
-  const base = session.registrationUrl || '/contact';
-  const params = new URLSearchParams({ formation: session.training?.slug || session.training?.name || '', session: session.id });
-  return `${base.includes('?') ? base : `${base}?${params.toString()}`}`;
 }
 
 function infoHref(session?: Session) {
@@ -74,32 +68,91 @@ function infoHref(session?: Session) {
   return `/contact${params.toString() ? `?${params.toString()}` : ''}`;
 }
 
-function SessionCard({ session, isNext }: { session: Session; isNext: boolean }) {
+function SessionCard({ session, isNext, onRegister }: { session: Session; isNext: boolean; onRegister: (session: Session) => void }) {
   const badge = seatsBadge(computedSeats(session));
   const category = categorySections.find(section => section.key === sessionCategory(session));
   const title = session.training?.name || session.title;
-  return <article className="group reveal relative overflow-hidden rounded-[2rem] border border-white/70 bg-white/86 p-5 shadow-[0_24px_70px_rgba(54,40,20,.13)] backdrop-blur transition duration-300 hover:-translate-y-1 hover:shadow-[0_34px_90px_rgba(54,40,20,.20)] dark:border-white/10 dark:bg-white/10 sm:p-6">
+  const infoItems = [
+    { label: 'Début', value: formatDate(session.startDate) },
+    { label: 'Fin', value: formatDate(session.endDate) },
+    session.examDate ? { label: 'Examen', value: formatDate(session.examDate) } : null,
+    session.location ? { label: 'Lieu', value: session.location } : null,
+    session.priceLabel ? { label: 'Prix', value: session.priceLabel } : null,
+  ].filter(Boolean) as { label: string; value: string }[];
+
+  return <article className="group reveal relative overflow-hidden rounded-[1.75rem] border border-white/70 bg-white/88 p-4 shadow-[0_22px_62px_rgba(54,40,20,.12)] backdrop-blur transition duration-300 hover:-translate-y-1.5 hover:border-academy-gold/45 hover:shadow-[0_34px_90px_rgba(54,40,20,.22)] dark:border-white/10 dark:bg-white/10 dark:hover:border-academy-gold/40 sm:p-5">
     <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${category?.accent || 'from-academy-gold to-yellow-200'}`} />
-    <div className="flex flex-wrap items-center gap-2">
-      {isNext ? <span className="rounded-full bg-academy-ink px-3 py-1 text-xs font-black uppercase tracking-[.14em] text-academy-gold">Prochaine session</span> : null}
-      {badge ? <span className={`animate-[statusPulse_2.8s_ease-out_infinite] rounded-full border px-3 py-1 text-xs font-black ${badge.className}`}>{badge.label}</span> : null}
+    <div className="flex flex-wrap items-center gap-1.5">
+      {isNext ? <span className="rounded-full bg-academy-ink px-3 py-1 text-[11px] font-black uppercase tracking-[.13em] text-academy-gold">Prochaine session</span> : null}
+      {badge ? <span className={`session-seats-badge rounded-full border px-3 py-1 text-[11px] font-black transition duration-300 hover:-translate-y-0.5 ${badge.className}`}>{badge.label}</span> : null}
     </div>
-    <h3 className="mt-5 text-2xl font-black tracking-tight text-academy-ink dark:text-white">{title}</h3>
-    <p className="mt-1 text-sm font-bold text-academy-gold-strong">{category?.title}</p>
-    <div className="mt-5 grid gap-3 text-sm font-semibold text-academy-muted sm:grid-cols-2">
-      <p className="rounded-2xl bg-academy-bg/80 p-4 dark:bg-black/20"><span className="block text-xs uppercase tracking-[.16em] opacity-70">Début</span>{formatDate(session.startDate)}</p>
-      <p className="rounded-2xl bg-academy-bg/80 p-4 dark:bg-black/20"><span className="block text-xs uppercase tracking-[.16em] opacity-70">Fin</span>{formatDate(session.endDate)}</p>
-      {session.examDate ? <p className="rounded-2xl bg-academy-bg/80 p-4 dark:bg-black/20"><span className="block text-xs uppercase tracking-[.16em] opacity-70">Examen</span>{formatDate(session.examDate)}</p> : null}
-      {session.location ? <p className="rounded-2xl bg-academy-bg/80 p-4 dark:bg-black/20"><span className="block text-xs uppercase tracking-[.16em] opacity-70">Lieu</span>{session.location}</p> : null}
-      {session.durationLabel ? <p className="rounded-2xl bg-academy-bg/80 p-4 dark:bg-black/20"><span className="block text-xs uppercase tracking-[.16em] opacity-70">Durée</span>{session.durationLabel}</p> : null}
-      {session.priceLabel ? <p className="rounded-2xl bg-academy-bg/80 p-4 dark:bg-black/20"><span className="block text-xs uppercase tracking-[.16em] opacity-70">Prix</span>{session.priceLabel}</p> : null}
+    <h3 className="mt-3 text-[1.35rem] font-black leading-tight tracking-tight text-academy-ink dark:text-white sm:text-2xl">{title}</h3>
+    <p className="mt-0.5 text-sm font-bold text-academy-gold-strong">{category?.title}</p>
+    <div className="mt-4 grid grid-cols-2 gap-2.5 text-sm text-academy-muted">
+      {infoItems.map((item, index) => <p key={item.label} className={`rounded-[1.15rem] border border-white/70 bg-academy-bg/75 px-3 py-2.5 shadow-[inset_0_1px_0_rgba(255,255,255,.55)] dark:border-white/10 dark:bg-black/20 ${index === infoItems.length - 1 && infoItems.length % 2 === 1 ? 'sm:col-span-2 lg:col-span-1' : ''}`}>
+        <span className="block text-[10px] font-black uppercase tracking-[.17em] text-academy-muted/70">{item.label}</span>
+        <span className="mt-0.5 block font-black leading-snug text-academy-ink dark:text-white">{item.value}</span>
+      </p>)}
     </div>
-    {session.fundingNotes ? <p className="mt-4 rounded-2xl border border-academy-line/70 bg-academy-gold/10 p-4 text-sm font-bold leading-6 text-academy-muted">{session.fundingNotes}</p> : null}
-    <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-      <Link href={primaryHref(session)} className="inline-flex flex-1 items-center justify-center rounded-full bg-academy-ink px-5 py-3 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-black">Je veux cette session</Link>
-      <Link href={infoHref(session)} className="inline-flex flex-1 items-center justify-center rounded-full border border-academy-line bg-white px-5 py-3 text-sm font-black text-academy-ink transition hover:-translate-y-0.5 hover:bg-stone-50">Demander des infos</Link>
+    {session.fundingNotes ? <p className="mt-3 rounded-2xl border border-academy-line/70 bg-academy-gold/10 p-3 text-sm font-bold leading-6 text-academy-muted">{session.fundingNotes}</p> : null}
+    <div className="mt-4 flex flex-col gap-2.5 sm:flex-row">
+      <button type="button" onClick={() => onRegister(session)} className="inline-flex flex-1 items-center justify-center rounded-full bg-academy-ink px-5 py-3 text-sm font-black text-white shadow-[0_14px_34px_rgba(23,19,13,.18)] transition hover:-translate-y-0.5 hover:bg-black hover:shadow-[0_18px_44px_rgba(23,19,13,.25)]">Je souhaite m’inscrire</button>
+      <Link href={infoHref(session)} className="inline-flex flex-1 items-center justify-center rounded-full border border-academy-line bg-white px-5 py-3 text-sm font-black text-academy-ink transition hover:-translate-y-0.5 hover:border-academy-gold/50 hover:bg-stone-50">Demander des infos</Link>
     </div>
   </article>;
+}
+
+
+function RegistrationModal({ session, onClose }: { session: Session | null; onClose: () => void }) {
+  useEffect(() => {
+    if (!session) return;
+    const onKeyDown = (event: KeyboardEvent) => { if (event.key === 'Escape') onClose(); };
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', onKeyDown);
+    };
+  }, [session, onClose]);
+
+  if (!session) return null;
+
+  const title = session.training?.name || session.title;
+  const sessionLabel = `${formatDate(session.startDate)} → ${formatDate(session.endDate)}`;
+  const hiddenSession = `${title} — ${sessionLabel}`;
+
+  return <div className="fixed inset-0 z-50 grid place-items-center px-4 py-6" role="dialog" aria-modal="true" aria-labelledby="registration-modal-title">
+    <button type="button" aria-label="Fermer la modale" onClick={onClose} className="absolute inset-0 bg-academy-ink/55 backdrop-blur-sm" />
+    <div className="reveal relative max-h-[92vh] w-full max-w-2xl overflow-y-auto rounded-[2rem] border border-white/75 bg-white p-5 shadow-[0_30px_110px_rgba(23,19,13,.30)] dark:border-white/10 dark:bg-[#211d18] sm:p-7">
+      <button type="button" onClick={onClose} aria-label="Fermer" className="absolute right-4 top-4 grid h-10 w-10 place-items-center rounded-full border border-academy-line bg-white text-xl font-black text-academy-ink transition hover:-translate-y-0.5 hover:border-academy-gold/60 dark:bg-white/10 dark:text-white">×</button>
+      <div className="pr-10">
+        <p className="text-xs font-black uppercase tracking-[.2em] text-academy-gold-strong">Inscription session</p>
+        <h2 id="registration-modal-title" className="mt-2 text-3xl font-black tracking-tight text-academy-ink dark:text-white">Réserver un rendez-vous téléphonique</h2>
+        <p className="mt-2 text-base leading-7 text-academy-muted">Un conseiller vous recontacte pour finaliser votre inscription à cette session.</p>
+      </div>
+      <div className="mt-5 rounded-[1.5rem] border border-academy-line/70 bg-academy-bg/70 p-4 dark:bg-black/20">
+        <p className="text-xs font-black uppercase tracking-[.18em] text-academy-muted/70">Formation choisie</p>
+        <p className="mt-1 text-xl font-black text-academy-ink dark:text-white">{title}</p>
+        <p className="mt-1 text-sm font-bold text-academy-gold-strong">{sessionLabel}</p>
+      </div>
+      <div className="mt-5 grid gap-2.5 sm:grid-cols-3">
+        <Link href={`/contact?motif=rdv&formation=${encodeURIComponent(session.training?.slug || title)}&session=${encodeURIComponent(session.id)}`} className="rounded-full bg-academy-ink px-4 py-3 text-center text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-black">Prendre rendez-vous</Link>
+        <Link href={`/contact?motif=rappel&formation=${encodeURIComponent(session.training?.slug || title)}&session=${encodeURIComponent(session.id)}`} className="rounded-full bg-academy-gold px-4 py-3 text-center text-sm font-black text-academy-gold-text transition hover:-translate-y-0.5">Être rappelé</Link>
+        <Link href={infoHref(session)} className="rounded-full border border-academy-line bg-white px-4 py-3 text-center text-sm font-black text-academy-ink transition hover:-translate-y-0.5 hover:border-academy-gold/60 dark:bg-white/10 dark:text-white">Demander des informations</Link>
+      </div>
+      <form action="/contact" method="get" className="mt-5 grid gap-3 sm:grid-cols-2">
+        <input type="hidden" name="motif" value="inscription-session" />
+        <input type="hidden" name="session" value={session.id} />
+        <input type="hidden" name="formation_session" value={hiddenSession} />
+        <input name="nom" placeholder="Nom" className="rounded-2xl border px-4 py-3 text-sm font-bold" />
+        <input name="prenom" placeholder="Prénom" className="rounded-2xl border px-4 py-3 text-sm font-bold" />
+        <input name="telephone" placeholder="Téléphone" className="rounded-2xl border px-4 py-3 text-sm font-bold" />
+        <input name="email" type="email" placeholder="E-mail" className="rounded-2xl border px-4 py-3 text-sm font-bold" />
+        <input name="formation" value={hiddenSession} readOnly className="rounded-2xl border px-4 py-3 text-sm font-bold sm:col-span-2" />
+        <button type="submit" className="rounded-full bg-academy-ink px-5 py-3 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-black sm:col-span-2">Envoyer ma demande</button>
+      </form>
+    </div>
+  </div>;
 }
 
 function EmptyState({ category }: { category: CategoryKey }) {
@@ -112,6 +165,7 @@ function EmptyState({ category }: { category: CategoryKey }) {
 
 export function PlanningClient({ initialSessions }: { initialSessions: Session[] }) {
   const [active, setActive] = useState<'all' | CategoryKey>('all');
+  const [selectedSession, setSelectedSession] = useState<Session | null>(null);
   const sessionsByCategory = useMemo(() => Object.fromEntries(categorySections.map(section => [section.key, initialSessions.filter(session => sessionCategory(session) === section.key).sort((a, b) => +new Date(a.startDate) - +new Date(b.startDate))])) as Record<CategoryKey, Session[]>, [initialSessions]);
   const visibleSections = categorySections.filter(section => active === 'all' || active === section.key);
 
@@ -126,7 +180,8 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
       </div>
     </section>
     <div id="sessions" className="sticky top-[4.5rem] z-30 border-y border-academy-line bg-academy-surface/86 px-4 py-3 backdrop-blur-xl"><div className="mx-auto flex max-w-7xl gap-2 overflow-x-auto pb-1">{filters.map(filter => <button key={filter.key} onClick={() => setActive(filter.key)} className={`shrink-0 rounded-full px-5 py-3 text-sm font-black transition ${active === filter.key ? 'bg-academy-ink text-white shadow-soft' : 'bg-white text-academy-muted ring-1 ring-academy-line hover:text-academy-ink'}`}>{filter.label}</button>)}</div></div>
-    <section className="mx-auto max-w-7xl space-y-14 px-4 py-14 sm:py-20">{visibleSections.map(section => { const rows = sessionsByCategory[section.key]; return <div key={section.key} className="transition-all duration-300"><div className="mb-7 flex flex-col gap-4 md:flex-row md:items-end md:justify-between"><div><p className="text-xs font-black uppercase tracking-[.22em] text-academy-gold-strong">{section.title}</p><h2 className="mt-3 text-3xl font-black tracking-tight md:text-5xl">{section.title}</h2><p className="mt-4 max-w-3xl text-lg leading-8 text-academy-muted">{section.intro}</p></div></div>{rows.length ? <div className="grid gap-5 lg:grid-cols-2">{rows.map((session, index) => <SessionCard key={session.id} session={session} isNext={index === 0} />)}</div> : <EmptyState category={section.key} />}</div>; })}</section>
+    <section className="mx-auto max-w-7xl space-y-14 px-4 py-14 sm:py-20">{visibleSections.map(section => { const rows = sessionsByCategory[section.key]; return <div key={section.key} className="transition-all duration-300"><div className="mb-7 flex flex-col gap-4 md:flex-row md:items-end md:justify-between"><div><p className="text-xs font-black uppercase tracking-[.22em] text-academy-gold-strong">{section.title}</p><h2 className="mt-3 text-3xl font-black tracking-tight md:text-5xl">{section.title}</h2><p className="mt-4 max-w-3xl text-lg leading-8 text-academy-muted">{section.intro}</p></div></div>{rows.length ? <div className="grid gap-5 lg:grid-cols-2">{rows.map((session, index) => <SessionCard key={session.id} session={session} isNext={index === 0} onRegister={setSelectedSession} />)}</div> : <EmptyState category={section.key} />}</div>; })}</section>
+    <RegistrationModal session={selectedSession} onClose={() => setSelectedSession(null)} />
     <div className="fixed inset-x-3 bottom-3 z-40 grid grid-cols-3 gap-2 rounded-[1.5rem] border border-white/70 bg-white/90 p-2 shadow-[0_18px_60px_rgba(17,17,17,.18)] backdrop-blur md:hidden"><Link href="tel:0422470768" className="rounded-2xl bg-academy-ink px-3 py-3 text-center text-xs font-black text-white">Appeler</Link><Link href="/contact" className="rounded-2xl bg-academy-gold px-3 py-3 text-center text-xs font-black text-academy-gold-text">Infos</Link><Link href="/contact?motif=rdv" className="rounded-2xl border border-academy-line bg-white px-3 py-3 text-center text-xs font-black text-academy-ink">RDV</Link></div>
   </main>;
 }
