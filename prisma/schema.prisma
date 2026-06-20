@@ -1,55 +1,68 @@
-generator client { provider = "prisma-client-js" }
-datasource db { provider = "postgresql" url = env("DATABASE_URL") }
+generator client {
+  provider = "prisma-client-js"
+}
 
-enum TrainingSessionStatus { OPEN FULL COMING_SOON HIDDEN }
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum TrainingSessionStatus {
+  OPEN
+  FULL
+  COMING_SOON
+  HIDDEN
+}
 
 model Training {
-  id          String   @id @default(cuid())
-  slug        String   @unique
+  id          String            @id @default(cuid())
+  slug        String            @unique
   name        String
   title       String
   category    String
-  description String   @default("")
+  description String            @default("")
   pageUrl     String
-  isActive    Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  isActive    Boolean           @default(true)
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
   sessions    TrainingSession[]
 }
 
 model TrainingSession {
-  id              String   @id @default(cuid())
+  id              String                @id @default(cuid())
   trainingId      String
-  training        Training @relation(fields: [trainingId], references: [id], onDelete: Cascade)
+  training        Training              @relation(fields: [trainingId], references: [id], onDelete: Cascade)
+
   title           String
   startDate       DateTime
   endDate         DateTime
   examDate        DateTime?
-  priceCents      Int
-  priceLabel      String
-  location        String
+  priceCents      Int?
+  priceLabel      String?
+  location        String?
   status          TrainingSessionStatus @default(OPEN)
   seatsTotal      Int?
   seatsLeft       Int?
-  registrationUrl String
-  fundingNotes    String   @default("")
-  publicNotes     String   @default("")
-  internalNotes   String   @default("")
-  sortOrder       Int      @default(0)
-  isHighlighted   Boolean  @default(false)
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  registrationUrl String?
+  fundingNotes    String?
+  publicNotes     String?
+  internalNotes   String?
+  sortOrder       Int                   @default(0)
+  isHighlighted   Boolean               @default(false)
+
+  createdAt       DateTime              @default(now())
+  updatedAt       DateTime              @updatedAt
 }
 
 model ChatLead {
   id               String   @id @default(cuid())
-  firstName        String
-  lastName         String
-  email            String
-  phone            String
-  trainingInterest String   @default("")
-  message          String   @default("")
-  source           String   @default("chat")
+  firstName        String?
+  lastName         String?
+  email            String?
+  phone            String?
+  trainingInterest String?
+  message          String?
+  source           String?  @default("chat")
   createdAt        DateTime @default(now())
 }
 
@@ -57,7 +70,7 @@ model ChatConversationLog {
   id                     String   @id @default(cuid())
   userMessage            String
   assistantAnswer        String
-  selectedKnowledgeFiles String   @default("")
-  selectedSessions       String   @default("")
+  selectedKnowledgeFiles String?
+  selectedSessions       String?
   createdAt              DateTime @default(now())
 }
