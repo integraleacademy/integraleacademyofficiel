@@ -68,7 +68,7 @@ export function Badge({children,tone='gold'}:{children:React.ReactNode;tone?:'go
 export function Button({href,children,variant='primary'}:{href:string;children:React.ReactNode;variant?:'primary'|'secondary'|'ghost'}){const c=variant==='primary'?'bg-academy-ink text-white hover:bg-black':variant==='secondary'?'bg-academy-gold text-academy-ink hover:brightness-95':'bg-white text-academy-ink ring-1 ring-academy-line hover:bg-stone-50';return <Link className={`inline-flex items-center justify-center rounded-full px-5 py-3 text-sm font-bold transition hover:-translate-y-0.5 ${c}`} href={href}>{children}</Link>}
 export function SectionTitle({eyebrow,title,children}:{eyebrow?:string;title:string;children?:React.ReactNode}){return <div className="mx-auto mb-10 max-w-3xl text-center reveal">{eyebrow&&<Badge>{eyebrow}</Badge>}<h2 className="mt-4 text-3xl font-black tracking-tight md:text-5xl">{title}</h2>{children&&<p className="mt-4 text-lg text-stone-600">{children}</p>}</div>}
 
-type ArtDirectionWorld = 'security' | 'bts' | 'vtc' | 'financement' | 'contact';
+type ArtDirectionWorld = 'security' | 'aps' | 'bts' | 'vtc' | 'financement' | 'contact';
 
 const artDirectionCopy: Record<ArtDirectionWorld, { label: string; title: string; chips: string[]; stats: [string, string][]; glyphs: string[] }> = {
   security: {
@@ -77,6 +77,13 @@ const artDirectionCopy: Record<ArtDirectionWorld, { label: string; title: string
     chips: ['APS', 'SSIAP', 'SST', 'CNAPS'],
     stats: [['6', 'formations'], ['2', 'centres'], ['CPF', 'selon éligibilité']],
     glyphs: ['◆', '✓', '⬟'],
+  },
+  aps: {
+    label: 'Formation APS',
+    title: 'Carte professionnelle CNAPS · métier · examen',
+    chips: ['TFP APS', 'CNAPS', '175h', 'Sécurité'],
+    stats: [['5', 'semaines'], ['1 650€', 'tarif'], ['CPF', 'possible']],
+    glyphs: ['🛡', '✓', '◆'],
   },
   bts: {
     label: 'Alternance BTS',
