@@ -74,5 +74,12 @@ export async function POST(request: NextRequest) {
   }
 
   const result = await answerChatQuestion(messages);
-  return NextResponse.json({ reply: result.finalAnswer });
+  return NextResponse.json({
+    reply: result.structuredAnswer.answerText,
+    answerText: result.structuredAnswer.answerText,
+    quickActions: result.structuredAnswer.quickActions,
+    showCallbackForm: result.structuredAnswer.showCallbackForm,
+    suggestedNextStep: result.structuredAnswer.suggestedNextStep,
+    intent: result.structuredAnswer.intent,
+  });
 }

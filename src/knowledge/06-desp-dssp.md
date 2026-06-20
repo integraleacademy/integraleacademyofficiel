@@ -26,3 +26,13 @@ Programme : environnement juridique et stratégie, équipements et techniques de
 Évaluation : QCU de 40 questions, mises en situation création/reprise, gestion, marketing et management, jury professionnel.
 
 Financement : CPF, France Travail, paiement en plusieurs fois selon dossier.
+
+## Informations commerciales à utiliser
+
+- Dirigeant d’une entreprise de sécurité privée.
+- Tarif parcours initial : 4 300 €.
+- Tarif VAE : 3 800 €.
+- Durée parcours initial : environ 7 semaines / 245 heures.
+- Durée VAE : environ 1 mois selon dossier.
+- Financements possibles : CPF, France Travail, paiement en plusieurs fois selon dossier.
+- Appels à l’action recommandés : vérifier le financement, voir le programme, être rappelé, s’inscrire.
