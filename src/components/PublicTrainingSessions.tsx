@@ -60,20 +60,20 @@ export function PublicTrainingSessions({ sessions, title = 'Prochaines dates', i
   return <section className="mx-auto max-w-7xl px-4 py-10 sm:py-12">
     <div className="mb-6 max-w-3xl"><p className="text-xs font-black uppercase tracking-[.24em] text-academy-gold">Planning admin</p><h2 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl">{title}</h2><p className="mt-3 text-base leading-7 text-academy-muted">{intro}</p></div>
     {rows.length ? <div className="space-y-3">{rows.map((session, index) => { const badge = seatsBadge(computedSeats(session)); const details = [
-      { label: 'Début', value: formatDate(session.startDate) },
-      { label: 'Fin', value: formatDate(session.endDate) },
-      session.examDate ? { label: 'Examen', value: formatDate(session.examDate) } : null,
+      { label: 'Début', value: formatDate(session.startDate), nowrap: true },
+      { label: 'Fin', value: formatDate(session.endDate), nowrap: true },
+      session.examDate ? { label: 'Examen', value: formatDate(session.examDate), nowrap: true } : null,
       session.location ? { label: 'Lieu', value: session.location } : null,
       session.durationLabel ? { label: 'Durée', value: session.durationLabel } : null,
       session.priceLabel ? { label: 'Prix', value: session.priceLabel } : null,
-    ].filter(Boolean) as { label: string; value: string }[]; return <article key={session.id} className={`reveal rounded-[1.5rem] border p-4 shadow-soft ${index === 0 ? 'border-academy-gold bg-gradient-to-r from-academy-gold-soft to-white shadow-card' : 'border-academy-line bg-academy-elevated'}`}>
-      <div className="grid gap-4 lg:grid-cols-[minmax(220px,.9fr)_minmax(420px,1.7fr)_auto] lg:items-center">
+    ].filter(Boolean) as { label: string; value: string; nowrap?: boolean }[]; return <article key={session.id} className={`reveal rounded-[1.5rem] border p-4 shadow-soft ${index === 0 ? 'border-academy-gold bg-gradient-to-r from-academy-gold-soft to-white shadow-card' : 'border-academy-line bg-academy-elevated'}`}>
+      <div className="grid gap-4 lg:grid-cols-[minmax(220px,.75fr)_minmax(520px,1.9fr)_auto] lg:items-center">
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-2">{index === 0 ? <span className="rounded-full bg-academy-ink px-3 py-1 text-[0.68rem] font-black uppercase tracking-[.14em] text-academy-gold">Prochaine session</span> : null}{badge ? <span className={`rounded-full border px-3 py-1 text-[0.68rem] font-black ${badge.className}`}>{badge.label}</span> : null}{session.status === 'FULL' ? <span className="rounded-full bg-stone-200 px-3 py-1 text-[0.68rem] font-black uppercase tracking-[.14em] text-stone-700">Complet</span> : null}</div>
           <h3 className="mt-2 truncate text-lg font-black leading-tight sm:text-xl">{session.title || session.training?.name}</h3>
         </div>
         <div className="grid gap-x-4 gap-y-2 text-sm font-semibold text-academy-muted sm:grid-cols-2 xl:grid-cols-3">
-          {details.map(item => <p key={item.label} className="min-w-0 leading-snug"><span className="mr-1 text-[0.65rem] font-black uppercase tracking-[.12em] opacity-65">{item.label}</span><span className="font-black text-academy-ink">{item.value}</span></p>)}
+          {details.map(item => <p key={item.label} className={`min-w-0 leading-snug ${item.nowrap ? 'whitespace-nowrap' : ''}`}><span className="mr-1 text-[0.65rem] font-black uppercase tracking-[.12em] opacity-65">{item.label}</span><span className="font-black text-academy-ink">{item.value}</span></p>)}
           {session.publicNotes ? <p className="min-w-0 leading-snug sm:col-span-2 xl:col-span-3"><span className="mr-1 text-[0.65rem] font-black uppercase tracking-[.12em] opacity-65">Info</span><span className="font-black text-academy-ink">{session.publicNotes}</span></p> : null}
         </div>
         <div className="flex flex-col gap-2 sm:flex-row lg:w-[22rem]"><Link href={primaryHref(session)} className="inline-flex flex-1 justify-center rounded-full bg-academy-ink px-4 py-2.5 text-sm font-black text-white transition hover:-translate-y-0.5">Je réserve cette session</Link><Link href={infoHref(session)} className="inline-flex flex-1 justify-center rounded-full border border-academy-line bg-white px-4 py-2.5 text-sm font-black text-academy-ink transition hover:-translate-y-0.5">Demander des infos</Link></div>
