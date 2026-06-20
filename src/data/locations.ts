@@ -9,6 +9,14 @@ export const locations: Location[] = [
 export const contactInfo = {
   phone: '04 22 47 07 68',
   email: 'Contact par formulaire',
-  whatsapp: 'Demande de rappel via le formulaire',
+  whatsapp: '07 44 30 45 27',
+  whatsappHref: 'https://wa.me/33744304527',
   hours: 'Lundi-vendredi 08h00-19h00 ; samedi 08h00-12h00',
 };
+
+export const socialLinks = [
+  { label: 'Facebook', href: 'https://www.facebook.com/integraleacademy', handle: '@integraleacademy' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/vaillantclement/', handle: 'Clément Vaillant' },
+  { label: 'Instagram', href: 'https://www.instagram.com/integraleacademy/', handle: '@integraleacademy' },
+  { label: 'WhatsApp', href: contactInfo.whatsappHref, handle: contactInfo.whatsapp },
+] as const;
