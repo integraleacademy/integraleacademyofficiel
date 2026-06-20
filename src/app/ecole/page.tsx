@@ -54,7 +54,7 @@ function PremiumCard({ title, children }: { title: string; children: React.React
 function DirectorCard({ compact = false }: { compact?: boolean }) {
   return <article className={`reveal overflow-hidden rounded-[2.25rem] border border-academy-gold/40 bg-gradient-to-br from-white via-academy-surface to-academy-gold/10 p-6 shadow-soft ${compact ? '' : 'md:p-10'}`}>
     <div className={`grid gap-7 ${compact ? '' : 'lg:grid-cols-[auto_1fr] lg:items-start'}`}>
-      <div className="mx-auto grid h-28 w-28 shrink-0 place-items-center rounded-[2rem] bg-gradient-to-br from-academy-ink to-stone-800 text-3xl font-black text-academy-gold shadow-gold ring-4 ring-academy-gold/20 lg:mx-0">CV</div>
+      <div className="team-avatar team-avatar-director mx-auto grid h-28 w-28 shrink-0 place-items-center rounded-[2rem] bg-gradient-to-br from-academy-ink to-stone-800 text-3xl font-black text-academy-gold shadow-gold ring-4 ring-academy-gold/20 lg:mx-0"><span>CV</span></div>
       <div>
         <p className="text-xs font-black uppercase tracking-[.2em] text-academy-gold-strong">Direction</p>
         <h3 className="mt-3 text-3xl font-black text-academy-ink">Clément VAILLANT</h3>
@@ -66,7 +66,7 @@ function DirectorCard({ compact = false }: { compact?: boolean }) {
             <p>Titulaire d’un Master 2 en communication et stratégies d’image, il combine aujourd’hui vision stratégique, culture opérationnelle et approche pragmatique de la formation, du management et du développement.</p>
           </>}
         </div>
-        <div className="mt-6 flex flex-wrap gap-2">{directorTags.map(tag => <span key={tag} className="rounded-full bg-academy-ink px-3 py-1 text-xs font-black text-academy-gold">{tag}</span>)}</div>
+        <div className="mt-6 flex flex-wrap gap-2">{directorTags.map((tag, index) => <span key={tag} className="animated-chip rounded-full bg-academy-ink px-3 py-1 text-xs font-black text-academy-gold" style={{ animationDelay: `${index * 90}ms` }}>{tag}</span>)}</div>
         <a href={linkedInUrl} target="_blank" rel="noopener noreferrer" className="mt-7 inline-flex items-center justify-center rounded-full bg-academy-gold px-5 py-3 text-sm font-black text-academy-gold-text shadow-gold transition hover:-translate-y-0.5 hover:brightness-95">Voir le profil LinkedIn</a>
       </div>
     </div>
