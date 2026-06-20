@@ -164,6 +164,7 @@ export function SessionsClient({ initialRows }: { initialRows: SessionRow[] }) {
         <button type="button" onClick={() => importInputRef.current?.click()} disabled={!canEdit} className="rounded-xl bg-academy-ink px-4 py-3 font-bold text-white disabled:cursor-not-allowed disabled:opacity-50">Importer Excel et remplacer</button>
         {health && health.ok && health.trainingsCount < expectedBaseTrainingsCount ? <button type="button" onClick={() => initialize()} className="rounded-xl bg-academy-ink px-4 py-3 font-bold text-white">Initialiser / compléter les formations</button> : null}
       </div>
+      <p className="mt-3 text-sm font-semibold text-stone-600">Format conseillé : remplir le modèle, puis l’enregistrer en Classeur Excel .xlsx avant import. Les anciens fichiers .xls binaires ne sont pas acceptés.</p>
       <div className="mt-4 flex flex-wrap gap-2">
         <button type="button" onClick={() => setSelectedTrainingId('all')} className={`rounded-full px-3 py-2 text-sm font-bold ${selectedTrainingId === 'all' ? 'bg-academy-ink text-white' : 'border bg-white text-stone-700'}`}>Toutes</button>
         {sortedTrainings.map(training => <button key={training.id} type="button" onClick={() => setSelectedTrainingId(training.id)} className={`rounded-full px-3 py-2 text-sm font-bold ${selectedTrainingId === training.id ? 'bg-academy-ink text-white' : 'border bg-white text-stone-700'}`}>{training.name} · {trainingCounts[training.id] || 0}</button>)}
