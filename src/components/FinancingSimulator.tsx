@@ -85,25 +85,19 @@ function SummaryRow({ label, value, highlight = false }: { label: string; value:
 
 export default function FinancingSimulator() {
   const [formation, setFormation] = useState('APS');
-  const [cpfAmount, setCpfAmount] = useState(1000);
-  const [aidAmount, setAidAmount] = useState(0);
-  const [personalAmount, setPersonalAmount] = useState(0);
+  const [cpfAmount, setCpfAmount] = useState(0);
   const [installments, setInstallments] = useState(1);
 
   const selectedFormation = formationOptions.find((option) => option.label === formation) ?? formationOptions[0];
   const formationAmount = selectedFormation.amount;
 
   const cappedCpf = Math.min(cpfAmount, formationAmount);
-  const cappedAid = Math.min(aidAmount, formationAmount);
-  const cappedPersonal = Math.min(personalAmount, formationAmount);
 
-  const remaining = useMemo(() => Math.max(formationAmount - cappedCpf - cappedAid - cappedPersonal, 0), [formationAmount, cappedCpf, cappedAid, cappedPersonal]);
+  const remaining = useMemo(() => Math.max(formationAmount - cappedCpf, 0), [formationAmount, cappedCpf]);
   const monthlyAmount = installments > 1 ? Math.ceil(remaining / installments) : remaining;
 
   useEffect(() => {
     setCpfAmount((current) => clampAmount(current, formationAmount));
-    setAidAmount((current) => clampAmount(current, formationAmount));
-    setPersonalAmount((current) => clampAmount(current, formationAmount));
   }, [formationAmount]);
 
   return <section className="bg-[#080f1f] px-4 py-14 text-white md:py-20">
@@ -111,7 +105,7 @@ export default function FinancingSimulator() {
       <div className="mb-8 max-w-3xl">
         <p className="text-xs font-black uppercase tracking-[.28em] text-academy-gold">Financement</p>
         <h2 className="mt-3 text-3xl font-black tracking-tight md:text-5xl">Simulez votre reste à charge</h2>
-        <p className="mt-4 text-base leading-7 text-stone-300 md:text-lg">Estimez en quelques secondes le montant restant à financer selon votre CPF, vos aides et votre apport personnel.</p>
+        <p className="mt-4 text-base leading-7 text-stone-300 md:text-lg">Estimez en quelques secondes le montant restant à financer selon votre CPF.</p>
       </div>
 
       <div className="grid gap-6 lg:grid-cols-[1.05fr_.95fr]">
@@ -132,14 +126,6 @@ export default function FinancingSimulator() {
               <p className="mt-2 text-xs font-semibold leading-5 text-stone-400">Montant automatiquement réglé selon la formation choisie, non modifiable dans cette simulation.</p>
             </div>
             <AmountControl id="cpf-amount" label="Montant disponible sur votre CPF" value={cappedCpf} max={formationAmount} onChange={setCpfAmount} />
-            <AmountControl id="aid-amount" label="Aide France Travail / OPCO / employeur" value={cappedAid} max={formationAmount} onChange={setAidAmount} />
-            <AmountControl id="personal-amount" label="Apport personnel immédiat" value={cappedPersonal} max={formationAmount} onChange={setPersonalAmount} />
-            <div className="rounded-3xl border border-white/10 bg-white/[.06] p-4">
-              <p className="text-sm font-black text-white">Paiement en plusieurs fois</p>
-              <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3">
-                {paymentOptions.map((option) => <button key={option.installments} type="button" onClick={() => setInstallments(option.installments)} className={`rounded-2xl px-3 py-3 text-sm font-black transition ${installments === option.installments ? 'bg-academy-gold text-academy-gold-text shadow-gold' : 'bg-black/25 text-stone-200 ring-1 ring-white/10 hover:bg-white/10'}`}>{option.label}</button>)}
-              </div>
-            </div>
           </div>
         </div>
 
@@ -153,13 +139,17 @@ export default function FinancingSimulator() {
           <div className="mt-5 grid gap-3">
             <SummaryRow label="Coût total de la formation" value={euros(formationAmount)} />
             <SummaryRow label="Financement CPF" value={`- ${euros(cappedCpf)}`} />
-            <SummaryRow label="Aides complémentaires" value={`- ${euros(cappedAid)}`} />
-            <SummaryRow label="Apport personnel" value={`- ${euros(cappedPersonal)}`} />
             <SummaryRow label="Reste à charge estimé" value={euros(remaining)} highlight />
           </div>
           <div className="mt-5 rounded-3xl border border-white/10 bg-white/[.07] p-5">
             {remaining === 0 ? <p className="font-bold text-green-200">Votre formation peut être intégralement couverte selon les montants renseignés.</p> : <p className="font-bold text-white">Reste à financer : <span className="text-academy-gold">{euros(remaining)}</span></p>}
             {remaining > 0 && installments > 1 && <p className="mt-2 text-sm font-semibold text-stone-300">Soit environ {euros(monthlyAmount)} / mois sur {installments} mensualités</p>}
+          </div>
+          <div className="mt-3 rounded-3xl border border-white/10 bg-white/[.07] p-5">
+            <p className="text-sm font-black text-white">Paiement en plusieurs fois</p>
+            <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3">
+              {paymentOptions.map((option) => <button key={option.installments} type="button" onClick={() => setInstallments(option.installments)} className={`rounded-2xl px-3 py-3 text-sm font-black transition ${installments === option.installments ? 'bg-academy-gold text-academy-gold-text shadow-gold' : 'bg-black/25 text-stone-200 ring-1 ring-white/10 hover:bg-white/10'}`}>{option.label}</button>)}
+            </div>
           </div>
           <div className="mt-6 grid gap-3 sm:grid-cols-2">
             <Link href="/contact" className="inline-flex items-center justify-center rounded-full bg-academy-gold px-5 py-3 text-sm font-black text-academy-gold-text transition hover:-translate-y-0.5 hover:brightness-105">Demander une étude de financement</Link>
