@@ -41,6 +41,7 @@ export async function POST(request: NextRequest) {
   if (denied) return denied;
   const prisma = await getPrisma();
   if (!prisma) return NextResponse.json({ error: 'Base de données serveur indisponible.' }, { status: 503 });
+  console.log('[ADMIN_SESSIONS] create session');
   const data = await request.json();
   const session = await prisma.trainingSession.create({ data: sessionData(data), include: { training: true } });
   return NextResponse.json(session);
