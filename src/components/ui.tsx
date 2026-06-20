@@ -232,44 +232,4 @@ export function VisualJourneyShowcase(){return <section className="mx-auto max-w
   </article>
 </section>}
 
-
-type ArtWorld = 'aps' | 'a3p' | 'desp' | 'bts' | 'vtc' | 'financement' | 'contact' | 'security';
-
-const artDirections: Record<ArtWorld, { eyebrow: string; title: string; tint: string; chips: string[]; nodes: string[]; metric: string; metricLabel: string; pattern: 'shield' | 'radar' | 'dashboard' | 'campus' | 'road' | 'payment' | 'chat' }> = {
-  aps: { eyebrow: 'Contrôle · CNAPS', title: 'Poste de sécurité opérationnel', tint: 'from-emerald-400/35 via-academy-gold/30 to-slate-950/10', chips: ['Carte CNAPS', 'Ronde', 'Contrôle accès'], nodes: ['PC sécurité', 'Site ERP', 'Main courante'], metric: '175h', metricLabel: 'parcours cadré', pattern: 'shield' },
-  a3p: { eyebrow: 'Protection rapprochée', title: 'Cellule d’analyse de risque', tint: 'from-blue-400/35 via-academy-gold/25 to-slate-950/20', chips: ['Itinéraire', 'Menace', 'Extraction'], nodes: ['VIP', 'Équipe', 'Zone sûre'], metric: 'A3P', metricLabel: 'sécurisation', pattern: 'radar' },
-  desp: { eyebrow: 'Direction · Réglementation', title: 'Tableau de pilotage dirigeant', tint: 'from-amber-300/40 via-academy-gold/30 to-stone-900/15', chips: ['Agrément', 'Juridique', 'Pilotage'], nodes: ['CNAPS', 'RH', 'Contrats'], metric: 'RNCP', metricLabel: 'niveau dirigeant', pattern: 'dashboard' },
-  bts: { eyebrow: 'Alternance · Diplôme', title: 'Parcours école + entreprise', tint: 'from-sky-300/35 via-academy-gold/25 to-emerald-300/20', chips: ['CFA', 'Entreprise', 'Diplôme'], nodes: ['École', 'Tuteur', 'Candidat'], metric: '2 ans', metricLabel: 'accompagnement', pattern: 'campus' },
-  vtc: { eyebrow: 'Mobilité professionnelle', title: 'Trajectoire chauffeur VTC', tint: 'from-cyan-300/35 via-academy-gold/25 to-slate-900/15', chips: ['Code route', 'Client', 'Examen'], nodes: ['Départ', 'Session', 'Certification'], metric: 'VTC', metricLabel: 'route maîtrisée', pattern: 'road' },
-  financement: { eyebrow: 'CPF · France Travail', title: 'Validation du financement', tint: 'from-violet-300/35 via-academy-gold/25 to-emerald-300/20', chips: ['CPF', 'AIF', 'Paiement'], nodes: ['Droits', 'Devis', 'Accord'], metric: 'OK', metricLabel: 'dossier validé', pattern: 'payment' },
-  contact: { eyebrow: 'Conseiller dédié', title: 'Échange & orientation', tint: 'from-rose-300/30 via-academy-gold/25 to-blue-300/20', chips: ['Rappel', 'Conseil', 'Inscription'], nodes: ['Vous', 'Conseiller', 'Solution'], metric: '24h', metricLabel: 'réponse rapide', pattern: 'chat' },
-  security: { eyebrow: 'Sécurité privée', title: 'Cartographie des parcours', tint: 'from-emerald-300/35 via-academy-gold/25 to-blue-300/15', chips: ['APS', 'A3P', 'DESP'], nodes: ['Prévenir', 'Protéger', 'Diriger'], metric: '360°', metricLabel: 'univers sécurité', pattern: 'shield' },
-};
-
-export function ArtDirectionVisual({world='security'}:{world?:ArtWorld}){
-  const art=artDirections[world];
-  return <div className="relative overflow-hidden rounded-[2rem] border border-academy-line bg-academy-ink p-1 text-white shadow-card reveal">
-    <div className={`relative min-h-[30rem] overflow-hidden rounded-[1.8rem] bg-gradient-to-br ${art.tint} p-6`}>
-      <div className="absolute inset-0 opacity-35 grid-soft"/><div className="absolute -right-20 -top-24 h-72 w-72 rounded-full bg-academy-gold/30 blur-3xl"/><div className="absolute -left-16 bottom-4 h-64 w-64 rounded-full bg-white/10 blur-3xl"/>
-      <div className="relative flex items-center justify-between gap-4"><span className="rounded-full border border-white/15 bg-white/10 px-4 py-2 text-[.68rem] font-black uppercase tracking-[.18em] text-academy-gold backdrop-blur">{art.eyebrow}</span><span className="rounded-full bg-academy-gold px-4 py-2 text-sm font-black text-academy-gold-text">{art.metric}</span></div>
-      <div className="relative mt-7 rounded-[1.5rem] border border-white/12 bg-white/10 p-5 backdrop-blur-md"><p className="text-xs font-black uppercase tracking-[.2em] text-white/55">Direction artistique</p><h3 className="mt-3 text-2xl font-black leading-tight">{art.title}</h3><p className="mt-2 text-sm font-semibold text-white/65">{art.metricLabel}</p></div>
-      <div className="relative mt-6 grid grid-cols-3 gap-3">{art.chips.map(chip=><span key={chip} className="rounded-2xl border border-white/10 bg-white/12 px-3 py-3 text-center text-xs font-black text-white/85 backdrop-blur">{chip}</span>)}</div>
-      <div className="relative mt-8 h-44 overflow-hidden rounded-[1.4rem] border border-white/12 bg-[#07111f]/55 p-5">
-        <ArtPattern pattern={art.pattern}/>
-        <div className="absolute inset-x-5 bottom-5 grid grid-cols-3 gap-3">{art.nodes.map(node=><span key={node} className="rounded-xl bg-white/90 px-3 py-2 text-center text-[.7rem] font-black text-slate-900 shadow-soft">{node}</span>)}</div>
-      </div>
-    </div>
-  </div>
-}
-
-function ArtPattern({pattern}:{pattern:ArtWorld extends never ? never : 'shield' | 'radar' | 'dashboard' | 'campus' | 'road' | 'payment' | 'chat'}){
-  if(pattern==='road')return <svg viewBox="0 0 360 160" className="absolute inset-0 h-full w-full"><path d="M30 150 C110 95 170 90 235 25" fill="none" stroke="#f5c45b" strokeWidth="18" strokeLinecap="round"/><path d="M30 150 C110 95 170 90 235 25" fill="none" stroke="white" strokeWidth="3" strokeDasharray="14 16" strokeLinecap="round"/><circle cx="245" cy="25" r="18" fill="#f5c45b"/></svg>;
-  if(pattern==='radar')return <svg viewBox="0 0 360 160" className="absolute inset-0 h-full w-full"><circle cx="180" cy="80" r="62" fill="none" stroke="#f5c45b" strokeWidth="2"/><circle cx="180" cy="80" r="35" fill="none" stroke="white" opacity=".45"/><path d="M180 80 L300 35" stroke="#f5c45b" strokeWidth="6" strokeLinecap="round"/><circle cx="180" cy="80" r="7" fill="white"/></svg>;
-  if(pattern==='dashboard')return <div className="grid h-full grid-cols-3 items-end gap-4 opacity-90">{[58,88,42].map(h=><span key={h} className="rounded-t-xl bg-academy-gold" style={{height:`${h}%`}}/>)}</div>;
-  if(pattern==='campus')return <div className="absolute inset-6 grid grid-cols-3 gap-4"><div className="col-span-2 rounded-2xl border border-white/25 bg-white/10"/><div className="rounded-2xl bg-academy-gold/80"/><div className="rounded-2xl bg-white/20"/><div className="col-span-2 rounded-2xl border border-academy-gold/60"/></div>;
-  if(pattern==='payment')return <div className="absolute inset-6 space-y-4"><div className="rounded-2xl bg-white/90 p-4 text-slate-900"><b>CPF</b><span className="float-right text-emerald-600">✓ validé</span></div><div className="rounded-2xl border border-academy-gold/60 p-4 font-black text-academy-gold">France Travail · devis envoyé</div></div>;
-  if(pattern==='chat')return <div className="absolute inset-6 space-y-3"><div className="mr-12 rounded-2xl bg-white/90 p-3 text-sm font-bold text-slate-900">Bonjour, quel est votre projet ?</div><div className="ml-16 rounded-2xl bg-academy-gold p-3 text-sm font-black text-academy-gold-text">Être rappelé</div><div className="mr-20 rounded-2xl bg-white/15 p-3 text-sm font-bold text-white">Un conseiller vous guide.</div></div>;
-  return <svg viewBox="0 0 360 160" className="absolute inset-0 h-full w-full"><path d="M180 18 L285 58 V92 C285 122 238 145 180 154 C122 145 75 122 75 92 V58 Z" fill="rgba(245,196,91,.22)" stroke="#f5c45b" strokeWidth="4"/><path d="M142 83 l24 24 55-58" fill="none" stroke="white" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round"/></svg>;
-}
-
 export function StickyMobileCTA(){return <div className="fixed inset-x-0 bottom-0 z-40 border-t border-academy-line bg-academy-surface/95 p-3 shadow-soft backdrop-blur md:hidden"><div className="mx-auto grid max-w-md grid-cols-2 gap-2"><Button href="tel:0422470768" variant="ghost">Appeler</Button><Button href="/contact">Infos</Button></div></div>}
