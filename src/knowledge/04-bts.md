@@ -18,3 +18,9 @@ Financement : les BTS en alternance sont pris en charge via le contrat et l’OP
 Documents généralement demandés : CV, éléments liés à l’alternance, justificatif de niveau bac ou titre équivalent selon la formation.
 
 Si une spécialité, une date de rentrée, un rythme ou une condition d’admission n’est pas indiqué dans cette base, l’assistant doit orienter vers l’équipe Intégrale Academy.
+
+## Informations commerciales à utiliser
+
+- BTS en alternance : rythme école + entreprise.
+- Accompagnement à la recherche d’entreprise.
+- Appels à l’action recommandés : être rappelé, recevoir les infos, candidater.

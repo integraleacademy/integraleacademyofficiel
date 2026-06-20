@@ -26,3 +26,10 @@ Programme : théorie en e-learning, livre officiel envoyé, pratique en véhicul
 Évaluation : examen VTC avec frais inclus dans l’offre mentionnée.
 
 Financement : CPF 100 % financée selon éligibilité et accompagnement administratif.
+
+## Informations commerciales à utiliser
+
+- Formation chauffeur VTC.
+- Préparation à l’examen VTC.
+- Financements possibles selon situation.
+- Appels à l’action recommandés : voir programme, être rappelé, s’inscrire.
