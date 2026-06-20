@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
 
 type FormationKey = 'aps' | 'a3p' | 'desp' | 'vtc' | 'bts';
@@ -25,6 +25,7 @@ const formations: AssistantFormation[] = [
 
 export function OrientationAssistant({initialFormationKey, initialStep, hideInfoAction = false}:{initialFormationKey?:FormationKey; initialStep?:Step; hideInfoAction?:boolean} = {}){
   const pathname = usePathname();
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(true);
   const [step, setStep] = useState<Step>(initialStep ?? (initialFormationKey ? 2 : 1));
   const [selectedKey, setSelectedKey] = useState<FormationKey | null>(initialFormationKey ?? null);
@@ -39,8 +40,7 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
   }
 
   function goBack(){
-    if(step === 3) setStep(2);
-    if(step === 2) setStep(1);
+    router.push('/');
   }
 
   if(!isOpen){
