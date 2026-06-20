@@ -9,18 +9,11 @@ export const chatGptAgentUrl = 'https://chatgpt.com/g/g-69cb47858f948191b7daabca
 
 const menuSecurityFormations = securityFormations.filter(formation => !['/formations-securite/desp-initial', '/formations-securite/desp-vae'].includes(formation.slug));
 
-const aiChatConversations = [
-  {
-    intro: 'Bonjour, je peux vous aider à choisir entre APS, SSIAP, VTC ou BTS.',
-    user: 'Quel financement est possible pour mon profil ?',
-    answer: 'Je vous explique les options CPF, France Travail, alternance ou OPCO.',
-  },
-  {
-    intro: 'Vous souhaitez vous inscrire à une formation ?',
-    user: 'Je veux devenir agent de sécurité.',
-    answer: 'Je vous guide sur les prérequis, le CNAPS et les prochaines sessions.',
-  },
-];
+const aiChatConversation = {
+  intro: 'Bonjour, je peux vous aider à choisir votre formation.',
+  user: 'Je veux devenir agent de sécurité.',
+  answer: 'Je vous guide sur les prérequis, le CNAPS et les prochaines sessions.',
+};
 
 function AIChatPreview(){
   const bubbleBase = 'max-w-[88%] rounded-2xl p-4 text-sm leading-6 shadow-sm sm:text-[0.95rem]';
@@ -33,19 +26,12 @@ function AIChatPreview(){
         <p className="text-xs text-academy-muted">Réponse rapide · orientation formation</p>
       </div>
     </div>
-    <div className="ai-chat-preview mt-5 grid min-h-[22rem] pb-8 sm:min-h-[20rem]" aria-label="Aperçu animé d’une conversation avec l’assistant IA">
-      {aiChatConversations.map((conversation, index) => <div key={conversation.user} className={`ai-chat-sequence ai-chat-sequence-${index + 1} col-start-1 row-start-1 space-y-3 pb-4`}>
-        <div className={`${bubbleBase} ai-chat-message ai-chat-delay-1 bg-academy-bg text-academy-muted`}>{conversation.intro}</div>
-        <div className={`${bubbleBase} ai-chat-message ai-chat-delay-2 ml-auto bg-academy-ink font-semibold text-white`}>{conversation.user}</div>
-        <div className="ai-chat-message ai-chat-typing ai-chat-delay-3 max-w-[5.75rem] rounded-2xl bg-academy-bg px-4 py-3 shadow-sm" aria-label="L’assistant rédige une réponse">
-          <span className="flex gap-1.5" aria-hidden="true">
-            <span className="ai-typing-dot"/>
-            <span className="ai-typing-dot ai-typing-dot-2"/>
-            <span className="ai-typing-dot ai-typing-dot-3"/>
-          </span>
-        </div>
-        <div className={`${bubbleBase} ai-chat-message ai-chat-delay-4 bg-academy-gold/25 text-stone-800`}>{conversation.answer}</div>
-      </div>)}
+    <div className="ai-chat-preview mt-5 min-h-[19rem] pb-4 sm:min-h-[17rem]" aria-label="Aperçu animé d’une conversation avec l’assistant IA">
+      <div className="ai-chat-sequence space-y-3 pb-4">
+        <div className={`${bubbleBase} ai-chat-message ai-chat-delay-1 bg-academy-bg text-academy-muted`}>{aiChatConversation.intro}</div>
+        <div className={`${bubbleBase} ai-chat-message ai-chat-delay-2 ml-auto bg-academy-ink font-semibold text-white`}>{aiChatConversation.user}</div>
+        <div className={`${bubbleBase} ai-chat-message ai-chat-delay-3 bg-academy-gold/25 text-stone-800`}>{aiChatConversation.answer}</div>
+      </div>
     </div>
   </div>
 }
