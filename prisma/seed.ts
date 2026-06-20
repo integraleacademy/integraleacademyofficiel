@@ -1,11 +1,20 @@
 const seedTrainings = [
   { slug: 'aps', name: 'APS', title: 'Agent de Prévention et de Sécurité', category: 'sécurité', description: '', pageUrl: '/formations-securite/aps' },
-  { slug: 'ssiap-1', name: 'SSIAP 1', title: 'Service de Sécurité Incendie et d’Assistance à Personnes', category: 'sécurité', description: '', pageUrl: '/formations-securite/ssiap-1' },
+  { slug: 'ssiap-1', name: 'SSIAP 1', title: 'Agent de sécurité incendie', category: 'sécurité incendie', description: '', pageUrl: '/formations-securite/ssiap-1' },
+  { slug: 'sst', name: 'SST', title: 'Sauveteur Secouriste du Travail', category: 'secourisme', description: '', pageUrl: '/formations-securite/sst' },
+  { slug: 'a3p-apr', name: 'A3P / APR', title: 'Agent de Protection Physique des Personnes', category: 'sécurité privée', description: '', pageUrl: '/formations-securite/a3p-apr' },
+  { slug: 'cpsp', name: 'CPSP', title: 'Chef de poste en sécurité privée', category: 'sécurité privée', description: '', pageUrl: '/formations-securite/cpsp' },
+  { slug: 'desp-dssp', name: 'DESP / DSSP', title: 'Dirigeant d’entreprise de sécurité privée', category: 'direction', description: '', pageUrl: '/formations-securite/desp' },
+  { slug: 'desp-initial', name: 'DESP initial', title: 'Formation DESP initial', category: 'direction', description: '', pageUrl: '/formations-securite/desp-initial' },
+  { slug: 'desp-vae', name: 'DESP VAE', title: 'Validation des acquis dirigeant sécurité privée', category: 'direction', description: '', pageUrl: '/formations-securite/desp-vae' },
   { slug: 'bts-mos', name: 'BTS MOS', title: 'Management Opérationnel de la Sécurité', category: 'bts', description: '', pageUrl: '/bts/mos' },
   { slug: 'bts-mco', name: 'BTS MCO', title: 'Management Commercial Opérationnel', category: 'bts', description: '', pageUrl: '/bts/mco' },
-  { slug: 'vtc', name: 'VTC', title: 'Chauffeur VTC', category: 'vtc', description: '', pageUrl: '/formations-vtc' },
-  { slug: 'desp-dssp', name: 'DESP / DSSP', title: 'Dirigeant d’entreprise de sécurité privée', category: 'direction', description: '', pageUrl: '/formations-securite/desp' },
-];
+  { slug: 'bts-ndrc', name: 'BTS NDRC', title: 'Négociation et Digitalisation de la Relation Client', category: 'bts', description: '', pageUrl: '/bts/ndrc' },
+  { slug: 'bts-ci', name: 'BTS CI', title: 'Commerce International', category: 'bts', description: '', pageUrl: '/bts/commerce-international' },
+  { slug: 'bts-pi', name: 'BTS PI', title: 'Professions Immobilières', category: 'bts', description: '', pageUrl: '/bts/professions-immobilieres' },
+  { slug: 'bts-cg', name: 'BTS CG', title: 'Comptabilité et Gestion', category: 'bts', description: '', pageUrl: '/bts/comptabilite-gestion' },
+  { slug: 'vtc', name: 'VTC', title: 'Chauffeur VTC', category: 'vtc', description: '', pageUrl: '/vtc' },
+]
 
 async function main() {
   const importer = new Function('m', 'return import(m)') as (m: string) => Promise<any>;
