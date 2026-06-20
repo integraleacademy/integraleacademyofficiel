@@ -18,7 +18,7 @@ const approachCards = [
   { title: 'Employabilité', text: 'Une priorité donnée à la reconversion, à l’alternance, à l’insertion et à l’évolution professionnelle.' },
 ];
 
-const directorTags = ['Sécurité privée', 'Formation professionnelle', 'Communication', 'Management', 'Développement'];
+const directorTags = ['Sécurité privée', 'Formation professionnelle', 'Communication', 'Management', 'Stratégie d’image', 'Développement'];
 
 const certifications = [
   { title: 'Qualiopi', detail: 'Certification qualité n°03169 du 21/10/2024.' },
@@ -32,10 +32,10 @@ const certifications = [
 ];
 
 const qualityIndicators = [
-  { title: 'Nombre d’apprenants formés', value: 'Données mises à jour prochainement' },
-  { title: 'Taux de réussite', value: 'Indicateur suivi par formation' },
-  { title: 'Taux de satisfaction', value: 'Indicateur suivi par formation' },
-  { title: 'Taux d’insertion ou poursuite de parcours', value: 'Indicateur suivi par formation' },
+  { title: 'Nombre d’apprenants formés', value: 'Indicateur suivi par formation' },
+  { title: 'Taux de réussite', value: 'Indicateur suivi par parcours' },
+  { title: 'Taux de satisfaction', value: 'Indicateur suivi auprès des apprenants' },
+  { title: 'Taux d’insertion ou poursuite de parcours', value: 'Communiqué selon les formations concernées' },
 ];
 
 const team = [
@@ -63,50 +63,48 @@ function DirectorCard({ compact = false }: { compact?: boolean }) {
           <p>Entrepreneur et dirigeant engagé dans la formation professionnelle et le développement des compétences, Clément VAILLANT a construit son parcours à partir du terrain, au croisement de la sécurité privée, de la gestion de dispositifs à forte affluence, de la communication et de la formation.</p>
           {!compact && <>
             <p>Très tôt impliqué dans l’organisation de manifestations sportives et culturelles d’envergure, il a évolué de fonctions opérationnelles vers des rôles de coordination, de supervision puis de direction, en pilotant des équipes, des flux, des périmètres de sécurité et des projets complexes dans des environnements exigeants et réglementés.</p>
-            <p>Titulaire d’un Master 2 en communication et stratégies d’image, il combine aujourd’hui vision stratégique, culture opérationnelle et approche pragmatique du management, de la formation et du développement.</p>
+            <p>Titulaire d’un Master 2 en communication et stratégies d’image, il combine aujourd’hui vision stratégique, culture opérationnelle et approche pragmatique de la formation, du management et du développement.</p>
           </>}
         </div>
         <div className="mt-6 flex flex-wrap gap-2">{directorTags.map((tag, index) => <span key={tag} className="animated-chip rounded-full bg-academy-ink px-3 py-1 text-xs font-black text-academy-gold" style={{ animationDelay: `${index * 90}ms` }}>{tag}</span>)}</div>
         <a href={linkedInUrl} target="_blank" rel="noopener noreferrer" className="mt-7 inline-flex items-center justify-center rounded-full bg-academy-gold px-5 py-3 text-sm font-black text-academy-gold-text shadow-gold transition hover:-translate-y-0.5 hover:brightness-95">Voir le profil LinkedIn</a>
       </div>
     </div>
-    {!compact && <div className="mt-10 border-t border-academy-gold/30 pt-8">
-      <div className="max-w-3xl">
-        <p className="text-xs font-black uppercase tracking-[.2em] text-academy-gold-strong">Notre équipe</p>
-        <h3 className="mt-3 text-2xl font-black text-academy-ink">Équipe administrative, commerciale et pédagogique</h3>
-        <p className="mt-3 text-sm leading-7 text-stone-600 md:text-base">Aux côtés de la direction, l’équipe sécurise chaque étape du parcours : information, relation client, suivi administratif et coordination pédagogique.</p>
-      </div>
-      <div className="mt-6 grid gap-4 md:grid-cols-3">{team.map((member, index) => <article key={member.name} className="team-member-card rounded-[1.5rem] border border-academy-line bg-white/85 p-5 shadow-soft" style={{ animationDelay: `${index * 120}ms` }}><div className="flex items-center gap-4"><div className="team-avatar grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-academy-ink font-black text-academy-gold"><span>{member.initials}</span></div><div><h4 className="font-black text-academy-ink">{member.name}</h4><p className="text-sm font-semibold leading-6 text-stone-600">{member.role}</p></div></div></article>)}</div>
-    </div>}
   </article>;
+}
+
+function TeamGrid() {
+  return <div className="grid gap-4 md:grid-cols-3">{team.map(member => <article key={member.name} className="reveal rounded-[1.5rem] border border-academy-line bg-white p-5 shadow-soft"><div className="flex items-center gap-4"><div className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-academy-ink font-black text-academy-gold">{member.initials}</div><div><h4 className="font-black text-academy-ink">{member.name}</h4><p className="text-sm font-semibold leading-6 text-stone-600">{member.role}</p></div></div></article>)}</div>;
 }
 
 export default function Page() {
   return <>
     <Hero
       badge="Notre école"
-      title="Une école fondée sur le terrain, l’exigence et l’accompagnement"
-      subtitle="Depuis 2018, Intégrale Academy accompagne les apprenants, alternants et professionnels dans des parcours de formation concrets, encadrés et orientés vers l’emploi. Née d’une expérience terrain dans la sécurité privée, la gestion de dispositifs à forte affluence, la communication et la formation professionnelle, Intégrale Academy s’est construite autour d’une conviction : une formation réussie doit être sérieuse, humaine, structurée et connectée aux réalités du marché."
+      title="Intégrale Academy, une école fondée sur le terrain, l’exigence et l’accompagnement"
+      subtitle="Depuis 2018, Intégrale Academy accompagne les apprenants, alternants et professionnels dans des parcours de formation concrets, encadrés et orientés vers l’emploi."
       actions={<><Button href="#histoire">Découvrir notre histoire</Button><Button href="#direction" variant="secondary">Rencontrer la direction</Button><Button href={appointmentFormUrl} variant="ghost">Prendre rendez-vous</Button></>}
       visual={<div className="reveal rounded-[2rem] border border-academy-line bg-white/90 p-5 shadow-soft backdrop-blur"><div className="rounded-[1.5rem] bg-academy-ink p-6 text-white"><p className="text-xs font-black uppercase tracking-[.2em] text-academy-gold">Repères</p><div className="mt-5 grid gap-3 sm:grid-cols-2">{heroBadges.map(item => <div key={item} className="rounded-2xl border border-white/10 bg-white/10 p-4 text-sm font-black">{item}</div>)}</div></div></div>}
     />
 
     <section id="histoire" className="mx-auto max-w-7xl scroll-mt-28 px-4 py-16">
       <div className="grid gap-8 lg:grid-cols-[1fr_.78fr] lg:items-center">
-        <div className="reveal"><p className="text-xs font-black uppercase tracking-[.2em] text-academy-gold-strong">Notre histoire</p><h2 className="mt-4 text-3xl font-black tracking-tight md:text-5xl">Depuis 2018, une école construite avec une vision claire</h2><div className="mt-6 space-y-5 text-base leading-8 text-stone-600"><p>Fondée en 2018, Intégrale Academy est née d’une volonté simple : proposer des formations professionnelles sérieuses, exigeantes et réellement utiles. L’école s’est développée à partir d’une culture du terrain, de l’encadrement et de la responsabilité, dans des secteurs où la rigueur, la conformité et l’employabilité sont essentielles.</p><p>Au fil des années, Intégrale Academy a structuré son offre autour des métiers de la sécurité privée, de la sécurité incendie, du VTC et des BTS en alternance. Mais au-delà des intitulés de formation, l’objectif reste le même : accompagner chaque apprenant vers un projet professionnel concret, lisible et durable.</p></div></div>
+        <div className="reveal"><p className="text-xs font-black uppercase tracking-[.2em] text-academy-gold-strong">Notre histoire</p><h2 className="mt-4 text-3xl font-black tracking-tight md:text-5xl">Une école fondée en 2018, née du terrain</h2><div className="mt-6 space-y-5 text-base leading-8 text-stone-600"><p>Fondée en 2018, Intégrale Academy est née d’une volonté claire : proposer des formations professionnelles sérieuses, encadrées et réellement utiles. L’école s’est construite à partir d’une expérience terrain dans la sécurité privée, la gestion de dispositifs à forte affluence, la communication et la formation professionnelle.</p><p>Depuis sa création, Intégrale Academy développe des parcours pensés pour l’emploi, la reconversion et la montée en compétences, avec une attention particulière portée à l’accompagnement humain, à la conformité réglementaire et aux besoins concrets des entreprises.</p></div></div>
         <blockquote className="reveal rounded-[2rem] bg-academy-ink p-8 text-2xl font-black leading-tight text-white shadow-soft"><span className="text-academy-gold">“</span>Former, ce n’est pas seulement transmettre un programme. C’est préparer une personne à exercer un métier, à comprendre un cadre professionnel et à construire son avenir.<span className="text-academy-gold">”</span></blockquote>
       </div>
     </section>
 
-    <section id="direction" className="bg-academy-surface/70 px-4 py-16 scroll-mt-28"><div className="mx-auto max-w-7xl"><SectionTitle eyebrow="Fondateur" title="Une direction issue du terrain" /> <DirectorCard /></div></section>
+    <section id="direction" className="bg-academy-surface/70 px-4 py-16 scroll-mt-28"><div className="mx-auto max-w-7xl"><SectionTitle eyebrow="Direction" title="Une direction issue du terrain" /> <DirectorCard /></div></section>
 
-    <section className="mx-auto max-w-7xl px-4 py-16"><SectionTitle eyebrow="Approche pédagogique" title="Une approche exigeante, humaine et orientée emploi">Intégrale Academy défend une vision de la formation à la fois sérieuse, humaine et opérationnelle. L’école accompagne les candidats avant, pendant et après leur formation, avec une attention particulière portée à la clarté du parcours, au respect des exigences réglementaires et à l’employabilité.</SectionTitle><div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">{approachCards.map(card => <PremiumCard key={card.title} title={card.title}><p>{card.text}</p></PremiumCard>)}</div></section>
+    <section className="mx-auto max-w-7xl px-4 py-16"><SectionTitle eyebrow="Équipe" title="Équipe administrative, commerciale et pédagogique">Aux côtés de la direction, l’équipe sécurise chaque étape du parcours : information, relation client, suivi administratif et coordination pédagogique.</SectionTitle><TeamGrid /></section>
 
-    <section className="bg-academy-ink px-4 py-16 text-white"><div className="mx-auto max-w-7xl"><SectionTitle eyebrow="Parcours" title="Des parcours professionnalisants">Intégrale Academy intervient principalement dans les métiers de la sécurité privée, de la sécurité incendie, du VTC et des BTS en alternance. Chaque parcours dispose de sa page dédiée afin de présenter les objectifs, prérequis, modalités, financements et débouchés.</SectionTitle><div className="flex flex-wrap justify-center gap-3"><Button href="/formations-securite" variant="secondary">Formations sécurité</Button><Button href="/bts" variant="ghost">BTS en alternance</Button><Button href="/vtc" variant="ghost">Formation VTC</Button></div></div></section>
+    <section className="mx-auto max-w-7xl px-4 py-16"><SectionTitle eyebrow="Approche pédagogique" title="Une approche exigeante, humaine et orientée emploi">Intégrale Academy défend une vision de la formation à la fois sérieuse, humaine et opérationnelle. Chaque parcours doit être clair, encadré et utile, avec un accompagnement adapté aux candidats, aux alternants, aux professionnels en reconversion et aux entreprises.</SectionTitle><div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">{approachCards.map(card => <PremiumCard key={card.title} title={card.title}><p>{card.text}</p></PremiumCard>)}</div></section>
+
+    <section className="bg-academy-ink px-4 py-16 text-white"><div className="mx-auto max-w-7xl"><SectionTitle eyebrow="Parcours" title="Nos grands domaines de formation">Sur cette page, nous rappelons uniquement les grands domaines portés par l’école : sécurité privée, sécurité incendie, VTC et BTS en alternance. Le détail des parcours est présenté sur les pages formations dédiées.</SectionTitle><div className="flex flex-wrap justify-center gap-3"><Button href="/formations-securite" variant="secondary">Formations sécurité</Button><Button href="/bts" variant="ghost">BTS en alternance</Button><Button href="/vtc" variant="ghost">Formation VTC</Button></div></div></section>
 
     <section className="mx-auto max-w-7xl px-4 py-16"><SectionTitle eyebrow="Centres" title="Nos lieux de formation">Intégrale Academy s’appuie sur plusieurs lieux de formation et modalités pédagogiques afin de proposer des parcours adaptés aux besoins des apprenants et aux spécificités des formations.</SectionTitle><div className="grid gap-5 md:grid-cols-3">{contact.locations.map(location => <PremiumCard key={location.name} title={location.name}><p className="font-semibold text-academy-ink">{location.address}</p><p className="mt-3">{location.detail}</p><Button href="/contact" variant="ghost">Nous contacter</Button></PremiumCard>)}</div><div className="mt-5 rounded-[1.5rem] bg-white p-5 text-sm leading-7 text-stone-600 shadow-soft ring-1 ring-academy-line"><b className="text-academy-ink">BTS à distance : </b>certaines modalités peuvent être proposées à distance selon les parcours, les prérequis et l’organisation validée avec l’équipe admissions.</div></section>
 
-    <section id="agrements" className="bg-academy-surface/70 px-4 py-16"><div className="mx-auto max-w-7xl"><SectionTitle eyebrow="Agréments & certifications" title="Des références réglementaires clairement affichées">Dans des secteurs réglementés, la transparence des références, agréments et certifications est essentielle. Intégrale Academy centralise ces informations pour permettre aux candidats, entreprises, financeurs et partenaires de vérifier facilement le cadre de formation.</SectionTitle><div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">{certifications.map(item => <PremiumCard key={item.title} title={item.title}><p>{item.detail}</p></PremiumCard>)}</div><details className="mt-6 rounded-[1.5rem] bg-white p-5 text-sm leading-7 text-stone-600 shadow-soft ring-1 ring-academy-line"><summary className="cursor-pointer font-black text-academy-ink">Références complètes</summary><p className="mt-3">{legalRefs.join(' · ')} · ADEF CPSP 8325091511.</p></details></div></section>
+    <section id="agrements" className="bg-academy-surface/70 px-4 py-16"><div className="mx-auto max-w-7xl"><SectionTitle eyebrow="Agréments & certifications" title="Un cadre réglementaire lisible et rassurant">Les agréments et certifications sont conservés dans une présentation compacte afin d’identifier rapidement le cadre qualité, administratif et réglementaire de l’école.</SectionTitle><div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{certifications.map(item => <PremiumCard key={item.title} title={item.title}><p>{item.detail}</p></PremiumCard>)}</div><details className="mt-6 rounded-[1.5rem] bg-white p-5 text-sm leading-7 text-stone-600 shadow-soft ring-1 ring-academy-line"><summary className="cursor-pointer font-black text-academy-ink">Références complètes</summary><p className="mt-3">{legalRefs.join(' · ')} · ADEF CPSP 8325091511.</p></details></div></section>
 
     <section className="mx-auto max-w-7xl px-4 py-16"><div className="rounded-[2rem] bg-academy-ink p-6 text-white shadow-soft md:p-10"><div className="grid gap-8 lg:grid-cols-[.9fr_1.1fr]"><div><span className="rounded-full bg-white/10 px-4 py-2 text-xs font-black uppercase tracking-[.18em] text-academy-gold">Indicateurs qualité</span><h2 className="mt-5 text-3xl font-black md:text-5xl">Suivi qualité par formation</h2><p className="mt-4 text-sm leading-7 text-stone-200 md:text-base">Les indicateurs qualité sont suivis par formation et mis à jour selon les données consolidées par l’équipe administrative.</p></div><div className="grid gap-3 sm:grid-cols-2">{qualityIndicators.map(item => <div key={item.title} className="rounded-2xl border border-white/10 bg-white/10 p-4"><h3 className="font-black text-academy-gold">{item.title}</h3><p className="mt-2 text-sm font-semibold leading-6 text-stone-100">{item.value}</p></div>)}</div></div></div></section>
 
