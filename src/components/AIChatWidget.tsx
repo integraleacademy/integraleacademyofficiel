@@ -17,6 +17,8 @@ export function AIChatWidget() {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [showLeadForm, setShowLeadForm] = useState(false);
+  const [leadSent, setLeadSent] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -55,12 +57,34 @@ export function AIChatWidget() {
         ...currentMessages,
         { role: 'assistant', content: data.reply },
       ]);
+      if (/coordonnées|rappelé|inscription|inscrire|financement|dossier|place/i.test(`${content} ${data.reply}`)) setShowLeadForm(true);
     } catch (requestError) {
       setError(requestError instanceof Error ? requestError.message : 'Le tchat est momentanément indisponible.');
 
     } finally {
       setIsLoading(false);
     }
+  }
+
+
+  async function handleLeadSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const payload = Object.fromEntries(formData.entries());
+    const response = await fetch('/api/chat/lead', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    if (!response.ok) {
+      setError('Impossible de transmettre vos coordonnées pour le moment. Vous pouvez appeler le 04 22 47 07 68.');
+      return;
+    }
+    setLeadSent(true);
+    setShowLeadForm(false);
+    setMessages((currentMessages) => [...currentMessages, { role: 'assistant', content: 'Merci, votre demande a bien été transmise. L’équipe Intégrale Academy pourra vous recontacter.' }]);
+    form.reset();
   }
 
   return (
@@ -100,6 +124,22 @@ export function AIChatWidget() {
                 </div>
               </div>
             ))}
+
+
+            {showLeadForm && !leadSent ? (
+              <form onSubmit={handleLeadSubmit} className="rounded-2xl border border-academy-gold/40 bg-white p-3 text-xs shadow-sm dark:border-academy-gold/50 dark:bg-stone-800">
+                <p className="mb-2 font-bold text-academy-ink dark:text-white">Être rappelé par l’équipe</p>
+                <div className="grid grid-cols-2 gap-2">
+                  <input name="firstName" required placeholder="Prénom" className="rounded-xl border p-2 dark:bg-stone-900" />
+                  <input name="lastName" required placeholder="Nom" className="rounded-xl border p-2 dark:bg-stone-900" />
+                  <input name="phone" required placeholder="Téléphone" className="rounded-xl border p-2 dark:bg-stone-900" />
+                  <input name="email" type="email" required placeholder="Email" className="rounded-xl border p-2 dark:bg-stone-900" />
+                </div>
+                <input name="trainingInterest" placeholder="Formation souhaitée" className="mt-2 w-full rounded-xl border p-2 dark:bg-stone-900" />
+                <textarea name="message" placeholder="Votre demande" className="mt-2 w-full rounded-xl border p-2 dark:bg-stone-900" rows={2} />
+                <button className="mt-2 rounded-xl bg-academy-gold px-3 py-2 font-bold text-academy-gold-text">Transmettre ma demande</button>
+              </form>
+            ) : null}
 
             {isLoading ? (
               <div className="flex justify-start">
