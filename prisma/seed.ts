@@ -1,18 +1,32 @@
-const trainings = [
-  ['aps','APS','Agent de Prévention et de Sécurité','sécurité','/formations-securite/aps'],
-  ['ssiap-1','SSIAP 1','Service de Sécurité Incendie et d’Assistance à Personnes','sécurité','/formations-securite/ssiap-1'],
-  ['bts-mos','BTS MOS','Management Opérationnel de la Sécurité','bts','/bts/mos'],
-  ['bts-mco','BTS MCO','Management Commercial Opérationnel','bts','/bts/mco'],
-  ['vtc','VTC','Chauffeur VTC','vtc','/formations-vtc'],
-  ['desp-dssp','DESP / DSSP','Dirigeant d’entreprise de sécurité privée','direction','/formations-securite/desp'],
+const seedTrainings = [
+  { slug: 'aps', name: 'APS', title: 'Agent de Prévention et de Sécurité', category: 'sécurité', description: '', pageUrl: '/formations-securite/aps' },
+  { slug: 'ssiap-1', name: 'SSIAP 1', title: 'Service de Sécurité Incendie et d’Assistance à Personnes', category: 'sécurité', description: '', pageUrl: '/formations-securite/ssiap-1' },
+  { slug: 'bts-mos', name: 'BTS MOS', title: 'Management Opérationnel de la Sécurité', category: 'bts', description: '', pageUrl: '/bts/mos' },
+  { slug: 'bts-mco', name: 'BTS MCO', title: 'Management Commercial Opérationnel', category: 'bts', description: '', pageUrl: '/bts/mco' },
+  { slug: 'vtc', name: 'VTC', title: 'Chauffeur VTC', category: 'vtc', description: '', pageUrl: '/formations-vtc' },
+  { slug: 'desp-dssp', name: 'DESP / DSSP', title: 'Dirigeant d’entreprise de sécurité privée', category: 'direction', description: '', pageUrl: '/formations-securite/desp' },
 ];
-async function main(){
+
+async function main() {
   const importer = new Function('m', 'return import(m)') as (m: string) => Promise<any>;
   const { PrismaClient } = await importer('@prisma/client');
   const prisma = new PrismaClient();
-  for (const [slug,name,title,category,pageUrl] of trainings) await prisma.training.upsert({where:{slug},update:{name,title,category,pageUrl,isActive:true},create:{slug,name,title,category,pageUrl}});
-  const aps = await prisma.training.findUniqueOrThrow({where:{slug:'aps'}});
-  await prisma.trainingSession.upsert({where:{id:'seed-aps-septembre-2026'},update:{},create:{id:'seed-aps-septembre-2026',trainingId:aps.id,title:'Session APS septembre 2026',startDate:new Date('2026-09-07'),endDate:new Date('2026-10-09'),examDate:new Date('2026-10-12'),priceCents:165000,priceLabel:'1 650 €',location:'Puget-sur-Argens / Côte d’Azur',status:'OPEN',seatsLeft:8,registrationUrl:'/formations-securite/aps',publicNotes:'Formation de 5 semaines, soit 175 heures.',isHighlighted:true}});
-  await prisma.$disconnect();
+  try {
+    console.log('[ADMIN_SEED] seed started');
+    for (const training of seedTrainings) {
+      await prisma.training.upsert({ where: { slug: training.slug }, update: { ...training, isActive: true }, create: { ...training, isActive: true } });
+    }
+    console.log('[ADMIN_SEED] trainings created / updated');
+    const aps = await prisma.training.findUniqueOrThrow({ where: { slug: 'aps' } });
+    await prisma.trainingSession.upsert({
+      where: { id: 'seed-aps-septembre-2026' },
+      update: { trainingId: aps.id, title: 'Session APS septembre 2026', startDate: new Date('2026-09-07T00:00:00.000Z'), endDate: new Date('2026-10-09T00:00:00.000Z'), examDate: new Date('2026-10-12T00:00:00.000Z'), priceCents: 165000, priceLabel: '1 650 €', location: 'Puget-sur-Argens / Côte d’Azur', status: 'OPEN', seatsLeft: 8, registrationUrl: '/formations-securite/aps', publicNotes: 'Formation de 5 semaines, soit 175 heures.', isHighlighted: true },
+      create: { id: 'seed-aps-septembre-2026', trainingId: aps.id, title: 'Session APS septembre 2026', startDate: new Date('2026-09-07T00:00:00.000Z'), endDate: new Date('2026-10-09T00:00:00.000Z'), examDate: new Date('2026-10-12T00:00:00.000Z'), priceCents: 165000, priceLabel: '1 650 €', location: 'Puget-sur-Argens / Côte d’Azur', status: 'OPEN', seatsLeft: 8, registrationUrl: '/formations-securite/aps', publicNotes: 'Formation de 5 semaines, soit 175 heures.', isHighlighted: true },
+    });
+    console.log('[ADMIN_SEED] sessions created / updated');
+  } finally {
+    await prisma.$disconnect();
+  }
 }
-main().catch(e=>{console.error(e);process.exit(1)});
+
+main().catch((error) => { console.error(error); process.exit(1); });
