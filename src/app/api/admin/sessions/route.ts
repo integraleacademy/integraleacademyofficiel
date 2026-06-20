@@ -21,6 +21,8 @@ function sessionData(data: any) {
     status: String(data.status || 'OPEN') as any,
     seatsTotal: nullableNumber(data.seatsTotal),
     seatsLeft: nullableNumber(data.seatsLeft),
+    showSeatsLeft: data.showSeatsLeft === undefined ? true : !!data.showSeatsLeft,
+    durationLabel: String(data.durationLabel || ''),
     registrationUrl: String(data.registrationUrl || ''),
     fundingNotes: String(data.fundingNotes || ''),
     publicNotes: String(data.publicNotes || ''),
