@@ -107,7 +107,7 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
             <button type="button" onClick={() => setDespExperience(false)} className={`rounded-2xl px-5 py-4 text-left font-black transition ${despExperience === false ? 'bg-academy-ink text-white shadow-soft' : 'bg-white text-academy-ink ring-1 ring-academy-line hover:ring-academy-gold'}`}>Non</button>
           </div>
           {despExperience === true && <div className="space-y-4">
-            <div className="rounded-2xl border-l-4 border-academy-gold bg-academy-gold-soft/55 px-4 py-3 text-sm font-extrabold leading-6 text-academy-ink shadow-none" role="status"><span className="mr-2" aria-hidden="true">✓</span>Vous êtes peut-être éligible à la VAE DESP (Validation des Acquis de l’expérience)</div>
+            <div className="flex items-start gap-3 rounded-none border-0 bg-transparent px-1 py-2 text-sm font-black leading-6 text-academy-ink" role="status"><span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full border-2 border-academy-gold text-xs text-yellow-700" aria-hidden="true">✓</span><span><span className="block text-base">Vous êtes peut-être éligible à la VAE DESP</span><span className="block text-sm font-extrabold text-stone-600">Validation des Acquis de l’expérience</span></span></div>
             <DespActionGrid vae />
           </div>}
           {despExperience === false && <DespActionGrid />}
@@ -177,7 +177,7 @@ function FinancingModalButton(){
 
 function DespActionGrid({vae=false}:{vae?:boolean}){
   return <div className="grid gap-3 sm:grid-cols-2">
-    {vae ? <VaeEligibilityModal className="inline-flex min-h-14 items-center justify-center rounded-2xl bg-academy-gold px-4 py-3 text-center text-sm font-black text-academy-gold-text shadow-gold transition hover:-translate-y-0.5" /> : <Link href="/formations-securite/desp-initial" className="inline-flex min-h-14 items-center justify-center rounded-2xl bg-academy-gold px-4 py-3 text-center text-sm font-black text-academy-gold-text shadow-gold transition hover:-translate-y-0.5">En savoir plus sur la formation initiale DESP</Link>}
+    {vae ? <VaeEligibilityModal className="inline-flex min-h-14 items-center justify-center rounded-2xl bg-white px-4 py-3 text-center text-sm font-black text-academy-ink ring-1 ring-academy-line transition hover:-translate-y-0.5 hover:ring-academy-gold" /> : <Link href="/formations-securite/desp-initial" className="inline-flex min-h-14 items-center justify-center rounded-2xl bg-academy-gold px-4 py-3 text-center text-sm font-black text-academy-gold-text shadow-gold transition hover:-translate-y-0.5">En savoir plus sur la formation initiale DESP</Link>}
     {vae && <Link href="/formations-securite/desp-vae" className="inline-flex min-h-14 items-center justify-center rounded-2xl bg-white px-4 py-3 text-center text-sm font-black text-academy-ink ring-1 ring-academy-line transition hover:-translate-y-0.5 hover:ring-academy-gold">En savoir plus sur la VAE Dirigeant</Link>}
     <IframeModalButton label="Réserver un RDV téléphonique" url={calendlyDirigeantUrl} title="Réserver un RDV téléphonique" featured />
     <IframeModalButton label="Demander un devis personnalisé" url={quoteRequestUrl} title="Demander un devis personnalisé" />
