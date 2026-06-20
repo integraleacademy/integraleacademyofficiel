@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { createPortal } from 'react-dom';
 
 const simulatorUrl = 'https://assistance-alw9.onrender.com/simulateur-eligibilite-vae-desp';
 
@@ -8,7 +9,7 @@ export function VaeEligibilityModal({label='Tester mon éligibilité à la VAE',
   const [open,setOpen]=useState(false);
   return <>
     <button type="button" onClick={()=>setOpen(true)} className={className}>{label}</button>
-    {open&&<div className="fixed inset-0 z-50 grid place-items-center bg-black/70 p-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-label="Simulateur d’éligibilité VAE DESP">
+    {open && typeof document !== 'undefined' && createPortal(<div className="fixed inset-0 z-[9999] grid place-items-center bg-black/70 p-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-label="Simulateur d’éligibilité VAE DESP">
       <div className="flex h-[90vh] w-full max-w-5xl flex-col overflow-hidden rounded-[2rem] bg-academy-surface shadow-[0_30px_90px_rgba(0,0,0,.35)] ring-1 ring-white/20">
         <div className="flex items-center justify-between gap-4 border-b border-academy-line p-4 sm:p-5">
           <div>
@@ -19,6 +20,6 @@ export function VaeEligibilityModal({label='Tester mon éligibilité à la VAE',
         </div>
         <iframe src={simulatorUrl} title="Simulateur d’éligibilité VAE DESP" className="min-h-0 flex-1 bg-academy-surface" />
       </div>
-    </div>}
+    </div>, document.body)}
   </>
 }
