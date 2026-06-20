@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { academyFallbackResponse, getRelevantKnowledge } from '@/lib/knowledge';
+import { answerChatQuestion, type ChatMessage } from '@/lib/chat';
 
 export const runtime = 'nodejs';
 
@@ -8,11 +8,6 @@ const MAX_HISTORY_MESSAGES = 12;
 const MAX_REQUESTS_PER_WINDOW = 12;
 const RATE_LIMIT_WINDOW_MS = 60_000;
 const rateLimitStore = new Map<string, { count: number; resetAt: number }>();
-
-type ChatMessage = {
-  role: 'user' | 'assistant';
-  content: string;
-};
 
 function getClientKey(request: NextRequest) {
   const forwardedFor = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim();
@@ -50,10 +45,6 @@ function sanitizeMessages(messages: unknown): ChatMessage[] {
 }
 
 export async function POST(request: NextRequest) {
-  if (!process.env.OPENAI_API_KEY) {
-    return NextResponse.json({ error: 'Configuration OpenAI manquante côté serveur.' }, { status: 500 });
-  }
-
   if (isRateLimited(getClientKey(request))) {
     return NextResponse.json(
       { error: 'Trop de demandes en peu de temps. Merci de réessayer dans une minute.' },
@@ -82,49 +73,6 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const { selectedFiles, context: knowledgeContext } = await getRelevantKnowledge(latestUserMessage.content);
-
-  console.log('[CHAT] Question:', latestUserMessage.content);
-  console.log('[CHAT] Selected files:', selectedFiles);
-  console.log('[CHAT] Context preview:', knowledgeContext.slice(0, 500));
-
-  const systemPrompt = `Tu es l'assistant IA d'Intégrale Academy. Réponds en français comme un conseiller professionnel, clair et rassurant.
-Règles strictes :
-- Utilise uniquement la base de connaissances fournie ci-dessous.
-- N'invente jamais de dates, tarifs, conditions, agréments ou modalités.
-- Réponds obligatoirement à partir du contexte fourni quand il contient l'information demandée, notamment les tarifs.
-- N'utilise la réponse de secours que si le contexte ne contient vraiment pas l'information demandée ou si elle est incertaine. Dans ce cas, réponds exactement avec cette réponse de secours : "${academyFallbackResponse}"
-- Oriente vers une inscription ou une prise de contact quand c'est pertinent.
-- Si l'utilisateur semble intéressé par une formation, tu peux proposer : "Souhaitez-vous laisser vos coordonnées pour être rappelé ?"
-- Ne collecte pas de données sensibles dans le chat.
-
-Base de connaissances Intégrale Academy sélectionnée pour cette question :
-${knowledgeContext}`;
-
-  try {
-    const openaiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: process.env.OPENAI_MODEL || 'gpt-4o-mini',
-        temperature: 0.2,
-        max_tokens: 500,
-        messages: [{ role: 'system', content: systemPrompt }, ...messages],
-      }),
-    });
-
-    if (!openaiResponse.ok) {
-      return NextResponse.json({ reply: academyFallbackResponse }, { status: 200 });
-    }
-
-    const data = await openaiResponse.json();
-    const reply = data?.choices?.[0]?.message?.content?.trim() || academyFallbackResponse;
-
-    return NextResponse.json({ reply });
-  } catch {
-    return NextResponse.json({ reply: academyFallbackResponse }, { status: 200 });
-  }
+  const result = await answerChatQuestion(messages);
+  return NextResponse.json({ reply: result.finalAnswer });
 }
