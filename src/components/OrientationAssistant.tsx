@@ -129,12 +129,34 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
 
 function IframeModalButton({label,url,title,featured=false}:{label:string;url:string;title:string;featured?:boolean}){
   const [open,setOpen]=useState(false);
+  const [iframeLoaded,setIframeLoaded]=useState(false);
+  const openModal=()=>{setIframeLoaded(false);setOpen(true);};
   return <>
-    <button type="button" onClick={()=>setOpen(true)} className={featured ? 'relative inline-flex min-h-14 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-r from-academy-gold via-yellow-300 to-academy-gold px-4 py-3 text-center text-sm font-black text-academy-gold-text shadow-gold ring-2 ring-academy-gold/45 transition hover:-translate-y-1 hover:shadow-[0_22px_55px_rgba(180,124,31,.38)] focus:outline-none focus:ring-4 focus:ring-academy-gold/35 motion-safe:animate-[rdvButtonPulse_2.4s_ease-in-out_infinite]' : 'inline-flex min-h-14 items-center justify-center rounded-2xl bg-white px-4 py-3 text-center text-sm font-black text-academy-ink ring-1 ring-academy-line transition hover:-translate-y-0.5 hover:ring-academy-gold'}><span className={featured ? 'relative z-10' : undefined}>{label}</span>{featured && <span className="absolute inset-y-0 -left-1/2 w-1/2 skew-x-[-18deg] bg-white/35 motion-safe:animate-[rdvButtonShine_2.4s_ease-in-out_infinite]" aria-hidden="true" />}</button>
-    {open && typeof document !== 'undefined' && createPortal(<div className="fixed inset-0 z-[9999] grid place-items-center bg-black/70 p-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-label={title}>
-      <div className="flex h-[90vh] w-full max-w-5xl flex-col overflow-hidden rounded-[2rem] bg-academy-surface shadow-[0_30px_90px_rgba(0,0,0,.35)] ring-1 ring-white/20">
-        <div className="flex items-center justify-between gap-4 border-b border-academy-line p-4 sm:p-5"><h2 className="text-lg font-black text-academy-ink sm:text-2xl">{title}</h2><button type="button" onClick={()=>setOpen(false)} className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-academy-bg text-xl font-black text-academy-ink transition hover:bg-academy-gold" aria-label="Fermer la modale">×</button></div>
-        <iframe src={url} title={title} className="min-h-0 flex-1 bg-academy-surface" />
+    <button type="button" onClick={openModal} className={featured ? 'relative inline-flex min-h-14 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-r from-academy-gold via-yellow-300 to-academy-gold px-4 py-3 text-center text-sm font-black text-academy-gold-text shadow-gold ring-2 ring-academy-gold/45 transition hover:-translate-y-1 hover:shadow-[0_22px_55px_rgba(180,124,31,.38)] focus:outline-none focus:ring-4 focus:ring-academy-gold/35 motion-safe:animate-[rdvButtonPulse_2.4s_ease-in-out_infinite]' : 'inline-flex min-h-14 items-center justify-center rounded-2xl bg-white px-4 py-3 text-center text-sm font-black text-academy-ink ring-1 ring-academy-line transition hover:-translate-y-0.5 hover:ring-academy-gold'}><span className={featured ? 'relative z-10' : undefined}>{label}</span>{featured && <span className="absolute inset-y-0 -left-1/2 w-1/2 skew-x-[-18deg] bg-white/35 motion-safe:animate-[rdvButtonShine_2.4s_ease-in-out_infinite]" aria-hidden="true" />}</button>
+    {open && typeof document !== 'undefined' && createPortal(<div className="fixed inset-0 z-[9999] grid place-items-center bg-black/75 p-3 backdrop-blur-md sm:p-4" role="dialog" aria-modal="true" aria-label={title}>
+      <div className="flex h-[92vh] w-full max-w-5xl flex-col overflow-hidden rounded-[2rem] bg-white shadow-[0_35px_110px_rgba(0,0,0,.45)] ring-1 ring-white/30">
+        <div className="relative overflow-hidden border-b border-academy-gold/20 bg-gradient-to-br from-[#0B1220] via-[#101B2D] to-[#D8A640] p-5 text-white sm:p-6">
+          <div className="absolute -right-12 -top-16 h-44 w-44 rounded-full bg-academy-gold/30 blur-3xl" aria-hidden="true" />
+          <div className="absolute -bottom-20 left-1/3 h-40 w-40 rounded-full bg-white/10 blur-3xl" aria-hidden="true" />
+          <div className="relative flex items-center justify-between gap-4">
+            <div className="min-w-0">
+              <p className="text-xs font-black uppercase tracking-[.24em] text-academy-gold">Intégrale Academy</p>
+              <h2 className="mt-2 text-2xl font-black tracking-tight sm:text-4xl">{title}</h2>
+              <p className="mt-2 text-sm font-semibold text-white/75 sm:text-base">Choisissez le créneau qui vous convient, notre équipe vous rappelle.</p>
+            </div>
+            <button type="button" onClick={()=>setOpen(false)} className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-white/12 text-2xl font-black text-white ring-1 ring-white/20 transition hover:bg-academy-gold hover:text-academy-ink focus:outline-none focus:ring-4 focus:ring-academy-gold/35" aria-label="Fermer la modale">×</button>
+          </div>
+        </div>
+        <div className="relative min-h-0 flex-1 bg-[#F7F3EA]">
+          {!iframeLoaded && <div className="absolute inset-0 z-10 grid place-items-center bg-[radial-gradient(circle_at_top,#fff7df,transparent_42%),linear-gradient(135deg,#F7F3EA,#ffffff)] p-8 text-center">
+            <div className="max-w-sm rounded-[2rem] border border-academy-gold/25 bg-white/85 p-8 shadow-soft backdrop-blur">
+              <div className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-academy-gold/15 ring-8 ring-academy-gold/10"><span className="h-9 w-9 animate-spin rounded-full border-4 border-academy-gold/25 border-t-academy-gold" aria-hidden="true" /></div>
+              <p className="mt-6 text-lg font-black text-academy-ink">Chargement en cours…</p>
+              <p className="mt-2 text-sm font-semibold leading-6 text-academy-muted">Nous préparons l’agenda sécurisé pour votre rendez-vous téléphonique.</p>
+            </div>
+          </div>}
+          <iframe src={url} title={title} onLoad={()=>setIframeLoaded(true)} className="h-full w-full border-0 bg-white" />
+        </div>
       </div>
     </div>, document.body)}
   </>;
