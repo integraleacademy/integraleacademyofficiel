@@ -160,7 +160,7 @@ export function SessionsClient({ initialRows }: { initialRows: SessionRow[] }) {
         </label>
         <button type="button" onClick={() => addSession()} disabled={!canEdit} className="rounded-xl bg-academy-gold px-4 py-3 font-bold disabled:cursor-not-allowed disabled:opacity-50">Ajouter une session{selectedTraining ? ` ${selectedTraining.name}` : ''}</button>
         <a href="/api/admin/sessions/excel" className="rounded-xl border px-4 py-3 font-bold text-stone-800">Exporter le modèle Excel</a>
-        <input ref={importInputRef} type="file" accept=".xls,application/vnd.ms-excel,text/xml" onChange={event => { const file = event.target.files?.[0]; if (file) importExcel(file); }} className="hidden"/>
+        <input ref={importInputRef} type="file" accept=".xls,.xlsx,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/xml" onChange={event => { const file = event.target.files?.[0]; if (file) importExcel(file); }} className="hidden"/>
         <button type="button" onClick={() => importInputRef.current?.click()} disabled={!canEdit} className="rounded-xl bg-academy-ink px-4 py-3 font-bold text-white disabled:cursor-not-allowed disabled:opacity-50">Importer Excel et remplacer</button>
         {health && health.ok && health.trainingsCount < expectedBaseTrainingsCount ? <button type="button" onClick={() => initialize()} className="rounded-xl bg-academy-ink px-4 py-3 font-bold text-white">Initialiser / compléter les formations</button> : null}
       </div>
