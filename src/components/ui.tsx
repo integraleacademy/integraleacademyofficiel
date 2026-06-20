@@ -55,7 +55,7 @@ function SocialIcon({ label }: { label: string }){
   if(label==='Facebook') return <span className="font-black" aria-hidden="true">f</span>;
   if(label==='LinkedIn') return <span className="text-[0.68rem] font-black" aria-hidden="true">in</span>;
   if(label==='Instagram') return <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true"><rect x="5" y="5" width="14" height="14" rx="4" fill="none" stroke="currentColor" strokeWidth="2"/><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" strokeWidth="2"/><circle cx="16.5" cy="7.5" r="1" fill="currentColor"/></svg>;
-  return <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true"><path d="M6.6 10.8c1.7 3.4 3.2 4.9 6.6 6.6l2.2-2.1c.3-.3.8-.4 1.2-.2 1.3.4 2.6.7 4 .7.6 0 1 .4 1 1v3.5c0 .6-.4 1-1 1C10.7 21.3 2.7 13.3 2.7 3.4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.4.2 2.8.7 4 .1.4 0 .8-.2 1.2l-2.1 2.2Z" fill="currentColor"/></svg>;
+  return <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true"><path d="M12 2.6a9.2 9.2 0 0 0-7.8 14.1L3 21.4l4.8-1.2A9.2 9.2 0 1 0 12 2.6Zm0 1.8a7.4 7.4 0 0 1 6.3 11.3 7.4 7.4 0 0 1-9.9 2.6l-.3-.2-2.5.7.7-2.5-.2-.3A7.4 7.4 0 0 1 12 4.4Zm-3.2 3.7c-.2 0-.5.1-.7.4-.3.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.8 2.8 4.5 3.8 2.2.9 2.7.7 3.2.7s1.6-.6 1.8-1.3c.2-.6.2-1.2.2-1.3-.1-.1-.2-.2-.5-.4l-1.7-.8c-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.6.1-.3-.2-1.1-.4-2-1.2-.8-.6-1.3-1.5-1.4-1.7-.2-.2 0-.4.1-.5l.4-.5c.1-.2.2-.3.3-.5.1-.2.1-.3 0-.5l-.8-1.9c-.2-.4-.4-.4-.6-.4h-1Z" fill="currentColor"/></svg>;
 }
 
 export function SocialLinks({ tone = 'dark' }: { tone?: 'dark' | 'light' }){
