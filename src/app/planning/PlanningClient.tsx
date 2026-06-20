@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from 'react';
 
 type Session = any;
 type CategoryKey = 'security' | 'fire' | 'vtc' | 'bts';
+type SecurityGroupKey = 'aps' | 'a3p' | 'desp';
 
 const filters: { key: 'all' | CategoryKey; label: string }[] = [
   { key: 'all', label: 'Toutes' },
@@ -15,10 +16,17 @@ const filters: { key: 'all' | CategoryKey; label: string }[] = [
 ];
 
 const categorySections: { key: CategoryKey; title: string; intro: string; slugs: string[]; accent: string }[] = [
-  { key: 'security', title: 'Formations sécurité privée', intro: 'APS, A3P et DESP : des parcours opérationnels pour entrer ou évoluer dans la sécurité privée.', slugs: ['aps', 'a3p', 'a3p-apr', 'desp', 'desp-dssp', 'desp-initial', 'desp-vae'], accent: 'from-amber-300 to-orange-500' },
+  { key: 'security', title: 'Formations sécurité privée', intro: 'Les parcours APS, A3P / APR et DESP sont affichés séparément pour choisir la bonne voie sans mélanger les objectifs.', slugs: ['aps', 'a3p', 'a3p-apr', 'desp', 'desp-dssp', 'desp-initial', 'desp-vae'], accent: 'from-amber-300 to-orange-500' },
   { key: 'fire', title: 'Formations incendie', intro: 'SSIAP 1 : développez une compétence recherchée en sécurité incendie et assistance à personnes.', slugs: ['ssiap-1', 'ssiap1'], accent: 'from-red-300 to-rose-500' },
   { key: 'vtc', title: 'Formation Chauffeur VTC', intro: 'Préparez votre projet VTC avec une session claire, accompagnée et orientée passage à l’action.', slugs: ['vtc'], accent: 'from-sky-300 to-cyan-500' },
   { key: 'bts', title: 'BTS en alternance', intro: 'Les prochaines rentrées BTS en alternance pour construire un diplôme d’État avec l’entreprise.', slugs: ['bts', 'bts-mos', 'bts-mco', 'bts-ndrc', 'bts-ci', 'commerce-international', 'bts-professions-immobilieres', 'bts-pi', 'comptabilite-gestion'], accent: 'from-violet-300 to-fuchsia-500' },
+];
+
+
+const securityGroups: { key: SecurityGroupKey; title: string; intro: string; slugs: string[]; badge: string }[] = [
+  { key: 'aps', title: 'APS', intro: 'Agent de Prévention et de Sécurité : entrée métier, surveillance humaine et carte professionnelle.', slugs: ['aps'], badge: 'Surveillance humaine' },
+  { key: 'a3p', title: 'A3P / APR', intro: 'Protection physique des personnes : parcours protection rapprochée, missions et déplacements sécurisés.', slugs: ['a3p', 'a3p-apr'], badge: 'Protection rapprochée' },
+  { key: 'desp', title: 'DESP / DSSP', intro: 'Dirigeant d’entreprise de sécurité privée : création, reprise, management ou VAE.', slugs: ['desp', 'desp-dssp', 'desp-initial', 'desp-vae'], badge: 'Direction sécurité' },
 ];
 
 function parisDateKey(date = new Date()) {
@@ -155,6 +163,26 @@ function RegistrationModal({ session, onClose }: { session: Session | null; onCl
   </div>;
 }
 
+
+function SecurityGroupedSessions({ rows, onRegister }: { rows: Session[]; onRegister: (session: Session) => void }) {
+  return <div className="space-y-8">
+    {securityGroups.map(group => {
+      const groupRows = rows.filter(session => group.slugs.includes(session.training?.slug)).sort((a, b) => +new Date(a.startDate) - +new Date(b.startDate));
+      return <section key={group.key} className="rounded-[2rem] border border-academy-line/70 bg-white/55 p-4 shadow-[0_18px_58px_rgba(54,40,20,.08)] backdrop-blur dark:border-white/10 dark:bg-white/5 sm:p-6">
+        <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p className="text-[11px] font-black uppercase tracking-[.2em] text-academy-gold-strong">{group.badge}</p>
+            <h3 className="mt-2 text-2xl font-black tracking-tight md:text-3xl">{group.title}</h3>
+            <p className="mt-2 max-w-3xl text-sm font-semibold leading-6 text-academy-muted md:text-base">{group.intro}</p>
+          </div>
+          <Link href={`/contact?motif=alerte-planning&formation=${group.key}`} className="inline-flex shrink-0 rounded-full border border-academy-line bg-white px-4 py-2.5 text-sm font-black text-academy-ink transition hover:-translate-y-0.5 hover:border-academy-gold/60 dark:bg-white/10 dark:text-white">Être prévenu</Link>
+        </div>
+        {groupRows.length ? <div className="grid gap-5 lg:grid-cols-2">{groupRows.map((session, index) => <SessionCard key={session.id} session={session} isNext={index === 0} onRegister={onRegister} />)}</div> : <div className="rounded-[1.5rem] border border-dashed border-academy-line bg-white/70 p-5 text-sm font-bold text-academy-muted dark:bg-black/20">Aucune date {group.title} disponible actuellement. Demandez une alerte pour être prévenu de la prochaine session.</div>}
+      </section>;
+    })}
+  </div>;
+}
+
 function EmptyState({ category }: { category: CategoryKey }) {
   return <div className="rounded-[2rem] border border-dashed border-academy-line bg-white/70 p-8 text-center shadow-soft dark:bg-white/10">
     <p className="text-2xl font-black">Aucune date disponible actuellement</p>
@@ -180,7 +208,7 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
       </div>
     </section>
     <div id="sessions" className="sticky top-[4.5rem] z-30 border-y border-academy-line bg-academy-surface/86 px-4 py-3 backdrop-blur-xl"><div className="mx-auto flex max-w-7xl gap-2 overflow-x-auto pb-1">{filters.map(filter => <button key={filter.key} onClick={() => setActive(filter.key)} className={`shrink-0 rounded-full px-5 py-3 text-sm font-black transition ${active === filter.key ? 'bg-academy-ink text-white shadow-soft' : 'bg-white text-academy-muted ring-1 ring-academy-line hover:text-academy-ink'}`}>{filter.label}</button>)}</div></div>
-    <section className="mx-auto max-w-7xl space-y-14 px-4 py-14 sm:py-20">{visibleSections.map(section => { const rows = sessionsByCategory[section.key]; return <div key={section.key} className="transition-all duration-300"><div className="mb-7 flex flex-col gap-4 md:flex-row md:items-end md:justify-between"><div><p className="text-xs font-black uppercase tracking-[.22em] text-academy-gold-strong">{section.title}</p><h2 className="mt-3 text-3xl font-black tracking-tight md:text-5xl">{section.title}</h2><p className="mt-4 max-w-3xl text-lg leading-8 text-academy-muted">{section.intro}</p></div></div>{rows.length ? <div className="grid gap-5 lg:grid-cols-2">{rows.map((session, index) => <SessionCard key={session.id} session={session} isNext={index === 0} onRegister={setSelectedSession} />)}</div> : <EmptyState category={section.key} />}</div>; })}</section>
+    <section className="mx-auto max-w-7xl space-y-14 px-4 py-14 sm:py-20">{visibleSections.map(section => { const rows = sessionsByCategory[section.key]; return <div key={section.key} className="transition-all duration-300"><div className="mb-7 flex flex-col gap-4 md:flex-row md:items-end md:justify-between"><div><p className="text-xs font-black uppercase tracking-[.22em] text-academy-gold-strong">{section.title}</p><h2 className="mt-3 text-3xl font-black tracking-tight md:text-5xl">{section.title}</h2><p className="mt-4 max-w-3xl text-lg leading-8 text-academy-muted">{section.intro}</p></div></div>{rows.length ? (section.key === 'security' ? <SecurityGroupedSessions rows={rows} onRegister={setSelectedSession} /> : <div className="grid gap-5 lg:grid-cols-2">{rows.map((session, index) => <SessionCard key={session.id} session={session} isNext={index === 0} onRegister={setSelectedSession} />)}</div>) : <EmptyState category={section.key} />}</div>; })}</section>
     <RegistrationModal session={selectedSession} onClose={() => setSelectedSession(null)} />
     <div className="fixed inset-x-3 bottom-3 z-40 grid grid-cols-3 gap-2 rounded-[1.5rem] border border-white/70 bg-white/90 p-2 shadow-[0_18px_60px_rgba(17,17,17,.18)] backdrop-blur md:hidden"><Link href="tel:0422470768" className="rounded-2xl bg-academy-ink px-3 py-3 text-center text-xs font-black text-white">Appeler</Link><Link href="/contact" className="rounded-2xl bg-academy-gold px-3 py-3 text-center text-xs font-black text-academy-gold-text">Infos</Link><Link href="/contact?motif=rdv" className="rounded-2xl border border-academy-line bg-white px-3 py-3 text-center text-xs font-black text-academy-ink">RDV</Link></div>
   </main>;
