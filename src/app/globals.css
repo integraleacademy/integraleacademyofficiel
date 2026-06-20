@@ -200,3 +200,85 @@
 @media (prefers-reduced-motion: reduce) {
   .session-seats-badge, .session-seats-badge::after { animation: none !important; transform: none !important; }
 }
+
+.team-avatar {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  animation: avatarFloat 5.6s ease-in-out infinite;
+}
+
+.team-avatar > span {
+  position: relative;
+  z-index: 1;
+}
+
+.team-avatar::before {
+  content: '';
+  position: absolute;
+  inset: -35%;
+  background: conic-gradient(from 160deg, transparent 0 28%, rgb(var(--accent) / .95), transparent 56% 100%);
+  opacity: .38;
+  animation: avatarOrbit 4.8s linear infinite;
+}
+
+.team-avatar::after {
+  content: '';
+  position: absolute;
+  inset: .22rem;
+  z-index: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgb(var(--text-main)), rgb(41 37 31));
+}
+
+.team-avatar-director {
+  animation-duration: 6.4s;
+}
+
+.team-member-card {
+  animation: teamCardIn .68s ease both;
+  transition: transform .28s ease, border-color .28s ease, box-shadow .28s ease;
+}
+
+.team-member-card:hover {
+  transform: translateY(-6px);
+  border-color: rgb(var(--accent) / .58);
+  box-shadow: var(--shadow-card);
+}
+
+.team-member-card:hover .team-avatar {
+  animation-duration: 2.8s;
+}
+
+.animated-chip {
+  animation: chipPop .55s ease both;
+  transition: transform .22s ease, box-shadow .22s ease, background-color .22s ease;
+}
+
+.animated-chip:hover {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 10px 24px rgb(var(--accent) / .20);
+}
+
+@keyframes avatarFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); box-shadow: var(--shadow-gold); }
+  50% { transform: translateY(-8px) rotate(-1deg); box-shadow: 0 24px 56px rgb(var(--accent) / .26); }
+}
+
+@keyframes avatarOrbit {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes teamCardIn {
+  from { opacity: 0; transform: translateY(18px) scale(.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes chipPop {
+  from { opacity: 0; transform: translateY(8px) scale(.94); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .team-avatar, .team-avatar::before, .team-member-card, .animated-chip { animation: none !important; transform: none !important; }
+}
