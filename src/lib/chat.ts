@@ -3,7 +3,7 @@ import { getPrisma } from '@/lib/db';
 import { getRelevantDynamicTrainingData } from '@/lib/training-data';
 
 const PRICE_QUESTION_PATTERN = /\b(combien|cout|coût|coute|coûte|prix|tarif)\b/i;
-const TARIFF_LINE_PATTERN = /Tarif indiqué\s*:\s*(\d[\d\s]*)\s*€/i;
+const TARIFF_LINE_PATTERN = /Tarifs? indiqués?\s*:\s*(.*?€(?:.*?€)?)/i;
 
 export type ChatMessage = {
   role: 'user' | 'assistant';
@@ -27,9 +27,6 @@ export type ChatDebugResult = {
   finalAnswerLength: number;
 };
 
-function formatEuroAmount(amount: string) {
-  return Number(amount.replace(/\s/g, '')).toLocaleString('fr-FR');
-}
 
 function getReliableExtractedFacts(question: string, context: string) {
   if (!PRICE_QUESTION_PATTERN.test(question)) return '';
@@ -37,7 +34,7 @@ function getReliableExtractedFacts(question: string, context: string) {
   const tariffMatch = context.match(TARIFF_LINE_PATTERN);
   if (!tariffMatch) return '';
 
-  return `Information fiable extraite du contexte : le tarif indiqué est de ${formatEuroAmount(tariffMatch[1])} €.`;
+  return `Information fiable extraite du contexte : tarif indiqué : ${tariffMatch[1].trim()}.`;
 }
 
 function buildSystemPrompt(knowledgeContext: string, dynamicTrainingContext: string, message: string, reliableFacts: string) {
@@ -121,9 +118,14 @@ function lineValue(context: string, label: string) {
   return context.split('\n').find((line) => line.startsWith(`${label}: `))?.slice(label.length + 2);
 }
 
+function formatTrainingName(value?: string) {
+  return value?.replace(/\s*\([^)]*\)\s*$/, '').trim() || 'cette formation';
+}
+
 function buildLocalDynamicAnswer(question: string, dynamicContext: string) {
   if (!dynamicContext) return '';
   const q = question.toLowerCase();
+  const training = formatTrainingName(lineValue(dynamicContext, 'Formation'));
   const price = lineValue(dynamicContext, 'Tarif')?.replace(/\s*\(\d+ centimes\)/, '');
   const dates = lineValue(dynamicContext, 'Dates');
   const exam = lineValue(dynamicContext, 'Examen');
@@ -132,10 +134,30 @@ function buildLocalDynamicAnswer(question: string, dynamicContext: string) {
   const status = lineValue(dynamicContext, 'Statut');
   const link = lineValue(dynamicContext, 'Inscription');
   const notes = lineValue(dynamicContext, 'Notes publiques');
-  if (/place|places/.test(q) && seats) return `Il reste actuellement ${seats} place(s) indiquée(s) pour la session APS. La session est au statut ${status || 'non précisé'}${dates ? `, ${dates}` : ''}. Pour bloquer votre place ou vérifier votre dossier, vous pouvez utiliser le lien ${link || 'de la page formation'} ou contacter l’équipe au 04 22 47 07 68.`;
-  if (/quand|prochaine|date|debut|début|examen/.test(q) && dates) return `La prochaine session APS indiquée est prévue ${dates}. L’examen est prévu le ${exam || 'non précisé'}. Le statut actuel est ${status || 'non précisé'}${seats ? ` et il reste ${seats} place(s)` : ''}. La formation se déroule à ${location || 'un lieu à confirmer'}. Vous pouvez consulter l’inscription ici : ${link || 'lien non précisé'}.`;
-  if (/inscri|rendez|rappel|dossier|financement/.test(q)) return `Oui, vous pouvez avancer sur votre inscription APS : la session indiquée est ${status || 'disponible'}${dates ? `, ${dates}` : ''}. Le lien d’inscription est ${link || 'à confirmer avec l’équipe'}. ${price ? `Le tarif indiqué est ${price}.` : ''} Souhaitez-vous laisser vos coordonnées pour être rappelé par notre équipe ?`;
-  if (/combien|coût|cout|coute|coûte|prix|tarif|montant/.test(q) && price) return `Le tarif indiqué pour la formation APS est ${price}. ${notes ? notes + ' ' : ''}La session se déroule à ${location || 'un lieu à confirmer'}${dates ? `, ${dates}` : ''}. Un financement peut être étudié selon votre situation (CPF, France Travail ou financement personnel). Pour vous inscrire ou vérifier votre prise en charge, consultez ${link || 'la page formation'} ou contactez Intégrale Academy au 04 22 47 07 68.`;
+  if (/place|places/.test(q) && seats) return `Il reste actuellement ${seats} place(s) indiquée(s) pour la session ${training}. La session est au statut ${status || 'non précisé'}${dates ? `, ${dates}` : ''}. Pour bloquer votre place ou vérifier votre dossier, vous pouvez utiliser le lien ${link || 'de la page formation'} ou contacter l’équipe au 04 22 47 07 68.`;
+  if (/quand|prochaine|date|debut|début|examen/.test(q) && dates) return `La prochaine session ${training} indiquée est prévue ${dates}. L’examen est prévu le ${exam || 'non précisé'}. Le statut actuel est ${status || 'non précisé'}${seats ? ` et il reste ${seats} place(s)` : ''}. La formation se déroule à ${location || 'un lieu à confirmer'}. Vous pouvez consulter l’inscription ici : ${link || 'lien non précisé'}.`;
+  if (/inscri|rendez|rappel|dossier|financement/.test(q)) return `Oui, vous pouvez avancer sur votre inscription ${training} : la session indiquée est ${status || 'disponible'}${dates ? `, ${dates}` : ''}. Le lien d’inscription est ${link || 'à confirmer avec l’équipe'}. ${price ? `Le tarif indiqué est ${price}.` : ''} Souhaitez-vous laisser vos coordonnées pour être rappelé par notre équipe ?`;
+  if (/combien|coût|cout|coute|coûte|prix|tarif|montant/.test(q) && price) return `Le tarif indiqué pour la formation ${training} est ${price}. ${notes ? notes + ' ' : ''}La session se déroule à ${location || 'un lieu à confirmer'}${dates ? `, ${dates}` : ''}. Un financement peut être étudié selon votre situation (CPF, France Travail ou financement personnel). Pour vous inscrire ou vérifier votre prise en charge, consultez ${link || 'la page formation'} ou contactez Intégrale Academy au 04 22 47 07 68.`;
+  return '';
+}
+
+function buildLocalKnowledgeAnswer(question: string, context: string) {
+  const q = question.toLowerCase();
+  if (!context) return '';
+  const title = context.match(/^#\s+(.+)$/m)?.[1] || 'cette formation';
+  const tariffLine = context.match(/^Tarifs? indiqués?\s*:\s*(.+)$/im)?.[1];
+  const durationLine = context.match(/^Durée\s*:\s*(.+)$/im)?.[1];
+  const modalityLine = context.match(/^Modalités et lieux\s*:\s*(.+)$/im)?.[1];
+  const fundingLine = context.match(/^Financement\s*:\s*(.+)$/im)?.[1];
+
+  if (/combien|coût|cout|coute|coûte|prix|tarif|montant/.test(q) && tariffLine) {
+    return `Pour ${title}, les tarifs indiqués sont : ${tariffLine}. ${durationLine ? `Durée : ${durationLine}. ` : ''}${fundingLine ? `Financement possible : ${fundingLine}. ` : ''}Pour confirmer votre dossier ou les modalités de prise en charge, contactez Intégrale Academy au 04 22 47 07 68.`;
+  }
+
+  if (/durée|duree|temps|combien de temps|semaine|mois/.test(q) && durationLine) {
+    return `Pour ${title}, la durée indiquée est : ${durationLine}. ${modalityLine ? `${modalityLine}. ` : ''}L’équipe peut confirmer la session adaptée à votre situation au 04 22 47 07 68.`;
+  }
+
   return '';
 }
 
@@ -179,7 +201,7 @@ export async function answerChatQuestion(messages: ChatMessage[]): Promise<ChatD
     console.error('[CHAT] OpenAI request failed:', error);
   }
 
-  const finalAnswer = rawAnswer || buildLocalDynamicAnswer(latestUserMessage.content, dynamicTrainingContext) || academyFallbackResponse;
+  const finalAnswer = rawAnswer || buildLocalDynamicAnswer(latestUserMessage.content, dynamicTrainingContext) || buildLocalKnowledgeAnswer(latestUserMessage.content, context) || academyFallbackResponse;
   const fallbackUsed = finalAnswer === academyFallbackResponse;
 
   if (shouldLogDebug()) {
