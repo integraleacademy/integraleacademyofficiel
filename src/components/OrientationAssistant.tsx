@@ -22,10 +22,10 @@ const formations: AssistantFormation[] = [
   { key: 'bts', label: 'Un BTS en alternance', icon: '◇', infoUrl: '/bts', rdvUrl: '/contact?formation=bts&type=rdv' },
 ];
 
-export function OrientationAssistant(){
+export function OrientationAssistant({initialFormationKey, initialStep}:{initialFormationKey?:FormationKey; initialStep?:Step} = {}){
   const [isOpen, setIsOpen] = useState(true);
-  const [step, setStep] = useState<Step>(1);
-  const [selectedKey, setSelectedKey] = useState<FormationKey | null>(null);
+  const [step, setStep] = useState<Step>(initialStep ?? (initialFormationKey ? 2 : 1));
+  const [selectedKey, setSelectedKey] = useState<FormationKey | null>(initialFormationKey ?? null);
   const selectedFormation = useMemo(() => formations.find((formation) => formation.key === selectedKey) ?? null, [selectedKey]);
 
   function chooseFormation(key: FormationKey){
