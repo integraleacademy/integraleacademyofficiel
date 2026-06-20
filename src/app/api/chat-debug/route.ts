@@ -1,27 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getRelevantKnowledge } from '@/lib/knowledge';
+import { answerChatQuestion } from '@/lib/chat';
 
 export const runtime = 'nodejs';
 
-function getContextPreview(context: string) {
-  const tariffLine = context
-    .split('\n')
-    .map((line) => line.trim())
-    .find((line) => line === 'Tarif indiqué : 1650 €.' || (/tarif|prix|coût|cout|montant/i.test(line) && !line.toLowerCase().includes('informations tarifaires')));
-
-  return tariffLine || context.slice(0, 500);
-}
-
 export async function GET(request: NextRequest) {
-  const question = request.nextUrl.searchParams.get('q')?.trim() || 'combien coute la formation aps';
-  const { selectedFiles, context } = await getRelevantKnowledge(question);
-  const contextPreview = getContextPreview(context);
+  const question = request.nextUrl.searchParams.get('q')?.trim() || 'combien coute la formation aps ?';
+  const result = await answerChatQuestion([{ role: 'user', content: question }]);
 
-  return NextResponse.json({
-    ok: true,
-    question,
-    selectedFiles,
-    contextPreview,
-    hasTarif: context.includes('Tarif indiqué : 1650 €.'),
-  });
+  return NextResponse.json(result);
 }

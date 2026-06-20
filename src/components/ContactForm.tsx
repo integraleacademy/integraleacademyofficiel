@@ -9,7 +9,7 @@ export function ContactForm({ type = 'candidat' }: { type?: string }) {
 
   return (
     <form
-      className="grid gap-4 rounded-[2rem] bg-white p-6 shadow-soft ring-1 ring-academy-line"
+      className="grid gap-4 rounded-[2rem] bg-academy-surface p-6 shadow-soft ring-1 ring-academy-line"
       onSubmit={(event) => {
         event.preventDefault();
         setSent(true);
@@ -25,14 +25,14 @@ export function ContactForm({ type = 'candidat' }: { type?: string }) {
       </div>
       <label className="grid gap-2 text-sm font-semibold" htmlFor={`${type}-formation`}>
         Formation souhaitée
-        <select id={`${type}-formation`} name="formation" className="rounded-2xl border border-academy-line bg-white px-4 py-3 font-normal text-stone-700" required>
+        <select id={`${type}-formation`} name="formation" className="rounded-2xl border border-academy-line bg-academy-surface px-4 py-3 font-normal text-academy-muted" required>
           <option value="">Sélectionner une formation</option>
           {options.map((option) => <option key={option}>{option}</option>)}
         </select>
       </label>
       <label className="grid gap-2 text-sm font-semibold" htmlFor={`${type}-lieu`}>
         Lieu souhaité
-        <select id={`${type}-lieu`} name="lieu" className="rounded-2xl border border-academy-line bg-white px-4 py-3 font-normal text-stone-700" required>
+        <select id={`${type}-lieu`} name="lieu" className="rounded-2xl border border-academy-line bg-academy-surface px-4 py-3 font-normal text-academy-muted" required>
           <option value="">Sélectionner un lieu</option>
           {contact.locations.map((location) => <option key={location.id}>{location.name}</option>)}
           <option>À distance</option>
@@ -40,9 +40,9 @@ export function ContactForm({ type = 'candidat' }: { type?: string }) {
       </label>
       <label className="grid gap-2 text-sm font-semibold" htmlFor={`${type}-message`}>
         Message
-        <textarea id={`${type}-message`} name="message" className="min-h-32 rounded-2xl border border-academy-line px-4 py-3 font-normal text-stone-700" aria-label="Votre demande" />
+        <textarea id={`${type}-message`} name="message" className="min-h-32 rounded-2xl border border-academy-line px-4 py-3 font-normal text-academy-muted" aria-label="Votre demande" />
       </label>
-      <label className="flex gap-3 rounded-2xl bg-academy-bg p-4 text-sm text-stone-700" htmlFor={`${type}-rgpd`}>
+      <label className="flex gap-3 rounded-2xl bg-academy-bg p-4 text-sm text-academy-muted" htmlFor={`${type}-rgpd`}>
         <input id={`${type}-rgpd`} name="rgpd" type="checkbox" required className="mt-1 h-4 w-4 accent-academy-gold" />
         <span>J’accepte que mes informations soient utilisées pour être recontacté au sujet de ma demande de formation.</span>
       </label>
@@ -56,7 +56,7 @@ function Field({ id, label, hint, type = 'text' }: { id: string; label: string; 
   return (
     <label className="grid gap-2 text-sm font-semibold" htmlFor={id}>
       {label}
-      <input id={id} name={id} type={type} aria-label={hint} required className="rounded-2xl border border-academy-line px-4 py-3 font-normal text-stone-700" />
+      <input id={id} name={id} type={type} aria-label={hint} required className="rounded-2xl border border-academy-line px-4 py-3 font-normal text-academy-muted" />
     </label>
   );
 }

@@ -17,6 +17,8 @@ export function AIChatWidget() {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [showLeadForm, setShowLeadForm] = useState(false);
+  const [leadSent, setLeadSent] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -55,12 +57,34 @@ export function AIChatWidget() {
         ...currentMessages,
         { role: 'assistant', content: data.reply },
       ]);
+      if (/coordonnées|rappelé|inscription|inscrire|financement|dossier|place/i.test(`${content} ${data.reply}`)) setShowLeadForm(true);
     } catch (requestError) {
       setError(requestError instanceof Error ? requestError.message : 'Le tchat est momentanément indisponible.');
 
     } finally {
       setIsLoading(false);
     }
+  }
+
+
+  async function handleLeadSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const payload = Object.fromEntries(formData.entries());
+    const response = await fetch('/api/chat/lead', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    if (!response.ok) {
+      setError('Impossible de transmettre vos coordonnées pour le moment. Vous pouvez appeler le 04 22 47 07 68.');
+      return;
+    }
+    setLeadSent(true);
+    setShowLeadForm(false);
+    setMessages((currentMessages) => [...currentMessages, { role: 'assistant', content: 'Merci, votre demande a bien été transmise. L’équipe Intégrale Academy pourra vous recontacter.' }]);
+    form.reset();
   }
 
   return (
@@ -89,17 +113,33 @@ export function AIChatWidget() {
           <div className="flex-1 space-y-3 overflow-y-auto bg-stone-50 p-4 dark:bg-stone-900">
             {messages.map((message, index) => (
               <div key={`${message.role}-${index}`} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <p
-                  className={`max-w-[85%] rounded-2xl px-4 py-3 text-sm leading-relaxed shadow-sm ${
+                <div
+                  className={`max-w-[85%] whitespace-pre-line rounded-2xl px-4 py-3 text-sm leading-relaxed shadow-sm ${
                     message.role === 'user'
                       ? 'bg-academy-ink text-white'
                       : 'border border-academy-line bg-white text-academy-ink dark:border-stone-700 dark:bg-stone-800 dark:text-stone-100'
                   }`}
                 >
                   {message.content}
-                </p>
+                </div>
               </div>
             ))}
+
+
+            {showLeadForm && !leadSent ? (
+              <form onSubmit={handleLeadSubmit} className="rounded-2xl border border-academy-gold/40 bg-white p-3 text-xs shadow-sm dark:border-academy-gold/50 dark:bg-stone-800">
+                <p className="mb-2 font-bold text-academy-ink dark:text-white">Être rappelé par l’équipe</p>
+                <div className="grid grid-cols-2 gap-2">
+                  <input name="firstName" required placeholder="Prénom" className="rounded-xl border p-2 dark:bg-stone-900" />
+                  <input name="lastName" required placeholder="Nom" className="rounded-xl border p-2 dark:bg-stone-900" />
+                  <input name="phone" required placeholder="Téléphone" className="rounded-xl border p-2 dark:bg-stone-900" />
+                  <input name="email" type="email" required placeholder="Email" className="rounded-xl border p-2 dark:bg-stone-900" />
+                </div>
+                <input name="trainingInterest" placeholder="Formation souhaitée" className="mt-2 w-full rounded-xl border p-2 dark:bg-stone-900" />
+                <textarea name="message" placeholder="Votre demande" className="mt-2 w-full rounded-xl border p-2 dark:bg-stone-900" rows={2} />
+                <button className="mt-2 rounded-xl bg-academy-gold px-3 py-2 font-bold text-academy-gold-text">Transmettre ma demande</button>
+              </form>
+            ) : null}
 
             {isLoading ? (
               <div className="flex justify-start">
@@ -129,7 +169,7 @@ export function AIChatWidget() {
               <button
                 type="submit"
                 disabled={isLoading || !input.trim()}
-                className="rounded-2xl bg-academy-gold px-4 py-2 text-sm font-bold text-academy-ink shadow-gold transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none"
+                className="rounded-2xl bg-academy-gold px-4 py-2 text-sm font-bold text-academy-gold-text shadow-gold transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none"
               >
                 Envoyer
               </button>
@@ -146,7 +186,7 @@ export function AIChatWidget() {
           className="group flex items-center gap-3 rounded-full border border-academy-gold/70 bg-academy-ink px-5 py-4 text-white shadow-2xl transition hover:-translate-y-1 hover:shadow-gold"
           aria-label="Ouvrir le tchat IA Intégrale Academy"
         >
-          <span className="flex h-10 w-10 items-center justify-center rounded-full bg-academy-gold text-xl text-academy-ink">✦</span>
+          <span className="flex h-10 w-10 items-center justify-center rounded-full bg-academy-gold text-xl text-academy-gold-text">✦</span>
           <span className="hidden text-left sm:block">
             <span className="block text-sm font-bold">Assistant IA</span>
             <span className="block text-xs text-stone-300 group-hover:text-white">Une question ?</span>
