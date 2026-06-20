@@ -1,4 +1,26 @@
-import { Button, Hero, SectionTitle } from '@/components/ui';
-import { planning } from '@/data/planning';
-export const metadata={title:'Planning des formations',description:'Consultez les prochaines sessions APS, A3P, DESP et formations Intégrale Academy à Puget-sur-Argens, Paris et Aurillac.'};
-export default function Page(){return <><Hero badge="Planning" title="Planning des formations" subtitle="Consultez les prochaines sessions connues et contactez l’équipe pour réserver une place."/><section className="mx-auto max-w-7xl px-4 py-12"><SectionTitle title="Sessions programmées"/><div className="grid gap-5 md:grid-cols-2">{planning.map(s=><div key={s.formation+s.date} className="rounded-3xl bg-academy-surface p-6 shadow-soft ring-1 ring-academy-line"><div className="text-xl font-black">{s.formation}</div><p className="mt-2 text-academy-muted">{s.place}</p><p className="mt-2 font-semibold">{s.date}</p><p className="mt-2 text-sm text-academy-muted">Examen / jury : {s.exam}</p><p className="mt-2 text-sm text-green-700">{s.status}</p><div className="mt-5"><Button href="/contact">Inscription</Button></div></div>)}</div></section></>}
+import { listSessions } from '@/lib/training-data';
+import { PlanningClient } from './PlanningClient';
+
+export const dynamic = 'force-dynamic';
+
+export const metadata = {
+  title: 'Planning des prochaines formations',
+  description: 'Consultez les prochaines sessions APS, A3P, DESP, SSIAP 1, VTC et BTS en alternance chez Intégrale Academy.',
+};
+
+function parisDateKey(date = new Date()) {
+  return new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Paris', year: 'numeric', month: '2-digit', day: '2-digit' }).format(date);
+}
+
+function isPublicUpcomingSession(session: any) {
+  if (!session?.training?.isActive || session.status === 'HIDDEN') return false;
+  return parisDateKey(new Date(session.startDate)) >= parisDateKey();
+}
+
+export default async function Page() {
+  const sessions = (await listSessions())
+    .filter(isPublicUpcomingSession)
+    .sort((a: any, b: any) => +new Date(a.startDate) - +new Date(b.startDate));
+
+  return <PlanningClient initialSessions={JSON.parse(JSON.stringify(sessions))} />;
+}

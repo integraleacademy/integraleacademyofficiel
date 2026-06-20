@@ -1,5 +1,9 @@
+import { PublicTrainingSessions, isPublicUpcomingSession } from '@/components/PublicTrainingSessions';
 import { Button, ConversionStrip, FAQ, FeatureCard, Hero, SectionTitle } from '@/components/ui';
+import { listSessions } from '@/lib/training-data';
 import { formationFaq } from '@/data/faq';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata = {
   title: 'Formation DESP initial - Dirigeant sécurité privée',
@@ -37,10 +41,14 @@ const why = [
   'Accompagnement pédagogique et administratif jusqu’à l’examen.',
 ];
 
-export default function DespInitialPage(){
+async function getSessions(){return (await listSessions()).filter((session:any)=>isPublicUpcomingSession(session)&&['desp-initial','desp-dssp','desp'].includes(session.training?.slug));}
+
+export default async function DespInitialPage(){
+  const sessions = await getSessions();
   return <>
     <Hero badge="DESP · RNCP n°40385" title="Formation DESP initial" subtitle="Le parcours initial pour apprendre étape par étape à créer, reprendre ou diriger une entreprise de sécurité privée." actions={<><Button href="/contact">Inscription / devis</Button><Button href="/formations-securite/desp" variant="secondary">Comparer initial et VAE</Button></>}/>
     <section className="mx-auto max-w-7xl px-4 py-10"><div className="grid gap-4 md:grid-cols-3"><FeatureCard title="Durée">7 semaines · 245 heures</FeatureCard><FeatureCard title="Public concerné">Candidats souhaitant acquérir ou consolider les compétences de dirigeant en sécurité privée.</FeatureCard><FeatureCard title="Prérequis">Niveau 4 ou expérience à valider avec l’équipe admissions ; conditions CNAPS et honorabilité à vérifier.</FeatureCard><FeatureCard title="Lieux">Distanciel + présentiel à Paris, Puget-sur-Argens ou Aurillac selon les sessions.</FeatureCard><FeatureCard title="Financement">CPF, France Travail, entreprise ou facilités de paiement selon dossier.</FeatureCard><FeatureCard title="Certification / examen">DESP · RNCP n°40385 · agrément dirigeant CNAPS<br/>Tarif : 4300 €</FeatureCard></div></section>
+    <PublicTrainingSessions sessions={sessions} title="Prochaines dates DESP initial" intro="Dates, lieux, tarifs et places restantes proviennent directement de l’administration."/>
     <ConversionStrip/>
     <Info title="Objectifs de la formation" items={objectives}/>
     <Info title="Programme détaillé" items={program}/>

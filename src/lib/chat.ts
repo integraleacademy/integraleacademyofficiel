@@ -2,12 +2,24 @@ import { academyFallbackResponse, getRelevantKnowledge } from '@/lib/knowledge';
 import { getPrisma } from '@/lib/db';
 import { getRelevantDynamicTrainingData } from '@/lib/training-data';
 
-const PRICE_QUESTION_PATTERN = /\b(combien|cout|coût|coute|coûte|prix|tarif)\b/i;
+const PRICE_QUESTION_PATTERN = /\b(combien|cout|coût|coute|coûte|prix|tarif|montant)\b/i;
 const TARIFF_LINE_PATTERN = /Tarifs? indiqués?\s*:\s*(.*?€(?:.*?€)?)/i;
 
 export type ChatMessage = {
   role: 'user' | 'assistant';
   content: string;
+};
+
+export type ChatIntent = 'tarif' | 'durée' | 'financement' | 'inscription' | 'programme' | 'examen' | 'CNAPS' | 'rappel' | 'question générale';
+
+export type ChatQuickAction = { label: string; value: string; opensCallbackForm?: boolean };
+
+export type StructuredChatAnswer = {
+  answerText: string;
+  quickActions: ChatQuickAction[];
+  showCallbackForm: boolean;
+  suggestedNextStep: string;
+  intent: ChatIntent;
 };
 
 export type ChatDebugResult = {
@@ -21,11 +33,155 @@ export type ChatDebugResult = {
   contextPreview: string;
   rawOpenAIAnswer: string;
   finalAnswer: string;
+  structuredAnswer: StructuredChatAnswer;
   fallbackUsed: boolean;
   modelUsed: string;
   contextLength: number;
   finalAnswerLength: number;
 };
+
+const CALLBACK_ACTION_LABELS = ['Être rappelé', 'Vérifier mon financement', 'M’inscrire', 'Vérifier mon éligibilité VAE', 'Candidater'];
+
+type TrainingKey = 'aps' | 'a3p' | 'desp' | 'vtc' | 'bts' | 'unknown';
+
+function normalizeText(value: string) {
+  return value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+
+export function detectChatIntent(question: string): ChatIntent {
+  const q = normalizeText(question);
+  if (/\b(rappel|rappele|appeler|appelez|contact|telephone|rdv|rendez-vous)\b/.test(q)) return 'rappel';
+  if (/\b(inscri|inscription|candidater|candidate|postuler|dossier|reserver)\b/.test(q)) return 'inscription';
+  if (/\b(financement|financer|cpf|france travail|pole emploi|paiement|payer|prise en charge|aide)\b/.test(q)) return 'financement';
+  if (/\b(combien|cout|coute|coût|coûte|prix|tarif|montant)\b/.test(q)) return 'tarif';
+  if (/\b(duree|durée|temps|semaine|semaines|mois|heures|heure|longtemps)\b/.test(q)) return 'durée';
+  if (/\b(programme|contenu|module|apprendre|cours)\b/.test(q)) return 'programme';
+  if (/\b(examen|epreuve|épreuve|test|qcu|jury)\b/.test(q)) return 'examen';
+  if (/\b(cnaps|carte professionnelle|autorisation|agrement|agrément)\b/.test(q)) return 'CNAPS';
+  return 'question générale';
+}
+
+function detectTraining(question: string): TrainingKey {
+  const q = normalizeText(question);
+  if (/\b(desp|dssp|dirigeant|vae)\b/.test(q)) return 'desp';
+  if (/\b(a3p|apr|protection rapprochee|garde du corps|protection physique)\b/.test(q)) return 'a3p';
+  if (/\b(aps|agent de securite|prevention securite)\b/.test(q)) return 'aps';
+  if (/\b(vtc|chauffeur|conducteur)\b/.test(q)) return 'vtc';
+  if (/\b(bts|alternance|mco|ndrc|mos|immobilier|commerce international)\b/.test(q)) return 'bts';
+  return 'unknown';
+}
+
+function action(label: string, value: string): ChatQuickAction {
+  return { label, value, opensCallbackForm: CALLBACK_ACTION_LABELS.includes(label) };
+}
+
+function buildFallbackStructuredAnswer(intent: ChatIntent): StructuredChatAnswer {
+  const answerText = 'Je préfère vous faire confirmer ce point par l’équipe Intégrale Academy pour éviter de vous donner une mauvaise information.';
+  return {
+    answerText,
+    quickActions: [action('Être rappelé', 'Je veux être rappelé'), action('Poser une autre question', 'J’ai une autre question')],
+    showCallbackForm: false,
+    suggestedNextStep: 'Être rappelé',
+    intent,
+  };
+}
+
+function buildKnownStructuredAnswer(question: string): StructuredChatAnswer | null {
+  const intent = detectChatIntent(question);
+  const training = detectTraining(question);
+  const q = normalizeText(question);
+  const isVaeDesp = training === 'desp' && /\bvae\b/.test(q);
+
+  if (training === 'desp') {
+    if (intent === 'tarif') return {
+      answerText: 'La formation DESP est à 4 300 € en parcours initial.\n\nLa VAE DESP est à 3 800 €.\n\nLe parcours initial dure environ 7 semaines, soit 245 heures. Des financements peuvent être possibles selon votre situation : CPF, France Travail ou paiement en plusieurs fois.\n\nVous voulez que l’on vérifie rapidement votre financement ?',
+      quickActions: [action('Voir le programme DESP', 'Voir le programme DESP'), action('Vérifier mon financement', 'Vérifier mon financement DESP'), action('Être rappelé', 'Être rappelé pour le DESP'), action('M’inscrire', 'Je veux m’inscrire en DESP')],
+      showCallbackForm: false,
+      suggestedNextStep: 'Vérifier mon financement',
+      intent,
+    };
+    if (intent === 'durée' && isVaeDesp) return {
+      answerText: 'La VAE DESP dure généralement environ 1 mois, selon l’avancement de votre dossier et les éléments à préparer.\n\nL’équipe peut vous dire rapidement si votre expérience est suffisante pour partir sur une VAE.',
+      quickActions: [action('Vérifier mon éligibilité VAE', 'Vérifier mon éligibilité VAE DESP'), action('Être rappelé', 'Être rappelé pour la VAE DESP'), action('Voir la VAE DESP', 'Voir la VAE DESP')],
+      showCallbackForm: false,
+      suggestedNextStep: 'Vérifier mon éligibilité VAE',
+      intent,
+    };
+    if (intent === 'durée') return {
+      answerText: 'Le DESP en parcours initial dure environ 7 semaines, soit 245 heures.\n\nLa VAE DESP dure généralement environ 1 mois, selon votre dossier.\n\nVous hésitez entre l’initial et la VAE ?',
+      quickActions: [action('Voir le programme DESP', 'Voir le programme DESP'), action('Vérifier mon éligibilité VAE', 'Vérifier mon éligibilité VAE DESP'), action('Être rappelé', 'Être rappelé pour le DESP')],
+      showCallbackForm: false,
+      suggestedNextStep: 'Vérifier le parcours adapté',
+      intent,
+    };
+    if (intent === 'inscription' || intent === 'rappel') return {
+      answerText: 'Très bien. Pour une inscription en DESP, l’équipe peut vérifier avec vous le parcours le plus adapté : formation initiale ou VAE.\n\nVous pouvez laisser vos coordonnées et nous vous rappelons rapidement.',
+      quickActions: [action('Être rappelé', 'Être rappelé pour le DESP'), action('Voir le programme DESP', 'Voir le programme DESP'), action('Vérifier mon financement', 'Vérifier mon financement DESP')],
+      showCallbackForm: intent === 'rappel',
+      suggestedNextStep: 'Être rappelé',
+      intent,
+    };
+  }
+
+  if (training === 'aps' && intent === 'tarif') return {
+    answerText: 'Le tarif de la formation APS dépend du mode de financement et de votre situation.\n\nElle peut être financée selon les cas par CPF, France Travail ou un paiement personnel.\n\nLe plus simple est de vérifier votre situation rapidement pour vous donner le bon montant.',
+    quickActions: [action('Vérifier mon financement', 'Vérifier mon financement APS'), action('Voir la formation APS', 'Voir la formation APS'), action('Être rappelé', 'Être rappelé pour APS')],
+    showCallbackForm: false,
+    suggestedNextStep: 'Vérifier mon financement',
+    intent,
+  };
+
+  if (training === 'aps') return {
+    answerText: 'La formation APS permet de devenir Agent de Prévention et de Sécurité.\n\nC’est une formation réglementée pour accéder aux métiers de la sécurité privée et préparer la carte professionnelle CNAPS.\n\nVous souhaitez plutôt connaître le programme, le financement ou les prochaines étapes d’inscription ?',
+    quickActions: [action('Voir la formation APS', 'Voir la formation APS'), action('Vérifier mon financement', 'Vérifier mon financement APS'), action('Être rappelé', 'Être rappelé pour APS')],
+    showCallbackForm: false,
+    suggestedNextStep: 'Choisir une action APS',
+    intent,
+  };
+
+  if (training === 'a3p') return {
+    answerText: 'La formation A3P prépare au métier d’Agent de Protection Physique des Personnes, aussi appelé protection rapprochée ou garde du corps.\n\nC’est une formation réglementée, avec des conditions à vérifier avant l’entrée en formation.\n\nVous voulez voir le programme ou être rappelé pour vérifier votre profil ?',
+    quickActions: [action('Voir la formation A3P', 'Voir la formation A3P'), action('Être rappelé', 'Être rappelé pour A3P')],
+    showCallbackForm: false,
+    suggestedNextStep: 'Voir la formation A3P',
+    intent,
+  };
+
+  if (training === 'vtc') return {
+    answerText: 'La formation VTC prépare au métier de chauffeur VTC et à l’examen VTC.\n\nUn financement peut être étudié selon votre situation.\n\nVous voulez consulter le programme ou avancer sur une inscription ?',
+    quickActions: [action('Voir le programme VTC', 'Voir le programme VTC'), action('Être rappelé', 'Être rappelé pour VTC'), action('M’inscrire', 'Je veux m’inscrire en VTC')],
+    showCallbackForm: false,
+    suggestedNextStep: 'Voir le programme VTC',
+    intent,
+  };
+
+  if (training === 'bts') return {
+    answerText: 'Les BTS se font en alternance, avec un rythme entre l’école et l’entreprise.\n\nIntégrale Academy accompagne aussi les candidats dans la recherche d’entreprise et la préparation du dossier.\n\nVous voulez recevoir les infos ou candidater ?',
+    quickActions: [action('Être rappelé', 'Être rappelé pour un BTS'), action('Recevoir les infos', 'Recevoir les infos BTS'), action('Candidater', 'Candidater en BTS')],
+    showCallbackForm: false,
+    suggestedNextStep: 'Recevoir les infos BTS',
+    intent,
+  };
+
+  if (intent === 'financement') return {
+    answerText: 'Les financements possibles dépendent de votre formation et de votre situation.\n\nSelon les cas, l’équipe peut étudier le CPF, France Travail ou un paiement en plusieurs fois.\n\nVous voulez que l’on vérifie rapidement la solution la plus adaptée ?',
+    quickActions: [action('Vérifier mon financement', 'Vérifier mon financement'), action('Être rappelé', 'Être rappelé pour le financement'), action('Poser une autre question', 'J’ai une autre question')],
+    showCallbackForm: false,
+    suggestedNextStep: 'Vérifier mon financement',
+    intent,
+  };
+
+  return null;
+}
+
+function toStructuredAnswer(answerText: string, question: string): StructuredChatAnswer {
+  const intent = detectChatIntent(question);
+  if (answerText === academyFallbackResponse) return buildFallbackStructuredAnswer(intent);
+  const quickActions = intent === 'inscription' || intent === 'rappel'
+    ? [action('Être rappelé', 'Être rappelé'), action('Vérifier mon financement', 'Vérifier mon financement'), action('Poser une autre question', 'J’ai une autre question')]
+    : [action('Vérifier mon financement', 'Vérifier mon financement'), action('Être rappelé', 'Être rappelé'), action('Poser une autre question', 'J’ai une autre question')];
+  return { answerText, quickActions, showCallbackForm: false, suggestedNextStep: quickActions[0].label, intent };
+}
 
 
 function getReliableExtractedFacts(question: string, context: string) {
@@ -71,6 +227,10 @@ Règles strictes :
 - Tu peux être plus complet pour les sujets complexes comme CPF, France Travail, CNAPS, inscription ou financement.
 - Si le CONTEXTE ne contient vraiment pas l’information demandée ou si elle est incertaine, réponds exactement avec cette réponse de secours : "${academyFallbackResponse}"
 - Ne collecte pas de données sensibles dans le chat.
+- Ne commence jamais par "Pour Formation".
+- Ne copie jamais une phrase brute de la base de données : reformule proprement.
+- Pour un tarif, donne le prix en premier. Pour une durée, donne la durée en premier.
+- Termine par une question simple ou une action claire.
 ${reliableFacts ? `\n${reliableFacts}\nUtilise cette information uniquement comme repère fiable, puis reformule la réponse finale de manière naturelle et commerciale.` : ''}
 
 CONTEXTE STABLE :
@@ -151,11 +311,11 @@ function buildLocalKnowledgeAnswer(question: string, context: string) {
   const fundingLine = context.match(/^Financement\s*:\s*(.+)$/im)?.[1];
 
   if (/combien|coût|cout|coute|coûte|prix|tarif|montant/.test(q) && tariffLine) {
-    return `Pour ${title}, les tarifs indiqués sont : ${tariffLine}. ${durationLine ? `Durée : ${durationLine}. ` : ''}${fundingLine ? `Financement possible : ${fundingLine}. ` : ''}Pour confirmer votre dossier ou les modalités de prise en charge, contactez Intégrale Academy au 04 22 47 07 68.`;
+    return `Le tarif indiqué est : ${tariffLine}. ${durationLine ? `Durée : ${durationLine}. ` : ''}${fundingLine ? `Financement possible : ${fundingLine}. ` : ''}Vous souhaitez que l’équipe Intégrale Academy confirme votre dossier ?`;
   }
 
   if (/durée|duree|temps|combien de temps|semaine|mois/.test(q) && durationLine) {
-    return `Pour ${title}, la durée indiquée est : ${durationLine}. ${modalityLine ? `${modalityLine}. ` : ''}L’équipe peut confirmer la session adaptée à votre situation au 04 22 47 07 68.`;
+    return `La durée indiquée est : ${durationLine}. ${modalityLine ? `${modalityLine}. ` : ''}Vous souhaitez que l’équipe confirme la session adaptée à votre situation ?`;
   }
 
   return '';
@@ -181,6 +341,7 @@ export async function answerChatQuestion(messages: ChatMessage[]): Promise<ChatD
       contextPreview: '',
       rawOpenAIAnswer: '',
       finalAnswer: academyFallbackResponse,
+      structuredAnswer: buildFallbackStructuredAnswer('question générale'),
       fallbackUsed: true,
       modelUsed,
       contextLength: 0,
@@ -201,8 +362,10 @@ export async function answerChatQuestion(messages: ChatMessage[]): Promise<ChatD
     console.error('[CHAT] OpenAI request failed:', error);
   }
 
-  const finalAnswer = rawAnswer || buildLocalDynamicAnswer(latestUserMessage.content, dynamicTrainingContext) || buildLocalKnowledgeAnswer(latestUserMessage.content, context) || academyFallbackResponse;
-  const fallbackUsed = finalAnswer === academyFallbackResponse;
+  const knownStructuredAnswer = buildKnownStructuredAnswer(latestUserMessage.content);
+  const finalAnswer = knownStructuredAnswer?.answerText || rawAnswer || buildLocalDynamicAnswer(latestUserMessage.content, dynamicTrainingContext) || buildLocalKnowledgeAnswer(latestUserMessage.content, context) || academyFallbackResponse;
+  const structuredAnswer = knownStructuredAnswer || toStructuredAnswer(finalAnswer, latestUserMessage.content);
+  const fallbackUsed = structuredAnswer.answerText === buildFallbackStructuredAnswer(structuredAnswer.intent).answerText;
 
   if (shouldLogDebug()) {
     console.log('[CHAT DEBUG]', {
@@ -214,7 +377,7 @@ export async function answerChatQuestion(messages: ChatMessage[]): Promise<ChatD
     });
   }
 
-  try { const p = await getPrisma(); if (p) await p.chatConversationLog.create({data:{userMessage: latestUserMessage.content, assistantAnswer: finalAnswer, selectedKnowledgeFiles: selectedFiles.join(','), selectedSessions: dynamicData.selectedSessions.join(',')}}); } catch (e) { console.warn('[CHAT] log skipped', e); }
+  try { const p = await getPrisma(); if (p) await p.chatConversationLog.create({data:{userMessage: latestUserMessage.content, assistantAnswer: structuredAnswer.answerText, selectedKnowledgeFiles: selectedFiles.join(','), selectedSessions: dynamicData.selectedSessions.join(',')}}); } catch (e) { console.warn('[CHAT] log skipped', e); }
 
   return {
     ok: true,
@@ -227,6 +390,7 @@ export async function answerChatQuestion(messages: ChatMessage[]): Promise<ChatD
     contextPreview: combinedContext.slice(0, 1000),
     rawOpenAIAnswer: rawAnswer,
     finalAnswer,
+    structuredAnswer,
     fallbackUsed,
     modelUsed,
     contextLength: combinedContext.length,
