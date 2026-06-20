@@ -9,7 +9,7 @@ const PRICE_QUESTION_TERMS = ['combien', 'cout', 'coût', 'coute', 'coûte', 'pr
 const PRICE_LINE_TERMS = ['tarif', 'prix', 'coût', 'cout', 'montant'];
 
 export const academyFallbackResponse =
-  'Je préfère vous orienter vers notre équipe pour une réponse précise. Vous pouvez nous contacter au 04 22 47 07 68.';
+  'Je préfère vous faire confirmer ce point par l’équipe Intégrale Academy pour éviter de vous donner une mauvaise information.';
 
 export type KnowledgeDocument = {
   filePath: string;
