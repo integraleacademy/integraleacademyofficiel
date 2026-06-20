@@ -2,7 +2,6 @@ import { academyFallbackResponse, getRelevantKnowledge } from '@/lib/knowledge';
 
 const PRICE_QUESTION_PATTERN = /\b(combien|cout|coût|coute|coûte|prix|tarif)\b/i;
 const TARIFF_LINE_PATTERN = /Tarif indiqué\s*:\s*(\d[\d\s]*)\s*€/i;
-const APS_CONTEXT_PATTERN = /formation\s+APS|Agent de Prévention et de Sécurité|Fichier:\s*02-formations-aps\.md/i;
 
 export type ChatMessage = {
   role: 'user' | 'assistant';
@@ -17,50 +16,71 @@ export type ChatDebugResult = {
   rawOpenAIAnswer: string;
   finalAnswer: string;
   fallbackUsed: boolean;
+  modelUsed: string;
+  contextLength: number;
+  finalAnswerLength: number;
 };
 
 function formatEuroAmount(amount: string) {
   return Number(amount.replace(/\s/g, '')).toLocaleString('fr-FR');
 }
 
-function getDeterministicTariffAnswer(question: string, context: string) {
+function getReliableExtractedFacts(question: string, context: string) {
   if (!PRICE_QUESTION_PATTERN.test(question)) return '';
 
   const tariffMatch = context.match(TARIFF_LINE_PATTERN);
   if (!tariffMatch) return '';
 
-  const amount = formatEuroAmount(tariffMatch[1]);
-
-  if (APS_CONTEXT_PATTERN.test(context)) {
-    return `La formation APS est indiquée à ${amount} €. Elle dure 5 semaines, soit 175 heures, à Puget-sur-Argens / Côte d’Azur. Pour confirmer votre financement ou votre inscription, vous pouvez contacter Intégrale Academy au 04 22 47 07 68.`;
-  }
-
-  return `Le tarif indiqué est de ${amount} €. Pour confirmer votre financement ou votre inscription, vous pouvez contacter Intégrale Academy au 04 22 47 07 68.`;
+  return `Information fiable extraite du contexte : le tarif indiqué est de ${formatEuroAmount(tariffMatch[1])} €.`;
 }
 
-function buildSystemPrompt(context: string, message: string) {
-  return `Tu es l’assistant Intégrale Academy.
-Tu dois répondre uniquement à partir du CONTEXTE ci-dessous.
-Si le CONTEXTE contient l’information demandée, tu dois répondre directement.
-Tu ne dois utiliser la réponse de secours que si le CONTEXTE ne contient pas l’information.
+function buildSystemPrompt(context: string, message: string, reliableFacts: string) {
+  return `INSTRUCTIONS :
+Tu es l’assistant IA officiel d’Intégrale Academy.
+Tu réponds comme un conseiller formation professionnel, clair, rassurant et orienté conversion.
+
+Objectif :
+- répondre précisément à la question
+- utiliser uniquement les informations du contexte
+- donner une réponse naturelle et utile
+- valoriser la formation sans exagérer
+- orienter vers une inscription, un financement ou une prise de contact
+- poser une question de relance quand c’est pertinent
+
+Style :
+- ton humain, fluide, rassurant
+- phrases courtes mais pas robotiques
+- réponse développée quand la question le mérite
+- ne pas répondre en une seule phrase sèche
+- éviter les réponses trop longues sur mobile
+- ne pas inventer de dates, tarifs ou conditions
+
+Format recommandé :
+- réponse directe dès la première phrase
+- 2 à 4 informations utiles
+- une phrase de conseil
+- un appel à l’action clair
 
 Règles strictes :
-- Réponds en français comme un conseiller professionnel, clair et rassurant.
-- N'invente jamais de dates, tarifs, conditions, agréments ou modalités.
-- Pour une question de tarif, si une ligne "Tarif indiqué" est présente dans le CONTEXTE, donne ce tarif directement.
-- Si le CONTEXTE ne contient vraiment pas l'information demandée ou si elle est incertaine, réponds exactement avec cette réponse de secours : "${academyFallbackResponse}"
-- Oriente vers une inscription ou une prise de contact quand c'est pertinent.
-- Si l'utilisateur semble intéressé par une formation, tu peux proposer : "Souhaitez-vous laisser vos coordonnées pour être rappelé ?"
+- Réponds en français.
+- N’invente jamais de dates, tarifs, conditions, agréments, modalités ou places disponibles.
+- Pour une question simple, vise environ 120 à 220 mots maximum.
+- Tu peux être plus complet pour les sujets complexes comme CPF, France Travail, CNAPS, inscription ou financement.
+- Si le CONTEXTE ne contient vraiment pas l’information demandée ou si elle est incertaine, réponds exactement avec cette réponse de secours : "${academyFallbackResponse}"
 - Ne collecte pas de données sensibles dans le chat.
+${reliableFacts ? `\n${reliableFacts}\nUtilise cette information uniquement comme repère fiable, puis reformule la réponse finale de manière naturelle et commerciale.` : ''}
 
 CONTEXTE :
 ${context}
 
-QUESTION :
-${message}`;
+QUESTION DU VISITEUR :
+${message}
+
+CONSIGNE FINALE :
+Réponds uniquement à partir du contexte. Si le contexte contient l’information demandée, réponds de manière complète et commerciale. Utilise la réponse de secours uniquement si l’information n’est vraiment pas présente.`;
 }
 
-async function getOpenAIAnswer(messages: ChatMessage[], context: string, question: string) {
+async function getOpenAIAnswer(messages: ChatMessage[], context: string, question: string, reliableFacts: string, model: string) {
   if (!process.env.OPENAI_API_KEY) return '';
 
   const openaiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -70,21 +90,30 @@ async function getOpenAIAnswer(messages: ChatMessage[], context: string, questio
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      model: process.env.OPENAI_MODEL || 'gpt-4o-mini',
-      temperature: 0.2,
-      max_tokens: 500,
-      messages: [{ role: 'system', content: buildSystemPrompt(context, question) }, ...messages],
+      model,
+      temperature: Number(process.env.OPENAI_TEMPERATURE || 0.4),
+      max_tokens: Number(process.env.OPENAI_MAX_TOKENS || 900),
+      messages: [{ role: 'system', content: buildSystemPrompt(context, question, reliableFacts) }, ...messages],
     }),
   });
 
-  if (!openaiResponse.ok) return '';
+  if (!openaiResponse.ok) {
+    const errorText = await openaiResponse.text();
+    console.error('[CHAT] OpenAI response error:', openaiResponse.status, errorText.slice(0, 500));
+    return '';
+  }
 
   const data = await openaiResponse.json();
   return data?.choices?.[0]?.message?.content?.trim() || '';
 }
 
+function shouldLogDebug() {
+  return process.env.CHAT_DEBUG === 'true' || process.env.OPENAI_DEBUG === 'true';
+}
+
 export async function answerChatQuestion(messages: ChatMessage[]): Promise<ChatDebugResult> {
   const latestUserMessage = [...messages].reverse().find((message) => message.role === 'user');
+  const modelUsed = process.env.OPENAI_MODEL || 'gpt-5.4-mini';
 
   if (!latestUserMessage) {
     return {
@@ -95,34 +124,34 @@ export async function answerChatQuestion(messages: ChatMessage[]): Promise<ChatD
       rawOpenAIAnswer: '',
       finalAnswer: academyFallbackResponse,
       fallbackUsed: true,
+      modelUsed,
+      contextLength: 0,
+      finalAnswerLength: academyFallbackResponse.length,
     };
   }
 
   const { selectedFiles, context } = await getRelevantKnowledge(latestUserMessage.content);
+  const reliableFacts = getReliableExtractedFacts(latestUserMessage.content, context);
 
-  console.log('[CHAT] Question:', latestUserMessage.content);
-  console.log('[CHAT] Selected files:', selectedFiles);
-  console.log('[CHAT] Context preview:', context.slice(0, 500));
-
-  const deterministicAnswer = getDeterministicTariffAnswer(latestUserMessage.content, context);
   let rawAnswer = '';
-  let finalAnswer = deterministicAnswer;
-
-  if (!finalAnswer) {
-    try {
-      rawAnswer = await getOpenAIAnswer(messages, context, latestUserMessage.content);
-    } catch (error) {
-      console.error('[CHAT] OpenAI request failed:', error);
-    }
-
-    finalAnswer = rawAnswer || academyFallbackResponse;
+  try {
+    rawAnswer = await getOpenAIAnswer(messages, context, latestUserMessage.content, reliableFacts, modelUsed);
+  } catch (error) {
+    console.error('[CHAT] OpenAI request failed:', error);
   }
 
+  const finalAnswer = rawAnswer || academyFallbackResponse;
   const fallbackUsed = finalAnswer === academyFallbackResponse;
 
-  console.log('[CHAT] Context sent to OpenAI:', context.slice(0, 1000));
-  console.log('[CHAT] Raw OpenAI answer:', rawAnswer);
-  console.log('[CHAT] Final answer returned:', finalAnswer);
+  if (shouldLogDebug()) {
+    console.log('[CHAT DEBUG]', {
+      modelUsed,
+      selectedFiles,
+      contextLength: context.length,
+      finalAnswerLength: finalAnswer.length,
+      fallbackUsed,
+    });
+  }
 
   return {
     ok: true,
@@ -132,5 +161,8 @@ export async function answerChatQuestion(messages: ChatMessage[]): Promise<ChatD
     rawOpenAIAnswer: rawAnswer,
     finalAnswer,
     fallbackUsed,
+    modelUsed,
+    contextLength: context.length,
+    finalAnswerLength: finalAnswer.length,
   };
 }

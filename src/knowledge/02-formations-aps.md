@@ -26,3 +26,21 @@ Programme : cadre légal et déontologie de la sécurité privée, surveillance 
 Évaluation : QCU de 99 questions sur tablette avec note supérieure à 12/20 à chaque module, puis épreuve pratique en binôme d’environ 30 minutes avec gestion du PC sécurité et scénario statique ou dynamique.
 
 Financement : CPF, France Travail et facilités de paiement selon dossier.
+
+## Réponse commerciale recommandée
+
+La formation APS permet d’obtenir les compétences nécessaires pour exercer comme agent de prévention et de sécurité. Elle est particulièrement adaptée aux personnes qui souhaitent travailler rapidement dans la sécurité privée, sous réserve des conditions CNAPS.
+
+## Arguments à mettre en avant
+
+* Formation réglementée
+* Préparation au TFP APS
+* Durée claire : 175 heures
+* Accompagnement dans les démarches
+* Possibilités de financement selon la situation
+
+## Questions de relance possibles
+
+* Souhaitez-vous connaître les possibilités de financement ?
+* Avez-vous déjà une autorisation préalable CNAPS ?
+* Souhaitez-vous recevoir les informations pour vous inscrire ?
