@@ -43,6 +43,8 @@ model TrainingSession {
   status          TrainingSessionStatus @default(OPEN)
   seatsTotal      Int?
   seatsLeft       Int?
+  showSeatsLeft   Boolean               @default(true)
+  durationLabel   String?
   registrationUrl String?
   fundingNotes    String?
   publicNotes     String?
