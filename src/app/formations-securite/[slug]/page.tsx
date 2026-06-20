@@ -1,7 +1,6 @@
 import { notFound } from 'next/navigation';
 import { OrientationAssistant } from '@/components/OrientationAssistant';
-import { Button, ConversionStrip, FAQ, FeatureCard, Hero, SectionTitle } from '@/components/ui';
-import { VaeEligibilityModal } from '@/components/VaeEligibilityModal';
+import { Badge, Button, ConversionStrip, FAQ, FeatureCard, Hero, SectionTitle } from '@/components/ui';
 import { formationFaq } from '@/data/faq';
 import { formations } from '@/data/site';
 export function generateStaticParams(){return formations.filter(f=>f.category==='security').map(f=>({slug:f.slug.split('/').pop()!}))}

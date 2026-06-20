@@ -4,10 +4,10 @@ import { useState } from 'react';
 
 const simulatorUrl = 'https://assistance-alw9.onrender.com/simulateur-eligibilite-vae-desp';
 
-export function VaeEligibilityModal(){
+export function VaeEligibilityModal({label='Tester mon éligibilité à la VAE',className='inline-flex items-center justify-center rounded-full bg-academy-gold px-5 py-3 text-sm font-black text-academy-gold-text shadow-gold transition hover:-translate-y-0.5 hover:bg-academy-gold-strong focus:outline-none focus:ring-4 focus:ring-academy-gold/30'}:{label?:string;className?:string}){
   const [open,setOpen]=useState(false);
   return <>
-    <button type="button" onClick={()=>setOpen(true)} className="inline-flex items-center justify-center rounded-full bg-academy-gold px-5 py-3 text-sm font-black text-academy-gold-text shadow-gold transition hover:-translate-y-0.5 hover:bg-academy-gold-strong focus:outline-none focus:ring-4 focus:ring-academy-gold/30">Tester mon éligibilité à la VAE</button>
+    <button type="button" onClick={()=>setOpen(true)} className={className}>{label}</button>
     {open&&<div className="fixed inset-0 z-50 grid place-items-center bg-black/70 p-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-label="Simulateur d’éligibilité VAE DESP">
       <div className="flex h-[90vh] w-full max-w-5xl flex-col overflow-hidden rounded-[2rem] bg-academy-surface shadow-[0_30px_90px_rgba(0,0,0,.35)] ring-1 ring-white/20">
         <div className="flex items-center justify-between gap-4 border-b border-academy-line p-4 sm:p-5">
