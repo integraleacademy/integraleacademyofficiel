@@ -89,15 +89,15 @@ export function AIChatWidget() {
           <div className="flex-1 space-y-3 overflow-y-auto bg-stone-50 p-4 dark:bg-stone-900">
             {messages.map((message, index) => (
               <div key={`${message.role}-${index}`} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <p
-                  className={`max-w-[85%] rounded-2xl px-4 py-3 text-sm leading-relaxed shadow-sm ${
+                <div
+                  className={`max-w-[85%] whitespace-pre-line rounded-2xl px-4 py-3 text-sm leading-relaxed shadow-sm ${
                     message.role === 'user'
                       ? 'bg-academy-ink text-white'
                       : 'border border-academy-line bg-white text-academy-ink dark:border-stone-700 dark:bg-stone-800 dark:text-stone-100'
                   }`}
                 >
                   {message.content}
-                </p>
+                </div>
               </div>
             ))}
 
