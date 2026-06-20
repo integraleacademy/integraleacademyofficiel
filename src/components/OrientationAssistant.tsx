@@ -22,7 +22,7 @@ const formations: AssistantFormation[] = [
   { key: 'bts', label: 'Un BTS en alternance', icon: '◇', infoUrl: '/bts', rdvUrl: '/contact?formation=bts&type=rdv' },
 ];
 
-export function OrientationAssistant({initialFormationKey, initialStep}:{initialFormationKey?:FormationKey; initialStep?:Step} = {}){
+export function OrientationAssistant({initialFormationKey, initialStep, hideInfoAction = false}:{initialFormationKey?:FormationKey; initialStep?:Step; hideInfoAction?:boolean} = {}){
   const [isOpen, setIsOpen] = useState(true);
   const [step, setStep] = useState<Step>(initialStep ?? (initialFormationKey ? 2 : 1));
   const [selectedKey, setSelectedKey] = useState<FormationKey | null>(initialFormationKey ?? null);
@@ -70,8 +70,8 @@ export function OrientationAssistant({initialFormationKey, initialStep}:{initial
 
         {step === 2 && selectedFormation && <div className="space-y-4">
           <h3 className="text-xl font-black">Que souhaitez-vous faire&nbsp;?</h3>
-          <div className="grid gap-3 sm:grid-cols-2">
-            <Link href={selectedFormation.infoUrl} className="flex min-h-28 flex-col justify-between rounded-2xl border border-academy-line bg-white p-5 font-black shadow-sm transition hover:-translate-y-0.5 hover:border-academy-gold hover:shadow-gold"><span>Je souhaite des informations</span><span className="text-sm text-yellow-700">Voir la formation →</span></Link>
+          <div className={`grid gap-3 ${hideInfoAction ? '' : 'sm:grid-cols-2'}`}>
+            {!hideInfoAction && <Link href={selectedFormation.infoUrl} className="flex min-h-28 flex-col justify-between rounded-2xl border border-academy-line bg-white p-5 font-black shadow-sm transition hover:-translate-y-0.5 hover:border-academy-gold hover:shadow-gold"><span>Je souhaite des informations</span><span className="text-sm text-yellow-700">Voir la formation →</span></Link>}
             <button type="button" onClick={() => setStep(3)} className="flex min-h-28 flex-col justify-between rounded-2xl bg-academy-ink p-5 text-left font-black text-white shadow-soft transition hover:-translate-y-0.5 hover:bg-black active:translate-y-0"><span>Je souhaite m’inscrire</span><span className="text-sm text-academy-gold">Préparer mon rendez-vous →</span></button>
           </div>
         </div>}
@@ -79,7 +79,7 @@ export function OrientationAssistant({initialFormationKey, initialStep}:{initial
         {step === 3 && selectedFormation && <div className="rounded-[1.35rem] bg-academy-bg p-5">
           <h3 className="text-xl font-black">Parfait, nous pouvons vous rappeler</h3>
           <p className="mt-3 text-sm leading-7 text-stone-600">Nous vérifierons votre projet, vos financements possibles et les prochaines dates disponibles.</p>
-          <div className="mt-5 grid gap-3"><Link href={selectedFormation.rdvUrl} className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-academy-gold via-yellow-300 to-academy-gold px-5 py-3 text-sm font-black text-academy-ink shadow-gold transition hover:-translate-y-0.5">Réserver un rendez-vous téléphonique</Link><Link href={selectedFormation.infoUrl} className="inline-flex items-center justify-center rounded-full bg-white px-5 py-3 text-sm font-black text-academy-ink ring-1 ring-academy-line transition hover:-translate-y-0.5 hover:bg-stone-50">Voir d’abord les informations</Link></div>
+          <div className="mt-5 grid gap-3"><Link href={selectedFormation.rdvUrl} className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-academy-gold via-yellow-300 to-academy-gold px-5 py-3 text-sm font-black text-academy-ink shadow-gold transition hover:-translate-y-0.5">Réserver un rendez-vous téléphonique</Link>{!hideInfoAction && <Link href={selectedFormation.infoUrl} className="inline-flex items-center justify-center rounded-full bg-white px-5 py-3 text-sm font-black text-academy-ink ring-1 ring-academy-line transition hover:-translate-y-0.5 hover:bg-stone-50">Voir d’abord les informations</Link>}</div>
         </div>}
       </div>
 
