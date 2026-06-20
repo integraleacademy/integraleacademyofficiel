@@ -5,7 +5,27 @@ import path from 'node:path';
 
 const MIN_SELECTED_FILES = 3;
 const MAX_SELECTED_FILES = 6;
-const PRICE_QUESTION_TERMS = ['combien', 'cout', 'coût', 'coute', 'coûte', 'prix', 'tarif', 'montant'];
+const PRICE_QUESTION_TERMS = [
+  'prix',
+  'tarif',
+  'coût',
+  'cout',
+  'coûte',
+  'coute',
+  'combien',
+  'payer',
+  'frais',
+  'examen inclus',
+  'c’est combien',
+  "c'est combien",
+  'ça coûte combien',
+  'ca coute combien',
+  'combien ça coute',
+  'combien ca coute',
+  'combien ça coûte',
+  'combien ca coûte',
+  'montant',
+];
 const PRICE_LINE_TERMS = ['tarif', 'prix', 'coût', 'cout', 'montant'];
 
 export const academyFallbackResponse =
@@ -31,6 +51,7 @@ export type KnowledgeFilesResult = {
 export type RelevantKnowledgeResult = {
   documents: KnowledgeDocument[];
   selectedFiles: string[];
+  scoredDocuments: { filePath: string; score: number; preview: string }[];
   context: string;
 };
 
@@ -132,7 +153,13 @@ export async function getKnowledgeDocuments() {
   const documents = await Promise.all(
     knowledgeFiles.files.map(async (file) => {
       const raw = await readFile(file, 'utf8');
-      return parseFrontmatter(raw, path.relative(knowledgeFiles.knowledgePath, file), file);
+      const relativeFile = path.relative(knowledgeFiles.knowledgePath, file);
+      console.log(`[KNOWLEDGE] Fichier chargé: ${relativeFile}`);
+      console.log(`[KNOWLEDGE] Caractères chargés: ${raw.length}`);
+      if (relativeFile.toLowerCase().includes('vtc')) {
+        console.log(`[KNOWLEDGE] Vérification VTC 1600 € tout inclus: ${raw.includes('1600 € tout inclus') ? 'OK' : 'MANQUANT'}`);
+      }
+      return parseFrontmatter(raw, relativeFile, file);
     }),
   );
 
@@ -163,6 +190,7 @@ function scoreDocument(document: KnowledgeDocument, question: string) {
   }
 
   if (normalizedQuestion.includes('aps') && document.filePath.toLowerCase().includes('aps')) score += 100;
+  if (normalizedQuestion.includes('vtc') && document.filePath.toLowerCase().includes('vtc')) score += 100;
 
   return score;
 }
@@ -219,6 +247,11 @@ export async function getRelevantKnowledge(question: string): Promise<RelevantKn
   return {
     documents: selected,
     selectedFiles: selected.map((document) => document.filePath),
+    scoredDocuments: ranked.map((item) => ({
+      filePath: item.document.filePath,
+      score: item.score,
+      preview: item.document.content.replace(/\s+/g, ' ').trim().slice(0, 220),
+    })),
     context: buildKnowledgeContext(selected, question),
   };
 }

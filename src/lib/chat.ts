@@ -2,7 +2,7 @@ import { academyFallbackResponse, getRelevantKnowledge } from '@/lib/knowledge';
 import { getPrisma } from '@/lib/db';
 import { getRelevantDynamicTrainingData } from '@/lib/training-data';
 
-const PRICE_QUESTION_PATTERN = /\b(combien|cout|coût|coute|coûte|prix|tarif|montant)\b/i;
+const PRICE_QUESTION_PATTERN = /\b(prix|tarif|coût|cout|coûte|coute|combien|payer|frais|montant)\b|examen inclus|c[’']est combien|ça coûte combien|ca coute combien|combien ça coute|combien ca coute|combien ça coûte|combien ca coûte/i;
 const TARIFF_LINE_PATTERN = /Tarifs? indiqués?\s*:\s*(.*?€(?:.*?€)?)/i;
 
 export type ChatMessage = {
@@ -52,8 +52,8 @@ export function detectChatIntent(question: string): ChatIntent {
   const q = normalizeText(question);
   if (/\b(rappel|rappele|appeler|appelez|contact|telephone|rdv|rendez-vous)\b/.test(q)) return 'rappel';
   if (/\b(inscri|inscription|candidater|candidate|postuler|dossier|reserver)\b/.test(q)) return 'inscription';
-  if (/\b(financement|financer|cpf|france travail|pole emploi|paiement|payer|prise en charge|aide)\b/.test(q)) return 'financement';
-  if (/\b(combien|cout|coute|coût|coûte|prix|tarif|montant)\b/.test(q)) return 'tarif';
+  if (/\b(prix|tarif|cout|coute|combien|payer|frais|montant)\b|examen inclus|c[’']est combien|ca coute combien|combien ca coute/.test(q)) return 'tarif';
+  if (/\b(financement|financer|cpf|france travail|pole emploi|paiement|prise en charge|aide)\b/.test(q)) return 'financement';
   if (/\b(duree|durée|temps|semaine|semaines|mois|heures|heure|longtemps)\b/.test(q)) return 'durée';
   if (/\b(programme|contenu|module|apprendre|cours)\b/.test(q)) return 'programme';
   if (/\b(examen|epreuve|épreuve|test|qcu|jury)\b/.test(q)) return 'examen';
@@ -69,6 +69,27 @@ function detectTraining(question: string): TrainingKey {
   if (/\b(vtc|chauffeur|conducteur)\b/.test(q)) return 'vtc';
   if (/\b(bts|alternance|mco|ndrc|mos|immobilier|commerce international)\b/.test(q)) return 'bts';
   return 'unknown';
+}
+
+
+const VTC_PRICE_ANSWER = `La formation Chauffeur VTC coûte 1600 € tout inclus.
+
+Ce tarif comprend :
+- la formation théorique en ligne à distance ;
+- l’accès e-learning 24h/24 et 7j/7 ;
+- le livre officiel VTC ;
+- la formation pratique ;
+- le prêt du véhicule à doubles-commandes le jour de l’examen ;
+- l’essence ;
+- les péages ;
+- les frais d’examen de 221 €.
+
+Un financement peut être étudié selon votre situation.
+
+Pour avancer sur votre inscription, contactez-nous au 04 22 47 07 68.`;
+
+function isVtcPriceQuestion(question: string) {
+  return detectTraining(question) === 'vtc' && detectChatIntent(question) === 'tarif';
 }
 
 function action(label: string, value: string): ChatQuickAction {
@@ -139,11 +160,55 @@ function buildKnownStructuredAnswer(question: string): StructuredChatAnswer | nu
     intent,
   };
 
+  if (/frais.*examen|examen.*inclus/.test(q)) return {
+    answerText: `Oui, les frais d’examen VTC de 221 € sont inclus dans le tarif de la formation Chauffeur VTC à 1600 € tout inclus.
+
+Le tarif comprend aussi la théorie en e-learning, la pratique, le livre officiel VTC, le prêt du véhicule à doubles-commandes le jour de l’examen, l’essence et les péages.
+
+Pour avancer sur votre inscription, contactez-nous au 04 22 47 07 68.`,
+    quickActions: [action('M’inscrire', 'Je veux m’inscrire en VTC'), action('Être rappelé', 'Être rappelé pour VTC'), action('Voir le programme VTC', 'Voir le programme VTC')],
+    showCallbackForm: false,
+    suggestedNextStep: 'M’inscrire',
+    intent: 'tarif',
+  };
+
   if (training === 'a3p') return {
     answerText: 'La formation A3P prépare au métier d’Agent de Protection Physique des Personnes, aussi appelé protection rapprochée ou garde du corps.\n\nC’est une formation réglementée, avec des conditions à vérifier avant l’entrée en formation.\n\nVous voulez voir le programme ou être rappelé pour vérifier votre profil ?',
     quickActions: [action('Voir la formation A3P', 'Voir la formation A3P'), action('Être rappelé', 'Être rappelé pour A3P')],
     showCallbackForm: false,
     suggestedNextStep: 'Voir la formation A3P',
+    intent,
+  };
+
+  if (training === 'vtc' && intent === 'durée') return {
+    answerText: `La durée totale de la formation Chauffeur VTC est de 105 heures.
+
+Elle comprend 100 heures de formation théorique à distance en e-learning et 5 heures de formation pratique en présentiel.
+
+Pour avancer sur votre inscription, contactez-nous au 04 22 47 07 68.`,
+    quickActions: [action('M’inscrire', 'Je veux m’inscrire en VTC'), action('Être rappelé', 'Être rappelé pour VTC'), action('Voir le programme VTC', 'Voir le programme VTC')],
+    showCallbackForm: false,
+    suggestedNextStep: 'M’inscrire',
+    intent,
+  };
+
+  if (training === 'vtc' && /\b(pratique|lieu|ou|où|presentiel|présentiel)\b/.test(q)) return {
+    answerText: `La pratique VTC se déroule en présentiel sur véhicule homologué à doubles-commandes.
+
+Les lieux de pratique indiqués sont : Nice, Cannes, Toulon et Fréjus. Les lieux exacts et les créneaux sont confirmés lors de l’inscription selon l’organisation de la formation.
+
+Pour avancer sur votre inscription, contactez-nous au 04 22 47 07 68.`,
+    quickActions: [action('M’inscrire', 'Je veux m’inscrire en VTC'), action('Être rappelé', 'Être rappelé pour VTC'), action('Voir le programme VTC', 'Voir le programme VTC')],
+    showCallbackForm: false,
+    suggestedNextStep: 'M’inscrire',
+    intent,
+  };
+
+  if (training === 'vtc' && intent === 'tarif') return {
+    answerText: VTC_PRICE_ANSWER,
+    quickActions: [action('M’inscrire', 'Je veux m’inscrire en VTC'), action('Être rappelé', 'Être rappelé pour VTC'), action('Voir le programme VTC', 'Voir le programme VTC')],
+    showCallbackForm: false,
+    suggestedNextStep: 'M’inscrire',
     intent,
   };
 
@@ -201,6 +266,8 @@ Tu réponds comme un conseiller formation professionnel, clair, rassurant, humai
 Objectif :
 - répondre précisément à la question
 - utiliser uniquement les informations du contexte
+- répondre avec les informations précises de la base de connaissances
+- si un tarif, une durée, un lieu ou une date est présent dans les documents, le donner directement
 - donner une réponse naturelle et utile
 - valoriser la formation sans exagérer
 - orienter vers une inscription, un financement ou une prise de contact
@@ -233,17 +300,17 @@ Règles strictes :
 - Termine par une question simple ou une action claire.
 ${reliableFacts ? `\n${reliableFacts}\nUtilise cette information uniquement comme repère fiable, puis reformule la réponse finale de manière naturelle et commerciale.` : ''}
 
-CONTEXTE STABLE :
+CONTEXTE FORMATION :
 ${knowledgeContext}
 
 DONNÉES DYNAMIQUES :
 ${dynamicTrainingContext || 'Aucune donnée dynamique pertinente trouvée.'}
 
-QUESTION DU VISITEUR :
+QUESTION UTILISATEUR :
 ${message}
 
-CONSIGNE FINALE :
-Réponds uniquement à partir du contexte. Si le contexte contient l’information demandée, réponds précisément et naturellement. Si le contexte ne contient pas l’information, dis que l’équipe peut confirmer et donne le téléphone 04 22 47 07 68. Ne jamais utiliser les notes internes dans la réponse.`;
+CONSIGNE :
+Réponds uniquement avec les informations du contexte. Si le contexte contient un prix, donne le prix exact. Si le contexte contient une durée, un lieu ou une date, donne l’information exacte. Si le contexte ne contient pas l’information, dis que l’équipe peut confirmer et donne le téléphone 04 22 47 07 68. Ne jamais utiliser les notes internes dans la réponse.`;
 }
 
 async function getOpenAIAnswer(messages: ChatMessage[], context: string, dynamicTrainingContext: string, question: string, reliableFacts: string, model: string) {
@@ -349,14 +416,16 @@ export async function answerChatQuestion(messages: ChatMessage[]): Promise<ChatD
     };
   }
 
-  const { selectedFiles, context } = await getRelevantKnowledge(latestUserMessage.content);
+  const { selectedFiles, scoredDocuments, context } = await getRelevantKnowledge(latestUserMessage.content);
   const dynamicData = await getRelevantDynamicTrainingData(latestUserMessage.content);
   const dynamicTrainingContext = dynamicData.context;
   const combinedContext = [context, dynamicTrainingContext].filter(Boolean).join('\n\n--- DONNÉES DYNAMIQUES ---\n\n');
   const reliableFacts = getReliableExtractedFacts(latestUserMessage.content, combinedContext);
 
   let rawAnswer = '';
-  try {
+  if (isVtcPriceQuestion(latestUserMessage.content)) {
+    rawAnswer = '';
+  } else try {
     rawAnswer = await getOpenAIAnswer(messages, context, dynamicTrainingContext, latestUserMessage.content, reliableFacts, modelUsed);
   } catch (error) {
     console.error('[CHAT] OpenAI request failed:', error);
@@ -370,7 +439,11 @@ export async function answerChatQuestion(messages: ChatMessage[]): Promise<ChatD
   if (shouldLogDebug()) {
     console.log('[CHAT DEBUG]', {
       modelUsed,
+      question: latestUserMessage.content,
+      chunksFound: scoredDocuments.filter((item) => selectedFiles.includes(item.filePath)),
+      similarityScores: scoredDocuments,
       selectedFiles,
+      contextSentToModel: context,
       contextLength: combinedContext.length,
       finalAnswerLength: finalAnswer.length,
       fallbackUsed,
