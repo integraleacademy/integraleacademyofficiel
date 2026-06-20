@@ -57,6 +57,8 @@ function safeDate(value: string) {
   const trimmed = value.trim();
   const french = trimmed.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
   if (french) return new Date(`${french[3]}-${french[2]}-${french[1]}T00:00:00.000Z`);
+  const excelDateTime = trimmed.match(/^(\d{4})-(\d{2})-(\d{2})T/);
+  if (excelDateTime) return new Date(`${excelDateTime[1]}-${excelDateTime[2]}-${excelDateTime[3]}T00:00:00.000Z`);
   return /^\d{4}-\d{2}-\d{2}$/.test(trimmed) ? new Date(`${trimmed}T00:00:00.000Z`) : null;
 }
 
@@ -81,10 +83,14 @@ function workbookXml() {
 
 function cellsFromRow(rowXmlValue: string) {
   const cells = [...rowXmlValue.matchAll(/<Cell\b[^>]*>([\s\S]*?)<\/Cell>/gi)];
-  return cells.map(cell => {
+  const values: string[] = [];
+  cells.forEach(cell => {
+    const index = Number(attr(cell[0], 'ss:Index') || attr(cell[0], 'Index'));
+    const targetIndex = Number.isFinite(index) && index > 0 ? index - 1 : values.length;
     const data = cell[1].match(/<Data\b[^>]*>([\s\S]*?)<\/Data>/i);
-    return textOnly(data?.[1] || '');
+    values[targetIndex] = textOnly(data?.[1] || '');
   });
+  return values;
 }
 
 function rowsToSessions(rowsBySheet: Map<string, string[][]>) {
@@ -242,7 +248,7 @@ export async function POST(request: NextRequest) {
   if (parsed.length === 0) return NextResponse.json({ error: 'Aucune session importée. Vérifiez que le fichier est bien le modèle Excel avec les onglets attendus et que les dates début/fin sont remplies au format DD/MM/YYYY.' }, { status: 400 });
   await seedAdminData(prisma);
   const trainings = await prisma.training.findMany({ where: { slug: { in: [...new Set(sheets.map(sheet => sheet.slug))] } } });
-  const trainingBySlug = new Map(trainings.map((training: any) => [training.slug, training]));
+  const trainingBySlug = new Map<string, any>(trainings.map((training: any) => [training.slug, training]));
   await prisma.$transaction(async (tx: any) => {
     await tx.trainingSession.deleteMany({});
     for (const item of parsed) {
