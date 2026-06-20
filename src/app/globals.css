@@ -165,3 +165,38 @@
 .ai-typing-dot-3 { animation-delay: .32s; }
 @keyframes aiTypingBubble { from { opacity: 0; transform: translateY(6px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
 @keyframes aiTypingDot { 0%, 80%, 100% { opacity: .38; transform: translateY(0); } 40% { opacity: 1; transform: translateY(-3px); } }
+
+.session-seats-badge {
+  position: relative;
+  isolation: isolate;
+  animation: seatsBadgePulse 3.4s ease-in-out infinite;
+}
+
+.session-seats-badge::after {
+  content: '';
+  position: absolute;
+  inset: -.28rem;
+  z-index: -1;
+  border-radius: inherit;
+  background: radial-gradient(circle, rgb(var(--accent) / .18), transparent 68%);
+  opacity: .65;
+  animation: seatsBadgeHalo 3.4s ease-in-out infinite;
+}
+
+.session-seats-badge:hover {
+  box-shadow: 0 0 0 1px rgb(var(--accent) / .20), 0 12px 28px rgb(var(--accent) / .18);
+}
+
+@keyframes seatsBadgePulse {
+  0%, 100% { transform: scale(1); filter: saturate(1); }
+  48% { transform: scale(1.025); filter: saturate(1.08); }
+}
+
+@keyframes seatsBadgeHalo {
+  0%, 100% { opacity: .32; transform: scale(.95); }
+  48% { opacity: .78; transform: scale(1.12); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .session-seats-badge, .session-seats-badge::after { animation: none !important; transform: none !important; }
+}
