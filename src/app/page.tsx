@@ -1,4 +1,4 @@
-import { Button, ChatGptAgentBanner, ConversionStrip, FAQ, FeatureCard, FinancingCard, FormationCard, FullWidthBand, Hero, LocationCard, ProofBar, SectionTitle, StatCard } from '@/components/ui';
+import { Button, ChatGptAgentBanner, ConversionStrip, FAQ, FeatureCard, FinancingCard, FormationCard, FullWidthBand, Hero, Highlight, LocationCard, ProofBar, SectionTitle, StatCard } from '@/components/ui';
 import { OrientationAssistant } from '@/components/OrientationAssistant';
 import { FloatingBadge, VisualSection, VisualTimeline } from '@/components/visuals';
 import { globalFaq } from '@/data/faq';
@@ -10,7 +10,7 @@ export default function Home(){
   const securityHighlights=securityFormations.slice(0,6);
   const btsHighlights=bts.slice(0,6).map(x=>({title:x.title,short:x.desc,slug:x.slug,tags:x.tags}));
   return <>
-    <Hero badge="Centre de formation agréé" title="Formez-vous aux métiers de la sécurité, du commerce et du transport avec Intégrale Academy" subtitle="Centre de formation professionnelle spécialisé dans la sécurité privée, la sécurité incendie, le VTC et les BTS en alternance." actions={<><Button href="/formations-securite">Voir les formations</Button><Button href="/contact" variant="secondary">Être rappelé</Button><Button href="/contact" variant="ghost">Demander des informations</Button></>} visual={<OrientationAssistant/>}/>
+    <Hero badge="Centre de formation agréé" title={<>Formez-vous aux métiers qui <Highlight>recrutent</Highlight> vraiment.</>} subtitle="Centre de formation professionnelle spécialisé dans la sécurité privée, la sécurité incendie, le VTC et les BTS en alternance." actions={<><Button href="/formations-securite">Voir les formations</Button><Button href="/contact" variant="secondary">Être rappelé</Button><Button href="/contact" variant="ghost">Demander des informations</Button></>} visual={<OrientationAssistant/>}/>
     <div className="relative"><FloatingBadge tone="academy" className="right-[8%] top-8"/><ProofBar/></div>
     <ConversionStrip/>
     <ChatGptAgentBanner/>
