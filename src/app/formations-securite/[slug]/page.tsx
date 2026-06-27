@@ -48,30 +48,28 @@ const apsProgramModules = [
 const apsEnrollmentSteps = [
   {
     step: '01',
-    title: 'Premier rendez-vous',
-    text: "Nous vous invitons à convenir d'un rendez-vous téléphonique afin d'aborder ensemble votre projet APS, vos disponibilités et les prérequis CNAPS.",
-    note: 'Vous pouvez demander à être rappelé(e).',
+    title: 'Premier échange téléphonique',
+    text: 'Appelez-nous ou réservez un rendez-vous téléphonique afin que nous puissions faire le point sur votre projet APS, vos disponibilités, votre situation et les premières démarches à prévoir.',
   },
   {
     step: '02',
     title: 'Organisation de la formation',
-    text: "Lors de notre rendez-vous téléphonique, nous validons les détails pratiques : dates, lieu, rythme, examen et constitution du dossier.",
+    text: 'Nous vous expliquons le déroulement de la formation APS : dates, rythme, lieu, modalités pratiques, examen, documents à préparer et étapes administratives.',
   },
   {
     step: '03',
-    title: 'Identité Numérique La Poste',
-    text: 'Si vous souhaitez utiliser votre Compte Personnel de Formation (CPF) ou demander un financement à France Travail, vous devez créer votre Identité Numérique La Poste.',
-    note: 'Pour en savoir plus, contactez-nous.',
+    title: 'Financement & Identité Numérique La Poste',
+    text: 'Si vous souhaitez utiliser votre Compte Personnel de Formation (CPF) ou solliciter un financement France Travail, nous vous guidons sur les démarches à effectuer, notamment la création de votre Identité Numérique La Poste si nécessaire.',
   },
   {
     step: '04',
     title: 'Finalisation du dossier',
-    text: "Lors d'un second entretien téléphonique, nous finalisons ensemble votre inscription APS, votre financement et votre demande d'autorisation préalable CNAPS si nécessaire.",
+    text: 'Lors d’un second échange, nous vérifions ensemble votre inscription, votre financement, vos documents administratifs et, si nécessaire, votre demande d’autorisation préalable CNAPS.',
   },
   {
     step: '05',
     title: 'Validation & démarrage',
-    text: 'Votre dossier et votre financement sont validés ? Vous êtes inscrit, vous pouvez préparer votre entrée en formation APS.',
+    text: 'Une fois votre dossier et votre financement validés, votre inscription est confirmée. Vous recevez les dernières informations pratiques pour préparer sereinement votre entrée en formation APS.',
   },
 ];
 
