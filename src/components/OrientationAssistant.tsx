@@ -6,6 +6,7 @@ import { VaeEligibilityModal } from './VaeEligibilityModal';
 import { usePathname } from 'next/navigation';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { computedSeats, formatSessionDate } from '@/lib/public-sessions';
+import { securityFormations } from '@/data/formations';
 import { createPortal } from 'react-dom';
 
 type FormationKey = 'aps' | 'a3p' | 'desp' | 'vtc' | 'bts';
@@ -22,6 +23,7 @@ type AssistantFormation = {
 
 const calendlyDirigeantUrl = 'https://calendly.com/integraleacademy/dirigeant';
 const quoteRequestUrl = 'https://assistance-alw9.onrender.com/demande-informations-formations';
+const apsFormation = securityFormations.find(formation => formation.slug === '/formations-securite/aps');
 
 const formations: AssistantFormation[] = [
   { key: 'aps', label: 'Agent de sécurité privée (APS)', icon: '👮', infoUrl: '/formations-securite/aps', rdvUrl: '/contact?formation=aps&type=rdv' },
@@ -68,6 +70,11 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
       return;
     }
     setStep(2);
+  }
+
+  function startApsInformation(){
+    setStep('loading');
+    window.setTimeout(() => setStep('aps-result'), 1200);
   }
 
   function goBack(){
@@ -122,9 +129,11 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
           <h3 className="text-xl font-black">Que souhaitez-vous faire&nbsp;?</h3>
           <div className={`grid gap-3 ${shouldHideInfoAction ? '' : 'sm:grid-cols-2'}`}>
             {!shouldHideInfoAction && (selectedFormation.key === 'desp'
-              ? <button type="button" onClick={() => setStep(4)} className="flex min-h-28 flex-col justify-between rounded-2xl border border-academy-line bg-white p-5 text-left font-black shadow-sm transition hover:-translate-y-0.5 hover:border-academy-gold hover:shadow-gold"><span>Je souhaite des informations</span><span className="text-sm text-yellow-700">Répondre à une question →</span></button>
-              : <Link href={selectedFormation.infoUrl} className="flex min-h-28 flex-col justify-between rounded-2xl border border-academy-line bg-white p-5 font-black shadow-sm transition hover:-translate-y-0.5 hover:border-academy-gold hover:shadow-gold"><span>Je souhaite des informations</span><span className="text-sm text-yellow-700">Voir la formation →</span></Link>)}
-            <button type="button" onClick={() => setStep(3)} className="flex min-h-28 flex-col justify-between rounded-2xl bg-academy-ink p-5 text-left font-black text-white shadow-soft transition hover:-translate-y-0.5 hover:bg-black active:translate-y-0"><span>Je souhaite m’inscrire</span><span className="text-sm text-academy-gold">Préparer mon rendez-vous →</span></button>
+              ? <button type="button" onClick={() => setStep(4)} className="flex min-h-24 flex-col justify-between rounded-2xl border border-academy-line bg-white p-5 text-left font-black shadow-sm transition hover:-translate-y-0.5 hover:border-academy-gold hover:shadow-gold"><span>Je veux en savoir plus</span><span className="text-sm text-yellow-700">Répondre à une question →</span></button>
+              : selectedFormation.key === 'aps'
+                ? <button type="button" onClick={startApsInformation} className="flex min-h-24 flex-col justify-between rounded-2xl border border-academy-line bg-white p-5 text-left font-black shadow-sm transition hover:-translate-y-0.5 hover:border-academy-gold hover:shadow-gold"><span>Je veux en savoir plus</span><span className="text-sm text-yellow-700">Voir la réponse assistant →</span></button>
+                : <Link href={selectedFormation.infoUrl} className="flex min-h-24 flex-col justify-between rounded-2xl border border-academy-line bg-white p-5 font-black shadow-sm transition hover:-translate-y-0.5 hover:border-academy-gold hover:shadow-gold"><span>Je veux en savoir plus</span><span className="text-sm text-yellow-700">Voir la formation →</span></Link>)}
+            <button type="button" onClick={() => setStep(3)} className="flex min-h-24 flex-col justify-between rounded-2xl bg-academy-ink p-5 text-left font-black text-white shadow-soft transition hover:-translate-y-0.5 hover:bg-black active:translate-y-0"><span>Je souhaite m’inscrire</span><span className="text-sm text-academy-gold">Préparer mon rendez-vous →</span></button>
           </div>
         </div>}
 
@@ -187,7 +196,7 @@ function ApsAssistantResult({sessions,onBack}:{sessions:AssistantSession[];onBac
   const upcomingApsSessions = sessions
     .filter(session => session.training?.slug === 'aps')
     .sort((a,b) => +new Date(a.startDate) - +new Date(b.startDate))
-    .slice(0, 3);
+    .slice(0, 1);
   const keyPoints = [
     'Formation pour devenir agent de sécurité privée',
     'Formation en présentiel dans notre centre à Puget-sur-Argens',
@@ -196,19 +205,19 @@ function ApsAssistantResult({sessions,onBack}:{sessions:AssistantSession[];onBac
     'Accompagnement dans les démarches administratives',
   ];
 
-  return <div className="space-y-4 rounded-[1.35rem] border border-academy-gold/25 bg-gradient-to-br from-white via-[#FFFBF2] to-academy-bg p-5 shadow-soft sm:p-6">
+  return <div className="space-y-3 rounded-[1.35rem] border border-academy-gold/25 bg-gradient-to-br from-white via-[#FFFBF2] to-academy-bg p-4 shadow-soft sm:p-5">
     <div>
       <p className="text-xs font-black uppercase tracking-[.22em] text-academy-gold">Réponse assistant IA</p>
-      <h3 className="mt-2 text-2xl font-black tracking-tight">Formation Agent de sécurité privée (APS)</h3>
-      <p className="mt-3 text-sm font-semibold leading-6 text-stone-600">Voici les informations clés concernant la formation APS chez Intégrale Academy.</p>
+      <h3 className="mt-1 text-xl font-black tracking-tight sm:text-2xl">Formation Agent de sécurité privée (APS)</h3>
+      <p className="mt-2 text-sm font-semibold leading-6 text-stone-600">Voici les informations clés concernant la formation APS chez Intégrale Academy.</p>
     </div>
-    <div className="rounded-2xl border border-academy-line bg-white/80 p-4">
-      <p className="font-black">Informations clés</p>
-      <ul className="mt-3 space-y-2 text-sm font-semibold leading-6 text-stone-600">{keyPoints.map(point => <li key={point} className="flex gap-2"><span className="mt-1 text-academy-gold" aria-hidden="true">✓</span><span>{point}</span></li>)}</ul>
+    <div className="grid gap-2 sm:grid-cols-[.75fr_1.25fr]">
+      <div className="rounded-2xl border border-academy-line bg-white/85 p-3"><span className="block text-[10px] font-black uppercase tracking-[.15em] text-academy-muted/70">Tarif</span><span className="text-lg font-black text-academy-ink">{apsFormation?.price || 'Tarif sur demande'}</span></div>
+      <div className="rounded-2xl border border-academy-line bg-white/85 p-3"><p className="text-sm font-black">Informations clés</p><ul className="mt-2 space-y-1 text-xs font-semibold leading-5 text-stone-600 sm:text-sm">{keyPoints.map(point => <li key={point} className="flex gap-2"><span className="text-academy-gold" aria-hidden="true">✓</span><span>{point}</span></li>)}</ul></div>
     </div>
     <div>
-      <p className="font-black">Prochaines dates</p>
-      {upcomingApsSessions.length ? <div className="mt-3 grid gap-3">{upcomingApsSessions.map(session => <div key={session.id} className="rounded-2xl border border-academy-line bg-white p-4 shadow-sm">
+      <p className="font-black">Prochaine date</p>
+      {upcomingApsSessions.length ? <div className="mt-3 grid gap-3">{upcomingApsSessions.map(session => <div key={session.id} className="rounded-2xl border border-academy-line bg-white p-3 shadow-sm">
         <div className="grid gap-3 sm:grid-cols-2">
           <p><span className="block text-[10px] font-black uppercase tracking-[.15em] text-academy-muted/70">Début</span><span className="font-black">{formatSessionDate(session.startDate)}</span></p>
           <p><span className="block text-[10px] font-black uppercase tracking-[.15em] text-academy-muted/70">Fin</span><span className="font-black">{formatSessionDate(session.endDate)}</span></p>

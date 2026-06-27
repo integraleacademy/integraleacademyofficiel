@@ -66,6 +66,14 @@ export function SocialLinks({ tone = 'dark' }: { tone?: 'dark' | 'light' }){
   </div>
 }
 
+export function Highlight({children,variant='normal',className=''}:{children:React.ReactNode;variant?:'normal'|'large'|'subtle';className?:string}){
+  const variants={
+    normal:'from-[#F6C64A]/85 to-[#F6C64A]/85 bg-[length:100%_40%] [text-shadow:0_1px_0_rgba(255,255,255,.18)]',
+    large:'from-[#F6C64A]/90 to-[#F6C64A]/90 bg-[length:100%_45%] [text-shadow:0_1px_0_rgba(255,255,255,.2)]',
+    subtle:'from-[#F6C64A]/55 to-[#F6C64A]/55 bg-[length:100%_35%]',
+  } as const;
+  return <span className={`relative z-0 inline bg-gradient-to-r bg-left-bottom bg-no-repeat px-[0.08em] [border-radius:0.18em] [box-decoration-break:clone] [-webkit-box-decoration-break:clone] ${variants[variant]} ${className}`}>{children}</span>
+}
 export function Badge({children,tone='gold'}:{children:React.ReactNode;tone?:'gold'|'green'|'neutral'}){const c=tone==='green'?'bg-academy-green/10 text-green-700':tone==='gold'?'bg-academy-gold/25 text-stone-900':'bg-white text-stone-700 border border-academy-line';return <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${c}`}>{children}</span>}
 export function Button({href,children,variant='primary'}:{href:string;children:React.ReactNode;variant?:'primary'|'secondary'|'ghost'}){const c=variant==='primary'?'bg-academy-ink text-white hover:bg-black':variant==='secondary'?'bg-academy-gold text-academy-ink hover:brightness-95':'bg-white text-academy-ink ring-1 ring-academy-line hover:bg-stone-50';return <Link className={`inline-flex items-center justify-center rounded-full px-5 py-3 text-sm font-bold transition hover:-translate-y-0.5 ${c}`} href={href}>{children}</Link>}
 export function SectionTitle({eyebrow,title,children}:{eyebrow?:string;title:string;children?:React.ReactNode}){return <div className="mx-auto mb-10 max-w-3xl text-center reveal">{eyebrow&&<Badge>{eyebrow}</Badge>}<h2 className="mt-4 text-3xl font-black tracking-tight md:text-5xl">{title}</h2>{children&&<p className="mt-4 text-lg text-stone-600">{children}</p>}</div>}
@@ -139,7 +147,7 @@ export function ArtDirectionVisual({ world }: { world: ArtDirectionWorld }) {
   </div>;
 }
 
-export function Hero({badge,title,subtitle,actions,visual}:{badge?:string;title:string;subtitle:string;actions?:React.ReactNode;visual?:React.ReactNode}){return <section className="grid-soft gold-glow overflow-hidden px-4 py-16 md:py-24"><div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1.15fr_.85fr] lg:items-center"><div className="reveal">{badge&&<Badge>{badge}</Badge>}<h1 className="mt-5 text-4xl font-black tracking-tight md:text-6xl">{title}</h1><p className="mt-6 max-w-2xl text-lg leading-8 text-stone-600">{subtitle}</p>{actions&&<div className="mt-8 flex flex-wrap gap-3">{actions}</div>}</div>{visual ?? <div className="relative rounded-[2rem] bg-white/90 p-6 shadow-soft ring-1 ring-academy-line backdrop-blur reveal"><div className="rounded-[1.5rem] bg-academy-bg p-6"><p className="text-sm font-bold text-stone-500">Centres & modalités</p><div className="mt-5 grid gap-3">{contact.locations.map(l=><div key={l.name} className="rounded-2xl bg-white p-4"><b>{l.name}</b><p className="text-sm text-stone-600">{l.address}</p></div>)}</div></div></div>}</div></section>}
+export function Hero({badge,title,subtitle,actions,visual}:{badge?:string;title:React.ReactNode;subtitle:string;actions?:React.ReactNode;visual?:React.ReactNode}){return <section className="grid-soft gold-glow overflow-hidden px-4 py-16 md:py-24"><div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1.15fr_.85fr] lg:items-center"><div className="reveal">{badge&&<Badge>{badge}</Badge>}<h1 className="mt-5 text-4xl font-black tracking-tight md:text-6xl">{title}</h1><p className="mt-6 max-w-2xl text-lg leading-8 text-stone-600">{subtitle}</p>{actions&&<div className="mt-8 flex flex-wrap gap-3">{actions}</div>}</div>{visual ?? <div className="relative rounded-[2rem] bg-white/90 p-6 shadow-soft ring-1 ring-academy-line backdrop-blur reveal"><div className="rounded-[1.5rem] bg-academy-bg p-6"><p className="text-sm font-bold text-stone-500">Centres & modalités</p><div className="mt-5 grid gap-3">{contact.locations.map(l=><div key={l.name} className="rounded-2xl bg-white p-4"><b>{l.name}</b><p className="text-sm text-stone-600">{l.address}</p></div>)}</div></div></div>}</div></section>}
 const appointmentFormUrl = 'https://assistance-alw9.onrender.com/demande-informations-formations';
 
 function AppointmentButton(){
