@@ -1,5 +1,6 @@
 import { Button, ChatGptAgentBanner, ConversionStrip, FAQ, FeatureCard, FinancingCard, FormationCard, FullWidthBand, Hero, LocationCard, ProofBar, SectionTitle, StatCard } from '@/components/ui';
 import { OrientationAssistant } from '@/components/OrientationAssistant';
+import { GoogleReviewsSection } from '@/components/GoogleReviewsSection';
 import { FloatingBadge, VisualSection, VisualTimeline } from '@/components/visuals';
 import { globalFaq } from '@/data/faq';
 import { bts, contact, securityFormations, vtcFormation } from '@/data/site';
@@ -31,6 +32,7 @@ export default function Home(){
     <section className="mx-auto max-w-7xl px-4 py-12"><SectionTitle eyebrow="Nos centres" title="Paris, Côte d’Azur et Centre France"/><div className="grid gap-5 md:grid-cols-3">{contact.locations.map(l=><LocationCard key={l.name} {...l}/>)}</div></section>
     <section className="mx-auto max-w-7xl px-4 py-12"><SectionTitle eyebrow="Financements" title="Des solutions selon votre situation"/><div className="grid gap-5 md:grid-cols-4"><FinancingCard title="CPF" href="/financements/cpf">Mobilisable selon éligibilité de la formation.</FinancingCard><FinancingCard title="France Travail" href="/financements/france-travail">Accompagnement possible selon dossier.</FinancingCard><FinancingCard title="Alternance" href="/financements/alternance">BTS gratuits pour apprentis selon prise en charge.</FinancingCard><FinancingCard title="Entreprise / OPCO" href="/entreprises">Former salariés ou recruter un alternant.</FinancingCard></div></section>
     <section className="mx-auto max-w-7xl px-4 py-12"><div className="grid gap-4 md:grid-cols-4"><StatCard value="400 m²" label="Dédiés aux enseignements pratiques et théoriques"/><StatCard value="3" label="Implantations disponibles"/><StatCard value="10" label="Parcours formation et BTS présentés"/><StatCard value="08h-19h" label="Standard du lundi au vendredi"/></div></section>
+    <GoogleReviewsSection/>
     <FullWidthBand eyebrow="Inscription" title="Une prochaine session peut correspondre à votre projet" tone="light" actions={<><Button href="/contact">Demander des informations</Button><Button href="tel:0422470768" variant="secondary">Appeler</Button></>}>Indiquez votre formation cible, votre ville et votre mode de financement : l’équipe revient vers vous avec les informations utiles.</FullWidthBand>
     <section className="px-4 py-12"><SectionTitle eyebrow="FAQ" title="Questions fréquentes"/><FAQ items={globalFaq}/></section>
   </>
