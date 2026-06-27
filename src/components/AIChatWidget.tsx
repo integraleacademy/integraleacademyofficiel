@@ -100,25 +100,25 @@ export function AIChatWidget() {
   }
 
   return (
-    <div className="fixed bottom-4 right-3 z-50 sm:bottom-6 sm:right-6">
+    <div className={isOpen ? 'fixed inset-0 z-50 flex items-center justify-center bg-academy-ink/45 p-3 backdrop-blur-sm sm:p-6' : 'fixed bottom-4 right-3 z-50 sm:bottom-6 sm:right-6'}>
       {isOpen ? (
         <section
           aria-label="Tchat IA Intégrale Academy"
-          className="reveal flex h-[min(620px,calc(100vh-2rem))] w-[calc(100vw-1.5rem)] max-w-[23rem] flex-col overflow-hidden rounded-3xl border border-academy-gold/40 bg-white shadow-2xl dark:border-academy-gold/50 dark:bg-stone-950 sm:max-w-sm"
+          className="reveal flex h-[min(760px,calc(100vh-1.5rem))] w-full max-w-5xl flex-col overflow-hidden rounded-[2rem] border border-academy-gold/40 bg-white shadow-2xl dark:border-academy-gold/50 dark:bg-stone-950 sm:h-[min(780px,calc(100vh-3rem))]"
         >
-          <div className="flex items-start justify-between gap-4 bg-academy-ink p-4 text-white">
+          <div className="flex items-start justify-between gap-4 bg-academy-ink p-4 text-white sm:p-6">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[.24em] text-academy-gold">Assistant IA</p>
-              <h2 className="mt-1 text-lg font-bold">Intégrale Academy</h2>
-              <p className="mt-1 text-xs text-stone-300">Réponses courtes, financement, inscription</p>
+              <h2 className="mt-1 text-xl font-bold sm:text-2xl">Intégrale Academy</h2>
+              <p className="mt-1 text-xs text-stone-300 sm:text-sm">Réponses courtes, financement, inscription</p>
             </div>
-            <button type="button" onClick={() => setIsOpen(false)} className="rounded-full border border-white/20 px-3 py-1 text-sm text-white transition hover:border-academy-gold hover:text-academy-gold" aria-label="Fermer le tchat">✕</button>
+            <button type="button" onClick={() => setIsOpen(false)} className="rounded-full border border-white/20 px-4 py-2 text-sm font-bold text-white transition hover:border-academy-gold hover:text-academy-gold" aria-label="Réduire le tchat">Réduire</button>
           </div>
 
-          <div className="flex-1 space-y-3 overflow-y-auto bg-stone-50 p-3 dark:bg-stone-900 sm:p-4">
+          <div className="flex-1 space-y-4 overflow-y-auto bg-stone-50 p-4 dark:bg-stone-900 sm:p-6">
             {messages.map((message, index) => (
               <div key={`${message.role}-${index}`} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`max-w-[82%] rounded-2xl px-4 py-3 text-sm leading-relaxed shadow-sm ${message.role === 'user' ? 'bg-academy-ink text-white' : 'border border-academy-line bg-white text-academy-ink dark:border-stone-700 dark:bg-stone-800 dark:text-stone-100'}`}>
+                <div className={`max-w-[88%] rounded-2xl px-4 py-3 text-sm leading-relaxed sm:max-w-[74%] sm:text-base shadow-sm ${message.role === 'user' ? 'bg-academy-ink text-white' : 'border border-academy-line bg-white text-academy-ink dark:border-stone-700 dark:bg-stone-800 dark:text-stone-100'}`}>
                   <p className="whitespace-pre-line">{message.content}</p>
                   {message.role === 'assistant' && message.quickActions?.length ? (
                     <div className="mt-3 flex flex-wrap gap-2">
@@ -159,11 +159,11 @@ export function AIChatWidget() {
             <div ref={messagesEndRef} />
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-3 border-t border-academy-line bg-white p-3 dark:border-stone-700 dark:bg-stone-950 sm:p-4">
+          <form onSubmit={handleSubmit} className="space-y-3 border-t border-academy-line bg-white p-4 dark:border-stone-700 dark:bg-stone-950 sm:p-6">
             {error ? <p className="rounded-xl bg-red-50 px-3 py-2 text-xs text-red-700">{error}</p> : null}
             <div className="flex items-stretch gap-2">
-              <textarea value={input} onChange={(event) => setInput(event.target.value.slice(0, MAX_MESSAGE_LENGTH))} placeholder="Écrivez votre question..." rows={2} className="min-h-12 flex-1 resize-none rounded-2xl border border-academy-line bg-white px-3 py-2 text-sm text-academy-ink shadow-inner transition focus:border-academy-gold dark:border-stone-700 dark:bg-stone-900 dark:text-stone-100" />
-              <button type="submit" disabled={isLoading || !input.trim()} className="shrink-0 rounded-2xl bg-academy-gold px-4 py-2 text-sm font-black text-academy-gold-text shadow-gold transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none">Envoyer</button>
+              <textarea value={input} onChange={(event) => setInput(event.target.value.slice(0, MAX_MESSAGE_LENGTH))} placeholder="Écrivez votre question..." rows={3} className="min-h-16 flex-1 resize-none rounded-2xl border border-academy-line bg-white px-4 py-3 text-sm text-academy-ink shadow-inner transition focus:border-academy-gold dark:border-stone-700 dark:bg-stone-900 dark:text-stone-100 sm:text-base" />
+              <button type="submit" disabled={isLoading || !input.trim()} className="shrink-0 rounded-2xl bg-academy-gold px-5 py-3 text-sm font-black text-academy-gold-text shadow-gold transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none sm:px-6 sm:text-base">Envoyer</button>
             </div>
             <p className="text-[11px] leading-relaxed text-stone-500">Ne transmettez pas de données sensibles dans ce tchat.</p>
           </form>
