@@ -45,33 +45,31 @@ const apsProgramModules = [
   ['Risques professionnels et industriels', 'ICPE, risques SEVESO, EPI et plans d’intervention.'],
 ];
 
-const apsEnrollmentSteps = [
+const apsEnrollmentSteps: Array<{ step: string; title: string; text: string; note?: string }> = [
   {
     step: '01',
-    title: 'Premier rendez-vous',
-    text: "Nous vous invitons à convenir d'un rendez-vous téléphonique afin d'aborder ensemble votre projet APS, vos disponibilités et les prérequis CNAPS.",
-    note: 'Vous pouvez demander à être rappelé(e).',
+    title: 'Premier échange téléphonique',
+    text: 'Appelez-nous ou réservez un rendez-vous téléphonique afin que nous puissions faire le point sur votre projet APS, vos disponibilités, votre situation et les premières démarches à prévoir.',
   },
   {
     step: '02',
     title: 'Organisation de la formation',
-    text: "Lors de notre rendez-vous téléphonique, nous validons les détails pratiques : dates, lieu, rythme, examen et constitution du dossier.",
+    text: 'Nous vous expliquons le déroulement de la formation APS : dates, rythme, lieu, modalités pratiques, examen, documents à préparer et étapes administratives.',
   },
   {
     step: '03',
-    title: 'Identité Numérique La Poste',
-    text: 'Si vous souhaitez utiliser votre Compte Personnel de Formation (CPF) ou demander un financement à France Travail, vous devez créer votre Identité Numérique La Poste.',
-    note: 'Pour en savoir plus, contactez-nous.',
+    title: 'Financement & Identité Numérique La Poste',
+    text: 'Si vous souhaitez utiliser votre Compte Personnel de Formation (CPF) ou solliciter un financement France Travail, nous vous guidons sur les démarches à effectuer, notamment la création de votre Identité Numérique La Poste si nécessaire.',
   },
   {
     step: '04',
     title: 'Finalisation du dossier',
-    text: "Lors d'un second entretien téléphonique, nous finalisons ensemble votre inscription APS, votre financement et votre demande d'autorisation préalable CNAPS si nécessaire.",
+    text: 'Lors d’un second échange, nous vérifions ensemble votre inscription, votre financement, vos documents administratifs et, si nécessaire, votre demande d’autorisation préalable CNAPS.',
   },
   {
     step: '05',
     title: 'Validation & démarrage',
-    text: 'Votre dossier et votre financement sont validés ? Vous êtes inscrit, vous pouvez préparer votre entrée en formation APS.',
+    text: 'Une fois votre dossier et votre financement validés, votre inscription est confirmée. Vous recevez les dernières informations pratiques pour préparer sereinement votre entrée en formation APS.',
   },
 ];
 
@@ -111,7 +109,7 @@ function ApsCnapsBlock(){return <section className="mx-auto max-w-7xl px-4 py-14
 function ApsCpfButton({className=''}:{className?:string}){return <a href={apsCpfUrl} target="_blank" rel="noopener noreferrer" className={`inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-sky-500 px-5 py-3 text-sm font-black text-white shadow-[0_16px_38px_rgba(37,99,235,.28)] transition hover:-translate-y-0.5 hover:brightness-105 ${className}`}><span aria-hidden="true">🔐</span><span>S’inscrire avec mon CPF</span></a>}
 function ApsFunding(){return <ApsSection eyebrow="Budget" title={<>Tarif et <Highlight>financement</Highlight></>}><div className="grid gap-5 lg:grid-cols-[1fr_.75fr]"><div className="reveal rounded-[2rem] border border-academy-line bg-academy-elevated p-6 shadow-card sm:p-8"><p className="text-sm font-black uppercase tracking-[.2em] text-academy-gold">Tarif</p><p className="mt-2 text-5xl font-black">1 650 €</p><div className="mt-6 grid gap-3 sm:grid-cols-2">{['CPF possible','France Travail possible','Paiement x3, x4 ou x10','Conseiller dédié'].map(x=><p key={x} className={x==='CPF possible'?"rounded-2xl border border-blue-300 bg-blue-50 p-4 font-black text-blue-800 shadow-[0_14px_34px_rgba(37,99,235,.14)]":"rounded-2xl bg-academy-bg p-4 font-bold text-academy-muted"}>✓ {x}</p>)}</div><div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap"><ApsCpfButton/><Button href="/contact?formation=aps&objet=financement">Étudier mon financement</Button></div></div><div className="reveal rounded-[2rem] border border-blue-200 bg-blue-50 p-6 shadow-soft"><p className="inline-flex rounded-full bg-white px-3 py-1 text-xs font-black uppercase tracking-[.16em] text-blue-700 ring-1 ring-blue-100">CPF</p><h3 className="mt-4 text-2xl font-black">Inscription CPF possible</h3><p className="mt-4 text-lg font-bold leading-8 text-academy-muted">Vous pouvez vous inscrire directement à la formation APS depuis votre espace Mon Compte Formation. Si besoin, notre équipe vous accompagne dans les démarches.</p><div className="mt-6"><ApsCpfButton className="w-full"/></div></div></div></ApsSection>}
 
-function ApsFullWidthPromise(){return <section className="bg-gradient-to-r from-[#FAF7F0] via-white to-[#F3E8D0] px-4 py-14 sm:py-16"><div className="mx-auto grid max-w-7xl gap-5 lg:grid-cols-3"><div className="reveal rounded-[1.75rem] bg-[#111827] p-6 text-white shadow-card lg:col-span-1"><p className="text-xs font-black uppercase tracking-[.22em] text-academy-gold">Parcours guidé</p><h2 className="mt-3 text-3xl font-black">Une formation cadrée du premier contact à l’<Highlight>examen</Highlight></h2></div>{['On vérifie votre admissibilité, votre situation CNAPS et vos contraintes de financement avant de vous engager.','Vous avancez avec une page claire : objectifs, programme, dates, examen, tarif et CTA visibles à chaque étape.'].map(text=><div key={text} className="reveal rounded-[1.75rem] border border-academy-line bg-academy-elevated p-6 shadow-soft"><span className="grid h-10 w-10 place-items-center rounded-full bg-emerald-500 font-black text-white">✓</span><p className="mt-5 text-lg font-bold leading-8 text-academy-muted">{text}</p></div>)}</div></section>}
+function ApsFullWidthPromise(){return <section className="bg-gradient-to-r from-[#FAF7F0] via-white to-[#F3E8D0] px-4 py-14 sm:py-16"><div className="mx-auto grid max-w-7xl gap-5 lg:grid-cols-3"><div className="reveal rounded-[1.75rem] bg-[#111827] p-6 text-white shadow-card lg:col-span-1"><p className="text-xs font-black uppercase tracking-[.22em] text-academy-gold">Parcours guidé</p><h2 className="mt-3 text-3xl font-black">Nous vous accompagnons du premier échange jusqu’à l’<Highlight>examen</Highlight></h2></div>{['Avant toute inscription, nous vérifions avec vous votre situation, vos prérequis, vos disponibilités et les solutions de financement possibles.','À chaque étape, vous avancez clairement : programme, dates, financement, inscription et démarrage de la formation.'].map(text=><div key={text} className="reveal rounded-[1.75rem] border border-academy-line bg-academy-elevated p-6 shadow-soft"><span className="grid h-10 w-10 place-items-center rounded-full bg-emerald-500 font-black text-white">✓</span><p className="mt-5 text-lg font-bold leading-8 text-academy-muted">{text}</p></div>)}</div></section>}
 
 function ApsSection({eyebrow,title,intro,children}:{eyebrow:string;title:React.ReactNode;intro?:string;children:React.ReactNode}){return <section className="mx-auto max-w-7xl px-4 py-10 sm:py-14"><div className="mb-8 max-w-3xl"><p className="text-xs font-black uppercase tracking-[.24em] text-academy-gold">{eyebrow}</p><h2 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl">{title}</h2>{intro&&<p className="mt-4 text-lg leading-8 text-academy-muted">{intro}</p>}</div>{children}</section>}
 function ApsCard({icon,title,text}:{icon:string;title:string;text:string}){return <article className="reveal rounded-[1.5rem] border border-academy-line bg-academy-elevated p-5 shadow-soft transition duration-300 hover:-translate-y-1 hover:shadow-card"><span className="text-3xl">{icon}</span><h3 className="mt-4 text-xl font-black">{title}</h3><p className="mt-2 leading-7 text-academy-muted">{text}</p></article>}
