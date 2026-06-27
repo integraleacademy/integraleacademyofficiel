@@ -1,8 +1,11 @@
+export const trainingNavigation = [
+  {label:'Métiers de la sécurité', href:'/#formations-securite'},
+  {label:'BTS en alternance', href:'/#bts'},
+  {label:'Chauffeur VTC', href:'/vtc'},
+];
+
 export const navigation = [
-  {label:'Accueil', href:'/'},
-  {label:'Formations sécurité', href:'/formations-securite'},
-  {label:'BTS', href:'/bts'},
-  {label:'VTC', href:'/vtc'},
+  {label:'Nos formations', children:trainingNavigation},
   {label:'Financements', href:'/financements'},
   {label:'Entreprises', href:'/entreprises'},
   {label:'Planning', href:'/planning'},
