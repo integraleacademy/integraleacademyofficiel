@@ -30,34 +30,9 @@ const securityGroups: { key: SecurityGroupKey; title: string; intro: string; slu
   { key: 'desp', title: 'DESP / DSSP', intro: 'Dirigeant d’entreprise de sécurité privée : création, reprise, management ou VAE.', slugs: ['desp', 'desp-dssp', 'desp-initial', 'desp-vae'], badge: 'Direction sécurité' },
 ];
 
-function parisDateKey(date = new Date()) {
-  return new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Paris', year: 'numeric', month: '2-digit', day: '2-digit' }).format(date);
-}
-
-function daysUntilParis(value: string) {
-  const toUtcMidnight = (key: string) => { const [year, month, day] = key.split('-').map(Number); return Date.UTC(year, month - 1, day); };
-  return Math.ceil((toUtcMidnight(parisDateKey(new Date(value))) - toUtcMidnight(parisDateKey())) / 86400000);
-}
-
-function formatDate(value?: string) {
-  if (!value) return '';
-  return new Intl.DateTimeFormat('fr-FR', { timeZone: 'Europe/Paris', day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(value));
-}
-
 function sessionCategory(session: Session): CategoryKey | null {
   const slug = session.training?.slug;
   return categorySections.find(section => section.slugs.includes(slug))?.key || null;
-}
-
-function computedSeats(session: Session): number | null {
-  if (session.showSeatsLeft === false) return null;
-  if (session.seatsLeft !== null && session.seatsLeft !== undefined && session.seatsLeft !== '') return Number(session.seatsLeft);
-  const days = daysUntilParis(session.startDate);
-  if (days <= 15) return 2;
-  if (days <= 30) return 4;
-  if (days <= 45) return 5;
-  if (days <= 60) return 6;
-  return null;
 }
 
 function seatsBadge(seats: number | null) {
@@ -82,9 +57,9 @@ function SessionCard({ session, isNext, onRegister }: { session: Session; isNext
   const category = categorySections.find(section => section.key === sessionCategory(session));
   const title = session.training?.name || session.title;
   const infoItems = [
-    { label: 'Début', value: formatDate(session.startDate) },
-    { label: 'Fin', value: formatDate(session.endDate) },
-    session.examDate ? { label: 'Examen', value: formatDate(session.examDate) } : null,
+    { label: 'Début', value: formatSessionDate(session.startDate) },
+    { label: 'Fin', value: formatSessionDate(session.endDate) },
+    session.examDate ? { label: 'Examen', value: formatSessionDate(session.examDate) } : null,
     session.location ? { label: 'Lieu', value: session.location } : null,
     session.priceLabel ? { label: 'Prix', value: session.priceLabel } : null,
   ].filter(Boolean) as { label: string; value: string }[];
@@ -131,7 +106,7 @@ function RegistrationModal({ session, onClose }: { session: Session | null; onCl
   if (!session) return null;
 
   const title = session.training?.name || session.title;
-  const sessionLabel = `${formatDate(session.startDate)} → ${formatDate(session.endDate)}`;
+  const sessionLabel = `${formatSessionDate(session.startDate)} → ${formatSessionDate(session.endDate)}`;
   const hiddenSession = `${title} — ${sessionLabel}`;
 
   return <div className="fixed inset-0 z-50 grid place-items-center px-4 py-6" role="dialog" aria-modal="true" aria-labelledby="registration-modal-title">

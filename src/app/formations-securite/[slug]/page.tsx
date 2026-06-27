@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import { OrientationAssistant } from '@/components/OrientationAssistant';
-import { PublicTrainingSessions, isPublicUpcomingSession } from '@/components/PublicTrainingSessions';
+import { PublicTrainingSessions } from '@/components/PublicTrainingSessions';
+import { isPublicUpcomingSession } from '@/lib/public-sessions';
 import { listSessions } from '@/lib/training-data';
 import { VaeEligibilityModal } from '@/components/VaeEligibilityModal';
 import { Badge, Button, ConversionStrip, FAQ, FeatureCard, Hero, Highlight, SectionTitle } from '@/components/ui';
