@@ -55,7 +55,7 @@ export function isPublicUpcomingSession(session: PublicTrainingSession) {
   return parisDateKey(new Date(session.startDate)) >= parisDateKey();
 }
 
-export function PublicTrainingSessions({ sessions, title = 'Prochaines dates', intro = 'Dates, places et informations issues de l’administration.', displayLimit = 3, moreHref = '/planning#sessions' }: { sessions: PublicTrainingSession[]; title?: string; intro?: string; displayLimit?: number; moreHref?: string }) {
+export function PublicTrainingSessions({ sessions, title = 'Prochaines dates', intro = 'Dates, places et informations issues de l’administration.', displayLimit = 3, moreHref = '/planning#sessions' }: { sessions: PublicTrainingSession[]; title?: React.ReactNode; intro?: string; displayLimit?: number; moreHref?: string }) {
   const rows = sessions.filter(isPublicUpcomingSession).sort((a, b) => +new Date(a.startDate) - +new Date(b.startDate));
   const visibleRows = displayLimit > 0 ? rows.slice(0, displayLimit) : rows;
   const hiddenCount = Math.max(rows.length - visibleRows.length, 0);
