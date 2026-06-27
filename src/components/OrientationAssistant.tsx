@@ -4,7 +4,7 @@ import Link from 'next/link';
 import FinancingSimulator from './FinancingSimulator';
 import { VaeEligibilityModal } from './VaeEligibilityModal';
 import { usePathname } from 'next/navigation';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { computedSeats, formatSessionDate } from '@/lib/public-sessions';
 import { securityFormations } from '@/data/formations';
 import { createPortal } from 'react-dom';
@@ -26,10 +26,10 @@ const quoteRequestUrl = 'https://assistance-alw9.onrender.com/demande-informatio
 const apsFormation = securityFormations.find(formation => formation.slug === '/formations-securite/aps');
 
 const formations: AssistantFormation[] = [
-  { key: 'aps', label: 'Agent de sécurité privée (APS)', icon: '🛡️', infoUrl: '/formations-securite/aps', rdvUrl: '/contact?formation=aps&type=rdv' },
+  { key: 'aps', label: 'Agent de sécurité privée (APS)', icon: '👮', infoUrl: '/formations-securite/aps', rdvUrl: '/contact?formation=aps&type=rdv' },
   { key: 'a3p', label: 'Agent de protection physique des personnes (A3P)', icon: '◆', infoUrl: '/formations-securite/a3p-apr', rdvUrl: '/contact?formation=a3p&type=rdv' },
   { key: 'desp', label: 'Dirigeant d’entreprise de sécurité (DESP)', icon: '▣', infoUrl: '/formations-securite/desp', rdvUrl: '/contact?formation=desp&type=rdv' },
-  { key: 'vtc', label: 'Chauffeur VTC', icon: '✦', infoUrl: '/vtc', rdvUrl: '/contact?formation=vtc&type=rdv' },
+  { key: 'vtc', label: 'Chauffeur VTC', icon: '🚗', infoUrl: '/vtc', rdvUrl: '/contact?formation=vtc&type=rdv' },
   { key: 'bts', label: 'Un BTS en alternance', icon: '◇', infoUrl: '/bts', rdvUrl: '/contact?formation=bts&type=rdv' },
 ];
 
@@ -40,6 +40,7 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
   const [sessions, setSessions] = useState<AssistantSession[]>([]);
   const [selectedKey, setSelectedKey] = useState<FormationKey | null>(initialFormationKey ?? null);
   const [despExperience, setDespExperience] = useState<boolean | null>(null);
+  const loadingTimeoutRef = useRef<number | null>(null);
   const selectedFormation = useMemo(() => formations.find((formation) => formation.key === selectedKey) ?? null, [selectedKey]);
   const normalizedPathname = pathname?.replace(/\/$/, '') || '/';
   const isAlreadyOnSelectedFormation = Boolean(selectedFormation && normalizedPathname === selectedFormation.infoUrl);
@@ -52,9 +53,22 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
       .catch(() => setSessions([]));
   }, []);
 
+  useEffect(() => () => {
+    if (loadingTimeoutRef.current) window.clearTimeout(loadingTimeoutRef.current);
+  }, []);
+
   function chooseFormation(key: FormationKey){
+    if (loadingTimeoutRef.current) window.clearTimeout(loadingTimeoutRef.current);
     setSelectedKey(key);
     setDespExperience(null);
+    if (key === 'aps') {
+      setStep('loading');
+      loadingTimeoutRef.current = window.setTimeout(() => {
+        setStep('aps-result');
+        loadingTimeoutRef.current = null;
+      }, 1200);
+      return;
+    }
     setStep(2);
   }
 
@@ -64,6 +78,10 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
   }
 
   function goBack(){
+    if (loadingTimeoutRef.current) {
+      window.clearTimeout(loadingTimeoutRef.current);
+      loadingTimeoutRef.current = null;
+    }
     if(step === 4){
       setStep(2);
       setDespExperience(null);
@@ -85,14 +103,13 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
     <div className="relative">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <p className="text-xs font-black uppercase tracking-[.2em] text-yellow-700">Étape {step === 'formations' ? 1 : step === 'loading' ? 2 : Math.min(Number(step === 'aps-result' ? 2 : step), 3)} sur 3</p>
+          <p className="inline-flex items-center gap-2 rounded-full border border-academy-gold/30 bg-academy-gold/10 px-3 py-1.5 text-xs font-black uppercase tracking-[.18em] text-yellow-700"><span className="status-dot" aria-hidden="true" />Notre assistant est disponible</p>
           <h2 className="mt-2 text-2xl font-black tracking-tight sm:text-3xl">Notre assistant va vous aider</h2>
           <p className="mt-2 text-sm font-medium leading-6 text-stone-600">{step === 'formations' ? 'Je souhaite des renseignements concernant la formation :' : selectedFormation?.label}</p>
         </div>
         <button type="button" onClick={() => setIsOpen(false)} className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-academy-line bg-white text-lg font-black text-stone-500 transition hover:bg-stone-50 hover:text-academy-ink" aria-label="Réduire l’assistant">×</button>
       </div>
 
-      <div className="mt-5 h-1.5 overflow-hidden rounded-full bg-stone-100" aria-hidden="true"><div className="h-full rounded-full bg-gradient-to-r from-academy-gold to-yellow-300 transition-all duration-300" style={{ width: `${((step === 'formations' ? 1 : step === 'loading' ? 2 : Math.min(Number(step === 'aps-result' ? 2 : step), 3)) / 3) * 100}%` }}/></div>
 
       <div className="mt-6 transition-all duration-300">
         {step === 'formations' && <div className="grid gap-3">
@@ -154,7 +171,7 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
 function ApsAssistantLoading(){
   return <div className="overflow-hidden rounded-[1.35rem] border border-academy-gold/25 bg-gradient-to-br from-white via-[#FFFBF2] to-academy-bg p-5 shadow-soft">
     <div className="flex items-center gap-3">
-      <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-academy-gold/15 text-xl" aria-hidden="true">🛡️</span>
+      <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-academy-gold/15 text-xl" aria-hidden="true">👮</span>
       <div>
         <h3 className="text-lg font-black">Je recherche les informations sur la formation APS</h3>
         <div className="mt-2 flex gap-1" aria-hidden="true">{[0,1,2].map(index => <span key={index} className="h-2 w-2 rounded-full bg-academy-gold motion-safe:animate-pulse" style={{ animationDelay: `${index * 160}ms` }} />)}</div>
