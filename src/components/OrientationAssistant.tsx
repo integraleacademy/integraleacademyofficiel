@@ -36,6 +36,7 @@ const formations: AssistantFormation[] = [
 export function OrientationAssistant({initialFormationKey, initialStep, hideInfoAction = false}:{initialFormationKey?:FormationKey; initialStep?:Step; hideInfoAction?:boolean} = {}){
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(false);
   const [step, setStep] = useState<Step>(initialStep ?? (initialFormationKey ? 2 : 'formations'));
   const [sessions, setSessions] = useState<AssistantSession[]>([]);
   const [selectedKey, setSelectedKey] = useState<FormationKey | null>(initialFormationKey ?? null);
@@ -70,6 +71,7 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
       return;
     }
     setStep(2);
+    setIsExpanded(true);
   }
 
   function startApsInformation(){
@@ -92,13 +94,13 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
   }
 
   if(!isOpen){
-    return <button type="button" onClick={() => setIsOpen(true)} className="group fixed bottom-20 right-4 z-40 inline-flex max-w-[calc(100vw-2rem)] items-center gap-3 rounded-full border border-academy-gold/60 bg-white/95 px-4 py-3 text-left text-sm font-black text-academy-ink shadow-[0_18px_45px_rgba(17,17,17,.14)] backdrop-blur transition hover:-translate-y-0.5 hover:border-academy-gold md:bottom-6 md:right-6">
+    return <button type="button" onClick={() => { setIsOpen(true); setIsExpanded(false); }} className="group fixed bottom-20 right-4 z-40 inline-flex max-w-[calc(100vw-2rem)] items-center gap-3 rounded-full border border-academy-gold/60 bg-white/95 px-4 py-3 text-left text-sm font-black text-academy-ink shadow-[0_18px_45px_rgba(17,17,17,.14)] backdrop-blur transition hover:-translate-y-0.5 hover:border-academy-gold md:bottom-6 md:right-6">
       <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-academy-ink text-academy-gold transition group-hover:rotate-6" aria-hidden="true">?</span>
       <span>Être conseillé</span>
     </button>
   }
 
-  return <aside className="orientation-assistant relative mx-auto w-full max-w-xl overflow-hidden rounded-[1.5rem] border border-white/70 bg-white/95 p-4 text-academy-ink shadow-[0_28px_90px_rgba(17,17,17,.16)] ring-1 ring-academy-line backdrop-blur reveal sm:rounded-[2rem] sm:p-5" aria-label="Assistant d’orientation formation">
+  const assistantPanel = <aside className={`orientation-assistant relative mx-auto w-full overflow-hidden rounded-[1.5rem] border border-white/70 bg-white/95 p-4 text-academy-ink shadow-[0_28px_90px_rgba(17,17,17,.16)] ring-1 ring-academy-line backdrop-blur reveal sm:rounded-[2rem] sm:p-5 ${isExpanded ? 'max-w-4xl sm:p-7' : 'max-w-xl'}`} aria-label="Assistant d’orientation formation">
     <div className="absolute -right-16 -top-16 h-40 w-40 rounded-full bg-academy-gold/30 blur-3xl" aria-hidden="true"/>
     <div className="relative">
       <div className="flex items-start justify-between gap-4">
@@ -107,7 +109,7 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
           <h2 className="mt-2 text-2xl font-black tracking-tight sm:text-3xl">Notre assistant va vous aider</h2>
           <p className="mt-2 text-sm font-medium leading-6 text-stone-600">{step === 'formations' ? 'Je souhaite des renseignements concernant la formation :' : selectedFormation?.label}</p>
         </div>
-        <button type="button" onClick={() => setIsOpen(false)} className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-academy-line bg-white text-lg font-black text-stone-500 transition hover:bg-stone-50 hover:text-academy-ink" aria-label="Réduire l’assistant">×</button>
+        <button type="button" onClick={() => { if (isExpanded) setIsExpanded(false); else setIsOpen(false); }} className={isExpanded ? 'shrink-0 rounded-full border border-academy-line bg-white px-4 py-2 text-sm font-black text-stone-600 transition hover:bg-stone-50 hover:text-academy-ink' : 'grid h-10 w-10 shrink-0 place-items-center rounded-full border border-academy-line bg-white text-lg font-black text-stone-500 transition hover:bg-stone-50 hover:text-academy-ink'} aria-label="Réduire l’assistant">{isExpanded ? 'Réduire' : '×'}</button>
       </div>
 
 
@@ -164,7 +166,13 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
       {step !== 'formations' && <button type="button" onClick={goBack} className="mt-5 inline-flex items-center gap-2 rounded-full px-1 py-2 text-sm font-black text-stone-600 transition hover:text-yellow-700"><span aria-hidden="true">←</span> Retour</button>}
       <p className="mt-5 rounded-2xl bg-green-50 px-4 py-3 text-center text-xs font-black text-green-800">Réponse rapide • Conseils personnalisés • Financements possibles</p>
     </div>
-  </aside>
+  </aside>;
+
+  if (isExpanded) {
+    return <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-academy-ink/45 p-3 backdrop-blur-sm sm:p-6" role="presentation">{assistantPanel}</div>;
+  }
+
+  return assistantPanel;
 }
 
 
