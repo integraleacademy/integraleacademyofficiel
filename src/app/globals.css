@@ -282,3 +282,48 @@
 @media (prefers-reduced-motion: reduce) {
   .team-avatar, .team-avatar::before, .team-member-card, .animated-chip { animation: none !important; transform: none !important; }
 }
+
+.recognition-marquee-mask {
+  position: relative;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+}
+
+.recognition-marquee-track {
+  animation: recognitionMarquee 34s linear infinite;
+}
+
+@keyframes recognitionMarquee {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+@media (max-width: 767px) {
+  .recognition-marquee-section { min-height: 96px; }
+  .recognition-marquee-mask {
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 11%, #000 89%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 11%, #000 89%, transparent);
+  }
+  .recognition-marquee-track { animation-duration: 28s; }
+}
+
+@media (min-width: 768px) {
+  .recognition-marquee-section { min-height: 122px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .recognition-marquee-track {
+    animation: none !important;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: .85rem;
+    width: 100%;
+    transform: none !important;
+  }
+  .recognition-marquee-list[aria-hidden="true"] { display: none; }
+  .recognition-marquee-mask {
+    overflow: visible;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+}

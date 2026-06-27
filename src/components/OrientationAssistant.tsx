@@ -3,12 +3,14 @@
 import Link from 'next/link';
 import FinancingSimulator from './FinancingSimulator';
 import { VaeEligibilityModal } from './VaeEligibilityModal';
-import { usePathname, useRouter } from 'next/navigation';
-import { useMemo, useState } from 'react';
+import { usePathname } from 'next/navigation';
+import { useEffect, useMemo, useState } from 'react';
+import { computedSeats, formatSessionDate } from '@/lib/public-sessions';
 import { createPortal } from 'react-dom';
 
 type FormationKey = 'aps' | 'a3p' | 'desp' | 'vtc' | 'bts';
-type Step = 1 | 2 | 3 | 4;
+type Step = 'formations' | 'loading' | 'aps-result' | 2 | 3 | 4;
+type AssistantSession = { id: string; startDate: string; endDate: string; seatsLeft?: number | null; showSeatsLeft?: boolean | null; training?: { slug?: string; name?: string } | null; };
 
 type AssistantFormation = {
   key: FormationKey;
@@ -31,9 +33,9 @@ const formations: AssistantFormation[] = [
 
 export function OrientationAssistant({initialFormationKey, initialStep, hideInfoAction = false}:{initialFormationKey?:FormationKey; initialStep?:Step; hideInfoAction?:boolean} = {}){
   const pathname = usePathname();
-  const router = useRouter();
   const [isOpen, setIsOpen] = useState(true);
-  const [step, setStep] = useState<Step>(initialStep ?? (initialFormationKey ? 2 : 1));
+  const [step, setStep] = useState<Step>(initialStep ?? (initialFormationKey ? 2 : 'formations'));
+  const [sessions, setSessions] = useState<AssistantSession[]>([]);
   const [selectedKey, setSelectedKey] = useState<FormationKey | null>(initialFormationKey ?? null);
   const [despExperience, setDespExperience] = useState<boolean | null>(null);
   const selectedFormation = useMemo(() => formations.find((formation) => formation.key === selectedKey) ?? null, [selectedKey]);
@@ -41,10 +43,22 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
   const isAlreadyOnSelectedFormation = Boolean(selectedFormation && normalizedPathname === selectedFormation.infoUrl);
   const shouldHideInfoAction = hideInfoAction || isAlreadyOnSelectedFormation;
 
+  useEffect(() => {
+    fetch('/api/sessions')
+      .then(response => response.ok ? response.json() : Promise.reject())
+      .then(data => setSessions(Array.isArray(data.sessions) ? data.sessions : []))
+      .catch(() => setSessions([]));
+  }, []);
+
   function chooseFormation(key: FormationKey){
     setSelectedKey(key);
-    setStep(2);
     setDespExperience(null);
+    if (key === 'aps') {
+      setStep('loading');
+      window.setTimeout(() => setStep('aps-result'), 1200);
+      return;
+    }
+    setStep(2);
   }
 
   function goBack(){
@@ -53,7 +67,8 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
       setDespExperience(null);
       return;
     }
-    router.push('/');
+    setSelectedKey(null);
+    setStep('formations');
   }
 
   if(!isOpen){
@@ -68,23 +83,28 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
     <div className="relative">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <p className="text-xs font-black uppercase tracking-[.2em] text-yellow-700">Étape {Math.min(step, 3)} sur 3</p>
+          <p className="text-xs font-black uppercase tracking-[.2em] text-yellow-700">Étape {step === 'formations' ? 1 : step === 'loading' ? 2 : Math.min(Number(step === 'aps-result' ? 2 : step), 3)} sur 3</p>
           <h2 className="mt-2 text-2xl font-black tracking-tight sm:text-3xl">Notre assistant va vous aider</h2>
-          <p className="mt-2 text-sm font-medium leading-6 text-stone-600">{step === 1 ? 'Je souhaite des renseignements concernant la formation :' : selectedFormation?.label}</p>
+          <p className="mt-2 text-sm font-medium leading-6 text-stone-600">{step === 'formations' ? 'Je souhaite des renseignements concernant la formation :' : selectedFormation?.label}</p>
         </div>
         <button type="button" onClick={() => setIsOpen(false)} className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-academy-line bg-white text-lg font-black text-stone-500 transition hover:bg-stone-50 hover:text-academy-ink" aria-label="Réduire l’assistant">×</button>
       </div>
 
-      <div className="mt-5 h-1.5 overflow-hidden rounded-full bg-stone-100" aria-hidden="true"><div className="h-full rounded-full bg-gradient-to-r from-academy-gold to-yellow-300 transition-all duration-300" style={{ width: `${(Math.min(step, 3) / 3) * 100}%` }}/></div>
+      <div className="mt-5 h-1.5 overflow-hidden rounded-full bg-stone-100" aria-hidden="true"><div className="h-full rounded-full bg-gradient-to-r from-academy-gold to-yellow-300 transition-all duration-300" style={{ width: `${((step === 'formations' ? 1 : step === 'loading' ? 2 : Math.min(Number(step === 'aps-result' ? 2 : step), 3)) / 3) * 100}%` }}/></div>
 
       <div className="mt-6 transition-all duration-300">
-        {step === 1 && <div className="grid gap-3">
+        {step === 'formations' && <div className="grid gap-3">
           {formations.map((formation) => <button key={formation.key} type="button" onClick={() => chooseFormation(formation.key)} className="group flex w-full items-center gap-3 rounded-2xl border border-academy-line bg-white p-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-academy-gold hover:shadow-gold active:translate-y-0">
             <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-academy-bg text-lg font-black text-yellow-700 transition group-hover:bg-academy-ink group-hover:text-academy-gold" aria-hidden="true">{formation.icon}</span>
             <span className="flex-1 text-sm font-black leading-5 sm:text-base">{formation.label}</span>
             <span className="text-yellow-700 transition group-hover:translate-x-1" aria-hidden="true">→</span>
           </button>)}
         </div>}
+
+
+        {step === 'loading' && <ApsAssistantLoading />}
+
+        {step === 'aps-result' && <ApsAssistantResult sessions={sessions} onBack={() => { setSelectedKey(null); setStep('formations'); }} />}
 
         {step === 2 && selectedFormation && <div className="space-y-4">
           <h3 className="text-xl font-black">Que souhaitez-vous faire&nbsp;?</h3>
@@ -120,10 +140,75 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
         </div>}
       </div>
 
-      {step > 1 && <button type="button" onClick={goBack} className="mt-5 inline-flex items-center gap-2 rounded-full px-1 py-2 text-sm font-black text-stone-600 transition hover:text-yellow-700"><span aria-hidden="true">←</span> Retour</button>}
+      {step !== 'formations' && <button type="button" onClick={goBack} className="mt-5 inline-flex items-center gap-2 rounded-full px-1 py-2 text-sm font-black text-stone-600 transition hover:text-yellow-700"><span aria-hidden="true">←</span> Retour</button>}
       <p className="mt-5 rounded-2xl bg-green-50 px-4 py-3 text-center text-xs font-black text-green-800">Réponse rapide • Conseils personnalisés • Financements possibles</p>
     </div>
   </aside>
+}
+
+
+function ApsAssistantLoading(){
+  return <div className="overflow-hidden rounded-[1.35rem] border border-academy-gold/25 bg-gradient-to-br from-white via-[#FFFBF2] to-academy-bg p-5 shadow-soft">
+    <div className="flex items-center gap-3">
+      <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-academy-gold/15 text-xl" aria-hidden="true">🛡️</span>
+      <div>
+        <h3 className="text-lg font-black">Je recherche les informations sur la formation APS</h3>
+        <div className="mt-2 flex gap-1" aria-hidden="true">{[0,1,2].map(index => <span key={index} className="h-2 w-2 rounded-full bg-academy-gold motion-safe:animate-pulse" style={{ animationDelay: `${index * 160}ms` }} />)}</div>
+      </div>
+    </div>
+    <div className="mt-5 space-y-2" aria-hidden="true">
+      <div className="h-3 w-11/12 overflow-hidden rounded-full bg-academy-gold/10"><span className="block h-full w-1/2 rounded-full bg-gradient-to-r from-transparent via-academy-gold/35 to-transparent motion-safe:animate-pulse" /></div>
+      <div className="h-3 w-8/12 rounded-full bg-academy-gold/10" />
+      <div className="h-3 w-10/12 rounded-full bg-academy-gold/10" />
+    </div>
+  </div>;
+}
+
+function apsSeatLabel(session: AssistantSession){
+  const seats = computedSeats(session);
+  if (seats === null || Number.isNaN(seats)) return 'Places limitées';
+  if (seats < 4) return `Attention, il reste ${seats} place${seats > 1 ? 's' : ''}`;
+  return `${seats} places restantes`;
+}
+
+function ApsAssistantResult({sessions,onBack}:{sessions:AssistantSession[];onBack:()=>void}){
+  const upcomingApsSessions = sessions
+    .filter(session => session.training?.slug === 'aps')
+    .sort((a,b) => +new Date(a.startDate) - +new Date(b.startDate))
+    .slice(0, 3);
+  const keyPoints = [
+    'Formation pour devenir agent de sécurité privée',
+    'Formation en présentiel dans notre centre à Puget-sur-Argens',
+    'Préparation à l’examen permettant d’obtenir la carte professionnelle',
+    'Financements possibles selon votre situation',
+    'Accompagnement dans les démarches administratives',
+  ];
+
+  return <div className="space-y-4 rounded-[1.35rem] border border-academy-gold/25 bg-gradient-to-br from-white via-[#FFFBF2] to-academy-bg p-5 shadow-soft sm:p-6">
+    <div>
+      <p className="text-xs font-black uppercase tracking-[.22em] text-academy-gold">Réponse assistant IA</p>
+      <h3 className="mt-2 text-2xl font-black tracking-tight">Formation Agent de sécurité privée (APS)</h3>
+      <p className="mt-3 text-sm font-semibold leading-6 text-stone-600">Voici les informations clés concernant la formation APS chez Intégrale Academy.</p>
+    </div>
+    <div className="rounded-2xl border border-academy-line bg-white/80 p-4">
+      <p className="font-black">Informations clés</p>
+      <ul className="mt-3 space-y-2 text-sm font-semibold leading-6 text-stone-600">{keyPoints.map(point => <li key={point} className="flex gap-2"><span className="mt-1 text-academy-gold" aria-hidden="true">✓</span><span>{point}</span></li>)}</ul>
+    </div>
+    <div>
+      <p className="font-black">Prochaines dates</p>
+      {upcomingApsSessions.length ? <div className="mt-3 grid gap-3">{upcomingApsSessions.map(session => <div key={session.id} className="rounded-2xl border border-academy-line bg-white p-4 shadow-sm">
+        <div className="grid gap-3 sm:grid-cols-2">
+          <p><span className="block text-[10px] font-black uppercase tracking-[.15em] text-academy-muted/70">Début</span><span className="font-black">{formatSessionDate(session.startDate)}</span></p>
+          <p><span className="block text-[10px] font-black uppercase tracking-[.15em] text-academy-muted/70">Fin</span><span className="font-black">{formatSessionDate(session.endDate)}</span></p>
+        </div>
+        <p className={`mt-3 inline-flex rounded-full px-3 py-1 text-xs font-black ${computedSeats(session) !== null && Number(computedSeats(session)) < 4 ? 'bg-rose-100 text-rose-800' : 'bg-academy-gold/15 text-yellow-800'}`}>{apsSeatLabel(session)}</p>
+      </div>)}</div> : <p className="mt-3 rounded-2xl border border-dashed border-academy-line bg-white/70 p-4 text-sm font-bold text-academy-muted">Places limitées</p>}
+    </div>
+    <div className="grid gap-3 sm:grid-cols-2">
+      <Link href="/formations-securite/aps" className="inline-flex min-h-12 items-center justify-center rounded-full bg-academy-ink px-5 py-3 text-center text-sm font-black text-white shadow-soft transition hover:-translate-y-0.5 hover:bg-black">Je souhaite en savoir plus</Link>
+      <button type="button" onClick={onBack} className="inline-flex min-h-12 items-center justify-center rounded-full border border-academy-line bg-white px-5 py-3 text-sm font-black text-academy-ink transition hover:-translate-y-0.5 hover:border-academy-gold">Retour aux formations</button>
+    </div>
+  </div>;
 }
 
 
