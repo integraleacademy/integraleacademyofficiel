@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 
-type NavSubLink = readonly [string, string];
+type NavSubLink = readonly [string, string] | readonly [string, string, string, string];
 type NavLink = readonly [string, string | readonly NavSubLink[]];
 type MobileHeaderMenuProps = {
   nav: readonly NavLink[];
