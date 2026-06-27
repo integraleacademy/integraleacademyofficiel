@@ -46,34 +46,32 @@ const apsProgramModules = [
 const apsEnrollmentSteps = [
   {
     step: '01',
-    title: 'Premier rendez-vous',
-    text: "Nous vous invitons à convenir d'un rendez-vous téléphonique afin d'aborder ensemble votre projet APS, vos disponibilités et les prérequis CNAPS.",
-    note: 'Vous pouvez demander à être rappelé(e).',
+    title: 'Premier échange téléphonique',
+    text: 'Appelez-nous ou réservez un rendez-vous téléphonique afin que nous puissions faire le point sur votre projet APS, vos disponibilités, votre situation et les premières démarches à prévoir.',
   },
   {
     step: '02',
     title: 'Organisation de la formation',
-    text: "Lors de notre rendez-vous téléphonique, nous validons les détails pratiques : dates, lieu, rythme, examen et constitution du dossier.",
+    text: 'Nous vous expliquons le déroulement de la formation APS : dates, rythme, lieu, modalités pratiques, examen, documents à préparer et étapes administratives.',
   },
   {
     step: '03',
-    title: 'Identité Numérique La Poste',
-    text: 'Si vous souhaitez utiliser votre Compte Personnel de Formation (CPF) ou demander un financement à France Travail, vous devez créer votre Identité Numérique La Poste.',
-    note: 'Pour en savoir plus, contactez-nous.',
+    title: 'Financement & Identité Numérique La Poste',
+    text: 'Si vous souhaitez utiliser votre Compte Personnel de Formation (CPF) ou solliciter un financement France Travail, nous vous guidons sur les démarches à effectuer, notamment la création de votre Identité Numérique La Poste si nécessaire.',
   },
   {
     step: '04',
     title: 'Finalisation du dossier',
-    text: "Lors d'un second entretien téléphonique, nous finalisons ensemble votre inscription APS, votre financement et votre demande d'autorisation préalable CNAPS si nécessaire.",
+    text: 'Lors d’un second échange, nous vérifions ensemble votre inscription, votre financement, vos documents administratifs et, si nécessaire, votre demande d’autorisation préalable CNAPS.',
   },
   {
     step: '05',
     title: 'Validation & démarrage',
-    text: 'Votre dossier et votre financement sont validés ? Vous êtes inscrit, vous pouvez préparer votre entrée en formation APS.',
+    text: 'Une fois votre dossier et votre financement validés, votre inscription est confirmée. Vous recevez les dernières informations pratiques pour préparer sereinement votre entrée en formation APS.',
   },
 ];
 
-function ApsEnrollmentShowcase(){return <section className="relative isolate overflow-hidden bg-[linear-gradient(135deg,#111111,#263752_60%,#151515)] px-4 py-14 text-white md:py-20"><div className="absolute inset-0 -z-10 opacity-70"><div className="absolute -left-20 top-12 h-72 w-72 rounded-full bg-academy-gold/25 blur-3xl"/><div className="absolute -right-24 bottom-0 h-80 w-80 rounded-full bg-white/10 blur-3xl"/></div><div className="mx-auto max-w-7xl"><div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between"><div><Badge>Inscription et financement</Badge><h2 className="mt-4 text-3xl font-black tracking-tight md:text-5xl">Inscription en <Highlight>5 temps</Highlight></h2><p className="mt-4 max-w-3xl text-base leading-8 text-stone-200 md:text-lg">Nous vous accompagnons du premier rendez-vous téléphonique jusqu’à la validation du financement et au démarrage de votre formation APS.</p></div><div className="flex shrink-0 flex-wrap gap-3"><Button href="tel:0422470768" variant="secondary">Appeler</Button><Button href="/contact" variant="ghost">Être rappelé(e)</Button></div></div><div className="rounded-[2rem] bg-white/95 p-4 text-academy-ink shadow-[0_28px_90px_rgba(0,0,0,.28)] ring-1 ring-white/20 md:p-6"><div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">{apsEnrollmentSteps.map(item=><div key={item.step} className="rounded-2xl bg-academy-bg/70 p-4 ring-1 ring-academy-line"><span className="grid h-10 w-10 place-items-center rounded-full bg-academy-ink text-sm font-black text-academy-gold">{item.step}</span><h4 className="mt-4 font-black">{item.title}</h4><p className="mt-2 text-sm leading-6 text-stone-600">{item.text}</p>{item.step==='01'&&<div className="mt-4 flex flex-wrap gap-2"><Button href="tel:0422470768">Appeler</Button><Button href="/contact" variant="ghost">Être rappelé(e)</Button></div>}{item.step==='03'&&<div className="mt-4 inline-block rounded-xl bg-blue-50 px-3 py-2 text-sm font-black leading-5 text-blue-700 ring-1 ring-blue-100">L’Identité<br/>Numérique</div>}{item.note&&<p className="mt-3 text-sm font-bold text-academy-ink underline underline-offset-4">{item.note}</p>}</div>)}</div></div></div></section>}
+function ApsEnrollmentShowcase(){return <section className="relative isolate overflow-hidden bg-[linear-gradient(135deg,#111111,#263752_60%,#151515)] px-4 py-14 text-white md:py-20"><div className="absolute inset-0 -z-10 opacity-70"><div className="absolute -left-20 top-12 h-72 w-72 rounded-full bg-academy-gold/25 blur-3xl"/><div className="absolute -right-24 bottom-0 h-80 w-80 rounded-full bg-white/10 blur-3xl"/></div><div className="mx-auto max-w-7xl"><div className="mb-8 flex flex-col gap-5 md:flex-row md:items-end md:justify-between"><div><Badge>Inscription & financement</Badge><h2 className="mt-4 text-3xl font-black tracking-tight md:text-5xl">Inscription en <Highlight>5 étapes</Highlight></h2><p className="mt-4 max-w-3xl text-base leading-8 text-stone-200 md:text-lg">Nous vous accompagnons simplement, étape par étape, depuis le premier échange téléphonique jusqu’à la validation du financement et au démarrage de votre formation APS.</p></div><div className="flex shrink-0 flex-wrap gap-3"><Button href="tel:0422470768" variant="secondary">Appeler</Button><Button href="https://calendly.com/integraleacademy/aps" variant="ghost">Prendre un RDV téléphonique</Button></div></div><div className="rounded-[2rem] bg-white/95 p-4 text-academy-ink shadow-[0_28px_90px_rgba(0,0,0,.28)] ring-1 ring-white/20 sm:p-5 md:p-6"><div className="grid items-stretch gap-4 md:grid-cols-2 xl:grid-cols-5">{apsEnrollmentSteps.map(item=><article key={item.step} className="flex h-full flex-col rounded-[1.5rem] border border-academy-line bg-gradient-to-b from-white to-academy-bg/80 p-5 shadow-soft transition duration-300 hover:-translate-y-1 hover:shadow-card sm:p-6"><span className="grid h-12 w-12 place-items-center rounded-full bg-academy-ink text-sm font-black text-academy-gold shadow-soft">{item.step}</span><h4 className="mt-5 text-lg font-black leading-6 text-academy-ink">{item.title}</h4><p className="mt-3 flex-1 text-sm font-semibold leading-7 text-academy-muted">{item.text}</p>{item.step==='01'&&<div className="mt-5 flex flex-col gap-2"><Button href="tel:0422470768">Appeler</Button><Button href="https://calendly.com/integraleacademy/aps" variant="secondary">Prendre un RDV téléphonique</Button></div>}{item.step==='03'&&<div className="mt-5 flex flex-col gap-2"><Button href="https://lidentitenumerique.laposte.fr/" variant="secondary">Créer mon Identité Numérique</Button><Button href="tel:0422470768" variant="ghost">Nous contacter</Button></div>}</article>)}</div></div></div></section>}
 
 
 function apsHeroSeatsBadge(seats:any){if(seats===null||seats===undefined||seats==='')return null;const value=Number(seats);if(Number.isNaN(value))return null;if(value<=1)return {label:`${value} place restante`,className:'border-rose-300 bg-rose-100 text-rose-800 shadow-[0_0_24px_rgba(244,63,94,.18)]'};if(value===2)return {label:'Plus que 2 places',className:'border-rose-300 bg-rose-100 text-rose-800 shadow-[0_0_24px_rgba(244,63,94,.18)]'};if(value===4)return {label:'4 places restantes',className:'border-orange-300 bg-orange-100 text-orange-800 shadow-[0_0_22px_rgba(249,115,22,.16)]'};if(value===5)return {label:'5 places restantes',className:'border-amber-300 bg-amber-100 text-amber-800'};if(value===6)return {label:'6 places restantes',className:'border-emerald-300 bg-emerald-100 text-emerald-800 shadow-[0_0_22px_rgba(16,185,129,.14)]'};return {label:`${value} places restantes`,className:'border-amber-300 bg-amber-100 text-amber-800'}}
