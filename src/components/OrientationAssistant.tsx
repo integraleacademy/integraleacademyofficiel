@@ -24,6 +24,7 @@ type AssistantFormation = {
 const calendlyDirigeantUrl = 'https://calendly.com/integraleacademy/dirigeant';
 const quoteRequestUrl = 'https://assistance-alw9.onrender.com/demande-informations-formations';
 const apsFormation = securityFormations.find(formation => formation.slug === '/formations-securite/aps');
+const apsInformationLoadingDelayMs = 2600;
 
 const formations: AssistantFormation[] = [
   { key: 'aps', label: 'Agent de sécurité privée (APS)', icon: '👮', infoUrl: '/formations-securite/aps', rdvUrl: '/contact?formation=aps&type=rdv' },
@@ -68,15 +69,19 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
       loadingTimeoutRef.current = window.setTimeout(() => {
         setStep('aps-result');
         loadingTimeoutRef.current = null;
-      }, 1200);
+      }, apsInformationLoadingDelayMs);
       return;
     }
     setStep(2);
   }
 
   function startApsInformation(){
+    if (loadingTimeoutRef.current) window.clearTimeout(loadingTimeoutRef.current);
     setStep('loading');
-    window.setTimeout(() => setStep('aps-result'), 1200);
+    loadingTimeoutRef.current = window.setTimeout(() => {
+      setStep('aps-result');
+      loadingTimeoutRef.current = null;
+    }, apsInformationLoadingDelayMs);
   }
 
   function goBack(){
