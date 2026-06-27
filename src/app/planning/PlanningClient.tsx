@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
 import { Highlight } from '@/components/ui';
-import { computedSeats, formatSessionDate } from '@/lib/public-sessions';
 
 type Session = any;
 type CategoryKey = 'security' | 'fire' | 'vtc' | 'bts';
