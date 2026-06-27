@@ -1,6 +1,8 @@
 import { Button, ChatGptAgentBanner, ConversionStrip, FAQ, FeatureCard, FinancingCard, FormationCard, FullWidthBand, Hero, LocationCard, ProofBar, SectionTitle, StatCard } from '@/components/ui';
 import { OrientationAssistant } from '@/components/OrientationAssistant';
 import { GoogleReviewsSection } from '@/components/GoogleReviewsSection';
+import { RecognitionMarquee } from '@/components/RecognitionMarquee';
+import { CampusSection } from '@/components/CampusSection';
 import { FloatingBadge, VisualSection, VisualTimeline } from '@/components/visuals';
 import { globalFaq } from '@/data/faq';
 import { bts, contact, securityFormations, vtcFormation } from '@/data/site';
