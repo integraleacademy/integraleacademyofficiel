@@ -130,7 +130,7 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
 
         {step === 'loading' && <ApsAssistantLoading />}
 
-        {step === 'aps-result' && <ApsAssistantResult sessions={sessions} onBack={() => { setSelectedKey(null); setStep('formations'); }} hideBackAction={shouldHideInfoAction} />}
+        {step === 'aps-result' && <ApsAssistantResult sessions={sessions} onBack={() => { setSelectedKey(null); setStep('formations'); }} hideInfoAction={shouldHideInfoAction} />}
 
         {step === 2 && selectedFormation && <div className="space-y-4">
           <h3 className="text-xl font-black">Que souhaitez-vous faire&nbsp;?</h3>
@@ -169,7 +169,7 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
         </div>}
       </div>
 
-      {step !== 'formations' && !shouldHideInfoAction && <button type="button" onClick={goBack} className="mt-5 inline-flex items-center gap-2 rounded-full px-1 py-2 text-sm font-black text-stone-600 transition hover:text-yellow-700"><span aria-hidden="true">←</span> Retour</button>}
+      {step !== 'formations' && step !== 2 && <button type="button" onClick={goBack} className="mt-5 inline-flex items-center gap-2 rounded-full px-1 py-2 text-sm font-black text-stone-600 transition hover:text-yellow-700"><span aria-hidden="true">←</span> Retour</button>}
       <p className="mt-5 rounded-2xl bg-green-50 px-4 py-3 text-center text-xs font-black text-green-800">Réponse rapide • Conseils personnalisés • Financements possibles</p>
     </div>
   </aside>;
@@ -206,7 +206,7 @@ function apsSeatLabel(session: AssistantSession){
   return `${seats} places restantes`;
 }
 
-function ApsAssistantResult({sessions,onBack,hideBackAction=false}:{sessions:AssistantSession[];onBack:()=>void;hideBackAction?:boolean}){
+function ApsAssistantResult({sessions,onBack,hideInfoAction=false}:{sessions:AssistantSession[];onBack:()=>void;hideInfoAction?:boolean}){
   const upcomingApsSessions = sessions
     .filter(session => session.training?.slug === 'aps')
     .sort((a,b) => +new Date(a.startDate) - +new Date(b.startDate))
@@ -244,10 +244,10 @@ function ApsAssistantResult({sessions,onBack,hideBackAction=false}:{sessions:Ass
     </div>
     <div className="grid gap-3">
       <Link href="/contact?formation=aps&type=inscription" className="group relative inline-flex min-h-14 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-r from-academy-gold via-yellow-300 to-academy-gold px-5 py-3 text-center text-sm font-black text-academy-gold-text shadow-gold ring-2 ring-academy-gold/45 transition hover:-translate-y-1 hover:shadow-[0_22px_55px_rgba(180,124,31,.38)] focus:outline-none focus:ring-4 focus:ring-academy-gold/35"><span className="relative z-10">Je souhaite m’inscrire</span><span className="absolute inset-y-0 -left-1/2 w-1/2 skew-x-[-18deg] bg-white/35 transition group-hover:translate-x-[280%]" aria-hidden="true" /></Link>
-      {!hideBackAction && <div className="grid gap-3 sm:grid-cols-2">
-        <Link href="/formations-securite/aps" className="inline-flex min-h-12 items-center justify-center rounded-full bg-academy-ink px-5 py-3 text-center text-sm font-black text-white shadow-soft transition hover:-translate-y-0.5 hover:bg-black">Je souhaite en savoir plus</Link>
+      <div className={`grid gap-3 ${hideInfoAction ? '' : 'sm:grid-cols-2'}`}>
+        {!hideInfoAction && <Link href="/formations-securite/aps" className="inline-flex min-h-12 items-center justify-center rounded-full bg-academy-ink px-5 py-3 text-center text-sm font-black text-white shadow-soft transition hover:-translate-y-0.5 hover:bg-black">Je souhaite en savoir plus</Link>}
         <button type="button" onClick={onBack} className="inline-flex min-h-12 items-center justify-center rounded-full border border-academy-line bg-white px-5 py-3 text-sm font-black text-academy-ink transition hover:-translate-y-0.5 hover:border-academy-gold">Retour aux formations</button>
-      </div>}
+      </div>
     </div>
   </div>;
 }
