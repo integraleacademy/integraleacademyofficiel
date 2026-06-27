@@ -11,7 +11,7 @@ import { createPortal } from 'react-dom';
 
 type FormationKey = 'aps' | 'a3p' | 'desp' | 'vtc' | 'bts';
 type Step = 'formations' | 'loading' | 'aps-result' | 2 | 3 | 4;
-type AssistantSession = { id: string; startDate: string; endDate: string; seatsLeft?: number | null; showSeatsLeft?: boolean | null; training?: { slug?: string; name?: string } | null; };
+type AssistantSession = { id: string; startDate: string; endDate: string; examDate?: string | null; seatsLeft?: number | null; showSeatsLeft?: boolean | null; training?: { slug?: string; name?: string } | null; };
 
 type AssistantFormation = {
   key: FormationKey;
@@ -181,11 +181,12 @@ function ApsAssistantResult({sessions,onBack}:{sessions:AssistantSession[];onBac
     .sort((a,b) => +new Date(a.startDate) - +new Date(b.startDate))
     .slice(0, 1);
   const keyPoints = [
-    'Formation pour devenir agent de sécurité privée',
-    'Formation en présentiel dans notre centre à Puget-sur-Argens',
-    'Préparation à l’examen permettant d’obtenir la carte professionnelle',
-    'Financements possibles selon votre situation',
-    'Accompagnement dans les démarches administratives',
+    'Formation hybride : 62 h en e-learning + 113 h en présentiel',
+    `Durée : ${apsFormation?.duration || '175 heures au total'}`,
+    `Lieu : ${apsFormation?.locations || 'Puget-sur-Argens, Côte d’Azur'}`,
+    `Certification : ${apsFormation?.certification || 'TFP APS · RNCP n°36648 · niveau 3'}`,
+    'Examen final en présentiel : QCU sur tablette + mise en situation pratique',
+    `Financements : ${apsFormation?.financing || 'CPF, France Travail ou paiement en plusieurs fois'}`,
   ];
 
   return <div className="space-y-3 rounded-[1.35rem] border border-academy-gold/25 bg-gradient-to-br from-white via-[#FFFBF2] to-academy-bg p-4 shadow-soft sm:p-5">
@@ -194,23 +195,28 @@ function ApsAssistantResult({sessions,onBack}:{sessions:AssistantSession[];onBac
       <h3 className="mt-1 text-xl font-black tracking-tight sm:text-2xl">Formation Agent de sécurité privée (APS)</h3>
       <p className="mt-2 text-sm font-semibold leading-6 text-stone-600">Voici les informations clés concernant la formation APS chez Intégrale Academy.</p>
     </div>
-    <div className="grid gap-2 sm:grid-cols-[.75fr_1.25fr]">
-      <div className="rounded-2xl border border-academy-line bg-white/85 p-3"><span className="block text-[10px] font-black uppercase tracking-[.15em] text-academy-muted/70">Tarif</span><span className="text-lg font-black text-academy-ink">{apsFormation?.price || 'Tarif sur demande'}</span></div>
+    <div className="grid gap-2">
       <div className="rounded-2xl border border-academy-line bg-white/85 p-3"><p className="text-sm font-black">Informations clés</p><ul className="mt-2 space-y-1 text-xs font-semibold leading-5 text-stone-600 sm:text-sm">{keyPoints.map(point => <li key={point} className="flex gap-2"><span className="text-academy-gold" aria-hidden="true">✓</span><span>{point}</span></li>)}</ul></div>
+      <div className="rounded-2xl border border-academy-line bg-white/85 p-3"><span className="block text-[10px] font-black uppercase tracking-[.15em] text-academy-muted/70">Tarif</span><span className="text-lg font-black text-academy-ink">{apsFormation?.price || 'Tarif sur demande'}</span></div>
     </div>
     <div>
-      <p className="font-black">Prochaine date</p>
+      <p className="font-black">Prochaine formation</p>
       {upcomingApsSessions.length ? <div className="mt-3 grid gap-3">{upcomingApsSessions.map(session => <div key={session.id} className="rounded-2xl border border-academy-line bg-white p-3 shadow-sm">
-        <div className="grid gap-3 sm:grid-cols-2">
+        <div className="grid gap-3 sm:grid-cols-3">
           <p><span className="block text-[10px] font-black uppercase tracking-[.15em] text-academy-muted/70">Début</span><span className="font-black">{formatSessionDate(session.startDate)}</span></p>
           <p><span className="block text-[10px] font-black uppercase tracking-[.15em] text-academy-muted/70">Fin</span><span className="font-black">{formatSessionDate(session.endDate)}</span></p>
+          <p><span className="block text-[10px] font-black uppercase tracking-[.15em] text-academy-muted/70">Examen</span><span className="font-black">{session.examDate ? formatSessionDate(session.examDate) : 'À confirmer'}</span></p>
         </div>
         <p className={`mt-3 inline-flex rounded-full px-3 py-1 text-xs font-black ${computedSeats(session) !== null && Number(computedSeats(session)) < 4 ? 'bg-rose-100 text-rose-800' : 'bg-academy-gold/15 text-yellow-800'}`}>{apsSeatLabel(session)}</p>
       </div>)}</div> : <p className="mt-3 rounded-2xl border border-dashed border-academy-line bg-white/70 p-4 text-sm font-bold text-academy-muted">Places limitées</p>}
+      <p className="mt-2 text-xs font-bold leading-5 text-stone-600">Consultez toutes les dates en <Link href="/planning?formation=aps" className="font-black text-yellow-700 underline decoration-academy-gold/50 underline-offset-4 hover:text-academy-ink">cliquant ici</Link>.</p>
     </div>
-    <div className="grid gap-3 sm:grid-cols-2">
-      <Link href="/formations-securite/aps" className="inline-flex min-h-12 items-center justify-center rounded-full bg-academy-ink px-5 py-3 text-center text-sm font-black text-white shadow-soft transition hover:-translate-y-0.5 hover:bg-black">Je souhaite en savoir plus</Link>
-      <button type="button" onClick={onBack} className="inline-flex min-h-12 items-center justify-center rounded-full border border-academy-line bg-white px-5 py-3 text-sm font-black text-academy-ink transition hover:-translate-y-0.5 hover:border-academy-gold">Retour aux formations</button>
+    <div className="grid gap-3">
+      <Link href="/contact?formation=aps&type=inscription" className="group relative inline-flex min-h-14 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-r from-academy-gold via-yellow-300 to-academy-gold px-5 py-3 text-center text-sm font-black text-academy-gold-text shadow-gold ring-2 ring-academy-gold/45 transition hover:-translate-y-1 hover:shadow-[0_22px_55px_rgba(180,124,31,.38)] focus:outline-none focus:ring-4 focus:ring-academy-gold/35"><span className="relative z-10">Je souhaite m’inscrire</span><span className="absolute inset-y-0 -left-1/2 w-1/2 skew-x-[-18deg] bg-white/35 transition group-hover:translate-x-[280%]" aria-hidden="true" /></Link>
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Link href="/formations-securite/aps" className="inline-flex min-h-12 items-center justify-center rounded-full bg-academy-ink px-5 py-3 text-center text-sm font-black text-white shadow-soft transition hover:-translate-y-0.5 hover:bg-black">Je souhaite en savoir plus</Link>
+        <button type="button" onClick={onBack} className="inline-flex min-h-12 items-center justify-center rounded-full border border-academy-line bg-white px-5 py-3 text-sm font-black text-academy-ink transition hover:-translate-y-0.5 hover:border-academy-gold">Retour aux formations</button>
+      </div>
     </div>
   </div>;
 }
