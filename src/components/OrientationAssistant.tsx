@@ -62,6 +62,7 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
     if (loadingTimeoutRef.current) window.clearTimeout(loadingTimeoutRef.current);
     setSelectedKey(key);
     setDespExperience(null);
+    setIsExpanded(true);
     if (key === 'aps') {
       setStep('loading');
       loadingTimeoutRef.current = window.setTimeout(() => {
@@ -71,7 +72,6 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
       return;
     }
     setStep(2);
-    setIsExpanded(true);
   }
 
   function startApsInformation(){
