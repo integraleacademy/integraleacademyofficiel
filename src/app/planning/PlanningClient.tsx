@@ -30,34 +30,9 @@ const securityGroups: { key: SecurityGroupKey; title: string; intro: string; slu
   { key: 'desp', title: 'DESP / DSSP', intro: 'Dirigeant d’entreprise de sécurité privée : création, reprise, management ou VAE.', slugs: ['desp', 'desp-dssp', 'desp-initial', 'desp-vae'], badge: 'Direction sécurité' },
 ];
 
-function parisDateKey(date = new Date()) {
-  return new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Paris', year: 'numeric', month: '2-digit', day: '2-digit' }).format(date);
-}
-
-function daysUntilParis(value: string) {
-  const toUtcMidnight = (key: string) => { const [year, month, day] = key.split('-').map(Number); return Date.UTC(year, month - 1, day); };
-  return Math.ceil((toUtcMidnight(parisDateKey(new Date(value))) - toUtcMidnight(parisDateKey())) / 86400000);
-}
-
-function formatDate(value?: string) {
-  if (!value) return '';
-  return new Intl.DateTimeFormat('fr-FR', { timeZone: 'Europe/Paris', day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(value));
-}
-
 function sessionCategory(session: Session): CategoryKey | null {
   const slug = session.training?.slug;
   return categorySections.find(section => section.slugs.includes(slug))?.key || null;
-}
-
-function computedSeats(session: Session): number | null {
-  if (session.showSeatsLeft === false) return null;
-  if (session.seatsLeft !== null && session.seatsLeft !== undefined && session.seatsLeft !== '') return Number(session.seatsLeft);
-  const days = daysUntilParis(session.startDate);
-  if (days <= 15) return 2;
-  if (days <= 30) return 4;
-  if (days <= 45) return 5;
-  if (days <= 60) return 6;
-  return null;
 }
 
 function seatsBadge(seats: number | null) {
@@ -82,9 +57,9 @@ function SessionCard({ session, isNext, onRegister }: { session: Session; isNext
   const category = categorySections.find(section => section.key === sessionCategory(session));
   const title = session.training?.name || session.title;
   const infoItems = [
-    { label: 'Début', value: formatDate(session.startDate) },
-    { label: 'Fin', value: formatDate(session.endDate) },
-    session.examDate ? { label: 'Examen', value: formatDate(session.examDate) } : null,
+    { label: 'Début', value: formatSessionDate(session.startDate) },
+    { label: 'Fin', value: formatSessionDate(session.endDate) },
+    session.examDate ? { label: 'Examen', value: formatSessionDate(session.examDate) } : null,
     session.location ? { label: 'Lieu', value: session.location } : null,
     session.priceLabel ? { label: 'Prix', value: session.priceLabel } : null,
   ].filter(Boolean) as { label: string; value: string }[];
@@ -131,7 +106,7 @@ function RegistrationModal({ session, onClose }: { session: Session | null; onCl
   if (!session) return null;
 
   const title = session.training?.name || session.title;
-  const sessionLabel = `${formatDate(session.startDate)} → ${formatDate(session.endDate)}`;
+  const sessionLabel = `${formatSessionDate(session.startDate)} → ${formatSessionDate(session.endDate)}`;
   const hiddenSession = `${title} — ${sessionLabel}`;
 
   return <div className="fixed inset-0 z-50 grid place-items-center px-4 py-6" role="dialog" aria-modal="true" aria-labelledby="registration-modal-title">
@@ -193,7 +168,7 @@ function SecurityGroupedSessions({ rows, expandedGroups, onToggleMore, onRegiste
 
 function EmptyState({ category }: { category: CategoryKey }) {
   return <div className="rounded-[2rem] border border-dashed border-academy-line bg-white/70 p-8 text-center shadow-soft dark:bg-white/10">
-    <p className="text-2xl font-black">Aucune date disponible actuellement</p>
+    <p className="text-2xl font-black">Aucune <Highlight variant="subtle">session disponible</Highlight> actuellement</p>
     <p className="mx-auto mt-3 max-w-xl text-academy-muted">L’équipe peut vous prévenir dès qu’une nouvelle session est ouverte dans cette catégorie.</p>
     <Link href={`/contact?motif=alerte-planning&categorie=${category}`} className="mt-6 inline-flex rounded-full bg-academy-gold px-5 py-3 text-sm font-black text-academy-gold-text transition hover:-translate-y-0.5">Être prévenu des prochaines dates</Link>
   </div>;
@@ -218,7 +193,7 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
       </div>
     </section>
     <div id="sessions" className="sticky top-[4.5rem] z-30 border-y border-academy-line bg-academy-surface/86 px-4 py-3 backdrop-blur-xl"><div className="mx-auto flex max-w-7xl gap-2 overflow-x-auto pb-1">{filters.map(filter => <button key={filter.key} onClick={() => setActive(filter.key)} className={`shrink-0 rounded-full px-5 py-3 text-sm font-black transition ${active === filter.key ? 'bg-academy-ink text-white shadow-soft' : 'bg-white text-academy-muted ring-1 ring-academy-line hover:text-academy-ink'}`}>{filter.label}</button>)}</div></div>
-    <section className="mx-auto max-w-7xl space-y-14 px-4 py-14 sm:py-20">{visibleSections.map(section => { const rows = sessionsByCategory[section.key]; return <div key={section.key} className="transition-all duration-300"><div className="mb-7 flex flex-col gap-4 md:flex-row md:items-end md:justify-between"><div><p className="text-xs font-black uppercase tracking-[.22em] text-academy-gold-strong">{section.title}</p><h2 className="mt-3 text-3xl font-black tracking-tight md:text-5xl">{section.title}</h2><p className="mt-4 max-w-3xl text-lg leading-8 text-academy-muted">{section.intro}</p></div></div>{section.key === 'security' ? (rows.length ? <SecurityGroupedSessions rows={rows} expandedGroups={expandedSecurityGroups} onToggleMore={(group) => setExpandedSecurityGroups(current => ({ ...current, [group]: true }))} onRegister={setSelectedSession} /> : <EmptyState category={section.key} />) : (rows.length ? (() => { const visibleRows = expandedCategories[section.key] ? rows : rows.slice(0, 3); const hiddenCount = Math.max(rows.length - visibleRows.length, 0); return <><div className="grid gap-3">{visibleRows.map((session, index) => <SessionCard key={session.id} session={session} isNext={index === 0} onRegister={setSelectedSession} />)}</div>{hiddenCount > 0 ? <div className="mt-6 text-center"><button type="button" onClick={() => setExpandedCategories(current => ({ ...current, [section.key]: true }))} className="inline-flex rounded-full border border-academy-line bg-white px-6 py-3 text-sm font-black text-academy-ink shadow-soft transition hover:-translate-y-0.5 hover:border-academy-gold/60 dark:bg-white/10 dark:text-white">Voir plus de dates ({hiddenCount})</button></div> : null}</>; })() : <EmptyState category={section.key} />)}</div>; })}</section>
+    <section className="mx-auto max-w-7xl space-y-14 px-4 py-14 sm:py-20">{visibleSections.map(section => { const rows = sessionsByCategory[section.key]; return <div key={section.key} className="transition-all duration-300"><div className="mb-7 flex flex-col gap-4 md:flex-row md:items-end md:justify-between"><div><p className="text-xs font-black uppercase tracking-[.22em] text-academy-gold-strong">{section.title}</p><h2 className="mt-3 text-3xl font-black tracking-tight md:text-5xl">{section.key === 'security' ? <>Sessions sécurité : <Highlight variant="subtle">places restantes</Highlight></> : section.title}</h2><p className="mt-4 max-w-3xl text-lg leading-8 text-academy-muted">{section.intro}</p></div></div>{section.key === 'security' ? (rows.length ? <SecurityGroupedSessions rows={rows} expandedGroups={expandedSecurityGroups} onToggleMore={(group) => setExpandedSecurityGroups(current => ({ ...current, [group]: true }))} onRegister={setSelectedSession} /> : <EmptyState category={section.key} />) : (rows.length ? (() => { const visibleRows = expandedCategories[section.key] ? rows : rows.slice(0, 3); const hiddenCount = Math.max(rows.length - visibleRows.length, 0); return <><div className="grid gap-3">{visibleRows.map((session, index) => <SessionCard key={session.id} session={session} isNext={index === 0} onRegister={setSelectedSession} />)}</div>{hiddenCount > 0 ? <div className="mt-6 text-center"><button type="button" onClick={() => setExpandedCategories(current => ({ ...current, [section.key]: true }))} className="inline-flex rounded-full border border-academy-line bg-white px-6 py-3 text-sm font-black text-academy-ink shadow-soft transition hover:-translate-y-0.5 hover:border-academy-gold/60 dark:bg-white/10 dark:text-white">Voir plus de dates ({hiddenCount})</button></div> : null}</>; })() : <EmptyState category={section.key} />)}</div>; })}</section>
     <RegistrationModal session={selectedSession} onClose={() => setSelectedSession(null)} />
     <div className="fixed inset-x-3 bottom-3 z-40 grid grid-cols-3 gap-2 rounded-[1.5rem] border border-white/70 bg-white/90 p-2 shadow-[0_18px_60px_rgba(17,17,17,.18)] backdrop-blur md:hidden"><Link href="tel:0422470768" className="rounded-2xl bg-academy-ink px-3 py-3 text-center text-xs font-black text-white">Appeler</Link><Link href="/contact" className="rounded-2xl bg-academy-gold px-3 py-3 text-center text-xs font-black text-academy-gold-text">Infos</Link><Link href="/contact?motif=rdv" className="rounded-2xl border border-academy-line bg-white px-3 py-3 text-center text-xs font-black text-academy-ink">RDV</Link></div>
   </main>;

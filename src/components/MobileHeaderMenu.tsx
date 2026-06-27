@@ -3,7 +3,8 @@
 import { useState } from 'react';
 import Link from 'next/link';
 
-type NavLink = readonly [string, string];
+type NavSubLink = readonly [string, string] | readonly [string, string, string, string];
+type NavLink = readonly [string, string | readonly NavSubLink[]];
 type MobileHeaderMenuProps = {
   nav: readonly NavLink[];
   appointmentFormUrl: string;
@@ -17,7 +18,7 @@ export function MobileHeaderMenu({ nav, appointmentFormUrl }: MobileHeaderMenuPr
     <summary className="list-none rounded-full border border-academy-line bg-academy-surface px-4 py-2 text-sm font-bold shadow-soft cursor-pointer">Menu</summary>
     <div className="absolute right-0 mt-3 max-h-[80vh] w-[min(22rem,calc(100vw-2rem))] overflow-y-auto rounded-3xl bg-academy-surface p-4 shadow-soft ring-1 ring-academy-line">
       <nav className="grid gap-2" aria-label="Navigation mobile">
-        {nav.map(([n, h]) => <Link key={h} href={h} onClick={closeMenu} className="rounded-2xl px-4 py-3 font-semibold hover:text-academy-gold-strong">{n}</Link>)}
+        {nav.map(([n, h]) => typeof h !== 'string' ? <div key={n} className="rounded-2xl bg-academy-bg/60 p-2"><p className="px-2 py-2 text-xs font-black uppercase tracking-[.18em] text-academy-gold-strong">{n}</p><div className="grid gap-1">{h.map(([label, href]) => <Link key={href} href={href} onClick={closeMenu} className="rounded-xl px-3 py-2 font-semibold hover:text-academy-gold-strong">{label}</Link>)}</div></div> : <Link key={h} href={h} onClick={closeMenu} className="rounded-2xl px-4 py-3 font-semibold hover:text-academy-gold-strong">{n}</Link>)}
       </nav>
       <div className="mt-3 grid gap-2">
         <Link className="inline-flex items-center justify-center rounded-full bg-white px-5 py-3 text-sm font-bold text-academy-ink ring-1 ring-academy-line transition hover:-translate-y-0.5 hover:bg-stone-50" href="tel:0422470768" onClick={closeMenu}>Appeler</Link>
