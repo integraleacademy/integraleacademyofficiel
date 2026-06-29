@@ -41,6 +41,7 @@ const qualityIndicators = [
 const team = [
   { name: 'Cassandre MENARD', role: 'Responsable commerciale', initials: 'CM' },
   { name: 'Aurélie CHAUSSEZ', role: 'Chargée des relations clients', initials: 'AC' },
+  { name: 'Elsa DUQUESNE', role: 'Assistante de direction', initials: 'ED' },
   { name: 'Yannice LIBAULT', role: 'Coordinateur pédagogique · Azzera Academy', initials: 'YL' },
 ];
 
