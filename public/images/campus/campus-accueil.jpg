@@ -1,0 +1,6 @@
+Placeholder image file for Intégrale Academy campus gallery.
+
+This repository uses text placeholders because the current Git workflow does not support binary files.
+The home page component displays a styled grey fallback when this file is not a real JPEG.
+
+To replace this placeholder, upload a real JPEG photo with the same filename.
