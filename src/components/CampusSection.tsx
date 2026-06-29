@@ -6,23 +6,49 @@ type CampusImage = {
 };
 
 const campusImages: CampusImage[] = [
-  { id: 'main-room', label: 'Salle principale' },
-  { id: 'classroom', label: 'Salle de cours' },
-  { id: 'practice-area', label: 'Zone pratique' },
-  { id: 'meeting-room', label: 'Espace pédagogique' },
-  { id: 'reception', label: 'Accueil campus' },
+  {
+    id: 'main-room',
+    label: 'Salle principale',
+    src: '/images/campus/campus-principal.jpg',
+    alt: 'Campus Intégrale Academy - salle principale',
+  },
+  {
+    id: 'meeting-room',
+    label: 'Salle de réunion',
+    src: '/images/campus/campus-salle-reunion.jpg',
+    alt: 'Campus Intégrale Academy - salle de réunion',
+  },
+  {
+    id: 'practice-area',
+    label: 'Zone pratique',
+    src: '/images/campus/campus-pratique.jpg',
+    alt: 'Campus Intégrale Academy - espace de pratique',
+  },
+  {
+    id: 'classroom',
+    label: 'Salle de cours',
+    src: '/images/campus/campus-salle-cours.jpg',
+    alt: 'Campus Intégrale Academy - salle de cours',
+  },
+  {
+    id: 'reception',
+    label: 'Accueil campus',
+    src: '/images/campus/campus-accueil.jpg',
+    alt: 'Campus Intégrale Academy - espace accueil',
+  },
 ];
 
 function CampusPlaceholder({ image, priority = false }: { image: CampusImage; priority?: boolean }) {
   const label = image.alt ?? image.label;
+  const fallback = <div className="absolute inset-0">
+    <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(255,255,255,.72),transparent_28%),linear-gradient(135deg,rgba(255,255,255,.36),transparent_40%,rgba(0,0,0,.035))]" aria-hidden="true" />
+    <div className="absolute inset-x-6 top-6 h-px bg-gradient-to-r from-transparent via-white/70 to-transparent" aria-hidden="true" />
+    <div className="absolute -right-16 -top-14 h-44 w-44 rounded-full bg-white/35 blur-3xl" aria-hidden="true" />
+    <div className="absolute bottom-5 left-5 rounded-full border border-white/60 bg-white/45 px-3 py-1.5 text-[0.68rem] font-black uppercase tracking-[.16em] text-academy-muted backdrop-blur-sm">Image à venir</div>
+  </div>;
 
-  return <figure className={`group relative isolate h-full min-h-[15rem] overflow-hidden rounded-[1.75rem] border border-academy-line/80 bg-[linear-gradient(135deg,rgb(var(--surface-elevated))_0%,rgb(var(--surface-soft))_48%,rgb(var(--surface-elevated))_100%)] ${priority ? 'lg:min-h-[32rem]' : 'lg:min-h-[15.25rem]'}`}>
-    {image.src ? <img src={image.src} alt={label} className="h-full w-full object-cover" /> : <div className="absolute inset-0">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(255,255,255,.72),transparent_28%),linear-gradient(135deg,rgba(255,255,255,.36),transparent_40%,rgba(0,0,0,.035))]" aria-hidden="true" />
-      <div className="absolute inset-x-6 top-6 h-px bg-gradient-to-r from-transparent via-white/70 to-transparent" aria-hidden="true" />
-      <div className="absolute -right-16 -top-14 h-44 w-44 rounded-full bg-white/35 blur-3xl" aria-hidden="true" />
-      <div className="absolute bottom-5 left-5 rounded-full border border-white/60 bg-white/45 px-3 py-1.5 text-[0.68rem] font-black uppercase tracking-[.16em] text-academy-muted backdrop-blur-sm">Image à venir</div>
-    </div>}
+  return <figure className={`group relative isolate h-full min-h-[15rem] overflow-hidden rounded-[1.75rem] border border-academy-line/80 bg-[linear-gradient(135deg,rgb(var(--surface-elevated))_0%,rgb(var(--surface-soft))_48%,rgb(var(--surface-elevated))_100%)] shadow-[0_24px_70px_rgba(15,23,42,.08)] ${priority ? 'lg:min-h-[32rem]' : 'lg:min-h-[15.25rem]'}`}>
+    {image.src ? <object data={image.src} type="image/jpeg" aria-label={label} role="img" className="h-full w-full object-cover">{fallback}</object> : fallback}
     <figcaption className="sr-only">{label}</figcaption>
   </figure>;
 }
@@ -30,7 +56,7 @@ function CampusPlaceholder({ image, priority = false }: { image: CampusImage; pr
 export function CampusSection() {
   const [featuredImage, ...secondaryImages] = campusImages;
 
-  return <section className="relative isolate overflow-hidden bg-academy-bg px-4 py-16 sm:py-20 lg:py-24">
+  return <section className="relative isolate overflow-hidden bg-white px-4 py-16 sm:py-20 lg:py-24">
     <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-academy-line to-transparent" aria-hidden="true" />
     <div className="pointer-events-none absolute left-1/2 top-10 -z-10 h-72 w-72 -translate-x-1/2 rounded-full bg-academy-gold/10 blur-3xl" aria-hidden="true" />
 

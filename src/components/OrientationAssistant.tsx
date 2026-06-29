@@ -38,6 +38,7 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(true);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
   const [step, setStep] = useState<Step>(initialStep ?? (initialFormationKey ? 2 : 'formations'));
   const [sessions, setSessions] = useState<AssistantSession[]>([]);
   const [selectedKey, setSelectedKey] = useState<FormationKey | null>(initialFormationKey ?? null);
@@ -47,6 +48,10 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
   const normalizedPathname = pathname?.replace(/\/$/, '') || '/';
   const isAlreadyOnSelectedFormation = Boolean(selectedFormation && normalizedPathname === selectedFormation.infoUrl);
   const shouldHideInfoAction = hideInfoAction || isAlreadyOnSelectedFormation;
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   useEffect(() => {
     fetch('/api/sessions')
@@ -77,6 +82,7 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
 
   function startApsInformation(){
     if (loadingTimeoutRef.current) window.clearTimeout(loadingTimeoutRef.current);
+    setIsExpanded(true);
     setStep('loading');
     loadingTimeoutRef.current = window.setTimeout(() => {
       setStep('aps-result');
@@ -141,7 +147,7 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
               : selectedFormation.key === 'aps'
                 ? <button type="button" onClick={startApsInformation} className="flex min-h-24 flex-col justify-between rounded-2xl border border-academy-line bg-white p-5 text-left font-black shadow-sm transition hover:-translate-y-0.5 hover:border-academy-gold hover:shadow-gold"><span>Je veux en savoir plus</span><span className="text-sm text-yellow-700">Voir la réponse assistant →</span></button>
                 : <Link href={selectedFormation.infoUrl} className="flex min-h-24 flex-col justify-between rounded-2xl border border-academy-line bg-white p-5 font-black shadow-sm transition hover:-translate-y-0.5 hover:border-academy-gold hover:shadow-gold"><span>Je veux en savoir plus</span><span className="text-sm text-yellow-700">Voir la formation →</span></Link>)}
-            <button type="button" onClick={() => setStep(3)} className="flex min-h-24 flex-col justify-between rounded-2xl bg-academy-ink p-5 text-left font-black text-white shadow-soft transition hover:-translate-y-0.5 hover:bg-black active:translate-y-0"><span>Je souhaite m’inscrire</span><span className="text-sm text-academy-gold">Préparer mon rendez-vous →</span></button>
+            <button type="button" onClick={() => { setIsExpanded(true); setStep(3); }} className="flex min-h-24 flex-col justify-between rounded-2xl bg-academy-ink p-5 text-left font-black text-white shadow-soft transition hover:-translate-y-0.5 hover:bg-black active:translate-y-0"><span>Je souhaite m’inscrire</span><span className="text-sm text-academy-gold">Préparer mon rendez-vous →</span></button>
           </div>
         </div>}
 
@@ -177,7 +183,8 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
   </aside>;
 
   if (isExpanded) {
-    return <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-academy-ink/45 p-3 backdrop-blur-sm sm:p-6" role="presentation">{assistantPanel}</div>;
+    const expandedPanel = <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-academy-ink/45 p-3 backdrop-blur-sm sm:p-6" role="presentation">{assistantPanel}</div>;
+    return isMounted && typeof document !== 'undefined' ? createPortal(expandedPanel, document.body) : expandedPanel;
   }
 
   return assistantPanel;
