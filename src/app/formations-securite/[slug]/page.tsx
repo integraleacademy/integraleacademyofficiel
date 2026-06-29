@@ -4,7 +4,7 @@ import { PublicTrainingSessions } from '@/components/PublicTrainingSessions';
 import { isPublicUpcomingSession } from '@/lib/public-sessions';
 import { listSessions } from '@/lib/training-data';
 import { VaeEligibilityModal } from '@/components/VaeEligibilityModal';
-import { Badge, Button, ConversionStrip, FAQ, FeatureCard, Hero, Highlight, SectionTitle } from '@/components/ui';
+import { Button, ConversionStrip, FAQ, FeatureCard, Hero, Highlight, SectionTitle } from '@/components/ui';
 import { formationFaq } from '@/data/faq';
 import { apsFaq } from '@/data/formations';
 import { formations } from '@/data/site';
@@ -74,9 +74,9 @@ const apsEnrollmentSteps: Array<{ step: string; title: string; text: string; not
 ];
 
 function ApsEnrollmentShowcase(){
-  const primaryCtaClass = 'inline-flex items-center justify-center rounded-full bg-academy-gold px-5 py-3 text-center text-sm font-black text-academy-ink shadow-gold transition hover:-translate-y-0.5 hover:brightness-95';
-  const darkCtaClass = 'inline-flex items-center justify-center rounded-full bg-academy-ink px-5 py-3 text-center text-sm font-black text-white shadow-soft transition hover:-translate-y-0.5 hover:bg-black';
-  const lightCtaClass = 'inline-flex items-center justify-center rounded-full bg-white px-5 py-3 text-center text-sm font-black text-academy-ink ring-1 ring-academy-line transition hover:-translate-y-0.5 hover:bg-stone-50';
+  const primaryCtaClass = 'inline-flex items-center justify-center rounded-full bg-academy-gold px-5 py-3 text-center text-sm font-black text-academy-ink shadow-gold transition hover:-translate-y-0.5 hover:brightness-95 focus:outline-none focus:ring-2 focus:ring-academy-gold focus:ring-offset-2';
+  const darkCtaClass = 'inline-flex items-center justify-center rounded-full bg-academy-ink px-5 py-3 text-center text-sm font-black text-white shadow-soft transition hover:-translate-y-0.5 hover:bg-black focus:outline-none focus:ring-2 focus:ring-academy-ink focus:ring-offset-2';
+  const lightCtaClass = 'inline-flex items-center justify-center rounded-full bg-white px-5 py-3 text-center text-sm font-black text-academy-ink ring-1 ring-academy-line transition hover:-translate-y-0.5 hover:bg-stone-50 focus:outline-none focus:ring-2 focus:ring-academy-gold focus:ring-offset-2';
 
   return <section id="inscription-financement-aps" className="relative isolate overflow-hidden bg-[linear-gradient(135deg,#111111,#263752_60%,#151515)] px-4 py-14 text-white md:py-20">
     <div className="absolute inset-0 -z-10 opacity-70">
@@ -86,7 +86,7 @@ function ApsEnrollmentShowcase(){
     <div className="mx-auto max-w-7xl">
       <div className="mb-8 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
         <div>
-          <Badge>Inscription & financement</Badge>
+          <span className="inline-flex rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-black text-academy-gold shadow-soft backdrop-blur">Inscription & financement</span>
           <h2 className="mt-4 text-3xl font-black tracking-tight md:text-5xl">Inscription en <Highlight>5 étapes</Highlight></h2>
           <p className="mt-4 max-w-3xl text-base leading-8 text-stone-200 md:text-lg">Nous vous accompagnons simplement, étape par étape, depuis le premier échange téléphonique jusqu’à la validation du financement et au démarrage de votre formation APS.</p>
         </div>
@@ -95,17 +95,17 @@ function ApsEnrollmentShowcase(){
           <a href="https://calendly.com/integraleacademy/aps" className={lightCtaClass}>Prendre un RDV téléphonique</a>
         </div>
       </div>
-      <div className="rounded-[2rem] bg-white/95 p-4 text-academy-ink shadow-[0_28px_90px_rgba(0,0,0,.28)] ring-1 ring-white/20 sm:p-5 md:p-6">
-        <div className="grid items-stretch gap-4 md:grid-cols-2 xl:grid-cols-5">
-          {apsEnrollmentSteps.map(item=><article key={item.step} className="flex h-full flex-col rounded-[1.5rem] border border-academy-line bg-gradient-to-b from-white to-academy-bg/80 p-5 shadow-soft transition duration-300 hover:-translate-y-1 hover:shadow-card sm:p-6">
+      <div className="rounded-[2rem] bg-white/95 p-5 text-academy-ink shadow-[0_28px_90px_rgba(0,0,0,.28)] ring-1 ring-white/20 sm:p-6 md:p-7">
+        <div className="grid items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+          {apsEnrollmentSteps.map(item=><article key={item.step} className="flex h-full min-h-[23rem] flex-col rounded-[1.5rem] border border-academy-line bg-gradient-to-b from-white to-academy-bg/80 p-6 shadow-soft transition duration-300 hover:-translate-y-1 hover:shadow-card xl:min-h-[28rem]">
             <span className="grid h-12 w-12 place-items-center rounded-full bg-academy-ink text-sm font-black text-academy-gold shadow-soft">{item.step}</span>
             <h4 className="mt-5 text-lg font-black leading-6 text-academy-ink">{item.title}</h4>
-            <p className="mt-3 flex-1 text-sm font-semibold leading-7 text-academy-muted">{item.text}</p>
-            {item.step==='01'&&<div className="mt-5 flex flex-col gap-2">
+            <p className="mt-4 flex-1 text-sm font-semibold leading-7 text-academy-muted">{item.text}</p>
+            {item.step==='01'&&<div className="mt-6 flex flex-col gap-3">
               <a href="tel:0422470768" className={darkCtaClass}>Appeler</a>
               <a href="https://calendly.com/integraleacademy/aps" className={primaryCtaClass}>Prendre un RDV téléphonique</a>
             </div>}
-            {item.step==='03'&&<div className="mt-5 flex flex-col gap-2">
+            {item.step==='03'&&<div className="mt-6 flex flex-col gap-3">
               <a href="https://lidentitenumerique.laposte.fr/" className={primaryCtaClass}>Créer mon Identité Numérique</a>
               <a href="tel:0422470768" className={lightCtaClass}>Nous contacter</a>
             </div>}
