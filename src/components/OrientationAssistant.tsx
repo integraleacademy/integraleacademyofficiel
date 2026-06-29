@@ -105,9 +105,9 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
     </button>
   }
 
-  const assistantPanel = <aside className={`orientation-assistant relative mx-auto w-full overflow-hidden rounded-[1.5rem] border border-white/70 bg-white/95 p-4 text-academy-ink shadow-[0_28px_90px_rgba(17,17,17,.16)] ring-1 ring-academy-line backdrop-blur reveal sm:rounded-[2rem] sm:p-5 ${isExpanded ? 'max-w-4xl sm:p-7' : 'max-w-xl'}`} aria-label="Assistant d’orientation formation">
+  const assistantPanel = <aside className={`orientation-assistant relative mx-auto w-full overflow-hidden rounded-[1.5rem] border border-white/70 bg-white/95 p-4 text-academy-ink shadow-[0_28px_90px_rgba(17,17,17,.16)] ring-1 ring-academy-line backdrop-blur reveal sm:rounded-[2rem] sm:p-5 ${isExpanded ? 'flex max-h-[90vh] w-[calc(100vw-24px)] flex-col sm:p-6 md:max-h-[88vh] md:w-[min(1120px,calc(100vw-96px))] md:max-w-none' : 'max-w-xl'}`} aria-label="Assistant d’orientation formation">
     <div className="absolute -right-16 -top-16 h-40 w-40 rounded-full bg-academy-gold/30 blur-3xl" aria-hidden="true"/>
-    <div className="relative">
+    <div className={isExpanded ? 'relative flex min-h-0 flex-1 flex-col' : 'relative'}>
       <div className="flex items-start justify-between gap-4">
         <div>
           <p className="inline-flex items-center gap-2 rounded-full border border-academy-gold/30 bg-academy-gold/10 px-3 py-1.5 text-xs font-black uppercase tracking-[.18em] text-yellow-700"><span className="status-dot" aria-hidden="true" />Notre assistant est disponible</p>
@@ -118,7 +118,7 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
       </div>
 
 
-      <div className="mt-6 transition-all duration-300">
+      <div className={isExpanded ? 'mt-5 min-h-0 flex-1 overflow-y-auto pr-1 transition-all duration-300' : 'mt-6 transition-all duration-300'}>
         {step === 'formations' && <div className="grid gap-3">
           {formations.map((formation) => <button key={formation.key} type="button" onClick={() => chooseFormation(formation.key)} className="group flex w-full items-center gap-3 rounded-2xl border border-academy-line bg-white p-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-academy-gold hover:shadow-gold active:translate-y-0">
             <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-academy-bg text-lg font-black text-yellow-700 transition group-hover:bg-academy-ink group-hover:text-academy-gold" aria-hidden="true">{formation.icon}</span>
@@ -167,10 +167,12 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
           <p className="mt-3 text-sm leading-7 text-stone-600">Nous vérifierons votre projet, vos financements possibles et les prochaines dates disponibles.</p>
           <div className="mt-5 grid gap-3"><Link href={selectedFormation.rdvUrl} className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-academy-gold via-yellow-300 to-academy-gold px-5 py-3 text-sm font-black text-academy-ink shadow-gold transition hover:-translate-y-0.5">Réserver un rendez-vous téléphonique</Link>{!shouldHideInfoAction && <Link href={selectedFormation.infoUrl} className="inline-flex items-center justify-center rounded-full bg-white px-5 py-3 text-sm font-black text-academy-ink ring-1 ring-academy-line transition hover:-translate-y-0.5 hover:bg-stone-50">Voir d’abord les informations</Link>}</div>
         </div>}
-      </div>
 
-      {step !== 'formations' && step !== 2 && <button type="button" onClick={goBack} className="mt-5 inline-flex items-center gap-2 rounded-full px-1 py-2 text-sm font-black text-stone-600 transition hover:text-yellow-700"><span aria-hidden="true">←</span> Retour</button>}
-      <p className="mt-5 rounded-2xl bg-green-50 px-4 py-3 text-center text-xs font-black text-green-800">Réponse rapide • Conseils personnalisés • Financements possibles</p>
+        <div className={isExpanded ? 'pb-1 pt-4' : ''}>
+          {step !== 'formations' && step !== 2 && <button type="button" onClick={goBack} className="inline-flex items-center gap-2 rounded-full px-1 py-2 text-sm font-black text-stone-600 transition hover:text-yellow-700"><span aria-hidden="true">←</span> Retour</button>}
+          <p className={`${step !== 'formations' && step !== 2 ? 'mt-3' : ''} rounded-2xl bg-green-50 px-4 py-3 text-center text-xs font-black text-green-800`}>Réponse rapide • Conseils personnalisés • Financements possibles</p>
+        </div>
+      </div>
     </div>
   </aside>;
 
@@ -226,9 +228,9 @@ function ApsAssistantResult({sessions,onBack,hideInfoAction=false}:{sessions:Ass
       <h3 className="mt-1 text-xl font-black tracking-tight sm:text-2xl">Formation Agent de sécurité privée (APS)</h3>
       <p className="mt-2 text-sm font-semibold leading-6 text-stone-600">Voici les informations clés concernant la formation APS chez Intégrale Academy.</p>
     </div>
-    <div className="grid gap-2">
+    <div className="grid gap-2 lg:grid-cols-[minmax(0,1fr)_280px]">
       <div className="rounded-2xl border border-academy-line bg-white/85 p-3"><p className="text-sm font-black">Informations clés</p><ul className="mt-2 space-y-1 text-xs font-semibold leading-5 text-stone-600 sm:text-sm">{keyPoints.map(point => <li key={point} className="flex gap-2"><span className="text-academy-gold" aria-hidden="true">✓</span><span>{point}</span></li>)}</ul></div>
-      <div className="rounded-2xl border border-academy-line bg-white/85 p-3"><span className="block text-[10px] font-black uppercase tracking-[.15em] text-academy-muted/70">Tarif</span><span className="text-lg font-black text-academy-ink">{apsFormation?.price || 'Tarif sur demande'}</span></div>
+      <div className="rounded-2xl border border-academy-line bg-white/85 p-3 lg:flex lg:flex-col lg:justify-center"><span className="block text-[10px] font-black uppercase tracking-[.15em] text-academy-muted/70">Tarif</span><span className="text-lg font-black text-academy-ink">{apsFormation?.price || 'Tarif sur demande'}</span></div>
     </div>
     <div>
       <p className="font-black">Prochaine formation</p>
