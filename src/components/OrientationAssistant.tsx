@@ -120,7 +120,7 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
           <h2 className="mt-2 text-2xl font-black tracking-tight sm:text-3xl">Notre assistant va vous aider</h2>
           <p className="mt-2 text-sm font-medium leading-6 text-stone-600">{step === 'formations' ? 'Je souhaite des renseignements concernant la formation :' : selectedFormation?.label}</p>
         </div>
-        <button type="button" onClick={() => { if (isExpanded) setIsExpanded(false); else setIsOpen(false); }} className={isExpanded ? 'shrink-0 rounded-full border border-academy-line bg-white px-4 py-2 text-sm font-black text-stone-600 transition hover:bg-stone-50 hover:text-academy-ink' : 'grid h-10 w-10 shrink-0 place-items-center rounded-full border border-academy-line bg-white text-lg font-black text-stone-500 transition hover:bg-stone-50 hover:text-academy-ink'} aria-label="Réduire l’assistant">{isExpanded ? 'Réduire' : '×'}</button>
+        <button type="button" onClick={() => { setIsExpanded(false); setIsOpen(false); }} className={isExpanded ? 'shrink-0 rounded-full border border-academy-line bg-white px-4 py-2 text-sm font-black text-stone-600 transition hover:bg-stone-50 hover:text-academy-ink' : 'grid h-10 w-10 shrink-0 place-items-center rounded-full border border-academy-line bg-white text-lg font-black text-stone-500 transition hover:bg-stone-50 hover:text-academy-ink'} aria-label="Réduire l’assistant">{isExpanded ? 'Réduire' : '×'}</button>
       </div>
 
 
@@ -136,7 +136,7 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
 
         {step === 'loading' && <ApsAssistantLoading />}
 
-        {step === 'aps-result' && <ApsAssistantResult sessions={sessions} onBack={() => { setSelectedKey(null); setStep('formations'); }} hideInfoAction={shouldHideInfoAction} />}
+        {step === 'aps-result' && <ApsAssistantResult sessions={sessions} onBack={() => { setSelectedKey(null); setStep('formations'); }} hideInfoAction={shouldHideInfoAction} isExpanded={isExpanded} />}
 
         {step === 2 && selectedFormation && <div className="space-y-4">
           <h3 className="text-xl font-black">Que souhaitez-vous faire&nbsp;?</h3>
@@ -215,7 +215,7 @@ function apsSeatLabel(session: AssistantSession){
   return `${seats} places restantes`;
 }
 
-function ApsAssistantResult({sessions,onBack,hideInfoAction=false}:{sessions:AssistantSession[];onBack:()=>void;hideInfoAction?:boolean}){
+function ApsAssistantResult({sessions,onBack,hideInfoAction=false,isExpanded=false}:{sessions:AssistantSession[];onBack:()=>void;hideInfoAction?:boolean;isExpanded?:boolean}){
   const upcomingApsSessions = sessions
     .filter(session => session.training?.slug === 'aps')
     .sort((a,b) => +new Date(a.startDate) - +new Date(b.startDate))
@@ -235,9 +235,9 @@ function ApsAssistantResult({sessions,onBack,hideInfoAction=false}:{sessions:Ass
       <h3 className="mt-1 text-xl font-black tracking-tight sm:text-2xl">Formation Agent de sécurité privée (APS)</h3>
       <p className="mt-2 text-sm font-semibold leading-6 text-stone-600">Voici les informations clés concernant la formation APS chez Intégrale Academy.</p>
     </div>
-    <div className="grid gap-2 lg:grid-cols-[minmax(0,1fr)_280px]">
+    <div className={`grid gap-2 ${isExpanded ? 'lg:grid-cols-[minmax(0,1fr)_280px]' : ''}`}>
       <div className="rounded-2xl border border-academy-line bg-white/85 p-3"><p className="text-sm font-black">Informations clés</p><ul className="mt-2 space-y-1 text-xs font-semibold leading-5 text-stone-600 sm:text-sm">{keyPoints.map(point => <li key={point} className="flex gap-2"><span className="text-academy-gold" aria-hidden="true">✓</span><span>{point}</span></li>)}</ul></div>
-      <div className="rounded-2xl border border-academy-line bg-white/85 p-3 lg:flex lg:flex-col lg:justify-center"><span className="block text-[10px] font-black uppercase tracking-[.15em] text-academy-muted/70">Tarif</span><span className="text-lg font-black text-academy-ink">{apsFormation?.price || 'Tarif sur demande'}</span></div>
+      <div className={`rounded-2xl border border-academy-line bg-white/85 p-3 ${isExpanded ? 'lg:flex lg:flex-col lg:justify-center' : ''}`}><span className="block text-[10px] font-black uppercase tracking-[.15em] text-academy-muted/70">Tarif</span><span className="text-lg font-black text-academy-ink">{apsFormation?.price || 'Tarif sur demande'}</span></div>
     </div>
     <div>
       <p className="font-black">Prochaine formation</p>
