@@ -48,6 +48,16 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
   const normalizedPathname = pathname?.replace(/\/$/, '') || '/';
   const isAlreadyOnSelectedFormation = Boolean(selectedFormation && normalizedPathname === selectedFormation.infoUrl);
   const shouldHideInfoAction = hideInfoAction || isAlreadyOnSelectedFormation;
+  const resetAssistantState = () => {
+    if (loadingTimeoutRef.current) {
+      window.clearTimeout(loadingTimeoutRef.current);
+      loadingTimeoutRef.current = null;
+    }
+    setIsExpanded(false);
+    setStep(initialStep ?? (initialFormationKey ? 2 : 'formations'));
+    setSelectedKey(initialFormationKey ?? null);
+    setDespExperience(null);
+  };
 
   useEffect(() => {
     setIsMounted(true);
@@ -104,11 +114,13 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
     setStep('formations');
   }
 
-  if(!isOpen){
-    return <button type="button" onClick={() => { setIsOpen(true); setIsExpanded(false); }} className="group fixed bottom-20 right-4 z-40 inline-flex max-w-[calc(100vw-2rem)] items-center gap-3 rounded-full border border-academy-gold/60 bg-white/95 px-4 py-3 text-left text-sm font-black text-academy-ink shadow-[0_18px_45px_rgba(17,17,17,.14)] backdrop-blur transition hover:-translate-y-0.5 hover:border-academy-gold md:bottom-6 md:right-6">
+  const minimizedButton = <button type="button" onClick={() => { resetAssistantState(); setIsOpen(true); }} className="group fixed bottom-20 right-4 z-[9998] inline-flex max-w-[calc(100vw-2rem)] items-center gap-3 rounded-full border border-academy-gold/60 bg-white/95 px-4 py-3 text-left text-sm font-black text-academy-ink shadow-[0_18px_45px_rgba(17,17,17,.14)] backdrop-blur transition hover:-translate-y-0.5 hover:border-academy-gold md:bottom-6 md:right-6">
       <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-academy-ink text-academy-gold transition group-hover:rotate-6" aria-hidden="true">?</span>
       <span>Être conseillé</span>
-    </button>
+    </button>;
+
+  if(!isOpen){
+    return isMounted && typeof document !== 'undefined' ? createPortal(minimizedButton, document.body) : minimizedButton;
   }
 
   const assistantPanel = <aside className={`orientation-assistant relative mx-auto w-full overflow-hidden rounded-[1.5rem] border border-white/70 bg-white/95 p-4 text-academy-ink shadow-[0_28px_90px_rgba(17,17,17,.16)] ring-1 ring-academy-line backdrop-blur reveal sm:rounded-[2rem] sm:p-5 ${isExpanded ? 'flex max-h-[90vh] w-[calc(100vw-24px)] flex-col sm:p-6 md:max-h-[88vh] md:w-[min(1120px,calc(100vw-96px))] md:max-w-none' : 'max-w-xl'}`} aria-label="Assistant d’orientation formation">
@@ -120,7 +132,7 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
           <h2 className="mt-2 text-2xl font-black tracking-tight sm:text-3xl">Notre assistant va vous aider</h2>
           <p className="mt-2 text-sm font-medium leading-6 text-stone-600">{step === 'formations' ? 'Je souhaite des renseignements concernant la formation :' : selectedFormation?.label}</p>
         </div>
-        <button type="button" onClick={() => { setIsExpanded(false); setIsOpen(false); }} className={isExpanded ? 'shrink-0 rounded-full border border-academy-line bg-white px-4 py-2 text-sm font-black text-stone-600 transition hover:bg-stone-50 hover:text-academy-ink' : 'grid h-10 w-10 shrink-0 place-items-center rounded-full border border-academy-line bg-white text-lg font-black text-stone-500 transition hover:bg-stone-50 hover:text-academy-ink'} aria-label="Réduire l’assistant">{isExpanded ? 'Réduire' : '×'}</button>
+        <button type="button" onClick={() => { resetAssistantState(); setIsOpen(false); }} className={isExpanded ? 'shrink-0 rounded-full border border-academy-line bg-white px-4 py-2 text-sm font-black text-stone-600 transition hover:bg-stone-50 hover:text-academy-ink' : 'grid h-10 w-10 shrink-0 place-items-center rounded-full border border-academy-line bg-white text-lg font-black text-stone-500 transition hover:bg-stone-50 hover:text-academy-ink'} aria-label="Réduire l’assistant">{isExpanded ? 'Réduire' : '×'}</button>
       </div>
 
 
