@@ -77,6 +77,7 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
 
   function startApsInformation(){
     if (loadingTimeoutRef.current) window.clearTimeout(loadingTimeoutRef.current);
+    setIsExpanded(true);
     setStep('loading');
     loadingTimeoutRef.current = window.setTimeout(() => {
       setStep('aps-result');
@@ -141,7 +142,7 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
               : selectedFormation.key === 'aps'
                 ? <button type="button" onClick={startApsInformation} className="flex min-h-24 flex-col justify-between rounded-2xl border border-academy-line bg-white p-5 text-left font-black shadow-sm transition hover:-translate-y-0.5 hover:border-academy-gold hover:shadow-gold"><span>Je veux en savoir plus</span><span className="text-sm text-yellow-700">Voir la réponse assistant →</span></button>
                 : <Link href={selectedFormation.infoUrl} className="flex min-h-24 flex-col justify-between rounded-2xl border border-academy-line bg-white p-5 font-black shadow-sm transition hover:-translate-y-0.5 hover:border-academy-gold hover:shadow-gold"><span>Je veux en savoir plus</span><span className="text-sm text-yellow-700">Voir la formation →</span></Link>)}
-            <button type="button" onClick={() => setStep(3)} className="flex min-h-24 flex-col justify-between rounded-2xl bg-academy-ink p-5 text-left font-black text-white shadow-soft transition hover:-translate-y-0.5 hover:bg-black active:translate-y-0"><span>Je souhaite m’inscrire</span><span className="text-sm text-academy-gold">Préparer mon rendez-vous →</span></button>
+            <button type="button" onClick={() => { setIsExpanded(true); setStep(3); }} className="flex min-h-24 flex-col justify-between rounded-2xl bg-academy-ink p-5 text-left font-black text-white shadow-soft transition hover:-translate-y-0.5 hover:bg-black active:translate-y-0"><span>Je souhaite m’inscrire</span><span className="text-sm text-academy-gold">Préparer mon rendez-vous →</span></button>
           </div>
         </div>}
 
