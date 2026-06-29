@@ -26,7 +26,6 @@ model Training {
   createdAt   DateTime          @default(now())
   updatedAt   DateTime          @updatedAt
   sessions    TrainingSession[]
-  trainees    Trainee[]
 }
 
 model TrainingSession {
@@ -55,7 +54,6 @@ model TrainingSession {
 
   createdAt       DateTime              @default(now())
   updatedAt       DateTime              @updatedAt
-  trainees        Trainee[]
 }
 
 model ChatLead {
@@ -77,28 +75,4 @@ model ChatConversationLog {
   selectedKnowledgeFiles String?
   selectedSessions       String?
   createdAt              DateTime @default(now())
-}
-
-
-enum TraineeDocumentStatus {
-  pending
-  sent
-}
-
-model Trainee {
-  id                       String                @id @default(cuid())
-  civility                 String?
-  firstName                String
-  lastName                 String
-  email                    String
-  trainingId               String?
-  training                 Training?             @relation(fields: [trainingId], references: [id], onDelete: SetNull)
-  sessionId                String?
-  session                  TrainingSession?      @relation(fields: [sessionId], references: [id], onDelete: SetNull)
-  convocationApsStatus     TraineeDocumentStatus @default(pending)
-  convocationApsSentAt     DateTime?
-  convocationApsPdfPath    String?
-  convocationApsLastError  String?
-  createdAt                DateTime              @default(now())
-  updatedAt                DateTime              @updatedAt
 }
