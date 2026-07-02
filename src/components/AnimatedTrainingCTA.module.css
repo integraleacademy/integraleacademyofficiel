@@ -1,0 +1,36 @@
+.rotatingText {
+  animation: trainingCtaText 620ms cubic-bezier(.22, 1, .36, 1) both;
+}
+
+.arrow {
+  transition: transform 220ms ease;
+}
+
+.cta:hover .arrow {
+  transform: translateX(.28rem);
+}
+
+@keyframes trainingCtaText {
+  0% {
+    opacity: 0;
+    transform: translateY(14px);
+    filter: blur(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rotatingText {
+    animation: none;
+  }
+
+  .arrow,
+  .cta:hover .arrow {
+    transform: none;
+    transition: none;
+  }
+}
