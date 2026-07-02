@@ -75,7 +75,7 @@ export function GoogleReviewsSection(){
   return <section className="relative isolate overflow-hidden px-4 py-16 md:py-20">
     <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_18%_10%,rgba(230,176,58,.18),transparent_30%),linear-gradient(180deg,rgb(var(--surface-elevated)),rgb(var(--background)))]" aria-hidden="true"/>
     <div className="absolute -right-28 top-10 -z-10 h-72 w-72 rounded-full bg-academy-gold/15 blur-3xl" aria-hidden="true"/>
-    <div className="mx-auto max-w-7xl">
+    <div className="page-container">
       <div className="grid gap-8 lg:grid-cols-[0.88fr_1.12fr] lg:items-end">
         <div className="reveal">
           <span className="inline-flex rounded-full bg-academy-gold/25 px-3 py-1 text-xs font-black uppercase tracking-[.22em] text-academy-gold-text">AVIS GOOGLE</span>

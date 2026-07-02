@@ -101,7 +101,7 @@ export default function FinancingSimulator() {
   }, [formationAmount]);
 
   return <section className="bg-[#080f1f] px-4 py-14 text-white md:py-20">
-    <div className="mx-auto max-w-7xl overflow-hidden rounded-[2.25rem] border border-white/10 bg-[radial-gradient(circle_at_8%_10%,rgba(244,196,90,.20),transparent_28%),linear-gradient(135deg,#0b1327,#050814_58%,#101827)] p-5 shadow-[0_34px_120px_rgba(0,0,0,.45)] md:p-8">
+    <div className="page-container overflow-hidden rounded-[2.25rem] border border-white/10 bg-[radial-gradient(circle_at_8%_10%,rgba(244,196,90,.20),transparent_28%),linear-gradient(135deg,#0b1327,#050814_58%,#101827)] p-5 shadow-[0_34px_120px_rgba(0,0,0,.45)] md:p-8">
       <div className="mb-8 max-w-3xl">
         <p className="text-xs font-black uppercase tracking-[.28em] text-academy-gold">Financement</p>
         <h2 className="mt-3 text-3xl font-black tracking-tight md:text-5xl">Simulez votre reste à charge</h2>

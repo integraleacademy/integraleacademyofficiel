@@ -59,7 +59,7 @@ export function PublicTrainingSessions({ sessions, title = 'Prochaines dates', i
   const rows = sessions.filter(isPublicUpcomingSession).sort((a, b) => +new Date(a.startDate) - +new Date(b.startDate));
   const visibleRows = displayLimit > 0 ? rows.slice(0, displayLimit) : rows;
   const hiddenCount = Math.max(rows.length - visibleRows.length, 0);
-  return <section className="mx-auto max-w-7xl px-4 py-10 sm:py-12">
+  return <section className="page-container py-10 sm:py-12">
     <div className="mb-6 max-w-3xl"><p className="text-xs font-black uppercase tracking-[.24em] text-academy-gold">Planning admin</p><h2 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl">{title}</h2><p className="mt-3 text-base leading-7 text-academy-muted">{intro}</p></div>
     {rows.length ? <div className="space-y-3">{rows.map((session, index) => { const badge = seatsBadge(computedSeats(session)); const details = [
       { label: 'Début', value: formatDate(session.startDate) },

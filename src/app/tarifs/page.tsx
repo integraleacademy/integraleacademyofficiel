@@ -23,7 +23,7 @@ export default function Page() {
     <section className="relative isolate overflow-hidden bg-[linear-gradient(135deg,rgb(var(--surface-elevated)),rgb(var(--background))_52%,rgb(var(--accent-soft)))] px-4 py-16 text-academy-ink md:py-24 dark:bg-academy-ink dark:text-white">
       <div className="absolute inset-0 -z-10 bg-[linear-gradient(120deg,rgba(230,176,58,.26),transparent_32%),radial-gradient(circle_at_85%_15%,rgba(139,88,18,.12),transparent_26%),radial-gradient(circle_at_15%_85%,rgba(230,176,58,.30),transparent_30%)] dark:bg-[linear-gradient(120deg,rgba(244,196,90,.18),transparent_32%),radial-gradient(circle_at_85%_15%,rgba(255,255,255,.16),transparent_26%),radial-gradient(circle_at_15%_85%,rgba(244,196,90,.24),transparent_30%)]" />
       <div className="absolute left-0 top-0 -z-10 h-full w-full opacity-[.07] [background-image:linear-gradient(rgba(31,26,18,.14)_1px,transparent_1px),linear-gradient(90deg,rgba(31,26,18,.14)_1px,transparent_1px)] dark:[background-image:linear-gradient(#fff_1px,transparent_1px),linear-gradient(90deg,#fff_1px,transparent_1px)] [background-size:44px_44px]" />
-      <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1fr_.72fr] lg:items-end">
+      <div className="page-container grid gap-10 lg:grid-cols-[1fr_.72fr] lg:items-end">
         <div>
           <div className="inline-flex rounded-full border border-academy-gold/45 bg-academy-gold-soft/80 px-4 py-2 text-xs font-black uppercase tracking-[.22em] text-academy-gold-strong shadow-sm backdrop-blur dark:border-white/15 dark:bg-academy-surface/10 dark:text-academy-gold">Grille tarifaire</div>
           <h1 className="mt-7 max-w-4xl text-5xl font-black leading-[.95] tracking-tight md:text-7xl">
@@ -52,7 +52,7 @@ export default function Page() {
     </section>
 
     <section className="bg-academy-bg px-4 py-14 md:py-20">
-      <div className="mx-auto max-w-7xl">
+      <div className="page-container">
         <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="text-xs font-black uppercase tracking-[.25em] text-academy-gold-strong">Catalogue hors BTS</p>
@@ -103,7 +103,7 @@ export default function Page() {
     <FinancingSimulator />
 
     <section className="px-4 py-12">
-      <div className="mx-auto overflow-hidden rounded-[2rem] bg-academy-surface shadow-card ring-1 ring-academy-line md:max-w-7xl">
+      <div className="page-container overflow-hidden rounded-[2rem] bg-academy-surface shadow-card ring-1 ring-academy-line">
         <div className="grid lg:grid-cols-[.8fr_1.2fr]">
           <div className="bg-academy-ink p-8 text-white md:p-10">
             <p className="text-xs font-black uppercase tracking-[.25em] text-academy-gold">Important</p>

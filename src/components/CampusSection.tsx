@@ -60,7 +60,7 @@ export function CampusSection() {
     <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-academy-line to-transparent" aria-hidden="true" />
     <div className="pointer-events-none absolute left-1/2 top-10 -z-10 h-72 w-72 -translate-x-1/2 rounded-full bg-academy-gold/10 blur-3xl" aria-hidden="true" />
 
-    <div className="mx-auto max-w-7xl">
+    <div className="page-container">
       <div className="grid gap-8 lg:grid-cols-[1.12fr_.88fr] lg:items-end">
         <div className="max-w-3xl">
           <p className="text-xs font-black uppercase tracking-[.22em] text-academy-gold-strong">NOS CAMPUS</p>
