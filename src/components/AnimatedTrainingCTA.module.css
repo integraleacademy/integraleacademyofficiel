@@ -1,4 +1,6 @@
 .rotatingText {
+  padding-bottom: .08em;
+  line-height: 1.12;
   animation: trainingCtaText 620ms cubic-bezier(.22, 1, .36, 1) both;
 }
 
