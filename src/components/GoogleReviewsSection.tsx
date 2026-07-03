@@ -152,9 +152,9 @@ function ReviewCard({ review, compact = false }: { review: Review; compact?: boo
 }
 
 export function GoogleReviewsSection(){
-  return <section className="relative isolate overflow-hidden px-4 py-[4.5rem] md:py-24">
+  return <section className="relative isolate overflow-visible px-4 pb-20 pt-[4.5rem] md:pb-20 md:pt-24">
     <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_18%_12%,rgba(230,176,58,.14),transparent_28%),linear-gradient(180deg,rgb(var(--surface-elevated)),rgb(var(--background))_76%)]" aria-hidden="true"/>
-    <div className="page-container max-w-6xl">
+    <div className="page-container max-w-6xl overflow-visible">
       <div className="mx-auto max-w-3xl text-center reveal">
         <span className="inline-flex items-center gap-2 rounded-full bg-white/80 px-3.5 py-1.5 text-[0.7rem] font-black uppercase tracking-[.22em] text-academy-gold-text shadow-sm ring-1 ring-academy-ink/[.06] backdrop-blur dark:bg-white/5 dark:ring-white/10"><span aria-hidden="true">★</span> Avis Google</span>
         <h2 className="mt-6 text-3xl font-black tracking-tight text-academy-ink md:text-5xl">Ce sont nos stagiaires qui en parlent le mieux.</h2>
@@ -179,14 +179,14 @@ export function GoogleReviewsSection(){
         </div>
       </div>
 
-      <details className="group/more reveal mt-7">
+      <details className="group/more reveal mt-7 h-auto overflow-visible">
         <summary className="mx-auto flex w-fit cursor-pointer list-none items-center gap-2 rounded-full bg-academy-ink px-5 py-3 text-sm font-black text-white shadow-[0_18px_45px_rgba(15,23,42,.14)] transition hover:-translate-y-0.5 hover:bg-black [&::-webkit-details-marker]:hidden">
           <span className="group-open/more:hidden">Voir plus d’avis</span>
           <span className="hidden group-open/more:inline">Masquer les avis</span>
           <span aria-hidden="true" className="transition group-open/more:rotate-180">↓</span>
         </summary>
-        <div className="mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4 md:grid md:grid-cols-2 md:overflow-visible md:pb-0 lg:grid-cols-3">
-          {moreReviews.map((review, index) => <div key={`${review.name}-${review.category}-${index}`} className="w-[84%] shrink-0 snap-center md:w-auto"><ReviewCard review={review} compact/></div>)}
+        <div className="mt-8 grid h-auto gap-4 overflow-visible pb-0 sm:grid-cols-2 lg:grid-cols-3">
+          {moreReviews.map((review, index) => <div key={`${review.name}-${review.category}-${index}`} className="min-w-0"><ReviewCard review={review} compact/></div>)}
         </div>
       </details>
 
