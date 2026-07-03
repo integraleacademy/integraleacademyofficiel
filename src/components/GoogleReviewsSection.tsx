@@ -135,11 +135,27 @@ function ReviewHeader({ review, compact = false }: { review: Review; compact?: b
   </div>
 }
 
+function ExpandableReviewText({ text, limit, className }: { text: string; limit: number; className: string }){
+  const isLong = text.length > limit;
+  if(!isLong) return <p className={className}>“{text}”</p>;
+
+  return <details className={`${className} group/text`}>
+    <summary className="list-none [&::-webkit-details-marker]:hidden">
+      <span className="group-open/text:hidden">“{getShortText(text, limit)}”</span>
+      <span className="hidden group-open/text:inline">“{text}”</span>
+      <span className="mt-3 block w-fit cursor-pointer rounded-full bg-academy-ink/[.06] px-3 py-1.5 text-xs font-black text-academy-ink transition hover:bg-academy-gold/20 dark:bg-white/10 dark:text-white">
+        <span className="group-open/text:hidden">Lire l’avis complet</span>
+        <span className="hidden group-open/text:inline">Réduire l’avis</span>
+      </span>
+    </summary>
+  </details>
+}
+
 function FeaturedCard({ review }: { review: Review }){
   return <article className="relative overflow-hidden rounded-[2.25rem] bg-white p-7 shadow-[0_28px_80px_rgba(15,23,42,.10)] ring-1 ring-academy-ink/[.06] md:p-9 dark:bg-academy-elevated dark:ring-white/10">
     <div className="pointer-events-none absolute right-8 top-8 text-6xl font-black leading-none text-academy-gold/[.12]" aria-hidden="true">“</div>
     <ReviewHeader review={review}/>
-    <p className="mt-8 max-w-2xl text-xl font-black leading-9 tracking-tight text-academy-ink md:text-2xl md:leading-10">“{getShortText(review.text, 188)}”</p>
+    <ExpandableReviewText text={review.text} limit={188} className="mt-8 max-w-2xl text-xl font-black leading-9 tracking-tight text-academy-ink md:text-2xl md:leading-10"/>
     <p className="mt-6 text-xs font-bold uppercase tracking-[.18em] text-academy-muted">Avis Google sélectionné</p>
   </article>
 }
@@ -147,7 +163,7 @@ function FeaturedCard({ review }: { review: Review }){
 function ReviewCard({ review, compact = false }: { review: Review; compact?: boolean }){
   return <article className="flex h-full flex-col rounded-[1.65rem] bg-white/88 p-5 shadow-[0_18px_55px_rgba(15,23,42,.07)] ring-1 ring-academy-ink/[.055] backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_65px_rgba(15,23,42,.10)] dark:bg-academy-elevated/85 dark:ring-white/10">
     <ReviewHeader review={review} compact/>
-    <p className={`${compact ? 'mt-5 text-sm leading-7' : 'mt-6 text-[0.95rem] leading-7'} flex-1 text-academy-muted`}>“{getShortText(review.text, compact ? 132 : 152)}”</p>
+    <ExpandableReviewText text={review.text} limit={compact ? 132 : 152} className={`${compact ? 'mt-5 text-sm leading-7' : 'mt-6 text-[0.95rem] leading-7'} flex-1 text-academy-muted`}/>
   </article>
 }
 
