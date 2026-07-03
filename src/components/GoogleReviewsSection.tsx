@@ -135,11 +135,27 @@ function ReviewHeader({ review, compact = false }: { review: Review; compact?: b
   </div>
 }
 
+function ExpandableReviewText({ text, limit, className }: { text: string; limit: number; className: string }){
+  const isLong = text.length > limit;
+  if(!isLong) return <p className={className}>“{text}”</p>;
+
+  return <details className={`${className} group/text`}>
+    <summary className="list-none [&::-webkit-details-marker]:hidden">
+      <span className="group-open/text:hidden">“{getShortText(text, limit)}”</span>
+      <span className="hidden group-open/text:inline">“{text}”</span>
+      <span className="mt-3 block w-fit cursor-pointer rounded-full bg-academy-ink/[.06] px-3 py-1.5 text-xs font-black text-academy-ink transition hover:bg-academy-gold/20 dark:bg-white/10 dark:text-white">
+        <span className="group-open/text:hidden">Lire l’avis complet</span>
+        <span className="hidden group-open/text:inline">Réduire l’avis</span>
+      </span>
+    </summary>
+  </details>
+}
+
 function FeaturedCard({ review }: { review: Review }){
   return <article className="relative overflow-hidden rounded-[2.25rem] bg-white p-7 shadow-[0_28px_80px_rgba(15,23,42,.10)] ring-1 ring-academy-ink/[.06] md:p-9 dark:bg-academy-elevated dark:ring-white/10">
     <div className="pointer-events-none absolute right-8 top-8 text-6xl font-black leading-none text-academy-gold/[.12]" aria-hidden="true">“</div>
     <ReviewHeader review={review}/>
-    <p className="mt-8 max-w-2xl text-xl font-black leading-9 tracking-tight text-academy-ink md:text-2xl md:leading-10">“{getShortText(review.text, 188)}”</p>
+    <ExpandableReviewText text={review.text} limit={188} className="mt-8 max-w-2xl text-xl font-black leading-9 tracking-tight text-academy-ink md:text-2xl md:leading-10"/>
     <p className="mt-6 text-xs font-bold uppercase tracking-[.18em] text-academy-muted">Avis Google sélectionné</p>
   </article>
 }
@@ -147,14 +163,14 @@ function FeaturedCard({ review }: { review: Review }){
 function ReviewCard({ review, compact = false }: { review: Review; compact?: boolean }){
   return <article className="flex h-full flex-col rounded-[1.65rem] bg-white/88 p-5 shadow-[0_18px_55px_rgba(15,23,42,.07)] ring-1 ring-academy-ink/[.055] backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_65px_rgba(15,23,42,.10)] dark:bg-academy-elevated/85 dark:ring-white/10">
     <ReviewHeader review={review} compact/>
-    <p className={`${compact ? 'mt-5 text-sm leading-7' : 'mt-6 text-[0.95rem] leading-7'} flex-1 text-academy-muted`}>“{getShortText(review.text, compact ? 132 : 152)}”</p>
+    <ExpandableReviewText text={review.text} limit={compact ? 132 : 152} className={`${compact ? 'mt-5 text-sm leading-7' : 'mt-6 text-[0.95rem] leading-7'} flex-1 text-academy-muted`}/>
   </article>
 }
 
 export function GoogleReviewsSection(){
-  return <section className="relative isolate overflow-hidden px-4 py-[4.5rem] md:py-24">
+  return <section className="relative isolate overflow-visible px-4 pb-20 pt-[4.5rem] md:pb-20 md:pt-24">
     <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_18%_12%,rgba(230,176,58,.14),transparent_28%),linear-gradient(180deg,rgb(var(--surface-elevated)),rgb(var(--background))_76%)]" aria-hidden="true"/>
-    <div className="page-container max-w-6xl">
+    <div className="page-container max-w-6xl overflow-visible">
       <div className="mx-auto max-w-3xl text-center reveal">
         <span className="inline-flex items-center gap-2 rounded-full bg-white/80 px-3.5 py-1.5 text-[0.7rem] font-black uppercase tracking-[.22em] text-academy-gold-text shadow-sm ring-1 ring-academy-ink/[.06] backdrop-blur dark:bg-white/5 dark:ring-white/10"><span aria-hidden="true">★</span> Avis Google</span>
         <h2 className="mt-6 text-3xl font-black tracking-tight text-academy-ink md:text-5xl">Ce sont nos stagiaires qui en parlent le mieux.</h2>
@@ -179,14 +195,14 @@ export function GoogleReviewsSection(){
         </div>
       </div>
 
-      <details className="group/more reveal mt-7">
+      <details className="group/more reveal mt-7 h-auto overflow-visible">
         <summary className="mx-auto flex w-fit cursor-pointer list-none items-center gap-2 rounded-full bg-academy-ink px-5 py-3 text-sm font-black text-white shadow-[0_18px_45px_rgba(15,23,42,.14)] transition hover:-translate-y-0.5 hover:bg-black [&::-webkit-details-marker]:hidden">
           <span className="group-open/more:hidden">Voir plus d’avis</span>
           <span className="hidden group-open/more:inline">Masquer les avis</span>
           <span aria-hidden="true" className="transition group-open/more:rotate-180">↓</span>
         </summary>
-        <div className="mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4 md:grid md:grid-cols-2 md:overflow-visible md:pb-0 lg:grid-cols-3">
-          {moreReviews.map((review, index) => <div key={`${review.name}-${review.category}-${index}`} className="w-[84%] shrink-0 snap-center md:w-auto"><ReviewCard review={review} compact/></div>)}
+        <div className="mt-8 grid h-auto gap-4 overflow-visible pb-0 sm:grid-cols-2 lg:grid-cols-3">
+          {moreReviews.map((review, index) => <div key={`${review.name}-${review.category}-${index}`} className="min-w-0"><ReviewCard review={review} compact/></div>)}
         </div>
       </details>
 
