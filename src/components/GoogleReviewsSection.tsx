@@ -1,13 +1,36 @@
 const googleRating = '5,0';
-const googleReviewsCount = '15 extraits sélectionnés';
-const googleReviewsUrl = '#'; // TODO: remplacer par l’URL officielle de la fiche Google / des avis Google.
+const googleReviewsCount = '15 avis sélectionnés';
 
 const reviews = [
+  {
+    name: 'Mee-Kyung K.',
+    rating: 5,
+    category: 'A3P',
+    text: 'Une formation A3P exceptionnelle, clairement au-dessus de ce que j’ai pu voir ailleurs. Exigeante, réaliste et ultra-professionnalisante, elle prépare vraiment au terrain.',
+  },
   {
     name: 'Emma-Rosa B.',
     rating: 5,
     category: 'APS',
     text: 'J’ai passé la formation APS avec Abdel, que je souhaite remercier infiniment pour son professionnalisme, sa pédagogie et son attention. J’ai passé cinq semaines remplies de connaissances, de compétences, mais aussi de bons moments.',
+  },
+  {
+    name: 'Mathys C.',
+    rating: 5,
+    category: 'Agent de sécurité',
+    text: 'Les locaux sont propres, bien équipés et agréables. L’ambiance est sérieuse mais conviviale. La formation est complète, bien organisée, avec un bon équilibre entre théorie et pratique.',
+  },
+  {
+    name: 'Nelson D.',
+    rating: 5,
+    category: 'Sécurité privée',
+    text: 'L’équipe est professionnelle, à l’écoute et très investie dans la réussite des stagiaires. Les formations sont claires, dynamiques et parfaitement adaptées aux exigences du terrain.',
+  },
+  {
+    name: 'Mehdi A.',
+    rating: 5,
+    category: 'Protection rapprochée',
+    text: '9 semaines de formation très enrichissantes et de qualité. Une équipe en or. Nous avons tous obtenu notre titre à finalité professionnelle : 100 % de réussite à cette session.',
   },
   {
     name: 'Joëlle B.',
@@ -18,20 +41,8 @@ const reviews = [
   {
     name: 'Mee-Kyung K.',
     rating: 5,
-    category: 'A3P',
-    text: 'Une formation A3P exceptionnelle, clairement au-dessus de ce que j’ai pu voir ailleurs. Exigeante, réaliste et ultra-professionnalisante, elle prépare vraiment au terrain.',
-  },
-  {
-    name: 'Mee-Kyung K.',
-    rating: 5,
     category: 'APS',
     text: 'Une formation de grande qualité avec un accompagnement au top. Le formateur prend vraiment le temps d’expliquer, de répondre aux questions et de mettre tout le monde en confiance.',
-  },
-  {
-    name: 'Nelson D.',
-    rating: 5,
-    category: 'Sécurité privée',
-    text: 'L’équipe est professionnelle, à l’écoute et très investie dans la réussite des stagiaires. Les formations sont claires, dynamiques et parfaitement adaptées aux exigences du terrain.',
   },
   {
     name: 'Shin S.',
@@ -46,22 +57,10 @@ const reviews = [
     text: 'Un formateur vraiment au top : bienveillant, à l’écoute, patient et très pédagogue. Il a su me mettre en confiance, me motiver et m’accompagner jusqu’au bout.',
   },
   {
-    name: 'Mathys C.',
-    rating: 5,
-    category: 'Agent de sécurité',
-    text: 'Les locaux sont propres, bien équipés et agréables. L’ambiance est sérieuse mais conviviale. La formation est complète, bien organisée, avec un bon équilibre entre théorie et pratique.',
-  },
-  {
     name: 'Romain F.',
     rating: 5,
     category: 'Protection rapprochée',
     text: 'Une formation très intéressante dans tous les domaines de la protection rapprochée. Une formation sérieuse à conseiller.',
-  },
-  {
-    name: 'Mehdi A.',
-    rating: 5,
-    category: 'Protection rapprochée',
-    text: '9 semaines de formation très enrichissantes et de qualité. Une équipe en or. Nous avons tous obtenu notre titre à finalité professionnelle : 100 % de réussite à cette session.',
   },
   {
     name: 'Amélie M.',
@@ -96,13 +95,16 @@ const reviews = [
 ];
 
 const featuredCategories = ['APS', 'A3P', 'Protection rapprochée', 'VTC'];
-const excerptLimit = 152;
+const [featuredReview, ...remainingReviews] = reviews;
+const secondaryReviews = remainingReviews.slice(0, 2);
+const moreReviews = remainingReviews.slice(2);
+const excerptLimit = 165;
 
 type Review = (typeof reviews)[number];
 
-function Stars({ rating }: { rating: number }){
-  return <div className="flex gap-0.5 text-[1.05rem] text-academy-gold-strong" aria-label={`${rating} étoiles sur 5`}>
-    {Array.from({ length: 5 }).map((_, index) => <span key={index} className={index < rating ? 'text-academy-gold-strong drop-shadow-[0_2px_8px_rgba(230,176,58,.35)]' : 'text-academy-line'} aria-hidden="true">★</span>)}
+function Stars({ rating, subtle = false }: { rating: number; subtle?: boolean }){
+  return <div className={`flex gap-0.5 ${subtle ? 'text-sm' : 'text-base'} text-academy-gold-strong`} aria-label={`${rating} étoiles sur 5`}>
+    {Array.from({ length: 5 }).map((_, index) => <span key={index} className={index < rating ? 'text-academy-gold-strong' : 'text-academy-line'} aria-hidden="true">★</span>)}
   </div>
 }
 
@@ -110,76 +112,93 @@ function getInitial(name: string){
   return name.trim().charAt(0).toUpperCase() || 'A';
 }
 
-function getShortText(text: string){
-  if(text.length <= excerptLimit) return text;
-  const cut = text.lastIndexOf(' ', excerptLimit);
-  return `${text.slice(0, cut > 90 ? cut : excerptLimit).trim()}…`;
+function getShortText(text: string, limit = excerptLimit){
+  if(text.length <= limit) return text;
+  const cut = text.lastIndexOf(' ', limit);
+  return `${text.slice(0, cut > 90 ? cut : limit).trim()}…`;
 }
 
-function ReviewText({ text }: { text: string }){
-  const isLong = text.length > excerptLimit;
-
-  if(!isLong){
-    return <p className="mt-5 flex-1 text-[0.95rem] leading-7 text-academy-muted">“{text}”</p>
-  }
-
-  return <details className="group/details mt-5 flex-1 text-[0.95rem] leading-7 text-academy-muted">
-    <summary className="list-none [&::-webkit-details-marker]:hidden">
-      <span className="group-open/details:hidden">“{getShortText(text)}”</span>
-      <span className="hidden group-open/details:inline">“{text}”</span>
-      <span className="mt-4 inline-flex cursor-pointer items-center rounded-full border border-academy-line bg-white/70 px-3 py-1.5 text-xs font-black text-academy-ink transition hover:border-academy-gold/60 hover:text-academy-gold-text dark:border-white/10 dark:bg-white/5">
-        <span className="group-open/details:hidden">Lire plus</span>
-        <span className="hidden group-open/details:inline">Réduire</span>
-      </span>
-    </summary>
-  </details>
+function FormationBadge({ category }: { category: string }){
+  return <span className="rounded-full bg-academy-ink/[.055] px-2.5 py-1 text-[0.68rem] font-bold text-academy-muted ring-1 ring-academy-ink/[.06] dark:bg-white/[.06] dark:text-white/70 dark:ring-white/10">{category}</span>
 }
 
-function ReviewCard({ review }: { review: Review }){
-  return <article className="group relative flex h-full min-h-[20rem] snap-center scroll-mx-4 flex-col overflow-hidden rounded-[2rem] border border-white/70 bg-white/85 p-6 shadow-[0_24px_70px_rgba(36,28,12,.10)] ring-1 ring-academy-gold/10 backdrop-blur transition duration-300 hover:-translate-y-1 hover:border-academy-gold/45 hover:shadow-[0_30px_85px_rgba(36,28,12,.16)] dark:border-white/10 dark:bg-academy-elevated/85">
-    <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-academy-gold via-academy-gold-strong to-academy-gold-soft" aria-hidden="true"/>
-    <div className="flex items-start justify-between gap-4">
-      <div className="flex items-center gap-3">
-        <div className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-academy-ink to-black text-base font-black text-white shadow-[0_14px_30px_rgba(0,0,0,.20)]" aria-hidden="true">{getInitial(review.name)}</div>
-        <div>
-          <h3 className="font-black text-academy-ink">{review.name}</h3>
-          <p className="mt-1 text-xs font-black uppercase tracking-[.16em] text-academy-muted">Avis Google</p>
-        </div>
+function ReviewHeader({ review, compact = false }: { review: Review; compact?: boolean }){
+  return <div className="flex items-start justify-between gap-4">
+    <div className="flex min-w-0 items-center gap-3">
+      <div className={`${compact ? 'h-10 w-10 rounded-2xl text-sm' : 'h-12 w-12 rounded-[1.15rem] text-base'} grid shrink-0 place-items-center bg-academy-ink text-white shadow-[0_14px_35px_rgba(15,23,42,.12)]`} aria-hidden="true">{getInitial(review.name)}</div>
+      <div className="min-w-0">
+        <h3 className="truncate font-black text-academy-ink">{review.name}</h3>
+        <div className="mt-1 flex items-center gap-2"><Stars rating={review.rating} subtle/><span className="text-xs font-bold text-academy-muted">{review.rating}/5</span></div>
       </div>
-      <span className="rounded-full border border-academy-gold/30 bg-academy-gold/15 px-3 py-1 text-[0.68rem] font-black uppercase tracking-[.14em] text-academy-gold-text">{review.category}</span>
     </div>
-    <div className="mt-6 flex items-center gap-3"><Stars rating={review.rating}/><span className="text-sm font-black text-academy-ink">{review.rating}/5</span></div>
-    <ReviewText text={review.text}/>
-    <div className="mt-6 flex items-center justify-between border-t border-academy-line/70 pt-4 text-xs font-bold text-academy-muted dark:border-white/10">
-      <span>Extrait sélectionné</span>
-      <span className="text-academy-gold-text">Google</span>
-    </div>
+    <FormationBadge category={review.category}/>
+  </div>
+}
+
+function FeaturedCard({ review }: { review: Review }){
+  return <article className="relative overflow-hidden rounded-[2.25rem] bg-white p-7 shadow-[0_28px_80px_rgba(15,23,42,.10)] ring-1 ring-academy-ink/[.06] md:p-9 dark:bg-academy-elevated dark:ring-white/10">
+    <div className="pointer-events-none absolute right-8 top-8 text-6xl font-black leading-none text-academy-gold/[.12]" aria-hidden="true">“</div>
+    <ReviewHeader review={review}/>
+    <p className="mt-8 max-w-2xl text-xl font-black leading-9 tracking-tight text-academy-ink md:text-2xl md:leading-10">“{getShortText(review.text, 188)}”</p>
+    <p className="mt-6 text-xs font-bold uppercase tracking-[.18em] text-academy-muted">Avis Google sélectionné</p>
+  </article>
+}
+
+function ReviewCard({ review, compact = false }: { review: Review; compact?: boolean }){
+  return <article className="flex h-full flex-col rounded-[1.65rem] bg-white/88 p-5 shadow-[0_18px_55px_rgba(15,23,42,.07)] ring-1 ring-academy-ink/[.055] backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_65px_rgba(15,23,42,.10)] dark:bg-academy-elevated/85 dark:ring-white/10">
+    <ReviewHeader review={review} compact/>
+    <p className={`${compact ? 'mt-5 text-sm leading-7' : 'mt-6 text-[0.95rem] leading-7'} flex-1 text-academy-muted`}>“{getShortText(review.text, compact ? 132 : 152)}”</p>
   </article>
 }
 
 export function GoogleReviewsSection(){
-  return <section className="relative isolate overflow-hidden px-4 py-16 md:py-24">
-    <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_14%_8%,rgba(230,176,58,.24),transparent_31%),radial-gradient(circle_at_86%_22%,rgba(19,30,51,.10),transparent_30%),linear-gradient(180deg,rgb(var(--surface-elevated)),rgb(var(--background)))]" aria-hidden="true"/>
-    <div className="absolute -right-28 top-10 -z-10 h-72 w-72 rounded-full bg-academy-gold/15 blur-3xl" aria-hidden="true"/>
-    <div className="page-container">
-      <div className="mx-auto max-w-4xl text-center reveal">
-        <span className="inline-flex items-center gap-2 rounded-full border border-academy-gold/30 bg-white/75 px-4 py-2 text-xs font-black uppercase tracking-[.22em] text-academy-gold-text shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5"><span aria-hidden="true">★</span> Avis Google</span>
+  return <section className="relative isolate overflow-hidden px-4 py-[4.5rem] md:py-24">
+    <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_18%_12%,rgba(230,176,58,.14),transparent_28%),linear-gradient(180deg,rgb(var(--surface-elevated)),rgb(var(--background))_76%)]" aria-hidden="true"/>
+    <div className="page-container max-w-6xl">
+      <div className="mx-auto max-w-3xl text-center reveal">
+        <span className="inline-flex items-center gap-2 rounded-full bg-white/80 px-3.5 py-1.5 text-[0.7rem] font-black uppercase tracking-[.22em] text-academy-gold-text shadow-sm ring-1 ring-academy-ink/[.06] backdrop-blur dark:bg-white/5 dark:ring-white/10"><span aria-hidden="true">★</span> Avis Google</span>
         <h2 className="mt-6 text-3xl font-black tracking-tight text-academy-ink md:text-5xl">Ce sont nos stagiaires qui en parlent le mieux.</h2>
-        <p className="mx-auto mt-5 max-w-3xl text-base leading-8 text-academy-muted md:text-lg">Formations APS, A3P, protection rapprochée, VTC… découvrez les retours de celles et ceux qui nous ont fait confiance.</p>
+        <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-academy-muted md:text-lg">Formations APS, A3P, protection rapprochée, VTC… découvrez les retours de celles et ceux qui nous ont fait confiance.</p>
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-sm font-bold text-academy-muted">
+          <Stars rating={5} subtle/>
+          <span className="text-academy-ink">{googleRating}/5</span>
+          <span aria-hidden="true">·</span>
+          <span>{googleReviewsCount}</span>
+          <span aria-hidden="true">·</span>
+          <span>aucune réponse établissement affichée</span>
+        </div>
+        <div className="mt-5 flex flex-wrap justify-center gap-2">
+          {featuredCategories.map((category) => <span key={category} className="rounded-full px-3 py-1 text-xs font-bold text-academy-muted ring-1 ring-academy-ink/[.08] dark:ring-white/10">{category}</span>)}
+        </div>
       </div>
 
-      <div className="reveal mx-auto mt-8 flex max-w-4xl flex-col items-center justify-between gap-5 rounded-[2rem] border border-white/70 bg-white/75 p-5 shadow-soft backdrop-blur md:flex-row dark:border-white/10 dark:bg-academy-elevated/75">
-        <div className="flex items-center gap-4">
-          <div className="flex items-end gap-2"><span className="text-5xl font-black tracking-tight text-academy-ink">{googleRating}</span><span className="pb-2 text-lg font-black text-academy-muted">/5</span></div>
-          <div><Stars rating={5}/><p className="mt-1 text-sm font-bold text-academy-muted">{googleReviewsCount} · aucune réponse établissement affichée</p></div>
-        </div>
-        <div className="flex flex-wrap justify-center gap-2">
-          {featuredCategories.map((category) => <span key={category} className="rounded-full border border-academy-line bg-academy-bg/80 px-3 py-1.5 text-xs font-black text-academy-ink dark:border-white/10">{category}</span>)}
+      <div className="reveal mt-12 grid gap-5 lg:grid-cols-[1.18fr_.82fr] lg:items-stretch">
+        <FeaturedCard review={featuredReview}/>
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-1">
+          {secondaryReviews.map((review) => <ReviewCard key={`${review.name}-${review.category}`} review={review}/>)}
         </div>
       </div>
 
-      <div className="mt-10 flex snap-x snap-mandatory gap-5 overflow-x-auto pb-4 md:grid md:grid-cols-2 md:overflow-visible md:pb-0 lg:grid-cols-3">
-        {reviews.map((review, index) => <div key={`${review.name}-${review.category}-${index}`} className="w-[86%] shrink-0 md:w-auto"><ReviewCard review={review}/></div>)}
+      <details className="group/more reveal mt-7">
+        <summary className="mx-auto flex w-fit cursor-pointer list-none items-center gap-2 rounded-full bg-academy-ink px-5 py-3 text-sm font-black text-white shadow-[0_18px_45px_rgba(15,23,42,.14)] transition hover:-translate-y-0.5 hover:bg-black [&::-webkit-details-marker]:hidden">
+          <span className="group-open/more:hidden">Voir plus d’avis</span>
+          <span className="hidden group-open/more:inline">Masquer les avis</span>
+          <span aria-hidden="true" className="transition group-open/more:rotate-180">↓</span>
+        </summary>
+        <div className="mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4 md:grid md:grid-cols-2 md:overflow-visible md:pb-0 lg:grid-cols-3">
+          {moreReviews.map((review, index) => <div key={`${review.name}-${review.category}-${index}`} className="w-[84%] shrink-0 snap-center md:w-auto"><ReviewCard review={review} compact/></div>)}
+        </div>
+      </details>
+
+      <div className="reveal mx-auto mt-12 flex max-w-3xl flex-col items-center justify-between gap-5 rounded-[2rem] bg-white/70 p-5 text-center shadow-[0_18px_60px_rgba(15,23,42,.07)] ring-1 ring-academy-ink/[.055] backdrop-blur sm:flex-row sm:text-left dark:bg-white/[.04] dark:ring-white/10">
+        <div>
+          <p className="text-sm font-black text-academy-ink">Prêt à choisir votre formation ?</p>
+          <p className="mt-1 text-sm leading-6 text-academy-muted">Un conseiller peut vous orienter vers le parcours le plus adapté.</p>
+        </div>
+        <div className="flex flex-wrap justify-center gap-3">
+          <a href="/formations-securite" className="rounded-full border border-academy-ink/10 bg-white px-4 py-2.5 text-sm font-black text-academy-ink transition hover:-translate-y-0.5 hover:border-academy-gold/40 dark:border-white/10 dark:bg-white/5">Découvrir nos formations</a>
+          <a href="/contact" className="rounded-full bg-academy-gold px-4 py-2.5 text-sm font-black text-academy-gold-text shadow-gold transition hover:-translate-y-0.5">Parler à un conseiller</a>
+        </div>
       </div>
     </div>
   </section>
