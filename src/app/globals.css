@@ -62,8 +62,10 @@
 
 
 @layer components {
-  .page-container {
-    width: min(100% - 48px, 1500px);
+  .page-container,
+  .content-container,
+  .section-inner {
+    width: min(100% - 96px, 1320px);
     margin-left: auto;
     margin-right: auto;
   }
@@ -72,9 +74,19 @@
     max-width: 720px;
   }
 
-  @media (max-width: 768px) {
-    .page-container {
-      width: min(100% - 24px, 100%);
+  @media (max-width: 1024px) {
+    .page-container,
+    .content-container,
+    .section-inner {
+      width: min(100% - 48px, 1320px);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .page-container,
+    .content-container,
+    .section-inner {
+      width: min(100% - 32px, 1320px);
     }
   }
 }
