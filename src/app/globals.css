@@ -65,8 +65,7 @@
   .page-container,
   .content-container,
   .section-inner {
-    width: 100%;
-    max-width: 1416px;
+    width: min(100% - 96px, 1320px);
     margin-left: auto;
     margin-right: auto;
     padding-left: 48px;
@@ -81,8 +80,7 @@
     .page-container,
     .content-container,
     .section-inner {
-      padding-left: 24px;
-      padding-right: 24px;
+      width: min(100% - 48px, 1320px);
     }
   }
 
@@ -90,8 +88,7 @@
     .page-container,
     .content-container,
     .section-inner {
-      padding-left: 16px;
-      padding-right: 16px;
+      width: min(100% - 32px, 1320px);
     }
   }
 }
