@@ -1,3 +1,7 @@
+'use client';
+
+import { useMemo, useState } from 'react';
+
 const googleRating = '5,0';
 const googleReviewsCount = '15 avis sélectionnés';
 
@@ -94,13 +98,23 @@ const reviews = [
   },
 ];
 
-const featuredCategories = ['APS', 'A3P', 'Protection rapprochée', 'VTC'];
-const [featuredReview, ...remainingReviews] = reviews;
-const secondaryReviews = remainingReviews.slice(0, 2);
-const moreReviews = remainingReviews.slice(2);
+const featuredCategories = ['Tous', 'APS', 'A3P', 'Protection rapprochée', 'VTC'];
+const apsEquivalentCategories = ['APS', 'Sécurité privée', 'Agent de sécurité'];
 const excerptLimit = 165;
 
 type Review = (typeof reviews)[number];
+type ReviewFilter = (typeof featuredCategories)[number];
+
+function matchesReviewFilter(review: Review, filter: ReviewFilter){
+  if(filter === 'Tous') return true;
+  if(filter === 'APS') return apsEquivalentCategories.includes(review.category);
+  return review.category === filter;
+}
+
+function getFilterLabel(filter: ReviewFilter){
+  if(filter === 'APS') return 'APS / Sécurité privée / Agent de sécurité';
+  return filter;
+}
 
 function Stars({ rating, subtle = false }: { rating: number; subtle?: boolean }){
   return <div className={`flex gap-0.5 ${subtle ? 'text-sm' : 'text-base'} text-academy-gold-strong`} aria-label={`${rating} étoiles sur 5`}>
@@ -168,6 +182,12 @@ function ReviewCard({ review, compact = false }: { review: Review; compact?: boo
 }
 
 export function GoogleReviewsSection(){
+  const [activeFilter, setActiveFilter] = useState<ReviewFilter>('Tous');
+  const filteredReviews = useMemo(() => reviews.filter((review) => matchesReviewFilter(review, activeFilter)), [activeFilter]);
+  const [featuredReview, ...remainingReviews] = filteredReviews;
+  const secondaryReviews = remainingReviews.slice(0, 2);
+  const moreReviews = remainingReviews.slice(2);
+
   return <section className="relative isolate overflow-visible px-4 pb-20 pt-[4.5rem] md:pb-20 md:pt-24">
     <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_18%_12%,rgba(230,176,58,.14),transparent_28%),linear-gradient(180deg,rgb(var(--surface-elevated)),rgb(var(--background))_76%)]" aria-hidden="true"/>
     <div className="page-container max-w-6xl overflow-visible">
@@ -183,9 +203,22 @@ export function GoogleReviewsSection(){
           <span aria-hidden="true">·</span>
           <span>aucune réponse établissement affichée</span>
         </div>
-        <div className="mt-5 flex flex-wrap justify-center gap-2">
-          {featuredCategories.map((category) => <span key={category} className="rounded-full px-3 py-1 text-xs font-bold text-academy-muted ring-1 ring-academy-ink/[.08] dark:ring-white/10">{category}</span>)}
+        <div className="mt-5 flex flex-wrap justify-center gap-2" role="list" aria-label="Filtrer les avis par formation">
+          {featuredCategories.map((category) => {
+            const isActive = activeFilter === category;
+            return <button
+              key={category}
+              type="button"
+              onClick={() => setActiveFilter(category)}
+              aria-pressed={isActive}
+              title={getFilterLabel(category)}
+              className={`rounded-full px-3 py-1 text-xs font-bold transition hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-academy-gold ${isActive ? 'bg-academy-ink text-white shadow-[0_10px_24px_rgba(15,23,42,.12)] dark:bg-white dark:text-academy-ink' : 'text-academy-muted ring-1 ring-academy-ink/[.08] hover:bg-academy-ink/[.04] dark:ring-white/10 dark:hover:bg-white/[.06]'}`}
+            >{category}</button>
+          })}
         </div>
+        <p className="mt-3 text-xs font-semibold text-academy-muted" aria-live="polite">
+          {filteredReviews.length} avis affiché{filteredReviews.length > 1 ? 's' : ''}{activeFilter === 'APS' ? ' · APS, Sécurité privée et Agent de sécurité regroupés' : ''}
+        </p>
       </div>
 
       <div className="reveal mt-12 grid gap-5 lg:grid-cols-[1.18fr_.82fr] lg:items-stretch">
