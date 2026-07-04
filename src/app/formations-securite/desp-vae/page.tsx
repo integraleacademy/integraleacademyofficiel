@@ -57,7 +57,7 @@ export default async function DespVaePage(){
     <Info title="Modalités d’évaluation" items={evaluation}/>
     <Info title="Débouchés" items={outcomes}/>
     <Info title="Pourquoi suivre cette VAE chez Intégrale Academy" items={why}/>
-    <section className="px-4 py-10"><SectionTitle title="FAQ formation"/><FAQ items={formationFaq}/></section>
+    <section className="page-container py-10"><SectionTitle title="FAQ formation"/><FAQ items={formationFaq}/></section>
   </>
 }
 
