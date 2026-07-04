@@ -55,7 +55,7 @@ export default async function DespInitialPage(){
     <Info title="Modalités d’évaluation" items={evaluation}/>
     <Info title="Débouchés" items={outcomes}/>
     <Info title="Pourquoi suivre cette formation chez Intégrale Academy" items={why}/>
-    <section className="px-4 py-10"><SectionTitle title="FAQ formation"/><FAQ items={formationFaq}/></section>
+    <section className="page-container py-10"><SectionTitle title="FAQ formation"/><FAQ items={formationFaq}/></section>
   </>
 }
 

@@ -55,7 +55,7 @@ export function AnimatedTrainingCTA() {
       <div className="absolute inset-0 -z-10 opacity-35 [background-image:linear-gradient(rgba(255,255,255,.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.08)_1px,transparent_1px)] [background-size:54px_54px]" aria-hidden="true" />
       <div className="absolute left-1/2 top-0 -z-10 h-40 w-[34rem] -translate-x-1/2 rounded-full bg-cyan-300/20 blur-3xl" aria-hidden="true" />
 
-      <div className="mx-auto flex max-w-6xl flex-col items-center justify-center text-center lg:min-h-[280px]">
+      <div className="page-container flex flex-col items-center justify-center text-center lg:min-h-[280px]">
         <p className="text-xs font-black uppercase tracking-[.28em] text-cyan-100/80 sm:text-sm">
           FORMEZ-VOUS AUX MÉTIERS DE LA SÉCURITÉ
         </p>
