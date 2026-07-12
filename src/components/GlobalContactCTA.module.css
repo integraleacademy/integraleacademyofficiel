@@ -1,0 +1,399 @@
+.shell {
+  --spotlight-x: 76%;
+  --spotlight-y: 20%;
+  position: relative;
+  isolation: isolate;
+  overflow: visible;
+  border-radius: 2.75rem;
+  border: 1px solid rgb(var(--accent) / .22);
+  background: linear-gradient(135deg, rgb(var(--surface) / .92), rgb(var(--surface-elevated) / .78));
+  box-shadow: 0 28px 90px rgb(var(--text-main) / .10), inset 0 1px 0 rgb(255 255 255 / .55);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: border-color .24s ease, box-shadow .24s ease, transform .24s ease;
+}
+
+.shell::before {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  z-index: -1;
+  border-radius: inherit;
+  background:
+    radial-gradient(520px circle at var(--spotlight-x) var(--spotlight-y), rgb(var(--accent) / .13), transparent 56%),
+    radial-gradient(420px circle at 18% 54%, rgb(255 255 255 / .32), transparent 62%);
+  opacity: .72;
+  transition: opacity .24s ease;
+}
+
+.shell::after {
+  content: '';
+  position: absolute;
+  inset: -18px;
+  z-index: -2;
+  border-radius: 3.35rem;
+  background: radial-gradient(circle at 82% 20%, rgb(var(--accent) / .18), transparent 42%);
+  filter: blur(22px);
+  opacity: .62;
+  animation: ctaHaloDrift 6.8s ease-in-out infinite alternate;
+}
+
+.shellVisible {
+  animation: ctaRise .72s cubic-bezier(.16, 1, .3, 1) both;
+}
+
+.inner {
+  position: relative;
+  overflow: hidden;
+  border-radius: 2.45rem;
+  padding: clamp(1.5rem, 3vw, 3rem);
+  background:
+    radial-gradient(circle at 84% 10%, rgb(var(--accent) / .16), transparent 27%),
+    radial-gradient(circle at 40% 42%, rgb(var(--accent-soft) / .24), transparent 38%),
+    linear-gradient(135deg, rgb(var(--surface-elevated)), rgb(var(--surface)) 56%, rgb(var(--accent-soft) / .34));
+}
+
+.inner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: .105;
+  background-image: linear-gradient(rgb(var(--text-main) / .28) 1px, transparent 1px), linear-gradient(90deg, rgb(var(--text-main) / .24) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: radial-gradient(circle at 50% 50%, black, transparent 86%);
+}
+
+.inner::after {
+  content: '';
+  position: absolute;
+  inset: 0 8% auto;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / .74), rgb(var(--accent) / .30), transparent);
+}
+
+.haloPrimary,
+.haloSecondary {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: 999px;
+  filter: blur(42px);
+  transform: translate3d(0,0,0);
+  animation: ctaHaloFloat 8s ease-in-out infinite alternate;
+}
+
+.haloPrimary {
+  right: -6rem;
+  top: -7rem;
+  height: 22rem;
+  width: 22rem;
+  background: rgb(var(--accent) / .16);
+}
+
+.haloSecondary {
+  left: 28%;
+  bottom: -8rem;
+  height: 18rem;
+  width: 18rem;
+  background: rgb(255 255 255 / .34);
+  animation-delay: -2.5s;
+}
+
+.revealItem {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.shellVisible .revealItem {
+  animation: ctaItemRise .68s cubic-bezier(.16, 1, .3, 1) both;
+  animation-delay: var(--delay, 0ms);
+}
+
+.badge {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: .55rem;
+  border-radius: 999px;
+  border: 1px solid rgb(var(--accent) / .28);
+  background: rgb(var(--surface-elevated) / .62);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .52), 0 12px 28px rgb(var(--accent) / .08);
+  padding: .62rem 1rem;
+  color: rgb(var(--accent-strong));
+  font-size: .75rem;
+  font-weight: 900;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  backdrop-filter: blur(14px);
+}
+
+.badge::after {
+  content: '';
+  position: absolute;
+  inset-block: -40%;
+  left: -55%;
+  width: 34%;
+  transform: skewX(-18deg);
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / .46), transparent);
+  animation: badgeGlint 7.2s ease-in-out infinite;
+}
+
+.title {
+  margin-top: 1.25rem;
+  max-width: 48rem;
+  color: rgb(var(--text-main));
+  font-size: clamp(2.35rem, 5.1vw, 5.45rem);
+  font-weight: 950;
+  letter-spacing: -.06em;
+  line-height: .98;
+  text-wrap: balance;
+}
+
+.highlight {
+  position: relative;
+  display: inline-block;
+  color: rgb(var(--text-main));
+}
+
+.highlight::after {
+  content: '';
+  position: absolute;
+  left: .03em;
+  right: .02em;
+  bottom: .04em;
+  z-index: -1;
+  height: .18em;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgb(var(--accent) / .14), rgb(var(--accent) / .45), rgb(var(--accent) / .16));
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.shellVisible .highlight::after {
+  animation: underlineDraw .68s cubic-bezier(.16, 1, .3, 1) .38s both;
+}
+
+.contactCard {
+  position: relative;
+  isolation: isolate;
+  min-height: 20rem;
+  border-radius: 2.05rem;
+  border: 1px solid rgb(255 255 255 / .62);
+  background: linear-gradient(145deg, rgb(255 255 255 / .72), rgb(var(--surface-elevated) / .58));
+  box-shadow: 0 30px 80px rgb(var(--text-main) / .14), 0 1px 0 rgb(255 255 255 / .65) inset;
+  backdrop-filter: blur(18px);
+  padding: 1.45rem;
+  transition: transform .24s ease, border-color .24s ease, box-shadow .24s ease;
+}
+
+.contactCard::before {
+  content: '';
+  position: absolute;
+  inset: 1px 1px auto;
+  height: 42%;
+  z-index: -1;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgb(255 255 255 / .38), transparent);
+}
+
+.shell:hover .contactCard {
+  transform: translateY(-4px);
+  border-color: rgb(var(--accent) / .32);
+  box-shadow: 0 36px 90px rgb(var(--text-main) / .16), 0 1px 0 rgb(255 255 255 / .75) inset;
+}
+
+.memojiWrap {
+  position: relative;
+  z-index: 2;
+  margin-top: -3.2rem;
+  margin-left: -1.8rem;
+  height: 10.5rem;
+  width: 10.5rem;
+  flex: 0 0 auto;
+}
+
+.memojiWrap::before {
+  content: '';
+  position: absolute;
+  inset: 18%;
+  z-index: -1;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgb(var(--accent) / .24), rgb(var(--accent-soft) / .18) 48%, transparent 70%);
+  filter: blur(8px);
+}
+
+.memoji {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+  object-position: center;
+  filter: drop-shadow(0 18px 24px rgb(var(--text-main) / .16));
+  animation: memojiFloat 5.2s ease-in-out infinite;
+  transition: transform .24s ease, filter .24s ease;
+}
+
+.shell:hover .memoji {
+  transform: translateY(-3px) scale(1.025);
+  filter: drop-shadow(0 22px 30px rgb(var(--text-main) / .19));
+}
+
+.phoneLink {
+  display: inline-flex;
+  align-items: center;
+  gap: .55rem;
+  border-radius: 999px;
+  border: 1px solid rgb(var(--accent) / .18);
+  background: rgb(var(--surface-elevated) / .62);
+  padding: .68rem .9rem;
+  color: rgb(var(--text-main));
+  font-weight: 950;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .48);
+  transition: border-color .2s ease, background-color .2s ease, transform .2s ease;
+}
+
+.phoneLink:hover {
+  transform: translateY(-2px);
+  border-color: rgb(var(--accent) / .42);
+  background: rgb(var(--accent-soft) / .42);
+}
+
+.primaryButton,
+.secondaryButton {
+  min-height: 3.75rem;
+  width: 100%;
+  border-radius: 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .62rem;
+  padding: .9rem 1.1rem;
+  text-align: center;
+  font-size: .92rem;
+  font-weight: 950;
+  transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease, background-color .22s ease;
+}
+
+.primaryButton {
+  position: relative;
+  overflow: hidden;
+  background: rgb(var(--text-main));
+  color: white;
+  box-shadow: 0 18px 38px rgb(var(--text-main) / .18);
+}
+
+.primaryButton::after {
+  content: '';
+  position: absolute;
+  inset-block: -50%;
+  left: -45%;
+  width: 28%;
+  transform: skewX(-18deg);
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / .32), transparent);
+  opacity: 0;
+}
+
+.primaryButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 24px 46px rgb(var(--text-main) / .22);
+}
+
+.primaryButton:hover::after {
+  animation: buttonSweep .72s ease-out 1;
+}
+
+.primaryButton:active,
+.secondaryButton:active {
+  transform: translateY(0) scale(.98);
+}
+
+.arrow {
+  transition: transform .22s ease;
+}
+
+.primaryButton:hover .arrow {
+  transform: translateX(3px);
+}
+
+.secondaryButton {
+  border: 1px solid rgb(var(--border));
+  background: rgb(255 255 255 / .72);
+  color: rgb(var(--text-main));
+  box-shadow: 0 10px 24px rgb(var(--text-main) / .06);
+}
+
+.secondaryButton:hover {
+  transform: translateY(-2px);
+  border-color: rgb(var(--accent) / .48);
+  background: rgb(var(--accent-soft) / .32);
+}
+
+.secondaryButton svg {
+  transition: transform .2s ease;
+}
+
+.secondaryButton:hover svg {
+  transform: translateY(-1px) rotate(-3deg);
+}
+
+.assurance {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  color: rgb(var(--text-muted));
+  font-size: .78rem;
+  font-weight: 800;
+}
+
+@keyframes ctaRise { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes ctaItemRise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes underlineDraw { to { transform: scaleX(1); } }
+@keyframes ctaHaloDrift { from { transform: translate3d(-8px, 4px, 0); opacity: .48; } to { transform: translate3d(10px, -7px, 0); opacity: .68; } }
+@keyframes ctaHaloFloat { from { transform: translate3d(0,0,0); opacity: .42; } to { transform: translate3d(-12px, 10px,0); opacity: .58; } }
+@keyframes memojiFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+@keyframes badgeGlint { 0%, 72% { transform: translateX(0) skewX(-18deg); opacity: 0; } 78% { opacity: .7; } 88%, 100% { transform: translateX(430%) skewX(-18deg); opacity: 0; } }
+@keyframes buttonSweep { 0% { transform: translateX(0) skewX(-18deg); opacity: 0; } 22% { opacity: 1; } 100% { transform: translateX(520%) skewX(-18deg); opacity: 0; } }
+
+@media (min-width: 1024px) {
+  .shell:hover {
+    transform: translateY(-2px);
+    border-color: rgb(var(--accent) / .34);
+    box-shadow: 0 34px 98px rgb(var(--text-main) / .12), inset 0 1px 0 rgb(255 255 255 / .62);
+  }
+}
+
+@media (max-width: 640px) {
+  .shell { border-radius: 2rem; }
+  .inner { border-radius: 1.8rem; padding: 1.25rem; }
+  .contactCard { min-height: auto; padding: 1.15rem; border-radius: 1.65rem; }
+  .memojiWrap { height: 8.5rem; width: 8.5rem; margin: -2.7rem auto .25rem; }
+  .title { font-size: clamp(2.25rem, 13vw, 3.25rem); }
+  .primaryButton .longLabel { display: none; }
+  .primaryButton .shortLabel { display: inline; }
+}
+
+@media (min-width: 641px) {
+  .primaryButton .shortLabel { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shell,
+  .shellVisible,
+  .shellVisible .revealItem,
+  .shell::after,
+  .haloPrimary,
+  .haloSecondary,
+  .memoji,
+  .badge::after,
+  .primaryButton:hover::after,
+  .shellVisible .highlight::after {
+    animation: none !important;
+    transition-duration: .01ms !important;
+  }
+  .shell,
+  .revealItem {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .highlight::after { transform: scaleX(1); }
+}
