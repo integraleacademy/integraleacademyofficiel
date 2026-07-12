@@ -95,7 +95,7 @@ export function GlobalContactCTA() {
                 <div className="grid gap-5 sm:grid-cols-[auto_1fr] sm:items-start">
                   <div className={styles.memojiWrap}>
                     <img
-                      src="/static/img/cassandre-memoji.png"
+                      src="/images/cassandre-memoji.png"
                       alt="Memoji détouré de Cassandre, responsable commerciale d’Intégrale Academy"
                       className={styles.memoji}
                       width="190"
