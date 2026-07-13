@@ -157,7 +157,7 @@ function AppointmentButton(){
 
 export function Header(){
   const trainingNav=[
-    ['Métiers de la sécurité','/#formations-securite','Agent de sécurité privée (APS) Agent de Protection Physique des Personnes (A3P), SSIAP et Dirigeant d’entreprise de sécurité privée (DESP).','👮'],
+    ['Métiers de la sécurité','/#formations-securite','Agent de sécurité privée (APS), Agent de Protection Physique des Personnes (A3P), SSIAP et Dirigeant d’entreprise de sécurité privée (DESP).','👮'],
     ['BTS en alternance','/#bts','BTS sécurité (MOS), BTS commerce (CI, MCO, NDRC), BTS immobilier (PI).','🎓'],
     ['Chauffeur VTC','/vtc','Formation Théorique et Formation Pratique VTC.','🚘'],
   ] as const;
