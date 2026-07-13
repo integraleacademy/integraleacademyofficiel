@@ -11,7 +11,7 @@ import { bts, contact, securityFormations, vtcFormation } from '@/data/site';
 export const metadata={title:'Accueil',description:'Intégrale Academy forme aux métiers de la sécurité privée, sécurité incendie, VTC et BTS en alternance à Puget-sur-Argens, Paris et Aurillac.'};
 
 export default function Home(){
-  const securityHighlights=securityFormations.slice(0,6);
+  const securityHighlights=securityFormations.filter(f=>f.slug!=='/formations-securite/desp-initial').slice(0,6);
   const btsHighlights=bts.slice(0,6).map(x=>({title:x.title,short:x.desc,slug:x.slug,tags:x.tags}));
   return <>
     <Hero badge="Centre de formation agréé" title={<>Formez-vous aux métiers qui <Highlight>recrutent</Highlight> vraiment.</>} subtitle="Centre de formation professionnelle spécialisé dans la sécurité privée, la sécurité incendie, le VTC et les BTS en alternance." actions={<><Button href="/formations-securite">Voir les formations</Button><Button href="/contact" variant="secondary">Être rappelé</Button><Button href="/contact" variant="ghost">Demander des informations</Button></>} visual={<OrientationAssistant/>}/>
