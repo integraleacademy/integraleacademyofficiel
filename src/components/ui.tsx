@@ -157,9 +157,9 @@ function AppointmentButton(){
 
 export function Header(){
   const trainingNav=[
-    ['Métiers de la sécurité','/#formations-securite','Parcours APS, SSIAP, A3P et dirigeant sécurité.','🔒'],
-    ['BTS en alternance','/#bts','Diplômes d’État avec rythme entreprise / école.','🎓'],
-    ['Chauffeur VTC','/vtc','Préparation e-learning, pratique et examen VTC.','🚘'],
+    ['Métiers de la sécurité','/#formations-securite','Agent de sécurité privée (APS) Agent de Protection Physique des Personnes (A3P), SSIAP et Dirigeant d’entreprise de sécurité privée (DESP).','👮'],
+    ['BTS en alternance','/#bts','BTS sécurité (MOS), BTS commerce (CI, MCO, NDRC), BTS immobilier (PI).','🎓'],
+    ['Chauffeur VTC','/vtc','Formation Théorique et Formation Pratique VTC.','🚘'],
   ] as const;
   const nav=[['Nos formations',trainingNav],['Notre école','/ecole'],['Tarifs','/tarifs'],['Financements','/financements'],['Entreprises','/entreprises'],['Planning','/planning'],['Contact','/contact']] as const;
   return <header className="sticky top-0 z-50 border-b border-white/60 bg-academy-surface/80 shadow-[0_18px_50px_rgba(17,17,17,.06)] backdrop-blur-xl"><div className="page-container flex items-center justify-between gap-4 py-3"><Link href="/" aria-label="Retour à l’accueil Intégrale Academy" className="group flex items-center gap-3 rounded-full pr-2 text-lg font-black focus:outline-none focus:ring-2 focus:ring-academy-gold"><span className="grid h-12 w-12 place-items-center rounded-[1.25rem] bg-gradient-to-br from-academy-gold to-academy-gold text-academy-gold-text shadow-gold transition group-hover:rotate-3" aria-hidden="true">IA</span><span className="leading-tight">Intégrale<br className="sm:hidden"/><span className="text-academy-gold-strong"> Academy</span></span></Link><nav className="hidden items-center gap-1 text-sm font-bold lg:flex" aria-label="Navigation principale">{nav.map(([n,h])=>typeof h!=='string'?<DesktopTrainingDropdown key={n} label={n} items={h}/>:<Link key={h} href={h} className="rounded-full px-3 py-2 text-academy-muted transition hover:text-academy-gold-strong focus:text-academy-gold-strong">{n}</Link>)}</nav><div className="hidden items-center gap-2 xl:flex"><ThemeToggle/><Button href="tel:0422470768" variant="ghost">Appeler</Button><AppointmentButton/></div><div className="flex items-center gap-2 lg:hidden"><ThemeToggle/><MobileHeaderMenu nav={nav} appointmentFormUrl={appointmentFormUrl}/></div></div></header>
