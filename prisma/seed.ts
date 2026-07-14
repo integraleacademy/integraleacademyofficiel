@@ -1,3 +1,8 @@
+const a3pSeedSessions = [
+  { id: 'seed-a3p-septembre-2026', title: 'Session A3P septembre 2026', startDate: '2026-09-01T00:00:00.000Z', endDate: '2026-10-27T00:00:00.000Z', examDate: '2026-10-28T00:00:00.000Z', seatsLeft: 4, sortOrder: 0 },
+  { id: 'seed-a3p-novembre-2026', title: 'Session A3P novembre 2026', startDate: '2026-11-09T00:00:00.000Z', endDate: '2027-01-19T00:00:00.000Z', examDate: '2027-01-20T00:00:00.000Z', seatsLeft: null, sortOrder: 1 },
+];
+
 const seedTrainings = [
   { slug: 'aps', name: 'APS', title: 'Agent de Prévention et de Sécurité', category: 'sécurité', description: '', pageUrl: '/formations-securite/aps' },
   { slug: 'ssiap-1', name: 'SSIAP 1', title: 'Agent de sécurité incendie', category: 'sécurité incendie', description: '', pageUrl: '/formations-securite/ssiap-1' },
@@ -27,11 +32,19 @@ async function main() {
     }
     console.log('[ADMIN_SEED] trainings created / updated');
     const aps = await prisma.training.findUniqueOrThrow({ where: { slug: 'aps' } });
+    const a3p = await prisma.training.findUniqueOrThrow({ where: { slug: 'a3p-apr' } });
     await prisma.trainingSession.upsert({
       where: { id: 'seed-aps-septembre-2026' },
       update: { trainingId: aps.id, title: 'Session APS septembre 2026', startDate: new Date('2026-09-07T00:00:00.000Z'), endDate: new Date('2026-10-09T00:00:00.000Z'), examDate: new Date('2026-10-12T00:00:00.000Z'), priceCents: 165000, priceLabel: '1 650 €', location: 'Puget-sur-Argens / Côte d’Azur', status: 'OPEN', seatsLeft: 8, registrationUrl: '/formations-securite/aps', publicNotes: 'Formation de 5 semaines, soit 175 heures.', isHighlighted: true },
       create: { id: 'seed-aps-septembre-2026', trainingId: aps.id, title: 'Session APS septembre 2026', startDate: new Date('2026-09-07T00:00:00.000Z'), endDate: new Date('2026-10-09T00:00:00.000Z'), examDate: new Date('2026-10-12T00:00:00.000Z'), priceCents: 165000, priceLabel: '1 650 €', location: 'Puget-sur-Argens / Côte d’Azur', status: 'OPEN', seatsLeft: 8, registrationUrl: '/formations-securite/aps', publicNotes: 'Formation de 5 semaines, soit 175 heures.', isHighlighted: true },
     });
+    for (const session of a3pSeedSessions) {
+      await prisma.trainingSession.upsert({
+        where: { id: session.id },
+        update: { trainingId: a3p.id, title: session.title, startDate: new Date(session.startDate), endDate: new Date(session.endDate), examDate: new Date(session.examDate), priceCents: 420000, priceLabel: '4 200 €', location: 'Puget-sur-Argens / Côte d’Azur', status: 'OPEN', seatsLeft: session.seatsLeft, showSeatsLeft: true, durationLabel: '327 heures', registrationUrl: '/formations-securite/a3p-apr', fundingNotes: 'Financement possible selon votre situation : CPF, France Travail ou financement personnel à vérifier avec l’équipe.', publicNotes: 'Formation de 327 heures, hébergement collectif possible sur réservation.', sortOrder: session.sortOrder, isHighlighted: session.sortOrder === 0 },
+        create: { id: session.id, trainingId: a3p.id, title: session.title, startDate: new Date(session.startDate), endDate: new Date(session.endDate), examDate: new Date(session.examDate), priceCents: 420000, priceLabel: '4 200 €', location: 'Puget-sur-Argens / Côte d’Azur', status: 'OPEN', seatsLeft: session.seatsLeft, showSeatsLeft: true, durationLabel: '327 heures', registrationUrl: '/formations-securite/a3p-apr', fundingNotes: 'Financement possible selon votre situation : CPF, France Travail ou financement personnel à vérifier avec l’équipe.', publicNotes: 'Formation de 327 heures, hébergement collectif possible sur réservation.', sortOrder: session.sortOrder, isHighlighted: session.sortOrder === 0 },
+      });
+    }
     console.log('[ADMIN_SEED] sessions created / updated');
   } finally {
     await prisma.$disconnect();

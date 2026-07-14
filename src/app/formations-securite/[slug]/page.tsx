@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import { OrientationAssistant } from '@/components/OrientationAssistant';
+import { A3pReferencePage } from '@/components/A3pReferencePage';
 import { PublicTrainingSessions } from '@/components/PublicTrainingSessions';
 import { isPublicUpcomingSession } from '@/lib/public-sessions';
 import { listSessions } from '@/lib/training-data';
@@ -8,8 +9,9 @@ import { Button, ConversionStrip, FAQ, FeatureCard, Hero, Highlight, PremiumFAQS
 import { formationFaq } from '@/data/faq';
 import { apsFaq } from '@/data/formations';
 import { formations } from '@/data/site';
+import { a3pConfig } from '@/data/a3p';
 export function generateStaticParams(){return formations.filter(f=>f.category==='security').map(f=>({slug:f.slug.split('/').pop()!}))}
-export async function generateMetadata({params}:{params:Promise<{slug:string}>}){const {slug}=await params;const f=formations.find(x=>x.slug.endsWith(slug));return {title:f?.seo.title||f?.title||'Formation sécurité',description:f?.seo.description||f?.short}}
+export async function generateMetadata({params}:{params:Promise<{slug:string}>}){const {slug}=await params;if(slug==='a3p-apr')return {title:'Formation A3P / APR – Agent de protection rapprochée | Intégrale Academy',description:'Devenez agent de protection rapprochée avec la formation officielle TFP A3P à Puget-sur-Argens. 327 heures, titre RNCP niveau 4, financement CPF et hébergement possible.',alternates:{canonical:a3pConfig.pageUrl}};const f=formations.find(x=>x.slug.endsWith(slug));return {title:f?.seo.title||f?.title||'Formation sécurité',description:f?.seo.description||f?.short}}
 const assistantKeys: Record<string, 'aps' | 'a3p' | 'desp'> = { aps: 'aps', 'a3p-apr': 'a3p', desp: 'desp' };
 export const dynamic = 'force-dynamic';
 
@@ -19,7 +21,7 @@ function matchesTrainingSlug(session:any, slug:string){const trainingSlug=sessio
 const apsFallbackSessions=[{id:'aps-session-septembre-2026',training:{slug:'aps',name:'APS',title:'Agent de Prévention et de Sécurité',category:'sécurité',isActive:true},title:'Session APS septembre 2026',startDate:'2026-09-07T00:00:00.000Z',endDate:'2026-10-09T00:00:00.000Z',examDate:'2026-10-12T00:00:00.000Z',priceLabel:'1 650 €',location:'Puget-sur-Argens / Côte d’Azur',status:'OPEN',seatsLeft:8,showSeatsLeft:true,durationLabel:'175 heures',registrationUrl:'/formations-securite/aps',publicNotes:'Formation de 5 semaines, soit 175 heures.'}];
 async function sessionsForSlug(slug:string){const rows=(await listSessions()).filter((session:any)=>isPublicUpcomingSession(session)&&matchesTrainingSlug(session,slug));return slug==='aps'&&!rows.length?apsFallbackSessions:rows;}
 
-export default async function Page({params}:{params:Promise<{slug:string}>}){const {slug}=await params;const f=formations.find(x=>x.slug.endsWith(slug));if(!f)notFound();const sessions=await sessionsForSlug(slug);if(slug==='aps')return <ApsPage f={f} sessions={sessions}/>;if(slug==='desp')return <DespChoicePage sessions={sessions}/>;return <SecurityTrainingPage f={f} sessions={sessions} slug={slug}/>}
+export default async function Page({params}:{params:Promise<{slug:string}>}){const {slug}=await params;const f=formations.find(x=>x.slug.endsWith(slug));if(!f)notFound();const sessions=await sessionsForSlug(slug);if(slug==='aps')return <ApsPage f={f} sessions={sessions}/>;if(slug==='a3p-apr')return <A3pReferencePage sessions={sessions}/>;if(slug==='desp')return <DespChoicePage sessions={sessions}/>;return <SecurityTrainingPage f={f} sessions={sessions} slug={slug}/>}
 
 function formatTrainingLabel(f:typeof formations[number]){return f.title.replace(/^Formation\s+/i,'')}
 function trainingContactSlug(slug:string){return slug.replace(/[^a-z0-9-]/gi,'-')}
