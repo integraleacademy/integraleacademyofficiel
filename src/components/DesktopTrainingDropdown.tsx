@@ -36,6 +36,11 @@ export function DesktopTrainingDropdown({ label, items }: DesktopTrainingDropdow
     }, closeDelayMs);
   };
 
+  const closeMenu = () => {
+    clearCloseTimer();
+    setIsOpen(false);
+  };
+
   const menuStateClasses = isOpen
     ? 'visible translate-y-0 opacity-100'
     : 'invisible translate-y-3 opacity-0';
@@ -65,7 +70,7 @@ export function DesktopTrainingDropdown({ label, items }: DesktopTrainingDropdow
           <p className="px-3 pb-2 text-[0.68rem] font-black uppercase tracking-[.22em] text-academy-gold-strong">Choisir une famille</p>
           <div className="grid gap-2">
             {items.map(([itemLabel, href, description, icon]) => (
-              <Link key={href} href={href} className="group/item flex items-center gap-4 rounded-[1.25rem] p-3 text-academy-ink transition hover:-translate-y-0.5 hover:bg-white hover:shadow-card focus:-translate-y-0.5 focus:bg-white focus:shadow-card focus:outline-none">
+              <Link key={href} href={href} onClick={closeMenu} className="group/item flex items-center gap-4 rounded-[1.25rem] p-3 text-academy-ink transition hover:-translate-y-0.5 hover:bg-white hover:shadow-card focus:-translate-y-0.5 focus:bg-white focus:shadow-card focus:outline-none">
                 <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-academy-gold/18 text-xl shadow-inner transition group-hover/item:scale-105" aria-hidden="true">{icon}</span>
                 <span className="min-w-0">
                   <span className="block font-black">{itemLabel}</span>
