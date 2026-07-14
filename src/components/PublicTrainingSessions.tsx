@@ -67,7 +67,7 @@ export function PublicTrainingSessions({ sessions, title = 'Prochaines dates', i
       session.examDate ? { label: 'Examen', value: formatDate(session.examDate) } : null,
       session.location ? { label: 'Lieu', value: session.location } : null,
       session.priceLabel ? { label: 'Tarif', value: session.priceLabel } : null,
-      session.publicNotes ? { label: 'Option SST', value: session.publicNotes } : null,
+      session.publicNotes ? { label: 'Détails', value: session.publicNotes } : null,
       session.seatsTotal || session.seatsLeft !== null && session.seatsLeft !== undefined ? { label: 'Places', value: `${session.seatsLeft ?? '—'}${session.seatsTotal ? ` / ${session.seatsTotal}` : ''}` } : null,
       session.status ? { label: 'Statut', value: session.status === 'FULL' ? 'Complet' : session.status === 'OPEN' ? 'Ouvert' : session.status } : null,
     ].filter(Boolean) as { label: string; value: string }[];
