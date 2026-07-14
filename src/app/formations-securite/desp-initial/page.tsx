@@ -6,40 +6,27 @@ import { formationFaq } from '@/data/faq';
 export const dynamic = 'force-dynamic';
 
 export const metadata = {
-  title: 'Formation DESP initial - Dirigeant sécurité privée',
-  description: 'Formation DESP initial RNCP 40385 : 245 h pour préparer l’agrément dirigeant CNAPS et créer, reprendre ou diriger une entreprise de sécurité privée.',
+  title: 'Formation DESP initial – Dirigeant de sécurité privée | Intégrale Academy',
+  description: 'Préparez le titre RNCP niveau 5 de dirigeant d’entreprise de sécurité privée. Formation DESP de 245 heures à distance et en présentiel, éligible aux financements selon votre situation.',
 };
 
-const objectives = [
-  'Préparer l’agrément dirigeant CNAPS.',
-  'Acquérir les bases juridiques, réglementaires et opérationnelles de la sécurité privée.',
-  'Apprendre à piloter la gestion, le management et l’organisation d’une entreprise.',
-];
+const contactHref = '/contact?formation=desp-initial';
 
-const program = [
-  'Cadre juridique de la sécurité privée et obligations du dirigeant.',
-  'Management, gestion et organisation d’une entreprise de sécurité privée.',
-  'Supports de cours, entraînements, évaluations et préparation au jury.',
-  'Création, reprise, pilotage commercial et administratif d’une structure.',
-];
-
-const evaluation = [
-  'QCU de connaissances selon le référentiel DESP.',
-  'Mises en situation professionnelles de création, reprise, gestion, marketing et management.',
-  'Passage devant un jury professionnel.',
-];
-
-const outcomes = [
-  'Dirigeant d’entreprise de sécurité privée.',
-  'Créateur ou repreneur d’entreprise agréée.',
-  'Responsable ou manager d’activité sécurité privée.',
-];
-
-const why = [
-  'Parcours structuré pour apprendre le métier étape par étape.',
-  'Modalités hybrides avec centres Paris, Côte d’Azur et Aurillac selon planning.',
-  'Accompagnement pédagogique et administratif jusqu’à l’examen.',
-];
+const jobMissions = ['Créer ou reprendre une entreprise','Piloter la stratégie et les finances','Garantir la conformité réglementaire','Recruter et manager les équipes','Développer l’activité commerciale','Répondre aux appels d’offres','Superviser les prestations','Gérer les relations avec les clients'];
+const audience = ['créateurs d’entreprise','repreneurs d’une société de sécurité','responsables d’agence','responsables d’exploitation','managers de la sécurité privée','chefs d’équipe souhaitant évoluer','dirigeants souhaitant régulariser ou développer leur activité','personnes en reconversion disposant d’un projet sérieux de création ou de reprise'];
+const prerequisites = ['être majeur','maîtriser le français à l’oral et à l’écrit','disposer d’un niveau baccalauréat ou équivalent','ou être titulaire du SSIAP 3','ou justifier d’une expérience sur un poste à responsabilités','ou obtenir un avis favorable à l’entretien préalable d’admission selon le profil'];
+const cnaps = ['la condition de nationalité applicable','l’honorabilité','l’absence de condamnations incompatibles','l’absence d’interdiction de gérer ou de faillite personnelle incompatible','l’absence d’activité incompatible','l’aptitude professionnelle','la cohérence et la complétude du dossier'];
+const project = ['choix des activités','étude du marché','modèle économique','organisation de l’entreprise','prévisionnel financier','politique commerciale','besoins en recrutement','obligations CNAPS','plan de développement'];
+const evaluation = ['épreuve écrite sous forme de QCU','études de cas','mises en situation professionnelles','projet de création ou de reprise','évaluations portant sur la gestion financière et administrative','évaluations commerciales','évaluations de management','soutenances orales devant un jury professionnel'];
+const outcomes = ['Dirigeant d’entreprise de sécurité privée.','Créateur ou repreneur d’entreprise agréée.','Responsable ou manager d’activité sécurité privée.'];
+const why = ['Parcours structuré pour apprendre le métier étape par étape.','Modalités hybrides avec centres Paris, Côte d’Azur et Aurillac selon planning.','Accompagnement pédagogique et administratif jusqu’à l’examen.'];
+const programAxes = [
+  ['Axe 1 — Créer ou reprendre une entreprise',['analyser le marché','définir le positionnement','choisir les activités','construire le projet','réaliser un business plan','comparer les formes juridiques','prévoir les besoins financiers','effectuer les démarches de création ou de reprise']],
+  ['Axe 2 — Sécuriser la conformité réglementaire',['Livre VI du Code de la sécurité intérieure','rôle et pouvoirs du CNAPS','agrément dirigeant','autorisation d’exercice de l’entreprise','cartes professionnelles des salariés','déontologie','sous-traitance','contrats de prestations','obligations de contrôle','règles propres aux différentes activités de sécurité privée']],
+  ['Axe 3 — Piloter la gestion financière, juridique et administrative',['comptabilité','budget prévisionnel','trésorerie','rentabilité','coûts de revient','facturation','TVA et fiscalité','assurances','achats et équipements','maintenance','contrats de travail','obligations sociales']],
+  ['Axe 4 — Développer l’activité commerciale',['étude de marché','stratégie marketing','communication','prospection','partenariats','construction d’une offre','calcul du prix de vente','veille sur les marchés','lecture d’un cahier des charges','réponse à un appel d’offres','négociation','suivi et fidélisation des clients']],
+  ['Axe 5 — Recruter et manager les équipes',['organisation des recrutements','vérification des titres CNAPS','entretiens','intégration','planification','répartition des rôles','management opérationnel','objectifs','évaluation','gestion des conflits','discipline','formation','développement des compétences','évolution professionnelle']],
+] as const;
 
 async function getSessions(){return (await listSessions()).filter((session:any)=>isPublicUpcomingSession(session)&&['desp-initial','desp-dssp','desp'].includes(session.training?.slug));}
 
@@ -47,16 +34,29 @@ export default async function DespInitialPage(){
   const sessions = await getSessions();
   return <>
     <Hero badge="DESP · RNCP n°40385" title="Formation DESP initial" subtitle="Le parcours initial pour apprendre étape par étape à créer, reprendre ou diriger une entreprise de sécurité privée." actions={<><Button href="/contact">Inscription / devis</Button><Button href="/formations-securite/desp" variant="secondary">Comparer initial et VAE</Button></>}/>
-    <section className="page-container py-10"><div className="grid gap-4 md:grid-cols-3"><FeatureCard title="Durée">7 semaines · 245 heures</FeatureCard><FeatureCard title="Public concerné">Candidats souhaitant acquérir ou consolider les compétences de dirigeant en sécurité privée.</FeatureCard><FeatureCard title="Prérequis">Niveau 4 ou expérience à valider avec l’équipe admissions ; conditions CNAPS et honorabilité à vérifier.</FeatureCard><FeatureCard title="Lieux">Distanciel + présentiel à Paris, Puget-sur-Argens ou Aurillac selon les sessions.</FeatureCard><FeatureCard title="Financement">CPF, France Travail, entreprise ou facilités de paiement selon dossier.</FeatureCard><FeatureCard title="Certification / examen">DESP · RNCP n°40385 · agrément dirigeant CNAPS<br/>Tarif : 4300 €</FeatureCard></div></section>
+    <section className="page-container py-10"><div className="grid gap-4 md:grid-cols-3"><FeatureCard title="Durée">7 semaines · 245 heures</FeatureCard><FeatureCard title="Public concerné">Candidats souhaitant acquérir ou consolider les compétences de dirigeant en sécurité privée.</FeatureCard><FeatureCard title="Prérequis">Niveau 4 ou expérience à valider avec l’équipe admissions ; conditions CNAPS et honorabilité à vérifier.</FeatureCard><FeatureCard title="Lieux">Distanciel + présentiel à Paris, Puget-sur-Argens ou Aurillac selon les sessions.</FeatureCard><FeatureCard title="Financement">CPF, France Travail, entreprise ou facilités de paiement selon dossier.</FeatureCard><FeatureCard title="Certification / examen"><strong>Titre RNCP Dirigeant d’entreprise de sécurité privée – niveau 5</strong><br/>Titre : Dirigeant d’entreprise de sécurité privée · Sigle : DESP · Code : RNCP40385 · Certificateur : Scotia Formation · Échéance actuelle : 28 mars 2027 · Durée : 245 heures · Tarif actuel : 4 300 €<br/><span className="mt-2 block">Cette certification permet de justifier de l’aptitude professionnelle nécessaire à la demande d’agrément dirigeant auprès du CNAPS. L’agrément reste délivré séparément par le CNAPS après étude du dossier.</span></FeatureCard></div></section>
     <PublicTrainingSessions sessions={sessions} title="Prochaines dates DESP initial" intro="Dates, lieux, tarifs et places restantes proviennent directement de l’administration."/>
     <ConversionStrip/>
-    <Info title="Objectifs de la formation" items={objectives}/>
-    <Info title="Programme détaillé" items={program}/>
-    <Info title="Modalités d’évaluation" items={evaluation}/>
+    <TextSection title="Quel est le rôle d’un dirigeant d’entreprise de sécurité privée ?" intro="Le dirigeant d’entreprise de sécurité privée crée, reprend, dirige ou développe une structure exerçant une ou plusieurs activités réglementées de sécurité privée. Il veille au respect du Livre VI du Code de la sécurité intérieure, pilote la stratégie de l’entreprise, contrôle son équilibre financier, développe son activité commerciale et encadre les équipes."><CardGrid items={jobMissions}/><Note>Le dirigeant ne réalise pas nécessairement lui-même les missions opérationnelles. S’il exerce personnellement des activités d’agent de sécurité, il doit également détenir la carte professionnelle correspondant à l’activité exercée.</Note></TextSection>
+    <Info title="À qui s’adresse la formation ?" items={audience}/><NoteSection>La formation ne s’adresse pas uniquement aux agents de sécurité expérimentés. Une expérience du secteur constitue un avantage, mais l’admission dépend de l’ensemble du profil et des conditions du certificateur.</NoteSection>
+    <TextSection title="Quels sont les prérequis pour entrer en DESP initial ?"><CardGrid items={prerequisites}/><Note>Chaque candidature est étudiée individuellement. Un entretien préalable permet de vérifier le niveau, l’expérience, la cohérence du projet et la capacité à suivre une formation intensive de niveau 5.</Note></TextSection>
+    <TextSection title="Quelles conditions faut-il remplir pour obtenir l’agrément dirigeant ?" intro="Le CNAPS vérifie notamment :"><CardGrid items={cnaps}/><Note>La réussite au titre DESP ne garantit pas automatiquement la délivrance de l’agrément. La décision appartient au CNAPS après enquête administrative.</Note><div className="mt-5"><Button href={contactHref}>Faire vérifier mes prérequis</Button></div></TextSection>
+    <TextSection title="Une formation hybride de 245 heures"><div className="grid gap-4 md:grid-cols-2"><ListCard title="5 semaines à distance – 175 heures" items={['plateforme pédagogique accessible en ligne','cours et ressources numériques','études de cas','travaux individuels','préparation du projet professionnel','accompagnement par l’équipe pédagogique','évaluations et suivi de progression']}/><ListCard title="2 semaines en présentiel – 70 heures" items={['mises en situation','études de cas collectives','entraînements aux évaluations','travail sur la création ou la reprise d’entreprise','gestion financière et commerciale','management','préparation aux soutenances et au jury']}/></div><p className="mt-5 text-sm font-semibold leading-6 text-academy-muted">Lieux possibles selon les sessions administrées : Paris, Puget-sur-Argens ou Aurillac.</p></TextSection>
+    <ProgramSection/>
+    <TextSection title="Construisez votre véritable projet d’entreprise" intro="La formation ne se limite pas à l’apprentissage de la réglementation. Le candidat travaille sur un projet concret de création, de reprise ou de développement d’une entreprise de sécurité privée."><CardGrid items={project}/><Note>Les travaux réalisés pendant la formation restent pédagogiques et ne remplacent pas les conseils personnalisés d’un avocat, d’un expert-comptable ou d’un professionnel du droit.</Note></TextSection>
+    <TextSection title="Modalités d’évaluation"><CardGrid items={evaluation}/><Note>La certification est obtenue lorsque l’ensemble des évaluations obligatoires relatives aux cinq activités est validé. Le référentiel actuel prévoit neuf évaluations portant sur cinq activités.</Note></TextSection>
+    <TextSection title="À l’issue de la formation"><div className="grid gap-3 md:grid-cols-4">{['Valider les évaluations','Obtenir le titre RNCP40385 de niveau 5','Déposer la demande d’agrément dirigeant auprès du CNAPS','Demander l’autorisation d’exercice de l’entreprise créée ou reprise'].map((step,i)=><div key={step} className="rounded-2xl bg-academy-surface p-4 ring-1 ring-academy-line"><span className="grid h-9 w-9 place-items-center rounded-full bg-academy-gold font-black text-academy-gold-text">{i+1}</span><p className="mt-3 font-black text-academy-ink">{step}</p></div>)}</div><Note>Le titre, l’agrément personnel du dirigeant et l’autorisation d’exercice de l’entreprise sont trois éléments distincts. Si le dirigeant réalise lui-même des missions opérationnelles de sécurité, il doit également posséder la carte professionnelle correspondante.</Note></TextSection>
+    <TextSection title="Combien de temps l’agrément dirigeant est-il valable ?" intro="L’agrément dirigeant est valable cinq ans. Son renouvellement doit être demandé auprès du CNAPS au moins trois mois avant son expiration."><Note>Ce renouvellement ne doit pas être confondu avec un MAC APS.</Note></TextSection>
     <Info title="Débouchés" items={outcomes}/>
     <Info title="Pourquoi suivre cette formation chez Intégrale Academy" items={why}/>
     <section className="page-container py-10"><SectionTitle title="FAQ formation"/><FAQ items={formationFaq}/></section>
   </>
 }
 
+function TextSection({title,intro,children}:{title:string;intro?:string;children?:React.ReactNode}){return <section className="page-container py-8"><h2 className="text-2xl font-black">{title}</h2>{intro&&<p className="mt-4 text-lg leading-8 text-academy-muted">{intro}</p>}<div className="mt-5">{children}</div></section>}
+function CardGrid({items}:{items:string[]}){return <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">{items.map(i=><div key={i} className="rounded-2xl bg-academy-surface p-4 font-semibold text-academy-muted ring-1 ring-academy-line">✓ {i}</div>)}</div>}
+function ListCard({title,items}:{title:string;items:string[]}){return <div className="rounded-2xl bg-academy-surface p-5 ring-1 ring-academy-line"><h3 className="text-xl font-black text-academy-ink">{title}</h3><ul className="mt-4 space-y-2 text-sm font-semibold leading-6 text-academy-muted">{items.map(i=><li key={i}>✓ {i}</li>)}</ul></div>}
+function Note({children}:{children:React.ReactNode}){return <p className="mt-5 rounded-2xl border border-academy-gold/35 bg-academy-gold/10 p-4 font-bold leading-7 text-academy-ink">{children}</p>}
+function NoteSection({children}:{children:React.ReactNode}){return <section className="page-container py-2"><Note>{children}</Note></section>}
+function ProgramSection(){return <section className="page-container py-8"><h2 className="text-2xl font-black">Programme détaillé</h2><div className="mt-5 space-y-3">{programAxes.map(([title,items],index)=><details key={title} open={index===0} className="group rounded-2xl border border-academy-line bg-academy-elevated p-5 shadow-soft"><summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-black"><span>{title}</span><span className="grid h-8 w-8 place-items-center rounded-full bg-academy-gold text-academy-gold-text transition group-open:rotate-45">+</span></summary><ul className="mt-4 grid gap-2 text-academy-muted sm:grid-cols-2">{items.map(item=><li key={item} className="flex gap-2 text-sm font-semibold leading-6"><span className="text-academy-gold">✓</span><span>{item}</span></li>)}</ul></details>)}</div></section>}
 function Info({title,items}:{title:string;items:string[]}){return <section className="page-container py-8"><h2 className="text-2xl font-black">{title}</h2><div className="mt-5 grid gap-3">{items.map(i=><div key={i} className="rounded-2xl bg-academy-surface p-4 ring-1 ring-academy-line"><p className="mt-2 text-academy-muted">{i}</p></div>)}</div></section>}
