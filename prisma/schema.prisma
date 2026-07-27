@@ -37,6 +37,10 @@ model TrainingSession {
   startDate       DateTime
   endDate         DateTime
   examDate        DateTime?
+  remoteStartDate DateTime?
+  remoteEndDate   DateTime?
+  onsiteStartDate DateTime?
+  onsiteEndDate   DateTime?
   priceCents      Int?
   priceLabel      String?
   location        String?
