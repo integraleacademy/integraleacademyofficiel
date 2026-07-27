@@ -9,6 +9,29 @@ type Session = any;
 type CategoryKey = 'security' | 'fire' | 'vtc' | 'bts';
 type SecurityGroupKey = 'aps' | 'a3p' | 'desp';
 
+function locationGroup(location?: string | null) {
+  const value = (location || '').toLocaleLowerCase('fr-FR');
+  if (value.includes('paris')) return 'Paris';
+  if (value.includes('aurillac')) return 'Aurillac';
+  if (value.includes('côte d’azur') || value.includes("côte d'azur") || value.includes('puget-sur-argens')) return 'Côte d’Azur';
+  return location?.split(/[·/]/)[0]?.trim() || 'Lieu à confirmer';
+}
+
+function groupByLocation(rows: Session[]) {
+  const preferredOrder = ['Paris', 'Côte d’Azur', 'Aurillac'];
+  const groups = new Map<string, Session[]>();
+  rows.forEach(session => {
+    const location = locationGroup(session.location);
+    groups.set(location, [...(groups.get(location) || []), session]);
+  });
+  return [...groups.entries()].sort(([a], [b]) => {
+    const aIndex = preferredOrder.indexOf(a);
+    const bIndex = preferredOrder.indexOf(b);
+    if (aIndex !== -1 || bIndex !== -1) return (aIndex === -1 ? 99 : aIndex) - (bIndex === -1 ? 99 : bIndex);
+    return a.localeCompare(b, 'fr');
+  });
+}
+
 const filters: { key: 'all' | CategoryKey; label: string }[] = [
   { key: 'all', label: 'Toutes' },
   { key: 'security', label: 'Sécurité privée' },
@@ -57,9 +80,16 @@ function SessionCard({ session, isNext, onRegister }: { session: Session; isNext
   const badge = seatsBadge(computedSeats(session));
   const category = categorySections.find(section => section.key === sessionCategory(session));
   const title = session.training?.name || session.title;
+  const isHybrid = ['aps', 'desp', 'desp-dssp', 'desp-initial'].includes(session.training?.slug);
+  const dateRange = (start?: string, end?: string) => start && end ? `du ${formatSessionDate(start)} au ${formatSessionDate(end)}` : 'Dates à confirmer';
   const infoItems = [
-    { label: 'Début', value: formatSessionDate(session.startDate) },
-    { label: 'Fin', value: formatSessionDate(session.endDate) },
+    ...(isHybrid ? [
+      { label: 'Distanciel', value: dateRange(session.remoteStartDate, session.remoteEndDate) },
+      { label: 'Présentiel', value: dateRange(session.onsiteStartDate, session.onsiteEndDate) },
+    ] : [
+      { label: 'Début', value: formatSessionDate(session.startDate) },
+      { label: 'Fin', value: formatSessionDate(session.endDate) },
+    ]),
     session.examDate ? { label: 'Examen', value: formatSessionDate(session.examDate) } : null,
     session.priceLabel ? { label: 'Prix', value: session.priceLabel } : null,
   ].filter(Boolean) as { label: string; value: string }[];
@@ -73,6 +103,7 @@ function SessionCard({ session, isNext, onRegister }: { session: Session; isNext
           {badge ? <span className={`session-seats-badge rounded-full border px-2.5 py-0.5 text-[10px] font-black transition duration-300 hover:-translate-y-0.5 ${badge.className}`}>{badge.label}</span> : null}
         </div>
         <h3 className="mt-1.5 truncate text-lg font-black leading-tight tracking-tight text-academy-ink dark:text-white sm:text-xl">{title}</h3>
+        {isHybrid ? <p className="mt-1 text-xs font-black text-academy-gold-strong">Hybride <span className="font-semibold text-academy-muted">(présentiel + distanciel)</span></p> : null}
         {session.location ? <p className="mt-0.5 flex min-w-0 items-center gap-1 truncate text-sm font-semibold text-academy-muted" title={session.location}><span aria-hidden="true" className="shrink-0 text-academy-gold-strong">⌖</span><span className="truncate">{session.location}</span></p> : null}
       </div>
       <div className="grid gap-2 text-sm text-academy-muted sm:grid-cols-2 lg:grid-cols-4">
@@ -86,6 +117,20 @@ function SessionCard({ session, isNext, onRegister }: { session: Session; isNext
       </div>
     </div>
   </article>;
+}
+
+function LocationGroupedCards({ rows, expanded, onRegister }: { rows: Session[]; expanded: boolean; onRegister: (session: Session) => void }) {
+  return <div className="space-y-6">{groupByLocation(rows).map(([location, locationRows]) => {
+    const visibleRows = expanded ? locationRows : locationRows.slice(0, 3);
+    return <section key={location} aria-labelledby={`location-${location.replace(/\W/g, '-').toLowerCase()}`}>
+      <div className="mb-3 flex items-center gap-2 border-b border-academy-line/70 pb-2">
+        <span aria-hidden="true" className="grid h-7 w-7 place-items-center rounded-full bg-academy-gold/15 text-sm text-academy-gold-strong">⌖</span>
+        <h4 id={`location-${location.replace(/\W/g, '-').toLowerCase()}`} className="text-sm font-black uppercase tracking-[.16em] text-academy-ink dark:text-white">{location}</h4>
+        <span className="text-xs font-bold text-academy-muted">{locationRows.length} session{locationRows.length > 1 ? 's' : ''}</span>
+      </div>
+      <div className="grid gap-2.5">{visibleRows.map((session, index) => <SessionCard key={session.id} session={session} isNext={index === 0} onRegister={onRegister} />)}</div>
+    </section>;
+  })}</div>;
 }
 
 
@@ -147,8 +192,7 @@ function SecurityGroupedSessions({ rows, expandedGroups, onToggleMore, onRegiste
     {securityGroups.map(group => {
       const groupRows = rows.filter(session => group.slugs.includes(session.training?.slug)).sort((a, b) => +new Date(a.startDate) - +new Date(b.startDate));
       const isExpanded = expandedGroups[group.key];
-      const visibleRows = isExpanded ? groupRows : groupRows.slice(0, 3);
-      const hiddenCount = Math.max(groupRows.length - visibleRows.length, 0);
+      const hiddenCount = isExpanded ? 0 : groupByLocation(groupRows).reduce((count, [, locationRows]) => count + Math.max(locationRows.length - 3, 0), 0);
       return <section key={group.key} className="rounded-[2rem] border border-academy-line/70 bg-white/55 p-4 shadow-[0_18px_58px_rgba(54,40,20,.08)] backdrop-blur dark:border-white/10 dark:bg-white/5 sm:p-6">
         <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <div>
@@ -158,7 +202,7 @@ function SecurityGroupedSessions({ rows, expandedGroups, onToggleMore, onRegiste
           </div>
           <Link href={`/contact?motif=alerte-planning&formation=${group.key}`} className="inline-flex shrink-0 rounded-full border border-academy-line bg-white px-4 py-2.5 text-sm font-black text-academy-ink transition hover:-translate-y-0.5 hover:border-academy-gold/60 dark:bg-white/10 dark:text-white">Être prévenu</Link>
         </div>
-        {groupRows.length ? <><div className="grid gap-2.5">{visibleRows.map((session, index) => <SessionCard key={session.id} session={session} isNext={index === 0} onRegister={onRegister} />)}</div>{hiddenCount > 0 ? <div className="mt-5 text-center"><button type="button" onClick={() => onToggleMore(group.key)} className="inline-flex rounded-full border border-academy-line bg-white px-6 py-3 text-sm font-black text-academy-ink shadow-soft transition hover:-translate-y-0.5 hover:border-academy-gold/60 dark:bg-white/10 dark:text-white">Voir plus de dates ({hiddenCount})</button></div> : null}</> : <div className="rounded-[1.5rem] border border-dashed border-academy-line bg-white/70 p-5 text-sm font-bold text-academy-muted dark:bg-black/20">Aucune date {group.title} disponible actuellement. Demandez une alerte pour être prévenu de la prochaine session.</div>}
+        {groupRows.length ? <><LocationGroupedCards rows={groupRows} expanded={isExpanded} onRegister={onRegister} />{hiddenCount > 0 ? <div className="mt-5 text-center"><button type="button" onClick={() => onToggleMore(group.key)} className="inline-flex rounded-full border border-academy-line bg-white px-6 py-3 text-sm font-black text-academy-ink shadow-soft transition hover:-translate-y-0.5 hover:border-academy-gold/60 dark:bg-white/10 dark:text-white">Voir plus de dates ({hiddenCount})</button></div> : null}</> : <div className="rounded-[1.5rem] border border-dashed border-academy-line bg-white/70 p-5 text-sm font-bold text-academy-muted dark:bg-black/20">Aucune date {group.title} disponible actuellement. Demandez une alerte pour être prévenu de la prochaine session.</div>}
       </section>;
     })}
   </div>;
@@ -191,7 +235,7 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
       </div>
     </section>
     <div id="sessions" className="sticky top-[4.5rem] z-30 border-y border-academy-line bg-academy-surface/86 px-4 py-3 backdrop-blur-xl"><div className="page-container flex gap-2 overflow-x-auto pb-1">{filters.map(filter => <button key={filter.key} onClick={() => setActive(filter.key)} className={`shrink-0 rounded-full px-5 py-3 text-sm font-black transition ${active === filter.key ? 'bg-academy-ink text-white shadow-soft' : 'bg-white text-academy-muted ring-1 ring-academy-line hover:text-academy-ink'}`}>{filter.label}</button>)}</div></div>
-    <section className="page-container space-y-14 py-14 sm:py-20">{visibleSections.map(section => { const rows = sessionsByCategory[section.key]; return <div key={section.key} className="transition-all duration-300"><div className="mb-7 flex flex-col gap-4 md:flex-row md:items-end md:justify-between"><div><p className="text-xs font-black uppercase tracking-[.22em] text-academy-gold-strong">{section.title}</p><h2 className="mt-3 text-3xl font-black tracking-tight md:text-5xl">{section.key === 'security' ? <>Sessions sécurité : <Highlight variant="subtle">places restantes</Highlight></> : section.title}</h2><p className="mt-4 max-w-3xl text-lg leading-8 text-academy-muted">{section.intro}</p></div></div>{section.key === 'security' ? (rows.length ? <SecurityGroupedSessions rows={rows} expandedGroups={expandedSecurityGroups} onToggleMore={(group) => setExpandedSecurityGroups(current => ({ ...current, [group]: true }))} onRegister={setSelectedSession} /> : <EmptyState category={section.key} />) : (rows.length ? (() => { const visibleRows = expandedCategories[section.key] ? rows : rows.slice(0, 3); const hiddenCount = Math.max(rows.length - visibleRows.length, 0); return <><div className="grid gap-3">{visibleRows.map((session, index) => <SessionCard key={session.id} session={session} isNext={index === 0} onRegister={setSelectedSession} />)}</div>{hiddenCount > 0 ? <div className="mt-6 text-center"><button type="button" onClick={() => setExpandedCategories(current => ({ ...current, [section.key]: true }))} className="inline-flex rounded-full border border-academy-line bg-white px-6 py-3 text-sm font-black text-academy-ink shadow-soft transition hover:-translate-y-0.5 hover:border-academy-gold/60 dark:bg-white/10 dark:text-white">Voir plus de dates ({hiddenCount})</button></div> : null}</>; })() : <EmptyState category={section.key} />)}</div>; })}</section>
+    <section className="page-container space-y-14 py-14 sm:py-20">{visibleSections.map(section => { const rows = sessionsByCategory[section.key]; return <div key={section.key} className="transition-all duration-300"><div className="mb-7 flex flex-col gap-4 md:flex-row md:items-end md:justify-between"><div><p className="text-xs font-black uppercase tracking-[.22em] text-academy-gold-strong">{section.title}</p><h2 className="mt-3 text-3xl font-black tracking-tight md:text-5xl">{section.key === 'security' ? <>Sessions sécurité : <Highlight variant="subtle">places restantes</Highlight></> : section.title}</h2><p className="mt-4 max-w-3xl text-lg leading-8 text-academy-muted">{section.intro}</p></div></div>{section.key === 'security' ? (rows.length ? <SecurityGroupedSessions rows={rows} expandedGroups={expandedSecurityGroups} onToggleMore={(group) => setExpandedSecurityGroups(current => ({ ...current, [group]: true }))} onRegister={setSelectedSession} /> : <EmptyState category={section.key} />) : (rows.length ? (() => { const expanded = expandedCategories[section.key]; const hiddenCount = expanded ? 0 : groupByLocation(rows).reduce((count, [, locationRows]) => count + Math.max(locationRows.length - 3, 0), 0); return <><LocationGroupedCards rows={rows} expanded={expanded} onRegister={setSelectedSession} />{hiddenCount > 0 ? <div className="mt-6 text-center"><button type="button" onClick={() => setExpandedCategories(current => ({ ...current, [section.key]: true }))} className="inline-flex rounded-full border border-academy-line bg-white px-6 py-3 text-sm font-black text-academy-ink shadow-soft transition hover:-translate-y-0.5 hover:border-academy-gold/60 dark:bg-white/10 dark:text-white">Voir plus de dates ({hiddenCount})</button></div> : null}</>; })() : <EmptyState category={section.key} />)}</div>; })}</section>
     <RegistrationModal session={selectedSession} onClose={() => setSelectedSession(null)} />
     <div className="fixed inset-x-3 bottom-3 z-40 grid grid-cols-3 gap-2 rounded-[1.5rem] border border-white/70 bg-white/90 p-2 shadow-[0_18px_60px_rgba(17,17,17,.18)] backdrop-blur md:hidden"><Link href="tel:0422470768" className="rounded-2xl bg-academy-ink px-3 py-3 text-center text-xs font-black text-white">Appeler</Link><Link href="/contact" className="rounded-2xl bg-academy-gold px-3 py-3 text-center text-xs font-black text-academy-gold-text">Infos</Link><Link href="/contact?motif=rdv" className="rounded-2xl border border-academy-line bg-white px-3 py-3 text-center text-xs font-black text-academy-ink">RDV</Link></div>
   </main>;

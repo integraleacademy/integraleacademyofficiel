@@ -12,6 +12,9 @@ function sessionUpdateData(data: any) {
   if ('startDate' in data) update.startDate = new Date(String(data.startDate || ''));
   if ('endDate' in data) update.endDate = new Date(String(data.endDate || ''));
   if ('examDate' in data) update.examDate = toDate(data.examDate);
+  for (const field of ['remoteStartDate', 'remoteEndDate', 'onsiteStartDate', 'onsiteEndDate']) {
+    if (field in data) update[field] = toDate(data[field]);
+  }
   if ('priceCents' in data) update.priceCents = Number(data.priceCents || 0);
   if ('seatsTotal' in data) update.seatsTotal = nullableNumber(data.seatsTotal);
   if ('seatsLeft' in data) update.seatsLeft = nullableNumber(data.seatsLeft);
