@@ -34,8 +34,6 @@ export const a3pInfoCards = [
   ['Lieu', a3pConfig.location, a3pConfig.locationDetail],
   ['Tarif', a3pConfig.priceLabel, 'Financements et paiement échelonné selon votre situation'],
   ['Certification', 'TFP A3P', 'Titre RNCP niveau 4'],
-  ['Modalité', a3pConfig.modality, 'Entraînements théoriques et pratiques'],
-  ['Hébergement', a3pConfig.accommodationLabel, 'Dortoir collectif équipé, sur réservation'],
 ];
 
 export const a3pPrerequisites = [
