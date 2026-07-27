@@ -66,7 +66,7 @@ function SessionCard({ session, isNext, onRegister }: { session: Session; isNext
 
   return <article className="session-card group reveal relative overflow-hidden rounded-[1.25rem] border border-white/70 bg-white/88 p-[14px_16px] shadow-[0_12px_32px_rgba(54,40,20,.09)] backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:border-academy-gold/45 hover:shadow-[0_18px_42px_rgba(54,40,20,.13)] dark:border-white/10 dark:bg-white/10 dark:hover:border-academy-gold/40">
     <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${category?.accent || 'from-academy-gold to-yellow-200'}`} />
-    <div className="grid gap-3 lg:grid-cols-[minmax(12rem,.9fr)_minmax(31rem,2fr)_minmax(12rem,.72fr)] lg:items-center">
+    <div className="grid gap-3 lg:grid-cols-[minmax(12rem,.9fr)_minmax(31rem,2fr)_auto] lg:items-center">
       <div className="min-w-0">
         <div className="flex flex-wrap items-center gap-1.5">
           {isNext ? <span className="rounded-full bg-academy-ink px-2.5 py-0.5 text-[9px] font-black uppercase tracking-[.1em] text-academy-gold">Prochaine session</span> : null}
@@ -81,9 +81,8 @@ function SessionCard({ session, isNext, onRegister }: { session: Session; isNext
           <span className="block truncate font-black leading-snug text-academy-ink dark:text-white" title={item.value}>{item.value}</span>
         </p>)}
       </div>
-      <div className="flex flex-col gap-1.5 sm:flex-row lg:flex-col">
-        <button type="button" onClick={() => onRegister(session)} className="inline-flex min-h-[38px] flex-1 items-center justify-center rounded-full bg-academy-ink px-4 py-2 text-sm font-black leading-tight text-white shadow-[0_8px_20px_rgba(23,19,13,.14)] transition hover:-translate-y-0.5 hover:bg-black hover:shadow-[0_12px_26px_rgba(23,19,13,.20)]">Je souhaite m’inscrire</button>
-        <Link href={infoHref(session)} className="inline-flex min-h-[38px] flex-1 items-center justify-center rounded-full border border-academy-line bg-white px-4 py-2 text-sm font-black leading-tight text-academy-ink transition hover:-translate-y-0.5 hover:border-academy-gold/50 hover:bg-stone-50">Demander des infos</Link>
+      <div className="flex items-center justify-center lg:justify-end">
+        <button type="button" onClick={() => onRegister(session)} className="session-card__cta inline-flex min-h-10 items-center justify-center whitespace-nowrap rounded-full bg-academy-ink px-[18px] py-2.5 text-center text-sm font-black leading-tight text-white shadow-[0_8px_20px_rgba(23,19,13,.14)] transition hover:-translate-y-0.5 hover:bg-black hover:shadow-[0_12px_26px_rgba(23,19,13,.20)]">Choisir cette session</button>
       </div>
     </div>
   </article>;
