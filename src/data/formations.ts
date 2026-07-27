@@ -52,7 +52,7 @@ export const apsFaq = [
   { q: 'Peut-on financer la formation avec le CPF ?', a: 'Oui, le financement CPF est possible. Vous devez disposer de votre Identité Numérique La Poste pour valider votre dossier.' },
   { q: 'France Travail peut-il financer la formation ?', a: 'Oui, une demande de financement peut être faite auprès de France Travail. L’acceptation dépend de votre profil, de votre niveau de qualification, de votre parcours et de votre projet professionnel.' },
   { q: 'Faut-il une autorisation CNAPS avant d’entrer en formation ?', a: 'Oui, sauf si vous possédez déjà une carte professionnelle en cours de validité. Intégrale Sécurité Formations vous accompagne dans cette démarche.' },
-  { q: 'Y a-t-il un test de français ?', a: 'Un test obligatoire d’entrée en formation permet de vérifier votre maîtrise du français. Il est organisé avant la validation définitive de votre entrée en formation. Notre équipe vous précise les justificatifs nécessaires selon votre situation.' },
+  { q: 'Y a-t-il un test de français ?', a: 'Oui, un test de français préalable à la formation est réalisé le premier jour sur tablette numérique.' },
   { q: 'Comment se déroule l’examen ?', a: 'L’examen final se déroule en présentiel uniquement. Il comprend un QCU sur tablette et une épreuve pratique avec des mises en situation professionnelles.' },
 ];
 
