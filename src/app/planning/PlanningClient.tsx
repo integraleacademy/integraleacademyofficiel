@@ -59,14 +59,16 @@ function sessionCategory(session: Session): CategoryKey | null {
   return categorySections.find(section => section.slugs.includes(slug))?.key || null;
 }
 
-function seatsBadge(seats: number | null) {
+function seatsBadge(seats: number | null, isComplete: boolean) {
+  if (isComplete) return { label: 'Complet', className: 'border-rose-300 bg-rose-100 text-rose-800 shadow-[0_0_24px_rgba(244,63,94,.18)]' };
   if (seats === null || Number.isNaN(seats)) return null;
-  if (seats <= 1) return { label: `${seats} place restante`, className: 'border-rose-300 bg-rose-100 text-rose-800 shadow-[0_0_24px_rgba(244,63,94,.18)]' };
-  if (seats === 2) return { label: 'Plus que 2 places', className: 'border-rose-300 bg-rose-100 text-rose-800 shadow-[0_0_24px_rgba(244,63,94,.18)]' };
-  if (seats === 4) return { label: '4 places restantes', className: 'border-orange-300 bg-orange-100 text-orange-800 shadow-[0_0_22px_rgba(249,115,22,.16)]' };
-  if (seats === 5) return { label: '5 places restantes', className: 'border-amber-300 bg-amber-100 text-amber-800' };
-  if (seats === 6) return { label: '6 places restantes', className: 'border-emerald-300 bg-emerald-100 text-emerald-800 shadow-[0_0_22px_rgba(16,185,129,.14)]' };
-  return { label: `${seats} places restantes`, className: 'border-amber-300 bg-amber-100 text-amber-800' };
+  const visibleSeats = Math.max(1, seats);
+  if (visibleSeats === 1) return { label: '1 place restante', className: 'border-rose-300 bg-rose-100 text-rose-800 shadow-[0_0_24px_rgba(244,63,94,.18)]' };
+  if (visibleSeats === 2) return { label: 'Plus que 2 places', className: 'border-rose-300 bg-rose-100 text-rose-800 shadow-[0_0_24px_rgba(244,63,94,.18)]' };
+  if (visibleSeats === 4) return { label: '4 places restantes', className: 'border-orange-300 bg-orange-100 text-orange-800 shadow-[0_0_22px_rgba(249,115,22,.16)]' };
+  if (visibleSeats === 5) return { label: '5 places restantes', className: 'border-amber-300 bg-amber-100 text-amber-800' };
+  if (visibleSeats === 6) return { label: '6 places restantes', className: 'border-emerald-300 bg-emerald-100 text-emerald-800 shadow-[0_0_22px_rgba(16,185,129,.14)]' };
+  return { label: `${visibleSeats} places restantes`, className: 'border-amber-300 bg-amber-100 text-amber-800' };
 }
 
 function infoHref(session?: Session) {
@@ -77,11 +79,13 @@ function infoHref(session?: Session) {
 }
 
 function SessionCard({ session, isNext, onRegister }: { session: Session; isNext: boolean; onRegister: (session: Session) => void }) {
-  const badge = seatsBadge(computedSeats(session));
+  const isComplete = session.status === 'FULL';
+  const badge = seatsBadge(computedSeats(session), isComplete);
   const category = categorySections.find(section => section.key === sessionCategory(session));
   const title = session.training?.name || session.title;
   const isHybrid = ['aps', 'desp', 'desp-dssp', 'desp-initial'].includes(session.training?.slug);
-  const dateRange = (start?: string, end?: string) => start && end ? `du ${formatSessionDate(start)} au ${formatSessionDate(end)}` : 'Dates à confirmer';
+  const dateRange = (start?: string, end?: string) => start && end ? `Du ${formatSessionDate(start)} au ${formatSessionDate(end)}` : 'Dates à confirmer';
+  const globalDateRange = dateRange(session.remoteStartDate || session.startDate, session.onsiteEndDate || session.endDate);
   const infoItems = [
     ...(isHybrid ? [
       { label: 'Distanciel', value: dateRange(session.remoteStartDate, session.remoteEndDate) },
@@ -103,6 +107,7 @@ function SessionCard({ session, isNext, onRegister }: { session: Session; isNext
           {badge ? <span className={`session-seats-badge rounded-full border px-2.5 py-0.5 text-[10px] font-black transition duration-300 hover:-translate-y-0.5 ${badge.className}`}>{badge.label}</span> : null}
         </div>
         <h3 className="mt-1.5 truncate text-lg font-black leading-tight tracking-tight text-academy-ink dark:text-white sm:text-xl">{title}</h3>
+        {isHybrid ? <p className="mt-1 text-sm font-black leading-snug text-academy-ink dark:text-white">{globalDateRange}</p> : null}
         {isHybrid ? <p className="mt-1 text-xs font-black text-academy-gold-strong">Hybride <span className="font-semibold text-academy-muted">(présentiel + distanciel)</span></p> : null}
         {session.location ? <p className="mt-0.5 flex min-w-0 items-center gap-1 truncate text-sm font-semibold text-academy-muted" title={session.location}><span aria-hidden="true" className="shrink-0 text-academy-gold-strong">⌖</span><span className="truncate">{session.location}</span></p> : null}
       </div>
@@ -113,7 +118,7 @@ function SessionCard({ session, isNext, onRegister }: { session: Session; isNext
         </p>)}
       </div>
       <div className="flex items-center justify-center lg:justify-end">
-        <button type="button" onClick={() => onRegister(session)} className="session-card__cta inline-flex min-h-10 items-center justify-center whitespace-nowrap rounded-full bg-academy-ink px-[18px] py-2.5 text-center text-sm font-black leading-tight text-white shadow-[0_8px_20px_rgba(23,19,13,.14)] transition hover:-translate-y-0.5 hover:bg-black hover:shadow-[0_12px_26px_rgba(23,19,13,.20)]">Choisir cette session</button>
+        <button type="button" onClick={() => onRegister(session)} disabled={isComplete} className="session-card__cta inline-flex min-h-10 items-center justify-center whitespace-nowrap rounded-full bg-academy-ink px-[18px] py-2.5 text-center text-sm font-black leading-tight text-white shadow-[0_8px_20px_rgba(23,19,13,.14)] transition hover:-translate-y-0.5 hover:bg-black hover:shadow-[0_12px_26px_rgba(23,19,13,.20)] disabled:cursor-not-allowed disabled:bg-rose-100 disabled:text-rose-800 disabled:shadow-none disabled:hover:translate-y-0">{isComplete ? 'Session complète' : 'Choisir cette session'}</button>
       </div>
     </div>
   </article>;
