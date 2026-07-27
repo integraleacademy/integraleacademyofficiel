@@ -1,0 +1,37 @@
+import Link from 'next/link';
+import type { CSSProperties } from 'react';
+import { OrientationAssistant } from './OrientationAssistant';
+import { formationHeroConfigs, type FormationHeroKey } from '@/data/formation-heroes';
+
+type Session = { id?: string; startDate?: string | Date; endDate?: string | Date; examDate?: string | Date | null; priceLabel?: string | null; location?: string | null; seatsLeft?: number | null; status?: string | null };
+const themes = {
+  a3p: { primary:'#34d399', soft:'rgba(52,211,153,.14)', dark:'#065f46', border:'rgba(110,231,183,.45)', gradient:'linear-gradient(135deg,#34d399,#bbf7d0)' },
+  aps: { primary:'#38bdf8', soft:'rgba(56,189,248,.14)', dark:'#075985', border:'rgba(125,211,252,.45)', gradient:'linear-gradient(135deg,#38bdf8,#bae6fd)' },
+  ssiap: { primary:'#f87171', soft:'rgba(248,113,113,.14)', dark:'#991b1b', border:'rgba(252,165,165,.45)', gradient:'linear-gradient(135deg,#f87171,#fecaca)' },
+  desp: { primary:'#fb923c', soft:'rgba(251,146,60,.14)', dark:'#9a3412', border:'rgba(253,186,116,.45)', gradient:'linear-gradient(135deg,#fb923c,#fed7aa)' },
+  vtc: { primary:'#c084fc', soft:'rgba(192,132,252,.14)', dark:'#6b21a8', border:'rgba(216,180,254,.45)', gradient:'linear-gradient(135deg,#c084fc,#e9d5ff)' },
+};
+
+function date(value?: string | Date){return value ? new Intl.DateTimeFormat('fr-FR',{timeZone:'Europe/Paris',day:'numeric',month:'short',year:'numeric'}).format(new Date(value)) : ''}
+
+export function FormationHero({formation,sessions=[]}:{formation:FormationHeroKey;sessions?:Session[]}){
+  const config=formationHeroConfigs[formation]; const theme=themes[formation]; const next=sessions[0];
+  const style={ '--formation-primary':theme.primary, '--formation-primary-soft':theme.soft, '--formation-primary-dark':theme.dark, '--formation-primary-border':theme.border, '--formation-gradient':theme.gradient } as CSSProperties;
+  const assistantKey=formation==='ssiap'?undefined:formation;
+  const info=[['Durée',config.duration],['Lieu',next?.location||config.location],['Tarif',next?.priceLabel||config.price],['Certification',config.certification],['Modalité',config.modality],['Hébergement',config.accommodation]];
+  const sessionDates=next?.startDate&&next?.endDate?`${date(next.startDate)} → ${date(next.endDate)}`:config.nextSession.dates;
+  const detail=next?.examDate?`Examen le ${date(next.examDate)}`:config.nextSession.detail;
+  const bookingHref=next?.id?`/contact?formation=${config.slug}&session=${next.id}`:config.nextSession.href;
+  return <section style={style} className="relative isolate overflow-hidden bg-[#0B0F17] px-4 py-10 text-white sm:py-12 lg:py-12">
+    <div className="absolute inset-0 -z-10" style={{background:`radial-gradient(circle at 18% 18%, ${theme.soft}, transparent 32%),radial-gradient(circle at 85% 20%, ${theme.soft}, transparent 28%),linear-gradient(135deg,#080b10 0%,#121827 55%,${theme.dark} 150%)`}}/>
+    <div className="absolute -left-20 top-20 -z-10 h-72 w-72 rounded-full blur-3xl" style={{background:'var(--formation-primary-soft)'}}/><div className="absolute -right-24 bottom-0 -z-10 h-80 w-80 rounded-full blur-3xl" style={{background:'var(--formation-primary-soft)'}}/>
+    <div className="page-container"><div className="grid items-start gap-7 lg:grid-cols-[1.02fr_.98fr]"><div className="reveal">
+      <span className="inline-flex items-center gap-2 rounded-full border bg-white/10 px-4 py-2 text-xs font-black uppercase tracking-[.22em] backdrop-blur" style={{borderColor:'var(--formation-primary-border)',color:'var(--formation-primary)'}}><span className="relative flex h-2.5 w-2.5"><span className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-75" style={{background:'var(--formation-primary)'}}/><span className="relative inline-flex h-2.5 w-2.5 rounded-full" style={{background:'var(--formation-primary)',boxShadow:`0 0 16px ${theme.primary}`}}/></span>{config.badge}</span>
+      <h1 className="mt-3 max-w-4xl text-balance text-4xl font-black tracking-tight sm:text-5xl lg:text-6xl">{config.title}</h1><div className="mt-3 max-w-2xl space-y-2 text-lg leading-8 text-white/78 sm:text-xl"><p>{config.description}</p>{config.secondaryDescription&&<p>{config.secondaryDescription}</p>}</div>
+      <div className="mt-4 inline-flex max-w-2xl rounded-2xl border px-4 py-3 text-left backdrop-blur" style={{borderColor:'var(--formation-primary-border)',background:'var(--formation-primary-soft)',boxShadow:`0 18px 45px ${theme.soft}`}}><p className="text-base font-black leading-6 sm:text-lg">{config.locationHighlight}</p></div>
+      <div className="mt-5 flex flex-col items-start gap-3 sm:flex-row sm:flex-wrap sm:items-center"><Link className="inline-flex min-h-12 items-center justify-center rounded-full px-6 py-3 text-center font-black text-[#081018] transition hover:-translate-y-0.5" style={{background:'var(--formation-primary)'}} href={config.primaryCta.href}>{config.primaryCta.label}</Link><Link className="inline-flex min-h-12 items-center px-2 text-sm font-bold text-white/75 transition hover:text-white" href={config.secondaryCta.href}>☎ <span className="ml-2 border-b border-white/30">{config.secondaryCta.label}</span></Link></div><p className="mt-3 text-sm font-bold text-white/66">{config.reassuranceText}</p>
+    </div><div className="reveal lg:w-[88%] lg:justify-self-end" aria-label={`${config.assistantTitle}. ${config.assistantSubtitle}. ${config.assistantAction}`}><OrientationAssistant initialFormationKey={assistantKey} hideInfoAction /></div></div>
+    <div className="reveal mt-6 grid grid-cols-1 gap-3 rounded-[2rem] border border-white/70 bg-white/92 p-3 text-academy-ink shadow-card backdrop-blur sm:grid-cols-2 lg:grid-cols-6">{info.map(([key,value])=><div key={key} className="flex min-h-28 flex-col justify-center rounded-[1.35rem] bg-academy-bg p-4"><p className="text-xs font-black uppercase tracking-[.16em] text-academy-muted">{key}</p><p className="mt-2 text-lg font-black text-academy-ink">{value}</p></div>)}</div>
+    <aside className="reveal mt-6 overflow-hidden rounded-[2rem] border bg-white text-academy-ink shadow-[0_30px_90px_rgba(0,0,0,.34)]" style={{borderColor:'var(--formation-primary-border)'}}><div className="grid sm:grid-cols-[1fr_auto] sm:items-stretch"><div className="px-4 py-3.5 sm:px-5 sm:py-4" style={{background:'var(--formation-gradient)'}}><div className="flex flex-wrap items-center gap-2"><p className="rounded-full bg-academy-ink px-3 py-1 text-[.68rem] font-black uppercase tracking-[.14em]" style={{color:'var(--formation-primary)'}}>Prochaine session {config.slug.toUpperCase()}</p>{next?.seatsLeft!=null&&<span className="rounded-full border border-white/70 bg-white/75 px-3 py-1 text-[.68rem] font-black">{next.seatsLeft} places restantes</span>}{next?.status==='FULL'&&<span className="rounded-full bg-stone-200 px-3 py-1 text-[.68rem] font-black">Complet</span>}</div><div className="mt-2 flex flex-col gap-0.5 lg:flex-row lg:items-baseline lg:gap-4"><h2 className="text-xl font-black sm:text-2xl">{sessionDates}</h2><p className="text-sm font-extrabold sm:text-base" style={{color:'var(--formation-primary-dark)'}}>{detail}</p></div></div><div className="flex items-center p-3.5 sm:p-4"><Link href={bookingHref} className="inline-flex min-h-12 items-center rounded-full bg-academy-ink px-6 py-3 text-center font-black text-white">Réserver ma place</Link></div></div></aside>
+    </div></section>
+}
