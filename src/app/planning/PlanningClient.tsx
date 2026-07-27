@@ -61,33 +61,31 @@ function SessionCard({ session, isNext, onRegister }: { session: Session; isNext
     { label: 'Début', value: formatSessionDate(session.startDate) },
     { label: 'Fin', value: formatSessionDate(session.endDate) },
     session.examDate ? { label: 'Examen', value: formatSessionDate(session.examDate) } : null,
-    session.location ? { label: 'Lieu', value: session.location } : null,
     session.priceLabel ? { label: 'Prix', value: session.priceLabel } : null,
   ].filter(Boolean) as { label: string; value: string }[];
 
-  return <article className="group reveal relative overflow-hidden rounded-[1.5rem] border border-white/70 bg-white/88 p-4 shadow-[0_18px_46px_rgba(54,40,20,.10)] backdrop-blur transition duration-300 hover:-translate-y-1 hover:border-academy-gold/45 hover:shadow-[0_24px_62px_rgba(54,40,20,.16)] dark:border-white/10 dark:bg-white/10 dark:hover:border-academy-gold/40">
+  return <article className="session-card group reveal relative overflow-hidden rounded-[1.25rem] border border-white/70 bg-white/88 p-[14px_16px] shadow-[0_12px_32px_rgba(54,40,20,.09)] backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:border-academy-gold/45 hover:shadow-[0_18px_42px_rgba(54,40,20,.13)] dark:border-white/10 dark:bg-white/10 dark:hover:border-academy-gold/40">
     <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${category?.accent || 'from-academy-gold to-yellow-200'}`} />
-    <div className="grid gap-3 xl:grid-cols-[minmax(13rem,.85fr)_minmax(0,1.7fr)_minmax(13rem,.75fr)] xl:items-center">
+    <div className="grid gap-3 lg:grid-cols-[minmax(12rem,.9fr)_minmax(31rem,2fr)_minmax(12rem,.72fr)] lg:items-center">
       <div className="min-w-0">
         <div className="flex flex-wrap items-center gap-1.5">
-          {isNext ? <span className="rounded-full bg-academy-ink px-3 py-1 text-[10px] font-black uppercase tracking-[.12em] text-academy-gold">Prochaine session</span> : null}
-          {badge ? <span className={`session-seats-badge rounded-full border px-3 py-1 text-[10px] font-black transition duration-300 hover:-translate-y-0.5 ${badge.className}`}>{badge.label}</span> : null}
+          {isNext ? <span className="rounded-full bg-academy-ink px-2.5 py-0.5 text-[9px] font-black uppercase tracking-[.1em] text-academy-gold">Prochaine session</span> : null}
+          {badge ? <span className={`session-seats-badge rounded-full border px-2.5 py-0.5 text-[10px] font-black transition duration-300 hover:-translate-y-0.5 ${badge.className}`}>{badge.label}</span> : null}
         </div>
-        <h3 className="mt-2 truncate text-xl font-black leading-tight tracking-tight text-academy-ink dark:text-white sm:text-2xl">{title}</h3>
-        <p className="mt-0.5 truncate text-sm font-bold text-academy-gold-strong">{category?.title}</p>
+        <h3 className="mt-1.5 truncate text-lg font-black leading-tight tracking-tight text-academy-ink dark:text-white sm:text-xl">{title}</h3>
+        {session.location ? <p className="mt-0.5 flex min-w-0 items-center gap-1 truncate text-sm font-semibold text-academy-muted" title={session.location}><span aria-hidden="true" className="shrink-0 text-academy-gold-strong">⌖</span><span className="truncate">{session.location}</span></p> : null}
       </div>
-      <div className="grid gap-2 text-sm text-academy-muted sm:grid-cols-2 lg:grid-cols-3">
-        {infoItems.map((item) => <p key={item.label} className="min-w-0 rounded-[1rem] border border-white/70 bg-academy-bg/75 px-3 py-2 shadow-[inset_0_1px_0_rgba(255,255,255,.55)] dark:border-white/10 dark:bg-black/20">
+      <div className="grid gap-2 text-sm text-academy-muted sm:grid-cols-2 lg:grid-cols-4">
+        {infoItems.map((item) => <p key={item.label} className="min-w-0 rounded-xl border border-white/70 bg-academy-bg/75 px-2.5 py-2 shadow-[inset_0_1px_0_rgba(255,255,255,.55)] dark:border-white/10 dark:bg-black/20">
           <span className="block text-[10px] font-black uppercase tracking-[.15em] text-academy-muted/70">{item.label}</span>
-          <span className="mt-0.5 block truncate font-black leading-snug text-academy-ink dark:text-white" title={item.value}>{item.value}</span>
+          <span className="block truncate font-black leading-snug text-academy-ink dark:text-white" title={item.value}>{item.value}</span>
         </p>)}
       </div>
-      <div className="flex flex-col gap-2 sm:flex-row xl:flex-col">
-        <button type="button" onClick={() => onRegister(session)} className="inline-flex flex-1 items-center justify-center rounded-full bg-academy-ink px-5 py-3 text-sm font-black text-white shadow-[0_12px_28px_rgba(23,19,13,.16)] transition hover:-translate-y-0.5 hover:bg-black hover:shadow-[0_16px_36px_rgba(23,19,13,.22)]">Je souhaite m’inscrire</button>
-        <Link href={infoHref(session)} className="inline-flex flex-1 items-center justify-center rounded-full border border-academy-line bg-white px-5 py-3 text-sm font-black text-academy-ink transition hover:-translate-y-0.5 hover:border-academy-gold/50 hover:bg-stone-50">Demander des infos</Link>
+      <div className="flex flex-col gap-1.5 sm:flex-row lg:flex-col">
+        <button type="button" onClick={() => onRegister(session)} className="inline-flex min-h-[38px] flex-1 items-center justify-center rounded-full bg-academy-ink px-4 py-2 text-sm font-black leading-tight text-white shadow-[0_8px_20px_rgba(23,19,13,.14)] transition hover:-translate-y-0.5 hover:bg-black hover:shadow-[0_12px_26px_rgba(23,19,13,.20)]">Je souhaite m’inscrire</button>
+        <Link href={infoHref(session)} className="inline-flex min-h-[38px] flex-1 items-center justify-center rounded-full border border-academy-line bg-white px-4 py-2 text-sm font-black leading-tight text-academy-ink transition hover:-translate-y-0.5 hover:border-academy-gold/50 hover:bg-stone-50">Demander des infos</Link>
       </div>
     </div>
-    {session.fundingNotes ? <p className="mt-3 rounded-2xl border border-academy-line/70 bg-academy-gold/10 p-3 text-sm font-bold leading-6 text-academy-muted">{session.fundingNotes}</p> : null}
   </article>;
 }
 
@@ -161,7 +159,7 @@ function SecurityGroupedSessions({ rows, expandedGroups, onToggleMore, onRegiste
           </div>
           <Link href={`/contact?motif=alerte-planning&formation=${group.key}`} className="inline-flex shrink-0 rounded-full border border-academy-line bg-white px-4 py-2.5 text-sm font-black text-academy-ink transition hover:-translate-y-0.5 hover:border-academy-gold/60 dark:bg-white/10 dark:text-white">Être prévenu</Link>
         </div>
-        {groupRows.length ? <><div className="grid gap-5">{visibleRows.map((session, index) => <SessionCard key={session.id} session={session} isNext={index === 0} onRegister={onRegister} />)}</div>{hiddenCount > 0 ? <div className="mt-5 text-center"><button type="button" onClick={() => onToggleMore(group.key)} className="inline-flex rounded-full border border-academy-line bg-white px-6 py-3 text-sm font-black text-academy-ink shadow-soft transition hover:-translate-y-0.5 hover:border-academy-gold/60 dark:bg-white/10 dark:text-white">Voir plus de dates ({hiddenCount})</button></div> : null}</> : <div className="rounded-[1.5rem] border border-dashed border-academy-line bg-white/70 p-5 text-sm font-bold text-academy-muted dark:bg-black/20">Aucune date {group.title} disponible actuellement. Demandez une alerte pour être prévenu de la prochaine session.</div>}
+        {groupRows.length ? <><div className="grid gap-2.5">{visibleRows.map((session, index) => <SessionCard key={session.id} session={session} isNext={index === 0} onRegister={onRegister} />)}</div>{hiddenCount > 0 ? <div className="mt-5 text-center"><button type="button" onClick={() => onToggleMore(group.key)} className="inline-flex rounded-full border border-academy-line bg-white px-6 py-3 text-sm font-black text-academy-ink shadow-soft transition hover:-translate-y-0.5 hover:border-academy-gold/60 dark:bg-white/10 dark:text-white">Voir plus de dates ({hiddenCount})</button></div> : null}</> : <div className="rounded-[1.5rem] border border-dashed border-academy-line bg-white/70 p-5 text-sm font-bold text-academy-muted dark:bg-black/20">Aucune date {group.title} disponible actuellement. Demandez une alerte pour être prévenu de la prochaine session.</div>}
       </section>;
     })}
   </div>;
