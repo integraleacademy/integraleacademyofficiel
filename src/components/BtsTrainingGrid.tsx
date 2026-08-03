@@ -6,6 +6,7 @@ export type BtsTrainingHighlight = {
   slug: string;
   title: string;
   description: string;
+  modality: string;
   tags: string[];
   visual: BtsVisual;
 };
@@ -98,7 +99,12 @@ export function BtsTrainingGrid({ items }: { items: BtsTrainingHighlight[] }) {
         <h3 className="relative mt-4 text-[1.3rem] font-black leading-[1.22] tracking-tight text-academy-ink sm:text-[1.4rem]">{item.title}</h3>
         <p className="relative mt-4 text-[0.95rem] font-medium leading-7 text-academy-muted">{item.description}</p>
 
-        <div className="relative mt-5 flex flex-wrap gap-2">
+        <div className="relative mt-5 flex w-fit max-w-full items-center gap-2 rounded-2xl border border-academy-gold/35 bg-academy-gold/10 px-3.5 py-2.5 text-xs font-black text-academy-ink shadow-sm">
+          <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4 shrink-0 text-academy-gold-strong" aria-hidden="true"><rect x="3.5" y="5" width="17" height="11.5" rx="1.8" stroke="currentColor" strokeWidth="1.8"/><path d="M8.5 20h7M12 16.5V20" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/></svg>
+          <span>{item.modality}</span>
+        </div>
+
+        <div className="relative mt-4 flex flex-wrap gap-2">
           {item.tags.map(tag => <span key={tag} className={tag === 'Prochainement' ? 'rounded-full border border-academy-gold/40 bg-academy-gold/10 px-3 py-1.5 text-xs font-black text-academy-gold-strong' : 'rounded-full border border-academy-line bg-academy-elevated/70 px-3 py-1.5 text-xs font-bold text-academy-muted'}>{tag}</span>)}
         </div>
 
