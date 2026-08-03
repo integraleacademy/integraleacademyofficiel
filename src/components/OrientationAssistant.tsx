@@ -120,7 +120,7 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
 
   function minimizeAssistant(){
     if (isExpanded) {
-      setIsExpanded(false);
+      resetAssistantState();
       return;
     }
     resetAssistantState();
