@@ -6,7 +6,7 @@ const toneStyles: Record<VisualTone, { glow: string; line: string; icon: string;
   academy: { glow: 'from-academy-gold/25 via-sky-400/10 to-emerald-400/10', line: 'via-academy-gold/55', icon: 'text-academy-gold', accent: 'bg-academy-gold' },
   security: { glow: 'from-emerald-400/20 via-academy-gold/16 to-blue-500/10', line: 'via-emerald-400/45', icon: 'text-emerald-300', accent: 'bg-emerald-400' },
   bts: { glow: 'from-sky-400/20 via-academy-gold/16 to-emerald-300/12', line: 'via-sky-300/45', icon: 'text-sky-200', accent: 'bg-sky-300' },
-  vtc: { glow: 'from-cyan-300/22 via-academy-gold/15 to-slate-900/10', line: 'via-cyan-300/45', icon: 'text-cyan-200', accent: 'bg-cyan-300' },
+  vtc: { glow: 'from-violet-400/20 via-fuchsia-300/10 to-indigo-500/10', line: 'via-violet-300/45', icon: 'text-violet-200', accent: 'bg-violet-400' },
   funding: { glow: 'from-violet-300/20 via-academy-gold/16 to-emerald-300/14', line: 'via-violet-300/45', icon: 'text-violet-200', accent: 'bg-violet-300' },
   contact: { glow: 'from-rose-300/18 via-academy-gold/16 to-sky-300/12', line: 'via-rose-200/45', icon: 'text-rose-100', accent: 'bg-rose-200' },
   exam: { glow: 'from-academy-gold/24 via-emerald-300/16 to-slate-950/10', line: 'via-academy-gold/55', icon: 'text-academy-gold', accent: 'bg-academy-gold' },
