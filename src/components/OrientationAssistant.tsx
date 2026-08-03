@@ -10,7 +10,7 @@ import { securityFormations } from '@/data/formations';
 import { createPortal } from 'react-dom';
 
 type FormationKey = 'aps' | 'a3p' | 'desp' | 'vtc' | 'bts';
-type Step = 'formations' | 'loading' | 'aps-result' | 2 | 3 | 4;
+type Step = 'formations' | 'loading' | 'formation-result' | 2 | 3 | 4;
 type AssistantSession = { id: string; startDate: string; endDate: string; examDate?: string | null; seatsLeft?: number | null; showSeatsLeft?: boolean | null; training?: { slug?: string; name?: string } | null; };
 
 type AssistantFormation = {
@@ -24,7 +24,7 @@ type AssistantFormation = {
 const calendlyDirigeantUrl = 'https://calendly.com/integraleacademy/dirigeant';
 const quoteRequestUrl = 'https://assistance-alw9.onrender.com/demande-informations-formations';
 const apsFormation = securityFormations.find(formation => formation.slug === '/formations-securite/aps');
-const apsInformationLoadingDelayMs = 2600;
+const informationLoadingDelayMs = 900;
 
 const formations: AssistantFormation[] = [
   { key: 'aps', label: 'Agent de sécurité privée (APS)', icon: '👮', infoUrl: '/formations-securite/aps', rdvUrl: '/contact?formation=aps&type=rdv' },
@@ -33,6 +33,16 @@ const formations: AssistantFormation[] = [
   { key: 'vtc', label: 'Chauffeur VTC', icon: '🚗', infoUrl: '/vtc', rdvUrl: '/contact?formation=vtc&type=rdv' },
   { key: 'bts', label: 'Un BTS en alternance', icon: '◇', infoUrl: '/bts', rdvUrl: '/contact?formation=bts&type=rdv' },
 ];
+
+type AssistantFormationDetails = { title: string; shortLabel: string; sessionSlugs: string[]; price: string; keyPoints: string[] };
+
+const formationDetails: Record<FormationKey, AssistantFormationDetails> = {
+  aps: { title: 'Formation Agent de sécurité privée (APS)', shortLabel: 'APS', sessionSlugs: ['aps'], price: apsFormation?.price || 'Tarif sur demande', keyPoints: ['Formation hybride : 62 h en e-learning + 113 h en présentiel', `Durée : ${apsFormation?.duration || '175 heures au total'}`, `Lieu : ${apsFormation?.locations || 'Puget-sur-Argens, Côte d’Azur'}`, `Certification : ${apsFormation?.certification || 'TFP APS · RNCP n°36648 · niveau 3'}`, 'Examen final en présentiel : QCU sur tablette + mise en situation pratique', `Financements : ${apsFormation?.financing || 'CPF, France Travail ou paiement en plusieurs fois'}`] },
+  a3p: { title: 'Formation Agent de protection physique des personnes (A3P)', shortLabel: 'A3P', sessionSlugs: ['a3p-apr'], price: '4 200 €', keyPoints: ['Formation en présentiel orientée protection rapprochée', 'Durée : 9 semaines · 327 heures', 'Lieu : Puget-sur-Argens · hébergement collectif possible sur demande', 'Certification : TFP A3P · RNCP n°38002 · CNAPS', 'Évaluations théoriques et mises en situation professionnelles', 'Financements : CPF, France Travail et facilités de paiement selon dossier'] },
+  desp: { title: 'Formation Dirigeant d’entreprise de sécurité privée (DESP)', shortLabel: 'DESP', sessionSlugs: ['desp-dssp', 'desp-initial'], price: '4 300 € initial · 3 800 € VAE', keyPoints: ['Deux parcours : formation initiale ou validation des acquis de l’expérience (VAE)', 'Durée : initial 7 semaines · 245 heures ; VAE environ 1 mois', 'Lieux : distanciel + Paris, Puget-sur-Argens ou Aurillac selon les sessions', 'Certification : DESP · RNCP n°40385 · agrément dirigeant CNAPS', 'Évaluation : QCU, mises en situation et jury professionnel', 'Financements : CPF, France Travail et facilités de paiement selon dossier'] },
+  vtc: { title: 'Formation Chauffeur VTC', shortLabel: 'VTC', sessionSlugs: ['vtc'], price: '1 600 € tout inclus', keyPoints: ['Formation mixte : théorie en e-learning et pratique en présentiel', 'Durée : 105 heures', 'Pratique : Nice, Cannes, Toulon ou Fréjus', 'Certification : RS n°5637 · agrément préfectoral VTC-26-001', 'Le tarif inclut le livre, la pratique, le véhicule et les frais d’examen', 'Financement CPF selon éligibilité avec accompagnement administratif'] },
+  bts: { title: 'BTS en alternance', shortLabel: 'BTS', sessionSlugs: ['bts-mos', 'bts-mco'], price: 'Sans frais pour l’apprenti', keyPoints: ['Parcours : MOS, MCO, NDRC, Commerce international, Professions immobilières et Comptabilité-Gestion', 'Durée habituelle : 2 ans en alternance', 'Modalités : présentiel ou distanciel selon le BTS et le dossier', 'Certification : diplôme national de niveau 5 délivré par le Ministère de l’Éducation nationale', 'Admission : niveau bac ou titre équivalent et projet d’alternance', 'Financement : prise en charge par l’entreprise et son OPCO selon le contrat'] },
+};
 
 export function OrientationAssistant({initialFormationKey, initialStep, hideInfoAction = false}:{initialFormationKey?:FormationKey; initialStep?:Step; hideInfoAction?:boolean} = {}){
   const pathname = usePathname();
@@ -79,25 +89,19 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
     setSelectedKey(key);
     setDespExperience(null);
     setIsExpanded(true);
-    if (key === 'aps') {
-      setStep('loading');
-      loadingTimeoutRef.current = window.setTimeout(() => {
-        setStep('aps-result');
-        loadingTimeoutRef.current = null;
-      }, apsInformationLoadingDelayMs);
-      return;
-    }
-    setStep(2);
+    startFormationInformation(key);
   }
 
-  function startApsInformation(){
+  function startFormationInformation(key = selectedKey){
+    if (!key) return;
     if (loadingTimeoutRef.current) window.clearTimeout(loadingTimeoutRef.current);
+    setSelectedKey(key);
     setIsExpanded(true);
     setStep('loading');
     loadingTimeoutRef.current = window.setTimeout(() => {
-      setStep('aps-result');
+      setStep('formation-result');
       loadingTimeoutRef.current = null;
-    }, apsInformationLoadingDelayMs);
+    }, informationLoadingDelayMs);
   }
 
   function goBack(){
@@ -146,19 +150,15 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
         </div>}
 
 
-        {step === 'loading' && <ApsAssistantLoading />}
+        {step === 'loading' && selectedFormation && <FormationAssistantLoading formation={selectedFormation} />}
 
-        {step === 'aps-result' && <ApsAssistantResult sessions={sessions} onBack={() => { setSelectedKey(null); setStep('formations'); }} hideInfoAction={shouldHideInfoAction} isExpanded={isExpanded} />}
+        {step === 'formation-result' && selectedFormation && <FormationAssistantResult formation={selectedFormation} sessions={sessions} onBack={() => { setSelectedKey(null); setStep('formations'); }} hideInfoAction={shouldHideInfoAction} isExpanded={isExpanded} />}
 
         {step === 2 && selectedFormation && <div className="space-y-4">
           <h3 className="text-xl font-black">Que souhaitez-vous faire&nbsp;?</h3>
           <div className={`grid gap-3 ${shouldHideInfoAction ? '' : 'sm:grid-cols-2'}`}>
-            {shouldHideInfoAction && selectedFormation.key === 'aps' && <button type="button" onClick={startApsInformation} className="group relative flex min-h-24 flex-col justify-between overflow-hidden rounded-2xl bg-gradient-to-r from-academy-gold via-yellow-300 to-academy-gold p-5 text-left font-black text-academy-gold-text shadow-gold ring-2 ring-academy-gold/45 transition hover:-translate-y-1 hover:shadow-[0_22px_55px_rgba(180,124,31,.38)] focus:outline-none focus:ring-4 focus:ring-academy-gold/35 motion-safe:animate-[rdvButtonPulse_2.4s_ease-in-out_infinite]"><span className="relative z-10">Je souhaite connaître les informations essentielles</span><span className="relative z-10 text-sm text-academy-ink/75">Tarif, prochaine date, durée et financement →</span><span className="absolute inset-y-0 -left-1/2 w-1/2 skew-x-[-18deg] bg-white/35 motion-safe:animate-[rdvButtonShine_2.4s_ease-in-out_infinite]" aria-hidden="true" /></button>}
-            {!shouldHideInfoAction && (selectedFormation.key === 'desp'
-              ? <button type="button" onClick={() => setStep(4)} className="flex min-h-24 flex-col justify-between rounded-2xl border border-academy-line bg-white p-5 text-left font-black shadow-sm transition hover:-translate-y-0.5 hover:border-academy-gold hover:shadow-gold"><span>Je veux en savoir plus</span><span className="text-sm text-yellow-700">Répondre à une question →</span></button>
-              : selectedFormation.key === 'aps'
-                ? <button type="button" onClick={startApsInformation} className="flex min-h-24 flex-col justify-between rounded-2xl border border-academy-line bg-white p-5 text-left font-black shadow-sm transition hover:-translate-y-0.5 hover:border-academy-gold hover:shadow-gold"><span>Je veux en savoir plus</span><span className="text-sm text-yellow-700">Voir la réponse assistant →</span></button>
-                : <Link href={selectedFormation.infoUrl} className="flex min-h-24 flex-col justify-between rounded-2xl border border-academy-line bg-white p-5 font-black shadow-sm transition hover:-translate-y-0.5 hover:border-academy-gold hover:shadow-gold"><span>Je veux en savoir plus</span><span className="text-sm text-yellow-700">Voir la formation →</span></Link>)}
+            {shouldHideInfoAction && <button type="button" onClick={() => startFormationInformation()} className="group relative flex min-h-24 flex-col justify-between overflow-hidden rounded-2xl bg-gradient-to-r from-academy-gold via-yellow-300 to-academy-gold p-5 text-left font-black text-academy-gold-text shadow-gold ring-2 ring-academy-gold/45 transition hover:-translate-y-1 hover:shadow-[0_22px_55px_rgba(180,124,31,.38)] focus:outline-none focus:ring-4 focus:ring-academy-gold/35 motion-safe:animate-[rdvButtonPulse_2.4s_ease-in-out_infinite]"><span className="relative z-10">Je souhaite connaître les informations essentielles</span><span className="relative z-10 text-sm text-academy-ink/75">Tarif, prochaine date, durée et financement →</span><span className="absolute inset-y-0 -left-1/2 w-1/2 skew-x-[-18deg] bg-white/35 motion-safe:animate-[rdvButtonShine_2.4s_ease-in-out_infinite]" aria-hidden="true" /></button>}
+            {!shouldHideInfoAction && <button type="button" onClick={() => startFormationInformation()} className="flex min-h-24 flex-col justify-between rounded-2xl border border-academy-line bg-white p-5 text-left font-black shadow-sm transition hover:-translate-y-0.5 hover:border-academy-gold hover:shadow-gold"><span>Je veux en savoir plus</span><span className="text-sm text-yellow-700">Voir la réponse assistant →</span></button>}
             <button type="button" onClick={() => { setIsExpanded(true); setStep(3); }} className="flex min-h-24 flex-col justify-between rounded-2xl bg-academy-ink p-5 text-left font-black text-white shadow-soft transition hover:-translate-y-0.5 hover:bg-black active:translate-y-0"><span>Je souhaite m’inscrire</span><span className="text-sm text-academy-gold">Préparer mon rendez-vous →</span></button>
           </div>
         </div>}
@@ -203,73 +203,36 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
 }
 
 
-function ApsAssistantLoading(){
-  return <div className="overflow-hidden rounded-[1.35rem] border border-academy-gold/25 bg-gradient-to-br from-white via-[#FFFBF2] to-academy-bg p-5 shadow-soft">
+function FormationAssistantLoading({formation}:{formation:AssistantFormation}){
+  return <div className="overflow-hidden rounded-[1.35rem] border border-academy-gold/25 bg-gradient-to-br from-white via-[#FFFBF2] to-academy-bg p-5 shadow-soft" role="status" aria-live="polite">
     <div className="flex items-center gap-3">
-      <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-academy-gold/15 text-xl" aria-hidden="true">👮</span>
-      <div>
-        <h3 className="text-lg font-black">Je recherche les informations sur la formation APS</h3>
-        <div className="mt-2 flex gap-1" aria-hidden="true">{[0,1,2].map(index => <span key={index} className="h-2 w-2 rounded-full bg-academy-gold motion-safe:animate-pulse" style={{ animationDelay: `${index * 160}ms` }} />)}</div>
-      </div>
+      <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-academy-gold/15 text-xl" aria-hidden="true">{formation.icon}</span>
+      <div><h3 className="text-lg font-black">Je recherche les informations sur la formation {formationDetails[formation.key].shortLabel}</h3><div className="mt-2 flex gap-1" aria-hidden="true">{[0,1,2].map(index => <span key={index} className="h-2 w-2 rounded-full bg-academy-gold motion-safe:animate-pulse" style={{ animationDelay: `${index * 160}ms` }} />)}</div></div>
     </div>
-    <div className="mt-5 space-y-2" aria-hidden="true">
-      <div className="h-3 w-11/12 overflow-hidden rounded-full bg-academy-gold/10"><span className="block h-full w-1/2 rounded-full bg-gradient-to-r from-transparent via-academy-gold/35 to-transparent motion-safe:animate-pulse" /></div>
-      <div className="h-3 w-8/12 rounded-full bg-academy-gold/10" />
-      <div className="h-3 w-10/12 rounded-full bg-academy-gold/10" />
-    </div>
+    <div className="mt-5 space-y-2" aria-hidden="true"><div className="h-3 w-11/12 rounded-full bg-academy-gold/10"/><div className="h-3 w-8/12 rounded-full bg-academy-gold/10"/><div className="h-3 w-10/12 rounded-full bg-academy-gold/10"/></div>
   </div>;
 }
 
-function apsSeatLabel(session: AssistantSession){
+function seatLabel(session: AssistantSession){
   const seats = computedSeats(session);
   if (seats === null || Number.isNaN(seats)) return 'Places limitées';
   if (seats < 4) return `Attention, il reste ${seats} place${seats > 1 ? 's' : ''}`;
   return `${seats} places restantes`;
 }
 
-function ApsAssistantResult({sessions,onBack,hideInfoAction=false,isExpanded=false}:{sessions:AssistantSession[];onBack:()=>void;hideInfoAction?:boolean;isExpanded?:boolean}){
-  const upcomingApsSessions = sessions
-    .filter(session => session.training?.slug === 'aps')
-    .sort((a,b) => +new Date(a.startDate) - +new Date(b.startDate))
-    .slice(0, 1);
-  const keyPoints = [
-    'Formation hybride : 62 h en e-learning + 113 h en présentiel',
-    `Durée : ${apsFormation?.duration || '175 heures au total'}`,
-    `Lieu : ${apsFormation?.locations || 'Puget-sur-Argens, Côte d’Azur'}`,
-    `Certification : ${apsFormation?.certification || 'TFP APS · RNCP n°36648 · niveau 3'}`,
-    'Examen final en présentiel : QCU sur tablette + mise en situation pratique',
-    `Financements : ${apsFormation?.financing || 'CPF, France Travail ou paiement en plusieurs fois'}`,
-  ];
-
+function FormationAssistantResult({formation,sessions,onBack,hideInfoAction=false,isExpanded=false}:{formation:AssistantFormation;sessions:AssistantSession[];onBack:()=>void;hideInfoAction?:boolean;isExpanded?:boolean}){
+  const details = formationDetails[formation.key];
+  const upcomingSessions = sessions.filter(session => Boolean(session.training?.slug && details.sessionSlugs.includes(session.training.slug))).sort((a,b) => +new Date(a.startDate) - +new Date(b.startDate)).slice(0, 1);
   return <div className="space-y-3 rounded-[1.35rem] border border-academy-gold/25 bg-gradient-to-br from-white via-[#FFFBF2] to-academy-bg p-4 shadow-soft sm:p-5">
-    <div>
-      <p className="text-xs font-black uppercase tracking-[.22em] text-academy-gold">Réponse assistant IA</p>
-      <h3 className="mt-1 text-xl font-black tracking-tight sm:text-2xl">Formation Agent de sécurité privée (APS)</h3>
-      <p className="mt-2 text-sm font-semibold leading-6 text-stone-600">Voici les informations clés concernant la formation APS chez Intégrale Academy.</p>
-    </div>
+    <div><p className="text-xs font-black uppercase tracking-[.22em] text-academy-gold">Réponse assistant IA</p><h3 className="mt-1 text-xl font-black tracking-tight sm:text-2xl">{details.title}</h3><p className="mt-2 text-sm font-semibold leading-6 text-stone-600">Voici les informations clés concernant cette formation chez Intégrale Academy.</p></div>
     <div className={`grid gap-2 ${isExpanded ? 'lg:grid-cols-[minmax(0,1fr)_280px]' : ''}`}>
-      <div className="rounded-2xl border border-academy-line bg-white/85 p-3"><p className="text-sm font-black">Informations clés</p><ul className="mt-2 space-y-1 text-xs font-semibold leading-5 text-stone-600 sm:text-sm">{keyPoints.map(point => <li key={point} className="flex gap-2"><span className="text-academy-gold" aria-hidden="true">✓</span><span>{point}</span></li>)}</ul></div>
-      <div className={`rounded-2xl border border-academy-line bg-white/85 p-3 ${isExpanded ? 'lg:flex lg:flex-col lg:justify-center' : ''}`}><span className="block text-[10px] font-black uppercase tracking-[.15em] text-academy-muted/70">Tarif</span><span className="text-lg font-black text-academy-ink">{apsFormation?.price || 'Tarif sur demande'}</span></div>
+      <div className="rounded-2xl border border-academy-line bg-white/85 p-3"><p className="text-sm font-black">Informations clés</p><ul className="mt-2 space-y-1 text-xs font-semibold leading-5 text-stone-600 sm:text-sm">{details.keyPoints.map(point => <li key={point} className="flex gap-2"><span className="text-academy-gold" aria-hidden="true">✓</span><span>{point}</span></li>)}</ul></div>
+      <div className={`rounded-2xl border border-academy-line bg-white/85 p-3 ${isExpanded ? 'lg:flex lg:flex-col lg:justify-center' : ''}`}><span className="block text-[10px] font-black uppercase tracking-[.15em] text-academy-muted/70">Tarif</span><span className="text-lg font-black text-academy-ink">{details.price}</span></div>
     </div>
-    <div>
-      <p className="font-black">Prochaine formation</p>
-      {upcomingApsSessions.length ? <div className="mt-3 grid gap-3">{upcomingApsSessions.map(session => <div key={session.id} className="rounded-2xl border border-academy-line bg-white p-3 shadow-sm">
-        <div className="grid gap-3 sm:grid-cols-3">
-          <p><span className="block text-[10px] font-black uppercase tracking-[.15em] text-academy-muted/70">Début</span><span className="font-black">{formatSessionDate(session.startDate)}</span></p>
-          <p><span className="block text-[10px] font-black uppercase tracking-[.15em] text-academy-muted/70">Fin</span><span className="font-black">{formatSessionDate(session.endDate)}</span></p>
-          <p><span className="block text-[10px] font-black uppercase tracking-[.15em] text-academy-muted/70">Examen</span><span className="font-black">{session.examDate ? formatSessionDate(session.examDate) : 'À confirmer'}</span></p>
-        </div>
-        <p className={`mt-3 inline-flex rounded-full px-3 py-1 text-xs font-black ${computedSeats(session) !== null && Number(computedSeats(session)) < 4 ? 'bg-rose-100 text-rose-800' : 'bg-academy-gold/15 text-yellow-800'}`}>{apsSeatLabel(session)}</p>
-      </div>)}</div> : <p className="mt-3 rounded-2xl border border-dashed border-academy-line bg-white/70 p-4 text-sm font-bold text-academy-muted">Places limitées</p>}
-      <p className="mt-2 text-xs font-bold leading-5 text-stone-600">Consultez toutes les dates en <Link href="/planning?formation=aps" className="font-black text-yellow-700 underline decoration-academy-gold/50 underline-offset-4 hover:text-academy-ink">cliquant ici</Link>.</p>
+    <div><p className="font-black">Prochaine formation</p>{upcomingSessions.length ? <div className="mt-3 grid gap-3">{upcomingSessions.map(session => <div key={session.id} className="rounded-2xl border border-academy-line bg-white p-3 shadow-sm"><div className="grid gap-3 sm:grid-cols-3"><p><span className="block text-[10px] font-black uppercase tracking-[.15em] text-academy-muted/70">Début</span><span className="font-black">{formatSessionDate(session.startDate)}</span></p><p><span className="block text-[10px] font-black uppercase tracking-[.15em] text-academy-muted/70">Fin</span><span className="font-black">{formatSessionDate(session.endDate)}</span></p><p><span className="block text-[10px] font-black uppercase tracking-[.15em] text-academy-muted/70">Examen</span><span className="font-black">{session.examDate ? formatSessionDate(session.examDate) : 'À confirmer'}</span></p></div><p className={`mt-3 inline-flex rounded-full px-3 py-1 text-xs font-black ${computedSeats(session) !== null && Number(computedSeats(session)) < 4 ? 'bg-rose-100 text-rose-800' : 'bg-academy-gold/15 text-yellow-800'}`}>{seatLabel(session)}</p></div>)}</div> : <p className="mt-3 rounded-2xl border border-dashed border-academy-line bg-white/70 p-4 text-sm font-bold text-academy-muted">La prochaine date est à confirmer avec notre équipe.</p>}
+      <p className="mt-2 text-xs font-bold leading-5 text-stone-600">Consultez toutes les dates en <Link href={`/planning?formation=${formation.key}`} className="font-black text-yellow-700 underline decoration-academy-gold/50 underline-offset-4 hover:text-academy-ink">cliquant ici</Link>.</p>
     </div>
-    <div className="grid gap-3">
-      <Link href="/contact?formation=aps&type=inscription" className="group relative inline-flex min-h-14 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-r from-academy-gold via-yellow-300 to-academy-gold px-5 py-3 text-center text-sm font-black text-academy-gold-text shadow-gold ring-2 ring-academy-gold/45 transition hover:-translate-y-1 hover:shadow-[0_22px_55px_rgba(180,124,31,.38)] focus:outline-none focus:ring-4 focus:ring-academy-gold/35"><span className="relative z-10">Je souhaite m’inscrire</span><span className="absolute inset-y-0 -left-1/2 w-1/2 skew-x-[-18deg] bg-white/35 transition group-hover:translate-x-[280%]" aria-hidden="true" /></Link>
-      <div className={`grid gap-3 ${hideInfoAction ? '' : 'sm:grid-cols-2'}`}>
-        {!hideInfoAction && <Link href="/formations-securite/aps" className="inline-flex min-h-12 items-center justify-center rounded-full bg-academy-ink px-5 py-3 text-center text-sm font-black text-white shadow-soft transition hover:-translate-y-0.5 hover:bg-black">Je souhaite en savoir plus</Link>}
-        <button type="button" onClick={onBack} className="inline-flex min-h-12 items-center justify-center rounded-full border border-academy-line bg-white px-5 py-3 text-sm font-black text-academy-ink transition hover:-translate-y-0.5 hover:border-academy-gold">Retour aux formations</button>
-      </div>
-    </div>
+    <div className="grid gap-3"><Link href={`/contact?formation=${formation.key}&type=inscription`} className="group relative inline-flex min-h-14 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-r from-academy-gold via-yellow-300 to-academy-gold px-5 py-3 text-center text-sm font-black text-academy-gold-text shadow-gold ring-2 ring-academy-gold/45 transition hover:-translate-y-1"><span className="relative z-10">Je souhaite m’inscrire</span></Link><div className={`grid gap-3 ${hideInfoAction ? '' : 'sm:grid-cols-2'}`}>{!hideInfoAction && <Link href={formation.infoUrl} className="inline-flex min-h-12 items-center justify-center rounded-full bg-academy-ink px-5 py-3 text-center text-sm font-black text-white shadow-soft transition hover:-translate-y-0.5 hover:bg-black">Je souhaite en savoir plus</Link>}<button type="button" onClick={onBack} className="inline-flex min-h-12 items-center justify-center rounded-full border border-academy-line bg-white px-5 py-3 text-sm font-black text-academy-ink transition hover:-translate-y-0.5 hover:border-academy-gold">Retour aux formations</button></div></div>
   </div>;
 }
 
