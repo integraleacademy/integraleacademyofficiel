@@ -4,14 +4,53 @@ import { RecognitionMarquee } from '@/components/RecognitionMarquee';
 import { CampusSection } from '@/components/CampusSection';
 import { GoogleReviewsSection } from '@/components/GoogleReviewsSection';
 import { AnimatedTrainingCTA } from '@/components/AnimatedTrainingCTA';
+import { SecurityTrainingGrid, type SecurityTrainingHighlight } from '@/components/SecurityTrainingGrid';
 import { FloatingBadge, VisualSection, VisualTimeline } from '@/components/visuals';
 import { globalFaq } from '@/data/faq';
-import { bts, contact, securityFormations, vtcFormation } from '@/data/site';
+import { bts, contact, vtcFormation } from '@/data/site';
 
 export const metadata={title:'Accueil',description:'Intégrale Academy forme aux métiers de la sécurité privée, sécurité incendie, VTC et BTS en alternance à Puget-sur-Argens, Paris et Aurillac.'};
 
+const securityHighlights: SecurityTrainingHighlight[] = [
+  {
+    slug: '/formations-securite/aps',
+    title: 'Formation Agent de Prévention et de Sécurité (APS)',
+    description: 'Apprenez à prévenir les risques, surveiller les sites et protéger les personnes afin d’exercer comme agent de sécurité privée.',
+    duration: '5 semaines - 175 heures',
+    visual: 'aps',
+  },
+  {
+    slug: '/formations-securite/ssiap-1',
+    title: 'Formation SSIAP 1 - Agent de sécurité incendie',
+    description: 'Prévenez les risques d’incendie, surveillez les installations et intervenez dans les ERP et les IGH.',
+    duration: '2 semaines - 70 heures',
+    visual: 'ssiap',
+  },
+  {
+    slug: '/formations-securite/sst',
+    title: 'Formation Sauveteur Secouriste du Travail (SST)',
+    description: 'Acquérez les gestes de premiers secours et contribuez à la prévention des risques professionnels en entreprise.',
+    duration: '2 jours - 14 heures',
+    visual: 'sst',
+  },
+  {
+    slug: '/formations-securite/a3p-apr',
+    title: 'Formation Agent de Protection Physique des Personnes (A3P)',
+    description: 'Préparez et sécurisez les déplacements de personnes exposées grâce à des techniques professionnelles de protection rapprochée.',
+    duration: '9 semaines - 327 heures',
+    visual: 'a3p',
+  },
+  {
+    slug: '/formations-securite/desp',
+    title: "Formation Dirigeant d'une entreprise de sécurité privée (DESP)",
+    description: 'Acquérez les compétences juridiques, commerciales et managériales pour créer ou diriger une entreprise de sécurité privée, en parcours initial ou par la VAE.',
+    duration: 'Initial : 7 semaines - 245 heures',
+    secondaryDuration: 'VAE : environ 1 mois',
+    visual: 'desp',
+  },
+];
+
 export default function Home(){
-  const securityHighlights=securityFormations.slice(0,5);
   const btsHighlights=bts.slice(0,6).map(x=>({title:x.title,short:x.desc,slug:x.slug,tags:x.tags}));
   return <>
     <Hero badge="Centre de formation agréé" title={<>Formez-vous aux métiers qui <Highlight>recrutent</Highlight> vraiment.</>} subtitle="Centre de formation professionnelle spécialisé dans la sécurité privée, la sécurité incendie, le VTC et les BTS en alternance." actions={<><Button href="/formations-securite">Voir les formations</Button><Button href="/contact" variant="secondary">Être rappelé</Button><Button href="/contact" variant="ghost">Demander des informations</Button></>} visual={<OrientationAssistant/>}/>
@@ -29,7 +68,7 @@ export default function Home(){
         <FormationCard title="3. BTS en alternance" desc="Des diplômes d’État en alternance, séparés des formations professionnelles courtes : MOS, MCO, NDRC, Commerce International, Immobilier et Comptabilité-Gestion." href="/bts" tags={['Alternance','Diplômes d’État']}/>
       </div><VisualTimeline tone="academy"/>
     </section></VisualSection>
-    <VisualSection tone="security"><section id="formations-securite" className="scroll-mt-28 page-container py-12"><SectionTitle eyebrow="1. Sécurité privée" title={<>Formations professionnelles aux <Highlight>métiers qui recrutent</Highlight></>}>Ces formations visent l’accès ou l’évolution dans les métiers de la sécurité privée, de la protection rapprochée, du management sécurité ou de la sécurité incendie.</SectionTitle><div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">{securityHighlights.map(f=><FormationCard key={f.slug} title={f.title} desc={f.short} href={f.slug} tags={['Sécurité privée',f.duration]}/>)}</div></section></VisualSection>
+    <VisualSection tone="security"><section id="formations-securite" className="scroll-mt-28 page-container py-14 md:py-16"><SectionTitle eyebrow="1. Sécurité privée" title={<>Formations professionnelles <span className="block"><Highlight>Métiers de la sécurité privée</Highlight></span></>}>Des parcours concrets et encadrés pour exercer dans la surveillance, la sécurité incendie, le secourisme, la protection rapprochée ou la direction d’entreprise.</SectionTitle><SecurityTrainingGrid items={securityHighlights}/></section></VisualSection>
     <VisualSection tone="vtc"><section className="page-container py-12"><SectionTitle eyebrow="2. Chauffeur VTC" title="Une formation dédiée au transport de personnes">Le parcours VTC est présenté à part : il ne relève ni des métiers de la sécurité privée, ni des BTS en alternance.</SectionTitle><div className="mx-auto max-w-3xl"><FormationCard title={vtcFormation.title} desc={vtcFormation.short} href={vtcFormation.slug} tags={[vtcFormation.duration,'VTC','CPF selon éligibilité']}/></div></section></VisualSection>
     <VisualSection tone="bts"><section id="bts" className="scroll-mt-28 page-container py-12"><SectionTitle eyebrow="3. BTS en alternance" title="Diplômes BTS : un parcours long en entreprise et en centre">Les BTS sont des diplômes d’État en alternance. Ils sont volontairement séparés des formations professionnelles métiers de la sécurité privée et du VTC.</SectionTitle><div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">{btsHighlights.map(f=><FormationCard key={f.slug} title={f.title} desc={f.short} href={f.slug} tags={f.tags}/>)}</div></section></VisualSection>
     <section className="page-container py-12"><SectionTitle eyebrow="Pourquoi nous choisir" title="Un organisme rassurant pour candidats, financeurs et entreprises"/><div className="grid gap-5 md:grid-cols-3"><FeatureCard title="Agréments et certifications">Qualiopi, CNAPS, ADEF, SSIAP, INRS SST, UAI et références réglementaires affichées pour faciliter les démarches.</FeatureCard><FeatureCard title="Accompagnement candidat">Aide au choix de formation, financement, devis, rappel et préparation à l’inscription.</FeatureCard><FeatureCard title="Approche professionnelle">Pages longues restructurées, informations utiles visibles, CTA clairs et parcours sans friction.</FeatureCard></div></section>
