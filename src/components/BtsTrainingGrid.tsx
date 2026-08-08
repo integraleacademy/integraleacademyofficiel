@@ -1,4 +1,8 @@
+"use client";
+
 import Link from 'next/link';
+import { useRef } from 'react';
+import { useTrainingCardAnimations } from './useTrainingCardAnimations';
 
 type BtsVisual = 'mos' | 'mco' | 'ndrc' | 'ci' | 'pi' | 'cg';
 
@@ -77,16 +81,21 @@ function BtsIcon({ type }: { type: BtsVisual }) {
 }
 
 export function BtsTrainingGrid({ items }: { items: BtsTrainingHighlight[] }) {
-  return <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+  const gridRef = useRef<HTMLDivElement>(null);
+  useTrainingCardAnimations(gridRef);
+
+  return <div ref={gridRef} className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
     {items.map((item, index) => {
       const style = visualStyles[item.visual];
 
-      return <article key={item.slug} className="group relative flex min-h-[22rem] flex-col overflow-hidden rounded-[1.8rem] border border-academy-line/90 bg-academy-surface p-6 shadow-soft transition duration-300 hover:-translate-y-1 hover:border-academy-gold/50 hover:shadow-card sm:p-7">
+      return <div key={item.slug} data-training-card>
+        <Link href={item.slug} aria-label={`Découvrir ${item.title}`} className="group relative flex h-full min-h-[22rem] cursor-pointer flex-col rounded-[1.8rem] outline-none transition duration-300 hover:-translate-y-2 focus-visible:-translate-y-1 focus-visible:ring-2 focus-visible:ring-academy-gold focus-visible:ring-offset-4 focus-visible:ring-offset-academy-bg motion-reduce:transform-none motion-reduce:transition-none">
+        <span data-training-tilt className="relative flex h-full min-h-[22rem] flex-col overflow-hidden rounded-[1.8rem] border border-academy-line/90 bg-academy-surface p-6 shadow-soft transition duration-300 group-hover:border-academy-gold/50 group-hover:shadow-card sm:p-7">
         <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${style.line}`} aria-hidden="true"/>
-        <div className={`absolute -right-16 -top-16 h-44 w-44 rounded-full opacity-70 blur-3xl transition duration-500 group-hover:scale-125 ${style.glow}`} aria-hidden="true"/>
+        <div className={`absolute -right-16 -top-16 h-44 w-44 rounded-full opacity-70 blur-3xl transition duration-500 group-hover:scale-125 motion-reduce:transform-none ${style.glow}`} aria-hidden="true"/>
 
         <div className="relative flex items-center justify-between gap-4">
-          <span className={`grid h-12 w-12 shrink-0 place-items-center rounded-2xl ring-1 ring-current/10 ${style.icon}`}><BtsIcon type={item.visual}/></span>
+          <span className={`grid h-12 w-12 shrink-0 place-items-center rounded-2xl ring-1 ring-current/10 transition duration-300 group-hover:-rotate-[5deg] group-hover:scale-[1.08] motion-reduce:transform-none ${style.icon}`}><BtsIcon type={item.visual}/></span>
           <span className="rounded-full border border-academy-line bg-academy-elevated/80 px-3 py-1.5 text-xs font-black text-academy-muted shadow-sm">Diplôme d’État</span>
         </div>
 
@@ -108,13 +117,10 @@ export function BtsTrainingGrid({ items }: { items: BtsTrainingHighlight[] }) {
           {item.tags.map(tag => <span key={tag} className={tag === 'Prochainement' ? 'rounded-full border border-academy-gold/40 bg-academy-gold/10 px-3 py-1.5 text-xs font-black text-academy-gold-strong' : 'rounded-full border border-academy-line bg-academy-elevated/70 px-3 py-1.5 text-xs font-bold text-academy-muted'}>{tag}</span>)}
         </div>
 
-        <div className="relative mt-auto pt-6">
-          <Link href={item.slug} className="inline-flex items-center gap-2 text-sm font-black text-academy-ink transition group-hover:text-academy-gold-strong">
-            Découvrir
-            <span className="grid h-8 w-8 place-items-center rounded-full bg-academy-ink text-white transition duration-300 group-hover:translate-x-1 group-hover:bg-academy-gold group-hover:text-academy-gold-text" aria-hidden="true">→</span>
-          </Link>
-        </div>
-      </article>;
+        <span className="relative mt-auto pt-6"><span className="inline-flex items-center gap-2 text-sm font-black text-academy-ink transition group-hover:text-academy-gold-strong">Découvrir<span className="grid h-8 w-8 place-items-center rounded-full bg-academy-ink text-white transition duration-300 group-hover:translate-x-1 group-hover:bg-academy-gold group-hover:text-academy-gold-text motion-reduce:transform-none" aria-hidden="true">→</span></span></span>
+        </span>
+        </Link>
+      </div>;
     })}
   </div>;
 }

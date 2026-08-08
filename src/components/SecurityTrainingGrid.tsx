@@ -1,9 +1,8 @@
 "use client";
 
 import Link from 'next/link';
-import { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useRef } from 'react';
+import { useTrainingCardAnimations } from './useTrainingCardAnimations';
 
 type TrainingVisual = 'aps' | 'ssiap' | 'sst' | 'a3p' | 'desp';
 export type SecurityTrainingHighlight = { slug:string; title:string; description:string; duration:string; secondaryDuration?:string; visual:TrainingVisual };
@@ -26,36 +25,12 @@ function TrainingIcon({type}:{type:TrainingVisual}) { const common='h-6 w-6';
 
 export function SecurityTrainingGrid({items}:{items:SecurityTrainingHighlight[]}) {
   const gridRef=useRef<HTMLDivElement>(null);
-  useEffect(()=>{
-    const grid=gridRef.current; if(!grid) return;
-    gsap.registerPlugin(ScrollTrigger);
-    const cleanups:Array<()=>void>=[];
-    const context=gsap.context(()=>{
-      const cards=gsap.utils.toArray('[data-security-training-card]',grid) as HTMLElement[];
-      const heading=grid.closest('section')?.querySelector<HTMLElement>('[data-security-training-heading]');
-      const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if(!reduce){
-        if(heading?.firstElementChild) gsap.from(heading.firstElementChild.children,{opacity:0,y:25,duration:.8,stagger:.14,ease:'power3.out',scrollTrigger:{trigger:heading,start:'top 85%',once:true}});
-        gsap.from(cards,{opacity:0,y:35,scale:.985,duration:.8,stagger:.1,ease:'power3.out',clearProps:'transform,opacity',scrollTrigger:{trigger:grid,start:'top 85%',once:true}});
-      }
-      if(!reduce&&window.matchMedia('(hover: hover) and (pointer: fine)').matches){
-        cards.forEach(card=>{
-          const tilt=card.querySelector<HTMLElement>('[data-security-training-tilt]'); if(!tilt) return;
-          gsap.set(tilt,{transformPerspective:1000,transformStyle:'preserve-3d'});
-          const move=(event:PointerEvent)=>{const box=card.getBoundingClientRect(); const x=(event.clientX-box.left)/box.width-.5; const y=(event.clientY-box.top)/box.height-.5; gsap.to(tilt,{rotateX:-y*8,rotateY:x*8,duration:.38,ease:'power2.out',overwrite:'auto'});};
-          const leave=()=>gsap.to(tilt,{rotateX:0,rotateY:0,duration:.75,ease:'elastic.out(1, 0.5)',overwrite:'auto'});
-          card.addEventListener('pointermove',move); card.addEventListener('pointerleave',leave);
-          cleanups.push(()=>{card.removeEventListener('pointermove',move);card.removeEventListener('pointerleave',leave);gsap.killTweensOf(tilt);});
-        });
-      }
-    },grid);
-    return ()=>{cleanups.forEach(cleanup=>cleanup());context.revert();};
-  },[]);
+  useTrainingCardAnimations(gridRef);
 
   return <div ref={gridRef} data-security-training-grid className="grid gap-5 md:grid-cols-2 lg:grid-cols-6">
-    {items.map((item,index)=>{const style=visualStyles[item.visual];const span=index<3?'lg:col-span-2':index===items.length-1?'md:col-span-2 lg:col-span-3':'lg:col-span-3';return <div key={item.slug} data-security-training-card className={span}>
+    {items.map((item,index)=>{const style=visualStyles[item.visual];const span=index<3?'lg:col-span-2':index===items.length-1?'md:col-span-2 lg:col-span-3':'lg:col-span-3';return <div key={item.slug} data-security-training-card data-training-card className={span}>
       <Link href={item.slug} aria-label={`Découvrir ${item.title}`} className="group relative flex min-h-[21rem] cursor-pointer flex-col rounded-[1.8rem] outline-none transition duration-300 hover:-translate-y-2 focus-visible:-translate-y-1 focus-visible:ring-2 focus-visible:ring-academy-gold focus-visible:ring-offset-4 focus-visible:ring-offset-academy-bg motion-reduce:transform-none motion-reduce:transition-none">
-        <span data-security-training-tilt className="relative flex h-full min-h-[21rem] flex-col overflow-hidden rounded-[1.8rem] border border-academy-line/90 bg-academy-surface p-6 shadow-soft transition duration-300 group-hover:border-academy-gold/50 group-hover:shadow-card sm:p-7">
+        <span data-security-training-tilt data-training-tilt className="relative flex h-full min-h-[21rem] flex-col overflow-hidden rounded-[1.8rem] border border-academy-line/90 bg-academy-surface p-6 shadow-soft transition duration-300 group-hover:border-academy-gold/50 group-hover:shadow-card sm:p-7">
           <span className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${style.line}`} aria-hidden="true"/><span className={`absolute -right-16 -top-16 h-44 w-44 rounded-full opacity-70 blur-3xl transition duration-500 group-hover:scale-125 motion-reduce:transform-none ${style.glow}`} aria-hidden="true"/>
           <span className="relative flex flex-wrap items-start justify-between gap-3"><span className={`grid h-12 w-12 shrink-0 place-items-center rounded-2xl ring-1 ring-current/10 transition duration-300 group-hover:-rotate-[5deg] group-hover:scale-[1.08] motion-reduce:transform-none ${style.icon}`}><TrainingIcon type={item.visual}/></span><span className="ml-auto flex max-w-full flex-wrap justify-end gap-2"><span className="rounded-full border border-academy-line bg-academy-elevated/80 px-3 py-1.5 text-right text-xs font-black text-academy-muted shadow-sm">{item.duration}</span>{item.secondaryDuration&&<span className="rounded-full border border-academy-gold/40 bg-academy-gold/10 px-3 py-1.5 text-right text-xs font-black text-academy-gold-strong shadow-sm">{item.secondaryDuration}</span>}</span></span>
           <span className="relative mt-6 flex items-center gap-3 text-[0.68rem] font-black uppercase tracking-[.18em] text-academy-muted"><span>{String(index+1).padStart(2,'0')}</span><span className="h-px w-7 bg-academy-line" aria-hidden="true"/><span>{style.label}</span></span>

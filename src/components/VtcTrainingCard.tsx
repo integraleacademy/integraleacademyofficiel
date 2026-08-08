@@ -1,4 +1,8 @@
+"use client";
+
 import Link from 'next/link';
+import { useRef } from 'react';
+import { useTrainingCardAnimations } from './useTrainingCardAnimations';
 
 type VtcTrainingCardProps = {
   title: string;
@@ -16,12 +20,17 @@ function CarIcon() {
 }
 
 export function VtcTrainingCard({ title, description, duration, href }: VtcTrainingCardProps) {
-  return <article className="group relative mx-auto flex min-h-[21rem] max-w-3xl flex-col overflow-hidden rounded-[1.8rem] border border-academy-line/90 bg-academy-surface p-6 shadow-soft transition duration-300 hover:-translate-y-1 hover:border-academy-gold/50 hover:shadow-card sm:p-7">
+  const containerRef = useRef<HTMLDivElement>(null);
+  useTrainingCardAnimations(containerRef);
+
+  return <div ref={containerRef} className="mx-auto max-w-3xl"><div data-training-card>
+    <Link href={href} aria-label={`Découvrir ${title}`} className="group relative flex h-full min-h-[21rem] cursor-pointer flex-col rounded-[1.8rem] outline-none transition duration-300 hover:-translate-y-2 focus-visible:-translate-y-1 focus-visible:ring-2 focus-visible:ring-academy-gold focus-visible:ring-offset-4 focus-visible:ring-offset-academy-bg motion-reduce:transform-none motion-reduce:transition-none">
+    <span data-training-tilt className="relative flex h-full min-h-[21rem] flex-col overflow-hidden rounded-[1.8rem] border border-academy-line/90 bg-academy-surface p-6 shadow-soft transition duration-300 group-hover:border-academy-gold/50 group-hover:shadow-card sm:p-7">
     <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-violet-400 via-fuchsia-400 to-purple-600" aria-hidden="true"/>
-    <div className="absolute -right-16 -top-16 h-44 w-44 rounded-full bg-violet-400/20 opacity-70 blur-3xl transition duration-500 group-hover:scale-125" aria-hidden="true"/>
+    <div className="absolute -right-16 -top-16 h-44 w-44 rounded-full bg-violet-400/20 opacity-70 blur-3xl transition duration-500 group-hover:scale-125 motion-reduce:transform-none" aria-hidden="true"/>
 
     <div className="relative flex flex-wrap items-start justify-between gap-3">
-      <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-violet-500/10 text-violet-700 ring-1 ring-current/10 dark:bg-violet-400/10 dark:text-violet-300"><CarIcon/></span>
+      <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-violet-500/10 transition duration-300 group-hover:-rotate-[5deg] group-hover:scale-[1.08] motion-reduce:transform-none text-violet-700 ring-1 ring-current/10 dark:bg-violet-400/10 dark:text-violet-300"><CarIcon/></span>
       <div className="ml-auto flex max-w-full flex-wrap justify-end gap-2">
         <span className="rounded-full border border-academy-line bg-academy-elevated/80 px-3 py-1.5 text-xs font-black text-academy-muted shadow-sm">{duration}</span>
         <span className="rounded-full border border-academy-line bg-academy-elevated/80 px-3 py-1.5 text-xs font-black text-academy-muted shadow-sm">CPF selon éligibilité</span>
@@ -41,11 +50,8 @@ export function VtcTrainingCard({ title, description, duration, href }: VtcTrain
       {['Théorie en e-learning', 'Pratique en présentiel', 'Frais d’examen inclus'].map(tag => <span key={tag} className="rounded-full border border-academy-line bg-academy-elevated/70 px-3 py-1.5 text-xs font-bold text-academy-muted">{tag}</span>)}
     </div>
 
-    <div className="relative mt-auto pt-6">
-      <Link href={href} className="inline-flex items-center gap-2 text-sm font-black text-academy-ink transition group-hover:text-academy-gold-strong">
-        Découvrir
-        <span className="grid h-8 w-8 place-items-center rounded-full bg-academy-ink text-white transition duration-300 group-hover:translate-x-1 group-hover:bg-academy-gold group-hover:text-academy-gold-text" aria-hidden="true">→</span>
-      </Link>
-    </div>
-  </article>;
+    <span className="relative mt-auto pt-6"><span className="inline-flex items-center gap-2 text-sm font-black text-academy-ink transition group-hover:text-academy-gold-strong">Découvrir<span className="grid h-8 w-8 place-items-center rounded-full bg-academy-ink text-white transition duration-300 group-hover:translate-x-1 group-hover:bg-academy-gold group-hover:text-academy-gold-text motion-reduce:transform-none" aria-hidden="true">→</span></span></span>
+    </span>
+    </Link>
+  </div></div>;
 }
