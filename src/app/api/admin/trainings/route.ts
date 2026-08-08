@@ -1,0 +1,4 @@
+import { NextRequest, NextResponse } from 'next/server';import { requireAdmin } from '@/lib/admin/guard';import { getPrisma } from '@/lib/db';import { listTrainings } from '@/lib/training-data';
+export const runtime='nodejs';
+export async function GET(){const denied=await requireAdmin(); if(denied)return denied; return NextResponse.json(await listTrainings())}
+export async function POST(r:NextRequest){const denied=await requireAdmin(); if(denied)return denied; const p=await getPrisma(); if(!p)return NextResponse.json({error:'DATABASE_URL/Prisma requis pour écrire.'},{status:503}); const d=await r.json(); return NextResponse.json(await p.training.create({data:{slug:d.slug,name:d.name,title:d.title,category:d.category,description:d.description||'',pageUrl:d.pageUrl,isActive:d.isActive!==false}}));}

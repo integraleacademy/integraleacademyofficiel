@@ -118,7 +118,7 @@ Date d'inventaire : 17 juin 2026. Site analysé : <https://www.integraleacademy.
 - **Prérequis** : section présente ; détail complet non récupéré au-delà du début de section, à vérifier manuellement avant refonte.
 - **Objectifs** : obtenir la carte professionnelle agent de surveillance humaine délivrée par le Ministère de l'intérieur/CNAPS ; exercer surveillance humaine, gardiennage, surveillance chantiers, sécurisation accès/rassemblements.
 - **Programme** : conforme au programme du Ministère de l'intérieur ; programme détaillé à préserver depuis document de présentation/téléchargement.
-- **Modalités d'évaluation** : non intégralement visibles dans l'extrait ; à compléter par page/document.
+- **Modalités d'évaluation** : non intégralement visibles dans l'extrait ; à renseigner par page/document.
 - **Financement** : CPF, France Travail, paiements en plusieurs fois (logique commune pages sécurité).
 - **CTA/liens** : appeler 04 22 47 07 68, demande de rappel, devis détaillé, dossier de présentation/télécharger.
 - **Textes réglementaires** : NDA, Qualiopi, ADEF n°8320032701, CNAPS n°FOR-083-2027-02-08-20200755135, RNCP 36648.
@@ -145,10 +145,10 @@ Date d'inventaire : 17 juin 2026. Site analysé : <https://www.integraleacademy.
 - **Durée** : 9 semaines, 327 heures.
 - **Tarif** : 4200 €.
 - **Lieu** : Puget-sur-Argens, France Côte d'Azur ; hébergement collectif sur place possible (nous contacter).
-- **Prérequis** : section présente ; détails non entièrement récupérés dans le rendu, à compléter manuellement.
+- **Prérequis** : section présente ; détails non entièrement récupérés dans le rendu, à renseigner manuellement.
 - **Objectifs** : obtenir carte professionnelle agent de protection rapprochée délivrée par CNAPS.
 - **Programme** : conforme au programme du Ministère de l'intérieur ; document de présentation à conserver.
-- **Modalités d'évaluation** : non intégralement visibles dans l'extrait ; à compléter depuis page/document.
+- **Modalités d'évaluation** : non intégralement visibles dans l'extrait ; à renseigner depuis page/document.
 - **Financement** : commun sécurité (CPF/France Travail/facilités) à confirmer sur page.
 - **CTA/liens** : appeler, demande de rappel, devis détaillé, dossier de présentation.
 - **Textes réglementaires** : ADEF n°8320111201, CNAPS, RNCP 38002.
@@ -179,7 +179,7 @@ Date d'inventaire : 17 juin 2026. Site analysé : <https://www.integraleacademy.
 - **Lieu** : présentiel Puget-sur-Argens.
 - **Prérequis** : carte professionnelle CNAPS valide ; 6 mois minimum d'expérience agent de sécurité privée.
 - **Objectifs** : devenir chef de poste, montée en compétences, suivi prestation, consignes, main courante, encadrement.
-- **Programme/modalités** : page à compléter manuellement au-delà des sections récupérées.
+- **Programme/modalités** : page à renseigner manuellement au-delà des sections récupérées.
 - **Financement** : CPF mentionné via lien Mon Compte Formation ; rappel/devis.
 - **CTA/liens** : appel, demande de rappel, devis, inscription CPF, dossier de présentation.
 - **Textes réglementaires** : ADEF n°8325091511, RS 7132, CNAPS.
@@ -198,7 +198,7 @@ Date d'inventaire : 17 juin 2026. Site analysé : <https://www.integraleacademy.
 - **Durée** : 105 heures.
 - **Tarif** : 1600 € tout inclus.
 - **Modalités** : théorie 100 % en ligne/e-learning 24/24 7/7 ; pratique en présentiel à Nice, Cannes, Toulon ou Fréjus ; livre officiel envoyé ; prêt véhicule double commande ; frais examen inclus 206 €.
-- **Prérequis** : non visibles dans l'extrait ; à compléter manuellement.
+- **Prérequis** : non visibles dans l'extrait ; à renseigner manuellement.
 - **Objectifs** : obtenir carte professionnelle Conducteur VTC.
 - **Programme** : théorique en ligne + pratique conduite professionnelle ; coaching examen.
 - **Modalités d'évaluation** : examen VTC, frais inclus ; détails complets à récupérer.

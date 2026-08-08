@@ -1,6 +1,6 @@
 # Contrôle contenu public
 
-| Page | Contenu repris depuis le site actuel | Contenu complet | Placeholders supprimés | Points à compléter |
+| Page | Contenu repris depuis le site actuel | Contenu complet | Textes provisoires supprimés | Points à renseigner |
 |---|---|---|---|---|
 | Accueil | oui | oui | oui | Aucun point bloquant |
 | Notre école | oui | oui | oui | Ajouter les photos définitives du campus si disponibles |

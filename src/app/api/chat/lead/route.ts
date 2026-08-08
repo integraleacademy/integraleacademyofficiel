@@ -1,0 +1,3 @@
+import { NextRequest, NextResponse } from 'next/server';import { getPrisma } from '@/lib/db';
+export const runtime='nodejs';
+export async function POST(r:NextRequest){const p=await getPrisma(); if(!p)return NextResponse.json({error:'Base de données indisponible.'},{status:503}); const d=await r.json(); const lead=await p.chatLead.create({data:{firstName:String(d.firstName||'').slice(0,80),lastName:String(d.lastName||'').slice(0,80),email:String(d.email||'').slice(0,120),phone:String(d.phone||'').slice(0,40),trainingInterest:String(d.trainingInterest||'').slice(0,120),message:String(d.message||'').slice(0,1000),source:'chat'}}); return NextResponse.json({ok:true,id:lead.id});}
