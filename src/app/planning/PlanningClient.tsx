@@ -7,6 +7,7 @@ import { computedSeats, formatSessionDate } from '@/lib/public-sessions';
 type Session = any;
 type CategoryKey = 'security' | 'fire' | 'vtc' | 'bts';
 type FilterKey = 'all' | CategoryKey;
+type FormationFilterKey = 'all' | 'aps' | 'a3p' | 'director' | 'ssiap' | 'vtc' | 'bts';
 type ViewMode = 'list' | 'calendar';
 
 type IconName =
@@ -61,6 +62,74 @@ const categorySections: {
     title: 'BTS en alternance',
     shortTitle: 'BTS',
     intro: 'Diplômes d’État préparés en alternance avec l’entreprise.',
+    slugs: [
+      'bts',
+      'bts-mos',
+      'bts-mco',
+      'bts-ndrc',
+      'bts-ci',
+      'commerce-international',
+      'bts-professions-immobilieres',
+      'bts-pi',
+      'comptabilite-gestion',
+    ],
+  },
+];
+
+const formationFilters: {
+  key: Exclude<FormationFilterKey, 'all'>;
+  label: string;
+  eyebrow: string;
+  description: string;
+  category: CategoryKey;
+  slugs: string[];
+}[] = [
+  {
+    key: 'aps',
+    label: 'APS',
+    eyebrow: 'Surveillance humaine',
+    description: 'Agent de prévention et de sécurité',
+    category: 'security',
+    slugs: ['aps'],
+  },
+  {
+    key: 'a3p',
+    label: 'A3P / APR',
+    eyebrow: 'Protection rapprochée',
+    description: 'Agent privé de protection de personnes',
+    category: 'security',
+    slugs: ['a3p', 'a3p-apr'],
+  },
+  {
+    key: 'director',
+    label: 'DIRIGEANT',
+    eyebrow: 'DESP / DSSP',
+    description: 'Diriger une entreprise de sécurité privée',
+    category: 'security',
+    slugs: ['desp', 'desp-dssp', 'desp-initial', 'desp-vae'],
+  },
+  {
+    key: 'ssiap',
+    label: 'SSIAP 1',
+    eyebrow: 'Sécurité incendie',
+    description: 'Agent de sécurité incendie',
+    category: 'fire',
+    slugs: ['ssiap-1', 'ssiap1'],
+  },
+  {
+    key: 'vtc',
+    label: 'VTC',
+    eyebrow: 'Transport de personnes',
+    description: 'Préparer le métier et l’examen VTC',
+    category: 'vtc',
+    slugs: ['vtc'],
+  },
+  {
+    key: 'bts',
+    label: 'BTS',
+    eyebrow: 'Alternance',
+    description: 'MOS, MCO, NDRC, CI et PI',
+    category: 'bts',
     slugs: [
       'bts',
       'bts-mos',
@@ -175,6 +244,14 @@ function sessionTitle(session: Session) {
   return session.training?.name || session.training?.title || session.title || 'Formation';
 }
 
+function formationFilterForSession(session: Session) {
+  return formationFilters.find((formation) => formation.slugs.includes(session.training?.slug));
+}
+
+function timelineTitle(session: Session) {
+  return formationFilterForSession(session)?.label || sessionTitle(session);
+}
+
 function monthKey(value?: string | Date) {
   if (!value) return '';
   const date = new Date(value);
@@ -188,6 +265,24 @@ function monthLabel(value?: string | Date) {
     timeZone: 'Europe/Paris',
     year: 'numeric',
   }).format(new Date(value));
+}
+
+function timelineMonthLabel(value: Date) {
+  const label = new Intl.DateTimeFormat('fr-FR', {
+    month: 'short',
+    timeZone: 'Europe/Paris',
+    year: 'numeric',
+  }).format(value).replace('.', '');
+  return label.toUpperCase();
+}
+
+function timelineDateLabel(value?: string | Date) {
+  if (!value) return '';
+  return new Intl.DateTimeFormat('fr-FR', {
+    day: '2-digit',
+    month: 'short',
+    timeZone: 'Europe/Paris',
+  }).format(new Date(value)).replace('.', '');
 }
 
 function shortDate(value?: string | Date) {
@@ -326,63 +421,126 @@ function SessionCard({
 function CalendarView({
   sessions,
   onRegister,
+  onListView,
 }: {
   sessions: Session[];
   onRegister: (session: Session) => void;
+  onListView: () => void;
 }) {
-  const groups = useMemo(() => {
-    const result = new Map<string, Session[]>();
-    sessions.forEach((session) => {
-      const key = monthKey(session.startDate);
-      result.set(key, [...(result.get(key) || []), session]);
-    });
-    return Array.from(result.entries()).sort(([a], [b]) => a.localeCompare(b));
+  const timeline = useMemo(() => {
+    const firstSessionDate = new Date(Math.min(...sessions.map((session) => +new Date(session.startDate))));
+    const finalSessionDate = new Date(Math.max(...sessions.map((session) => +new Date(session.examDate || session.endDate || session.startDate))));
+    const start = new Date(Date.UTC(firstSessionDate.getUTCFullYear(), firstSessionDate.getUTCMonth(), 1));
+    const end = new Date(Date.UTC(finalSessionDate.getUTCFullYear(), finalSessionDate.getUTCMonth() + 1, 1));
+    const total = Math.max(+end - +start, 1);
+    const months: { key: string; label: string; left: number; width: number }[] = [];
+
+    for (let cursor = new Date(start); cursor < end; cursor = new Date(Date.UTC(cursor.getUTCFullYear(), cursor.getUTCMonth() + 1, 1))) {
+      const next = new Date(Date.UTC(cursor.getUTCFullYear(), cursor.getUTCMonth() + 1, 1));
+      months.push({
+        key: monthKey(cursor),
+        label: timelineMonthLabel(cursor),
+        left: ((+cursor - +start) / total) * 100,
+        width: ((+next - +cursor) / total) * 100,
+      });
+    }
+
+    return { start, end, total, months };
   }, [sessions]);
 
-  return (
-    <div className="overflow-hidden rounded-[2rem] border border-academy-line/70 bg-white/65 p-4 shadow-soft dark:border-white/10 dark:bg-white/5 sm:p-6">
-      <div className="flex gap-4 overflow-x-auto pb-3">
-        {groups.map(([key, rows]) => (
-          <section key={key} className="min-w-[18rem] flex-1 rounded-[1.5rem] border border-academy-line/70 bg-academy-bg/70 p-4 dark:border-white/10 dark:bg-black/15 sm:min-w-[21rem]">
-            <div className="flex items-center justify-between border-b border-academy-line/60 pb-4 dark:border-white/10">
-              <div>
-                <p className="text-[10px] font-black uppercase tracking-[.18em] text-academy-gold-strong">Rentrées</p>
-                <h3 className="mt-1 text-xl font-black capitalize text-academy-ink dark:text-white">
-                  {monthLabel(rows[0]?.startDate)}
-                </h3>
-              </div>
-              <span className="grid h-10 w-10 place-items-center rounded-full bg-[#101a29] text-sm font-black text-academy-gold">
-                {rows.length}
-              </span>
-            </div>
+  function sessionPosition(session: Session) {
+    const start = Math.max(+new Date(session.startDate), +timeline.start);
+    const finish = Math.min(+new Date(session.examDate || session.endDate || session.startDate), +timeline.end);
+    const rawLeft = ((start - +timeline.start) / timeline.total) * 100;
+    const rawWidth = ((Math.max(finish, start) - start) / timeline.total) * 100;
+    const width = Math.min(100, Math.max(10, rawWidth));
+    return { left: Math.min(rawLeft, 100 - width), width };
+  }
 
-            <div className="mt-4 space-y-3">
-              {rows.map((session) => {
-                const date = shortDate(session.startDate);
-                return (
-                  <button
-                    key={session.id}
-                    type="button"
-                    onClick={() => onRegister(session)}
-                    className="group flex w-full items-center gap-3 rounded-2xl border border-academy-line/70 bg-white p-3 text-left transition hover:-translate-y-0.5 hover:border-academy-gold dark:border-white/10 dark:bg-white/5"
-                  >
-                    <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-[#101a29] text-center">
-                      <span>
-                        <span className="block text-lg font-black leading-none text-white">{date.day}</span>
-                        <span className="mt-1 block text-[8px] font-black text-academy-gold">{date.month}</span>
-                      </span>
-                    </span>
-                    <span className="min-w-0 flex-1">
-                      <span className="block truncate font-black text-academy-ink dark:text-white">{sessionTitle(session)}</span>
-                      <span className="mt-1 block truncate text-xs font-semibold text-academy-muted">{session.location || 'Lieu communiqué prochainement'}</span>
-                    </span>
-                    <Icon name="arrow" className="h-4 w-4 shrink-0 text-academy-gold-strong transition group-hover:translate-x-1" />
-                  </button>
-                );
-              })}
+  return (
+    <div className="relative overflow-hidden rounded-[2.4rem] bg-[#101a29] px-4 py-8 text-white shadow-[0_30px_90px_rgba(16,26,41,.24)] sm:px-7 sm:py-10 lg:px-10 lg:py-12">
+      <div className="absolute -right-40 -top-48 h-[32rem] w-[32rem] rounded-full bg-academy-gold/[.08]" />
+
+      <div className="relative flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+        <div>
+          <span className="inline-flex rounded-full border border-academy-gold/45 bg-academy-gold/10 px-4 py-2 text-[10px] font-black uppercase tracking-[.16em] text-academy-gold">
+            Vue calendrier
+          </span>
+          <h3 className="mt-5 max-w-4xl text-3xl font-black tracking-tight sm:text-4xl lg:text-5xl">
+            Visualisez les parcours dans le temps.
+          </h3>
+          <p className="mt-4 max-w-3xl text-sm font-semibold leading-6 text-white/62 sm:text-base">
+            Comparez les sessions, anticipez les examens et identifiez rapidement la meilleure rentrée.
+          </p>
+        </div>
+
+        <div className="flex w-fit rounded-full bg-black/35 p-1.5">
+          <button type="button" onClick={onListView} className="rounded-full bg-[#f7f3eb] px-5 py-3 text-xs font-black text-[#171712] transition hover:-translate-y-0.5 sm:px-7">
+            Vue liste
+          </button>
+          <button type="button" aria-pressed="true" className="rounded-full px-5 py-3 text-xs font-black text-white sm:px-7">
+            Vue calendrier
+          </button>
+        </div>
+      </div>
+
+      <p className="relative mt-5 text-[10px] font-black uppercase tracking-[.14em] text-white/45 sm:hidden">
+        Faites glisser le calendrier horizontalement
+      </p>
+
+      <div className="relative mt-7 overflow-x-auto rounded-[1.7rem] bg-[#f8f4ec] text-[#171712] shadow-[inset_0_0_0_1px_rgba(255,255,255,.2)]">
+        <div className="min-w-[68rem] p-5 sm:p-7">
+          <div className="grid grid-cols-[15rem_minmax(48rem,1fr)] border-b border-[#d9cfbd]">
+            <div className="px-2 pb-5 text-[11px] font-black uppercase tracking-[.12em] text-[#6d685f]">Formation</div>
+            <div className="relative min-h-10">
+              {timeline.months.map((item) => (
+                <div key={item.key} className="absolute inset-y-0 border-l border-[#dfd5c4] px-3 text-center text-[11px] font-black uppercase tracking-[.08em] text-[#6d685f]" style={{ left: item.left + '%', width: item.width + '%' }}>
+                  {item.label}
+                </div>
+              ))}
             </div>
-          </section>
-        ))}
+          </div>
+
+          <div>
+            {sessions.map((session, index) => {
+              const position = sessionPosition(session);
+              const formation = formationFilterForSession(session);
+              const hasExam = Boolean(session.examDate);
+
+              return (
+                <div key={session.id} className="grid min-h-24 grid-cols-[15rem_minmax(48rem,1fr)] border-b border-[#e6dece] last:border-b-0">
+                  <div className="flex flex-col justify-center px-2 py-4">
+                    <p className="text-lg font-black tracking-tight">{timelineTitle(session)}</p>
+                    <p className="mt-1 text-[11px] font-semibold text-[#6d685f]">{formation?.eyebrow || session.training?.shortDescription || 'Formation professionnelle'}</p>
+                  </div>
+
+                  <div className="relative min-h-24 overflow-hidden">
+                    {timeline.months.map((item) => (
+                      <span key={item.key} aria-hidden="true" className="pointer-events-none absolute inset-y-0 border-l border-[#dfd5c4]" style={{ left: item.left + '%' }} />
+                    ))}
+
+                    <button
+                      type="button"
+                      onClick={() => onRegister(session)}
+                      title={hasExam ? 'Examen le ' + formatSessionDate(session.examDate) : 'Voir la session'}
+                      className={'group absolute top-1/2 flex h-12 -translate-y-1/2 items-center justify-between gap-3 rounded-full px-4 text-left text-xs font-black text-[#111923] shadow-[0_10px_25px_rgba(106,75,9,.14)] transition hover:-translate-y-[54%] hover:shadow-[0_14px_32px_rgba(106,75,9,.22)] ' + (index % 2 === 0 ? 'bg-[#efb82f]' : 'bg-[#d39a17]')}
+                      style={{ left: position.left + '%', width: position.width + '%' }}
+                    >
+                      <span className="truncate">{timelineDateLabel(session.startDate)} → {timelineDateLabel(session.endDate)}</span>
+                      <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-[#111923] text-[9px] font-black text-white transition group-hover:scale-110">
+                        {hasExam ? 'E' : '›'}
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          <p className="ml-[15rem] mt-1 px-2 pt-4 text-[10px] font-black uppercase tracking-[.08em] text-[#6d685f]">
+            E = examen · cliquez sur un parcours pour voir la session
+          </p>
+        </div>
       </div>
     </div>
   );
@@ -556,12 +714,16 @@ function RegistrationModal({
 function MissingDates({
   sessions,
   active,
+  activeFormation,
 }: {
   sessions: Session[];
   active: FilterKey;
+  activeFormation: FormationFilterKey;
 }) {
+  const selectedFormation = activeFormation === 'all' ? null : formationFilters.find((formation) => formation.key === activeFormation);
   const missing = alertOptions.filter((option) => {
     if (active !== 'all' && option.category !== active) return false;
+    if (selectedFormation && !option.slugs.some((slug) => selectedFormation.slugs.includes(slug))) return false;
     return !sessions.some((session) => option.slugs.includes(session.training?.slug));
   });
 
@@ -631,10 +793,11 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
   );
   const nextSession = sortedSessions[0] || null;
   const [active, setActive] = useState<FilterKey>('all');
+  const [activeFormation, setActiveFormation] = useState<FormationFilterKey>('all');
   const [query, setQuery] = useState('');
   const [location, setLocation] = useState('all');
   const [month, setMonth] = useState('all');
-  const [view, setView] = useState<ViewMode>('list');
+  const [view, setView] = useState<ViewMode>('calendar');
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [showAll, setShowAll] = useState(false);
   const [selectedSession, setSelectedSession] = useState<Session | null>(null);
@@ -652,11 +815,18 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
     () => new Set(sortedSessions.map((session) => session.training?.slug || sessionTitle(session))).size,
     [sortedSessions],
   );
+  const formationSessionCounts = useMemo(
+    () => Object.fromEntries(formationFilters.map((formation) => [formation.key, sortedSessions.filter((session) => formation.slugs.includes(session.training?.slug)).length])) as Record<Exclude<FormationFilterKey, 'all'>, number>,
+    [sortedSessions],
+  );
+  const selectedFormationDetails = activeFormation === 'all' ? null : formationFilters.find((formation) => formation.key === activeFormation) || null;
 
   const filteredSessions = useMemo(() => {
     const normalizedQuery = query.trim().toLocaleLowerCase('fr');
+    const selectedFormation = activeFormation === 'all' ? null : formationFilters.find((formation) => formation.key === activeFormation);
     return sortedSessions.filter((session) => {
       if (active !== 'all' && sessionCategory(session) !== active) return false;
+      if (selectedFormation && !selectedFormation.slugs.includes(session.training?.slug)) return false;
       if (location !== 'all' && session.location !== location) return false;
       if (month !== 'all' && monthKey(session.startDate) !== month) return false;
       if (!normalizedQuery) return true;
@@ -668,149 +838,166 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
       ].filter(Boolean).join(' ').toLocaleLowerCase('fr');
       return haystack.includes(normalizedQuery);
     });
-  }, [active, location, month, query, sortedSessions]);
+  }, [active, activeFormation, location, month, query, sortedSessions]);
 
   const visibleSessions = showAll ? filteredSessions : filteredSessions.slice(0, 6);
 
   function resetFilters() {
     setActive('all');
+    setActiveFormation('all');
     setQuery('');
     setLocation('all');
     setMonth('all');
     setShowAll(false);
   }
 
+  function scrollToSessions() {
+    window.requestAnimationFrame(() => document.getElementById('sessions')?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+  }
+
+  function chooseFormation(formation: FormationFilterKey) {
+    setActiveFormation(formation);
+    setActive('all');
+    setQuery('');
+    setLocation('all');
+    setMonth('all');
+    setShowAll(false);
+    setView('list');
+    scrollToSessions();
+  }
+
+  function showCalendar() {
+    setView('calendar');
+    scrollToSessions();
+  }
+
   return (
     <main className="overflow-hidden pb-24">
-      <section className="relative isolate overflow-hidden bg-[#101a29] px-4 py-14 text-white sm:py-20 lg:py-24">
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_5%_10%,rgba(234,183,53,.22),transparent_32%),radial-gradient(circle_at_92%_85%,rgba(234,183,53,.12),transparent_27%),linear-gradient(135deg,#101a29_0%,#111c2d_55%,#172235_100%)]" />
-        <div className="absolute -left-32 top-8 -z-10 h-96 w-96 rounded-full border border-academy-gold/15 bg-academy-gold/5" />
-        <div className="absolute -right-28 bottom-[-10rem] -z-10 h-[30rem] w-[30rem] rounded-full border border-academy-gold/15 bg-academy-gold/5" />
+      <section className="relative isolate overflow-hidden border-b border-academy-line/70 bg-[#f7f1e7] px-4 py-14 text-[#141820] sm:py-16 lg:py-20">
+        <div className="absolute -right-40 -top-48 -z-10 h-[34rem] w-[34rem] rounded-full bg-academy-gold/20" />
+        <div className="absolute -bottom-48 left-[38%] -z-10 h-[28rem] w-[28rem] rounded-full border border-academy-gold/20" />
 
-        <div className="page-container grid gap-10 lg:grid-cols-[1.08fr_.92fr] lg:items-center">
+        <div className="page-container grid gap-9 lg:grid-cols-[1.2fr_.8fr] lg:items-center">
           <div className="reveal">
-            <span className="inline-flex items-center gap-2 rounded-full border border-academy-gold/35 bg-academy-gold/10 px-4 py-2 text-[11px] font-black uppercase tracking-[.2em] text-academy-gold">
+            <span className="inline-flex items-center gap-2 rounded-full border border-[#d9b548] bg-white/60 px-4 py-2 text-[10px] font-black uppercase tracking-[.2em] text-[#8f6810]">
               <Icon name="calendar" className="h-4 w-4" />
               Planning des formations
             </span>
-            <h1 className="mt-6 max-w-4xl text-4xl font-black tracking-tight sm:text-5xl lg:text-[4.2rem] lg:leading-[1.04]">
-              Choisissez votre prochaine <span className="text-academy-gold">session de formation.</span>
+            <h1 className="mt-6 max-w-5xl text-4xl font-black tracking-[-.045em] sm:text-5xl lg:text-[4.35rem] lg:leading-[1.02]">
+              Trouvez votre formation.<br />
+              <span className="text-[#b9820a]">Choisissez votre date.</span>
             </h1>
-            <p className="mt-6 max-w-2xl text-base font-semibold leading-8 text-white/72 sm:text-lg">
-              Dates, places restantes, centres et financement : retrouvez toutes les informations utiles pour vous inscrire sereinement.
+            <p className="mt-6 max-w-2xl text-base font-semibold leading-8 text-[#5f625f] sm:text-lg">
+              APS, A3P / APR, Dirigeant, SSIAP 1, VTC ou BTS : accédez directement au bon parcours, comparez les rentrées et vérifiez les places disponibles.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <a href="#sessions" className="inline-flex items-center justify-center gap-2 rounded-full bg-academy-gold px-6 py-4 text-sm font-black text-academy-gold-text transition hover:-translate-y-0.5">
-                Voir toutes les sessions
-                <Icon name="arrow" className="h-4 w-4" />
+              <a href="#choisir-formation" className="inline-flex items-center justify-center gap-2 rounded-full bg-[#111b2a] px-6 py-4 text-sm font-black text-white transition hover:-translate-y-0.5">
+                Choisir ma formation
+                <Icon name="arrow" className="h-4 w-4 text-academy-gold" />
               </a>
-              <Link href="/contact?motif=alerte-planning" className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 bg-white/5 px-6 py-4 text-sm font-black text-white backdrop-blur transition hover:-translate-y-0.5 hover:bg-white/10">
-                Créer une alerte
-                <Icon name="sparkles" className="h-4 w-4 text-academy-gold" />
-              </Link>
+              <button type="button" onClick={showCalendar} className="inline-flex items-center justify-center gap-2 rounded-full border border-[#cfc3ae] bg-white/70 px-6 py-4 text-sm font-black text-[#141820] transition hover:-translate-y-0.5 hover:border-academy-gold">
+                Voir le calendrier
+                <Icon name="calendar" className="h-4 w-4 text-[#b9820a]" />
+              </button>
             </div>
           </div>
 
-          {nextSession ? (
-            <div className="reveal rounded-[2rem] border border-white/15 bg-white/[.055] p-5 shadow-[0_35px_110px_rgba(0,0,0,.28)] backdrop-blur-xl sm:p-7">
-              <div className="flex items-center justify-between gap-4">
-                <span className="rounded-full border border-academy-gold/40 bg-academy-gold/10 px-4 py-2 text-[10px] font-black uppercase tracking-[.18em] text-academy-gold">Prochaine rentrée</span>
-                {seatText(nextSession) ? <span className="rounded-full border border-emerald-400/25 bg-emerald-400/10 px-3 py-1.5 text-[10px] font-black text-emerald-300">{seatText(nextSession)}</span> : null}
+          <div className="reveal relative overflow-hidden rounded-[2rem] bg-[#111b2a] p-6 text-white shadow-[0_30px_90px_rgba(17,27,42,.18)] sm:p-8">
+            <div className="absolute -right-24 -top-28 h-64 w-64 rounded-full bg-academy-gold/12" />
+            <div className="relative">
+              <p className="text-[10px] font-black uppercase tracking-[.2em] text-academy-gold">Votre planning, simplement</p>
+              <h2 className="mt-4 text-2xl font-black tracking-tight sm:text-3xl">Du projet à l’inscription en trois étapes.</h2>
+              <div className="mt-7 divide-y divide-white/10 border-y border-white/10">
+                {[
+                  ['01', 'Choisissez la formation', 'Accès direct à chaque parcours.'],
+                  ['02', 'Comparez les dates', 'Liste détaillée ou frise calendrier.'],
+                  ['03', 'Demandez votre inscription', 'Sans quitter la page.'],
+                ].map(([number, label, description]) => (
+                  <div key={number} className="grid grid-cols-[2.7rem_1fr] gap-4 py-4">
+                    <span className="grid h-9 w-9 place-items-center rounded-full bg-academy-gold text-[10px] font-black text-academy-gold-text">{number}</span>
+                    <span>
+                      <span className="block text-sm font-black">{label}</span>
+                      <span className="mt-1 block text-xs font-semibold text-white/50">{description}</span>
+                    </span>
+                  </div>
+                ))}
               </div>
-
-              <div className="mt-6 flex flex-col gap-5 sm:flex-row sm:items-center">
-                <div className="grid h-24 w-24 shrink-0 place-items-center rounded-[1.5rem] bg-academy-gold text-center text-academy-gold-text">
-                  <span>
-                    <span className="block text-4xl font-black leading-none">{shortDate(nextSession.startDate).day}</span>
-                    <span className="mt-2 block text-[10px] font-black uppercase tracking-[.12em]">{shortDate(nextSession.startDate).month} {new Date(nextSession.startDate).getUTCFullYear()}</span>
-                  </span>
-                </div>
-                <div className="min-w-0">
-                  <h2 className="text-2xl font-black tracking-tight sm:text-3xl">{sessionTitle(nextSession)}</h2>
-                  <p className="mt-2 text-sm font-semibold leading-6 text-white/60">{nextSession.training?.shortDescription || 'Formation professionnelle certifiante'}</p>
-                </div>
-              </div>
-
-              <div className="mt-6 grid gap-3 border-y border-white/10 py-5 sm:grid-cols-2">
-                <div className="flex gap-3">
-                  <Icon name="calendar" className="mt-0.5 h-5 w-5 shrink-0 text-academy-gold" />
-                  <span>
-                    <span className="block text-[9px] font-black uppercase tracking-[.14em] text-white/45">Période</span>
-                    <span className="mt-1 block text-sm font-black">{formatSessionDate(nextSession.startDate)} → {formatSessionDate(nextSession.endDate)}</span>
-                  </span>
-                </div>
-                <div className="flex gap-3">
-                  <Icon name="location" className="mt-0.5 h-5 w-5 shrink-0 text-academy-gold" />
-                  <span>
-                    <span className="block text-[9px] font-black uppercase tracking-[.14em] text-white/45">Centre</span>
-                    <span className="mt-1 block text-sm font-black">{nextSession.location || 'Communiqué prochainement'}</span>
-                  </span>
-                </div>
-              </div>
-
-              <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                <p className="text-xl font-black">{displayPrice(nextSession)}</p>
-                <button type="button" onClick={() => setSelectedSession(nextSession)} className="inline-flex items-center justify-center gap-2 rounded-full bg-academy-gold px-5 py-3.5 text-sm font-black text-academy-gold-text transition hover:-translate-y-0.5">
-                  Voir la session
-                  <Icon name="arrow" className="h-4 w-4" />
-                </button>
-              </div>
+              <p className="mt-5 flex items-center gap-2 text-xs font-bold text-white/55">
+                <span className="h-2 w-2 rounded-full bg-emerald-400" />
+                Dates et places mises à jour depuis l’administration
+              </p>
             </div>
-          ) : (
-            <div className="rounded-[2rem] border border-white/15 bg-white/[.055] p-8 text-center backdrop-blur-xl">
-              <Icon name="calendar" className="mx-auto h-10 w-10 text-academy-gold" />
-              <h2 className="mt-4 text-2xl font-black">De nouvelles dates arrivent bientôt.</h2>
-              <Link href="/contact?motif=alerte-planning" className="mt-6 inline-flex rounded-full bg-academy-gold px-5 py-3 text-sm font-black text-academy-gold-text">Créer une alerte</Link>
-            </div>
-          )}
+          </div>
         </div>
 
-        <div className="page-container mt-12 grid grid-cols-2 gap-4 border-t border-white/10 pt-7 lg:grid-cols-4">
+        <div className="page-container mt-10 grid grid-cols-2 gap-4 border-t border-[#d9cfbd] pt-6 lg:grid-cols-4">
           {[
             [String(sortedSessions.length), 'sessions ouvertes'],
-            [String(formationCount), 'formations disponibles'],
-            [String(locations.length), locations.length > 1 ? 'centres actuellement' : 'centre actuellement'],
-            ['100 %', 'données administrables'],
+            [String(formationCount), 'formations avec dates'],
+            [String(locations.length), locations.length > 1 ? 'centres disponibles' : 'centre disponible'],
+            ['Temps réel', 'places et calendrier'],
           ].map(([value, label]) => (
             <div key={label}>
-              <p className="text-2xl font-black text-white sm:text-3xl">{value}</p>
-              <p className="mt-1 text-[9px] font-black uppercase tracking-[.15em] text-academy-gold">{label}</p>
+              <p className="text-xl font-black text-[#141820] sm:text-2xl">{value}</p>
+              <p className="mt-1 text-[9px] font-black uppercase tracking-[.14em] text-[#8f6810]">{label}</p>
             </div>
           ))}
         </div>
       </section>
 
-      <section className="border-b border-academy-line/70 bg-academy-soft/45 py-10">
-        <div className="page-container">
-          <p className="text-[10px] font-black uppercase tracking-[.2em] text-academy-gold-strong">En un coup d’œil</p>
-          <h2 className="mt-3 text-2xl font-black tracking-tight text-academy-ink dark:text-white sm:text-3xl">Un planning clair pour décider plus vite.</h2>
-          <div className="mt-6 grid gap-3 md:grid-cols-3">
-            {[
-              ['01', 'Cherchez', 'Par formation, catégorie ou mot-clé.'],
-              ['02', 'Filtrez', 'Lieu, mois, disponibilité et parcours.'],
-              ['03', 'Inscrivez-vous', 'Un parcours guidé sans quitter la page.'],
-            ].map(([number, label, description]) => (
-              <div key={number} className="flex items-start gap-4 rounded-[1.35rem] border border-academy-line/70 bg-academy-surface p-5">
-                <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-academy-gold text-[10px] font-black text-academy-gold-text">{number}</span>
-                <span>
-                  <span className="block text-base font-black text-academy-ink dark:text-white">{label}</span>
-                  <span className="mt-1 block text-sm font-semibold leading-6 text-academy-muted">{description}</span>
-                </span>
-              </div>
-            ))}
+      <section id="choisir-formation" className="relative overflow-hidden bg-[#101a29] py-14 text-white sm:py-16">
+        <div className="absolute -left-40 -top-40 h-80 w-80 rounded-full bg-academy-gold/[.07]" />
+        <div className="page-container relative">
+          <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+              <p className="text-[10px] font-black uppercase tracking-[.2em] text-academy-gold">Accès direct</p>
+              <h2 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl">Quelle formation recherchez-vous ?</h2>
+              <p className="mt-3 max-w-3xl text-sm font-semibold leading-6 text-white/58 sm:text-base">Cliquez sur votre parcours pour afficher immédiatement les dates correspondantes.</p>
+            </div>
+            <button type="button" onClick={() => chooseFormation('all')} className={'w-fit rounded-full px-5 py-3 text-xs font-black transition ' + (activeFormation === 'all' ? 'bg-academy-gold text-academy-gold-text' : 'border border-white/15 bg-white/5 text-white hover:bg-white/10')}>
+              Toutes les formations
+            </button>
+          </div>
+
+          <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+            {formationFilters.map((formation, index) => {
+              const count = formationSessionCounts[formation.key];
+              const selected = activeFormation === formation.key;
+              return (
+                <button
+                  key={formation.key}
+                  type="button"
+                  aria-pressed={selected}
+                  onClick={() => chooseFormation(formation.key)}
+                  className={'group flex min-h-[13.5rem] flex-col rounded-[1.45rem] border p-5 text-left transition duration-300 hover:-translate-y-1 ' + (selected ? 'border-academy-gold bg-academy-gold text-academy-gold-text shadow-[0_20px_60px_rgba(234,183,53,.18)]' : 'border-white/10 bg-white/[.055] hover:border-academy-gold/55 hover:bg-white/[.08]')}
+                >
+                  <span className={'text-[10px] font-black uppercase tracking-[.14em] ' + (selected ? 'text-academy-gold-text/65' : 'text-academy-gold')}>0{index + 1} · {formation.eyebrow}</span>
+                  <span className="mt-5 block text-xl font-black tracking-tight">{formation.label}</span>
+                  <span className={'mt-2 block text-xs font-semibold leading-5 ' + (selected ? 'text-academy-gold-text/70' : 'text-white/48')}>{formation.description}</span>
+                  <span className={'mt-auto flex items-center justify-between border-t pt-4 text-[10px] font-black uppercase tracking-[.08em] ' + (selected ? 'border-black/10' : 'border-white/10')}>
+                    {count ? count + (count > 1 ? ' sessions' : ' session') : 'Créer une alerte'}
+                    <span className={'grid h-7 w-7 place-items-center rounded-full transition group-hover:translate-x-1 ' + (selected ? 'bg-[#111b2a] text-white' : 'bg-academy-gold text-academy-gold-text')}>
+                      <Icon name="arrow" className="h-3.5 w-3.5" />
+                    </span>
+                  </span>
+                </button>
+              );
+            })}
           </div>
         </div>
       </section>
 
       <section id="sessions" className="page-container py-14 sm:py-20">
         <div className="max-w-4xl">
-          <p className="text-[11px] font-black uppercase tracking-[.22em] text-academy-gold-strong">Toutes les sessions</p>
-          <h2 className="mt-4 text-3xl font-black tracking-tight text-academy-ink dark:text-white sm:text-5xl">Trouvez la date qui correspond à votre projet.</h2>
+          <p className="text-[11px] font-black uppercase tracking-[.22em] text-academy-gold-strong">{selectedFormationDetails ? 'Formation sélectionnée' : 'Toutes les sessions'}</p>
+          <h2 className="mt-4 text-3xl font-black tracking-tight text-academy-ink dark:text-white sm:text-5xl">
+            {selectedFormationDetails ? <>Les prochaines dates <span className="text-academy-gold-strong">{selectedFormationDetails.label}</span>.</> : 'Trouvez la date qui correspond à votre projet.'}
+          </h2>
           <p className="mt-4 max-w-3xl text-base font-semibold leading-7 text-academy-muted sm:text-lg">Les résultats, les places restantes et les tarifs sont mis à jour depuis l’administration du site.</p>
         </div>
 
         <div className="sticky top-[4.4rem] z-30 mt-8 rounded-[1.6rem] border border-academy-line/70 bg-academy-surface/95 p-3 shadow-[0_16px_50px_rgba(54,40,20,.10)] backdrop-blur-xl">
-          <div className="grid gap-3 xl:grid-cols-[minmax(16rem,1fr)_auto] xl:items-center">
+          <div className="grid gap-3 xl:grid-cols-[minmax(15rem,.8fr)_minmax(0,1.2fr)] xl:items-center">
             <label className="relative block">
               <span className="sr-only">Rechercher une formation</span>
               <Icon name="search" className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-academy-muted" />
@@ -826,18 +1013,30 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
             </label>
 
             <div className="flex items-center gap-2 overflow-x-auto pb-1 xl:pb-0">
-              {filters.map((filter) => (
+              <button
+                type="button"
+                aria-pressed={activeFormation === 'all'}
+                onClick={() => {
+                  setActiveFormation('all');
+                  setShowAll(false);
+                }}
+                className={'shrink-0 rounded-full px-3.5 py-3 text-xs font-black transition ' + (activeFormation === 'all' ? 'bg-[#101a29] text-white shadow-soft' : 'border border-academy-line bg-white text-academy-muted hover:border-academy-gold hover:text-academy-ink dark:bg-white/5')}
+              >
+                Toutes
+              </button>
+              {formationFilters.map((formation) => (
                 <button
-                  key={filter.key}
+                  key={formation.key}
                   type="button"
-                  aria-pressed={active === filter.key}
+                  aria-pressed={activeFormation === formation.key}
                   onClick={() => {
-                    setActive(filter.key);
+                    setActiveFormation(formation.key);
+                    setActive('all');
                     setShowAll(false);
                   }}
-                  className={'shrink-0 rounded-full px-4 py-3 text-xs font-black transition ' + (active === filter.key ? 'bg-[#101a29] text-white shadow-soft' : 'border border-academy-line bg-white text-academy-muted hover:border-academy-gold hover:text-academy-ink dark:bg-white/5')}
+                  className={'shrink-0 rounded-full px-3.5 py-3 text-xs font-black transition ' + (activeFormation === formation.key ? 'bg-[#101a29] text-white shadow-soft' : 'border border-academy-line bg-white text-academy-muted hover:border-academy-gold hover:text-academy-ink dark:bg-white/5')}
                 >
-                  {filter.label}
+                  {formation.label}
                 </button>
               ))}
               <button type="button" onClick={() => setFiltersOpen((value) => !value)} className="inline-flex shrink-0 items-center gap-2 rounded-full border border-academy-line bg-academy-gold px-4 py-3 text-xs font-black text-academy-gold-text xl:hidden">
@@ -847,7 +1046,13 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
             </div>
           </div>
 
-          <div className={(filtersOpen ? 'grid' : 'hidden') + ' mt-3 gap-3 border-t border-academy-line/60 pt-3 sm:grid-cols-2 xl:grid xl:grid-cols-[1fr_1fr_auto_auto] xl:items-end'}>
+          <div className={(filtersOpen ? 'grid' : 'hidden') + ' mt-3 gap-3 border-t border-academy-line/60 pt-3 sm:grid-cols-2 xl:grid xl:grid-cols-[1fr_1fr_1fr_auto] xl:items-end'}>
+            <label className="grid gap-1.5 text-[9px] font-black uppercase tracking-[.14em] text-academy-muted">
+              Domaine
+              <select value={active} onChange={(event) => { setActive(event.target.value as FilterKey); setActiveFormation('all'); setShowAll(false); }} className="rounded-full border border-academy-line bg-white px-4 py-3 text-sm font-bold normal-case tracking-normal dark:bg-white/5">
+                {filters.map((filter) => <option key={filter.key} value={filter.key}>{filter.label}</option>)}
+              </select>
+            </label>
             <label className="grid gap-1.5 text-[9px] font-black uppercase tracking-[.14em] text-academy-muted">
               Centre
               <select value={location} onChange={(event) => { setLocation(event.target.value); setShowAll(false); }} className="rounded-full border border-academy-line bg-white px-4 py-3 text-sm font-bold normal-case tracking-normal dark:bg-white/5">
@@ -862,26 +1067,24 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
                 {months.map(([key, label]) => <option key={key} value={key}>{label}</option>)}
               </select>
             </label>
-            <div className="flex rounded-full border border-academy-line bg-white p-1 dark:bg-white/5">
-              <button type="button" aria-pressed={view === 'list'} onClick={() => setView('list')} className={'rounded-full px-4 py-2.5 text-xs font-black transition ' + (view === 'list' ? 'bg-[#101a29] text-white' : 'text-academy-muted')}>Liste</button>
-              <button type="button" aria-pressed={view === 'calendar'} onClick={() => setView('calendar')} className={'rounded-full px-4 py-2.5 text-xs font-black transition ' + (view === 'calendar' ? 'bg-[#101a29] text-white' : 'text-academy-muted')}>Calendrier</button>
-            </div>
             <button type="button" onClick={resetFilters} className="rounded-full border border-academy-line bg-white px-4 py-3 text-xs font-black text-academy-muted transition hover:border-academy-gold hover:text-academy-ink dark:bg-white/5">Réinitialiser</button>
           </div>
         </div>
 
-        <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <p className="text-2xl font-black text-academy-ink dark:text-white">
-              {filteredSessions.length} {filteredSessions.length > 1 ? 'sessions disponibles' : 'session disponible'}
-            </p>
-            <p className="mt-1 text-sm font-semibold text-academy-muted">Triées par prochaine date de rentrée</p>
+        {view === 'list' ? (
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="text-2xl font-black text-academy-ink dark:text-white">
+                {filteredSessions.length} {filteredSessions.length > 1 ? 'sessions disponibles' : 'session disponible'}
+              </p>
+              <p className="mt-1 text-sm font-semibold text-academy-muted">Triées par prochaine date de rentrée</p>
+            </div>
+            <div className="flex w-fit rounded-full border border-academy-line bg-white p-1 dark:bg-white/5">
+              <button type="button" aria-pressed="true" className="rounded-full bg-[#101a29] px-4 py-2.5 text-xs font-black text-white">Vue liste</button>
+              <button type="button" aria-pressed="false" onClick={() => setView('calendar')} className="rounded-full px-4 py-2.5 text-xs font-black text-academy-muted transition hover:text-academy-ink">Vue calendrier</button>
+            </div>
           </div>
-          <div className="hidden rounded-full border border-academy-line bg-white p-1 dark:bg-white/5 xl:flex">
-            <button type="button" aria-pressed={view === 'list'} onClick={() => setView('list')} className={'rounded-full px-4 py-2.5 text-xs font-black transition ' + (view === 'list' ? 'bg-[#101a29] text-white' : 'text-academy-muted')}>Vue liste</button>
-            <button type="button" aria-pressed={view === 'calendar'} onClick={() => setView('calendar')} className={'rounded-full px-4 py-2.5 text-xs font-black transition ' + (view === 'calendar' ? 'bg-[#101a29] text-white' : 'text-academy-muted')}>Vue calendrier</button>
-          </div>
-        </div>
+        ) : null}
 
         {filteredSessions.length ? (
           view === 'list' ? (
@@ -900,7 +1103,7 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
               ) : null}
             </>
           ) : (
-            <div className="mt-6"><CalendarView sessions={filteredSessions} onRegister={setSelectedSession} /></div>
+            <div className="mt-8"><CalendarView sessions={filteredSessions} onRegister={setSelectedSession} onListView={() => setView('list')} /></div>
           )
         ) : (
           <div className="mt-6 rounded-[2rem] border border-dashed border-academy-line bg-white/65 p-8 text-center shadow-soft dark:bg-white/5 sm:p-12">
@@ -915,7 +1118,7 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
         )}
       </section>
 
-      <MissingDates sessions={sortedSessions} active={active} />
+      <MissingDates sessions={sortedSessions} active={active} activeFormation={activeFormation} />
 
       <section className="page-container py-16 sm:py-20">
         <div className="max-w-4xl">
