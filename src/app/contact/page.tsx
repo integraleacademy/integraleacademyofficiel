@@ -4,7 +4,7 @@ import { ContactForm } from '@/components/ContactForm';
 import { contact } from '@/data/site';
 
 export const metadata = {
-  title: 'Contact & admissions | Intégrale Academy',
+  title: 'Contact & admissions',
   description: 'Échangez avec l’équipe Intégrale Academy pour choisir une formation, trouver une session, étudier votre financement ou construire une solution entreprise.',
 };
 
@@ -74,7 +74,7 @@ function ArrowLink({ href, children, light = false, external = false }: { href: 
 
 export default function Page() {
   return (
-    <main className="overflow-hidden">
+    <div className="overflow-hidden">
       <section className="relative isolate overflow-hidden bg-[#101a29] px-4 py-14 text-white sm:py-20 lg:py-24">
         <div className="absolute inset-0 -z-20 bg-[radial-gradient(circle_at_8%_10%,rgba(234,183,53,.20),transparent_30%),radial-gradient(circle_at_92%_82%,rgba(234,183,53,.11),transparent_28%),linear-gradient(135deg,#101a29_0%,#111d30_58%,#162339_100%)]" />
         <div className="absolute -left-44 top-0 -z-10 h-[32rem] w-[32rem] rounded-full border border-academy-gold/15 bg-academy-gold/[.035]" />
@@ -303,6 +303,6 @@ export default function Page() {
           <a href="#demande" className="inline-flex items-center justify-center gap-2 rounded-full bg-[#101a29] px-6 py-4 text-sm font-black text-white transition hover:-translate-y-0.5 hover:shadow-soft">Parler de mon projet <Icon name="arrow" className="h-4 w-4 text-academy-gold" /></a>
         </div>
       </section>
-    </main>
+    </div>
   );
 }
