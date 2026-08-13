@@ -1,7 +1,14 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { OrientationAssistant } from '@/components/OrientationAssistant';
-import { appointmentFormUrl } from '@/components/ui';
+import { BtsTrainingGrid, type BtsTrainingHighlight } from '@/components/BtsTrainingGrid';
+import { CampusSection } from '@/components/CampusSection';
+import { GoogleReviewsSection } from '@/components/GoogleReviewsSection';
+import { SecurityTrainingGrid, type SecurityTrainingHighlight } from '@/components/SecurityTrainingGrid';
+import { VtcTrainingCard } from '@/components/VtcTrainingCard';
+import { Highlight, PremiumFAQSection, SectionTitle } from '@/components/ui';
+import { VisualSection } from '@/components/visuals';
+import { globalFaq } from '@/data/faq';
+import { vtcFormation } from '@/data/site';
 import styles from './home.module.css';
 
 export const metadata = {
@@ -16,14 +23,95 @@ const journeyCards = [
   { number: '04', icon: 'CM', title: 'Parler à Cassandre', description: 'Un échange humain, gratuit et sans engagement.', href: '/contact', tone: 'light' },
 ] as const;
 
-const featuredCourses = [
-  { eyebrow: 'Surveillance · 175 h', title: 'Agent de sécurité privée · APS', description: 'Prévenir les risques, surveiller les sites et protéger les personnes.', href: '/formations-securite/aps', tags: ['Puget-sur-Argens', 'Finançable'], featured: true, anchor: undefined },
-  { eyebrow: 'Protection rapprochée · 327 h', title: 'Agent de protection · A3P', description: 'Préparer et sécuriser les déplacements de personnes exposées.', href: '/formations-securite/a3p-apr', tags: ['A3P · APR', 'Agrément A3P'], featured: false, anchor: undefined },
-  { eyebrow: 'Direction · initial ou VAE', title: 'Dirigeant d’une société de sécurité', description: 'Créer, reprendre ou piloter une activité de sécurité privée.', href: '/formations-securite/desp', tags: ['Présentiel + distanciel', 'VAE'], featured: false, anchor: undefined },
-  { eyebrow: 'Incendie · 70 h', title: 'Agent SSIAP 1', description: 'Prévenir et intervenir dans les ERP et les IGH.', href: '/formations-securite/ssiap-1', tags: ['Examen inclus'], featured: false, anchor: undefined },
-  { eyebrow: 'Transport de personnes', title: 'Chauffeur VTC', description: 'Théorie, pratique, réglementation et préparation à l’examen.', href: '/vtc', tags: ['105 h', 'Tout inclus'], featured: false, anchor: undefined },
-  { eyebrow: 'Diplômes d’État', title: 'BTS en alternance', description: 'Six parcours orientés emploi, en présentiel ou à distance.', href: '/bts', tags: ['Alternance', 'Bac +2'], featured: false, anchor: 'bts' },
-] as const;
+const securityHighlights: SecurityTrainingHighlight[] = [
+  {
+    slug: '/formations-securite/aps',
+    title: 'Formation Agent de Prévention et de Sécurité (APS)',
+    description: 'Apprenez à prévenir les risques, surveiller les sites et protéger les personnes afin d’exercer comme agent de sécurité privée.',
+    duration: '5 semaines - 175 heures',
+    visual: 'aps',
+  },
+  {
+    slug: '/formations-securite/ssiap-1',
+    title: 'Formation SSIAP 1 - Agent de sécurité incendie',
+    description: 'Prévenez les risques d’incendie, surveillez les installations et intervenez dans les ERP et les IGH.',
+    duration: '2 semaines - 70 heures',
+    visual: 'ssiap',
+  },
+  {
+    slug: '/formations-securite/sst',
+    title: 'Formation Sauveteur Secouriste du Travail (SST)',
+    description: 'Acquérez les gestes de premiers secours et contribuez à la prévention des risques professionnels en entreprise.',
+    duration: '2 jours - 14 heures',
+    visual: 'sst',
+  },
+  {
+    slug: '/formations-securite/a3p-apr',
+    title: 'Formation Agent de Protection Physique des Personnes (A3P)',
+    description: 'Préparez et sécurisez les déplacements de personnes exposées grâce à des techniques professionnelles de protection rapprochée.',
+    duration: '9 semaines - 327 heures',
+    visual: 'a3p',
+  },
+  {
+    slug: '/formations-securite/desp',
+    title: "Formation Dirigeant d'une entreprise de sécurité privée (DESP)",
+    description: 'Acquérez les compétences juridiques, commerciales et managériales pour créer ou diriger une entreprise de sécurité privée, en parcours initial ou par la VAE.',
+    duration: 'Initial : 7 semaines - 245 heures',
+    secondaryDuration: 'VAE : environ 1 mois',
+    visual: 'desp',
+  },
+];
+
+const btsHighlights: BtsTrainingHighlight[] = [
+  {
+    slug: '/bts/mos',
+    title: 'BTS Management Opérationnel de la Sécurité (MOS)',
+    description: 'Apprenez à organiser des prestations de sécurité, coordonner les équipes et suivre la relation client sur le terrain.',
+    modality: 'En présentiel OU à distance',
+    tags: ['Sécurité', 'Alternance'],
+    visual: 'mos',
+  },
+  {
+    slug: '/bts/mco',
+    title: 'BTS Management Commercial Opérationnel (MCO)',
+    description: 'Développez la vente, la relation client et le management pour piloter efficacement une unité commerciale.',
+    modality: 'En présentiel OU à distance',
+    tags: ['Commerce', 'Alternance', 'Relation client'],
+    visual: 'mco',
+  },
+  {
+    slug: '/bts/ndrc',
+    title: 'BTS Négociation et Digitalisation de la Relation Client (NDRC)',
+    description: 'Maîtrisez la prospection, la négociation et la fidélisation, en face à face comme sur les canaux digitaux.',
+    modality: 'En présentiel OU à distance',
+    tags: ['Vente', 'Digital', 'Alternance'],
+    visual: 'ndrc',
+  },
+  {
+    slug: '/bts/commerce-international',
+    title: 'BTS Commerce International (CI)',
+    description: 'Préparez-vous à développer des marchés, gérer l’import-export et coordonner des opérations à l’international.',
+    modality: 'En présentiel OU à distance',
+    tags: ['International', 'Import-export', 'Alternance'],
+    visual: 'ci',
+  },
+  {
+    slug: '/bts/professions-immobilieres',
+    title: 'BTS Professions Immobilières (PI)',
+    description: 'Formez-vous à la transaction, à la gestion locative, à la copropriété et au conseil immobilier.',
+    modality: 'En présentiel OU à distance',
+    tags: ['Immobilier', 'Gestion', 'Alternance'],
+    visual: 'pi',
+  },
+  {
+    slug: '/bts/comptabilite-gestion',
+    title: 'BTS Comptabilité et Gestion (CG)',
+    description: 'Un futur parcours 100 % à distance pour maîtriser la comptabilité, la gestion et le pilotage financier.',
+    modality: '100 % à distance uniquement',
+    tags: ['Comptabilité', 'Prochainement'],
+    visual: 'cg',
+  },
+];
 
 const proofItems = [
   ['Depuis 2018', 'Expérience terrain'],
@@ -33,14 +121,9 @@ const proofItems = [
   ['3 centres', 'Selon les sessions'],
 ] as const;
 
-const reviews = [
-  { name: 'Mee-Kyung K.', course: 'Formation A3P', text: 'Une formation A3P exigeante, réaliste et ultra-professionnalisante. Elle prépare vraiment au terrain.' },
-  { name: 'Mathys C.', course: 'Formation Agent de sécurité', text: 'Les locaux sont propres, bien équipés et agréables. La formation est complète et très bien organisée.' },
-] as const;
-
 export default function Home() {
   return (
-    <>
+    <div className={styles.home}>
       <section className={styles.hero}>
         <span className={styles.heroGlow} aria-hidden="true" />
         <div className={styles.container}>
@@ -99,72 +182,46 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="formations-securite" className={styles.courses}>
-        <div className={styles.container}>
-          <div className={`${styles.sectionHeading} ${styles.sectionHeadingDark}`}>
-            <div><span>Nos parcours phares</span><h2>Des métiers concrets. Des formations lisibles.</h2></div>
-            <p>Retrouvez immédiatement nos formations les plus recherchées. Chaque carte mène vers une page complète avec programme, dates, tarif et financement.</p>
+      <VisualSection tone="security">
+        <section id="formations-securite" className="scroll-mt-28 page-container py-14 md:py-16">
+          <div data-security-training-heading data-training-heading>
+            <SectionTitle eyebrow="1. Sécurité privée" title={<>Formations professionnelles <span className="block"><Highlight>Métiers de la sécurité privée</Highlight></span></>}>
+              Des parcours concrets et encadrés pour exercer dans la surveillance, la sécurité incendie, le secourisme, la protection rapprochée ou la direction d’entreprise.
+            </SectionTitle>
           </div>
+          <SecurityTrainingGrid items={securityHighlights} />
+        </section>
+      </VisualSection>
 
-          <div className={styles.courseGrid}>
-            {featuredCourses.map((course) => (
-              <Link id={course.anchor} key={course.href} href={course.href} className={`${styles.courseCard} ${course.featured ? styles.courseFeatured : ''}`}>
-                <span className={styles.courseEyebrow}>{course.eyebrow}</span>
-                <div>
-                  <h3>{course.title}</h3><p>{course.description}</p>
-                  <div className={styles.courseTags}>{course.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
-                </div>
-                <span className={styles.courseArrow} aria-hidden="true">→</span>
-              </Link>
-            ))}
+      <VisualSection tone="vtc">
+        <section className="page-container py-14 md:py-16">
+          <div data-training-heading>
+            <SectionTitle eyebrow="2. Chauffeur VTC" title={<>Devenez chauffeur VTC avec une <Highlight>formation complète</Highlight></>}>
+              Préparez l’examen et votre future activité grâce à un parcours tout inclus qui associe théorie en e-learning et pratique en présentiel.
+            </SectionTitle>
           </div>
-        </div>
-      </section>
+          <VtcTrainingCard title={vtcFormation.title} description="Maîtrisez la réglementation, la conduite professionnelle et la relation client avec un accompagnement conçu pour réussir l’examen VTC." duration={vtcFormation.duration} href={vtcFormation.slug} />
+        </section>
+      </VisualSection>
+
+      <VisualSection tone="bts">
+        <section id="bts" className="scroll-mt-28 page-container py-14 md:py-16">
+          <div data-training-heading>
+            <SectionTitle eyebrow="3. BTS en alternance" title={<>Préparez votre avenir avec un <Highlight>BTS en alternance</Highlight></>}>
+              Explorez six diplômes d’État orientés vers l’emploi, avec une expérience concrète en entreprise ou un parcours à distance selon la formation.
+            </SectionTitle>
+          </div>
+          <BtsTrainingGrid items={btsHighlights} />
+        </section>
+      </VisualSection>
 
       <section className={styles.proofBar} aria-label="Chiffres et reconnaissances">
         <div className={styles.container}><div className={styles.proofGrid}>{proofItems.map(([value, label]) => <div key={value}><strong>{value}</strong><span>{label}</span></div>)}</div></div>
       </section>
 
-      <section className={styles.reviews}>
-        <div className={styles.container}>
-          <div className={styles.sectionHeading}>
-            <div><span>Avis stagiaires</span><h2>Ils parlent mieux de nous que nous-mêmes.</h2></div>
-            <p>Des retours issus de formations APS, A3P, protection rapprochée et VTC.</p>
-          </div>
-
-          <div className={styles.reviewGrid}>
-            <article className={styles.ratingCard}>
-              <span>Note Google sélectionnée</span><strong>5,0</strong><div aria-label="5 étoiles sur 5">★★★★★</div><p>15 avis mis en avant · APS · A3P · VTC</p>
-            </article>
-            {reviews.map((review) => (
-              <article key={review.name} className={styles.reviewCard}>
-                <div aria-label="5 étoiles sur 5">★★★★★</div><blockquote>« {review.text} »</blockquote>
-                <footer><strong>{review.name}</strong><span>{review.course}</span></footer>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className={styles.contactSection}>
-        <div className={styles.container}>
-          <div className={styles.contactBox}>
-            <span className={styles.contactHalo} aria-hidden="true" />
-            <div className={styles.contactCopy}>
-              <span>Faites le premier pas</span><h2>Votre projet mérite un échange simple.</h2>
-              <p>Expliquez votre objectif à Cassandre. Elle vous aide à identifier la formation, vérifier les prérequis et comprendre les solutions de financement.</p>
-              <div className={styles.contactActions}>
-                <Link href={appointmentFormUrl} className={styles.goldButton}>Réserver un rendez-vous <span aria-hidden="true">→</span></Link>
-                <a href="tel:0422470768" className={styles.contactSecondary}>Appeler</a>
-              </div>
-            </div>
-            <div className={styles.contactCard}>
-              <div className={styles.cassandreVisual}><Image src="/images/cassandre-memoji.png" alt="Cassandre, responsable commerciale d’Intégrale Academy" width={190} height={190} /></div>
-              <div><strong>Cassandre</strong><span>Responsable commerciale</span><a href="tel:0422470768">04 22 47 07 68</a></div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </>
+      <CampusSection />
+      <GoogleReviewsSection />
+      <PremiumFAQSection badge="FAQ" title="Questions fréquentes" description="Retrouvez les réponses aux questions les plus courantes sur nos formations, les financements, les inscriptions et l’accompagnement Intégrale Academy." items={globalFaq} contactHref="/contact" />
+    </div>
   );
 }

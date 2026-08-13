@@ -143,7 +143,7 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
     <div className="relative grid gap-6 lg:grid-cols-[220px_minmax(0,1fr)] lg:items-start">
       <div>
         <p className="text-[10px] font-black uppercase tracking-[.2em] text-academy-gold">Assistant d’orientation</p>
-        <h2 className="mt-3 text-3xl font-black leading-[.95] tracking-[-.045em] sm:text-4xl">Que voulez-vous devenir&nbsp;?</h2>
+        <h2 className="mt-3 text-3xl font-black leading-[.95] tracking-[-.045em] sm:text-4xl">Quelle formation vous intéresse&nbsp;?</h2>
         <p className="mt-4 inline-flex items-center gap-2 text-xs font-bold text-white/60"><span className="status-dot" aria-hidden="true" /> Disponible maintenant</p>
       </div>
       <div>
