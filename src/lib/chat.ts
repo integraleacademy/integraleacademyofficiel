@@ -72,7 +72,7 @@ function detectTraining(question: string): TrainingKey {
 }
 
 
-const VTC_PRICE_ANSWER = `La formation Chauffeur VTC coûte 1600 € tout inclus.
+const VTC_PRICE_ANSWER = `La formation Chauffeur VTC coûte 1 500 € tout inclus.
 
 Ce tarif comprend :
 - la formation théorique en ligne à distance ;
@@ -161,7 +161,7 @@ function buildKnownStructuredAnswer(question: string): StructuredChatAnswer | nu
   };
 
   if (/frais.*examen|examen.*inclus/.test(q)) return {
-    answerText: `Oui, les frais d’examen VTC de 221 € sont inclus dans le tarif de la formation Chauffeur VTC à 1600 € tout inclus.
+    answerText: `Oui, les frais d’examen VTC de 221 € sont inclus dans le tarif de la formation Chauffeur VTC à 1 500 € tout inclus.
 
 Le tarif comprend aussi la théorie en e-learning, la pratique, le livre officiel VTC, le prêt du véhicule à doubles-commandes le jour de l’examen, l’essence et les péages.
 

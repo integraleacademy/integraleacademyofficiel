@@ -14,7 +14,7 @@ const paymentOptions = [
 const formationOptions = [
   { label: 'APS', amount: 1650 },
   { label: 'SSIAP 1', amount: 980 },
-  { label: 'VTC', amount: 1600 },
+  { label: 'VTC', amount: 1500 },
   { label: 'BTS en alternance', amount: 0 },
   { label: 'DESP / DSSP', amount: 4300 },
 ];

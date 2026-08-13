@@ -7,9 +7,9 @@ type Expectation = {
 };
 
 const expectations: Expectation[] = [
-  { question: 'combien coute la formation vtc', includes: ['1600 € tout inclus'] },
-  { question: 'prix vtc', includes: ['1600 € tout inclus'] },
-  { question: 'tarif chauffeur vtc', includes: ['1600 € tout inclus'] },
+  { question: 'combien coute la formation vtc', includes: ['1 500 € tout inclus'] },
+  { question: 'prix vtc', includes: ['1 500 € tout inclus'] },
+  { question: 'tarif chauffeur vtc', includes: ['1 500 € tout inclus'] },
   { question: 'les frais d’examen sont inclus ?', includes: ['221 €', 'inclus'] },
   { question: 'durée formation vtc', includes: ['105 heures', '100 heures', '5 heures'] },
   { question: 'où se passe la pratique vtc', includes: ['Nice'] },

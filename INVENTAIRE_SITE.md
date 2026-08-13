@@ -196,7 +196,7 @@ Date d'inventaire : 17 juin 2026. Site analysé : <https://www.integraleacademy.
 - **Titre exact** : Formation Chauffeur VTC, RS n°5637.
 - **Description** : formation conducteur de voiture de transport avec chauffeur conforme à l'arrêté du 6 avril 2017 relatif aux programmes et à l'évaluation des examens d'accès à la profession ; cible Nice, Cannes, Toulon, Fréjus.
 - **Durée** : 105 heures.
-- **Tarif** : 1600 € tout inclus.
+- **Tarif** : 1 500 € tout inclus.
 - **Modalités** : théorie 100 % en ligne/e-learning 24/24 7/7 ; pratique en présentiel à Nice, Cannes, Toulon ou Fréjus ; livre officiel envoyé ; prêt véhicule double commande ; frais examen inclus 206 €.
 - **Prérequis** : non visibles dans l'extrait ; à renseigner manuellement.
 - **Objectifs** : obtenir carte professionnelle Conducteur VTC.

@@ -12,7 +12,7 @@ Formation VTC tout inclus avec théorie e-learning, pratique en présentiel et f
 
 ## Tarif
 
-1600 € tout inclus
+1 500 € tout inclus
 
 ## Lieu
 

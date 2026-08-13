@@ -85,7 +85,7 @@ Les pages et liens sont repris depuis l'inventaire des pages actuelles : accueil
 - A3P/APR : 327 h, 9 semaines, 4200 €, RNCP 38002, hébergement possible.
 - DESP/DSSP : 245 h initial, 4300 €, VAE 3800 €, distanciel + présentiel Paris/Puget/Aurillac, RNCP 40385.
 - SST : mention INRS H34836/2020/SST-1/O/07, contenu détaillé à vérifier.
-- VTC : 105 h, 1600 €, théorie e-learning, pratique Nice/Cannes/Toulon/Fréjus, agrément VTC-26-001.
+- VTC : 105 h, 1 500 €, théorie e-learning, pratique Nice/Cannes/Toulon/Fréjus, agrément VTC-26-001.
 - BTS MOS : 2 ans, 1350 h, alternance, gratuit apprentis, rythme 15 jours école/15 jours entreprise, RNCP 41000.
 - BTS MCO, NDRC, CI, PI : contenus programmes/missions/qualités repris de l'inventaire.
 - BTS Comptabilité Gestion : statut prochainement, 100 % à distance uniquement.

@@ -5,7 +5,7 @@ import { CampusSection } from '@/components/CampusSection';
 import { GoogleReviewsSection } from '@/components/GoogleReviewsSection';
 import { SecurityTrainingGrid, type SecurityTrainingHighlight } from '@/components/SecurityTrainingGrid';
 import { VtcTrainingCard } from '@/components/VtcTrainingCard';
-import { Highlight, PremiumFAQSection, SectionTitle } from '@/components/ui';
+import { PremiumFAQSection } from '@/components/ui';
 import { VisualSection } from '@/components/visuals';
 import { globalFaq } from '@/data/faq';
 import { vtcFormation } from '@/data/site';
@@ -242,12 +242,18 @@ export default function Home() {
 
       <VisualSection tone="vtc">
         <section className="page-container py-14 md:py-16">
-          <div data-training-heading>
-            <SectionTitle eyebrow="2. Chauffeur VTC" title={<>Devenez chauffeur VTC avec une <Highlight>formation complète</Highlight></>}>
-              Préparez l’examen et votre future activité grâce à un parcours tout inclus qui associe théorie en e-learning et pratique en présentiel.
-            </SectionTitle>
+          <div data-training-heading className={styles.vtcTrainingHeading}>
+            <span className={styles.securityTrainingEyebrow}>2. Chauffeur VTC</span>
+            <h2>Prenez le volant de <span>votre avenir.</span></h2>
+            <p>Une préparation complète à l’examen VTC, de la théorie à la pratique, pour lancer votre activité dans les meilleures conditions.</p>
           </div>
-          <VtcTrainingCard title={vtcFormation.title} description="Maîtrisez la réglementation, la conduite professionnelle et la relation client avec un accompagnement conçu pour réussir l’examen VTC." duration={vtcFormation.duration} href={vtcFormation.slug} />
+          <VtcTrainingCard
+            title={vtcFormation.title}
+            description="Préparez l’examen, maîtrisez la conduite professionnelle et développez une qualité de service qui fera la différence."
+            duration={vtcFormation.duration}
+            price={vtcFormation.price ?? '1 500 € tout inclus'}
+            href={vtcFormation.slug}
+          />
         </section>
       </VisualSection>
 

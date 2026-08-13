@@ -157,7 +157,7 @@ export async function getKnowledgeDocuments() {
       console.log(`[KNOWLEDGE] Fichier chargé: ${relativeFile}`);
       console.log(`[KNOWLEDGE] Caractères chargés: ${raw.length}`);
       if (relativeFile.toLowerCase().includes('vtc')) {
-        console.log(`[KNOWLEDGE] Vérification VTC 1600 € tout inclus: ${raw.includes('1600 € tout inclus') ? 'OK' : 'MANQUANT'}`);
+        console.log(`[KNOWLEDGE] Vérification VTC 1 500 € tout inclus: ${raw.includes('1 500 € tout inclus') ? 'OK' : 'MANQUANT'}`);
       }
       return parseFrontmatter(raw, relativeFile, file);
     }),

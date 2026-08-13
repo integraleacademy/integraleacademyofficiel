@@ -85,7 +85,7 @@ Si l’utilisateur demande :
 
 Tu dois répondre :
 
-**La formation Chauffeur VTC coûte 1600 € tout inclus.**
+**La formation Chauffeur VTC coûte 1 500 € tout inclus.**
 
 Ce tarif comprend :
 
@@ -145,7 +145,7 @@ La formation a pour objectifs de permettre au candidat de :
 
 Le tarif de la formation Chauffeur VTC est de :
 
-# **1600 € tout inclus**
+# **1 500 € tout inclus**
 
 Ce tarif est un tarif global.
 
@@ -153,7 +153,7 @@ Il comprend la théorie, la pratique, le livre officiel, le véhicule le jour de
 
 ---
 
-## Ce qui est inclus dans les 1600 €
+## Ce qui est inclus dans les 1 500 €
 
 La formule comprend :
 
@@ -235,7 +235,7 @@ La formation prépare à l’examen VTC.
 
 L’examen permet, en cas de réussite, de demander la carte professionnelle de conducteur VTC auprès de la préfecture.
 
-Les frais d’examen de **221 €** sont inclus dans l’offre à **1600 € tout inclus**.
+Les frais d’examen de **221 €** sont inclus dans l’offre à **1 500 € tout inclus**.
 
 Les dates d’examen sont communiquées sur demande.
 
@@ -353,7 +353,7 @@ Il peut commencer la théorie à distance et avancer à son rythme.
 
 La formation Chauffeur VTC Intégrale Academy présente plusieurs avantages :
 
-- tarif clair : **1600 € tout inclus** ;
+- tarif clair : **1 500 € tout inclus** ;
 - frais d’examen inclus ;
 - livre officiel inclus ;
 - véhicule inclus le jour de l’examen ;
@@ -403,7 +403,7 @@ Après réussite à l’examen et obtention de la carte professionnelle, le cand
 
 Réponse :
 
-La formation Chauffeur VTC coûte **1600 € tout inclus**.
+La formation Chauffeur VTC coûte **1 500 € tout inclus**.
 
 Ce tarif comprend la théorie en e-learning, la pratique, le livre officiel, le prêt du véhicule le jour de l’examen, l’essence, les péages et les frais d’examen de **221 €**.
 
@@ -417,7 +417,7 @@ Pour avancer sur votre inscription, contactez-nous au **04 22 47 07 68** ou cliq
 
 Réponse :
 
-La formation Chauffeur VTC coûte **1600 € tout inclus**.
+La formation Chauffeur VTC coûte **1 500 € tout inclus**.
 
 Les frais d’examen de **221 €** sont inclus, ainsi que la théorie, la pratique, le livre officiel, le véhicule le jour de l’examen, l’essence et les péages.
 
@@ -429,7 +429,7 @@ Pour étudier votre financement ou vous inscrire, contactez-nous au **04 22 47 0
 
 Réponse :
 
-Le prix de la formation Chauffeur VTC est de **1600 € tout inclus**.
+Le prix de la formation Chauffeur VTC est de **1 500 € tout inclus**.
 
 Cela comprend la formation théorique à distance, la pratique, le livre officiel, le véhicule à doubles-commandes le jour de l’examen, les frais d’examen, l’essence et les péages.
 
@@ -441,7 +441,7 @@ Pour avancer, contactez-nous au **04 22 47 07 68**.
 
 Réponse :
 
-Le tarif de la formation Chauffeur VTC est de **1600 € tout inclus**.
+Le tarif de la formation Chauffeur VTC est de **1 500 € tout inclus**.
 
 Les frais d’examen de **221 €** sont compris dans ce tarif.
 
@@ -453,7 +453,7 @@ Vous pouvez nous appeler au **04 22 47 07 68** pour étudier votre inscription o
 
 Réponse :
 
-Oui, les frais d’examen de **221 €** sont inclus dans la formule à **1600 € tout inclus**.
+Oui, les frais d’examen de **221 €** sont inclus dans la formule à **1 500 € tout inclus**.
 
 La formule comprend aussi la théorie, la pratique, le livre officiel, le véhicule le jour de l’examen, l’essence et les péages.
 
@@ -578,7 +578,7 @@ Pour démarrer votre projet, contactez-nous au **04 22 47 07 68**.
 
 Réponse :
 
-Oui, le prêt du véhicule à doubles-commandes le jour de l’examen est inclus dans la formule à **1600 € tout inclus**.
+Oui, le prêt du véhicule à doubles-commandes le jour de l’examen est inclus dans la formule à **1 500 € tout inclus**.
 
 L’essence et les péages sont également inclus.
 
@@ -594,7 +594,7 @@ Oui, le livre officiel **Préparer et réussir le concours VTC** est inclus dans
 
 Il est envoyé au candidat par courrier.
 
-La formation complète coûte **1600 € tout inclus**.
+La formation complète coûte **1 500 € tout inclus**.
 
 Pour avancer, contactez-nous au **04 22 47 07 68**.
 
@@ -604,7 +604,7 @@ Pour avancer, contactez-nous au **04 22 47 07 68**.
 
 ## Combien coûte la formation Chauffeur VTC ?
 
-La formation Chauffeur VTC coûte **1600 € tout inclus**.
+La formation Chauffeur VTC coûte **1 500 € tout inclus**.
 
 Ce tarif comprend la théorie à distance, la pratique, le livre officiel, le véhicule le jour de l’examen, l’essence, les péages et les frais d’examen de **221 €**.
 
@@ -612,7 +612,7 @@ Ce tarif comprend la théorie à distance, la pratique, le livre officiel, le v�
 
 ## Le tarif est-il vraiment tout inclus ?
 
-Oui, le tarif de **1600 €** est tout inclus.
+Oui, le tarif de **1 500 €** est tout inclus.
 
 Il comprend les principaux éléments nécessaires à la préparation :
 
@@ -628,7 +628,7 @@ Il comprend les principaux éléments nécessaires à la préparation :
 
 ## Les frais d’examen sont-ils à payer en plus ?
 
-Non, les frais d’examen de **221 €** sont inclus dans le tarif de **1600 € tout inclus**.
+Non, les frais d’examen de **221 €** sont inclus dans le tarif de **1 500 € tout inclus**.
 
 ---
 
@@ -768,7 +768,7 @@ Mots-clés :
 
 Réponse à utiliser :
 
-La formation Chauffeur VTC coûte **1600 € tout inclus**.
+La formation Chauffeur VTC coûte **1 500 € tout inclus**.
 
 Ce tarif comprend la théorie à distance, la pratique, le livre officiel, le véhicule le jour de l’examen, l’essence, les péages et les frais d’examen de **221 €**.
 
@@ -899,7 +899,7 @@ Réponse à utiliser :
 
 La formation prépare à l’examen VTC.
 
-Les frais d’examen de **221 €** sont inclus dans la formule à **1600 € tout inclus**.
+Les frais d’examen de **221 €** sont inclus dans la formule à **1 500 € tout inclus**.
 
 Le véhicule à doubles-commandes est également prêté le jour de l’examen.
 
@@ -944,7 +944,7 @@ La formation Chauffeur VTC comprend **105 heures** :
 - véhicule inclus le jour de l’examen ;
 - frais d’examen inclus.
 
-Tarif : **1600 € tout inclus**.
+Tarif : **1 500 € tout inclus**.
 
 Pour avancer, cliquez sur **M’inscrire** ou appelez le **04 22 47 07 68**.
 
@@ -968,7 +968,7 @@ Réponse :
 
 Pour vous inscrire à la formation Chauffeur VTC, nous devons vérifier votre projet, votre financement et vos documents.
 
-La formation coûte **1600 € tout inclus** et peut être financée selon votre situation.
+La formation coûte **1 500 € tout inclus** et peut être financée selon votre situation.
 
 Appelez-nous au **04 22 47 07 68** pour finaliser votre inscription.
 
@@ -987,7 +987,7 @@ Elle dure **105 heures** :
 - 100 heures de théorie en e-learning ;
 - 5 heures de pratique en présentiel.
 
-Le tarif est de **1600 € tout inclus**, avec frais d’examen, livre officiel, véhicule, essence et péages inclus.
+Le tarif est de **1 500 € tout inclus**, avec frais d’examen, livre officiel, véhicule, essence et péages inclus.
 
 Un financement peut être étudié selon votre situation.
 
@@ -997,7 +997,7 @@ Pour avancer, contactez-nous au **04 22 47 07 68**.
 
 ## Réponse courte prix
 
-La formation Chauffeur VTC coûte **1600 € tout inclus**.
+La formation Chauffeur VTC coûte **1 500 € tout inclus**.
 
 Ce tarif comprend la théorie, la pratique, le livre officiel, le véhicule le jour de l’examen, l’essence, les péages et les frais d’examen de **221 €**.
 
@@ -1046,7 +1046,7 @@ Devenez Chauffeur VTC avec Intégrale Academy grâce à une formation complète,
 
 La formation comprend la théorie à distance, la pratique, le livre officiel, le véhicule le jour de l’examen, les frais d’examen, l’essence et les péages.
 
-Tarif : **1600 € tout inclus**.
+Tarif : **1 500 € tout inclus**.
 
 Un financement peut être étudié selon votre situation.
 
@@ -1058,7 +1058,7 @@ Appelez-nous au **04 22 47 07 68** ou cliquez sur **M’inscrire**.
 
 Vous êtes accompagné dans les étapes importantes : inscription, financement, accès e-learning, pratique et préparation à l’examen.
 
-La formation coûte **1600 € tout inclus** et peut être financée selon votre situation.
+La formation coûte **1 500 € tout inclus** et peut être financée selon votre situation.
 
 Pour faire le point simplement, contactez-nous au **04 22 47 07 68**.
 
@@ -1099,7 +1099,7 @@ Site web :
 
 Formation Chauffeur VTC Intégrale Academy.
 
-Tarif : **1600 € tout inclus**.
+Tarif : **1 500 € tout inclus**.
 
 Durée : **105 heures**.
 
