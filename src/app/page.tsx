@@ -87,53 +87,69 @@ const securityHighlights: SecurityTrainingHighlight[] = [
   },
 ];
 
+const btsCommon = {
+  certification: 'Diplôme d’État',
+  level: 'Bac +2',
+  duration: '2 ans',
+  rhythm: 'Alternance',
+  onsiteLocation: 'Puget-sur-Argens',
+  distanceMode: 'En visioconférence',
+} as const;
+
 const btsHighlights: BtsTrainingHighlight[] = [
   {
+    ...btsCommon,
     slug: '/bts/mos',
-    title: 'BTS Management Opérationnel de la Sécurité (MOS)',
-    description: 'Apprenez à organiser des prestations de sécurité, coordonner les équipes et suivre la relation client sur le terrain.',
-    modality: 'En présentiel OU à distance',
-    tags: ['Sécurité', 'Alternance'],
+    shortTitle: 'BTS MOS',
+    title: 'Management Opérationnel de la Sécurité',
+    category: 'Management & sécurité',
+    description: 'Pilotez des prestations de sécurité, coordonnez les équipes et développez la relation client.',
     visual: 'mos',
+    featured: true,
   },
   {
+    ...btsCommon,
     slug: '/bts/mco',
-    title: 'BTS Management Commercial Opérationnel (MCO)',
+    shortTitle: 'BTS MCO',
+    title: 'Management Commercial Opérationnel',
+    category: 'Commerce',
     description: 'Développez la vente, la relation client et le management pour piloter efficacement une unité commerciale.',
-    modality: 'En présentiel OU à distance',
-    tags: ['Commerce', 'Alternance', 'Relation client'],
     visual: 'mco',
   },
   {
+    ...btsCommon,
     slug: '/bts/ndrc',
-    title: 'BTS Négociation et Digitalisation de la Relation Client (NDRC)',
+    shortTitle: 'BTS NDRC',
+    title: 'Négociation et Digitalisation de la Relation Client',
+    category: 'Relation client',
     description: 'Maîtrisez la prospection, la négociation et la fidélisation, en face à face comme sur les canaux digitaux.',
-    modality: 'En présentiel OU à distance',
-    tags: ['Vente', 'Digital', 'Alternance'],
     visual: 'ndrc',
   },
   {
+    ...btsCommon,
     slug: '/bts/commerce-international',
-    title: 'BTS Commerce International (CI)',
+    shortTitle: 'BTS CI',
+    title: 'Commerce International',
+    category: 'International',
     description: 'Préparez-vous à développer des marchés, gérer l’import-export et coordonner des opérations à l’international.',
-    modality: 'En présentiel OU à distance',
-    tags: ['International', 'Import-export', 'Alternance'],
     visual: 'ci',
   },
   {
+    ...btsCommon,
     slug: '/bts/professions-immobilieres',
-    title: 'BTS Professions Immobilières (PI)',
+    shortTitle: 'BTS PI',
+    title: 'Professions Immobilières',
+    category: 'Immobilier',
     description: 'Formez-vous à la transaction, à la gestion locative, à la copropriété et au conseil immobilier.',
-    modality: 'En présentiel OU à distance',
-    tags: ['Immobilier', 'Gestion', 'Alternance'],
     visual: 'pi',
   },
   {
+    ...btsCommon,
     slug: '/bts/comptabilite-gestion',
-    title: 'BTS Comptabilité et Gestion (CG)',
-    description: 'Un futur parcours 100 % à distance pour maîtriser la comptabilité, la gestion et le pilotage financier.',
-    modality: '100 % à distance uniquement',
-    tags: ['Comptabilité', 'Prochainement'],
+    shortTitle: 'BTS CG',
+    title: 'Comptabilité et Gestion',
+    category: 'Comptabilité',
+    description: 'Maîtrisez la comptabilité, la gestion et le pilotage financier.',
     visual: 'cg',
   },
 ];
@@ -237,10 +253,16 @@ export default function Home() {
 
       <VisualSection tone="bts">
         <section id="bts" className="scroll-mt-28 page-container py-14 md:py-16">
-          <div data-training-heading>
-            <SectionTitle eyebrow="3. BTS en alternance" title={<>Préparez votre avenir avec un <Highlight>BTS en alternance</Highlight></>}>
-              Explorez six diplômes d’État orientés vers l’emploi, avec une expérience concrète en entreprise ou un parcours à distance selon la formation.
-            </SectionTitle>
+          <div data-training-heading className={styles.securityTrainingHeading}>
+            <div>
+              <span className={styles.securityTrainingEyebrow}>BTS en alternance</span>
+              <h2>Trouvez le BTS adapté à votre projet.</h2>
+              <p>Six diplômes d’État pour construire un projet solide, en présentiel à Puget-sur-Argens ou 100 % à distance en visioconférence.</p>
+            </div>
+            <div className={styles.securityTrainingActions}>
+              <Link href="/bts" className={styles.securityTrainingSecondary}>Comparer les BTS</Link>
+              <Link href="/planning" className={styles.securityTrainingPrimary}>Voir les rentrées <span aria-hidden="true">→</span></Link>
+            </div>
           </div>
           <BtsTrainingGrid items={btsHighlights} />
         </section>
