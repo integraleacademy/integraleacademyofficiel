@@ -1,3 +1,4 @@
+import FinancingSimulator from '@/components/FinancingSimulator';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { appointmentFormUrl } from '@/components/ui';
@@ -171,6 +172,8 @@ export default function FinancementsPage() {
         <p className={styles.disclaimer}>Les prises en charge et montants indiqués sont soumis aux règles, critères et décisions propres à chaque organisme financeur.</p>
       </div>
     </section>
+
+    <FinancingSimulator />
 
     <section className={styles.stepsSection} aria-labelledby="steps-title">
       <div className="page-container">
