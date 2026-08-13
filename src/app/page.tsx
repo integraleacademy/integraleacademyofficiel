@@ -1,136 +1,170 @@
-import { Button, ChatGptAgentBanner, ConversionStrip, FeatureCard, FinancingCard, FormationCard, FullWidthBand, Hero, Highlight, LocationCard, PremiumFAQSection, ProofBar, SectionTitle, StatCard } from '@/components/ui';
+import Image from 'next/image';
+import Link from 'next/link';
 import { OrientationAssistant } from '@/components/OrientationAssistant';
-import { RecognitionMarquee } from '@/components/RecognitionMarquee';
-import { CampusSection } from '@/components/CampusSection';
-import { GoogleReviewsSection } from '@/components/GoogleReviewsSection';
-import { AnimatedTrainingCTA } from '@/components/AnimatedTrainingCTA';
-import { SecurityTrainingGrid, type SecurityTrainingHighlight } from '@/components/SecurityTrainingGrid';
-import { BtsTrainingGrid, type BtsTrainingHighlight } from '@/components/BtsTrainingGrid';
-import { VtcTrainingCard } from '@/components/VtcTrainingCard';
-import { FloatingBadge, VisualSection, VisualTimeline } from '@/components/visuals';
-import { globalFaq } from '@/data/faq';
-import { contact, vtcFormation } from '@/data/site';
+import { appointmentFormUrl } from '@/components/ui';
+import styles from './home.module.css';
 
-export const metadata={title:'Accueil',description:'Intégrale Academy forme aux métiers de la sécurité privée, sécurité incendie, VTC et BTS en alternance à Puget-sur-Argens, Paris et Aurillac.'};
+export const metadata = {
+  title: 'Accueil',
+  description: 'Intégrale Academy forme aux métiers de la sécurité privée, de la sécurité incendie, du VTC et aux BTS en alternance à Puget-sur-Argens, Paris et Aurillac.',
+};
 
-const securityHighlights: SecurityTrainingHighlight[] = [
-  {
-    slug: '/formations-securite/aps',
-    title: 'Formation Agent de Prévention et de Sécurité (APS)',
-    description: 'Apprenez à prévenir les risques, surveiller les sites et protéger les personnes afin d’exercer comme agent de sécurité privée.',
-    duration: '5 semaines - 175 heures',
-    visual: 'aps',
-  },
-  {
-    slug: '/formations-securite/ssiap-1',
-    title: 'Formation SSIAP 1 - Agent de sécurité incendie',
-    description: 'Prévenez les risques d’incendie, surveillez les installations et intervenez dans les ERP et les IGH.',
-    duration: '2 semaines - 70 heures',
-    visual: 'ssiap',
-  },
-  {
-    slug: '/formations-securite/sst',
-    title: 'Formation Sauveteur Secouriste du Travail (SST)',
-    description: 'Acquérez les gestes de premiers secours et contribuez à la prévention des risques professionnels en entreprise.',
-    duration: '2 jours - 14 heures',
-    visual: 'sst',
-  },
-  {
-    slug: '/formations-securite/a3p-apr',
-    title: 'Formation Agent de Protection Physique des Personnes (A3P)',
-    description: 'Préparez et sécurisez les déplacements de personnes exposées grâce à des techniques professionnelles de protection rapprochée.',
-    duration: '9 semaines - 327 heures',
-    visual: 'a3p',
-  },
-  {
-    slug: '/formations-securite/desp',
-    title: "Formation Dirigeant d'une entreprise de sécurité privée (DESP)",
-    description: 'Acquérez les compétences juridiques, commerciales et managériales pour créer ou diriger une entreprise de sécurité privée, en parcours initial ou par la VAE.',
-    duration: 'Initial : 7 semaines - 245 heures',
-    secondaryDuration: 'VAE : environ 1 mois',
-    visual: 'desp',
-  },
-];
+const journeyCards = [
+  { number: '01', icon: '◆', title: 'Découvrir les formations', description: 'Sécurité, incendie, direction, VTC et BTS.', href: '#formations-securite', tone: 'dark' },
+  { number: '02', icon: '€', title: 'Trouver un financement', description: 'CPF, France Travail, alternance, OPCO ou personnel.', href: '/financements', tone: 'light' },
+  { number: '03', icon: '↗', title: 'Recruter ou former', description: 'Une entrée dédiée aux besoins des entreprises.', href: '/entreprises', tone: 'blue' },
+  { number: '04', icon: 'CM', title: 'Parler à Cassandre', description: 'Un échange humain, gratuit et sans engagement.', href: '/contact', tone: 'light' },
+] as const;
 
-const btsHighlights: BtsTrainingHighlight[] = [
-  {
-    slug: '/bts/mos',
-    title: 'BTS Management Opérationnel de la Sécurité (MOS)',
-    description: 'Apprenez à organiser des prestations de sécurité, coordonner les équipes et suivre la relation client sur le terrain.',
-    modality: 'En présentiel OU à distance',
-    tags: ['Sécurité', 'Alternance'],
-    visual: 'mos',
-  },
-  {
-    slug: '/bts/mco',
-    title: 'BTS Management Commercial Opérationnel (MCO)',
-    description: 'Développez la vente, la relation client et le management pour piloter efficacement une unité commerciale.',
-    modality: 'En présentiel OU à distance',
-    tags: ['Commerce', 'Alternance', 'Relation client'],
-    visual: 'mco',
-  },
-  {
-    slug: '/bts/ndrc',
-    title: 'BTS Négociation et Digitalisation de la Relation Client (NDRC)',
-    description: 'Maîtrisez la prospection, la négociation et la fidélisation, en face à face comme sur les canaux digitaux.',
-    modality: 'En présentiel OU à distance',
-    tags: ['Vente', 'Digital', 'Alternance'],
-    visual: 'ndrc',
-  },
-  {
-    slug: '/bts/commerce-international',
-    title: 'BTS Commerce International (CI)',
-    description: 'Préparez-vous à développer des marchés, gérer l’import-export et coordonner des opérations à l’international.',
-    modality: 'En présentiel OU à distance',
-    tags: ['International', 'Import-export', 'Alternance'],
-    visual: 'ci',
-  },
-  {
-    slug: '/bts/professions-immobilieres',
-    title: 'BTS Professions Immobilières (PI)',
-    description: 'Formez-vous à la transaction, à la gestion locative, à la copropriété et au conseil immobilier.',
-    modality: 'En présentiel OU à distance',
-    tags: ['Immobilier', 'Gestion', 'Alternance'],
-    visual: 'pi',
-  },
-  {
-    slug: '/bts/comptabilite-gestion',
-    title: 'BTS Comptabilité et Gestion (CG)',
-    description: 'Un futur parcours 100 % à distance pour maîtriser la comptabilité, la gestion et le pilotage financier.',
-    modality: '100 % à distance uniquement',
-    tags: ['Comptabilité', 'Prochainement'],
-    visual: 'cg',
-  },
-];
+const featuredCourses = [
+  { eyebrow: 'Surveillance · 175 h', title: 'Agent de sécurité privée · APS', description: 'Prévenir les risques, surveiller les sites et protéger les personnes.', href: '/formations-securite/aps', tags: ['Puget-sur-Argens', 'Finançable'], featured: true, anchor: undefined },
+  { eyebrow: 'Protection rapprochée · 327 h', title: 'Agent de protection · A3P', description: 'Préparer et sécuriser les déplacements de personnes exposées.', href: '/formations-securite/a3p-apr', tags: ['A3P · APR', 'Agrément A3P'], featured: false, anchor: undefined },
+  { eyebrow: 'Direction · initial ou VAE', title: 'Dirigeant d’une société de sécurité', description: 'Créer, reprendre ou piloter une activité de sécurité privée.', href: '/formations-securite/desp', tags: ['Présentiel + distanciel', 'VAE'], featured: false, anchor: undefined },
+  { eyebrow: 'Incendie · 70 h', title: 'Agent SSIAP 1', description: 'Prévenir et intervenir dans les ERP et les IGH.', href: '/formations-securite/ssiap-1', tags: ['Examen inclus'], featured: false, anchor: undefined },
+  { eyebrow: 'Transport de personnes', title: 'Chauffeur VTC', description: 'Théorie, pratique, réglementation et préparation à l’examen.', href: '/vtc', tags: ['105 h', 'Tout inclus'], featured: false, anchor: undefined },
+  { eyebrow: 'Diplômes d’État', title: 'BTS en alternance', description: 'Six parcours orientés emploi, en présentiel ou à distance.', href: '/bts', tags: ['Alternance', 'Bac +2'], featured: false, anchor: 'bts' },
+] as const;
 
-export default function Home(){
-  return <>
-    <Hero badge="Centre de formation agréé" title={<>Formez-vous aux métiers qui <Highlight>recrutent</Highlight> vraiment.</>} subtitle="Centre de formation professionnelle spécialisé dans la sécurité privée, la sécurité incendie, le VTC et les BTS en alternance." actions={<><Button href="/formations-securite">Voir les formations</Button><Button href="/contact" variant="secondary">Être rappelé</Button><Button href="/contact" variant="ghost">Demander des informations</Button></>} visual={<OrientationAssistant/>}/>
-    <AnimatedTrainingCTA/>
-    <div className="relative"><FloatingBadge tone="academy" className="right-[8%] top-8"/><ProofBar/></div>
-    <RecognitionMarquee/>
-    <ConversionStrip/>
-    <ChatGptAgentBanner/>
-    <FullWidthBand eyebrow="Parcours lisible" title={<>Trois familles de <Highlight>formations certifiantes</Highlight></>} actions={<><Button href="/planning" variant="secondary">Voir le planning</Button><Button href="/tarifs" variant="ghost">Consulter les tarifs</Button></>}>Les formations professionnelles sécurité privée, la formation chauffeur VTC et les BTS en alternance répondent à des objectifs différents. La page d’accueil les présente donc séparément pour vous orienter plus vite.</FullWidthBand>
-    <VisualSection tone="academy" className="py-1"><section className="page-container py-12">
-      <SectionTitle eyebrow="3 parcours distincts" title="Choisissez d’abord votre famille de formation">Chaque bloc correspond à une demande différente : métier de la sécurité privée, chauffeur VTC ou diplôme BTS en alternance.</SectionTitle>
-      <div className="grid gap-5 lg:grid-cols-3">
-        <FormationCard title="1. Formations professionnelles métiers de la sécurité privée" desc="APS, SSIAP, A3P/APR, DESP ou CPSP : des parcours certifiants pour exercer, évoluer ou encadrer dans la sécurité privée et la sécurité incendie." href="/formations-securite" tags={['Sécurité privée','Certifications métier']}/>
-        <FormationCard title="2. Formation Chauffeur VTC" desc={vtcFormation.short} href={vtcFormation.slug} tags={['VTC','Transport de personnes']}/>
-        <FormationCard title="3. BTS en alternance" desc="Des diplômes d’État en alternance, séparés des formations professionnelles courtes : MOS, MCO, NDRC, Commerce International, Immobilier et Comptabilité-Gestion." href="/bts" tags={['Alternance','Diplômes d’État']}/>
-      </div><VisualTimeline tone="academy"/>
-    </section></VisualSection>
-    <VisualSection tone="security"><section id="formations-securite" className="scroll-mt-28 page-container py-14 md:py-16"><div data-security-training-heading data-training-heading><SectionTitle eyebrow="1. Sécurité privée" title={<>Formations professionnelles <span className="block"><Highlight>Métiers de la sécurité privée</Highlight></span></>}>Des parcours concrets et encadrés pour exercer dans la surveillance, la sécurité incendie, le secourisme, la protection rapprochée ou la direction d’entreprise.</SectionTitle></div><SecurityTrainingGrid items={securityHighlights}/></section></VisualSection>
-    <VisualSection tone="vtc"><section className="page-container py-14 md:py-16"><div data-training-heading><SectionTitle eyebrow="2. Chauffeur VTC" title={<>Devenez chauffeur VTC avec une <Highlight>formation complète</Highlight></>}>Préparez l’examen et votre future activité grâce à un parcours tout inclus qui associe théorie en e-learning et pratique en présentiel.</SectionTitle></div><VtcTrainingCard title={vtcFormation.title} description="Maîtrisez la réglementation, la conduite professionnelle et la relation client avec un accompagnement conçu pour réussir l’examen VTC." duration={vtcFormation.duration} href={vtcFormation.slug}/></section></VisualSection>
-    <VisualSection tone="bts"><section id="bts" className="scroll-mt-28 page-container py-14 md:py-16"><div data-training-heading><SectionTitle eyebrow="3. BTS en alternance" title={<>Préparez votre avenir avec un <Highlight>BTS en alternance</Highlight></>}>Explorez six diplômes d’État orientés vers l’emploi, avec une expérience concrète en entreprise ou un parcours à distance selon la formation.</SectionTitle></div><BtsTrainingGrid items={btsHighlights}/></section></VisualSection>
-    <section className="page-container py-12"><SectionTitle eyebrow="Pourquoi nous choisir" title="Un organisme rassurant pour candidats, financeurs et entreprises"/><div className="grid gap-5 md:grid-cols-3"><FeatureCard title="Agréments et certifications">Qualiopi, CNAPS, ADEF, SSIAP, INRS SST, UAI et références réglementaires affichées pour faciliter les démarches.</FeatureCard><FeatureCard title="Accompagnement candidat">Aide au choix de formation, financement, devis, rappel et préparation à l’inscription.</FeatureCard><FeatureCard title="Approche professionnelle">Pages longues restructurées, informations utiles visibles, CTA clairs et parcours sans friction.</FeatureCard></div></section>
-    <FullWidthBand eyebrow="Accompagnement" title={<>Des conseillers vous aident à valider un parcours <Highlight variant="large">finançable à 100%</Highlight></>} tone="gold" actions={<><Button href="/financements" variant="ghost">Explorer les financements</Button><Button href="/contact">Être accompagné</Button></>}>CPF, France Travail, alternance ou OPCO : nous vous orientons selon votre situation avant l’inscription, le devis ou la constitution du dossier.</FullWidthBand>
-    <section className="page-container py-12"><SectionTitle eyebrow="Nos centres" title="Paris, Côte d’Azur et Centre France"/><div className="grid gap-5 md:grid-cols-3">{contact.locations.map(l=><LocationCard key={l.name} {...l}/>)}</div></section>
-    <CampusSection/>
-    <section className="page-container py-12"><SectionTitle eyebrow="Financements" title={<>Des solutions de <Highlight>financement</Highlight> selon votre situation</>}/><div className="grid gap-5 md:grid-cols-4"><FinancingCard title="CPF" href="/financements/cpf">Mobilisable selon éligibilité de la formation.</FinancingCard><FinancingCard title="France Travail" href="/financements/france-travail">Accompagnement possible selon dossier.</FinancingCard><FinancingCard title="Alternance" href="/financements/alternance">BTS gratuits pour apprentis selon prise en charge.</FinancingCard><FinancingCard title="Entreprise / OPCO" href="/entreprises">Former salariés ou recruter un alternant.</FinancingCard></div></section>
-    <section className="page-container py-12"><div className="grid gap-4 md:grid-cols-4"><StatCard value="400 m²" label="Dédiés aux enseignements pratiques et théoriques"/><StatCard value="3" label="Implantations disponibles"/><StatCard value="10" label="Parcours formation et BTS présentés"/><StatCard value="08h-19h" label="Standard du lundi au vendredi"/></div></section>
-    <GoogleReviewsSection/>
-    <FullWidthBand eyebrow="Inscription" title="Une prochaine session peut correspondre à votre projet" tone="light" actions={<><Button href="/contact">Demander des informations</Button><Button href="tel:0422470768" variant="secondary">Appeler</Button></>}>Indiquez votre formation cible, votre ville et votre mode de financement : l’équipe revient vers vous avec les informations utiles.</FullWidthBand>
-    <PremiumFAQSection badge="FAQ" title="Questions fréquentes" description="Retrouvez les réponses aux questions les plus courantes sur nos formations, les financements, les inscriptions et l’accompagnement Intégrale Academy." items={globalFaq} contactHref="/contact"/>
-  </>
+const proofItems = [
+  ['Depuis 2018', 'Expérience terrain'],
+  ['400 m²', 'Campus principal'],
+  ['Qualiopi', 'Certification qualité'],
+  ['CNAPS · ADEF', 'Agréments métiers'],
+  ['3 centres', 'Selon les sessions'],
+] as const;
+
+const reviews = [
+  { name: 'Mee-Kyung K.', course: 'Formation A3P', text: 'Une formation A3P exigeante, réaliste et ultra-professionnalisante. Elle prépare vraiment au terrain.' },
+  { name: 'Mathys C.', course: 'Formation Agent de sécurité', text: 'Les locaux sont propres, bien équipés et agréables. La formation est complète et très bien organisée.' },
+] as const;
+
+export default function Home() {
+  return (
+    <>
+      <section className={styles.hero}>
+        <span className={styles.heroGlow} aria-hidden="true" />
+        <div className={styles.container}>
+          <div className={styles.heroCopy}>
+            <span className={styles.heroBadge}><i aria-hidden="true" /> Intégrale Academy · fondée en 2018</span>
+            <h1>Votre futur métier mérite une formation <em>à la hauteur.</em></h1>
+            <p>Des parcours concrets, des formateurs issus du terrain et une équipe qui vous accompagne réellement — du choix de la formation jusqu’à votre projet professionnel.</p>
+            <div className={styles.heroActions}>
+              <Link href="#formations-securite" className={styles.primaryButton}>Trouver ma formation <span aria-hidden="true">→</span></Link>
+              <Link href="/planning" className={styles.goldButton}>Voir le planning</Link>
+            </div>
+            <div className={styles.heroProofs} aria-label="Points forts d’Intégrale Academy">
+              <span>Formations réglementées</span>
+              <span>Financements possibles</span>
+              <span>Côte d’Azur · Paris · Centre France</span>
+            </div>
+          </div>
+
+          <div className={styles.assistantDock}>
+            <OrientationAssistant variant="homeDock" />
+          </div>
+        </div>
+      </section>
+
+      <section className={styles.journey}>
+        <div className={styles.container}>
+          <div className={styles.sectionHeading}>
+            <div>
+              <span>Préparez votre inscription</span>
+              <h2>Quatre étapes. Une équipe à chaque étape.</h2>
+            </div>
+            <p>La page vous guide sans vous demander de comprendre seul les financements, les prérequis ou les démarches administratives.</p>
+          </div>
+
+          <div className={styles.journeyGrid}>
+            <article className={styles.journeyLead}>
+              <span className={styles.cardEyebrow}>Votre parcours Intégrale Academy</span>
+              <h3>Vous avancez avec un plan clair.</h3>
+              <p>Commencez par choisir un métier. Nous vous aidons ensuite à vérifier les conditions, trouver une solution de financement et préparer votre inscription.</p>
+              <div className={styles.journeySteps}>
+                <span>01 · Choisir</span><span>02 · Financer</span><span>03 · S’inscrire</span><span>04 · Se former</span>
+              </div>
+            </article>
+
+            <div className={styles.journeyCards}>
+              {journeyCards.map((card) => (
+                <Link key={card.number} href={card.href} className={`${styles.journeyCard} ${styles[card.tone]}`}>
+                  <span className={styles.journeyIcon}>{card.icon}</span>
+                  <h3>{card.title}</h3>
+                  <p>{card.description}</p>
+                  <span className={styles.cardArrow} aria-hidden="true">→</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="formations-securite" className={styles.courses}>
+        <div className={styles.container}>
+          <div className={`${styles.sectionHeading} ${styles.sectionHeadingDark}`}>
+            <div><span>Nos parcours phares</span><h2>Des métiers concrets. Des formations lisibles.</h2></div>
+            <p>Retrouvez immédiatement nos formations les plus recherchées. Chaque carte mène vers une page complète avec programme, dates, tarif et financement.</p>
+          </div>
+
+          <div className={styles.courseGrid}>
+            {featuredCourses.map((course) => (
+              <Link id={course.anchor} key={course.href} href={course.href} className={`${styles.courseCard} ${course.featured ? styles.courseFeatured : ''}`}>
+                <span className={styles.courseEyebrow}>{course.eyebrow}</span>
+                <div>
+                  <h3>{course.title}</h3><p>{course.description}</p>
+                  <div className={styles.courseTags}>{course.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
+                </div>
+                <span className={styles.courseArrow} aria-hidden="true">→</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className={styles.proofBar} aria-label="Chiffres et reconnaissances">
+        <div className={styles.container}><div className={styles.proofGrid}>{proofItems.map(([value, label]) => <div key={value}><strong>{value}</strong><span>{label}</span></div>)}</div></div>
+      </section>
+
+      <section className={styles.reviews}>
+        <div className={styles.container}>
+          <div className={styles.sectionHeading}>
+            <div><span>Avis stagiaires</span><h2>Ils parlent mieux de nous que nous-mêmes.</h2></div>
+            <p>Des retours issus de formations APS, A3P, protection rapprochée et VTC.</p>
+          </div>
+
+          <div className={styles.reviewGrid}>
+            <article className={styles.ratingCard}>
+              <span>Note Google sélectionnée</span><strong>5,0</strong><div aria-label="5 étoiles sur 5">★★★★★</div><p>15 avis mis en avant · APS · A3P · VTC</p>
+            </article>
+            {reviews.map((review) => (
+              <article key={review.name} className={styles.reviewCard}>
+                <div aria-label="5 étoiles sur 5">★★★★★</div><blockquote>« {review.text} »</blockquote>
+                <footer><strong>{review.name}</strong><span>{review.course}</span></footer>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className={styles.contactSection}>
+        <div className={styles.container}>
+          <div className={styles.contactBox}>
+            <span className={styles.contactHalo} aria-hidden="true" />
+            <div className={styles.contactCopy}>
+              <span>Faites le premier pas</span><h2>Votre projet mérite un échange simple.</h2>
+              <p>Expliquez votre objectif à Cassandre. Elle vous aide à identifier la formation, vérifier les prérequis et comprendre les solutions de financement.</p>
+              <div className={styles.contactActions}>
+                <Link href={appointmentFormUrl} className={styles.goldButton}>Réserver un rendez-vous <span aria-hidden="true">→</span></Link>
+                <a href="tel:0422470768" className={styles.contactSecondary}>Appeler</a>
+              </div>
+            </div>
+            <div className={styles.contactCard}>
+              <div className={styles.cassandreVisual}><Image src="/images/cassandre-memoji.png" alt="Cassandre, responsable commerciale d’Intégrale Academy" width={190} height={190} /></div>
+              <div><strong>Cassandre</strong><span>Responsable commerciale</span><a href="tel:0422470768">04 22 47 07 68</a></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
+  );
 }

@@ -19,6 +19,8 @@ type AssistantFormation = {
   icon: string;
   infoUrl: string;
   rdvUrl: string;
+  homeTitle: string;
+  homeSubtitle: string;
 };
 
 const calendlyDirigeantUrl = 'https://calendly.com/integraleacademy/dirigeant';
@@ -27,11 +29,11 @@ const apsFormation = securityFormations.find(formation => formation.slug === '/f
 const informationLoadingDelayMs = 900;
 
 const formations: AssistantFormation[] = [
-  { key: 'aps', label: 'Agent de sécurité privée (APS)', icon: '👮', infoUrl: '/formations-securite/aps', rdvUrl: '/contact?formation=aps&type=rdv' },
-  { key: 'a3p', label: 'Agent de protection physique des personnes (A3P)', icon: '◆', infoUrl: '/formations-securite/a3p-apr', rdvUrl: '/contact?formation=a3p&type=rdv' },
-  { key: 'desp', label: 'Dirigeant d’entreprise de sécurité (DESP)', icon: '▣', infoUrl: '/formations-securite/desp', rdvUrl: '/contact?formation=desp&type=rdv' },
-  { key: 'vtc', label: 'Chauffeur VTC', icon: '🚗', infoUrl: '/vtc', rdvUrl: '/contact?formation=vtc&type=rdv' },
-  { key: 'bts', label: 'Un BTS en alternance', icon: '◇', infoUrl: '/bts', rdvUrl: '/contact?formation=bts&type=rdv' },
+  { key: 'aps', label: 'Agent de sécurité privée (APS)', icon: '👮', infoUrl: '/formations-securite/aps', rdvUrl: '/contact?formation=aps&type=rdv', homeTitle: 'Agent de sécurité', homeSubtitle: 'APS · surveillance' },
+  { key: 'a3p', label: 'Agent de protection physique des personnes (A3P)', icon: '◆', infoUrl: '/formations-securite/a3p-apr', rdvUrl: '/contact?formation=a3p&type=rdv', homeTitle: 'Agent de protection', homeSubtitle: 'A3P · APR' },
+  { key: 'desp', label: 'Dirigeant d’entreprise de sécurité (DESP)', icon: '▣', infoUrl: '/formations-securite/desp', rdvUrl: '/contact?formation=desp&type=rdv', homeTitle: 'Dirigeant sécurité', homeSubtitle: 'Initial · VAE' },
+  { key: 'vtc', label: 'Chauffeur VTC', icon: '🚗', infoUrl: '/vtc', rdvUrl: '/contact?formation=vtc&type=rdv', homeTitle: 'Chauffeur VTC', homeSubtitle: 'Théorie · pratique' },
+  { key: 'bts', label: 'Un BTS en alternance', icon: '◇', infoUrl: '/bts', rdvUrl: '/contact?formation=bts&type=rdv', homeTitle: 'Étudiant en BTS', homeSubtitle: 'Alternance · diplôme' },
 ];
 
 type AssistantFormationDetails = { title: string; shortLabel: string; sessionSlugs: string[]; price: string; keyPoints: string[] };
@@ -44,7 +46,7 @@ const formationDetails: Record<FormationKey, AssistantFormationDetails> = {
   bts: { title: 'BTS en alternance', shortLabel: 'BTS', sessionSlugs: ['bts-mos', 'bts-mco'], price: 'Sans frais pour l’apprenti', keyPoints: ['Parcours : MOS, MCO, NDRC, Commerce international, Professions immobilières et Comptabilité-Gestion', 'Durée habituelle : 2 ans en alternance', 'Modalités : présentiel ou distanciel selon le BTS et le dossier', 'Certification : diplôme national de niveau 5 délivré par le Ministère de l’Éducation nationale', 'Admission : niveau bac ou titre équivalent et projet d’alternance', 'Financement : prise en charge par l’entreprise et son OPCO selon le contrat'] },
 };
 
-export function OrientationAssistant({initialFormationKey, initialStep, hideInfoAction = false}:{initialFormationKey?:FormationKey; initialStep?:Step; hideInfoAction?:boolean} = {}){
+export function OrientationAssistant({initialFormationKey, initialStep, hideInfoAction = false, variant = 'default'}:{initialFormationKey?:FormationKey; initialStep?:Step; hideInfoAction?:boolean; variant?:'default'|'homeDock'} = {}){
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(true);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -136,6 +138,30 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
     return isMounted && typeof document !== 'undefined' ? createPortal(minimizedButton, document.body) : minimizedButton;
   }
 
+  const homeDockPanel = <aside className="relative overflow-hidden rounded-[1.8rem] border border-white/10 bg-[#081626] p-5 text-white shadow-[0_32px_90px_rgba(8,22,38,.22)] sm:p-6 lg:p-7" aria-label="Assistant d’orientation formation">
+    <div className="pointer-events-none absolute -right-20 -top-24 h-64 w-64 rounded-full border border-academy-gold/15 shadow-[0_0_0_52px_rgba(242,187,49,.025),0_0_0_104px_rgba(242,187,49,.018)]" aria-hidden="true" />
+    <div className="relative grid gap-6 lg:grid-cols-[220px_minmax(0,1fr)] lg:items-start">
+      <div>
+        <p className="text-[10px] font-black uppercase tracking-[.2em] text-academy-gold">Assistant d’orientation</p>
+        <h2 className="mt-3 text-3xl font-black leading-[.95] tracking-[-.045em] sm:text-4xl">Que voulez-vous devenir&nbsp;?</h2>
+        <p className="mt-4 inline-flex items-center gap-2 text-xs font-bold text-white/60"><span className="status-dot" aria-hidden="true" /> Disponible maintenant</p>
+      </div>
+      <div>
+        <div className="grid gap-2.5 sm:grid-cols-2 xl:grid-cols-5">
+          {formations.map((formation,index) => <button key={formation.key} type="button" onClick={() => chooseFormation(formation.key)} className="group flex min-h-28 flex-col rounded-[1.25rem] border border-white/10 bg-white/[.055] p-4 text-left transition hover:-translate-y-1 hover:border-academy-gold/50 hover:bg-white/[.09] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-academy-gold">
+            <span className="text-[10px] font-black text-academy-gold">{String(index + 1).padStart(2,'0')}</span>
+            <span className="mt-auto text-sm font-black leading-5 text-white">{formation.homeTitle}</span>
+            <span className="mt-1 flex w-full items-center justify-between gap-2 text-[10px] font-bold text-white/55"><span>{formation.homeSubtitle}</span><span className="text-academy-gold transition group-hover:translate-x-1" aria-hidden="true">→</span></span>
+          </button>)}
+        </div>
+        <div className="mt-4 flex flex-col gap-3 text-[10px] font-semibold text-white/50 sm:flex-row sm:items-center sm:justify-between">
+          <span>L’assistant conserve votre parcours : formation, situation, financement, dates et prise de rendez-vous.</span>
+          <button type="button" onClick={() => { setSelectedKey(null); setStep('formations'); setIsExpanded(true); }} className="shrink-0 font-black text-white underline decoration-academy-gold/50 underline-offset-4 transition hover:text-academy-gold">Je ne sais pas encore →</button>
+        </div>
+      </div>
+    </div>
+  </aside>;
+
   const assistantPanel = <aside className={`orientation-assistant relative mx-auto w-full overflow-hidden rounded-[1.5rem] border border-white/70 bg-white/95 p-4 text-academy-ink shadow-[0_28px_90px_rgba(17,17,17,.16)] ring-1 ring-academy-line backdrop-blur reveal sm:rounded-[2rem] sm:p-5 ${isExpanded ? 'flex max-h-[90vh] w-[calc(100vw-24px)] flex-col sm:p-6 md:max-h-[88vh] md:w-[min(1120px,calc(100vw-96px))] md:max-w-none' : 'max-w-xl'}`} aria-label="Assistant d’orientation formation">
     <div className="absolute -right-16 -top-16 h-40 w-40 rounded-full bg-academy-gold/30 blur-3xl" aria-hidden="true"/>
     <div className={isExpanded ? 'relative flex min-h-0 flex-1 flex-col' : 'relative'}>
@@ -207,6 +233,8 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
     const expandedPanel = <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-academy-ink/45 p-3 backdrop-blur-sm sm:p-6" role="presentation">{assistantPanel}</div>;
     return isMounted && typeof document !== 'undefined' ? createPortal(expandedPanel, document.body) : expandedPanel;
   }
+
+  if (variant === 'homeDock') return homeDockPanel;
 
   return assistantPanel;
 }

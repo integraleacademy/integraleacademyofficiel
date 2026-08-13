@@ -1,28 +1,34 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 const STORAGE_KEY = 'integrale-academy-project-popup-dismissed';
 
 export function ProjectTrainingPopup() {
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
+    if (pathname === '/') {
+      return;
+    }
+
     if (window.sessionStorage.getItem(STORAGE_KEY) === 'true') {
       return;
     }
 
     const timer = window.setTimeout(() => setIsOpen(true), 700);
     return () => window.clearTimeout(timer);
-  }, []);
+  }, [pathname]);
 
   function closePopup() {
     window.sessionStorage.setItem(STORAGE_KEY, 'true');
     setIsOpen(false);
   }
 
-  if (!isOpen) {
+  if (pathname === '/' || !isOpen) {
     return null;
   }
 

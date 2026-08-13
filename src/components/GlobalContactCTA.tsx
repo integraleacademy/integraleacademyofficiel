@@ -65,7 +65,7 @@ export function GlobalContactCTA() {
     });
   }
 
-  if (hiddenPathPrefixes.some((prefix) => pathname?.startsWith(prefix))) {
+  if (pathname === '/' || hiddenPathPrefixes.some((prefix) => pathname?.startsWith(prefix))) {
     return null;
   }
 
