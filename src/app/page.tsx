@@ -26,38 +26,63 @@ const journeyCards = [
 const securityHighlights: SecurityTrainingHighlight[] = [
   {
     slug: '/formations-securite/aps',
-    title: 'Formation Agent de Prévention et de Sécurité (APS)',
-    description: 'Apprenez à prévenir les risques, surveiller les sites et protéger les personnes afin d’exercer comme agent de sécurité privée.',
-    duration: '5 semaines - 175 heures',
+    shortTitle: 'APS',
+    title: 'Agent de prévention et de sécurité',
+    description: 'Prévenir les risques, surveiller les sites et protéger les personnes.',
+    duration: '175 h',
+    modality: 'Hybride',
+    location: 'Puget-sur-Argens',
+    financing: 'CPF · France Travail',
+    nextSession: '7 septembre 2026',
     visual: 'aps',
+    featured: true,
   },
   {
     slug: '/formations-securite/ssiap-1',
-    title: 'Formation SSIAP 1 - Agent de sécurité incendie',
-    description: 'Prévenez les risques d’incendie, surveillez les installations et intervenez dans les ERP et les IGH.',
-    duration: '2 semaines - 70 heures',
+    shortTitle: 'SSIAP 1',
+    title: 'Agent de sécurité incendie',
+    description: 'Prévenir les risques d’incendie et intervenir dans les ERP et les IGH.',
+    duration: '70 h',
+    modality: 'Présentiel',
+    location: 'Puget-sur-Argens',
+    financing: 'CPF · France Travail',
+    nextSession: '12 octobre 2026',
     visual: 'ssiap',
   },
   {
     slug: '/formations-securite/sst',
-    title: 'Formation Sauveteur Secouriste du Travail (SST)',
-    description: 'Acquérez les gestes de premiers secours et contribuez à la prévention des risques professionnels en entreprise.',
-    duration: '2 jours - 14 heures',
+    shortTitle: 'SST',
+    title: 'Sauveteur secouriste du travail',
+    description: 'Maîtriser les gestes de premiers secours et la prévention en entreprise.',
+    duration: '14 h',
+    modality: 'Présentiel',
+    location: 'Puget-sur-Argens',
+    financing: 'Entreprise · Personnel',
+    nextSession: 'Dates sur demande',
     visual: 'sst',
   },
   {
     slug: '/formations-securite/a3p-apr',
-    title: 'Formation Agent de Protection Physique des Personnes (A3P)',
-    description: 'Préparez et sécurisez les déplacements de personnes exposées grâce à des techniques professionnelles de protection rapprochée.',
-    duration: '9 semaines - 327 heures',
+    shortTitle: 'A3P',
+    title: 'Agent de protection physique des personnes',
+    description: 'Préparer et sécuriser les déplacements de personnes exposées.',
+    duration: '327 h',
+    modality: 'Présentiel',
+    location: 'Puget-sur-Argens',
+    financing: 'CPF · France Travail',
+    nextSession: '1er septembre 2026',
     visual: 'a3p',
   },
   {
     slug: '/formations-securite/desp',
-    title: "Formation Dirigeant d'une entreprise de sécurité privée (DESP)",
-    description: 'Acquérez les compétences juridiques, commerciales et managériales pour créer ou diriger une entreprise de sécurité privée, en parcours initial ou par la VAE.',
-    duration: 'Initial : 7 semaines - 245 heures',
-    secondaryDuration: 'VAE : environ 1 mois',
+    shortTitle: 'DESP',
+    title: 'Dirigeant d’entreprise de sécurité privée',
+    description: 'Créer, reprendre ou piloter une entreprise de sécurité privée.',
+    duration: '245 h',
+    modality: 'Hybride · VAE',
+    location: '3 campus + distanciel',
+    financing: 'CPF · France Travail',
+    nextSession: 'Selon le parcours',
     visual: 'desp',
   },
 ];
@@ -142,7 +167,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className={styles.assistantDock}>
+          <div id="assistant-orientation" className={`${styles.assistantDock} scroll-mt-28`}>
             <OrientationAssistant variant="homeDock" />
           </div>
         </div>
@@ -184,10 +209,16 @@ export default function Home() {
 
       <VisualSection tone="security">
         <section id="formations-securite" className="scroll-mt-28 page-container py-14 md:py-16">
-          <div data-security-training-heading data-training-heading>
-            <SectionTitle eyebrow="1. Sécurité privée" title={<>Formations professionnelles <span className="block"><Highlight>Métiers de la sécurité privée</Highlight></span></>}>
-              Des parcours concrets et encadrés pour exercer dans la surveillance, la sécurité incendie, le secourisme, la protection rapprochée ou la direction d’entreprise.
-            </SectionTitle>
+          <div data-security-training-heading data-training-heading className={styles.securityTrainingHeading}>
+            <div>
+              <span className={styles.securityTrainingEyebrow}>Formations en sécurité privée</span>
+              <h2>Trouvez la formation adaptée à votre projet.</h2>
+              <p>Comparez les durées, les modalités, les lieux et les prochaines sessions en un seul regard.</p>
+            </div>
+            <div className={styles.securityTrainingActions}>
+              <Link href="/formations-securite" className={styles.securityTrainingSecondary}>Comparer les formations</Link>
+              <Link href="/planning" className={styles.securityTrainingPrimary}>Voir le planning <span aria-hidden="true">→</span></Link>
+            </div>
           </div>
           <SecurityTrainingGrid items={securityHighlights} />
         </section>
