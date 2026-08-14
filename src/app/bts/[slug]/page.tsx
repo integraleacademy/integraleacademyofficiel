@@ -7,6 +7,7 @@ import {
   Highlight,
   PremiumFAQSection,
 } from "@/components/ui";
+import { BtsMosReferencePage } from "@/components/BtsMosReferencePage";
 
 export function generateStaticParams() {
   return bts.map((x) => ({ slug: x.slug.split("/").pop()! }));
@@ -17,6 +18,13 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
+  if (slug === "mos") {
+    return {
+      title: "BTS MOS en alternance",
+      description:
+        "Préparez le BTS Management Opérationnel de la Sécurité en alternance, à Puget-sur-Argens ou 100 % à distance en visioconférence.",
+    };
+  }
   const f = bts.find((x) => x.slug.endsWith(slug));
   return { title: f?.title || "BTS", description: f?.desc };
 }
@@ -252,6 +260,7 @@ export default async function Page({
   const { slug } = await params;
   const f = bts.find((x) => x.slug.endsWith(slug));
   if (!f) notFound();
+  if (slug === "mos") return <BtsMosReferencePage />;
   const contactSlug = btsContactSlug(slug);
   const label = shortBtsName(f.title);
   return (

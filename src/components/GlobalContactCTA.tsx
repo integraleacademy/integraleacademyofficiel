@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { type CSSProperties, type MouseEvent, useEffect, useRef, useState } from 'react';
 import { appointmentFormUrl } from '@/components/ui';
@@ -10,6 +9,10 @@ const hiddenPathPrefixes = ['/admin', '/login', '/connexion', '/espace', '/mon-c
 
 function CalendarIcon() {
   return <svg viewBox="0 0 24 24" className="h-5 w-5 shrink-0" aria-hidden="true"><path d="M7 3v3M17 3v3M4.5 9.2h15M6.5 5h11A2.5 2.5 0 0 1 20 7.5v10A2.5 2.5 0 0 1 17.5 20h-11A2.5 2.5 0 0 1 4 17.5v-10A2.5 2.5 0 0 1 6.5 5Z" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"/><path d="M8 13h.01M12 13h.01M16 13h.01M8 16.5h.01M12 16.5h.01" fill="none" stroke="currentColor" strokeLinecap="round" strokeWidth="3"/></svg>;
+}
+
+function EmailIcon() {
+  return <svg viewBox="0 0 24 24" className="h-5 w-5 shrink-0" aria-hidden="true"><path d="M4 6.5h16v11H4z" fill="none" stroke="currentColor" strokeLinejoin="round" strokeWidth="2"/><path d="m5 8 7 5 7-5" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"/></svg>;
 }
 
 function PhoneIcon({ className = 'h-5 w-5 shrink-0' }: { className?: string }) {
@@ -26,6 +29,15 @@ function SparkleIcon() {
 
 export function GlobalContactCTA() {
   const pathname = usePathname();
+  const isBts = pathname?.startsWith('/bts');
+  const contactName = isBts ? 'Aurélie' : 'Cassandre';
+  const contactFullName = isBts ? 'Aurélie CHAUSSEZ' : 'Cassandre';
+  const contactRole = isBts
+    ? 'Chargée des relations clients — Responsable des BTS'
+    : 'Responsable commerciale — Intégrale Academy';
+  const directPhoneHref = isBts ? 'tel:+33487830615' : 'tel:+33422470768';
+  const directPhoneLabel = isBts ? '04 87 83 06 15' : '04 22 47 07 68';
+  const primaryContactHref = isBts ? 'mailto:aurelie@integraleacademy.com?subject=Question%20sur%20un%20BTS' : appointmentFormUrl;
   const shellRef = useRef<HTMLDivElement | null>(null);
   const frameRef = useRef<number | null>(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -87,44 +99,61 @@ export function GlobalContactCTA() {
                   Faites le <span className={styles.highlight}>premier pas</span> vers votre futur métier.
                 </h2>
                 <p className={`${styles.revealItem} mt-5 max-w-2xl text-base font-medium leading-8 text-academy-muted sm:text-lg`} style={{ '--delay': '280ms' } as CSSProperties}>
-                  Notre équipe vous accompagne pour choisir la formation adaptée à votre projet et vous aider à concrétiser votre avenir professionnel.
+                  {isBts
+                    ? 'Aurélie vous accompagne pour choisir votre BTS, préparer votre candidature et comprendre toutes les étapes de l’alternance.'
+                    : 'Notre équipe vous accompagne pour choisir la formation adaptée à votre projet et vous aider à concrétiser votre avenir professionnel.'}
                 </p>
               </div>
 
               <div className={`${styles.contactCard} ${styles.revealItem}`} style={{ '--delay': '380ms' } as CSSProperties}>
                 <div className="grid gap-5 sm:grid-cols-[auto_1fr] sm:items-start">
                   <div className={styles.memojiWrap}>
-                    <img
-                      src="/images/cassandre-memoji.png"
-                      alt="Memoji détouré de Cassandre, responsable commerciale d’Intégrale Academy"
-                      className={styles.memoji}
-                      width="190"
-                      height="190"
-                      loading="lazy"
-                    />
+                    {isBts ? (
+                      <div
+                        className="grid h-[190px] w-[190px] place-items-center rounded-[2rem] bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,.9),transparent_34%),linear-gradient(145deg,#F7E5AC,#C99925)] text-5xl font-black text-academy-ink shadow-gold"
+                        aria-label="Aurélie CHAUSSEZ, chargée des relations clients et responsable des BTS"
+                      >
+                        AC
+                      </div>
+                    ) : (
+                      <img
+                        src="/images/cassandre-memoji.png"
+                        alt="Memoji détouré de Cassandre, responsable commerciale d’Intégrale Academy"
+                        className={styles.memoji}
+                        width="190"
+                        height="190"
+                        loading="lazy"
+                      />
+                    )}
                   </div>
 
                   <div className="min-w-0 pt-1 sm:pt-2">
-                    <p className="text-xs font-black uppercase tracking-[.18em] text-academy-gold-strong">Contactez Cassandre</p>
-                    <h3 className="mt-2 text-3xl font-black leading-tight text-academy-ink">Cassandre</h3>
-                    <p className="mt-2 max-w-xs text-sm font-bold leading-6 text-academy-muted">Responsable commerciale — Intégrale Academy</p>
-                    <a href="tel:+33422470768" className={`${styles.phoneLink} mt-4`}>
+                    <p className="text-xs font-black uppercase tracking-[.18em] text-academy-gold-strong">Contactez {contactName}</p>
+                    <h3 className="mt-2 text-3xl font-black leading-tight text-academy-ink">{contactFullName}</h3>
+                    <p className="mt-2 max-w-xs text-sm font-bold leading-6 text-academy-muted">{contactRole}</p>
+                    <a href={directPhoneHref} className={`${styles.phoneLink} mt-4`}>
                       <PhoneIcon className="h-4 w-4 shrink-0 text-academy-gold-strong" />
-                      04 22 47 07 68
+                      {directPhoneLabel}
                     </a>
+                    {isBts && (
+                      <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-xs font-bold text-academy-muted">
+                        <a href="tel:+33769390457" className="hover:text-academy-ink">Portable : 07 69 39 04 57</a>
+                        <a href="mailto:aurelie@integraleacademy.com" className="hover:text-academy-ink">aurelie@integraleacademy.com</a>
+                      </div>
+                    )}
                   </div>
                 </div>
 
                 <div className={`${styles.revealItem} mt-6 grid gap-3 xl:grid-cols-[1.18fr_.82fr]`} style={{ '--delay': '480ms' } as CSSProperties}>
-                  <Link href={appointmentFormUrl} className={`${styles.primaryButton} focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-academy-gold`}>
-                    <CalendarIcon />
-                    <span className={styles.longLabel}>Réserver un rendez-vous téléphonique</span>
-                    <span className={styles.shortLabel}>Réserver un rendez-vous</span>
+                  <a href={primaryContactHref} className={`${styles.primaryButton} focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-academy-gold`}>
+                    {isBts ? <EmailIcon /> : <CalendarIcon />}
+                    <span className={styles.longLabel}>{isBts ? 'Écrire à Aurélie' : 'Réserver un rendez-vous téléphonique'}</span>
+                    <span className={styles.shortLabel}>{isBts ? 'Écrire à Aurélie' : 'Réserver un rendez-vous'}</span>
                     <span className={styles.arrow} aria-hidden="true">→</span>
-                  </Link>
-                  <a href="tel:+33422470768" className={`${styles.secondaryButton} focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-academy-gold`}>
+                  </a>
+                  <a href={directPhoneHref} className={`${styles.secondaryButton} focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-academy-gold`}>
                     <PhoneIcon />
-                    Appeler Cassandre
+                    Appeler {contactName}
                   </a>
                 </div>
 

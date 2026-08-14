@@ -8,6 +8,8 @@ const STORAGE_KEY = 'integrale-academy-project-popup-dismissed';
 
 export function ProjectTrainingPopup() {
   const pathname = usePathname();
+  const isBts = pathname?.startsWith('/bts');
+  const contactName = isBts ? 'Aurélie' : 'Cassandre';
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -52,37 +54,48 @@ export function ProjectTrainingPopup() {
         <div className="flex items-start gap-4 pr-10">
           <div
             className="relative grid h-16 w-16 shrink-0 place-items-center overflow-hidden rounded-full bg-gradient-to-br from-academy-gold via-yellow-200 to-white text-xl font-black text-academy-gold-text shadow-gold ring-4 ring-white"
-            aria-label="Cassandre M., responsable commerciale Intégrale Academy"
+            aria-label={isBts ? 'Aurélie CHAUSSEZ, responsable des BTS' : 'Cassandre M., responsable commerciale Intégrale Academy'}
           >
             <span className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,.95),transparent_38%)]" aria-hidden="true" />
-            <span className="relative">CM</span>
+            <span className="relative">{isBts ? 'AC' : 'CM'}</span>
           </div>
           <div>
-            <p className="text-xs font-black uppercase tracking-[.18em] text-yellow-700">Cassandre · Responsable commerciale</p>
+            <p className="text-xs font-black uppercase tracking-[.18em] text-yellow-700">
+              {isBts ? 'Aurélie · Responsable des BTS' : 'Cassandre · Responsable commerciale'}
+            </p>
             <h2 id="project-popup-title" className="mt-2 text-2xl font-black tracking-tight text-academy-ink">
-              Parlez-nous de votre projet de formation
+              {isBts ? 'Parlons de votre projet BTS' : 'Parlez-nous de votre projet de formation'}
             </h2>
           </div>
         </div>
 
         <p className="mt-4 text-sm leading-6 text-stone-600">
-          Réservez un RDV téléphone avec Cassandre, responsable commerciale Intégrale Academy.
+          {isBts
+            ? 'Aurélie CHAUSSEZ, chargée des relations clients et responsable des BTS, répond à vos questions sur la candidature et l’alternance.'
+            : 'Réservez un RDV téléphone avec Cassandre, responsable commerciale Intégrale Academy.'}
         </p>
+
+        {isBts && (
+          <p className="mt-3 text-xs font-bold leading-5 text-stone-500">
+            Ligne directe : 04 87 83 06 15 · Portable : 07 69 39 04 57<br />
+            aurelie@integraleacademy.com
+          </p>
+        )}
 
         <div className="mt-5 grid gap-3">
           <Link
-            href="tel:0422470768"
+            href={isBts ? 'tel:+33487830615' : 'tel:0422470768'}
             onClick={closePopup}
             className="inline-flex items-center justify-center rounded-full bg-academy-gold px-5 py-3 text-sm font-black text-academy-gold-text shadow-gold transition hover:-translate-y-0.5 hover:brightness-95"
           >
-            Réserver un RDV téléphonique <span className="ml-3" aria-hidden="true">→</span>
+            {isBts ? `Appeler ${contactName}` : 'Réserver un RDV téléphonique'} <span className="ml-3" aria-hidden="true">→</span>
           </Link>
           <Link
-            href="/contact"
+            href={isBts ? 'mailto:aurelie@integraleacademy.com?subject=Question%20sur%20un%20BTS' : '/contact'}
             onClick={closePopup}
             className="inline-flex items-center justify-center rounded-full bg-academy-ink px-5 py-3 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-black"
           >
-            Écrire à l’équipe
+            {isBts ? `Écrire à ${contactName}` : 'Écrire à l’équipe'}
           </Link>
         </div>
 
