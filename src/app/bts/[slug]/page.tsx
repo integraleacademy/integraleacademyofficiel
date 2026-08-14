@@ -9,6 +9,7 @@ import {
 } from "@/components/ui";
 import { BtsMosReferencePage } from "@/components/BtsMosReferencePage";
 import { BtsMcoReferencePage } from "@/components/BtsMcoReferencePage";
+import { BtsCiReferencePage } from "@/components/BtsCiReferencePage";
 
 export function generateStaticParams() {
   return bts.map((x) => ({ slug: x.slug.split("/").pop()! }));
@@ -31,6 +32,13 @@ export async function generateMetadata({
       title: "BTS MCO en alternance",
       description:
         "Préparez le BTS Management Commercial Opérationnel en alternance, à Puget-sur-Argens ou 100 % à distance en visioconférence.",
+    };
+  }
+  if (slug === "commerce-international") {
+    return {
+      title: "BTS Commerce International en alternance",
+      description:
+        "Préparez le BTS Commerce International en alternance, à Puget-sur-Argens ou 100 % à distance en visioconférence. Diplôme d’État de niveau 5, RNCP 41759.",
     };
   }
   const f = bts.find((x) => x.slug.endsWith(slug));
@@ -270,6 +278,7 @@ export default async function Page({
   if (!f) notFound();
   if (slug === "mos") return <BtsMosReferencePage />;
   if (slug === "mco") return <BtsMcoReferencePage />;
+  if (slug === "commerce-international") return <BtsCiReferencePage />;
   const contactSlug = btsContactSlug(slug);
   const label = shortBtsName(f.title);
   return (
