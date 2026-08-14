@@ -1,4 +1,5 @@
-import { PublicTrainingSessions, isPublicUpcomingSession } from '@/components/PublicTrainingSessions';
+import { isPublicUpcomingSession } from '@/components/PublicTrainingSessions';
+import { TrainingDatesPricingSection } from '@/components/TrainingDatesPricingSection';
 import { Button, ConversionStrip, FeatureCard, PremiumFAQSection } from '@/components/ui';
 import { DespHero } from '@/components/DespHero';
 import { listSessions } from '@/lib/training-data';
@@ -37,7 +38,16 @@ export default async function DespInitialPage(){
   return <main className="relative overflow-hidden pb-28 lg:pb-0">
     <DespHero variant="initial" title="Formation DESP initial : devenez dirigeant d’entreprise de sécurité privée" subtitle={<><p>Apprenez étape par étape à créer, reprendre ou diriger une entreprise de sécurité privée avec un parcours DESP structuré, hybride et orienté projet professionnel.</p><p>Intégrale Academy vous accompagne sur la réglementation CNAPS, la gestion, le management, le développement commercial et la préparation aux évaluations du titre RNCP.</p></>} stats={[["Durée","245 h","175 h à distance + 70 h en présentiel"],["Rythme","7 semaines","parcours intensif"],["Tarif",despInitialAdminData.priceLabel,"selon offre administrée"],["Lieux","3 sites","Paris, Côte d’Azur ou Aurillac"],["RNCP",despInitialAdminData.rncpCode,"niveau 5"],["Objectif","CNAPS","préparer l’agrément dirigeant"]]} sessions={sessions}/>
     <section className="page-container py-10"><div className="grid gap-4 md:grid-cols-3"><FeatureCard title="Durée">7 semaines · 245 heures</FeatureCard><FeatureCard title="Public concerné">Candidats souhaitant acquérir ou consolider les compétences de dirigeant en sécurité privée.</FeatureCard><FeatureCard title="Prérequis">Niveau 4 ou expérience à valider avec l’équipe admissions ; conditions CNAPS et honorabilité à vérifier.</FeatureCard><FeatureCard title="Lieux">Distanciel + présentiel à Paris, Puget-sur-Argens ou Aurillac selon les sessions.</FeatureCard><FeatureCard title="Financement">CPF, France Travail, entreprise ou facilités de paiement selon dossier.</FeatureCard><FeatureCard title="Certification / examen"><strong>Titre RNCP Dirigeant d’entreprise de sécurité privée – niveau 5</strong><br/>Titre : Dirigeant d’entreprise de sécurité privée · Sigle : DESP · Code : {despInitialAdminData.rncpCode} · Certificateur : Scotia Formation · Échéance actuelle : 28 mars 2027 · Durée : {despInitialAdminData.duration.total} · Tarif actuel : {despInitialAdminData.priceLabel}<br/><span className="mt-2 block">Cette certification permet de justifier de l’aptitude professionnelle nécessaire à la demande d’agrément dirigeant auprès du CNAPS. L’agrément reste délivré séparément par le CNAPS après étude du dossier.</span></FeatureCard></div></section>
-    <PublicTrainingSessions sessions={sessions} title="Prochaines dates DESP initial" intro="Dates, lieux, tarifs, places restantes, statuts, périodes à distance / présentiel et liens d’inscription proviennent directement de l’administration." displayLimit={0}/>
+    <TrainingDatesPricingSection
+      sessions={sessions}
+      defaultPrice={despInitialAdminData.priceLabel}
+      defaultLocation="Paris, Puget-sur-Argens ou Aurillac"
+      priceDescription="Formation hybride de 245 heures · certification finale"
+      benefits={['CPF', 'France Travail', 'Employeur / OPCO', 'Paiement échelonné']}
+      registrationHref={(session) => session.id ? `${contactHref}&session=${encodeURIComponent(String(session.id))}` : contactHref}
+      priceAction={{ href: `${contactHref}&objet=financement`, label: 'Étudier mon financement →' }}
+      emptyAction={{ href: `${contactHref}&objet=alerte-planning`, label: 'Recevoir les prochaines dates →' }}
+    />
     <ConversionStrip/>
     <TextSection title="Quel est le rôle d’un dirigeant d’entreprise de sécurité privée ?" intro="Le dirigeant d’entreprise de sécurité privée crée, reprend, dirige ou développe une structure exerçant une ou plusieurs activités réglementées de sécurité privée. Il veille au respect du Livre VI du Code de la sécurité intérieure, pilote la stratégie de l’entreprise, contrôle son équilibre financier, développe son activité commerciale et encadre les équipes."><CardGrid items={jobMissions}/><Note>Le dirigeant ne réalise pas nécessairement lui-même les missions opérationnelles. S’il exerce personnellement des activités d’agent de sécurité, il doit également détenir la carte professionnelle correspondant à l’activité exercée.</Note></TextSection>
     <Info title="À qui s’adresse la formation ?" items={audience}/><NoteSection>La formation ne s’adresse pas uniquement aux agents de sécurité expérimentés. Une expérience du secteur constitue un avantage, mais l’admission dépend de l’ensemble du profil et des conditions du certificateur.</NoteSection>
