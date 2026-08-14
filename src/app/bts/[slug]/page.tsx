@@ -12,6 +12,7 @@ import { BtsMcoReferencePage } from "@/components/BtsMcoReferencePage";
 import { BtsCiReferencePage } from "@/components/BtsCiReferencePage";
 import { BtsPiReferencePage } from "@/components/BtsPiReferencePage";
 import { BtsCgReferencePage } from "@/components/BtsCgReferencePage";
+import { BtsNdrcReferencePage } from "@/components/BtsNdrcReferencePage";
 
 export function generateStaticParams() {
   return bts.map((x) => ({ slug: x.slug.split("/").pop()! }));
@@ -55,6 +56,13 @@ export async function generateMetadata({
       title: "BTS Comptabilité et Gestion en alternance",
       description:
         "Préparez le BTS Comptabilité et Gestion en alternance, à Puget-sur-Argens ou 100 % à distance en visioconférence. Diplôme d’État de niveau 5, RNCP 39159.",
+    };
+  }
+  if (slug === "ndrc") {
+    return {
+      title: "BTS NDRC en alternance",
+      description:
+        "Préparez le BTS Négociation et Digitalisation de la Relation Client en alternance, à Puget-sur-Argens ou 100 % à distance en visioconférence. Diplôme d’État de niveau 5, RNCP 38368.",
     };
   }
   const f = bts.find((x) => x.slug.endsWith(slug));
@@ -297,6 +305,7 @@ export default async function Page({
   if (slug === "commerce-international") return <BtsCiReferencePage />;
   if (slug === "professions-immobilieres") return <BtsPiReferencePage />;
   if (slug === "comptabilite-gestion") return <BtsCgReferencePage />;
+  if (slug === "ndrc") return <BtsNdrcReferencePage />;
   const contactSlug = btsContactSlug(slug);
   const label = shortBtsName(f.title);
   return (
