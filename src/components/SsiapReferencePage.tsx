@@ -3,6 +3,7 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { OrientationAssistant } from '@/components/OrientationAssistant';
 import { PremiumFAQSection } from '@/components/ui';
+import { TrainingDatesPricingSection } from '@/components/TrainingDatesPricingSection';
 
 const contactHref = (subject = 'inscription') => `/contact?formation=ssiap-1&objet=${encodeURIComponent(subject)}`;
 
@@ -198,10 +199,17 @@ export function SsiapReferencePage({ sessions }: { sessions: any[] }) {
       <div className="mt-8 flex flex-wrap items-center justify-between gap-5 rounded-[1.7rem] border border-white/10 bg-white/6 p-5"><div><p className="font-black">Une préparation exigeante, un effectif maîtrisé.</p><p className="mt-1 text-sm text-white/55">12 stagiaires maximum · diplôme SSIAP 1 · RS5641</p></div><CTA href={contactHref('conditions examen')} variant="outline">Poser une question</CTA></div>
     </Section>
 
-    <Section id="dates-tarifs" eyebrow="Dates et tarifs" title={<>Choisissez la session qui vous convient.</>} intro={<>Les sessions enregistrées par l’administration sont prioritaires. Les places étant limitées à 12, nous vous conseillons de faire vérifier rapidement votre dossier.</>} tone="paper">
-      <div className="grid gap-4 lg:grid-cols-2">{visibleSessions.map((session, index) => { const full = session?.status === 'FULL' || Number(session?.seatsLeft) === 0; return <article key={session.id || index} className={`rounded-[1.8rem] border p-5 shadow-soft ${index === 0 ? 'border-orange-300 bg-orange-50/60' : 'border-academy-line bg-white'}`}><div className="flex flex-wrap items-center justify-between gap-3"><span className="rounded-full bg-[#0D1725] px-3 py-1.5 text-[.64rem] font-black uppercase tracking-[.15em] text-orange-300">{index === 0 ? 'Prochaine session' : `Session ${index + 1}`}</span><span className="text-xs font-black text-orange-800">{seatsLabel(session)}</span></div><h3 className="mt-5 text-2xl font-black">{formatDate(session.startDate)} → {formatDate(session.endDate)}</h3><p className="mt-2 font-bold text-academy-muted">Examen : {formatDate(session.examDate)} · {session.location || 'Puget-sur-Argens'}</p><div className="mt-5 flex flex-wrap items-end justify-between gap-4"><p><span className="block text-xs font-black uppercase tracking-[.18em] text-academy-muted">SSIAP 1</span><strong className="text-3xl">980 €</strong></p><CTA href={sessionHref(session)} variant={full ? 'light' : 'dark'}>{full ? 'Être alerté' : 'Choisir cette session →'}</CTA></div></article>; })}</div>
-      <div className="mt-8 grid gap-5 rounded-[2rem] border border-academy-line bg-academy-bg p-6 lg:grid-cols-[1.05fr_.95fr] lg:p-8"><div><Eyebrow>Financement</Eyebrow><h3 className="mt-3 text-3xl font-black">Simulez votre reste à charge.</h3><p className="mt-3 max-w-xl leading-7 text-academy-muted">CPF selon l’offre active et votre éligibilité, France Travail, employeur ou OPCO : estimez votre situation avant d’échanger avec notre équipe.</p><CTA href="/financements#simulateur" variant="gold" className="mt-5">Ouvrir le simulateur →</CTA></div><div className="grid grid-cols-2 gap-3">{[['CPF', 'Selon éligibilité'], ['France Travail', 'Selon accord'], ['Employeur / OPCO', 'Selon dossier'], ['Paiement personnel', 'Facilités étudiées']].map(([title, text]) => <div key={title} className="rounded-2xl bg-white p-4"><p className="font-black">{title}</p><p className="mt-1 text-xs font-semibold text-academy-muted">{text}</p></div>)}</div></div>
-    </Section>
+    <TrainingDatesPricingSection
+      id="dates-tarifs"
+      eyebrow="Dates & tarifs"
+      sessions={visibleSessions}
+      defaultPrice="980 €"
+      defaultLocation="Puget-sur-Argens"
+      priceDescription="Formation SSIAP 1 · examen final · option SST disponible"
+      benefits={['CPF', 'France Travail', 'Option SSIAP 1 + SST', 'Paiement x3 / x4 / x10']}
+      registrationHref={sessionHref}
+      priceAction={{ href: contactHref('financement SSIAP 1'), label: 'Étudier mon financement →' }}
+    />
 
     <Section id="debouches" eyebrow="Après le SSIAP 1" title={<>Travaillez, évoluez, maintenez vos compétences.</>} intro={<>Le SSIAP 1 ouvre l’accès aux fonctions d’agent de sécurité incendie. L’expérience permet ensuite d’envisager le SSIAP 2 et la responsabilité d’une équipe.</>}>
       <div className="grid gap-5 lg:grid-cols-2"><article className="rounded-[2rem] border border-academy-line bg-[#FFFDF8] p-6"><Eyebrow>Débouchés</Eyebrow><h3 className="mt-3 text-3xl font-black">Les postes accessibles</h3><div className="mt-5 grid gap-3 sm:grid-cols-2">{jobs.map(item => <div key={item} className="rounded-2xl bg-academy-bg p-4 font-black">{item}</div>)}</div></article><article className="rounded-[2rem] bg-[#0D1725] p-6 text-white"><Eyebrow light>Évolution</Eyebrow><h3 className="mt-3 text-3xl font-black">Objectif SSIAP 2</h3><p className="mt-4 leading-7 text-white/65">Après l’expérience réglementaire requise, vous pouvez préparer le SSIAP 2 et évoluer vers le métier de chef d’équipe de sécurité incendie.</p><CTA href={contactHref('évolution SSIAP 2')} variant="outline" className="mt-5">Préparer mon évolution</CTA></article></div>

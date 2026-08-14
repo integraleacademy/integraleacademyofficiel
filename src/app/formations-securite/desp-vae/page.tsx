@@ -1,5 +1,6 @@
 import { VaeEligibilityModal } from '@/components/VaeEligibilityModal';
-import { PublicTrainingSessions, isPublicUpcomingSession } from '@/components/PublicTrainingSessions';
+import { isPublicUpcomingSession } from '@/components/PublicTrainingSessions';
+import { TrainingDatesPricingSection } from '@/components/TrainingDatesPricingSection';
 import { Button, ConversionStrip, FeatureCard, PremiumFAQSection } from '@/components/ui';
 import { DespHero } from '@/components/DespHero';
 import { listSessions } from '@/lib/training-data';
@@ -77,7 +78,16 @@ export default async function DespVaePage(){
     <Info title="Le parcours VAE en six étapes" items={steps.map(([title,text])=>`${title} — ${text}`)}/>
     <section className="page-container py-8"><h2 className="text-2xl font-black">Quelles preuves fournir ?</h2><div className="mt-5 grid gap-4 md:grid-cols-2">{proofs.map(([title,items])=><FeatureCard key={title as string} title={title as string}>{(items as string[]).join(' · ')}</FeatureCard>)}</div><Note>Les preuves doivent être authentiques, compréhensibles et directement liées aux activités décrites.</Note><Note>Les données personnelles, informations sensibles, noms de clients, tarifs confidentiels et éléments relevant du secret des affaires doivent être anonymisés lorsque cela est nécessaire.</Note></section>
     <section id="comparatif-initial-vae" className="page-container py-8"><h2 className="text-2xl font-black">Comparer DESP initial et DESP VAE</h2><div className="mt-5 grid gap-4 md:grid-cols-2"><FeatureCard title="DESP initial">destiné aux personnes devant acquérir les compétences · 245 heures de formation · cours, études de cas et évaluations · parcours à distance et en présentiel.</FeatureCard><FeatureCard title="DESP VAE">destiné aux personnes maîtrisant déjà les compétences · pas de formation initiale de 245 heures · dossier fondé sur des expériences réelles · accompagnement à l’analyse et à la rédaction · présentation devant un jury.</FeatureCard></div><Note>Lorsque l’expérience ne couvre pas suffisamment les cinq activités du titre, la formation initiale est généralement plus adaptée.</Note><div className="mt-5"><Button href="/contact">Faire étudier mon parcours</Button></div></section>
-    <PublicTrainingSessions sessions={sessions} title="Prochaines dates DESP VAE" intro="Les véritables dates de jury VAE proviennent de l’administration. Dates, lieux, formats, tarifs et places restantes sont affichés lorsqu’ils sont administrés."/>
+    <TrainingDatesPricingSection
+      sessions={sessions}
+      defaultPrice={despVaeAdmin.price}
+      defaultLocation="À distance · jury selon convocation"
+      priceDescription="Accompagnement VAE individualisé · jury de certification"
+      benefits={['CPF', 'France Travail', 'Employeur / OPCO', 'Accompagnement dédié']}
+      registrationHref={(session) => session.id ? `/contact?formation=desp-vae&session=${encodeURIComponent(String(session.id))}` : '/contact?formation=desp-vae'}
+      priceAction={{ href: '/contact?formation=desp-vae&objet=financement', label: 'Étudier mon financement →' }}
+      emptyAction={{ href: '/contact?formation=desp-vae&objet=alerte-jury', label: 'Recevoir les prochaines dates →' }}
+    />
     <ConversionStrip/>
     <Info title="Objectifs de la formation" items={objectives}/>
     <Info title="Accompagnement VAE" items={accompaniment}/><TextBlock title="Rôle de l’accompagnateur"><p>L’accompagnateur aide le candidat à analyser et présenter son expérience. Il ne rédige pas le dossier à sa place et ne peut pas garantir la décision du jury.</p></TextBlock>
