@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import { OrientationAssistant } from '@/components/OrientationAssistant';
-import { A3pReferencePage } from '@/components/A3pReferencePage';\nimport { ApsReferencePage } from '@/components/ApsReferencePage';
+import { A3pReferencePage } from '@/components/A3pReferencePage';
+import { ApsReferencePage } from '@/components/ApsReferencePage';
 import { SsiapReferencePage } from '@/components/SsiapReferencePage';
 import { PublicTrainingSessions } from '@/components/PublicTrainingSessions';
 import { isPublicUpcomingSession } from '@/lib/public-sessions';
