@@ -1,28 +1,162 @@
-import { Button, ConversionStrip, FeatureCard, Highlight, PremiumFAQSection } from '@/components/ui';
-import { formationFaq } from '@/data/faq';
-import { formations } from '@/data/site';
+import type { Metadata } from 'next';
+import Image from 'next/image';
+import Link from 'next/link';
+import { PremiumFAQSection } from '@/components/ui';
+import styles from './vtc.module.css';
 
-export const metadata={title:'Formation VTC',description:'Formation chauffeur VTC tout inclus avec e-learning, pratique et CPF.'};
+export const metadata: Metadata = {
+  title: 'Formation Chauffeur VTC tout inclus | Intégrale Academy',
+  description: 'Préparez l’examen VTC avec une formule tout inclus à 1 500 € : théorie en ligne, pratique, véhicule double commande et frais d’examen.',
+};
 
-function formatContactSlug(slug:string){return slug.replace(/^\//,'').replace(/[^a-z0-9-]/gi,'-')}
+const contactHref = (subject: string) => `/contact?formation=vtc&objet=${encodeURIComponent(subject)}`;
 
-function heroStats(f:typeof formations[number]){return [['Durée',f.duration],['Lieux',f.locations],['Tarif',f.price || 'Sur devis'],['Certification',f.certification]]}
+const icons = {
+  arrow: <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>,
+  check: <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg>,
+  car: <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 11 1.8-4.2A3 3 0 0 1 9.6 5h4.8a3 3 0 0 1 2.8 1.8L19 11M4 11h16v7H4v-7Zm3 7v2m10-2v2M7 14h.01M17 14h.01"/></svg>,
+};
 
-function VtcSection({eyebrow,title,intro,children}:{eyebrow:string;title:React.ReactNode;intro?:React.ReactNode;children:React.ReactNode}){return <section className="page-container py-10 sm:py-12"><div className="mb-6 max-w-3xl"><span className="inline-flex rounded-full bg-academy-gold/15 px-4 py-2 text-xs font-black uppercase tracking-[.2em] text-academy-gold-strong">{eyebrow}</span><h2 className="mt-4 text-3xl font-black tracking-tight sm:text-4xl">{title}</h2>{intro&&<p className="mt-4 text-base font-semibold leading-8 text-academy-muted sm:text-lg">{intro}</p>}</div>{children}</section>}
+function Icon({name}:{name:keyof typeof icons}) { return <span className={styles.icon}>{icons[name]}</span>; }
 
-function VtcCard({icon,title,text}:{icon:string;title:string;text:string}){return <article className="reveal rounded-[1.5rem] border border-academy-line bg-academy-surface p-5 shadow-soft"><span className="grid h-11 w-11 place-items-center rounded-2xl bg-academy-gold/18 text-xl" aria-hidden="true">{icon}</span><h3 className="mt-4 text-xl font-black">{title}</h3><p className="mt-2 text-sm font-semibold leading-7 text-academy-muted">{text}</p></article>}
+function CTA({href, children, light = false}:{href:string; children:React.ReactNode; light?:boolean}) {
+  return <Link href={href} className={light ? styles.ctaLight : styles.cta}>{children}<Icon name="arrow"/></Link>;
+}
 
-const vtcMissions = [
-  ['🚘','Préparer l’examen VTC','Travailler les connaissances théoriques et la conduite professionnelle attendues pour l’examen.'],
-  ['🧭','Construire son projet chauffeur','Comprendre l’activité VTC, les obligations métier, la relation client et l’organisation des courses.'],
-  ['🛣️','S’entraîner en pratique','Pratiquer sur véhicule à doubles-commandes dans les secteurs Nice, Cannes, Toulon ou Fréjus.'],
-  ['🤝','Être accompagné','Bénéficier d’un suivi administratif et financement, notamment pour les démarches CPF selon éligibilité.'],
-  ['📚','Apprendre en e-learning','Accéder à la théorie à distance, avec une organisation souple avant les temps pratiques.'],
-  ['✅','Passer à l’action','Avancer vers la carte professionnelle de conducteur VTC après réussite et démarches réglementaires.'],
+const included = [
+  ['01', 'Théorie en ligne', 'Cours accessibles 24h/24 et 7j/7 pour avancer à votre rythme.'],
+  ['02', 'Préparation intensive', 'QCM, entraînements et révisions sur les 7 matières de l’examen.'],
+  ['03', 'Conduite professionnelle', 'Mises en situation réelles avec un formateur spécialisé VTC.'],
+  ['04', 'Véhicule double commande', 'Le véhicule réglementaire est mis à disposition pour l’épreuve pratique.'],
+  ['05', 'Frais d’examen inclus', 'Votre budget est lisible dès le départ, sans mauvaise surprise.'],
+  ['06', 'Accompagnement humain', 'Notre équipe vous guide dans le dossier, le financement et les démarches.'],
 ];
 
-function VtcProgram({items}:{items:string[]}){return <div className="space-y-3">{items.map((item,index)=><details key={item} open={index===0} className="group rounded-2xl border border-academy-line bg-academy-elevated p-5 shadow-soft"><summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-black"><span>{item.split(':')[0]}</span><span className="grid h-8 w-8 place-items-center rounded-full bg-academy-gold text-academy-gold-text transition group-open:rotate-45">+</span></summary><p className="mt-4 leading-7 text-academy-muted">{item}</p></details>)}</div>}
+const program = [
+  ['A', 'Réglementation T3P', 'Comprendre le cadre du transport public particulier de personnes.'],
+  ['B', 'Gestion', 'Calculer ses coûts, sa marge et organiser une activité rentable.'],
+  ['C', 'Sécurité routière', 'Adopter une conduite sûre, souple et professionnelle.'],
+  ['D', 'Français & anglais', 'Accueillir, comprendre et accompagner tous les passagers.'],
+  ['E', 'Développement commercial', 'Trouver des clients, valoriser son service et les fidéliser.'],
+  ['F', 'Réglementation VTC', 'Maîtriser les obligations propres au métier et au véhicule.'],
+  ['G', 'Épreuve pratique', 'Préparer une course, conduire, accueillir, facturer et encaisser.'],
+];
 
-function VtcEnrollmentShowcase({f}:{f:typeof formations[number]}){const steps=[['Premier rendez-vous','Nous faisons le point sur votre projet VTC, votre situation et vos disponibilités.'],['Organisation de la formation','Nous expliquons le déroulement : théorie e-learning, pratique, examen et documents à prévoir.'],['Financement','Nous vérifions les possibilités CPF ou autres solutions selon votre dossier.'],['Finalisation du dossier','Nous validons les pièces, les modalités pratiques et l’accès à la formation.'],['Démarrage','Vous démarrez la théorie en ligne puis les temps pratiques prévus.']];return <section id="inscription-financement-vtc" className="relative isolate overflow-hidden bg-[linear-gradient(135deg,#111111,#263752_60%,#151515)] px-4 py-14 text-white md:py-20"><div className="absolute inset-0 -z-10 opacity-70"><div className="absolute -left-20 top-12 h-72 w-72 rounded-full bg-academy-gold/25 blur-3xl"/><div className="absolute -right-24 bottom-0 h-80 w-80 rounded-full bg-white/10 blur-3xl"/></div><div className="page-container"><div className="mb-8 flex flex-col gap-5 md:flex-row md:items-end md:justify-between"><div><span className="inline-flex rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-black text-academy-gold shadow-soft backdrop-blur">Inscription & financement</span><h2 className="mt-4 text-3xl font-black tracking-tight md:text-5xl">Inscription en <Highlight>5 étapes</Highlight></h2><p className="mt-4 max-w-3xl text-base leading-8 text-stone-200 md:text-lg">Comme sur la page APS, le parcours VTC présente clairement les étapes à suivre jusqu’au démarrage de la formation.</p></div><div className="flex shrink-0 flex-wrap gap-3"><Button href="tel:0422470768" variant="secondary">Appeler</Button><Button href="/contact?formation=vtc" variant="ghost">Demander un devis</Button></div></div><div className="rounded-[2rem] bg-white/95 p-5 text-academy-ink shadow-[0_28px_90px_rgba(0,0,0,.28)] ring-1 ring-white/20 sm:p-6 md:p-7"><div className="grid items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">{steps.map(([title,text],index)=><article key={title} className="flex h-full min-h-[18rem] flex-col rounded-[1.5rem] border border-academy-line bg-gradient-to-b from-white to-academy-bg/80 p-6 shadow-soft"><span className="grid h-12 w-12 place-items-center rounded-full bg-academy-ink text-sm font-black text-academy-gold">{String(index+1).padStart(2,'0')}</span><h4 className="mt-5 text-lg font-black leading-6 text-academy-ink">{title}</h4><p className="mt-4 flex-1 text-sm font-semibold leading-7 text-academy-muted">{index===2?f.financing:text}</p></article>)}</div></div></div></section>}
+const faq = [
+  {q:'La formation coûte-t-elle vraiment 1 500 € tout inclus ?', a:'Oui. La formule présentée comprend la préparation théorique, la pratique, le livre officiel, les frais d’examen et la mise à disposition du véhicule à doubles commandes selon les modalités précisées dans votre convention.'},
+  {q:'Puis-je financer la formation avec mon CPF ?', a:'La formation peut être financée avec le CPF selon votre éligibilité et les règles applicables à votre dossier. Notre équipe vérifie avec vous les possibilités avant toute inscription.'},
+  {q:'Où se déroule la formation ?', a:'La théorie se suit en e-learning. Les temps pratiques sont organisés en présentiel dans les secteurs de Nice, Cannes, Toulon ou Fréjus selon la session.'},
+  {q:'Combien de temps dure la préparation ?', a:'Le parcours représente 105 heures estimées. L’organisation combine une partie théorique flexible à distance et des temps pratiques en présentiel.'},
+  {q:'Comment se déroule l’examen VTC ?', a:'L’examen comprend d’abord sept épreuves théoriques d’admissibilité, puis une mise en situation pratique de réalisation d’une course VTC.'},
+  {q:'Quel permis faut-il avoir ?', a:'Vous devez être titulaire du permis B et avoir dépassé la période probatoire. Votre aptitude et la conformité de votre dossier sont vérifiées avant l’inscription.'},
+  {q:'Est-ce adapté si je travaille déjà ?', a:'Oui. La théorie disponible en ligne 24h/24 permet d’avancer plus facilement autour de vos contraintes. Les séances pratiques sont ensuite planifiées avec vous.'},
+  {q:'Suis-je accompagné après la réussite ?', a:'Nous vous expliquons les étapes qui suivent l’examen : demande de carte professionnelle, choix du statut et préparation du lancement de votre activité.'},
+];
 
-export default function Page(){const f=formations.find(x=>x.slug==='/vtc')!;const contactSlug=formatContactSlug(f.slug);return <main className="relative overflow-hidden pb-28 lg:pb-0"><section className="relative isolate bg-[#0B0F17] px-4 py-12 text-white sm:py-16 lg:py-14 xl:py-16"><div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_18%_18%,rgba(216,166,64,.34),transparent_32%),radial-gradient(circle_at_85%_20%,rgba(34,197,94,.16),transparent_28%),linear-gradient(135deg,#080B10_0%,#121827_55%,#231909_100%)]"/><div className="absolute -left-20 top-20 -z-10 h-72 w-72 rounded-full bg-academy-gold/25 blur-3xl"/><div className="absolute -right-24 bottom-0 -z-10 h-80 w-80 rounded-full bg-emerald-500/15 blur-3xl"/><div className="page-container"><div className="grid items-start gap-8 lg:grid-cols-[1.02fr_.98fr]"><div className="reveal"><span className="inline-flex items-center gap-2 rounded-full border border-academy-gold/40 bg-white/10 px-4 py-2 text-xs font-black uppercase tracking-[.22em] text-[#F8E6B5] backdrop-blur"><span className="relative flex h-2.5 w-2.5" aria-hidden="true"><span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-sky-400 opacity-75"/><span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-sky-400 shadow-[0_0_16px_rgba(56,189,248,.95)]"/></span>{f.certification}</span><h1 className="mt-4 max-w-4xl text-4xl font-black tracking-tight sm:text-5xl lg:text-6xl">{f.title}</h1><p className="mt-4 max-w-2xl text-lg leading-8 text-white/78 sm:text-xl">{f.short}</p><div className="mt-5 inline-flex max-w-2xl items-center gap-3 rounded-2xl border border-sky-300/35 bg-sky-400/12 px-4 py-3 text-left shadow-[0_18px_45px_rgba(14,165,233,.12)] backdrop-blur"><p className="text-base font-black leading-6 text-white sm:text-lg">Formation <span className="text-sky-200">{f.locations}</span></p></div><div className="mt-6 flex flex-col gap-3 sm:flex-row"><Button href={`/contact?formation=${contactSlug}`}>Inscription / devis</Button><Button href="tel:0422470768" variant="secondary">Appeler un conseiller</Button></div><div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{heroStats(f).map(([k,v])=><div key={k} className="rounded-2xl border border-white/10 bg-white/8 p-3 sm:p-4"><p className="text-xs font-black uppercase tracking-[.18em] text-white/50">{k}</p><p className="mt-1 font-extrabold text-white">{v}</p></div>)}</div></div><div className="reveal rounded-[2rem] border border-white/10 bg-white/8 p-6 shadow-card backdrop-blur"><p className="text-sm font-black uppercase tracking-[.2em] text-academy-gold">Conseil admissions</p><h2 className="mt-4 text-3xl font-black">Un parcours clair, accompagné et orienté examen</h2><p className="mt-4 leading-7 text-white/76">Notre équipe vérifie votre projet, votre financement, vos disponibilités et les modalités pratiques avant l’inscription.</p><div className="mt-6 rounded-2xl border border-white/10 bg-white/10 p-4"><p className="text-sm font-black uppercase tracking-[.18em] text-white/55">Tout inclus</p><p className="mt-2 text-2xl font-black text-academy-gold">{f.price}</p><p className="mt-2 text-sm leading-6 text-white/70">Théorie, pratique, livre officiel, frais d’examen et véhicule selon l’offre mentionnée.</p></div></div></div></div></section><VtcSection eyebrow="Métier" title="À quoi prépare la formation Chauffeur VTC ?" intro={f.audience}><div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">{vtcMissions.map(([icon,title,text])=><VtcCard key={title} icon={icon} title={title} text={text}/>)}</div></VtcSection><VtcSection eyebrow="Repères" title="Informations clés"><div className="grid gap-4 md:grid-cols-3"><FeatureCard title="Public concerné">{f.audience}</FeatureCard><FeatureCard title="Prérequis">{f.prerequisites}</FeatureCard><FeatureCard title="Financement">{f.financing}</FeatureCard></div></VtcSection><VtcSection eyebrow="Compétences" title="Ce que vous allez apprendre"><div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">{f.objectives.map(item=><div key={item} className="reveal flex gap-3 rounded-2xl border border-academy-line bg-academy-surface p-4 shadow-soft"><span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-emerald-500 text-sm font-black text-white">✓</span><p className="text-sm font-semibold leading-6 text-academy-muted">{item}</p></div>)}</div></VtcSection><VtcSection eyebrow="Programme" title="Programme de la formation"><VtcProgram items={f.program}/></VtcSection><VtcSection eyebrow="Certification" title="Examen final"><div className="grid gap-4 md:grid-cols-3">{f.evaluation.map((item,index)=><div key={item} className="reveal rounded-2xl border border-academy-line bg-academy-surface p-5 shadow-soft"><span className="grid h-10 w-10 place-items-center rounded-full bg-academy-ink font-black text-academy-gold">{index+1}</span><h3 className="mt-4 text-xl font-black">Validation VTC</h3><p className="mt-2 text-sm leading-6 text-academy-muted">{item}</p></div>)}</div></VtcSection><VtcSection eyebrow="Budget" title={<>Tarif et <Highlight>financement</Highlight></>}><div className="grid gap-5 lg:grid-cols-[1fr_.75fr]"><div className="reveal rounded-[2rem] border border-academy-line bg-academy-elevated p-6 shadow-card sm:p-8"><p className="text-sm font-black uppercase tracking-[.2em] text-academy-gold">Tarif</p><p className="mt-2 text-4xl font-black sm:text-5xl">{f.price}</p><div className="mt-6 grid gap-3 sm:grid-cols-2">{[f.financing,'Accompagnement admissions','Conseiller dédié','Devis personnalisé'].map(x=><p key={x} className="rounded-2xl bg-academy-bg p-4 font-bold text-academy-muted">✓ {x}</p>)}</div><div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap"><Button href="/contact?formation=vtc&objet=financement">Étudier mon financement</Button><Button href="tel:0422470768" variant="secondary">Appeler</Button></div></div><div className="reveal rounded-[2rem] border border-blue-200 bg-blue-50 p-6 shadow-soft"><p className="inline-flex rounded-full bg-white px-3 py-1 text-xs font-black uppercase tracking-[.16em] text-blue-700 ring-1 ring-blue-100">Financement</p><h3 className="mt-4 text-2xl font-black">Un dossier vérifié avec vous</h3><p className="mt-4 text-lg font-bold leading-8 text-academy-muted">Nous faisons le point sur votre situation, les dates disponibles, les prérequis et les solutions possibles avant de finaliser votre inscription.</p></div></div></VtcSection><VtcEnrollmentShowcase f={f}/><ConversionStrip/><VtcSection eyebrow="Débouchés" title="Après la formation"><div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">{f.outcomes.map(item=><div key={item} className="rounded-2xl border border-academy-line bg-academy-elevated p-5 font-bold text-academy-muted shadow-soft">{item}</div>)}</div></VtcSection><VtcSection eyebrow="Intégrale Academy" title="Pourquoi suivre cette formation chez nous ?"><div className="grid gap-3 md:grid-cols-2">{f.why.map(item=><div key={item} className="rounded-2xl bg-academy-surface p-4 ring-1 ring-academy-line"><p className="font-semibold leading-7 text-academy-muted">✓ {item}</p></div>)}</div></VtcSection><PremiumFAQSection badge="FAQ Chauffeur VTC" title="Vos questions sur la formation Chauffeur VTC" description="Retrouvez ici les réponses aux questions les plus fréquentes sur le déroulement, l’inscription, le financement et l’examen." items={formationFaq} contactHref="/contact?formation=vtc"/></main>}
+export default function VtcPage() {
+  return <main className={styles.page}>
+    <section className={styles.hero}>
+      <div className={styles.heroGlow}/><div className={styles.heroGrid}/>
+      <div className={styles.container}>
+        <div className={styles.heroLayout}>
+          <div className={styles.heroCopy}>
+            <span className={styles.pill}><span/> Formation VTC · Côte d’Azur</span>
+            <h1>Prenez le volant.<br/><em>Créez votre avenir.</em></h1>
+            <p>Une préparation complète pour réussir l’examen VTC et démarrer votre activité avec les bons réflexes — pas seulement une plateforme de cours.</p>
+            <div className={styles.heroActions}>
+              <CTA href={contactHref('Je souhaite m’inscrire à la formation VTC')}>Je démarre mon projet</CTA>
+              <CTA href="tel:0422470768" light>Parler à un conseiller</CTA>
+            </div>
+            <div className={styles.heroProofs}>
+              <span><Icon name="check"/> Centre agréé</span>
+              <span><Icon name="check"/> Qualiopi</span>
+              <span><Icon name="check"/> CPF selon éligibilité</span>
+            </div>
+          </div>
+
+          <div className={styles.cockpit}>
+            <div className={styles.cockpitTop}><span>Votre itinéraire vers le métier</span><span className={styles.live}>● PRÊT À DÉMARRER</span></div>
+            <div className={styles.routeMap}>
+              <svg viewBox="0 0 580 310" preserveAspectRatio="none" aria-hidden="true">
+                <path className={styles.roadBack} d="M-20 270 C80 250 72 150 170 160 S270 270 348 186 S415 72 605 48"/>
+                <path className={styles.road} d="M-20 270 C80 250 72 150 170 160 S270 270 348 186 S415 72 605 48"/>
+              </svg>
+              <span className={`${styles.pin} ${styles.pinOne}`}>1</span><span className={`${styles.pin} ${styles.pinTwo}`}>2</span><span className={`${styles.pin} ${styles.pinThree}`}>3</span>
+              <div className={styles.destination}><span>ARRIVÉE</span><strong>Votre carte VTC</strong></div>
+            </div>
+            <div className={styles.cockpitStats}>
+              <div><span>Durée</span><strong>105 h</strong><small>Parcours complet</small></div>
+              <div className={styles.price}><span>Tout inclus</span><strong>1 500 €</strong><small>Financement possible</small></div>
+              <div><span>Format</span><strong>Hybride</strong><small>En ligne + pratique</small></div>
+            </div>
+          </div>
+        </div>
+        <div className={styles.heroBottom}>
+          <span>THÉORIE EN LIGNE 24/7</span><i/><span>PRATIQUE EN PRÉSENTIEL</span><i/><span>VÉHICULE FOURNI À L’EXAMEN</span>
+        </div>
+      </div>
+    </section>
+
+    <section className={styles.promise}>
+      <div className={styles.container}>
+        <div className={styles.sectionHead}><div><span>01 — Une formule vraiment complète</span><h2>Tout ce qu’il vous faut.<br/><em>Rien à ajouter.</em></h2></div><p>Chaque élément du parcours est pensé pour vous rapprocher concrètement de la réussite, de votre première connexion à votre passage devant le jury.</p></div>
+        <div className={styles.includedGrid}>{included.map(([n,title,text])=><article key={n}><span className={styles.number}>{n}</span><div className={styles.miniIcon}><Icon name={n==='03'||n==='04'?'car':'check'}/></div><h3>{title}</h3><p>{text}</p></article>)}</div>
+      </div>
+    </section>
+
+    <section className={styles.journey}>
+      <div className={styles.container}>
+        <div className={styles.journeyLayout}>
+          <div className={styles.journeyIntro}><span>02 — Votre parcours</span><h2>De votre projet<br/>à vos <em>premières courses.</em></h2><p>Vous savez toujours où vous en êtes et quelle est la prochaine étape.</p><CTA href={contactHref('Recevoir le détail du parcours VTC')}>Recevoir le programme</CTA></div>
+          <div className={styles.timeline}>
+            {[
+              ['01','On valide votre projet','Prérequis, financement, disponibilité et objectif professionnel.'],
+              ['02','Vous maîtrisez la théorie','Cours en ligne, quiz, annales et examens blancs.'],
+              ['03','Vous passez l’admissibilité','Préparation aux sept matières de l’examen théorique.'],
+              ['04','Vous vous entraînez au métier','Conduite, accueil client, itinéraire, devis et facturation.'],
+              ['05','Vous passez la pratique','Mise en situation complète avec le véhicule réglementaire.'],
+            ].map(([n,title,text])=><article key={n}><span>{n}</span><div><h3>{title}</h3><p>{text}</p></div></article>)}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section className={styles.program}>
+      <div className={styles.container}>
+        <div className={styles.sectionHead}><div><span>03 — Les compétences</span><h2>Bien plus que conduire.<br/><em>Devenez professionnel.</em></h2></div><p>Le programme suit les compétences évaluées à l’examen et celles qui feront la différence face à vos futurs clients.</p></div>
+        <div className={styles.programGrid}>{program.map(([letter,title,text],index)=><article key={letter} className={index===6?styles.programFeatured:''}><span>{letter}</span><div><h3>{title}</h3><p>{text}</p></div><Icon name="arrow"/></article>)}</div>
+      </div>
+    </section>
+
+    <section className={styles.offer}>
+      <div className={styles.container}>
+        <div className={styles.offerCard}>
+          <div className={styles.offerCopy}><span>04 — L’offre Intégrale</span><h2>Votre projet VTC,<br/><em>clé en main.</em></h2><p>Une seule formule lisible, sans découvrir au dernier moment qu’il faut encore payer la pratique, le véhicule ou l’examen.</p><ul><li><Icon name="check"/> 105 heures de préparation</li><li><Icon name="check"/> E-learning accessible 24h/24</li><li><Icon name="check"/> Formation pratique encadrée</li><li><Icon name="check"/> Livre officiel inclus</li><li><Icon name="check"/> Frais d’examen inclus</li><li><Icon name="check"/> Véhicule double commande inclus</li></ul></div>
+          <div className={styles.checkout}>
+            <span className={styles.checkoutPill}>FORMATION COMPLÈTE</span><p>Prix tout inclus</p><strong>1 500 €</strong><small>Finançable par le CPF selon éligibilité</small><CTA href={contactHref('Étude de financement formation VTC')}>Étudier mon financement</CTA><Link href="tel:0422470768" className={styles.phone}>Ou appeler le 04 22 47 07 68</Link><div className={styles.reassurance}>✓ Étude gratuite et sans engagement</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section className={styles.local}>
+      <div className={styles.container}>
+        <div className={styles.localCard}>
+          <div className={styles.localVisual}><div className={styles.coast}><span>Nice</span><span>Cannes</span><span>Fréjus</span><span>Toulon</span></div><div className={styles.carBadge}><Icon name="car"/></div></div>
+          <div className={styles.localCopy}><span>05 — La Côte d’Azur comme terrain de jeu</span><h2>Apprenez là où<br/>vous allez <em>conduire.</em></h2><p>Les gares, les hôtels, les aéroports, les événements et les exigences d’une clientèle internationale font de notre territoire un cadre idéal pour apprendre le métier.</p><div className={styles.locationChips}><span>Nice</span><span>Cannes</span><span>Fréjus</span><span>Toulon</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section className={styles.contact}>
+      <div className={styles.container}>
+        <div className={styles.contactCard}>
+          <div><span>UNE QUESTION SUR VOTRE PROJET ?</span><h2>Faites le premier pas<br/>vers votre <em>future activité.</em></h2><p>Cassandre vérifie votre éligibilité, vous explique le calendrier et vous aide à choisir le financement adapté.</p></div>
+          <aside><Image src="/images/cassandre-memoji.png" width={96} height={96} alt="Cassandre, responsable commerciale Intégrale Academy"/><div><span>VOTRE CONSEILLÈRE</span><h3>Cassandre</h3><p>Responsable commerciale</p></div><a href="tel:0422470768">04 22 47 07 68</a><CTA href={contactHref('Être rappelé au sujet de la formation VTC')}>Réserver un échange</CTA></aside>
+        </div>
+      </div>
+    </section>
+
+    <PremiumFAQSection badge="06 — FAQ VTC" title="Vos questions avant de prendre le volant" description="Tarif, financement, prérequis, examen et organisation : toutes les réponses utiles avant de démarrer." items={faq} contactHref={contactHref('Question sur la formation VTC')} contactLabel="Poser ma question" />
+  </main>;
+}
