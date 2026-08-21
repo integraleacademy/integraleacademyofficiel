@@ -163,27 +163,59 @@ export function Header(){
     ['Chauffeur VTC','/vtc','Formation Théorique et Formation Pratique VTC.','🚘'],
   ] as const;
   const nav=[['Nos formations',trainingNav],['Notre école','/ecole'],['Tarifs','/tarifs'],['Financements','/financements'],['Entreprises','/entreprises'],['Planning','/planning'],['Contact','/contact']] as const;
-  return <header className="sticky top-0 z-50 border-b border-white/60 bg-academy-surface/80 shadow-[0_18px_50px_rgba(17,17,17,.06)] backdrop-blur-xl"><div className="page-container flex items-center justify-between gap-4 py-3"><Link href="/" aria-label="Retour à l’accueil Intégrale Academy" className="group flex shrink-0 items-center gap-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-academy-gold"><Image src="/images/logo2.png" alt="" width={3024} height={3024} priority className="h-11 w-11 object-contain transition group-hover:scale-[1.02]"/><span className="grid text-[10px] font-black leading-[.86] tracking-[.08em] text-academy-ink sm:text-xs"><span>INTÉGRALE</span><span className="mt-1 text-academy-gold-strong">ACADEMY</span></span></Link><nav className="hidden items-center gap-1 text-sm font-bold lg:flex" aria-label="Navigation principale">{nav.map(([n,h])=>typeof h!=='string'?<DesktopTrainingDropdown key={n} label={n} items={h}/>:<Link key={h} href={h} className="rounded-full px-3 py-2 text-academy-muted transition hover:text-academy-gold-strong focus:text-academy-gold-strong">{n}</Link>)}</nav><div className="hidden items-center gap-2 xl:flex"><ThemeToggle/><Button href="tel:0422470768" variant="ghost">Appeler</Button><AppointmentButton/></div><div className="flex items-center gap-2 lg:hidden"><ThemeToggle/><MobileHeaderMenu nav={nav} appointmentFormUrl={appointmentFormUrl}/></div></div></header>
+  return <header className="sticky top-0 z-50 border-b border-academy-line/80 bg-academy-surface/90 shadow-[0_18px_50px_rgba(17,17,17,.06)] backdrop-blur-xl"><div className="page-container flex items-center justify-between gap-4 py-3"><Link href="/" aria-label="Retour à l’accueil Intégrale Academy" className="group flex shrink-0 items-center gap-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-academy-gold"><Image src="/images/logo2.png" alt="" width={3024} height={3024} priority className="h-11 w-11 object-contain transition group-hover:scale-[1.02]"/><span className="grid text-[10px] font-black leading-[.86] tracking-[.08em] text-academy-ink sm:text-xs"><span>INTÉGRALE</span><span className="mt-1 text-academy-gold-strong">ACADEMY</span></span></Link><nav className="hidden items-center gap-1 text-sm font-bold lg:flex" aria-label="Navigation principale">{nav.map(([n,h])=>typeof h!=='string'?<DesktopTrainingDropdown key={n} label={n} items={h}/>:<Link key={h} href={h} className="rounded-full px-3 py-2 text-academy-muted transition hover:text-academy-gold-strong focus:text-academy-gold-strong">{n}</Link>)}</nav><div className="hidden items-center gap-2 xl:flex"><ThemeToggle/><Button href="tel:0422470768" variant="ghost">Appeler</Button><AppointmentButton/></div><div className="flex items-center gap-2 lg:hidden"><ThemeToggle/><MobileHeaderMenu nav={nav} appointmentFormUrl={appointmentFormUrl}/></div></div></header>
 }
 export function Footer(){
   const footerLinks=[
-    {title:'Formations',links:[['APS','/formations-securite/aps'],['SSIAP 1','/formations-securite/ssiap-1'],['A3P / APR','/formations-securite/a3p-apr'],['BTS en alternance','/bts'],['Tarifs hors BTS','/tarifs']]},
-    {title:'Financements',links:[['CPF','/financements/cpf'],['France Travail','/financements/france-travail'],['Alternance','/financements/alternance'],['Financements','/financements']]},
-    {title:'Ressources',links:[['Planning','/planning'],['Centres','/centres'],['Entreprises','/entreprises'],['Contact','/contact']]},
+    {title:'Formations',links:[['APS','/formations-securite/aps'],['SSIAP 1','/formations-securite/ssiap-1'],['A3P / APR','/formations-securite/a3p-apr'],['BTS en alternance','/bts'],['Chauffeur VTC','/vtc']]},
+    {title:'Financements',links:[['CPF','/financements/cpf'],['France Travail','/financements/france-travail'],['Alternance','/financements/alternance'],['Toutes les solutions','/financements']]},
+    {title:'Ressources',links:[['Planning','/planning'],['Nos centres','/centres'],['Entreprises','/entreprises'],['Tarifs','/tarifs'],['Contact','/contact']]},
   ];
+  const trustItems=['Qualiopi','CNAPS','France Travail','OPCO AKTO'];
 
-  return <footer className="relative mt-20 overflow-hidden bg-academy-ink px-4 pb-10 pt-12 text-white">
-    <div className="absolute inset-0 opacity-80" aria-hidden="true"><div className="absolute -left-24 top-12 h-80 w-80 rounded-full bg-academy-gold/20 blur-3xl"/><div className="absolute right-0 top-0 h-96 w-96 translate-x-1/3 rounded-full bg-yellow-300/10 blur-3xl"/><div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-academy-gold/70 to-transparent"/></div>
+  return <footer className="relative mt-20 overflow-hidden border-t border-academy-line bg-academy-surface px-4 pb-8 pt-12 text-academy-ink">
+    <div className="pointer-events-none absolute inset-0 opacity-70" aria-hidden="true">
+      <div className="absolute -left-32 top-0 h-80 w-80 rounded-full bg-academy-gold/15 blur-3xl"/>
+      <div className="absolute -right-24 bottom-0 h-80 w-80 rounded-full bg-academy-gold/10 blur-3xl"/>
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-academy-gold/70 to-transparent"/>
+    </div>
     <div className="relative page-container">
-      <Link href="/" aria-label="Retour à l’accueil Intégrale Academy" className="mx-auto block w-fit rounded-full focus:outline-none focus:ring-2 focus:ring-academy-gold focus:ring-offset-4 focus:ring-offset-academy-ink">
-        <Image src="/images/logo2.png" alt="Intégrale Academy" width={3024} height={3024} className="h-40 w-40 object-contain sm:h-48 sm:w-48"/>
-      </Link>
-      <div className="grid gap-10 py-12 lg:grid-cols-[1.2fr_2fr_.9fr]">
-        <div><p className="max-w-sm text-sm leading-7 text-stone-300">Centre de formation professionnelle spécialisé sécurité privée, sécurité incendie, VTC et BTS en alternance.</p><p className="mt-5 text-sm font-semibold text-stone-300">{contact.hours}</p></div>
-        <div className="grid gap-8 sm:grid-cols-3">{footerLinks.map(group=><div key={group.title}><h3 className="text-sm font-black uppercase tracking-[.18em] text-academy-gold">{group.title}</h3><ul className="mt-4 space-y-3 text-sm text-stone-300">{group.links.map(([label,href])=><li key={href}><Link href={href} className="transition hover:text-academy-gold">{label}</Link></li>)}</ul></div>)}</div>
-        <div className="rounded-[1.75rem] border border-white/10 bg-academy-surface/5 p-5"><div className="flex flex-wrap items-center gap-2"><h3 className="text-sm font-black uppercase tracking-[.18em] text-academy-gold">Coordonnées</h3><VerifiedBadge/></div><p className="mt-4 text-sm leading-7 text-stone-300"><Link href="tel:0422470768" className="font-black text-white hover:text-academy-gold">{contact.phone}</Link><br/><a href={contact.whatsappHref} target="_blank" rel="noopener noreferrer" className="font-black text-white hover:text-academy-gold">WhatsApp {contact.whatsapp}</a><br/>{contact.locations[0].address}</p><SocialLinks/><div className="mt-5 flex flex-wrap gap-3"><Link href="/contact" className="inline-flex text-sm font-black text-academy-gold hover:text-yellow-200">Nous contacter →</Link><Link href="/admin/ia" className="inline-flex items-center justify-center rounded-full border border-academy-gold/60 px-4 py-2 text-xs font-black uppercase tracking-[.16em] text-academy-gold transition hover:bg-academy-gold hover:text-academy-gold-text">Admin</Link></div></div>
+      <div className="grid gap-10 pb-10 lg:grid-cols-[1.05fr_1.65fr_.9fr] lg:gap-14">
+        <div>
+          <Link href="/" aria-label="Retour à l’accueil Intégrale Academy" className="inline-flex items-center gap-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-academy-gold">
+            <Image src="/images/logo2.png" alt="" width={3024} height={3024} className="h-14 w-14 object-contain"/>
+            <span className="grid text-sm font-black leading-[.9] tracking-[.12em]"><span>INTÉGRALE</span><span className="mt-2 text-academy-gold-strong">ACADEMY</span></span>
+          </Link>
+          <p className="mt-5 max-w-sm text-sm font-medium leading-7 text-academy-muted">Centre de formation professionnelle spécialisé en sécurité privée, sécurité incendie, VTC et BTS en alternance.</p>
+          <SocialLinks tone="light"/>
+        </div>
+
+        <nav className="grid gap-8 sm:grid-cols-3" aria-label="Navigation du pied de page">
+          {footerLinks.map(group=><div key={group.title}>
+            <h3 className="text-xs font-black uppercase tracking-[.2em] text-academy-gold-strong">{group.title}</h3>
+            <ul className="mt-5 space-y-3 text-sm font-semibold text-academy-muted">{group.links.map(([label,href])=><li key={href}><Link href={href} className="transition hover:text-academy-gold-strong">{label}</Link></li>)}</ul>
+          </div>)}
+        </nav>
+
+        <aside className="rounded-[1.75rem] border border-academy-line bg-academy-elevated p-6 shadow-soft">
+          <span className="text-xs font-black uppercase tracking-[.2em] text-academy-gold-strong">Une question ?</span>
+          <h3 className="mt-3 text-xl font-black tracking-tight">Parlons de votre projet.</h3>
+          <p className="mt-3 text-sm font-medium leading-6 text-academy-muted">{contact.hours}</p>
+          <div className="mt-5 grid gap-2">
+            <Link href="tel:0422470768" className="inline-flex items-center justify-center rounded-full bg-academy-gold px-4 py-3 text-sm font-black text-academy-gold-text transition hover:-translate-y-0.5">{contact.phone}</Link>
+            <Link href="/contact" className="inline-flex items-center justify-center rounded-full border border-academy-line bg-academy-surface px-4 py-3 text-sm font-black text-academy-ink transition hover:-translate-y-0.5 hover:border-academy-gold">Nous contacter</Link>
+          </div>
+        </aside>
       </div>
-      <div className="flex flex-col gap-4 border-t border-white/10 pt-6 text-xs text-stone-400 md:flex-row md:items-center md:justify-between"><div className="space-y-2"><p>{legalRefs.join(' · ')}</p><p>Le site internet a été créé par SAS Intégrale Group - Clément Vaillant.</p></div><div className="flex flex-wrap gap-4"><Link href="/mentions-legales" className="hover:text-academy-gold">Mentions légales</Link><Link href="/politique-confidentialite" className="hover:text-academy-gold">Confidentialité</Link></div></div>
+
+      <div className="grid gap-3 border-y border-academy-line py-5 sm:grid-cols-2 lg:grid-cols-4">
+        {trustItems.map(item=><span key={item} className="flex items-center justify-center gap-2 rounded-2xl border border-academy-line bg-academy-elevated px-4 py-3 text-xs font-black uppercase tracking-[.1em] text-academy-muted"><i className="h-2 w-2 rounded-full bg-academy-gold" aria-hidden="true"/>{item}</span>)}
+      </div>
+
+      <div className="flex flex-col gap-4 pt-6 text-xs font-medium text-academy-muted md:flex-row md:items-end md:justify-between">
+        <div className="max-w-4xl space-y-2"><p>{legalRefs.join(' · ')}</p><p>Site créé par SAS Intégrale Group — Clément Vaillant.</p></div>
+        <div className="flex flex-wrap gap-4"><Link href="/mentions-legales" className="hover:text-academy-gold-strong">Mentions légales</Link><Link href="/politique-confidentialite" className="hover:text-academy-gold-strong">Confidentialité</Link><Link href="/admin/ia" className="hover:text-academy-gold-strong">Administration</Link></div>
+      </div>
     </div>
   </footer>
 }
