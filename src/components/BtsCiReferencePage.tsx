@@ -545,7 +545,7 @@ export function BtsCiReferencePage() {
         </div>
       </section>
 
-      <div className="fixed inset-x-0 bottom-0 z-50 border-t border-academy-line bg-[#FFFDF8]/96 p-3 shadow-[0_-12px_40px_rgba(0,0,0,.12)] backdrop-blur lg:hidden">
+      <div className="fixed inset-x-0 bottom-0 z-50 border-t border-academy-line bg-[#FFFDF8]/96 p-3 pb-[calc(.75rem+env(safe-area-inset-bottom))] shadow-[0_-12px_40px_rgba(0,0,0,.12)] backdrop-blur lg:hidden">
         <div className="mx-auto flex max-w-lg gap-2">
           <CTA href={aurelieDirectHref} variant="light" className="min-w-0 flex-1 px-3">Appeler Aurélie</CTA>
           <CTA href={applicationUrl} variant="gold" className="min-w-0 flex-[1.2] px-3" external>Je candidate</CTA>

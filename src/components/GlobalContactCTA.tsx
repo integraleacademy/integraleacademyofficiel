@@ -111,7 +111,7 @@ export function GlobalContactCTA() {
                   <div className={styles.memojiWrap}>
                     {isBts ? (
                       <div
-                        className="grid h-[190px] w-[190px] place-items-center rounded-[2rem] bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,.9),transparent_34%),linear-gradient(145deg,#F7E5AC,#C99925)] text-5xl font-black text-academy-ink shadow-gold"
+                        className="grid h-full w-full place-items-center rounded-[2rem] bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,.9),transparent_34%),linear-gradient(145deg,#F7E5AC,#C99925)] text-5xl font-black text-academy-ink shadow-gold"
                         aria-label="Aurélie CHAUSSEZ, chargée des relations clients et responsable des BTS"
                       >
                         AC

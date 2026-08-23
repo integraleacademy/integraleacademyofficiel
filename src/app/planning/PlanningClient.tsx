@@ -1193,7 +1193,7 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
 
       <RegistrationModal session={selectedSession} onClose={() => setSelectedSession(null)} />
 
-      <div className="fixed inset-x-3 bottom-3 z-40 grid grid-cols-3 gap-2 rounded-[1.5rem] border border-white/70 bg-white/92 p-2 shadow-[0_18px_60px_rgba(17,17,17,.18)] backdrop-blur md:hidden">
+      <div className="fixed inset-x-3 bottom-[calc(.75rem+env(safe-area-inset-bottom))] z-40 grid grid-cols-3 gap-2 rounded-[1.5rem] border border-white/70 bg-white/92 p-2 shadow-[0_18px_60px_rgba(17,17,17,.18)] backdrop-blur md:hidden">
         <Link href="tel:0422470768" className="rounded-2xl bg-[#101a29] px-3 py-3 text-center text-xs font-black text-white">Appeler</Link>
         <Link href="/contact?motif=alerte-planning" className="rounded-2xl border border-academy-line bg-white px-3 py-3 text-center text-xs font-black text-academy-ink">Alerte</Link>
         {nextSession ? (

@@ -36,7 +36,7 @@ export function ProjectTrainingPopup() {
 
   return (
     <div
-      className="fixed bottom-24 right-4 z-[70] w-[calc(100%-2rem)] max-w-md md:bottom-6 md:right-6"
+      className="fixed inset-x-3 bottom-[calc(5.5rem+env(safe-area-inset-bottom))] z-[70] mx-auto max-h-[calc(100dvh-7rem)] w-auto max-w-md overflow-y-auto overscroll-contain lg:inset-x-auto lg:bottom-6 lg:right-6 lg:mx-0 lg:w-[28rem]"
       role="dialog"
       aria-labelledby="project-popup-title"
     >

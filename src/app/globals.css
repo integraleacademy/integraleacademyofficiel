@@ -50,7 +50,7 @@
   }
 
   html { scroll-behavior: smooth; background: rgb(var(--background)); color: rgb(var(--text-main)); }
-  body { min-height: 100vh; background: rgb(var(--background)); color: rgb(var(--text-main)); font-feature-settings: "ss01" on; transition: background-color .25s ease, color .25s ease; }
+  body { min-height: 100vh; overflow-x: hidden; overflow-x: clip; background: rgb(var(--background)); color: rgb(var(--text-main)); font-feature-settings: "ss01" on; transition: background-color .25s ease, color .25s ease; }
 
   @media (min-width: 1024px) {
     html { font-size: 80%; }
@@ -81,6 +81,8 @@
     .content-container,
     .section-inner {
       width: min(100% - 48px, 1320px);
+      padding-left: 24px;
+      padding-right: 24px;
     }
   }
 
@@ -88,7 +90,9 @@
     .page-container,
     .content-container,
     .section-inner {
-      width: min(100% - 32px, 1320px);
+      width: min(100% - 24px, 1320px);
+      padding-left: 0;
+      padding-right: 0;
     }
   }
 }
