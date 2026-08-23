@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
+import { BtsCompleteInformation, BtsStudentBenefits } from '@/components/BtsExpandedContent';
 import { PremiumFAQSection } from '@/components/ui';
 
 const applicationUrl = 'https://inscriptionsbts.onrender.com/';
@@ -262,6 +263,8 @@ export function BtsCiReferencePage() {
               </div>
               <div className="mt-6 flex flex-wrap gap-2 text-xs font-bold text-white/75">
                 <span className="rounded-full border border-white/15 bg-white/7 px-3 py-2">✓ Sans frais de scolarité pour l’apprenti*</span>
+                <span className="rounded-full border border-sky-300/35 bg-sky-300/10 px-3 py-2 text-sky-100">✓ iPad offert dès la signature</span>
+                <span className="rounded-full border border-academy-gold/40 bg-academy-gold/10 px-3 py-2 text-[#FFD56A]">✓ Londres en 2ᵉ année · 100 % pris en charge</span>
                 <span className="rounded-full border border-white/15 bg-white/7 px-3 py-2">✓ Présentiel ou visioconférence</span>
                 <span className="rounded-full border border-white/15 bg-white/7 px-3 py-2">✓ Anglais et ouverture interculturelle</span>
               </div>
@@ -302,6 +305,8 @@ export function BtsCiReferencePage() {
           <CTA href={applicationUrl} variant="gold" className="min-h-10 px-4 py-2" external>Je candidate</CTA>
         </div>
       </nav>
+
+      <BtsStudentBenefits courseName="BTS Commerce International" />
 
       <Section
         id="pour-qui"
@@ -480,6 +485,8 @@ export function BtsCiReferencePage() {
           </div>
         </div>
       </Section>
+
+      <BtsCompleteInformation course="ci" />
 
       <section id="admission" className="relative isolate overflow-hidden bg-[#0A1725] px-4 py-14 text-white sm:py-16 lg:py-20">
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_14%_12%,rgba(239,184,50,.25),transparent_27%),radial-gradient(circle_at_86%_80%,rgba(34,184,199,.18),transparent_28%),linear-gradient(145deg,#07111D,#112641)]" />
