@@ -163,7 +163,7 @@ export function Header(){
     ['Chauffeur VTC','/vtc','Formation Théorique et Formation Pratique VTC.','🚘'],
   ] as const;
   const nav=[['Nos formations',trainingNav],['Notre école','/ecole'],['Tarifs','/tarifs'],['Financements','/financements'],['Entreprises','/entreprises'],['Planning','/planning'],['Contact','/contact']] as const;
-  return <header className="sticky top-0 z-50 border-b border-academy-line/80 bg-academy-surface/90 shadow-[0_18px_50px_rgba(17,17,17,.06)] backdrop-blur-xl"><div className="page-container flex items-center justify-between gap-4 py-3"><Link href="/" aria-label="Retour à l’accueil Intégrale Academy" className="group flex shrink-0 items-center gap-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-academy-gold"><Image src="/images/logo2.png" alt="" width={3024} height={3024} priority className="h-11 w-11 object-contain transition group-hover:scale-[1.02]"/><span className="grid text-[10px] font-black leading-[.86] tracking-[.08em] text-academy-ink sm:text-xs"><span>INTÉGRALE</span><span className="mt-1 text-academy-gold-strong">ACADEMY</span></span></Link><nav className="hidden items-center gap-1 text-sm font-bold lg:flex" aria-label="Navigation principale">{nav.map(([n,h])=>typeof h!=='string'?<DesktopTrainingDropdown key={n} label={n} items={h}/>:<Link key={h} href={h} className="rounded-full px-3 py-2 text-academy-muted transition hover:text-academy-gold-strong focus:text-academy-gold-strong">{n}</Link>)}</nav><div className="hidden items-center gap-2 xl:flex"><ThemeToggle/><Button href="tel:0422470768" variant="ghost">Appeler</Button><AppointmentButton/></div><div className="flex items-center gap-2 lg:hidden"><ThemeToggle/><MobileHeaderMenu nav={nav} appointmentFormUrl={appointmentFormUrl}/></div></div></header>
+  return <header className="sticky top-0 z-50 border-b border-white/10 bg-[#0b0d12]/95 text-white shadow-[0_18px_50px_rgba(0,0,0,.22)] backdrop-blur-xl"><div className="page-container flex items-center justify-between gap-4 py-3"><Link href="/" aria-label="Retour à l’accueil Intégrale Academy" className="group flex shrink-0 items-center gap-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-academy-gold"><Image src="/images/sigle.png" alt="" width={1181} height={1181} priority className="h-11 w-11 rounded-full object-cover transition group-hover:scale-[1.03] sm:h-12 sm:w-12"/><span className="grid text-[10px] font-black leading-[.86] tracking-[.1em] sm:text-sm"><span className="text-white">INTÉGRALE</span><span className="mt-1.5 text-academy-gold">ACADEMY</span></span></Link><nav className="hidden items-center gap-1 text-sm font-bold lg:flex" aria-label="Navigation principale">{nav.map(([n,h])=>typeof h!=='string'?<DesktopTrainingDropdown key={n} label={n} items={h}/>:<Link key={h} href={h} className="rounded-full px-3 py-2 text-white/75 transition hover:bg-white/5 hover:text-academy-gold focus:bg-white/5 focus:text-academy-gold">{n}</Link>)}</nav><div className="hidden items-center gap-2 xl:flex"><ThemeToggle/><Button href="tel:0422470768" variant="ghost">Appeler</Button><AppointmentButton/></div><div className="flex items-center gap-2 lg:hidden"><ThemeToggle/><MobileHeaderMenu nav={nav} appointmentFormUrl={appointmentFormUrl}/></div></div></header>
 }
 export function Footer(){
   const footerLinks=[
@@ -173,7 +173,7 @@ export function Footer(){
   ];
   const trustItems=['Qualiopi','CNAPS','France Travail','OPCO AKTO'];
 
-  return <footer className="relative mt-20 overflow-hidden border-t border-academy-line bg-academy-surface px-4 pb-8 pt-12 text-academy-ink">
+  return <footer className="relative mt-20 overflow-hidden border-t border-white/10 bg-[#080a0e] px-4 pb-8 pt-12 text-white">
     <div className="pointer-events-none absolute inset-0 opacity-70" aria-hidden="true">
       <div className="absolute -left-32 top-0 h-80 w-80 rounded-full bg-academy-gold/15 blur-3xl"/>
       <div className="absolute -right-24 bottom-0 h-80 w-80 rounded-full bg-academy-gold/10 blur-3xl"/>
@@ -183,38 +183,38 @@ export function Footer(){
       <div className="grid gap-10 pb-10 lg:grid-cols-[1.05fr_1.65fr_.9fr] lg:gap-14">
         <div>
           <Link href="/" aria-label="Retour à l’accueil Intégrale Academy" className="inline-flex items-center gap-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-academy-gold">
-            <Image src="/images/logo2.png" alt="" width={3024} height={3024} className="h-14 w-14 object-contain"/>
-            <span className="grid text-sm font-black leading-[.9] tracking-[.12em]"><span>INTÉGRALE</span><span className="mt-2 text-academy-gold-strong">ACADEMY</span></span>
+            <Image src="/images/sigle.png" alt="" width={1181} height={1181} className="h-14 w-14 rounded-full object-cover"/>
+            <span className="grid text-sm font-black leading-[.9] tracking-[.12em]"><span className="text-white">INTÉGRALE</span><span className="mt-2 text-academy-gold">ACADEMY</span></span>
           </Link>
-          <p className="mt-5 max-w-sm text-sm font-medium leading-7 text-academy-muted">Centre de formation professionnelle spécialisé en sécurité privée, sécurité incendie, VTC et BTS en alternance.</p>
-          <SocialLinks tone="light"/>
+          <p className="mt-5 max-w-sm text-sm font-medium leading-7 text-white/65">Centre de formation professionnelle spécialisé en sécurité privée, sécurité incendie, VTC et BTS en alternance.</p>
+          <SocialLinks tone="dark"/>
         </div>
 
         <nav className="grid gap-8 sm:grid-cols-3" aria-label="Navigation du pied de page">
           {footerLinks.map(group=><div key={group.title}>
-            <h3 className="text-xs font-black uppercase tracking-[.2em] text-academy-gold-strong">{group.title}</h3>
-            <ul className="mt-5 space-y-3 text-sm font-semibold text-academy-muted">{group.links.map(([label,href])=><li key={href}><Link href={href} className="transition hover:text-academy-gold-strong">{label}</Link></li>)}</ul>
+            <h3 className="text-xs font-black uppercase tracking-[.2em] text-academy-gold">{group.title}</h3>
+            <ul className="mt-5 space-y-3 text-sm font-semibold text-white/65">{group.links.map(([label,href])=><li key={href}><Link href={href} className="transition hover:text-academy-gold">{label}</Link></li>)}</ul>
           </div>)}
         </nav>
 
-        <aside className="rounded-[1.75rem] border border-academy-line bg-academy-elevated p-6 shadow-soft">
-          <span className="text-xs font-black uppercase tracking-[.2em] text-academy-gold-strong">Une question ?</span>
+        <aside className="rounded-[1.75rem] border border-white/10 bg-white/5 p-6 shadow-[0_20px_60px_rgba(0,0,0,.24)]">
+          <span className="text-xs font-black uppercase tracking-[.2em] text-academy-gold">Une question ?</span>
           <h3 className="mt-3 text-xl font-black tracking-tight">Parlons de votre projet.</h3>
-          <p className="mt-3 text-sm font-medium leading-6 text-academy-muted">{contact.hours}</p>
+          <p className="mt-3 text-sm font-medium leading-6 text-white/65">{contact.hours}</p>
           <div className="mt-5 grid gap-2">
             <Link href="tel:0422470768" className="inline-flex items-center justify-center rounded-full bg-academy-gold px-4 py-3 text-sm font-black text-academy-gold-text transition hover:-translate-y-0.5">{contact.phone}</Link>
-            <Link href="/contact" className="inline-flex items-center justify-center rounded-full border border-academy-line bg-academy-surface px-4 py-3 text-sm font-black text-academy-ink transition hover:-translate-y-0.5 hover:border-academy-gold">Nous contacter</Link>
+            <Link href="/contact" className="inline-flex items-center justify-center rounded-full border border-white/15 bg-white/5 px-4 py-3 text-sm font-black text-white transition hover:-translate-y-0.5 hover:border-academy-gold hover:text-academy-gold">Nous contacter</Link>
           </div>
         </aside>
       </div>
 
-      <div className="grid gap-3 border-y border-academy-line py-5 sm:grid-cols-2 lg:grid-cols-4">
-        {trustItems.map(item=><span key={item} className="flex items-center justify-center gap-2 rounded-2xl border border-academy-line bg-academy-elevated px-4 py-3 text-xs font-black uppercase tracking-[.1em] text-academy-muted"><i className="h-2 w-2 rounded-full bg-academy-gold" aria-hidden="true"/>{item}</span>)}
+      <div className="grid gap-3 border-y border-white/10 py-5 sm:grid-cols-2 lg:grid-cols-4">
+        {trustItems.map(item=><span key={item} className="flex items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-xs font-black uppercase tracking-[.1em] text-white/65"><i className="h-2 w-2 rounded-full bg-academy-gold" aria-hidden="true"/>{item}</span>)}
       </div>
 
-      <div className="flex flex-col gap-4 pt-6 text-xs font-medium text-academy-muted md:flex-row md:items-end md:justify-between">
+      <div className="flex flex-col gap-4 pt-6 text-xs font-medium text-white/55 md:flex-row md:items-end md:justify-between">
         <div className="max-w-4xl space-y-2"><p>{legalRefs.join(' · ')}</p><p>Site créé par SAS Intégrale Group — Clément Vaillant.</p></div>
-        <div className="flex flex-wrap gap-4"><Link href="/mentions-legales" className="hover:text-academy-gold-strong">Mentions légales</Link><Link href="/politique-confidentialite" className="hover:text-academy-gold-strong">Confidentialité</Link><Link href="/admin/ia" className="hover:text-academy-gold-strong">Administration</Link></div>
+        <div className="flex flex-wrap gap-4"><Link href="/mentions-legales" className="hover:text-academy-gold">Mentions légales</Link><Link href="/politique-confidentialite" className="hover:text-academy-gold">Confidentialité</Link><Link href="/admin/ia" className="hover:text-academy-gold">Administration</Link></div>
       </div>
     </div>
   </footer>
