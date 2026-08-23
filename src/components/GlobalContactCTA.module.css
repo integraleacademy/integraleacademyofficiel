@@ -148,12 +148,36 @@
   letter-spacing: -.06em;
   line-height: .98;
   text-wrap: balance;
+  transform-origin: left center;
+  will-change: opacity, transform, filter;
+}
+
+.shellVisible .title {
+  animation: ctaTitleReveal .92s cubic-bezier(.16, 1, .3, 1) both;
+  animation-delay: 180ms;
 }
 
 .highlight {
   position: relative;
+  z-index: 0;
   display: inline-block;
+  margin-inline: -.04em;
+  padding-inline: .04em;
   color: rgb(var(--text-main));
+  isolation: isolate;
+  transform-origin: center bottom;
+}
+
+.highlight::before {
+  content: '';
+  position: absolute;
+  inset: -.12em -.08em -.05em;
+  z-index: -2;
+  border-radius: .28em;
+  background: linear-gradient(105deg, transparent 8%, rgb(var(--accent) / .08) 28%, rgb(var(--accent) / .24) 50%, rgb(var(--accent) / .10) 70%, transparent 92%);
+  opacity: 0;
+  transform: scaleX(.2) rotate(-1deg);
+  transform-origin: left center;
 }
 
 .highlight::after {
@@ -170,8 +194,16 @@
   transform-origin: left;
 }
 
+.shellVisible .highlight {
+  animation: highlightLift .82s cubic-bezier(.16, 1, .3, 1) .34s both;
+}
+
+.shellVisible .highlight::before {
+  animation: highlightSweep 1.15s cubic-bezier(.16, 1, .3, 1) .30s both;
+}
+
 .shellVisible .highlight::after {
-  animation: underlineDraw .68s cubic-bezier(.16, 1, .3, 1) .38s both;
+  animation: underlineDraw .72s cubic-bezier(.16, 1, .3, 1) .52s both;
 }
 
 .contactCard {
@@ -347,6 +379,22 @@
 
 @keyframes ctaRise { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes ctaItemRise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes ctaTitleReveal {
+  0% { opacity: 0; transform: translateY(28px) scale(.985); filter: blur(8px); }
+  58% { opacity: 1; transform: translateY(-2px) scale(1.004); filter: blur(0); }
+  100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+@keyframes highlightLift {
+  0% { transform: translateY(.08em) scale(.965); }
+  58% { transform: translateY(-.025em) scale(1.025); }
+  100% { transform: translateY(0) scale(1); }
+}
+@keyframes highlightSweep {
+  0% { opacity: 0; transform: scaleX(.2) rotate(-1deg); }
+  38% { opacity: .92; transform: scaleX(1.04) rotate(-1deg); }
+  72% { opacity: .42; transform: scaleX(1) rotate(-1deg); }
+  100% { opacity: 0; transform: scaleX(1) rotate(-1deg); }
+}
 @keyframes underlineDraw { to { transform: scaleX(1); } }
 @keyframes ctaHaloDrift { from { transform: translate3d(-8px, 4px, 0); opacity: .48; } to { transform: translate3d(10px, -7px, 0); opacity: .68; } }
 @keyframes ctaHaloFloat { from { transform: translate3d(0,0,0); opacity: .42; } to { transform: translate3d(-12px, 10px,0); opacity: .58; } }
@@ -380,6 +428,9 @@
   .shell,
   .shellVisible,
   .shellVisible .revealItem,
+  .shellVisible .title,
+  .shellVisible .highlight,
+  .shellVisible .highlight::before,
   .shell::after,
   .haloPrimary,
   .haloSecondary,
@@ -391,8 +442,15 @@
     transition-duration: .01ms !important;
   }
   .shell,
-  .revealItem {
+  .revealItem,
+  .title,
+  .highlight {
     opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+  .highlight::before {
+    opacity: 0 !important;
     transform: none !important;
   }
   .highlight::after { transform: scaleX(1); }
