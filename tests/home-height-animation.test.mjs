@@ -18,20 +18,25 @@ test('la feuille du zoom est chargée et ne cible que le hero de la page accueil
   assert.match(css, /\[data-home-page\] h1 em \{/);
 });
 
-test('à la hauteur devient réellement énorme sur desktop', () => {
-  assert.match(css, /animation: homeHeightImpact 3\.4s \.62s/);
-  assert.match(css, /@keyframes homeHeightImpact/);
-  assert.match(css, /scale\(1\.86\)/);
-  assert.match(css, /scale\(1\.44\)/);
-  assert.match(css, /scale\(1\.12\)/);
+test('à la hauteur fait un gros zoom unique puis revient exactement à sa taille normale', () => {
+  assert.match(css, /animation: homeHeightZoom 1\.1s \.72s both;/);
+  assert.match(css, /@keyframes homeHeightZoom/);
+  assert.match(css, /38% \{[\s\S]*?scale\(2\.05\)/);
+  assert.match(css, /100% \{[\s\S]*?scale\(1\)/);
+  assert.doesNotMatch(css, /\binfinite\b/);
 });
 
-test('le mobile garde un zoom spectaculaire mais réduit', () => {
+test('le zoom est net, sans rebond, flou ni déplacement parasite', () => {
+  assert.doesNotMatch(css, /blur\(|drop-shadow\(|translate[XYZ]?\(/);
+  assert.doesNotMatch(css, /scale\(1\.(?:0[1-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9])\)/);
+});
+
+test('le mobile garde un gros zoom adapté à la largeur disponible', () => {
   assert.match(css, /@media \(max-width: 700px\)/);
-  assert.match(css, /animation-name: homeHeightImpactMobile/);
-  assert.match(css, /@keyframes homeHeightImpactMobile/);
-  assert.match(css, /scale\(1\.38\)/);
-  assert.match(css, /scale\(1\.07\)/);
+  assert.match(css, /animation-name: homeHeightZoomMobile/);
+  assert.match(css, /@keyframes homeHeightZoomMobile/);
+  assert.match(css, /38% \{[\s\S]*?scale\(1\.6\)/);
+  assert.match(css, /100% \{[\s\S]*?scale\(1\)/);
 });
 
 test('le zoom ne provoque pas de reflow par des propriétés de layout', () => {
@@ -42,7 +47,5 @@ test('prefers-reduced-motion neutralise complètement le zoom', () => {
   const reducedMotion = css.match(/@media \(prefers-reduced-motion: reduce\) \{[\s\S]*\n\}/)?.[0] ?? '';
   assert.ok(reducedMotion, 'le bloc prefers-reduced-motion doit exister');
   assert.match(reducedMotion, /animation: none !important/);
-  assert.match(reducedMotion, /opacity: 1 !important/);
   assert.match(reducedMotion, /transform: none !important/);
-  assert.match(reducedMotion, /filter: none !important/);
 });
