@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light" />
+    <title>Installer la signature de Clément VAILLANT</title>
+    <style>
+      :root {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: #17263a;
+        background: #f4f6f8;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        padding: max(24px, env(safe-area-inset-top)) 18px max(32px, env(safe-area-inset-bottom));
+        display: grid;
+        place-items: center;
+      }
+
+      main {
+        width: min(100%, 720px);
+        padding: 28px;
+        border: 1px solid #e2e7ec;
+        border-radius: 22px;
+        background: #ffffff;
+        box-shadow: 0 18px 50px rgba(23, 38, 58, 0.12);
+      }
+
+      h1 {
+        margin: 0 0 10px;
+        font-size: clamp(24px, 6vw, 34px);
+        line-height: 1.12;
+      }
+
+      p {
+        margin: 0 0 20px;
+        color: #5c6876;
+        font-size: 16px;
+        line-height: 1.5;
+      }
+
+      #signature {
+        width: 100%;
+        margin: 0 0 22px;
+        overflow: hidden;
+        border-radius: 10px;
+      }
+
+      #signature img {
+        display: block;
+        width: 100%;
+        max-width: 640px;
+        height: auto;
+        border: 0;
+      }
+
+      button {
+        width: 100%;
+        min-height: 52px;
+        border: 0;
+        border-radius: 13px;
+        background: #f2bb31;
+        color: #10233a;
+        font: inherit;
+        font-weight: 750;
+        font-size: 17px;
+        cursor: pointer;
+      }
+
+      button:active {
+        transform: translateY(1px);
+      }
+
+      #status {
+        min-height: 24px;
+        margin: 14px 0 0;
+        text-align: center;
+        color: #1c6b42;
+        font-weight: 650;
+      }
+
+      .steps {
+        margin-top: 22px;
+        padding-top: 20px;
+        border-top: 1px solid #e6ebef;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Signature de Clément VAILLANT</h1>
+      <p>Appuyez sur le bouton ci-dessous : l’image sera copiée avec son adresse permanente.</p>
+
+      <div id="signature">
+        <a href="https://integraleacademy.com/" style="display: block; text-decoration: none">
+          <img
+            src="https://integraleacademyofficiel-1.onrender.com/email-signatures/signature-clement-vaillant.png"
+            width="640"
+            alt="Clément VAILLANT – Président Intégrale Group"
+            style="display: block; width: 100%; max-width: 640px; height: auto; border: 0"
+          />
+        </a>
+      </div>
+
+      <button id="copy" type="button">Copier la signature</button>
+      <div id="status" role="status" aria-live="polite"></div>
+
+      <p class="steps">
+        Ensuite : Réglages → Apps → Mail → Signature → Par compte, supprimez l’ancienne signature puis collez la nouvelle.
+      </p>
+    </main>
+
+    <script>
+      const imageUrl =
+        "https://integraleacademyofficiel-1.onrender.com/email-signatures/signature-clement-vaillant.png";
+      const signatureHtml =
+        '<a href="https://integraleacademy.com/" style="display:block;text-decoration:none">' +
+        '<img src="' +
+        imageUrl +
+        '" width="640" alt="Clément VAILLANT – Président Intégrale Group" style="display:block;width:100%;max-width:640px;height:auto;border:0">' +
+        "</a>";
+
+      const button = document.getElementById("copy");
+      const status = document.getElementById("status");
+
+      function fallbackCopy() {
+        const signature = document.getElementById("signature");
+        const selection = window.getSelection();
+        const range = document.createRange();
+        range.selectNodeContents(signature);
+        selection.removeAllRanges();
+        selection.addRange(range);
+        const copied = document.execCommand("copy");
+        selection.removeAllRanges();
+        if (!copied) throw new Error("Copie impossible");
+      }
+
+      button.addEventListener("click", async () => {
+        status.textContent = "";
+        try {
+          if (navigator.clipboard && window.ClipboardItem) {
+            await navigator.clipboard.write([
+              new ClipboardItem({
+                "text/html": new Blob([signatureHtml], { type: "text/html" }),
+                "text/plain": new Blob(["Clément VAILLANT – Président Intégrale Group"], {
+                  type: "text/plain",
+                }),
+              }),
+            ]);
+          } else {
+            fallbackCopy();
+          }
+          status.textContent = "Signature copiée ✓";
+        } catch (error) {
+          try {
+            fallbackCopy();
+            status.textContent = "Signature copiée ✓";
+          } catch (fallbackError) {
+            status.textContent = "Maintenez votre doigt sur l’image, puis choisissez Copier.";
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
