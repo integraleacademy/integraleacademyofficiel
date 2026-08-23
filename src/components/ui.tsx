@@ -156,6 +156,16 @@ function AppointmentButton(){
   return <Link className="group inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-academy-gold via-academy-gold to-academy-gold px-5 py-3 text-sm font-black text-academy-gold-text shadow-gold ring-1 ring-academy-gold/70 transition hover:-translate-y-0.5 hover:brightness-105 focus:outline-none focus:ring-2 focus:ring-academy-gold focus:ring-offset-2" href={appointmentFormUrl}><span>Prendre RDV</span><span className="transition group-hover:translate-x-0.5" aria-hidden="true">→</span></Link>
 }
 
+function BrandSigle({ placement }: { placement: 'header' | 'footer' }){
+  const size = placement === 'header'
+    ? 'h-[56px] w-[72px] sm:h-[64px] sm:w-[82px] xl:h-[70px] xl:w-[90px]'
+    : 'h-[118px] w-[150px]';
+
+  return <span className={`relative block shrink-0 overflow-hidden ${size}`} aria-hidden="true">
+    <Image src="/images/logo.png" alt="" width={5906} height={1772} priority={placement === 'header'} className="absolute left-0 top-0 h-full w-auto max-w-none object-contain"/>
+  </span>
+}
+
 export function Header(){
   const trainingNav=[
     ['Métiers de la sécurité','/#formations-securite','Agent de sécurité privée (APS), Agent de Protection Physique des Personnes (A3P), SSIAP et Dirigeant d’entreprise de sécurité privée (DESP).','👮'],
@@ -163,7 +173,7 @@ export function Header(){
     ['Chauffeur VTC','/vtc','Formation Théorique et Formation Pratique VTC.','🚘'],
   ] as const;
   const nav=[['Nos formations',trainingNav],['Notre école','/ecole'],['Tarifs','/tarifs'],['Financements','/financements'],['Entreprises','/entreprises'],['Planning','/planning'],['Contact','/contact']] as const;
-  return <header className="sticky top-0 z-50 border-b border-white/10 bg-[#0b0d12]/95 text-white shadow-[0_18px_50px_rgba(0,0,0,.22)] backdrop-blur-xl"><div className="page-container flex items-center justify-between gap-4 py-3"><Link href="/" aria-label="Retour à l’accueil Intégrale Academy" className="group flex shrink-0 items-center gap-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-academy-gold"><Image src="/images/sigle.png" alt="" width={1181} height={1181} priority className="h-11 w-11 rounded-full object-cover transition group-hover:scale-[1.03] sm:h-12 sm:w-12"/><span className="grid text-[10px] font-black leading-[.86] tracking-[.1em] sm:text-sm"><span className="text-white">INTÉGRALE</span><span className="mt-1.5 text-academy-gold">ACADEMY</span></span></Link><nav className="hidden items-center gap-1 text-sm font-bold lg:flex" aria-label="Navigation principale">{nav.map(([n,h])=>typeof h!=='string'?<DesktopTrainingDropdown key={n} label={n} items={h}/>:<Link key={h} href={h} className="rounded-full px-3 py-2 text-white/75 transition hover:bg-white/5 hover:text-academy-gold focus:bg-white/5 focus:text-academy-gold">{n}</Link>)}</nav><div className="hidden items-center gap-2 xl:flex"><ThemeToggle/><Button href="tel:0422470768" variant="ghost">Appeler</Button><AppointmentButton/></div><div className="flex items-center gap-2 lg:hidden"><ThemeToggle/><MobileHeaderMenu nav={nav} appointmentFormUrl={appointmentFormUrl}/></div></div></header>
+  return <header className="sticky top-0 z-50 border-b border-white/15 bg-[linear-gradient(90deg,#40506a_0%,#344259_48%,#2b384d_100%)] text-white shadow-[0_16px_42px_rgba(31,42,58,.24)]"><div className="page-container flex items-center justify-between gap-2 px-0 py-2"><Link href="/" aria-label="Retour à l’accueil Intégrale Academy" className="group flex shrink-0 items-center gap-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-academy-gold sm:gap-3"><BrandSigle placement="header"/><span className="whitespace-nowrap text-[11.5px] font-black tracking-[.08em] sm:text-[18px] xl:text-[21px]"><span className="text-white">INTÉGRALE</span><span className="ml-1.5 text-academy-gold">ACADEMY</span></span></Link><nav className="hidden items-center gap-1 text-sm font-bold lg:flex" aria-label="Navigation principale">{nav.map(([n,h])=>typeof h!=='string'?<DesktopTrainingDropdown key={n} label={n} items={h}/>:<Link key={h} href={h} className="rounded-full px-3 py-2 text-white/80 transition hover:bg-white/10 hover:text-academy-gold focus:bg-white/10 focus:text-academy-gold">{n}</Link>)}</nav><div className="hidden items-center gap-2 xl:flex"><ThemeToggle/><Button href="tel:0422470768" variant="ghost">Appeler</Button><AppointmentButton/></div><div className="flex items-center gap-2 lg:hidden"><span className="hidden sm:block"><ThemeToggle/></span><MobileHeaderMenu nav={nav} appointmentFormUrl={appointmentFormUrl}/></div></div></header>
 }
 export function Footer(){
   const footerLinks=[
@@ -173,7 +183,7 @@ export function Footer(){
   ];
   const trustItems=['Qualiopi','CNAPS','France Travail','OPCO AKTO'];
 
-  return <footer className="relative mt-20 overflow-hidden border-t border-white/10 bg-[#080a0e] px-4 pb-8 pt-12 text-white">
+  return <footer className="relative mt-20 overflow-hidden border-t border-white/10 bg-[linear-gradient(135deg,#2a394d_0%,#202c3d_100%)] px-4 pb-8 pt-12 text-white">
     <div className="pointer-events-none absolute inset-0 opacity-70" aria-hidden="true">
       <div className="absolute -left-32 top-0 h-80 w-80 rounded-full bg-academy-gold/15 blur-3xl"/>
       <div className="absolute -right-24 bottom-0 h-80 w-80 rounded-full bg-academy-gold/10 blur-3xl"/>
@@ -181,10 +191,10 @@ export function Footer(){
     </div>
     <div className="relative page-container">
       <div className="grid gap-10 pb-10 lg:grid-cols-[1.05fr_1.65fr_.9fr] lg:gap-14">
-        <div>
-          <Link href="/" aria-label="Retour à l’accueil Intégrale Academy" className="inline-flex items-center gap-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-academy-gold">
-            <Image src="/images/sigle.png" alt="" width={1181} height={1181} className="h-14 w-14 rounded-full object-cover"/>
-            <span className="grid text-sm font-black leading-[.9] tracking-[.12em]"><span className="text-white">INTÉGRALE</span><span className="mt-2 text-academy-gold">ACADEMY</span></span>
+        <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
+          <Link href="/" aria-label="Retour à l’accueil Intégrale Academy" className="inline-flex flex-col items-center rounded-xl focus:outline-none focus:ring-2 focus:ring-academy-gold">
+            <BrandSigle placement="footer"/>
+            <span className="mt-3 whitespace-nowrap text-[17px] font-black tracking-[.1em]"><span className="text-white">INTÉGRALE</span><span className="ml-2 text-academy-gold">ACADEMY</span></span>
           </Link>
           <p className="mt-5 max-w-sm text-sm font-medium leading-7 text-white/65">Centre de formation professionnelle spécialisé en sécurité privée, sécurité incendie, VTC et BTS en alternance.</p>
           <SocialLinks tone="dark"/>
