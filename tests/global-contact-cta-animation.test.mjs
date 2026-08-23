@@ -9,8 +9,16 @@ const motionCss = readFileSync('src/app/global-contact-cta-continuous.css', 'utf
 test('le titre du bandeau reste inchangé et seul premier pas reçoit le déclencheur', () => {
   assert.match(
     component,
-    /Faites le <span className=\{styles\.highlight\} data-contact-zoom=\{isVisible \? 'active' : undefined\}>premier pas<\/span> vers votre futur métier\./,
+    /Faites le <span key=\{`\$\{pathname\}-\$\{isVisible \? 'active' : 'idle'\}`\} className=\{styles\.highlight\} data-contact-zoom=\{isVisible \? 'active' : undefined\}>premier pas<\/span> vers votre futur métier\./,
   );
+});
+
+test('le zoom est réinitialisé et rejoué sur chaque page qui affiche le bandeau', () => {
+  assert.match(component, /const \[visiblePathname, setVisiblePathname\] = useState<string \| null>\(null\);/);
+  assert.match(component, /const isVisible = pathname !== null && visiblePathname === pathname;/);
+  assert.match(component, /setVisiblePathname\(pathname\);/);
+  assert.match(component, /\}, \[pathname\]\);/);
+  assert.match(component, /key=\{`\$\{pathname\}-\$\{isVisible \? 'active' : 'idle'\}`\}/);
 });
 
 test('la feuille du zoom est chargée globalement', () => {
