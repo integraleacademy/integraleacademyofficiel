@@ -43,12 +43,14 @@ test('le titre et premier pas ont une boucle longue, spectaculaire et continue',
 });
 
 test('la variante mobile conserve la boucle avec une amplitude réduite', () => {
-  const mobile = motionCss.match(/@media \(max-width: 640px\) \{[\s\S]*?\n\}/)?.[0] ?? '';
-  assert.ok(mobile, 'le bloc mobile doit exister');
-  assert.match(mobile, /globalContactTitleSpectacleMobile 8\.4s 1\.25s ease-in-out infinite/);
-  assert.match(mobile, /globalContactHighlightPulseMobile 8\.4s 1\.25s ease-in-out infinite/);
+  assert.match(
+    motionCss,
+    /@media \(max-width: 640px\) \{[\s\S]*?globalContactTitleSpectacleMobile 8\.4s 1\.25s ease-in-out infinite !important;[\s\S]*?globalContactHighlightPulseMobile 8\.4s 1\.25s ease-in-out infinite !important;/,
+  );
   assert.match(motionCss, /@keyframes globalContactTitleSpectacleMobile/);
   assert.match(motionCss, /@keyframes globalContactHighlightPulseMobile/);
+  assert.match(motionCss, /globalContactTitleSpectacleMobile[\s\S]*?scale\(1\.012\)/);
+  assert.match(motionCss, /globalContactHighlightPulseMobile[\s\S]*?scale\(1\.045\)/);
 });
 
 test('la nouvelle animation ne modifie pas les dimensions ou la typographie du bandeau', () => {
