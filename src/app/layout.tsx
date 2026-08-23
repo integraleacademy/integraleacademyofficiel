@@ -4,7 +4,7 @@ import './global-contact-cta-continuous.css';
 import './home-height-animation.css';
 import { Button, Header, Footer, FullWidthBand, StickyMobileCTA } from '@/components/ui';
 import { ProjectTrainingPopup } from '@/components/ProjectTrainingPopup';
-import { AIChatWidget } from '@/components/AIChatWidget';
+import { GoogleRatingBadge } from '@/components/GoogleRatingBadge';
 import { GlobalContactCTA } from '@/components/GlobalContactCTA';
 
 export const metadata: Metadata = {
@@ -31,4 +31,4 @@ const themeInitScript = `
   })();
 `;
 
-export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="fr" suppressHydrationWarning><head><script dangerouslySetInnerHTML={{__html:themeInitScript}} /></head><body className="bg-academy-bg text-academy-ink"><Header/><main>{children}</main><GlobalContactCTA/><Footer/><StickyMobileCTA/><ProjectTrainingPopup/><AIChatWidget/></body></html>}
+export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="fr" suppressHydrationWarning><head><script dangerouslySetInnerHTML={{__html:themeInitScript}} /></head><body className="bg-academy-bg text-academy-ink"><Header/><main>{children}</main><GlobalContactCTA/><Footer/><StickyMobileCTA/><ProjectTrainingPopup/><GoogleRatingBadge/></body></html>}
