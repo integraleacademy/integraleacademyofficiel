@@ -19,9 +19,9 @@ test('la feuille du zoom est chargée et ne cible que le hero de la page accueil
 });
 
 test('à la hauteur fait un gros zoom unique puis revient exactement à sa taille normale', () => {
-  assert.match(css, /animation: homeHeightZoom 1\.1s \.72s both;/);
+  assert.match(css, /animation: homeHeightZoom 1\.6s \.72s both;/);
   assert.match(css, /@keyframes homeHeightZoom/);
-  assert.match(css, /38% \{[\s\S]*?scale\(2\.05\)/);
+  assert.match(css, /42% \{[\s\S]*?scale\(2\.05\)/);
   assert.match(css, /100% \{[\s\S]*?scale\(1\)/);
   assert.doesNotMatch(css, /\binfinite\b/);
 });
@@ -34,8 +34,9 @@ test('le zoom est net, sans rebond, flou ni déplacement parasite', () => {
 test('le mobile garde un gros zoom adapté à la largeur disponible', () => {
   assert.match(css, /@media \(max-width: 700px\)/);
   assert.match(css, /animation-name: homeHeightZoomMobile/);
+  assert.match(css, /animation-duration: 1\.45s/);
   assert.match(css, /@keyframes homeHeightZoomMobile/);
-  assert.match(css, /38% \{[\s\S]*?scale\(1\.6\)/);
+  assert.match(css, /42% \{[\s\S]*?scale\(1\.6\)/);
   assert.match(css, /100% \{[\s\S]*?scale\(1\)/);
 });
 

@@ -29,12 +29,19 @@ test('le titre complet reste immobile et visible', () => {
 test('premier pas fait un seul gros zoom puis revient exactement à sa taille normale', () => {
   assert.match(
     motionCss,
-    /span\[data-contact-zoom='active'\] \{[\s\S]*?globalContactFirstStepZoom 1\.1s \.28s both !important;/,
+    /span\[data-contact-zoom='active'\] \{[\s\S]*?globalContactFirstStepZoom 1\.6s \.28s both !important;/,
   );
   assert.match(motionCss, /@keyframes globalContactFirstStepZoom/);
-  assert.match(motionCss, /38% \{[\s\S]*?scale\(1\.85\)/);
+  assert.match(motionCss, /42% \{[\s\S]*?scale\(1\.65\)/);
   assert.match(motionCss, /100% \{[\s\S]*?scale\(1\)/);
   assert.doesNotMatch(motionCss, /\binfinite\b/);
+});
+
+test('premier pas zoome depuis la gauche pour rester dans le bandeau', () => {
+  assert.match(
+    motionCss,
+    /#global-contact-cta-title > span \{[\s\S]*?transform-origin: left center;/,
+  );
 });
 
 test('les anciens effets de glow et de soulignement animé sont neutralisés', () => {
@@ -46,8 +53,9 @@ test('les anciens effets de glow et de soulignement animé sont neutralisés', (
 test('le mobile conserve un zoom franc avec une amplitude adaptée', () => {
   assert.match(motionCss, /@media \(max-width: 640px\)/);
   assert.match(motionCss, /animation-name: globalContactFirstStepZoomMobile !important/);
+  assert.match(motionCss, /animation-duration: 1\.45s !important/);
   assert.match(motionCss, /@keyframes globalContactFirstStepZoomMobile/);
-  assert.match(motionCss, /38% \{[\s\S]*?scale\(1\.5\)/);
+  assert.match(motionCss, /42% \{[\s\S]*?scale\(1\.32\)/);
   assert.match(motionCss, /100% \{[\s\S]*?scale\(1\)/);
 });
 
