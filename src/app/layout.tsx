@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import './global-contact-cta-continuous.css';
 import { Button, Header, Footer, FullWidthBand, StickyMobileCTA } from '@/components/ui';
 import { ProjectTrainingPopup } from '@/components/ProjectTrainingPopup';
 import { AIChatWidget } from '@/components/AIChatWidget';
