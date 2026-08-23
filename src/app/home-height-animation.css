@@ -3,7 +3,7 @@
   z-index: 1;
   transform-origin: center center;
   will-change: transform;
-  animation: homeHeightZoom 1.1s .72s both;
+  animation: homeHeightZoom 1.6s .72s both;
 }
 
 @keyframes homeHeightZoom {
@@ -14,7 +14,7 @@
     transform: scale(1);
     animation-timing-function: cubic-bezier(.12, .8, .2, 1);
   }
-  38% {
+  42% {
     transform: scale(2.05);
     animation-timing-function: cubic-bezier(.2, .8, .2, 1);
   }
@@ -26,7 +26,7 @@
 @media (max-width: 700px) {
   [data-home-page] h1 em {
     animation-name: homeHeightZoomMobile;
-    animation-duration: 1s;
+    animation-duration: 1.45s;
     animation-delay: .62s;
   }
 }
@@ -39,7 +39,7 @@
     transform: scale(1);
     animation-timing-function: cubic-bezier(.12, .8, .2, 1);
   }
-  38% {
+  42% {
     transform: scale(1.6);
     animation-timing-function: cubic-bezier(.2, .8, .2, 1);
   }
