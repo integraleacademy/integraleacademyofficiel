@@ -3,6 +3,7 @@ import { OrientationAssistant } from '@/components/OrientationAssistant';
 import { BtsTrainingGrid, type BtsTrainingHighlight } from '@/components/BtsTrainingGrid';
 import { CampusSection } from '@/components/CampusSection';
 import { GoogleReviewsSection } from '@/components/GoogleReviewsSection';
+import { HomePageAnimations } from '@/components/HomePageAnimations';
 import { SecurityTrainingGrid, type SecurityTrainingHighlight } from '@/components/SecurityTrainingGrid';
 import { VtcTrainingCard } from '@/components/VtcTrainingCard';
 import { PremiumFAQSection } from '@/components/ui';
@@ -164,26 +165,27 @@ const proofItems = [
 
 export default function Home() {
   return (
-    <div className={styles.home}>
+    <div className={styles.home} data-home-page>
+      <HomePageAnimations />
       <section className={styles.hero}>
-        <span className={styles.heroGlow} aria-hidden="true" />
+        <span className={styles.heroGlow} data-home-ambient aria-hidden="true" />
         <div className={styles.container}>
           <div className={styles.heroCopy}>
-            <span className={styles.heroBadge}><i aria-hidden="true" /> Intégrale Academy · fondée en 2018</span>
-            <h1>Votre futur métier mérite une formation <em>à la hauteur.</em></h1>
-            <p>Des parcours concrets, des formateurs issus du terrain et une équipe qui vous accompagne réellement — du choix de la formation jusqu’à votre projet professionnel.</p>
-            <div className={styles.heroActions}>
+            <span className={styles.heroBadge} data-home-hero-item><i aria-hidden="true" /> Intégrale Academy · fondée en 2018</span>
+            <h1 data-home-hero-item>Votre futur métier mérite une formation <em>à la hauteur.</em></h1>
+            <p data-home-hero-item>Des parcours concrets, des formateurs issus du terrain et une équipe qui vous accompagne réellement — du choix de la formation jusqu’à votre projet professionnel.</p>
+            <div className={styles.heroActions} data-home-hero-item>
               <Link href="#formations-securite" className={styles.primaryButton}>Trouver ma formation <span aria-hidden="true">→</span></Link>
               <Link href="/planning" className={styles.goldButton}>Voir le planning</Link>
             </div>
-            <div className={styles.heroProofs} aria-label="Points forts d’Intégrale Academy">
+            <div className={styles.heroProofs} data-home-hero-item aria-label="Points forts d’Intégrale Academy">
               <span>Formations réglementées</span>
               <span>Financements possibles</span>
               <span>Côte d’Azur · Paris · Centre France</span>
             </div>
           </div>
 
-          <div id="assistant-orientation" className={`${styles.assistantDock} scroll-mt-28`}>
+          <div id="assistant-orientation" data-home-assistant className={`${styles.assistantDock} scroll-mt-28`}>
             <OrientationAssistant variant="homeDock" />
           </div>
         </div>
@@ -191,7 +193,7 @@ export default function Home() {
 
       <section className={styles.journey}>
         <div className={styles.container}>
-          <div className={styles.sectionHeading}>
+          <div className={styles.sectionHeading} data-home-journey-heading>
             <div>
               <span>Préparez votre inscription</span>
               <h2>Quatre étapes. Une équipe à chaque étape.</h2>
@@ -199,8 +201,8 @@ export default function Home() {
             <p>La page vous guide sans vous demander de comprendre seul les financements, les prérequis ou les démarches administratives.</p>
           </div>
 
-          <div className={styles.journeyGrid}>
-            <article className={styles.journeyLead}>
+          <div className={styles.journeyGrid} data-home-journey-grid>
+            <article className={styles.journeyLead} data-home-journey-card>
               <span className={styles.cardEyebrow}>Votre parcours Intégrale Academy</span>
               <h3>Vous avancez avec un plan clair.</h3>
               <p>Commencez par choisir un métier. Nous vous aidons ensuite à vérifier les conditions, trouver une solution de financement et préparer votre inscription.</p>
@@ -211,7 +213,7 @@ export default function Home() {
 
             <div className={styles.journeyCards}>
               {journeyCards.map((card) => (
-                <Link key={card.number} href={card.href} className={`${styles.journeyCard} ${styles[card.tone]}`}>
+                <Link key={card.number} href={card.href} data-home-journey-card className={`${styles.journeyCard} ${styles[card.tone]}`}>
                   <span className={styles.journeyIcon}>{card.icon}</span>
                   <h3>{card.title}</h3>
                   <p>{card.description}</p>
@@ -274,8 +276,8 @@ export default function Home() {
         </section>
       </VisualSection>
 
-      <section className={styles.proofBar} aria-label="Chiffres et reconnaissances">
-        <div className={styles.container}><div className={styles.proofGrid}>{proofItems.map(([value, label]) => <div key={value}><strong>{value}</strong><span>{label}</span></div>)}</div></div>
+      <section className={styles.proofBar} data-home-proof aria-label="Chiffres et reconnaissances">
+        <div className={styles.container}><div className={styles.proofGrid}>{proofItems.map(([value, label]) => <div key={value} data-home-proof-item><strong>{value}</strong><span>{label}</span></div>)}</div></div>
       </section>
 
       <CampusSection />
