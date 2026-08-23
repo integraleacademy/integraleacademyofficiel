@@ -11,7 +11,7 @@ export function GoogleRatingBadge(){
   return <a
     href="/#avis-google"
     aria-label="Voir les avis Google Intégrale Academy, note 4,8 sur 5"
-    className="group fixed bottom-20 right-3 z-[60] flex items-center gap-2 rounded-2xl border border-[#E8EAED] bg-white/95 px-2.5 py-2.5 text-[#202124] shadow-[0_18px_55px_rgba(15,23,42,.18)] ring-1 ring-black/[.04] backdrop-blur transition duration-300 hover:-translate-y-1 hover:border-[#F2BB31]/60 hover:shadow-[0_22px_65px_rgba(15,23,42,.24)] md:bottom-6 md:right-6 md:px-3"
+    className="group fixed bottom-[calc(5.5rem+env(safe-area-inset-bottom))] left-3 right-auto z-[60] flex items-center gap-2 rounded-2xl border border-[#E8EAED] bg-white/95 px-2.5 py-2.5 text-[#202124] shadow-[0_18px_55px_rgba(15,23,42,.18)] ring-1 ring-black/[.04] backdrop-blur transition duration-300 hover:-translate-y-1 hover:border-[#F2BB31]/60 hover:shadow-[0_22px_65px_rgba(15,23,42,.24)] lg:bottom-6 lg:left-auto lg:right-6 lg:px-3"
   >
     <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-white shadow-[0_8px_24px_rgba(15,23,42,.10)] ring-1 ring-[#E8EAED]" aria-hidden="true"><GoogleIcon/></span>
     <span className="min-w-0 text-left">

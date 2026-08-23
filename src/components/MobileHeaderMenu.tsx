@@ -20,11 +20,11 @@ export function MobileHeaderMenu({ nav, appointmentFormUrl }: MobileHeaderMenuPr
       aria-expanded={isOpen}
       aria-haspopup="menu"
       onClick={() => setIsOpen(current => !current)}
-      className="rounded-full border border-academy-line bg-academy-surface px-4 py-2 text-sm font-bold shadow-soft"
+      className="rounded-full border border-academy-line bg-academy-surface px-3.5 py-2 text-sm font-bold text-academy-ink shadow-soft sm:px-4"
     >
       Menu
     </button>
-    {isOpen ? <div className="absolute right-0 mt-3 max-h-[80vh] w-[min(22rem,calc(100vw-2rem))] overflow-y-auto rounded-3xl bg-academy-surface p-4 shadow-soft ring-1 ring-academy-line">
+    {isOpen ? <div className="fixed inset-x-3 top-[4.25rem] max-h-[calc(100dvh-5rem)] w-auto overflow-y-auto overscroll-contain rounded-3xl bg-academy-surface p-4 text-academy-ink shadow-soft ring-1 ring-academy-line sm:absolute sm:inset-x-auto sm:right-0 sm:top-full sm:mt-3 sm:max-h-[80vh] sm:w-[min(22rem,calc(100vw-2rem))]">
       <nav className="grid gap-2" aria-label="Navigation mobile">
         {nav.map(([n, h]) => typeof h !== 'string' ? <div key={n} className="rounded-2xl bg-academy-bg/60 p-2"><p className="px-2 py-2 text-xs font-black uppercase tracking-[.18em] text-academy-gold-strong">{n}</p><div className="grid gap-1">{h.map(([label, href]) => <Link key={href} href={href} onClick={closeMenu} className="rounded-xl px-3 py-2 font-semibold hover:text-academy-gold-strong">{label}</Link>)}</div></div> : <Link key={h} href={h} onClick={closeMenu} className="rounded-2xl px-4 py-3 font-semibold hover:text-academy-gold-strong">{n}</Link>)}
       </nav>

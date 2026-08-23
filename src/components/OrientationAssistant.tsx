@@ -129,7 +129,7 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
     setIsOpen(false);
   }
 
-  const minimizedButton = <button type="button" onClick={() => { resetAssistantState(); setIsOpen(true); }} className="group fixed bottom-20 right-4 z-[9998] inline-flex max-w-[calc(100vw-2rem)] items-center gap-3 rounded-full border border-academy-gold/60 bg-white/95 px-4 py-3 text-left text-sm font-black text-academy-ink shadow-[0_18px_45px_rgba(17,17,17,.14)] backdrop-blur transition hover:-translate-y-0.5 hover:border-academy-gold md:bottom-6 md:right-6">
+  const minimizedButton = <button type="button" onClick={() => { resetAssistantState(); setIsOpen(true); }} className="group fixed bottom-[calc(5.5rem+env(safe-area-inset-bottom))] right-4 z-[55] inline-flex max-w-[calc(100vw-2rem)] items-center gap-3 rounded-full border border-academy-gold/60 bg-white/95 px-4 py-3 text-left text-sm font-black text-academy-ink shadow-[0_18px_45px_rgba(17,17,17,.14)] backdrop-blur transition hover:-translate-y-0.5 hover:border-academy-gold lg:bottom-24 lg:right-6">
       <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-academy-ink text-academy-gold transition group-hover:rotate-6" aria-hidden="true">?</span>
       <span>Être conseillé</span>
     </button>;
@@ -147,8 +147,8 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
         <p className="mt-4 inline-flex items-center gap-2 text-xs font-bold text-white/60"><span className="status-dot" aria-hidden="true" /> Disponible maintenant</p>
       </div>
       <div>
-        <div className="grid gap-2.5 sm:grid-cols-2 xl:grid-cols-5">
-          {formations.map((formation,index) => <button key={formation.key} type="button" onClick={() => chooseFormation(formation.key)} className="group flex min-h-28 flex-col rounded-[1.25rem] border border-white/10 bg-white/[.055] p-4 text-left transition hover:-translate-y-1 hover:border-academy-gold/50 hover:bg-white/[.09] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-academy-gold">
+        <div className="grid grid-cols-2 gap-2.5 xl:grid-cols-5">
+          {formations.map((formation,index) => <button key={formation.key} type="button" onClick={() => chooseFormation(formation.key)} className="group flex min-h-24 flex-col rounded-[1.25rem] border border-white/10 bg-white/[.055] p-3 text-left transition last:col-span-2 hover:-translate-y-1 hover:border-academy-gold/50 hover:bg-white/[.09] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-academy-gold sm:min-h-28 sm:p-4 xl:last:col-span-1">
             <span className="text-[10px] font-black text-academy-gold">{String(index + 1).padStart(2,'0')}</span>
             <span className="mt-auto text-sm font-black leading-5 text-white">{formation.homeTitle}</span>
             <span className="mt-1 flex w-full items-center justify-between gap-2 text-[10px] font-bold text-white/55"><span>{formation.homeSubtitle}</span><span className="text-academy-gold transition group-hover:translate-x-1" aria-hidden="true">→</span></span>
