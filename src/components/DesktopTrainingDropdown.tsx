@@ -56,12 +56,12 @@ export function DesktopTrainingDropdown({ label, items }: DesktopTrainingDropdow
       <span className="invisible absolute left-1/2 top-full h-5 w-[30rem] -translate-x-1/2" aria-hidden="true" />
       <button
         type="button"
-        className="inline-flex items-center gap-1 rounded-full px-3 py-2 font-bold text-academy-muted transition hover:bg-academy-gold/10 hover:text-academy-gold-strong focus:bg-academy-gold/10 focus:text-academy-gold-strong focus:outline-none focus:ring-2 focus:ring-academy-gold"
+        className="inline-flex items-center gap-1 rounded-full px-3 py-2 font-bold text-white/75 transition hover:bg-white/5 hover:text-academy-gold focus:bg-white/5 focus:text-academy-gold focus:outline-none focus:ring-2 focus:ring-academy-gold"
         aria-haspopup="true"
         aria-expanded={isOpen}
       >
         <span>{label}</span>
-        <span className={`text-academy-gold-strong transition ${isOpen ? 'rotate-180' : ''}`} aria-hidden="true">⌄</span>
+        <span className={`text-academy-gold transition ${isOpen ? 'rotate-180' : ''}`} aria-hidden="true">⌄</span>
       </button>
       <span className="absolute left-1/2 top-full z-[60] h-5 w-[30rem] -translate-x-1/2 bg-transparent" aria-hidden="true" />
       <div className={`absolute left-1/2 top-full z-[70] mt-3 w-[30rem] -translate-x-1/2 overflow-hidden rounded-[2rem] border border-academy-gold/25 bg-academy-surface/95 p-3 shadow-[0_28px_80px_rgba(55,43,18,.18)] ring-1 ring-white/70 backdrop-blur-2xl transition duration-200 ${menuStateClasses}`}>
