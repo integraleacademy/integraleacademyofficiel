@@ -7,7 +7,15 @@ import { ProjectTrainingPopup } from '@/components/ProjectTrainingPopup';
 import { AIChatWidget } from '@/components/AIChatWidget';
 import { GlobalContactCTA } from '@/components/GlobalContactCTA';
 
-export const metadata: Metadata = { title: { default:'Intégrale Academy - Formations sécurité, VTC et BTS', template:'%s | Intégrale Academy' }, description:'Centre de formation professionnelle spécialisé sécurité privée, sécurité incendie, VTC et BTS en alternance.' };
+export const metadata: Metadata = {
+  title: { default:'Intégrale Academy - Formations sécurité, VTC et BTS', template:'%s | Intégrale Academy' },
+  description:'Centre de formation professionnelle spécialisé sécurité privée, sécurité incendie, VTC et BTS en alternance.',
+  icons: {
+    icon: [{ url: '/images/favicon.png', type: 'image/png' }],
+    shortcut: '/images/favicon.png',
+    apple: '/images/favicon.png',
+  },
+};
 const themeInitScript = `
   (function () {
     try {
@@ -24,4 +32,3 @@ const themeInitScript = `
 `;
 
 export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="fr" suppressHydrationWarning><head><script dangerouslySetInnerHTML={{__html:themeInitScript}} /></head><body className="bg-academy-bg text-academy-ink"><Header/><main>{children}</main><GlobalContactCTA/><Footer/><StickyMobileCTA/><ProjectTrainingPopup/><AIChatWidget/></body></html>}
-
