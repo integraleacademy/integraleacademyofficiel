@@ -188,7 +188,7 @@ export function GoogleReviewsSection(){
   const secondaryReviews = remainingReviews.slice(0, 2);
   const moreReviews = remainingReviews.slice(2);
 
-  return <section className="relative isolate overflow-visible px-4 pb-20 pt-[4.5rem] md:pb-20 md:pt-24">
+  return <section id="avis-google" className="relative isolate scroll-mt-24 overflow-visible px-4 pb-20 pt-[4.5rem] md:pb-20 md:pt-24">
     <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_18%_12%,rgba(230,176,58,.14),transparent_28%),linear-gradient(180deg,rgb(var(--surface-elevated)),rgb(var(--background))_76%)]" aria-hidden="true"/>
     <div className="page-container max-w-6xl overflow-visible">
       <div className="mx-auto max-w-3xl text-center reveal">
