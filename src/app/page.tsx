@@ -169,7 +169,7 @@ export default function Home() {
         <span className={styles.heroGlow} aria-hidden="true" />
         <div className={styles.container}>
           <div className={styles.heroCopy}>
-            <span className={styles.heroBadge}><i aria-hidden="true" /> Intégrale Academy · fondée en 2018</span>
+            <span className={styles.heroBadge}><i aria-hidden="true" /> Intégrale Academy · fondée en 2018 · TEST</span>
             <h1>Votre futur métier mérite une formation <em>à la hauteur.</em></h1>
             <p>Des parcours concrets, des formateurs issus du terrain et une équipe qui vous accompagne réellement — du choix de la formation jusqu’à votre projet professionnel.</p>
             <div className={styles.heroActions}>
