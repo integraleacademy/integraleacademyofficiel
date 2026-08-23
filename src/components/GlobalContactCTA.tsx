@@ -40,7 +40,8 @@ export function GlobalContactCTA() {
   const primaryContactHref = isBts ? 'mailto:aurelie@integraleacademy.com?subject=Question%20sur%20un%20BTS' : appointmentFormUrl;
   const shellRef = useRef<HTMLDivElement | null>(null);
   const frameRef = useRef<number | null>(null);
-  const [isVisible, setIsVisible] = useState(false);
+  const [visiblePathname, setVisiblePathname] = useState<string | null>(null);
+  const isVisible = pathname !== null && visiblePathname === pathname;
 
   useEffect(() => {
     const node = shellRef.current;
@@ -48,14 +49,14 @@ export function GlobalContactCTA() {
 
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) {
-        setIsVisible(true);
+        setVisiblePathname(pathname);
         observer.disconnect();
       }
     }, { threshold: 0.24 });
 
     observer.observe(node);
     return () => observer.disconnect();
-  }, []);
+  }, [pathname]);
 
   function updateSpotlight(event: MouseEvent<HTMLDivElement>) {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || window.matchMedia('(max-width: 1023px)').matches) {
@@ -96,7 +97,7 @@ export function GlobalContactCTA() {
                   Une question sur votre projet ?
                 </span>
                 <h2 id="global-contact-cta-title" className={`${styles.title} ${styles.revealItem}`} style={{ '--delay': '180ms' } as CSSProperties}>
-                  Faites le <span className={styles.highlight} data-contact-zoom={isVisible ? 'active' : undefined}>premier pas</span> vers votre futur métier.
+                  Faites le <span key={`${pathname}-${isVisible ? 'active' : 'idle'}`} className={styles.highlight} data-contact-zoom={isVisible ? 'active' : undefined}>premier pas</span> vers votre futur métier.
                 </h2>
                 <p className={`${styles.revealItem} mt-5 max-w-2xl text-base font-medium leading-8 text-academy-muted sm:text-lg`} style={{ '--delay': '280ms' } as CSSProperties}>
                   {isBts
