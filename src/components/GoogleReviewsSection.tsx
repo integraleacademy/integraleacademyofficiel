@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react';
 
-const googleRating = '5,0';
+const googleRating = '4,8';
 const googleReviewsCount = '15 avis sélectionnés';
 
 const reviews = [
