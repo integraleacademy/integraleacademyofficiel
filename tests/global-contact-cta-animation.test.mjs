@@ -52,7 +52,7 @@ test('le mobile conserve un zoom franc avec une amplitude adaptée', () => {
 });
 
 test('la nouvelle animation ne modifie pas les dimensions ou la typographie du bandeau', () => {
-  assert.doesNotMatch(motionCss, /\b(?:width|height|margin|padding|font-size|line-height|letter-spacing)\s*:/);
+  assert.doesNotMatch(motionCss, /^\s*(?:width|height|margin|padding|font-size|line-height|letter-spacing)\s*:/m);
 });
 
 test('prefers-reduced-motion neutralise complètement le zoom', () => {

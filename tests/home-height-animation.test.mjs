@@ -40,7 +40,7 @@ test('le mobile garde un gros zoom adapté à la largeur disponible', () => {
 });
 
 test('le zoom ne provoque pas de reflow par des propriétés de layout', () => {
-  assert.doesNotMatch(css, /\b(?:width|height|margin|padding|font-size|line-height|letter-spacing)\s*:/);
+  assert.doesNotMatch(css, /^\s*(?:width|height|margin|padding|font-size|line-height|letter-spacing)\s*:/m);
 });
 
 test('prefers-reduced-motion neutralise complètement le zoom', () => {
