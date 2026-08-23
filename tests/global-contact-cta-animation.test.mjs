@@ -19,6 +19,29 @@ test('la feuille de mouvement continue est chargée globalement', () => {
   assert.match(motionCss, /#global-contact-cta-title > span \{/);
 });
 
+test('le titre sort explicitement de l opacity zéro de revealItem', () => {
+  assert.match(
+    motionCss,
+    /#global-contact-cta-title \{[\s\S]*?opacity: 1;/,
+  );
+  assert.match(
+    motionCss,
+    /@keyframes globalContactTitleEntrance \{[\s\S]*?0% \{[\s\S]*?opacity: 0;[\s\S]*?62% \{[\s\S]*?opacity: 1;[\s\S]*?100% \{[\s\S]*?opacity: 1;/,
+  );
+  assert.match(
+    motionCss,
+    /@keyframes globalContactTitleSpectacle \{[\s\S]*?0%, 100% \{[\s\S]*?opacity: 1;/,
+  );
+  assert.match(
+    motionCss,
+    /@keyframes globalContactTitleEntranceMobile \{[\s\S]*?0% \{ opacity: 0;[\s\S]*?62% \{ opacity: 1;[\s\S]*?100% \{ opacity: 1;/,
+  );
+  assert.match(
+    motionCss,
+    /@keyframes globalContactTitleSpectacleMobile \{[\s\S]*?0%, 100% \{ opacity: 1;/,
+  );
+});
+
 test('le titre et premier pas ont une boucle longue, spectaculaire et continue', () => {
   assert.match(
     motionCss,
@@ -57,7 +80,7 @@ test('la nouvelle animation ne modifie pas les dimensions ou la typographie du b
   assert.doesNotMatch(motionCss, /\b(?:width|height|margin|padding|font-size|letter-spacing)\s*:/);
 });
 
-test('prefers-reduced-motion neutralise toute la boucle continue', () => {
+test('prefers-reduced-motion neutralise toute la boucle continue et force le titre visible', () => {
   const reducedMotion = motionCss.match(/@media \(prefers-reduced-motion: reduce\) \{[\s\S]*\n\}/)?.[0] ?? '';
   assert.ok(reducedMotion, 'le bloc prefers-reduced-motion doit exister');
   assert.match(reducedMotion, /#global-contact-cta-title,/);
@@ -65,6 +88,7 @@ test('prefers-reduced-motion neutralise toute la boucle continue', () => {
   assert.match(reducedMotion, /#global-contact-cta-title > span::before,/);
   assert.match(reducedMotion, /#global-contact-cta-title > span::after/);
   assert.match(reducedMotion, /animation: none !important/);
+  assert.match(reducedMotion, /opacity: 1 !important/);
   assert.match(reducedMotion, /transform: none !important/);
   assert.match(reducedMotion, /filter: none !important/);
   assert.match(reducedMotion, /transform: scaleX\(1\) !important/);

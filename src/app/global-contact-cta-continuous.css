@@ -1,4 +1,5 @@
 #global-contact-cta-title {
+  opacity: 1;
   transform-origin: left center;
   will-change: transform, filter;
   animation:
@@ -26,14 +27,17 @@
 
 @keyframes globalContactTitleEntrance {
   0% {
+    opacity: 0;
     transform: translateY(30px) scale(.975);
     filter: blur(9px) drop-shadow(0 0 0 rgb(var(--accent) / 0));
   }
   62% {
+    opacity: 1;
     transform: translateY(-4px) scale(1.012);
     filter: blur(0) drop-shadow(0 14px 22px rgb(var(--accent) / .10));
   }
   100% {
+    opacity: 1;
     transform: translateY(0) scale(1);
     filter: blur(0) drop-shadow(0 0 0 rgb(var(--accent) / 0));
   }
@@ -41,6 +45,7 @@
 
 @keyframes globalContactTitleSpectacle {
   0%, 100% {
+    opacity: 1;
     transform: translateY(0) scale(1);
     filter: drop-shadow(0 0 0 rgb(var(--accent) / 0));
   }
@@ -185,13 +190,13 @@
 }
 
 @keyframes globalContactTitleEntranceMobile {
-  0% { transform: translateY(22px) scale(.98); filter: blur(7px); }
-  62% { transform: translateY(-3px) scale(1.008); filter: blur(0); }
-  100% { transform: translateY(0) scale(1); filter: blur(0); }
+  0% { opacity: 0; transform: translateY(22px) scale(.98); filter: blur(7px); }
+  62% { opacity: 1; transform: translateY(-3px) scale(1.008); filter: blur(0); }
+  100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
 }
 
 @keyframes globalContactTitleSpectacleMobile {
-  0%, 100% { transform: translateY(0) scale(1); filter: none; }
+  0%, 100% { opacity: 1; transform: translateY(0) scale(1); filter: none; }
   18% { transform: translateY(-1px) scale(1.006); filter: drop-shadow(0 8px 14px rgb(var(--accent) / .07)); }
   36% { transform: translateY(1px) scale(.998); filter: none; }
   54% { transform: translateY(-2px) scale(1.012); filter: drop-shadow(0 11px 18px rgb(var(--accent) / .10)); }
@@ -219,6 +224,7 @@
 
   #global-contact-cta-title,
   #global-contact-cta-title > span {
+    opacity: 1 !important;
     transform: none !important;
     filter: none !important;
   }
