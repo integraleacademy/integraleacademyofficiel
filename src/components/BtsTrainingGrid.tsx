@@ -5,7 +5,7 @@ import { useRef } from 'react';
 import styles from './BtsTrainingGrid.module.css';
 import { useTrainingCardAnimations } from './useTrainingCardAnimations';
 
-type BtsVisual = 'mos' | 'mco' | 'ndrc' | 'ci' | 'pi' | 'cg';
+export type BtsVisual = 'mos' | 'mco' | 'ndrc' | 'ci' | 'pi' | 'cg';
 
 export type BtsTrainingHighlight = {
   slug: string;
@@ -23,7 +23,7 @@ export type BtsTrainingHighlight = {
   featured?: boolean;
 };
 
-function BtsIcon({ type }: { type: BtsVisual }) {
+export function BtsIcon({ type }: { type: BtsVisual }) {
   if (type === 'mos') {
     return <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3.5 19 6v5.2c0 4.5-2.8 7.8-7 9.3-4.2-1.5-7-4.8-7-9.3V6l7-2.5Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"/><path d="M8.2 14.7c.8-1.5 2.1-2.3 3.8-2.3s3 .8 3.8 2.3M12 9.8a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/></svg>;
   }
