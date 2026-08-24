@@ -177,7 +177,7 @@ export function Header(){
 }
 export function Footer(){
   const footerLinks=[
-    {title:'Formations',links:[['APS','/formations-securite/aps'],['SSIAP 1','/formations-securite/ssiap-1'],['A3P / APR','/formations-securite/a3p-apr'],['BTS en alternance','/bts'],['Chauffeur VTC','/vtc']]},
+    {title:'Formations',links:[['APS','/formations-securite/aps'],['SSIAP','/formations-securite/ssiap'],['A3P / APR','/formations-securite/a3p-apr'],['BTS en alternance','/bts'],['Chauffeur VTC','/vtc']]},
     {title:'Financements',links:[['CPF','/financements/cpf'],['France Travail','/financements/france-travail'],['Alternance','/financements/alternance'],['Toutes les solutions','/financements']]},
     {title:'Ressources',links:[['Planning','/planning'],['Nos centres','/centres'],['Entreprises','/entreprises'],['Tarifs','/tarifs'],['Contact','/contact']]},
   ];
