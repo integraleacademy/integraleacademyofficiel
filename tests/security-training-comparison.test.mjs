@@ -41,6 +41,8 @@ test('la modale se ferme au clavier et restaure le défilement de la page', () =
 
 test('la comparaison utilise cinq colonnes sur ordinateur et des cartes glissables sur mobile', () => {
   assert.match(styles, /grid-template-columns: repeat\(5, minmax\(13\.5rem, 1fr\)\)/);
+  assert.match(styles, /@media \(min-width: 761px\) and \(max-height: 960px\)/);
+  assert.match(styles, /max-height: calc\(100dvh - \.9rem\)/);
   assert.match(styles, /@media \(max-width: 760px\)/);
   assert.match(styles, /grid-auto-flow: column/);
   assert.match(styles, /grid-auto-columns: minmax\(82vw, 1fr\)/);
