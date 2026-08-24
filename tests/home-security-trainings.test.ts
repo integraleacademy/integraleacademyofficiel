@@ -4,7 +4,7 @@ import {
   createHomeSecurityHighlights,
   getNearestDespSessionLabel,
   type HomeTrainingSession,
-} from '../src/lib/home-security-trainings.ts';
+} from '../src/lib/home-security-trainings';
 
 const now = '2026-08-24T08:00:00+02:00';
 
