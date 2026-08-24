@@ -2,6 +2,10 @@ export type PublicSessionLike = {
   id?: string;
   startDate?: string | Date;
   endDate?: string | Date;
+  inPersonStartDate?: string | Date | null;
+  inPersonEndDate?: string | Date | null;
+  remoteStartDate?: string | Date | null;
+  remoteEndDate?: string | Date | null;
   status?: string;
   seatsLeft?: number | string | null;
   showSeatsLeft?: boolean | null;
@@ -37,4 +41,27 @@ export function computedSeats(session: PublicSessionLike): number | null {
 export function formatSessionDate(value?: string | Date) {
   if (!value) return '';
   return new Intl.DateTimeFormat('fr-FR', { timeZone: 'Europe/Paris', day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(value));
+}
+
+export function formatSessionNumericDate(value?: string | Date | null) {
+  if (!value) return '';
+  const date = value instanceof Date ? value : new Date(value);
+  if (Number.isNaN(date.getTime())) return '';
+  return new Intl.DateTimeFormat('fr-FR', {
+    timeZone: 'Europe/Paris',
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  }).format(date);
+}
+
+export function formatSessionPeriod(startDate?: string | Date | null, endDate?: string | Date | null) {
+  const start = formatSessionNumericDate(startDate);
+  const end = formatSessionNumericDate(endDate);
+  return start && end ? `Du ${start} au ${end}` : 'À renseigner dans l’administration';
+}
+
+export function hasDetailedDeliveryPeriods(session: PublicSessionLike) {
+  const slug = session.training?.slug || '';
+  return slug === 'aps' || slug === 'desp' || slug === 'desp-dssp' || slug.startsWith('desp-');
 }

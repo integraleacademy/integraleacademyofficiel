@@ -160,6 +160,7 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
       id="dates-tarifs"
       eyebrow="06 — Dates & tarifs"
       sessions={visibleSessions}
+      showDeliveryPeriods
       defaultPrice="1 650 €"
       defaultLocation="Puget-sur-Argens"
       priceDescription="Formation complète · SST inclus · examen final"

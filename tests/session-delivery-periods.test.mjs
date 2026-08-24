@@ -59,3 +59,34 @@ test('les périodes détaillées sont transmises au contexte de l’IA', () => {
   assert.match(source, /Distanciel:/);
   for (const field of fields) assert.ok(source.includes(`s.${field}`), `champ IA manquant : ${field}`);
 });
+
+test('APS et DESP affichent les trois périodes sur leurs pages et dans le planning public', () => {
+  const formatter = read('src/lib/public-sessions.ts');
+  const dateCards = read('src/components/TrainingDatesPricingSection.tsx');
+  const apsPage = read('src/components/ApsReferencePage.tsx');
+  const despPage = read('src/app/formations-securite/desp-initial/page.tsx');
+  const planning = read('src/app/planning/PlanningClient.tsx');
+
+  assert.match(formatter, /day: '2-digit'/);
+  assert.match(formatter, /month: '2-digit'/);
+  assert.match(formatter, /return start && end \? `Du \$\{start\} au \$\{end\}`/);
+  assert.match(formatter, /slug === 'aps'/);
+  assert.match(formatter, /slug\.startsWith\('desp-'\)/);
+
+  for (const label of [
+    'Date de début et date de fin',
+    'Dates du distanciel',
+    'Dates du présentiel',
+  ]) {
+    assert.ok(dateCards.includes(label), `libellé public manquant : ${label}`);
+    assert.ok(planning.includes(label), `libellé planning manquant : ${label}`);
+  }
+
+  for (const field of fields) {
+    assert.ok(dateCards.includes(`session.${field}`), `champ public manquant : ${field}`);
+    assert.ok(planning.includes(`session.${field}`), `champ planning manquant : ${field}`);
+  }
+
+  assert.match(apsPage, /sessions=\{visibleSessions\}[\s\S]*?showDeliveryPeriods/);
+  assert.match(despPage, /sessions=\{sessions\}[\s\S]*?showDeliveryPeriods/);
+});

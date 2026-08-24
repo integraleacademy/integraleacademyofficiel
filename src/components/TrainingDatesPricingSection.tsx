@@ -1,10 +1,15 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
+import { formatSessionPeriod } from '@/lib/public-sessions';
 
 export type TrainingDatesPricingSession = {
   id?: string | number | null;
   startDate?: string | Date | null;
   endDate?: string | Date | null;
+  inPersonStartDate?: string | Date | null;
+  inPersonEndDate?: string | Date | null;
+  remoteStartDate?: string | Date | null;
+  remoteEndDate?: string | Date | null;
   examDate?: string | Date | null;
   status?: string | null;
   seatsLeft?: number | string | null;
@@ -30,6 +35,7 @@ type TrainingDatesPricingSectionProps = {
   title?: ReactNode;
   intro?: ReactNode;
   benefits?: string[];
+  showDeliveryPeriods?: boolean;
   priceAction: Action;
   emptyAction?: Action;
   children?: ReactNode;
@@ -124,6 +130,7 @@ export function TrainingDatesPricingSection({
   title = 'Choisissez votre prochaine session.',
   intro = 'Les dates, examens, tarifs et places restantes proviennent des informations enregistrées par l’administration.',
   benefits = defaultBenefits,
+  showDeliveryPeriods = false,
   priceAction,
   emptyAction,
   children,
@@ -140,12 +147,22 @@ export function TrainingDatesPricingSection({
       {sessions.length ? <div className="grid gap-4 lg:grid-cols-2">
         {sessions.map((session, index) => {
           const full = isFull(session);
+          const deliveryPeriods = [
+            { label: 'Date de début et date de fin', value: formatSessionPeriod(session.startDate, session.endDate) },
+            { label: 'Dates du distanciel', value: formatSessionPeriod(session.remoteStartDate, session.remoteEndDate) },
+            { label: 'Dates du présentiel', value: formatSessionPeriod(session.inPersonStartDate, session.inPersonEndDate) },
+          ];
           return <article key={session.id ?? index} className={`rounded-[1.8rem] border p-5 shadow-soft ${index === 0 ? 'border-emerald-300 bg-emerald-50/60' : 'border-academy-line bg-[#FFFDF8]'}`}>
             <div className="flex flex-wrap items-center justify-between gap-3">
               <span className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-[.64rem] font-black uppercase tracking-[.15em] text-emerald-800">{index === 0 ? 'Prochaine session' : 'Session ouverte'}</span>
               <span className={`rounded-full border px-3 py-1.5 text-xs font-black ${full ? 'border-stone-300 bg-stone-100 text-stone-700' : 'border-yellow-300 bg-yellow-50 text-yellow-800'}`}>{seatsLabel(session)}</span>
             </div>
-            <h3 className="mt-5 text-2xl font-black">{formatDate(session.startDate)} → {formatDate(session.endDate)}</h3>
+            {showDeliveryPeriods ? <div className="mt-5 grid gap-2">
+              {deliveryPeriods.map((period, periodIndex) => <div key={period.label} className={`rounded-2xl border px-4 py-3 ${periodIndex === 0 ? 'border-academy-gold/45 bg-academy-gold/10' : 'border-academy-line/70 bg-white/80'}`}>
+                <p className="text-[.62rem] font-black uppercase tracking-[.15em] text-academy-muted">{period.label}</p>
+                <p className="mt-1 text-base font-black text-academy-ink">{period.value}</p>
+              </div>)}
+            </div> : <h3 className="mt-5 text-2xl font-black">{formatSessionPeriod(session.startDate, session.endDate)}</h3>}
             <p className="mt-2 font-bold text-academy-muted">Examen : {formatDate(session.examDate)} · {session.location || defaultLocation}</p>
             <div className="mt-5 flex flex-wrap items-end justify-between gap-4">
               <strong className="text-3xl">{formatPrice(session.priceLabel, defaultPrice)}</strong>

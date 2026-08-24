@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
-import { computedSeats, formatSessionDate } from '@/lib/public-sessions';
+import { computedSeats, formatSessionDate, formatSessionPeriod, hasDetailedDeliveryPeriods } from '@/lib/public-sessions';
 
 type Session = any;
 type CategoryKey = 'security' | 'fire' | 'vtc' | 'bts';
@@ -330,6 +330,14 @@ function alertHref(formation: string) {
   return '/contact?motif=alerte-planning&formation=' + encodeURIComponent(formation);
 }
 
+function deliveryPeriodRows(session: Session): [string, string][] {
+  return [
+    ['Date de début et date de fin', formatSessionPeriod(session.startDate, session.endDate)],
+    ['Dates du distanciel', formatSessionPeriod(session.remoteStartDate, session.remoteEndDate)],
+    ['Dates du présentiel', formatSessionPeriod(session.inPersonStartDate, session.inPersonEndDate)],
+  ];
+}
+
 function SessionCard({
   session,
   isNext,
@@ -341,6 +349,7 @@ function SessionCard({
 }) {
   const date = shortDate(session.startDate);
   const seats = seatText(session);
+  const showDeliveryPeriods = hasDetailedDeliveryPeriods(session);
 
   return (
     <article className={'group relative overflow-hidden rounded-[1.6rem] border bg-white p-4 shadow-[0_18px_55px_rgba(54,40,20,.08)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_70px_rgba(54,40,20,.14)] dark:bg-white/5 sm:p-5 ' + (isNext ? 'border-academy-gold' : 'border-academy-line/70 dark:border-white/10')}>
@@ -374,10 +383,16 @@ function SessionCard({
               </span>
             ) : null}
           </div>
-          <p className="mt-2 text-sm font-semibold leading-6 text-academy-muted">
-            Du {formatSessionDate(session.startDate)} au {formatSessionDate(session.endDate)}
+          {showDeliveryPeriods ? <div className="mt-3 grid gap-2">
+            {deliveryPeriodRows(session).map(([label, value], periodIndex) => <div key={label} className={`rounded-xl border px-3 py-2 ${periodIndex === 0 ? 'border-academy-gold/40 bg-academy-gold/10' : 'border-academy-line/60 bg-academy-bg/55 dark:border-white/10 dark:bg-white/5'}`}>
+              <span className="block text-[9px] font-black uppercase tracking-[.13em] text-academy-muted/70">{label}</span>
+              <span className="mt-0.5 block text-sm font-black leading-5 text-academy-ink dark:text-white">{value}</span>
+            </div>)}
+          </div> : <p className="mt-2 text-sm font-semibold leading-6 text-academy-muted">
+            {formatSessionPeriod(session.startDate, session.endDate)}
             {session.examDate ? ' · Examen le ' + formatSessionDate(session.examDate) : ''}
-          </p>
+          </p>}
+          {showDeliveryPeriods && session.examDate ? <p className="mt-2 text-sm font-semibold leading-6 text-academy-muted">Examen le {formatSessionDate(session.examDate)}</p> : null}
           {session.location ? (
             <p className="mt-2 flex items-center gap-2 text-sm font-black text-academy-muted">
               <Icon name="location" className="h-4 w-4 shrink-0 text-academy-gold-strong" />
@@ -569,10 +584,16 @@ function RegistrationModal({
   if (!session) return null;
 
   const title = sessionTitle(session);
-  const sessionLabel = formatSessionDate(session.startDate) + ' → ' + formatSessionDate(session.endDate);
+  const sessionLabel = formatSessionPeriod(session.startDate, session.endDate);
   const hiddenSession = title + ' — ' + sessionLabel;
   const seats = seatText(session);
   const date = shortDate(session.startDate);
+  const sessionDetails: [string, string][] = [
+    ...(hasDetailedDeliveryPeriods(session) ? deliveryPeriodRows(session) : [['Période', sessionLabel] as [string, string]]),
+    ['Examen', session.examDate ? formatSessionDate(session.examDate) : 'Selon le calendrier de la session'],
+    ['Lieu', session.location || 'Communiqué prochainement'],
+    ['Tarif', displayPrice(session)],
+  ];
 
   return (
     <div className="fixed inset-0 z-[70] grid place-items-center px-3 py-4 sm:px-5" role="dialog" aria-modal="true" aria-labelledby="registration-modal-title">
@@ -608,12 +629,7 @@ function RegistrationModal({
           </div>
 
           <div className="mt-7 grid gap-3 sm:grid-cols-2">
-            {[
-              ['Période', sessionLabel],
-              ['Examen', session.examDate ? formatSessionDate(session.examDate) : 'Selon le calendrier de la session'],
-              ['Lieu', session.location || 'Communiqué prochainement'],
-              ['Tarif', displayPrice(session)],
-            ].map(([label, value]) => (
+            {sessionDetails.map(([label, value]) => (
               <div key={label} className="rounded-2xl border border-academy-line/70 bg-white/70 p-4 dark:border-white/10 dark:bg-white/5">
                 <p className="text-[9px] font-black uppercase tracking-[.16em] text-academy-gold-strong">{label}</p>
                 <p className="mt-2 text-sm font-black leading-6 text-academy-ink dark:text-white">{value}</p>
