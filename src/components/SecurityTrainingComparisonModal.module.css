@@ -189,6 +189,11 @@
   align-items: stretch;
 }
 
+.comparisonGrid[data-columns='6'] {
+  min-width: 81rem;
+  grid-template-columns: repeat(6, minmax(12.7rem, 1fr));
+}
+
 .courseCard {
   --tone: #2394bc;
   --tone-soft: #e9f8fc;
@@ -211,6 +216,37 @@
 .courseCard[data-tone='sst'] { --tone: #1b9f78; --tone-soft: #e9f8f2; }
 .courseCard[data-tone='a3p'] { --tone: #119a87; --tone-soft: #e7f8f4; }
 .courseCard[data-tone='desp'] { --tone: #dd6e2f; --tone-soft: #fff0e7; }
+.courseCard[data-tone='mos'] { --tone: #c38b18; --tone-soft: #fff4d8; }
+.courseCard[data-tone='mco'] { --tone: #d96b3b; --tone-soft: #fff0e8; }
+.courseCard[data-tone='ndrc'] { --tone: #b04c76; --tone-soft: #faedf3; }
+.courseCard[data-tone='ci'] { --tone: #267fb0; --tone-soft: #eaf5fb; }
+.courseCard[data-tone='pi'] { --tone: #248d72; --tone-soft: #e9f7f2; }
+.courseCard[data-tone='cg'] { --tone: #6c62aa; --tone-soft: #f0eefb; }
+
+.courseCard[data-kind='bts'] {
+  min-height: 39rem;
+}
+
+.courseCard[data-kind='bts'] .fullTitle {
+  min-height: 2.9rem;
+}
+
+.courseCard[data-kind='bts'] .idealBox {
+  min-height: 4.2rem;
+}
+
+.courseCard[data-kind='bts'] .capabilities {
+  min-height: 9.4rem;
+}
+
+.courseCard[data-kind='bts'] .certification {
+  min-height: 4.6rem;
+}
+
+.courseCard[data-kind='bts'] .financing {
+  align-items: flex-start;
+  line-height: 1.35;
+}
 
 .courseCard[data-featured='true'] {
   border-color: rgba(195, 139, 24, .36);
@@ -712,6 +748,11 @@
     grid-auto-flow: column;
     grid-template-columns: none;
     gap: .75rem;
+  }
+
+  .comparisonGrid[data-columns='6'] {
+    min-width: 0;
+    grid-template-columns: none;
   }
 
   .courseCard {
