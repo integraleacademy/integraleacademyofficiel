@@ -15,7 +15,8 @@ export type SecurityTrainingHighlight = {
   duration: string;
   modality: string;
   location: string;
-  financing: string;
+  financing?: string;
+  pathway?: string;
   nextSession: string;
   visual: TrainingVisual;
   featured?: boolean;
@@ -49,11 +50,12 @@ function TrainingIcon({ type }: { type: TrainingVisual }) {
   return <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3.5 19 6v5.2c0 4.5-2.8 7.8-7 9.3-4.2-1.5-7-4.8-7-9.3V6l7-2.5Z" stroke="currentColor" strokeWidth="1.8" /><path d="m8.8 11.8 2.1 2.1 4.5-4.6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" /></svg>;
 }
 
-function FactIcon({ type }: { type: 'duration' | 'modality' | 'location' | 'funding' | 'calendar' }) {
+function FactIcon({ type }: { type: 'duration' | 'modality' | 'location' | 'funding' | 'calendar' | 'pathway' }) {
   if (type === 'duration') return <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="8.5" stroke="currentColor" strokeWidth="1.8" /><path d="M12 7.5V12l3 2" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" /></svg>;
   if (type === 'modality') return <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="5" width="17" height="11.5" rx="1.8" stroke="currentColor" strokeWidth="1.8" /><path d="M8.5 20h7M12 16.5V20" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" /></svg>;
   if (type === 'location') return <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s6.5-5.8 6.5-11.5a6.5 6.5 0 1 0-13 0C5.5 15.2 12 21 12 21Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" /><circle cx="12" cy="9.5" r="2.2" stroke="currentColor" strokeWidth="1.8" /></svg>;
   if (type === 'calendar') return <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="5.5" width="16" height="14" rx="2" stroke="currentColor" strokeWidth="1.8" /><path d="M8 3.5v4M16 3.5v4M4 10h16" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" /></svg>;
+  if (type === 'pathway') return <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 7.5h14M5 16.5h14M8 4.5 5 7.5l3 3M16 13.5l3 3-3 3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>;
   return <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4.5 8.2h15M7 4.5h10c1.4 0 2.5 1.1 2.5 2.5v10c0 1.4-1.1 2.5-2.5 2.5H7A2.5 2.5 0 0 1 4.5 17V7C4.5 5.6 5.6 4.5 7 4.5Z" stroke="currentColor" strokeWidth="1.8" /><path d="M15.5 14.5h4M15.5 11.5h4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" /></svg>;
 }
 
@@ -88,7 +90,7 @@ function FeaturedCard({ item }: { item: SecurityTrainingHighlight }) {
           </div>
 
           <footer className={styles.featuredFooter}>
-            <span className={styles.financing}><FactIcon type="funding" /> {item.financing}</span>
+            {item.financing ? <span className={styles.financing}><FactIcon type="funding" /> {item.financing}</span> : null}
             <span className={styles.featuredCta}>Voir la formation <span aria-hidden="true">→</span></span>
           </footer>
         </article>
@@ -118,6 +120,7 @@ function CompactCard({ item }: { item: SecurityTrainingHighlight }) {
           <div className={styles.compactFacts}>
             <span><FactIcon type="modality" /> {item.modality}</span>
             <span><FactIcon type="location" /> {item.location}</span>
+            {item.pathway ? <span><FactIcon type="pathway" /> {item.pathway}</span> : null}
           </div>
 
           <footer className={styles.compactFooter}>
