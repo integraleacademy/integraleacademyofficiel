@@ -5,7 +5,7 @@ import { useRef } from 'react';
 import styles from './SecurityTrainingGrid.module.css';
 import { useTrainingCardAnimations } from './useTrainingCardAnimations';
 
-type TrainingVisual = 'aps' | 'ssiap' | 'sst' | 'a3p' | 'desp';
+export type TrainingVisual = 'aps' | 'ssiap' | 'sst' | 'a3p' | 'desp';
 
 export type SecurityTrainingHighlight = {
   slug: string;
