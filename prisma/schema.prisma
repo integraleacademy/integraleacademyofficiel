@@ -29,31 +29,35 @@ model Training {
 }
 
 model TrainingSession {
-  id              String                @id @default(cuid())
-  trainingId      String
-  training        Training              @relation(fields: [trainingId], references: [id], onDelete: Cascade)
+  id         String   @id @default(cuid())
+  trainingId String
+  training   Training @relation(fields: [trainingId], references: [id], onDelete: Cascade)
 
-  title           String
-  startDate       DateTime
-  endDate         DateTime
-  examDate        DateTime?
-  priceCents      Int?
-  priceLabel      String?
-  location        String?
-  status          TrainingSessionStatus @default(OPEN)
-  seatsTotal      Int?
-  seatsLeft       Int?
-  showSeatsLeft   Boolean               @default(true)
-  durationLabel   String?
-  registrationUrl String?
-  fundingNotes    String?
-  publicNotes     String?
-  internalNotes   String?
-  sortOrder       Int                   @default(0)
-  isHighlighted   Boolean               @default(false)
+  title             String
+  startDate         DateTime
+  endDate           DateTime
+  inPersonStartDate DateTime?
+  inPersonEndDate   DateTime?
+  remoteStartDate   DateTime?
+  remoteEndDate     DateTime?
+  examDate          DateTime?
+  priceCents        Int?
+  priceLabel        String?
+  location          String?
+  status            TrainingSessionStatus @default(OPEN)
+  seatsTotal        Int?
+  seatsLeft         Int?
+  showSeatsLeft     Boolean               @default(true)
+  durationLabel     String?
+  registrationUrl   String?
+  fundingNotes      String?
+  publicNotes       String?
+  internalNotes     String?
+  sortOrder         Int                   @default(0)
+  isHighlighted     Boolean               @default(false)
 
-  createdAt       DateTime              @default(now())
-  updatedAt       DateTime              @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model ChatLead {
