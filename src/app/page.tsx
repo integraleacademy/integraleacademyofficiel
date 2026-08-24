@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { OrientationAssistant } from '@/components/OrientationAssistant';
 import { BtsTrainingGrid, type BtsTrainingHighlight } from '@/components/BtsTrainingGrid';
+import { BtsTrainingComparisonModal } from '@/components/BtsTrainingComparisonModal';
 import { CampusSection } from '@/components/CampusSection';
 import { GoogleReviewsSection } from '@/components/GoogleReviewsSection';
 import { HomePageAnimations } from '@/components/HomePageAnimations';
@@ -269,7 +270,7 @@ export default function Home() {
               <p>Six diplômes d’État pour construire un projet solide, en présentiel à Puget-sur-Argens ou 100 % à distance en visioconférence.</p>
             </div>
             <div className={styles.securityTrainingActions}>
-              <Link href="/bts" className={styles.securityTrainingSecondary}>Comparer les BTS</Link>
+              <BtsTrainingComparisonModal items={btsHighlights} className={styles.securityTrainingSecondary} />
               <Link href="/planning" className={styles.securityTrainingPrimary}>Voir les rentrées <span aria-hidden="true">→</span></Link>
             </div>
           </div>
