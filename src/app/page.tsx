@@ -6,11 +6,13 @@ import { CampusSection } from '@/components/CampusSection';
 import { GoogleReviewsSection } from '@/components/GoogleReviewsSection';
 import { HomePageAnimations } from '@/components/HomePageAnimations';
 import { SecurityTrainingComparisonModal } from '@/components/SecurityTrainingComparisonModal';
-import { SecurityTrainingGrid, type SecurityTrainingHighlight } from '@/components/SecurityTrainingGrid';
+import { SecurityTrainingGrid } from '@/components/SecurityTrainingGrid';
 import { VtcTrainingCard } from '@/components/VtcTrainingCard';
 import { PremiumFAQSection } from '@/components/ui';
 import { VisualSection } from '@/components/visuals';
 import { globalFaq } from '@/data/faq';
+import { createHomeSecurityHighlights } from '@/lib/home-security-trainings';
+import { listSessions } from '@/lib/training-data';
 import { vtcFormation } from '@/data/site';
 import styles from './home.module.css';
 
@@ -25,70 +27,6 @@ const journeyCards = [
   { number: '03', icon: '↗', title: 'Recruter ou former', description: 'Une entrée dédiée aux besoins des entreprises.', href: '/entreprises', tone: 'blue' },
   { number: '04', icon: 'CM', title: 'Parler à Cassandre', description: 'Un échange humain, gratuit et sans engagement.', href: '/contact', tone: 'light' },
 ] as const;
-
-const securityHighlights: SecurityTrainingHighlight[] = [
-  {
-    slug: '/formations-securite/aps',
-    shortTitle: 'APS',
-    title: 'Agent de prévention et de sécurité',
-    description: 'Prévenir les risques, surveiller les sites et protéger les personnes.',
-    duration: '175 h',
-    modality: 'Hybride',
-    location: 'Puget-sur-Argens',
-    financing: 'CPF · France Travail',
-    nextSession: '7 septembre 2026',
-    visual: 'aps',
-    featured: true,
-  },
-  {
-    slug: '/formations-securite/ssiap',
-    shortTitle: 'SSIAP',
-    title: 'Sécurité incendie',
-    description: 'SSIAP 1, SSIAP 2, SSIAP 3, Remise à niveau et Recyclage.',
-    duration: '14 à 216 h',
-    modality: 'Présentiel',
-    location: 'Puget-sur-Argens',
-    financing: 'Selon le parcours',
-    nextSession: 'Dates selon le parcours',
-    visual: 'ssiap',
-  },
-  {
-    slug: '/formations-securite/sst',
-    shortTitle: 'SST',
-    title: 'Sauveteur secouriste du travail',
-    description: 'Maîtriser les gestes de premiers secours et la prévention en entreprise.',
-    duration: '14 h',
-    modality: 'Présentiel',
-    location: 'Puget-sur-Argens',
-    financing: 'Entreprise · Personnel',
-    nextSession: 'Dates sur demande',
-    visual: 'sst',
-  },
-  {
-    slug: '/formations-securite/a3p-apr',
-    shortTitle: 'A3P',
-    title: 'Agent de protection physique des personnes',
-    description: 'Préparer et sécuriser les déplacements de personnes exposées.',
-    duration: '327 h',
-    modality: 'Présentiel',
-    location: 'Puget-sur-Argens',
-    financing: 'CPF · France Travail',
-    nextSession: '1er septembre 2026',
-    visual: 'a3p',
-  },
-  {
-    slug: '/formations-securite/desp',
-    shortTitle: 'DESP',
-    title: 'Dirigeant d’entreprise de sécurité privée',
-    description: 'Créer, reprendre ou piloter une entreprise de sécurité privée.',
-    duration: '245 h',
-    modality: 'Hybride · VAE',
-    location: '3 campus + distanciel',
-    financing: 'CPF · France Travail',
-    nextSession: 'Selon le parcours',
-    visual: 'desp',
-  },
-];
 
 const btsCommon = {
   certification: 'Diplôme d’État',
@@ -165,7 +103,9 @@ const proofItems = [
   ['3 centres', 'Selon les sessions'],
 ] as const;
 
-export default function Home() {
+export default async function Home() {
+  const securityHighlights = createHomeSecurityHighlights(await listSessions());
+
   return (
     <div className={styles.home} data-home-page>
       <HomePageAnimations />
