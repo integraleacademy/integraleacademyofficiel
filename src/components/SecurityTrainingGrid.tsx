@@ -112,6 +112,7 @@ function CompactCard({ item }: { item: SecurityTrainingHighlight }) {
             <span className={styles.compactCategory}>{labels[item.visual]}</span>
             <h3>{item.shortTitle}</h3>
             <p>{item.title}</p>
+            {item.visual === 'ssiap' && <p className={styles.compactDescription}>{item.description}</p>}
           </div>
 
           <div className={styles.compactFacts}>

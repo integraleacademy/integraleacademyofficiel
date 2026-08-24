@@ -42,7 +42,7 @@ const securityHighlights: SecurityTrainingHighlight[] = [
     slug: '/formations-securite/ssiap',
     shortTitle: 'SSIAP',
     title: 'Sécurité incendie',
-    description: 'SSIAP 1, SSIAP 2, SSIAP 3, recyclages et remise à niveau.',
+    description: 'SSIAP 1, SSIAP 2, SSIAP 3, Remise à niveau et Recyclage.',
     duration: '14 à 216 h',
     modality: 'Présentiel',
     location: 'Puget-sur-Argens',
