@@ -49,6 +49,29 @@ const fundingOptions = [
   ['Paiement personnel', 'facilités étudiées'],
 ];
 
+type PeriodIconName = 'calendar' | 'location' | 'screen';
+
+function PeriodIcon({ name, className = 'h-4 w-4' }: { name: PeriodIconName; className?: string }) {
+  const common = {
+    className,
+    fill: 'none',
+    stroke: 'currentColor',
+    strokeLinecap: 'round' as const,
+    strokeLinejoin: 'round' as const,
+    strokeWidth: 1.8,
+    viewBox: '0 0 24 24',
+    'aria-hidden': true,
+  };
+
+  if (name === 'calendar') {
+    return <svg {...common}><rect x="3" y="5" width="18" height="16" rx="3" /><path d="M8 3v4M16 3v4M3 10h18" /></svg>;
+  }
+  if (name === 'screen') {
+    return <svg {...common}><rect x="3" y="4" width="18" height="13" rx="2.5" /><path d="M8 21h8M12 17v4" /></svg>;
+  }
+  return <svg {...common}><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z" /><circle cx="12" cy="10" r="2.5" /></svg>;
+}
+
 function formatDate(value?: string | Date | null) {
   if (!value) return 'À confirmer';
 
@@ -83,6 +106,12 @@ function formatPrice(value: unknown, fallback: string) {
   }
 
   return text;
+}
+
+function formatPublicPeriod(startDate?: string | Date | null, endDate?: string | Date | null) {
+  if (!startDate || !endDate) return 'Dates à confirmer';
+  const period = formatSessionPeriod(startDate, endDate);
+  return period.includes('administration') ? 'Dates à confirmer' : period;
 }
 
 function isFull(session: TrainingDatesPricingSession) {
@@ -148,23 +177,43 @@ export function TrainingDatesPricingSection({
         {sessions.map((session, index) => {
           const full = isFull(session);
           const deliveryPeriods = [
-            { label: 'Date de début et date de fin', value: formatSessionPeriod(session.startDate, session.endDate) },
-            { label: 'Dates du distanciel', value: formatSessionPeriod(session.remoteStartDate, session.remoteEndDate) },
-            { label: 'Dates du présentiel', value: formatSessionPeriod(session.inPersonStartDate, session.inPersonEndDate) },
+            { label: 'Session complète', value: formatPublicPeriod(session.startDate, session.endDate), icon: 'calendar' as const, confirmed: Boolean(session.startDate && session.endDate) },
+            { label: 'À distance', value: formatPublicPeriod(session.remoteStartDate, session.remoteEndDate), icon: 'screen' as const, confirmed: Boolean(session.remoteStartDate && session.remoteEndDate) },
+            { label: 'En présentiel', value: formatPublicPeriod(session.inPersonStartDate, session.inPersonEndDate), icon: 'location' as const, confirmed: Boolean(session.inPersonStartDate && session.inPersonEndDate) },
           ];
-          return <article key={session.id ?? index} className={`rounded-[1.8rem] border p-5 shadow-soft ${index === 0 ? 'border-emerald-300 bg-emerald-50/60' : 'border-academy-line bg-[#FFFDF8]'}`}>
+          const [mainPeriod, ...detailPeriods] = deliveryPeriods;
+          return <article key={session.id ?? index} className={`flex h-full flex-col rounded-[1.8rem] border p-5 shadow-soft ${index === 0 ? 'border-emerald-300 bg-emerald-50/60' : 'border-academy-line bg-[#FFFDF8]'}`}>
             <div className="flex flex-wrap items-center justify-between gap-3">
               <span className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-[.64rem] font-black uppercase tracking-[.15em] text-emerald-800">{index === 0 ? 'Prochaine session' : 'Session ouverte'}</span>
               <span className={`rounded-full border px-3 py-1.5 text-xs font-black ${full ? 'border-stone-300 bg-stone-100 text-stone-700' : 'border-yellow-300 bg-yellow-50 text-yellow-800'}`}>{seatsLabel(session)}</span>
             </div>
-            {showDeliveryPeriods ? <div className="mt-5 grid gap-2">
-              {deliveryPeriods.map((period, periodIndex) => <div key={period.label} className={`rounded-2xl border px-4 py-3 ${periodIndex === 0 ? 'border-academy-gold/45 bg-academy-gold/10' : 'border-academy-line/70 bg-white/80'}`}>
-                <p className="text-[.62rem] font-black uppercase tracking-[.15em] text-academy-muted">{period.label}</p>
-                <p className="mt-1 text-base font-black text-academy-ink">{period.value}</p>
-              </div>)}
+            {showDeliveryPeriods ? <div className="mt-5 rounded-[1.35rem] border border-academy-line/70 bg-white/65 p-2 shadow-[inset_0_1px_0_rgba(255,255,255,.8)]">
+              <div className="flex items-center gap-3 rounded-[1.05rem] bg-[#101a29] px-4 py-3.5 text-white shadow-[0_12px_28px_rgba(16,26,41,.16)]">
+                <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-academy-gold text-academy-gold-text">
+                  <PeriodIcon name={mainPeriod.icon} className="h-[1.1rem] w-[1.1rem]" />
+                </span>
+                <span className="min-w-0">
+                  <span className="block text-[.58rem] font-black uppercase tracking-[.16em] text-academy-gold">{mainPeriod.label}</span>
+                  <span className="mt-1 block text-[.95rem] font-black leading-5 text-white">{mainPeriod.value}</span>
+                </span>
+              </div>
+              <div className="mt-2 grid gap-2 sm:grid-cols-2">
+                {detailPeriods.map((period) => <div key={period.label} className={`flex items-start gap-3 rounded-[1rem] border px-3.5 py-3 ${period.confirmed ? 'border-academy-line/70 bg-[#FBF8F1]' : 'border-dashed border-academy-line bg-white/75'}`}>
+                  <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl border border-academy-line/70 bg-white text-academy-gold-strong">
+                    <PeriodIcon name={period.icon} />
+                  </span>
+                  <span className="min-w-0">
+                    <span className="block text-[.57rem] font-black uppercase tracking-[.15em] text-academy-muted">{period.label}</span>
+                    <span className={`mt-1 block text-sm font-black leading-5 ${period.confirmed ? 'text-academy-ink' : 'text-academy-muted'}`}>{period.value}</span>
+                  </span>
+                </div>)}
+              </div>
             </div> : <h3 className="mt-5 text-2xl font-black">{formatSessionPeriod(session.startDate, session.endDate)}</h3>}
-            <p className="mt-2 font-bold text-academy-muted">Examen : {formatDate(session.examDate)} · {session.location || defaultLocation}</p>
-            <div className="mt-5 flex flex-wrap items-end justify-between gap-4">
+            <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2 border-t border-academy-line/60 pt-3 text-sm font-bold text-academy-muted">
+              <span className="inline-flex items-center gap-2"><PeriodIcon name="calendar" className="h-4 w-4 text-academy-gold-strong" />Examen : {formatDate(session.examDate)}</span>
+              <span className="inline-flex items-center gap-2"><PeriodIcon name="location" className="h-4 w-4 text-academy-gold-strong" />{session.location || defaultLocation}</span>
+            </div>
+            <div className="mt-auto flex flex-wrap items-end justify-between gap-4 pt-5">
               <strong className="text-3xl">{formatPrice(session.priceLabel, defaultPrice)}</strong>
               <ActionLink action={{ href: registrationHref(session), label: full ? 'Être alerté' : 'Choisir cette session →' }} variant={full ? 'light' : 'dark'} />
             </div>
