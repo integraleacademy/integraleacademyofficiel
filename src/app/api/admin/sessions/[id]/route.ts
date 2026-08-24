@@ -11,6 +11,10 @@ function sessionUpdateData(data: any) {
   const update: any = { ...data };
   if ('startDate' in data) update.startDate = new Date(String(data.startDate || ''));
   if ('endDate' in data) update.endDate = new Date(String(data.endDate || ''));
+  if ('inPersonStartDate' in data) update.inPersonStartDate = toDate(data.inPersonStartDate);
+  if ('inPersonEndDate' in data) update.inPersonEndDate = toDate(data.inPersonEndDate);
+  if ('remoteStartDate' in data) update.remoteStartDate = toDate(data.remoteStartDate);
+  if ('remoteEndDate' in data) update.remoteEndDate = toDate(data.remoteEndDate);
   if ('examDate' in data) update.examDate = toDate(data.examDate);
   if ('priceCents' in data) update.priceCents = Number(data.priceCents || 0);
   if ('seatsTotal' in data) update.seatsTotal = nullableNumber(data.seatsTotal);

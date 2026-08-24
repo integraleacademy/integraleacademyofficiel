@@ -6,10 +6,20 @@ import { inflateRawSync } from 'zlib';
 
 export const runtime = 'nodejs';
 
-const columns = [
+const leadingColumns = [
   'Titre',
-  'Date début (DD/MM/YYYY)',
-  'Date fin (DD/MM/YYYY)',
+  'Date de début (DD/MM/YYYY)',
+  'Date de fin (DD/MM/YYYY)',
+];
+
+const deliveryPeriodColumns = [
+  'Date de début présentiel (DD/MM/YYYY)',
+  'Date de fin présentiel (DD/MM/YYYY)',
+  'Date de début distanciel (DD/MM/YYYY)',
+  'Date de fin distanciel (DD/MM/YYYY)',
+];
+
+const trailingColumns = [
   'Date examen (DD/MM/YYYY)',
   'Statut (OPEN/FULL/COMING_SOON/HIDDEN)',
   'Tarif centimes',
@@ -25,17 +35,19 @@ const columns = [
   'Mis en avant (oui/non)',
 ];
 
-const columnWidths = [220, 130, 130, 140, 230, 110, 130, 260, 110, 125, 220, 130, 340, 300, 80, 145];
+const leadingColumnWidths = [220, 130, 130];
+const deliveryPeriodColumnWidths = [170, 170, 170, 170];
+const trailingColumnWidths = [140, 230, 110, 130, 260, 110, 125, 220, 130, 340, 300, 80, 145];
 
 type SheetTheme = 'aps' | 'a3p' | 'desp' | 'neutral';
-type ImportSheet = { name: string; slug: string; location: string; registrationUrl: string; theme: SheetTheme; durationLabel?: string; priceLabel?: string; priceCents?: number };
+type ImportSheet = { name: string; slug: string; location: string; registrationUrl: string; theme: SheetTheme; hasDeliveryPeriods?: boolean; durationLabel?: string; priceLabel?: string; priceCents?: number };
 
 const sheets: ImportSheet[] = [
-  { name: 'APS', slug: 'aps', theme: 'aps', location: 'Puget-sur-Argens / Côte d’Azur', registrationUrl: '/formations-securite/aps', durationLabel: '175 heures', priceLabel: '1 650 €', priceCents: 165000 },
+  { name: 'APS', slug: 'aps', theme: 'aps', hasDeliveryPeriods: true, location: 'Puget-sur-Argens / Côte d’Azur', registrationUrl: '/formations-securite/aps', durationLabel: '175 heures', priceLabel: '1 650 €', priceCents: 165000 },
   { name: 'A3P', slug: 'a3p-apr', theme: 'a3p', location: 'Puget-sur-Argens / Côte d’Azur', registrationUrl: '/formations-securite/a3p-apr' },
-  { name: 'DESP Côte d’Azur', slug: 'desp-dssp', theme: 'desp', location: 'Puget-sur-Argens / Côte d’Azur', registrationUrl: '/formations-securite/desp' },
-  { name: 'DESP Paris', slug: 'desp-dssp', theme: 'desp', location: 'Paris · 142 rue de Rivoli, 75001 Paris', registrationUrl: '/formations-securite/desp' },
-  { name: 'DESP Aurillac', slug: 'desp-dssp', theme: 'desp', location: 'Aurillac · 14 avenue du Garric, 15000 Aurillac', registrationUrl: '/formations-securite/desp' },
+  { name: 'DESP Côte d’Azur', slug: 'desp-dssp', theme: 'desp', hasDeliveryPeriods: true, location: 'Puget-sur-Argens / Côte d’Azur', registrationUrl: '/formations-securite/desp' },
+  { name: 'DESP Paris', slug: 'desp-dssp', theme: 'desp', hasDeliveryPeriods: true, location: 'Paris · 142 rue de Rivoli, 75001 Paris', registrationUrl: '/formations-securite/desp' },
+  { name: 'DESP Aurillac', slug: 'desp-dssp', theme: 'desp', hasDeliveryPeriods: true, location: 'Aurillac · 14 avenue du Garric, 15000 Aurillac', registrationUrl: '/formations-securite/desp' },
   { name: 'SSIAP 1', slug: 'ssiap-1', theme: 'neutral', location: 'Puget-sur-Argens / Côte d’Azur', registrationUrl: '/formations-securite/ssiap-1' },
 ];
 
@@ -73,9 +85,12 @@ function workbookStyles() {
 
 function worksheetXml(sheet: ImportSheet) {
   const theme = themeStyle[sheet.theme];
-  const help = `Remplir une session par ligne. Dates obligatoires au format DD/MM/YYYY. Les lignes sans date début ou date fin sont ignorées. Statuts autorisés : OPEN, FULL, COMING_SOON, HIDDEN.`;
-  const example = [`Exemple ${sheet.name}`, '', '', '', 'OPEN', sheet.priceCents ?? '', sheet.priceLabel ?? '', sheet.location, '', '', sheet.registrationUrl, sheet.durationLabel ?? '', '', '', '0', 'non'];
-  return `<Worksheet ss:Name="${escapeXml(sheet.name)}"><Table>${columnWidths.map(width => `<Column ss:Width="${width}"/>`).join('')}${rowXml([help, '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''], 'Help', 42)}${rowXml(columns, theme.headerStyle, 34)}${rowXml(example)}</Table><WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel"><FreezePanes/><FrozenNoSplit/><SplitHorizontal>2</SplitHorizontal><TopRowBottomPane>2</TopRowBottomPane><ActivePane>2</ActivePane><TabColorIndex>${theme.tabColorIndex}</TabColorIndex><ProtectObjects>False</ProtectObjects><ProtectScenarios>False</ProtectScenarios></WorksheetOptions></Worksheet>`;
+  const columns = [...leadingColumns, ...(sheet.hasDeliveryPeriods ? deliveryPeriodColumns : []), ...trailingColumns];
+  const columnWidths = [...leadingColumnWidths, ...(sheet.hasDeliveryPeriods ? deliveryPeriodColumnWidths : []), ...trailingColumnWidths];
+  const help = `Remplir une session par ligne. Les dates de début et de fin sont obligatoires au format DD/MM/YYYY. Les lignes sans ces deux dates sont ignorées.${sheet.hasDeliveryPeriods ? ' Renseigner aussi les périodes présentiel et distanciel applicables à la session.' : ''} Statuts autorisés : OPEN, FULL, COMING_SOON, HIDDEN.`;
+  const example = [`Exemple ${sheet.name}`, '', '', ...(sheet.hasDeliveryPeriods ? ['', '', '', ''] : []), '', 'OPEN', sheet.priceCents ?? '', sheet.priceLabel ?? '', sheet.location, '', '', sheet.registrationUrl, sheet.durationLabel ?? '', '', '', '0', 'non'];
+  const helpRow = [help, ...Array(columns.length - 1).fill('')];
+  return `<Worksheet ss:Name="${escapeXml(sheet.name)}"><Table>${columnWidths.map(width => `<Column ss:Width="${width}"/>`).join('')}${rowXml(helpRow, 'Help', 42)}${rowXml(columns, theme.headerStyle, 34)}${rowXml(example)}</Table><WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel"><FreezePanes/><FrozenNoSplit/><SplitHorizontal>2</SplitHorizontal><TopRowBottomPane>2</TopRowBottomPane><ActivePane>2</ActivePane><TabColorIndex>${theme.tabColorIndex}</TabColorIndex><ProtectObjects>False</ProtectObjects><ProtectScenarios>False</ProtectScenarios></WorksheetOptions></Worksheet>`;
 }
 
 function workbookXml() {
@@ -98,33 +113,44 @@ function rowsToSessions(rowsBySheet: Map<string, string[][]>) {
   const sessions: Array<any> = [];
   for (const sheet of sheets) {
     const allRows = rowsBySheet.get(sheet.name) || [];
-    const headerIndex = allRows.findIndex(row => row.some(cell => cell.toLowerCase().includes('date début')));
+    const headerIndex = allRows.findIndex(row => row.some(cell => {
+      const normalized = cell.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+      return normalized.includes('date debut') || normalized.includes('date de debut');
+    }));
+    const header = headerIndex >= 0 ? allRows[headerIndex] : [];
+    const hasDeliveryPeriods = header.some(cell => cell.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes('debut presentiel'));
+    const trailingOffset = hasDeliveryPeriods ? deliveryPeriodColumns.length : 0;
     const rows = allRows.slice(headerIndex >= 0 ? headerIndex + 1 : 0);
     rows.forEach((cells, index) => {
       const startDate = safeDate(cells[1] || '');
       const endDate = safeDate(cells[2] || '');
       if (!startDate || !endDate) return;
-      const status = statuses.has((cells[4] || '').trim()) ? (cells[4] || '').trim() : 'OPEN';
+      const statusIndex = 4 + trailingOffset;
+      const status = statuses.has((cells[statusIndex] || '').trim()) ? (cells[statusIndex] || '').trim() : 'OPEN';
       sessions.push({
         sheet,
         data: {
           title: cells[0] || `${sheet.name} ${cells[1]}`,
           startDate,
           endDate,
-          examDate: safeDate(cells[3] || ''),
+          inPersonStartDate: hasDeliveryPeriods ? safeDate(cells[3] || '') : null,
+          inPersonEndDate: hasDeliveryPeriods ? safeDate(cells[4] || '') : null,
+          remoteStartDate: hasDeliveryPeriods ? safeDate(cells[5] || '') : null,
+          remoteEndDate: hasDeliveryPeriods ? safeDate(cells[6] || '') : null,
+          examDate: safeDate(cells[3 + trailingOffset] || ''),
           status,
-          priceCents: nullableNumber(cells[5] || ''),
-          priceLabel: cells[6] || sheet.priceLabel || '',
-          location: cells[7] || sheet.location,
-          seatsTotal: nullableNumber(cells[8] || ''),
-          seatsLeft: nullableNumber(cells[9] || ''),
+          priceCents: nullableNumber(cells[5 + trailingOffset] || ''),
+          priceLabel: cells[6 + trailingOffset] || sheet.priceLabel || '',
+          location: cells[7 + trailingOffset] || sheet.location,
+          seatsTotal: nullableNumber(cells[8 + trailingOffset] || ''),
+          seatsLeft: nullableNumber(cells[9 + trailingOffset] || ''),
           showSeatsLeft: true,
-          registrationUrl: cells[10] || sheet.registrationUrl,
-          durationLabel: cells[11] || sheet.durationLabel || '',
-          publicNotes: cells[12] || '',
-          internalNotes: cells[13] || '',
-          sortOrder: Number(cells[14] || index),
-          isHighlighted: yes(cells[15] || ''),
+          registrationUrl: cells[10 + trailingOffset] || sheet.registrationUrl,
+          durationLabel: cells[11 + trailingOffset] || sheet.durationLabel || '',
+          publicNotes: cells[12 + trailingOffset] || '',
+          internalNotes: cells[13 + trailingOffset] || '',
+          sortOrder: Number(cells[14 + trailingOffset] || index),
+          isHighlighted: yes(cells[15 + trailingOffset] || ''),
         },
       });
     });
@@ -209,8 +235,7 @@ function parseXlsx(buffer: Buffer) {
         const targetIndex = index >= 0 ? index : values.length;
         const type = attr(cell[1], 't');
         const raw = cell[2].match(/<v>([\s\S]*?)<\/v>/)?.[1] || cell[2].match(/<t[^>]*>([\s\S]*?)<\/t>/)?.[1] || '';
-        let value = type === 's' ? (sharedStrings[Number(raw)] || '') : textOnly(raw);
-        if ([1, 2, 3].includes(targetIndex) && /^[0-9]+(?:\.[0-9]+)?$/.test(value)) value = excelSerialToDate(value);
+        const value = type === 's' ? (sharedStrings[Number(raw)] || '') : textOnly(raw);
         values[targetIndex] = value;
       }
       return values;

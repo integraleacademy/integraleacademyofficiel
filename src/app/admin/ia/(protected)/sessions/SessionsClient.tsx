@@ -10,10 +10,54 @@ type DbHealth = { ok: boolean; hasDatabaseUrl: boolean; canConnectToDatabase: bo
 
 const displayDate = (value: any) => value ? new Date(value).toLocaleDateString('fr-FR') : '';
 const inputDate = (value: any) => value ? new Date(value).toISOString().slice(0, 10) : '';
-const emptySession = (training?: TrainingRow) => ({ trainingId: training?.id || '', title: '', startDate: '', endDate: '', examDate: '', priceCents: '', priceLabel: '', location: '', status: 'OPEN', seatsTotal: '', seatsLeft: '', registrationUrl: '', fundingNotes: '', publicNotes: '', internalNotes: '', sortOrder: 0, isHighlighted: false });
+const emptySession = (training?: TrainingRow) => ({
+  trainingId: training?.id || '',
+  title: '',
+  startDate: '',
+  endDate: '',
+  inPersonStartDate: '',
+  inPersonEndDate: '',
+  remoteStartDate: '',
+  remoteEndDate: '',
+  examDate: '',
+  priceCents: '',
+  priceLabel: '',
+  location: '',
+  status: 'OPEN',
+  seatsTotal: '',
+  seatsLeft: '',
+  registrationUrl: '',
+  fundingNotes: '',
+  publicNotes: '',
+  internalNotes: '',
+  sortOrder: 0,
+  isHighlighted: false,
+});
 
 function serialize(row: SessionRow) {
-  return { trainingId: row.trainingId, title: row.title, startDate: inputDate(row.startDate) || row.startDate, endDate: inputDate(row.endDate) || row.endDate, examDate: inputDate(row.examDate) || row.examDate, priceCents: row.priceCents, priceLabel: row.priceLabel, location: row.location || '', status: row.status, seatsTotal: row.seatsTotal ?? '', seatsLeft: row.seatsLeft ?? '', registrationUrl: row.registrationUrl || '', fundingNotes: row.fundingNotes || '', publicNotes: row.publicNotes || '', internalNotes: row.internalNotes || '', sortOrder: row.sortOrder || 0, isHighlighted: !!row.isHighlighted };
+  return {
+    trainingId: row.trainingId,
+    title: row.title,
+    startDate: inputDate(row.startDate) || row.startDate,
+    endDate: inputDate(row.endDate) || row.endDate,
+    inPersonStartDate: inputDate(row.inPersonStartDate) || row.inPersonStartDate || '',
+    inPersonEndDate: inputDate(row.inPersonEndDate) || row.inPersonEndDate || '',
+    remoteStartDate: inputDate(row.remoteStartDate) || row.remoteStartDate || '',
+    remoteEndDate: inputDate(row.remoteEndDate) || row.remoteEndDate || '',
+    examDate: inputDate(row.examDate) || row.examDate,
+    priceCents: row.priceCents,
+    priceLabel: row.priceLabel,
+    location: row.location || '',
+    status: row.status,
+    seatsTotal: row.seatsTotal ?? '',
+    seatsLeft: row.seatsLeft ?? '',
+    registrationUrl: row.registrationUrl || '',
+    fundingNotes: row.fundingNotes || '',
+    publicNotes: row.publicNotes || '',
+    internalNotes: row.internalNotes || '',
+    sortOrder: row.sortOrder || 0,
+    isHighlighted: !!row.isHighlighted,
+  };
 }
 
 export function SessionsClient({ initialRows }: { initialRows: SessionRow[] }) {
@@ -130,22 +174,33 @@ export function SessionsClient({ initialRows }: { initialRows: SessionRow[] }) {
     return health.error || 'Base de données indisponible côté serveur. Vérifiez DATABASE_URL, Prisma et les migrations Render.';
   }, [health]);
 
-  const fields = (row: SessionRow, onChange: (patch: Record<string, any>) => void, disabled: boolean) => <>
-    <label className="text-sm font-semibold">Formation<select value={row.trainingId || ''} onChange={event => onChange({ trainingId: event.target.value })} className="mt-1 w-full rounded-xl border p-3" disabled={disabled}>{sortedTrainings.map(training => <option key={training.id} value={training.id}>{training.name}</option>)}</select></label>
-    <label className="text-sm font-semibold">Titre<input value={row.title || ''} onChange={event => onChange({ title: event.target.value })} className="mt-1 w-full rounded-xl border p-3" disabled={disabled}/></label>
-    <label className="text-sm font-semibold">Début<input type="date" value={inputDate(row.startDate) || row.startDate || ''} onChange={event => onChange({ startDate: event.target.value })} className="mt-1 w-full rounded-xl border p-3" disabled={disabled}/></label>
-    <label className="text-sm font-semibold">Fin<input type="date" value={inputDate(row.endDate) || row.endDate || ''} onChange={event => onChange({ endDate: event.target.value })} className="mt-1 w-full rounded-xl border p-3" disabled={disabled}/></label>
-    <label className="text-sm font-semibold">Examen<input type="date" value={inputDate(row.examDate) || row.examDate || ''} onChange={event => onChange({ examDate: event.target.value })} className="mt-1 w-full rounded-xl border p-3" disabled={disabled}/></label>
-    <label className="text-sm font-semibold">Statut<select value={row.status} onChange={event => onChange({ status: event.target.value })} className="mt-1 w-full rounded-xl border p-3" disabled={disabled}>{sessionStatuses.map(status => <option key={status} value={status}>{status}</option>)}</select></label>
-    <label className="text-sm font-semibold">Tarif centimes<input type="number" min="0" value={row.priceCents ?? ''} onChange={event => onChange({ priceCents: event.target.value })} className="mt-1 w-full rounded-xl border p-3" disabled={disabled}/></label>
-    <label className="text-sm font-semibold">Libellé tarif<input value={row.priceLabel || ''} onChange={event => onChange({ priceLabel: event.target.value })} className="mt-1 w-full rounded-xl border p-3" disabled={disabled}/></label>
-    <label className="text-sm font-semibold">Lieu<input value={row.location || ''} onChange={event => onChange({ location: event.target.value })} className="mt-1 w-full rounded-xl border p-3" disabled={disabled}/></label>
-    <label className="text-sm font-semibold">Places totales<input type="number" min="0" value={row.seatsTotal ?? ''} onChange={event => onChange({ seatsTotal: event.target.value })} className="mt-1 w-full rounded-xl border p-3" disabled={disabled}/></label>
-    <label className="text-sm font-semibold">Places restantes<input type="number" min="0" value={row.seatsLeft ?? ''} onChange={event => onChange({ seatsLeft: event.target.value })} className="mt-1 w-full rounded-xl border p-3" disabled={disabled}/></label>
-    <label className="text-sm font-semibold">Lien inscription<input value={row.registrationUrl || ''} onChange={event => onChange({ registrationUrl: event.target.value })} className="mt-1 w-full rounded-xl border p-3" disabled={disabled}/></label>
-    <label className="text-sm font-semibold md:col-span-2">Notes publiques<textarea value={row.publicNotes || ''} onChange={event => onChange({ publicNotes: event.target.value })} className="mt-1 w-full rounded-xl border p-3" disabled={disabled}/></label>
-    <label className="text-sm font-semibold md:col-span-2">Notes internes<textarea value={row.internalNotes || ''} onChange={event => onChange({ internalNotes: event.target.value })} className="mt-1 w-full rounded-xl border p-3" disabled={disabled}/></label>
-  </>;
+  const fields = (row: SessionRow, onChange: (patch: Record<string, any>) => void, disabled: boolean) => {
+    const training = sortedTrainings.find(item => item.id === row.trainingId) || row.training;
+    const hasDeliveryPeriods = training?.slug === 'aps' || String(training?.slug || '').startsWith('desp-');
+
+    return <>
+      <label className="text-sm font-semibold">Formation<select value={row.trainingId || ''} onChange={event => onChange({ trainingId: event.target.value })} className="mt-1 w-full rounded-xl border p-3" disabled={disabled}>{sortedTrainings.map(trainingOption => <option key={trainingOption.id} value={trainingOption.id}>{trainingOption.name}</option>)}</select></label>
+      <label className="text-sm font-semibold">Titre<input value={row.title || ''} onChange={event => onChange({ title: event.target.value })} className="mt-1 w-full rounded-xl border p-3" disabled={disabled}/></label>
+      <label className="text-sm font-semibold">Date de début<input type="date" value={inputDate(row.startDate) || row.startDate || ''} onChange={event => onChange({ startDate: event.target.value })} className="mt-1 w-full rounded-xl border p-3" disabled={disabled}/></label>
+      <label className="text-sm font-semibold">Date de fin<input type="date" value={inputDate(row.endDate) || row.endDate || ''} onChange={event => onChange({ endDate: event.target.value })} className="mt-1 w-full rounded-xl border p-3" disabled={disabled}/></label>
+      {hasDeliveryPeriods ? <>
+        <label className="text-sm font-semibold">Date de début présentiel<input type="date" value={inputDate(row.inPersonStartDate) || row.inPersonStartDate || ''} onChange={event => onChange({ inPersonStartDate: event.target.value })} className="mt-1 w-full rounded-xl border p-3" disabled={disabled}/></label>
+        <label className="text-sm font-semibold">Date de fin présentiel<input type="date" value={inputDate(row.inPersonEndDate) || row.inPersonEndDate || ''} onChange={event => onChange({ inPersonEndDate: event.target.value })} className="mt-1 w-full rounded-xl border p-3" disabled={disabled}/></label>
+        <label className="text-sm font-semibold">Date de début distanciel<input type="date" value={inputDate(row.remoteStartDate) || row.remoteStartDate || ''} onChange={event => onChange({ remoteStartDate: event.target.value })} className="mt-1 w-full rounded-xl border p-3" disabled={disabled}/></label>
+        <label className="text-sm font-semibold">Date de fin distanciel<input type="date" value={inputDate(row.remoteEndDate) || row.remoteEndDate || ''} onChange={event => onChange({ remoteEndDate: event.target.value })} className="mt-1 w-full rounded-xl border p-3" disabled={disabled}/></label>
+      </> : null}
+      <label className="text-sm font-semibold">Examen<input type="date" value={inputDate(row.examDate) || row.examDate || ''} onChange={event => onChange({ examDate: event.target.value })} className="mt-1 w-full rounded-xl border p-3" disabled={disabled}/></label>
+      <label className="text-sm font-semibold">Statut<select value={row.status} onChange={event => onChange({ status: event.target.value })} className="mt-1 w-full rounded-xl border p-3" disabled={disabled}>{sessionStatuses.map(status => <option key={status} value={status}>{status}</option>)}</select></label>
+      <label className="text-sm font-semibold">Tarif centimes<input type="number" min="0" value={row.priceCents ?? ''} onChange={event => onChange({ priceCents: event.target.value })} className="mt-1 w-full rounded-xl border p-3" disabled={disabled}/></label>
+      <label className="text-sm font-semibold">Libellé tarif<input value={row.priceLabel || ''} onChange={event => onChange({ priceLabel: event.target.value })} className="mt-1 w-full rounded-xl border p-3" disabled={disabled}/></label>
+      <label className="text-sm font-semibold">Lieu<input value={row.location || ''} onChange={event => onChange({ location: event.target.value })} className="mt-1 w-full rounded-xl border p-3" disabled={disabled}/></label>
+      <label className="text-sm font-semibold">Places totales<input type="number" min="0" value={row.seatsTotal ?? ''} onChange={event => onChange({ seatsTotal: event.target.value })} className="mt-1 w-full rounded-xl border p-3" disabled={disabled}/></label>
+      <label className="text-sm font-semibold">Places restantes<input type="number" min="0" value={row.seatsLeft ?? ''} onChange={event => onChange({ seatsLeft: event.target.value })} className="mt-1 w-full rounded-xl border p-3" disabled={disabled}/></label>
+      <label className="text-sm font-semibold">Lien inscription<input value={row.registrationUrl || ''} onChange={event => onChange({ registrationUrl: event.target.value })} className="mt-1 w-full rounded-xl border p-3" disabled={disabled}/></label>
+      <label className="text-sm font-semibold md:col-span-2">Notes publiques<textarea value={row.publicNotes || ''} onChange={event => onChange({ publicNotes: event.target.value })} className="mt-1 w-full rounded-xl border p-3" disabled={disabled}/></label>
+      <label className="text-sm font-semibold md:col-span-2">Notes internes<textarea value={row.internalNotes || ''} onChange={event => onChange({ internalNotes: event.target.value })} className="mt-1 w-full rounded-xl border p-3" disabled={disabled}/></label>
+    </>;
+  };
 
   return <>
     <div className={`mt-4 rounded-xl border p-3 text-sm ${canEdit ? 'border-emerald-200 bg-emerald-50 text-emerald-800' : 'border-amber-200 bg-amber-50 text-amber-800'}`}>{healthMessage}</div>
