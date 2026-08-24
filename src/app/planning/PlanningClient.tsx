@@ -19,6 +19,7 @@ type IconName =
   | 'location'
   | 'people'
   | 'search'
+  | 'screen'
   | 'sparkles';
 
 const filters: { key: FilterKey; label: string }[] = [
@@ -232,6 +233,9 @@ function Icon({ name, className = 'h-5 w-5' }: { name: IconName; className?: str
   if (name === 'search') {
     return <svg {...common}><circle cx="11" cy="11" r="7" /><path d="m20 20-4-4" /></svg>;
   }
+  if (name === 'screen') {
+    return <svg {...common}><rect x="3" y="4" width="18" height="13" rx="2.5" /><path d="M8 21h8M12 17v4" /></svg>;
+  }
   return <svg {...common}><path d="m12 3 1.4 4.1L18 8.5l-4.6 1.4L12 14l-1.4-4.1L6 8.5l4.6-1.4L12 3ZM5 15l.8 2.2L8 18l-2.2.8L5 21l-.8-2.2L2 18l2.2-.8L5 15ZM19 13l.8 2.2L22 16l-2.2.8L19 19l-.8-2.2L16 16l2.2-.8L19 13Z" /></svg>;
 }
 
@@ -311,6 +315,31 @@ function displayPrice(session: Session) {
   return raw;
 }
 
+const fallbackDurationHours: Record<string, number> = {
+  aps: 175,
+  a3p: 327,
+  'a3p-apr': 327,
+  desp: 245,
+  'desp-dssp': 245,
+  'desp-initial': 245,
+  'ssiap-1': 67,
+  ssiap1: 67,
+};
+
+function displayDuration(session: Session) {
+  const durationSources = [session.durationLabel, session.publicNotes]
+    .map((value) => String(value || '').trim())
+    .filter(Boolean);
+
+  for (const value of durationSources) {
+    const match = value.match(/\b(\d[\d\s]{0,4})\s*(?:h|heures?)\b/i);
+    if (match) return Number(match[1].replace(/\s/g, '')).toLocaleString('fr-FR') + ' h';
+  }
+
+  const fallback = fallbackDurationHours[session.training?.slug || ''];
+  return fallback ? fallback.toLocaleString('fr-FR') + ' h' : 'À confirmer';
+}
+
 function seatText(session: Session) {
   const seats = computedSeats(session);
   if (seats === null || Number.isNaN(seats)) return null;
@@ -330,11 +359,15 @@ function alertHref(formation: string) {
   return '/contact?motif=alerte-planning&formation=' + encodeURIComponent(formation);
 }
 
-function deliveryPeriodRows(session: Session): [string, string][] {
+function displayPlanningPeriod(startDate?: string | Date | null, endDate?: string | Date | null) {
+  return startDate && endDate ? formatSessionPeriod(startDate, endDate) : 'Dates à confirmer';
+}
+
+function deliveryPeriodRows(session: Session): { label: string; value: string; icon: IconName }[] {
   return [
-    ['Date de début et date de fin', formatSessionPeriod(session.startDate, session.endDate)],
-    ['Dates du distanciel', formatSessionPeriod(session.remoteStartDate, session.remoteEndDate)],
-    ['Dates du présentiel', formatSessionPeriod(session.inPersonStartDate, session.inPersonEndDate)],
+    { label: 'Session complète', value: displayPlanningPeriod(session.startDate, session.endDate), icon: 'calendar' },
+    { label: 'À distance', value: displayPlanningPeriod(session.remoteStartDate, session.remoteEndDate), icon: 'screen' },
+    { label: 'En présentiel', value: displayPlanningPeriod(session.inPersonStartDate, session.inPersonEndDate), icon: 'location' },
   ];
 }
 
@@ -383,10 +416,15 @@ function SessionCard({
               </span>
             ) : null}
           </div>
-          {showDeliveryPeriods ? <div className="mt-3 grid gap-2">
-            {deliveryPeriodRows(session).map(([label, value], periodIndex) => <div key={label} className={`rounded-xl border px-3 py-2 ${periodIndex === 0 ? 'border-academy-gold/40 bg-academy-gold/10' : 'border-academy-line/60 bg-academy-bg/55 dark:border-white/10 dark:bg-white/5'}`}>
-              <span className="block text-[9px] font-black uppercase tracking-[.13em] text-academy-muted/70">{label}</span>
-              <span className="mt-0.5 block text-sm font-black leading-5 text-academy-ink dark:text-white">{value}</span>
+          {showDeliveryPeriods ? <div className="mt-4 grid gap-2 sm:grid-cols-2">
+            {deliveryPeriodRows(session).map((period, periodIndex) => <div key={period.label} className={`flex items-start gap-3 rounded-[1rem] border px-3.5 py-3 ${periodIndex === 0 ? 'border-academy-gold/50 bg-gradient-to-r from-academy-gold/20 to-academy-gold/[.07] sm:col-span-2' : 'border-academy-line/60 bg-academy-bg/55 dark:border-white/10 dark:bg-white/5'}`}>
+              <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-xl ${periodIndex === 0 ? 'bg-academy-gold text-academy-gold-text shadow-[0_8px_18px_rgba(234,183,53,.22)]' : 'border border-academy-line/70 bg-white text-academy-gold-strong dark:border-white/10 dark:bg-white/10'}`}>
+                <Icon name={period.icon} className="h-4 w-4" />
+              </span>
+              <span className="min-w-0">
+                <span className="block text-[9px] font-black uppercase tracking-[.14em] text-academy-muted/70">{period.label}</span>
+                <span className="mt-1 block text-[13px] font-black leading-5 text-academy-ink dark:text-white sm:text-sm">{period.value}</span>
+              </span>
             </div>)}
           </div> : <p className="mt-2 text-sm font-semibold leading-6 text-academy-muted">
             {formatSessionPeriod(session.startDate, session.endDate)}
@@ -407,8 +445,11 @@ function SessionCard({
             <span className="mt-1 block text-base font-black text-academy-ink dark:text-white">{displayPrice(session)}</span>
           </div>
           <div className="rounded-2xl border border-academy-line/60 bg-academy-bg/65 px-3 py-2.5 dark:border-white/10 dark:bg-black/15">
-            <span className="block text-[9px] font-black uppercase tracking-[.14em] text-academy-muted/70">Financement</span>
-            <span className="mt-1 block text-sm font-black text-academy-ink dark:text-white">{session.fundingNotes ? 'À étudier' : 'Accompagnement'}</span>
+            <span className="block text-[9px] font-black uppercase tracking-[.14em] text-academy-muted/70">Durée</span>
+            <span className="mt-1 flex items-center gap-1.5 text-base font-black text-academy-ink dark:text-white">
+              <Icon name="clock" className="h-4 w-4 text-academy-gold-strong" />
+              {displayDuration(session)}
+            </span>
           </div>
         </div>
 
@@ -589,9 +630,10 @@ function RegistrationModal({
   const seats = seatText(session);
   const date = shortDate(session.startDate);
   const sessionDetails: [string, string][] = [
-    ...(hasDetailedDeliveryPeriods(session) ? deliveryPeriodRows(session) : [['Période', sessionLabel] as [string, string]]),
+    ...(hasDetailedDeliveryPeriods(session) ? deliveryPeriodRows(session).map(({ label, value }) => [label, value] as [string, string]) : [['Période', sessionLabel] as [string, string]]),
     ['Examen', session.examDate ? formatSessionDate(session.examDate) : 'Selon le calendrier de la session'],
     ['Lieu', session.location || 'Communiqué prochainement'],
+    ['Durée', displayDuration(session)],
     ['Tarif', displayPrice(session)],
   ];
 
@@ -623,7 +665,10 @@ function RegistrationModal({
               <p className="mt-2 text-base font-semibold text-academy-muted">{session.training?.shortDescription || 'Formation professionnelle certifiante'}</p>
               <div className="mt-3 flex flex-wrap gap-2">
                 {seats ? <span className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-[10px] font-black text-emerald-700">{seats}</span> : null}
-                <span className="rounded-full border border-academy-gold/40 bg-academy-gold/15 px-3 py-1.5 text-[10px] font-black text-academy-gold-strong">Accompagnement financement</span>
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-academy-gold/40 bg-academy-gold/15 px-3 py-1.5 text-[10px] font-black text-academy-gold-strong">
+                  <Icon name="clock" className="h-3.5 w-3.5" />
+                  {displayDuration(session)} de formation
+                </span>
               </div>
             </div>
           </div>
@@ -813,7 +858,7 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
   const [query, setQuery] = useState('');
   const [location, setLocation] = useState('all');
   const [month, setMonth] = useState('all');
-  const [view, setView] = useState<ViewMode>('calendar');
+  const [view, setView] = useState<ViewMode>('list');
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [showAll, setShowAll] = useState(false);
   const [selectedSession, setSelectedSession] = useState<Session | null>(null);
