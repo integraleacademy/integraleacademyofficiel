@@ -16,6 +16,8 @@ import { listSessions } from '@/lib/training-data';
 import { vtcFormation } from '@/data/site';
 import styles from './home.module.css';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: 'Accueil',
   description: 'Intégrale Academy forme aux métiers de la sécurité privée, de la sécurité incendie, du VTC et aux BTS en alternance à Puget-sur-Argens, Paris et Aurillac.',
