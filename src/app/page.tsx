@@ -4,6 +4,7 @@ import { BtsTrainingGrid, type BtsTrainingHighlight } from '@/components/BtsTrai
 import { CampusSection } from '@/components/CampusSection';
 import { GoogleReviewsSection } from '@/components/GoogleReviewsSection';
 import { HomePageAnimations } from '@/components/HomePageAnimations';
+import { SecurityTrainingComparisonModal } from '@/components/SecurityTrainingComparisonModal';
 import { SecurityTrainingGrid, type SecurityTrainingHighlight } from '@/components/SecurityTrainingGrid';
 import { VtcTrainingCard } from '@/components/VtcTrainingCard';
 import { PremiumFAQSection } from '@/components/ui';
@@ -234,7 +235,7 @@ export default function Home() {
               <p>Comparez les durées, les modalités, les lieux et les prochaines sessions en un seul regard.</p>
             </div>
             <div className={styles.securityTrainingActions}>
-              <Link href="/formations-securite" className={styles.securityTrainingSecondary}>Comparer les formations</Link>
+              <SecurityTrainingComparisonModal items={securityHighlights} className={styles.securityTrainingSecondary} />
               <Link href="/planning" className={styles.securityTrainingPrimary}>Voir le planning <span aria-hidden="true">→</span></Link>
             </div>
           </div>
