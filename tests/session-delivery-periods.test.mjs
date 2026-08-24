@@ -79,6 +79,9 @@ test('APS et DESP affichent les trois périodes sur leurs pages et dans le plann
     'Dates du présentiel',
   ]) {
     assert.ok(dateCards.includes(label), `libellé public manquant : ${label}`);
+  }
+
+  for (const label of ['Session complète', 'À distance', 'En présentiel']) {
     assert.ok(planning.includes(label), `libellé planning manquant : ${label}`);
   }
 
@@ -89,4 +92,15 @@ test('APS et DESP affichent les trois périodes sur leurs pages et dans le plann
 
   assert.match(apsPage, /sessions=\{visibleSessions\}[\s\S]*?showDeliveryPeriods/);
   assert.match(despPage, /sessions=\{sessions\}[\s\S]*?showDeliveryPeriods/);
+});
+
+test('le planning s’ouvre en liste et remplace le résumé financement par la durée', () => {
+  const planning = read('src/app/planning/PlanningClient.tsx');
+
+  assert.match(planning, /useState<ViewMode>\('list'\)/);
+  assert.match(planning, /function displayDuration\(session: Session\)/);
+  assert.ok(planning.includes("return startDate && endDate ? formatSessionPeriod(startDate, endDate) : 'Dates à confirmer'"));
+  assert.ok(planning.includes('{displayDuration(session)}'));
+  assert.ok(!planning.includes('Accompagnement financement'));
+  assert.ok(!planning.includes("session.fundingNotes ? 'À étudier' : 'Accompagnement'"));
 });
