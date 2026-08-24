@@ -154,7 +154,7 @@ function ComparisonCard({ item }: { item: SecurityTrainingHighlight }) {
       </div>
 
       <div className={styles.cardBottom}>
-        <div className={styles.financing}><span aria-hidden="true">●</span>{item.financing}</div>
+        {item.financing ? <div className={styles.financing}><span aria-hidden="true">●</span>{item.financing}</div> : null}
         <div className={styles.priceBlock}>
           <small>Tarif</small>
           <strong>{details.price}</strong>
