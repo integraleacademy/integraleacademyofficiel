@@ -137,14 +137,14 @@ function priceLabel(value: unknown) {
 }
 
 function CTA({ href, children, variant = 'dark', className = '', external = false }: { href: string; children: ReactNode; variant?: 'dark' | 'gold' | 'light' | 'outline' | 'blue'; className?: string; external?: boolean }) {
-  const styles = {
+  const variantStyles = {
     dark: 'bg-academy-ink text-white hover:bg-black',
     gold: 'bg-academy-gold text-academy-gold-text hover:brightness-105',
     light: 'border border-academy-line bg-white text-academy-ink hover:bg-academy-bg',
     outline: 'border border-white/30 bg-white/5 text-white hover:bg-white/12',
     blue: 'bg-gradient-to-r from-blue-700 to-sky-500 text-white hover:brightness-105',
   };
-  const classNames = `${styles.cta} inline-flex min-h-12 items-center justify-center rounded-full px-5 py-3 text-center text-sm font-black transition hover:-translate-y-0.5 focus:outline-none focus:ring-4 focus:ring-academy-gold/25 ${styles[variant]} ${className}`;
+  const classNames = `${styles.cta} inline-flex min-h-12 items-center justify-center rounded-full px-5 py-3 text-center text-sm font-black transition hover:-translate-y-0.5 focus:outline-none focus:ring-4 focus:ring-academy-gold/25 ${variantStyles[variant]} ${className}`;
   if (external) return <a href={href} target="_blank" rel="noopener noreferrer" className={classNames}>{children}</a>;
   return <Link href={href} className={classNames}>{children}</Link>;
 }
