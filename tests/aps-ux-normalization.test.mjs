@@ -6,7 +6,7 @@ const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf
 
 const apsPage = read('src/components/ApsReferencePage.tsx');
 const apsStyles = read('src/components/ApsReferencePage.module.css');
-const sessionsSection = read('src/components/TrainingDatesPricingSection.tsx');
+const sessionsSection = `${read('src/components/TrainingDatesPricingSection.tsx')}\n${read('src/components/TrainingSessionCards.tsx')}`;
 
 test('le héros APS donne la priorité au nom de la formation et au nouveau CTA', () => {
   const hero = apsPage.slice(apsPage.indexOf('<section className={`${styles.hero}'), apsPage.indexOf('<nav aria-label'));
@@ -36,8 +36,8 @@ test('la page APS trie les sessions et limite la vue initiale aux deux prochaine
   assert.ok(apsPage.includes('sortSessionsChronologically(sessions.length ? sessions : fallbackSessions)'));
   assert.ok(apsPage.includes('initialSessionLimit={2}'));
   assert.ok(apsPage.includes('theme="blue"'));
-  assert.ok(sessionsSection.includes('const initiallyVisibleSessions = sessions.slice(0, normalizedInitialLimit)'));
-  assert.ok(sessionsSection.includes('const additionalSessions = sessions.slice(normalizedInitialLimit)'));
+  assert.ok(sessionsSection.includes('const initiallyVisibleSessions = filteredSessions.slice(0, normalizedInitialLimit)'));
+  assert.ok(sessionsSection.includes('const additionalSessions = filteredSessions.slice(normalizedInitialLimit)'));
 });
 
 test('les sessions suivantes sont révélées par un contrôle natif et accessible', () => {

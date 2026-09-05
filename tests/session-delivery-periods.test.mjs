@@ -62,7 +62,7 @@ test('les périodes détaillées sont transmises au contexte de l’IA', () => {
 
 test('APS et DESP affichent les trois périodes sur leurs pages et dans le planning public', () => {
   const formatter = read('src/lib/public-sessions.ts');
-  const dateCards = read('src/components/TrainingDatesPricingSection.tsx');
+  const dateCards = `${read('src/components/TrainingDatesPricingSection.tsx')}\n${read('src/components/TrainingSessionCards.tsx')}`;
   const apsPage = read('src/components/ApsReferencePage.tsx');
   const despPage = read('src/app/formations-securite/desp-initial/page.tsx');
   const planning = read('src/app/planning/PlanningClient.tsx');

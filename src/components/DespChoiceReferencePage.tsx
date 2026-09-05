@@ -255,6 +255,7 @@ export function DespChoiceReferencePage({ sessions }: { sessions: TrainingDatesP
       <TrainingDatesPricingSection
         sessions={sessions}
         theme="orange"
+        showLocationFilter
         defaultPrice="À partir de 3 800 €"
         defaultLocation="Paris, Puget-sur-Argens ou Aurillac"
         priceDescription="Parcours initial : 4 300 € · VAE : 3 800 €"

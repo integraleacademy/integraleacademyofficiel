@@ -3,12 +3,12 @@
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
 import { computedSeats, formatSessionDate, formatSessionPeriod, hasDetailedDeliveryPeriods } from '@/lib/public-sessions';
+import { sessionLocationFilters, sessionMatchesLocation, type SessionLocationFilterKey } from '@/lib/session-location-filter';
 import { formatTrainingPrice } from '@/lib/training-price';
 
 type Session = any;
 type CategoryKey = 'security' | 'fire' | 'vtc' | 'bts';
 type FormationFilterKey = 'all' | 'aps' | 'a3p' | 'director' | 'ssiap' | 'vtc' | 'bts';
-type LocationFilterKey = 'all' | 'paris' | 'cote-azur';
 type ViewMode = 'list' | 'calendar';
 type PlanningAccent = 'blue' | 'green' | 'orange' | 'red' | 'violet' | 'gold';
 
@@ -20,12 +20,6 @@ const planningThemeClasses: Record<PlanningAccent, string> = {
   violet: 'planning-theme-violet',
   gold: 'planning-theme-gold',
 };
-
-const locationFilters: { key: LocationFilterKey; label: string }[] = [
-  { key: 'all', label: 'Tous' },
-  { key: 'paris', label: 'Paris' },
-  { key: 'cote-azur', label: 'Côte d’Azur' },
-];
 
 type IconName =
   | 'arrow'
@@ -281,22 +275,6 @@ function formationMatchesSlug(formation: (typeof formationFilters)[number], slug
 
 function sessionTitle(session: Session) {
   return session.training?.name || session.training?.title || session.title || 'Formation';
-}
-
-function normalizedLocation(value?: string) {
-  return String(value || '')
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLocaleLowerCase('fr')
-    .replace(/[^a-z0-9]+/g, ' ')
-    .trim();
-}
-
-function sessionMatchesLocation(session: Session, filter: LocationFilterKey) {
-  if (filter === 'all') return true;
-  const location = normalizedLocation(session.location);
-  if (filter === 'paris') return /(^| )paris( |$)/.test(location);
-  return location.includes('cote d azur') || location.includes('puget sur argens');
 }
 
 function formationFilterForSession(session: Session) {
@@ -905,7 +883,7 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
   );
   const nextSession = sortedSessions[0] || null;
   const [activeFormation, setActiveFormation] = useState<FormationFilterKey>('all');
-  const [locationFilter, setLocationFilter] = useState<LocationFilterKey>('all');
+  const [locationFilter, setLocationFilter] = useState<SessionLocationFilterKey>('all');
   const [view, setView] = useState<ViewMode>('list');
   const [showAll, setShowAll] = useState(false);
   const [selectedSession, setSelectedSession] = useState<Session | null>(null);
@@ -1084,7 +1062,7 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
             <div className="flex w-fit items-center rounded-full border border-academy-line bg-white p-1 dark:bg-white/5" aria-label="Filtrer les sessions par centre">
               <span className="hidden px-3 text-[9px] font-black uppercase tracking-[.12em] text-academy-muted sm:inline">Centre</span>
-              {locationFilters.map((filter) => {
+              {sessionLocationFilters.map((filter) => {
                 const selected = locationFilter === filter.key;
                 return (
                   <button
