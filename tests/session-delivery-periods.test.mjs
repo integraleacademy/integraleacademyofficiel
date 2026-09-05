@@ -73,12 +73,14 @@ test('APS et DESP affichent les trois périodes sur leurs pages et dans le plann
   assert.match(formatter, /slug === 'aps'/);
   assert.match(formatter, /slug\.startsWith\('desp-'\)/);
 
-  for (const label of ['Session complète', 'À distance', 'En présentiel']) {
+  for (const label of ['Période complète', 'À distance', 'En présentiel']) {
     assert.ok(dateCards.includes(label), `libellé des fiches formation manquant : ${label}`);
     assert.ok(planning.includes(label), `libellé planning manquant : ${label}`);
   }
 
-  assert.ok(dateCards.includes("return 'Dates à confirmer'"));
+  assert.ok(dateCards.includes("fallback = 'Dates à confirmer'"));
+  assert.ok(dateCards.includes('remotePeriodFallback'));
+  assert.ok(dateCards.includes('inPersonPeriodFallback'));
   assert.ok(!dateCards.includes("'À renseigner dans l’administration'"));
 
   for (const field of fields) {
@@ -87,6 +89,8 @@ test('APS et DESP affichent les trois périodes sur leurs pages et dans le plann
   }
 
   assert.match(apsPage, /sessions=\{visibleSessions\}[\s\S]*?showDeliveryPeriods/);
+  assert.ok(apsPage.includes('remotePeriodFallback="51 h maximum · calendrier détaillé à confirmer"'));
+  assert.ok(apsPage.includes('inPersonPeriodFallback="124 h minimum · calendrier détaillé à confirmer"'));
   assert.match(despPage, /sessions=\{sessions\}[\s\S]*?showDeliveryPeriods/);
 });
 
