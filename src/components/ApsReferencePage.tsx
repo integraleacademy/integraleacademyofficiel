@@ -321,6 +321,7 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
       initialSessionLimit={2}
       theme="blue"
       showDeliveryPeriods
+      showSessionTitle
       remotePeriodFallback="51 h maximum · calendrier détaillé à confirmer"
       inPersonPeriodFallback="124 h minimum · calendrier détaillé à confirmer"
       defaultPrice="1 650 €"

@@ -26,6 +26,7 @@ type SessionTheme = {
 
 export type TrainingSessionCardItem = {
   id?: string | number | null;
+  title?: string | null;
   startDate?: string | null;
   endDate?: string | null;
   inPersonStartDate?: string | null;
@@ -53,6 +54,7 @@ type TrainingSessionCardsProps = {
   defaultPrice: string;
   initialSessionLimit?: number;
   showLocationFilter?: boolean;
+  showSessionTitle?: boolean;
   emptyAction?: Action;
 };
 
@@ -143,6 +145,7 @@ function SessionCard({
   inPersonPeriodFallback,
   defaultLocation,
   defaultPrice,
+  showSessionTitle,
 }: {
   session: TrainingSessionCardItem;
   index: number;
@@ -153,8 +156,10 @@ function SessionCard({
   inPersonPeriodFallback: string;
   defaultLocation: string;
   defaultPrice: string;
+  showSessionTitle: boolean;
 }) {
   const full = isFull(session);
+  const sessionTitle = String(session.title || '').trim();
   const deliveryPeriods = [
     { label: 'Période complète', value: formatPublicPeriod(session.startDate, session.endDate), icon: 'calendar' as const, confirmed: Boolean(session.startDate && session.endDate) },
     { label: 'À distance', value: formatPublicPeriod(session.remoteStartDate, session.remoteEndDate, remotePeriodFallback), icon: 'screen' as const, confirmed: Boolean(session.remoteStartDate && session.remoteEndDate) },
@@ -167,7 +172,8 @@ function SessionCard({
       <span className={`rounded-full border px-3 py-1.5 text-[.64rem] font-black uppercase tracking-[.15em] ${sessionTheme.badge}`}>{index === 0 ? 'Prochaine session' : 'Session ouverte'}</span>
       <span className={`rounded-full border px-3 py-1.5 text-xs font-black ${full ? 'border-stone-300 bg-stone-100 text-stone-700' : sessionTheme.badge}`}>{seatsLabel(session)}</span>
     </div>
-    {showDeliveryPeriods ? <div className="mt-5 rounded-[1.35rem] border border-academy-line/70 bg-white/65 p-2 shadow-[inset_0_1px_0_rgba(255,255,255,.8)]">
+    {showSessionTitle && sessionTitle ? <h3 className="mt-5 text-xl font-black tracking-tight text-academy-ink">{sessionTitle}</h3> : null}
+    {showDeliveryPeriods ? <div className={`${showSessionTitle && sessionTitle ? 'mt-3' : 'mt-5'} rounded-[1.35rem] border border-academy-line/70 bg-white/65 p-2 shadow-[inset_0_1px_0_rgba(255,255,255,.8)]`}>
       <div className="flex items-center gap-3 rounded-[1.05rem] bg-[#101a29] px-4 py-3.5 text-white shadow-[0_12px_28px_rgba(16,26,41,.16)]">
         <span className={`grid h-10 w-10 shrink-0 place-items-center rounded-xl ${sessionTheme.periodIcon}`}>
           <PeriodIcon name={mainPeriod.icon} className="h-[1.1rem] w-[1.1rem]" />
@@ -209,6 +215,7 @@ export function TrainingSessionCards({
   defaultPrice,
   initialSessionLimit,
   showLocationFilter = false,
+  showSessionTitle = false,
   emptyAction,
 }: TrainingSessionCardsProps) {
   const [locationFilter, setLocationFilter] = useState<SessionLocationFilterKey>('all');
@@ -234,6 +241,7 @@ export function TrainingSessionCards({
     inPersonPeriodFallback,
     defaultLocation,
     defaultPrice,
+    showSessionTitle,
   };
 
   return <>

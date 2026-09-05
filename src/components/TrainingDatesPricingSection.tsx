@@ -5,6 +5,7 @@ import { formatTrainingPrice } from '@/lib/training-price';
 
 export type TrainingDatesPricingSession = {
   id?: string | number | null;
+  title?: string | null;
   startDate?: string | Date | null;
   endDate?: string | Date | null;
   inPersonStartDate?: string | Date | null;
@@ -42,6 +43,7 @@ type TrainingDatesPricingSectionProps = {
   inPersonPeriodFallback?: string;
   initialSessionLimit?: number;
   showLocationFilter?: boolean;
+  showSessionTitle?: boolean;
   theme?: TrainingTheme;
   priceAction: Action;
   emptyAction?: Action;
@@ -153,6 +155,7 @@ function serializeSession(
 ): TrainingSessionCardItem {
   return {
     id: session.id,
+    title: session.title,
     startDate: serializeDate(session.startDate),
     endDate: serializeDate(session.endDate),
     inPersonStartDate: serializeDate(session.inPersonStartDate),
@@ -186,6 +189,7 @@ export function TrainingDatesPricingSection({
   inPersonPeriodFallback = 'Dates à confirmer',
   initialSessionLimit,
   showLocationFilter = false,
+  showSessionTitle = false,
   theme = 'green',
   priceAction,
   emptyAction,
@@ -219,6 +223,7 @@ export function TrainingDatesPricingSection({
         defaultPrice={defaultPrice}
         initialSessionLimit={initialSessionLimit}
         showLocationFilter={showLocationFilter}
+        showSessionTitle={showSessionTitle}
         emptyAction={emptyAction}
       />
 
