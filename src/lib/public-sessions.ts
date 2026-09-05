@@ -16,9 +16,9 @@ export function parisDateKey(date = new Date()) {
   return new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Paris', year: 'numeric', month: '2-digit', day: '2-digit' }).format(date);
 }
 
-export function daysUntilParis(value: string | Date) {
+export function daysUntilParis(value: string | Date, referenceDate = new Date()) {
   const toUtcMidnight = (key: string) => { const [year, month, day] = key.split('-').map(Number); return Date.UTC(year, month - 1, day); };
-  return Math.ceil((toUtcMidnight(parisDateKey(new Date(value))) - toUtcMidnight(parisDateKey())) / 86400000);
+  return Math.ceil((toUtcMidnight(parisDateKey(new Date(value))) - toUtcMidnight(parisDateKey(referenceDate))) / 86400000);
 }
 
 export function isPublicUpcomingSession(session: PublicSessionLike) {
@@ -26,11 +26,11 @@ export function isPublicUpcomingSession(session: PublicSessionLike) {
   return parisDateKey(new Date(session.startDate)) >= parisDateKey();
 }
 
-export function computedSeats(session: PublicSessionLike): number | null {
+export function computedSeats(session: PublicSessionLike, referenceDate = new Date()): number | null {
   if (session.showSeatsLeft === false) return null;
   if (session.seatsLeft !== null && session.seatsLeft !== undefined && session.seatsLeft !== '') return Number(session.seatsLeft);
   if (!session.startDate) return null;
-  const days = daysUntilParis(session.startDate);
+  const days = daysUntilParis(session.startDate, referenceDate);
   if (days <= 15) return 2;
   if (days <= 30) return 4;
   if (days <= 45) return 5;

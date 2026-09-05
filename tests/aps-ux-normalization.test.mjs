@@ -7,6 +7,7 @@ const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf
 const apsPage = read('src/components/ApsReferencePage.tsx');
 const apsStyles = read('src/components/ApsReferencePage.module.css');
 const sessionsSection = `${read('src/components/TrainingDatesPricingSection.tsx')}\n${read('src/components/TrainingSessionCards.tsx')}`;
+const seatAvailability = read('src/lib/session-seat-availability.ts');
 
 test('le héros APS donne la priorité au nom de la formation et au nouveau CTA', () => {
   const hero = apsPage.slice(apsPage.indexOf('<section className={`${styles.hero}'), apsPage.indexOf('<nav aria-label'));
@@ -53,6 +54,7 @@ test('les cartes APS gardent les dates sans leur libellé et affichent les place
   assert.ok(apsPage.includes('underlineDisclosure={false}'));
   assert.ok(sessionsSection.includes("showOverallPeriodLabel ? <span"));
   assert.ok(sessionsSection.includes('seatAvailability?.label'));
+  assert.ok(seatAvailability.includes('computedSeats'));
 });
 
 test('les sessions suivantes sont révélées par un contrôle natif et accessible', () => {

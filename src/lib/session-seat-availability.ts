@@ -1,6 +1,9 @@
+import { computedSeats } from '@/lib/public-sessions';
+
 export type SessionSeatAvailabilityTone = 'available' | 'moderate' | 'low' | 'critical' | 'full';
 
 type SessionSeatAvailabilitySource = {
+  startDate?: string | Date | null;
   seatsLeft?: number | string | null;
   status?: string | null;
 };
@@ -31,10 +34,18 @@ function normalizeSeatCount(value: SessionSeatAvailabilitySource['seatsLeft']) {
 export function getSessionSeatAvailability(
   session: SessionSeatAvailabilitySource,
   capacity = 12,
+  referenceDate = new Date(),
 ): SessionSeatAvailability {
   const safeCapacity = Number.isFinite(capacity) && capacity > 0 ? Math.floor(capacity) : 12;
   const storedCount = normalizeSeatCount(session.seatsLeft);
-  const count = storedCount === null ? safeCapacity : Math.min(storedCount, safeCapacity);
+  const validOverride = storedCount !== null && storedCount <= safeCapacity ? storedCount : null;
+  const automaticCount = computedSeats({
+    startDate: session.startDate ?? undefined,
+    seatsLeft: validOverride,
+    status: session.status ?? undefined,
+    showSeatsLeft: true,
+  }, referenceDate);
+  const count = Math.min(automaticCount ?? safeCapacity, safeCapacity);
 
   if (session.status === 'FULL' || count === 0) {
     return { count: 0, label: 'Session complète', tone: 'full', badgeClassName: badgeStyles.full };
