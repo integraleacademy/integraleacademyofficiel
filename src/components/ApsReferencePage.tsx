@@ -4,6 +4,7 @@ import type { ReactNode } from 'react';
 import { OrientationAssistant } from '@/components/OrientationAssistant';
 import { PremiumFAQSection } from '@/components/ui';
 import { TrainingDatesPricingSection } from '@/components/TrainingDatesPricingSection';
+import { getSessionSeatAvailability } from '@/lib/session-seat-availability';
 import styles from './ApsReferencePage.module.css';
 
 const apsCpfUrl = 'https://www.moncompteformation.gouv.fr/espace-prive/html/#/formation/recherche/84089988400026_CQPAPS2022/84089988400026_CQPAPS2022?contexteFormation=ACTIVITE_PROFESSIONNELLE';
@@ -152,12 +153,6 @@ function isSessionFull(session: any) {
   return session?.status === 'FULL' || (hasSeatCount && Number(seats) === 0);
 }
 
-function seatsLabel(session: any) {
-  if (isSessionFull(session)) return 'Session complète';
-  if (session?.showSeatsLeft === false || session?.seatsLeft === null || session?.seatsLeft === undefined || session?.seatsLeft === '') return 'Places limitées';
-  return Number(session.seatsLeft) === 1 ? '1 place restante' : `${session.seatsLeft} places restantes`;
-}
-
 function priceLabel(value: unknown) {
   if (typeof value === 'number') return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(value);
   const text = String(value || '1 650 €').trim();
@@ -206,7 +201,8 @@ function CompactAssistant() {
 
 function HeroSession({ session }: { session: any }) {
   const full = isSessionFull(session);
-  return <aside className={`${styles.sessionCard} rounded-[2rem] border border-white/80 bg-[#FFFDF8] p-5 text-academy-ink sm:p-6 lg:p-7`}><div className="grid gap-6 lg:grid-cols-[1.05fr_1.15fr_.9fr] lg:items-center"><div><div className="flex flex-wrap items-center gap-2"><span className="rounded-full bg-blue-50 px-3 py-1.5 text-[.62rem] font-black uppercase tracking-[.16em] text-blue-800 ring-1 ring-blue-200">Prochaine session</span><span className={`rounded-full border px-3 py-1.5 text-[.68rem] font-black ${full ? 'border-stone-300 bg-stone-100 text-stone-700' : 'border-yellow-300 bg-yellow-50 text-yellow-800'}`}>{seatsLabel(session)}</span></div><h2 className={`${styles.sessionDate} mt-4 text-3xl font-black tracking-[-.04em] sm:text-4xl`}>{formatDate(session?.startDate, true)} <span className="text-yellow-600">→</span><br />{formatDate(session?.endDate, true)}</h2><p className="mt-2 text-sm font-extrabold text-academy-muted">Examen final le {formatDate(session?.examDate, true)}</p></div><div className="grid grid-cols-2 gap-2.5">{[['Durée', '175 heures'], ['Tarif', priceLabel(session?.priceLabel)], ['Lieu', session?.location || 'Puget-sur-Argens'], ['Format', 'Hybride']].map(([key, value]) => <div key={key} className={`${styles.metric} rounded-2xl border border-[#E8DECE] bg-[#F5EFE4] p-3.5`}><p className="text-[.6rem] font-black uppercase tracking-[.16em] text-[#837968]">{key}</p><p className="mt-1 text-sm font-black sm:text-base">{value}</p></div>)}</div><div><CTA href={sessionHref(session)} variant={full ? 'light' : 'dark'} className="w-full">{full ? 'Être alerté de la prochaine session' : 'Réserver ma place →'}</CTA><p className="mt-3 text-center text-xs font-bold text-academy-muted">Un conseiller vérifie votre dossier avant validation.</p><CompactAssistant /></div></div></aside>;
+  const seatAvailability = getSessionSeatAvailability(session, 12);
+  return <aside className={`${styles.sessionCard} rounded-[2rem] border border-white/80 bg-[#FFFDF8] p-5 text-academy-ink sm:p-6 lg:p-7`}><div className="grid gap-6 lg:grid-cols-[1.05fr_1.15fr_.9fr] lg:items-center"><div><div className="flex flex-wrap items-center gap-2"><span className="rounded-full bg-blue-50 px-3 py-1.5 text-[.62rem] font-black uppercase tracking-[.16em] text-blue-800 ring-1 ring-blue-200">Prochaine session</span><span className={`rounded-full border px-3 py-1.5 text-[.68rem] font-black ${seatAvailability.badgeClassName}`}>{seatAvailability.label}</span></div><h2 className={`${styles.sessionDate} mt-4 text-3xl font-black tracking-[-.04em] sm:text-4xl`}>{formatDate(session?.startDate, true)} <span className="text-yellow-600">→</span><br />{formatDate(session?.endDate, true)}</h2><p className="mt-2 text-sm font-extrabold text-academy-muted">Examen final le {formatDate(session?.examDate, true)}</p></div><div className="grid grid-cols-2 gap-2.5">{[['Durée', '175 heures'], ['Tarif', priceLabel(session?.priceLabel)], ['Lieu', session?.location || 'Puget-sur-Argens'], ['Format', 'Hybride']].map(([key, value]) => <div key={key} className={`${styles.metric} rounded-2xl border border-[#E8DECE] bg-[#F5EFE4] p-3.5`}><p className="text-[.6rem] font-black uppercase tracking-[.16em] text-[#837968]">{key}</p><p className="mt-1 text-sm font-black sm:text-base">{value}</p></div>)}</div><div><CTA href={sessionHref(session)} variant={full ? 'light' : 'dark'} className="w-full">{full ? 'Être alerté de la prochaine session' : 'Réserver ma place →'}</CTA><p className="mt-3 text-center text-xs font-bold text-academy-muted">Un conseiller vérifie votre dossier avant validation.</p><CompactAssistant /></div></div></aside>;
 }
 
 export function ApsReferencePage({ sessions }: { sessions: any[] }) {
@@ -322,6 +318,9 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
       theme="blue"
       showDeliveryPeriods
       showSessionTitle
+      showOverallPeriodLabel={false}
+      seatCapacity={12}
+      underlineDisclosure={false}
       remotePeriodFallback="51 h maximum · calendrier détaillé à confirmer"
       inPersonPeriodFallback="124 h minimum · calendrier détaillé à confirmer"
       defaultPrice="1 650 €"
