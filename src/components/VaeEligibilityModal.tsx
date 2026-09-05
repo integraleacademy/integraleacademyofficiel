@@ -24,7 +24,7 @@ function resultFor(score:number){
   return ['Formation initiale probablement plus adaptée', 'Votre expérience semble actuellement insuffisante pour démontrer les cinq activités du titre. Le parcours DESP initial peut être plus approprié.'];
 }
 
-export function VaeEligibilityModal({label='Tester mon éligibilité à la VAE',className='inline-flex items-center justify-center rounded-full bg-academy-gold px-5 py-3 text-sm font-black text-academy-gold-text shadow-gold transition hover:-translate-y-0.5 hover:bg-academy-gold-strong focus:outline-none focus:ring-4 focus:ring-academy-gold/30'}:{label?:string;className?:string}){
+export function VaeEligibilityModal({label='Tester mon éligibilité à la VAE',className='inline-flex items-center justify-center rounded-full bg-orange-600 px-5 py-3 text-sm font-black text-white shadow-[0_14px_34px_rgba(234,88,12,.22)] transition hover:-translate-y-0.5 hover:bg-orange-700 focus:outline-none focus:ring-4 focus:ring-orange-300/55'}:{label?:string;className?:string}){
   const [open,setOpen]=useState(false);
   const [answers,setAnswers]=useState<Record<number, boolean>>({});
   const answered = Object.keys(answers).length;
@@ -36,23 +36,23 @@ export function VaeEligibilityModal({label='Tester mon éligibilité à la VAE',
       <div className="flex h-[90vh] w-full max-w-5xl flex-col overflow-hidden rounded-[2rem] bg-academy-surface shadow-[0_30px_90px_rgba(0,0,0,.35)] ring-1 ring-white/20">
         <div className="flex items-center justify-between gap-4 border-b border-academy-line p-4 sm:p-5">
           <div>
-            <p className="text-xs font-black uppercase tracking-[.2em] text-academy-gold-strong">VAE DESP</p>
+            <p className="text-xs font-black uppercase tracking-[.2em] text-orange-700">VAE DESP</p>
             <h2 className="text-lg font-black text-academy-ink sm:text-2xl">Testez votre éligibilité</h2>
           </div>
-          <button type="button" onClick={()=>setOpen(false)} className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-academy-bg text-xl font-black text-academy-ink transition hover:bg-academy-gold" aria-label="Fermer la modale">×</button>
+          <button type="button" onClick={()=>setOpen(false)} className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-academy-bg text-xl font-black text-academy-ink transition hover:bg-orange-100 focus:outline-none focus:ring-4 focus:ring-orange-300/55" aria-label="Fermer la modale">×</button>
         </div>
         <div className="min-h-0 flex-1 overflow-y-auto p-4 sm:p-6">
           <div className="grid gap-3 md:grid-cols-2">
             {questions.map((question,index)=><div key={question} className="rounded-2xl border border-academy-line bg-white p-4 shadow-sm">
               <p className="font-bold text-academy-ink">{question}</p>
               <div className="mt-3 flex gap-2">
-                <button type="button" onClick={()=>setAnswers({...answers,[index]:true})} className={`rounded-full px-4 py-2 text-sm font-black transition ${answers[index]===true?'bg-academy-gold text-academy-gold-text':'bg-academy-bg text-academy-muted hover:bg-academy-gold/30'}`}>Oui</button>
-                <button type="button" onClick={()=>setAnswers({...answers,[index]:false})} className={`rounded-full px-4 py-2 text-sm font-black transition ${answers[index]===false?'bg-academy-ink text-white':'bg-academy-bg text-academy-muted hover:bg-academy-gold/30'}`}>Non</button>
+                <button type="button" onClick={()=>setAnswers({...answers,[index]:true})} className={`rounded-full px-4 py-2 text-sm font-black transition ${answers[index]===true?'bg-orange-600 text-white':'bg-academy-bg text-academy-muted hover:bg-orange-100'}`}>Oui</button>
+                <button type="button" onClick={()=>setAnswers({...answers,[index]:false})} className={`rounded-full px-4 py-2 text-sm font-black transition ${answers[index]===false?'bg-academy-ink text-white':'bg-academy-bg text-academy-muted hover:bg-orange-100'}`}>Non</button>
               </div>
             </div>)}
           </div>
-          <div className="mt-6 rounded-[1.5rem] border border-academy-gold/35 bg-academy-gold/15 p-5">
-            <p className="text-sm font-black uppercase tracking-[.18em] text-academy-gold-strong">Résultat indicatif · {answered}/{questions.length} réponses</p>
+          <div className="mt-6 rounded-[1.5rem] border border-orange-300/55 bg-orange-50 p-5">
+            <p className="text-sm font-black uppercase tracking-[.18em] text-orange-700">Résultat indicatif · {answered}/{questions.length} réponses</p>
             <h3 className="mt-2 text-2xl font-black text-academy-ink">{title}</h3>
             <p className="mt-3 font-semibold leading-7 text-academy-muted">{text}</p>
             <p className="mt-3 text-sm font-semibold leading-6 text-academy-muted">Ce test est uniquement indicatif. Il ne constitue ni une décision de recevabilité, ni une garantie de validation par le jury.</p>

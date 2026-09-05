@@ -110,6 +110,11 @@
 .reveal { animation: rise .7s ease both; }
 .grid-soft { background-image: linear-gradient(rgb(var(--text-main) / .07) 1px, transparent 1px), linear-gradient(90deg, rgb(var(--text-main) / .07) 1px, transparent 1px); background-size: 44px 44px; }
 .gold-glow { background: radial-gradient(circle at 50% 0%, rgb(var(--accent) / .30), transparent 42%), linear-gradient(180deg, rgb(var(--surface-elevated) / .62), rgb(var(--background))); }
+.training-glow-blue { background: radial-gradient(circle at 50% 0%, rgb(37 99 235 / .22), transparent 42%), linear-gradient(180deg, rgb(var(--surface-elevated) / .62), rgb(var(--background))); }
+.training-glow-green { background: radial-gradient(circle at 50% 0%, rgb(5 150 105 / .22), transparent 42%), linear-gradient(180deg, rgb(var(--surface-elevated) / .62), rgb(var(--background))); }
+.training-glow-orange { background: radial-gradient(circle at 50% 0%, rgb(234 88 12 / .22), transparent 42%), linear-gradient(180deg, rgb(var(--surface-elevated) / .62), rgb(var(--background))); }
+.training-glow-red { background: radial-gradient(circle at 50% 0%, rgb(220 38 38 / .22), transparent 42%), linear-gradient(180deg, rgb(var(--surface-elevated) / .62), rgb(var(--background))); }
+.training-glow-violet { background: radial-gradient(circle at 50% 0%, rgb(124 58 237 / .22), transparent 42%), linear-gradient(180deg, rgb(var(--surface-elevated) / .62), rgb(var(--background))); }
 @keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
 
 .status-dot { height: .625rem; width: .625rem; border-radius: 9999px; background: rgb(var(--success)); box-shadow: 0 0 0 0 rgb(var(--success) / .55), 0 0 18px rgb(var(--success) / .42); animation: statusPulse 2.4s ease-out infinite; }

@@ -74,11 +74,11 @@ function RouteGraphic() {
   return <svg viewBox="0 0 320 250" fill="none" className={styles.routeGraphic} aria-hidden="true">
     <path d="M58 211c32-45 80-1 96-48 16-46-35-53-11-95 24-41 70-10 103-52" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeDasharray="2 7" />
     <path d="M58 211c32-45 80-1 96-48 16-46-35-53-11-95 24-41 70-10 103-52" stroke="url(#routeGradient)" strokeWidth="2.5" strokeLinecap="round" />
-    <circle cx="58" cy="211" r="5" fill="#F1B82E" />
-    <circle cx="154" cy="163" r="5" fill="#F1B82E" />
-    <circle cx="143" cy="68" r="5" fill="#F1B82E" />
-    <path d="M246 5a13 13 0 0 0-13 13c0 10 13 24 13 24s13-14 13-24a13 13 0 0 0-13-13Zm0 18a5 5 0 1 1 0-10 5 5 0 0 1 0 10Z" fill="#F1B82E" />
-    <defs><linearGradient id="routeGradient" x1="58" y1="211" x2="246" y2="5" gradientUnits="userSpaceOnUse"><stop stopColor="#F1B82E" stopOpacity=".05" /><stop offset="1" stopColor="#F1B82E" /></linearGradient></defs>
+    <circle cx="58" cy="211" r="5" fill="#7c3aed" />
+    <circle cx="154" cy="163" r="5" fill="#7c3aed" />
+    <circle cx="143" cy="68" r="5" fill="#7c3aed" />
+    <path d="M246 5a13 13 0 0 0-13 13c0 10 13 24 13 24s13-14 13-24a13 13 0 0 0-13-13Zm0 18a5 5 0 1 1 0-10 5 5 0 0 1 0 10Z" fill="#7c3aed" />
+    <defs><linearGradient id="routeGradient" x1="58" y1="211" x2="246" y2="5" gradientUnits="userSpaceOnUse"><stop stopColor="#7c3aed" stopOpacity=".05" /><stop offset="1" stopColor="#7c3aed" /></linearGradient></defs>
   </svg>;
 }
 

@@ -50,7 +50,7 @@ test('les sessions suivantes sont révélées par un contrôle natif et accessib
 });
 
 test('le composant de sessions formalise la charte par formation', () => {
-  for (const theme of ['blue', 'green', 'violet', 'orange']) {
+  for (const theme of ['blue', 'green', 'violet', 'orange', 'red']) {
     assert.ok(sessionsSection.includes(`${theme}: {`), `thème de formation manquant : ${theme}`);
   }
 });

@@ -47,7 +47,7 @@ type TrainingDatesPricingSectionProps = {
   children?: ReactNode;
 };
 
-type TrainingTheme = 'blue' | 'green' | 'violet' | 'orange' | 'gold';
+type TrainingTheme = 'blue' | 'green' | 'violet' | 'orange' | 'red' | 'gold';
 
 const defaultBenefits = ['CPF', 'France Travail', 'Paiement x3 / x4 / x10', 'Conseiller dédié'];
 const fundingOptions = [
@@ -97,6 +97,16 @@ const themeStyles: Record<TrainingTheme, { featuredCard: string; badge: string; 
     periodIcon: 'bg-orange-600 text-white',
     periodLabel: 'text-orange-200',
     detailIcon: 'text-orange-700',
+  },
+  red: {
+    featuredCard: 'border-red-300 bg-red-50/60',
+    badge: 'border-red-200 bg-red-50 text-red-800',
+    disclosure: 'text-red-700 hover:text-red-900 focus-visible:ring-red-300/55',
+    disclosureIcon: 'border-red-200 bg-red-50 text-red-800',
+    eyebrow: 'text-red-700',
+    periodIcon: 'bg-red-600 text-white',
+    periodLabel: 'text-red-200',
+    detailIcon: 'text-red-700',
   },
   gold: {
     featuredCard: 'border-yellow-300 bg-yellow-50/60',
@@ -167,14 +177,18 @@ function seatsLabel(session: TrainingDatesPricingSession) {
   return seats === 1 ? '1 place restante' : `${seats} places restantes`;
 }
 
-function ActionLink({ action, variant = 'dark', className = '' }: { action: Action; variant?: 'dark' | 'gold' | 'light' | 'blue'; className?: string }) {
+function ActionLink({ action, variant = 'dark', className = '' }: { action: Action; variant?: 'dark' | 'light' | TrainingTheme; className?: string }) {
   const styles = {
-    dark: 'bg-academy-ink text-white hover:bg-black',
-    gold: 'bg-academy-gold text-academy-gold-text hover:brightness-105',
-    light: 'border border-academy-line bg-white text-academy-ink hover:bg-academy-bg',
-    blue: 'bg-gradient-to-r from-blue-700 to-sky-500 text-white hover:brightness-105',
+    dark: 'bg-academy-ink text-white hover:bg-black focus:ring-academy-gold/25',
+    light: 'border border-academy-line bg-white text-academy-ink hover:bg-academy-bg focus:ring-stone-300/55',
+    blue: 'bg-gradient-to-r from-blue-700 to-sky-500 text-white hover:brightness-105 focus:ring-blue-300/55',
+    green: 'bg-emerald-600 text-white hover:bg-emerald-700 focus:ring-emerald-300/55',
+    violet: 'bg-violet-600 text-white hover:bg-violet-700 focus:ring-violet-300/55',
+    orange: 'bg-orange-600 text-white hover:bg-orange-700 focus:ring-orange-300/55',
+    red: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-300/55',
+    gold: 'bg-academy-gold text-academy-gold-text hover:brightness-105 focus:ring-academy-gold/25',
   };
-  const classes = `inline-flex min-h-12 items-center justify-center rounded-full px-5 py-3 text-center text-sm font-black transition hover:-translate-y-0.5 focus:outline-none focus:ring-4 focus:ring-academy-gold/25 ${styles[variant]} ${className}`;
+  const classes = `inline-flex min-h-12 items-center justify-center rounded-full px-5 py-3 text-center text-sm font-black transition hover:-translate-y-0.5 focus:outline-none focus:ring-4 ${styles[variant]} ${className}`;
 
   if (action.external) {
     return <a href={action.href} target="_blank" rel="noopener noreferrer" className={classes}>{action.label}</a>;
@@ -183,13 +197,10 @@ function ActionLink({ action, variant = 'dark', className = '' }: { action: Acti
   return <Link href={action.href} className={classes}>{action.label}</Link>;
 }
 
-function Eyebrow({ children, light = false }: { children: ReactNode; light?: boolean }) {
-  return <p className={`text-[.66rem] font-black uppercase tracking-[.24em] ${light ? 'text-emerald-300' : 'text-yellow-700'}`}>{children}</p>;
-}
-
 type SessionCardProps = {
   session: TrainingDatesPricingSession;
   index: number;
+  theme: TrainingTheme;
   sessionTheme: (typeof themeStyles)[TrainingTheme];
   showDeliveryPeriods: boolean;
   remotePeriodFallback: string;
@@ -202,6 +213,7 @@ type SessionCardProps = {
 function SessionCard({
   session,
   index,
+  theme,
   sessionTheme,
   showDeliveryPeriods,
   remotePeriodFallback,
@@ -221,7 +233,7 @@ function SessionCard({
   return <article className={`flex h-full flex-col rounded-[1.8rem] border p-5 shadow-soft ${index === 0 ? sessionTheme.featuredCard : 'border-academy-line bg-[#FFFDF8]'}`}>
     <div className="flex flex-wrap items-center justify-between gap-3">
       <span className={`rounded-full border px-3 py-1.5 text-[.64rem] font-black uppercase tracking-[.15em] ${sessionTheme.badge}`}>{index === 0 ? 'Prochaine session' : 'Session ouverte'}</span>
-      <span className={`rounded-full border px-3 py-1.5 text-xs font-black ${full ? 'border-stone-300 bg-stone-100 text-stone-700' : 'border-yellow-300 bg-yellow-50 text-yellow-800'}`}>{seatsLabel(session)}</span>
+      <span className={`rounded-full border px-3 py-1.5 text-xs font-black ${full ? 'border-stone-300 bg-stone-100 text-stone-700' : sessionTheme.badge}`}>{seatsLabel(session)}</span>
     </div>
     {showDeliveryPeriods ? <div className="mt-5 rounded-[1.35rem] border border-academy-line/70 bg-white/65 p-2 shadow-[inset_0_1px_0_rgba(255,255,255,.8)]">
       <div className="flex items-center gap-3 rounded-[1.05rem] bg-[#101a29] px-4 py-3.5 text-white shadow-[0_12px_28px_rgba(16,26,41,.16)]">
@@ -249,7 +261,7 @@ function SessionCard({
     </div>
     <div className="mt-auto flex flex-wrap items-end justify-between gap-4 pt-5">
       <strong className="text-3xl">{formatTrainingPrice(session, defaultPrice)}</strong>
-      <ActionLink action={{ href: registrationHref(session), label: full ? 'Être alerté' : 'Choisir cette session →' }} variant={full ? 'light' : 'dark'} />
+      <ActionLink action={{ href: registrationHref(session), label: full ? 'Être alerté' : 'Choisir cette session →' }} variant={full ? 'light' : theme} />
     </div>
   </article>;
 }
@@ -298,7 +310,7 @@ export function TrainingDatesPricingSection({
 
       {sessions.length ? <>
         <div className="grid gap-4 lg:grid-cols-2">
-          {initiallyVisibleSessions.map((session, index) => <SessionCard key={session.id ?? index} session={session} index={index} sessionTheme={sessionTheme} showDeliveryPeriods={showDeliveryPeriods} remotePeriodFallback={remotePeriodFallback} inPersonPeriodFallback={inPersonPeriodFallback} defaultLocation={defaultLocation} defaultPrice={defaultPrice} registrationHref={registrationHref} />)}
+          {initiallyVisibleSessions.map((session, index) => <SessionCard key={session.id ?? index} session={session} index={index} theme={theme} sessionTheme={sessionTheme} showDeliveryPeriods={showDeliveryPeriods} remotePeriodFallback={remotePeriodFallback} inPersonPeriodFallback={inPersonPeriodFallback} defaultLocation={defaultLocation} defaultPrice={defaultPrice} registrationHref={registrationHref} />)}
         </div>
         {additionalSessions.length ? <details className="group/session-list mt-5">
           <summary
@@ -312,31 +324,31 @@ export function TrainingDatesPricingSection({
           <div id={additionalSessionsId} className="mt-4 grid gap-4 lg:grid-cols-2">
             {additionalSessions.map((session, additionalIndex) => {
               const index = initiallyVisibleSessions.length + additionalIndex;
-              return <SessionCard key={session.id ?? index} session={session} index={index} sessionTheme={sessionTheme} showDeliveryPeriods={showDeliveryPeriods} remotePeriodFallback={remotePeriodFallback} inPersonPeriodFallback={inPersonPeriodFallback} defaultLocation={defaultLocation} defaultPrice={defaultPrice} registrationHref={registrationHref} />;
+              return <SessionCard key={session.id ?? index} session={session} index={index} theme={theme} sessionTheme={sessionTheme} showDeliveryPeriods={showDeliveryPeriods} remotePeriodFallback={remotePeriodFallback} inPersonPeriodFallback={inPersonPeriodFallback} defaultLocation={defaultLocation} defaultPrice={defaultPrice} registrationHref={registrationHref} />;
             })}
           </div>
         </details> : null}
       </> : <article className="rounded-[1.8rem] border border-dashed border-academy-line bg-[#FFFDF8] p-6 shadow-soft">
-        <span className="rounded-full border border-yellow-300 bg-yellow-50 px-3 py-1.5 text-[.64rem] font-black uppercase tracking-[.15em] text-yellow-800">Planning en préparation</span>
+        <span className={`rounded-full border px-3 py-1.5 text-[.64rem] font-black uppercase tracking-[.15em] ${sessionTheme.badge}`}>Planning en préparation</span>
         <h3 className="mt-5 text-2xl font-black">La prochaine session est en cours de programmation.</h3>
         <p className="mt-2 font-bold text-academy-muted">Laissez-nous vos coordonnées pour recevoir les dates dès leur ouverture.</p>
-        {emptyAction && <ActionLink action={emptyAction} className="mt-5" />}
+        {emptyAction && <ActionLink action={emptyAction} variant={theme} className="mt-5" />}
       </article>}
 
       <div className="mt-7 grid gap-5 lg:grid-cols-2">
         <article className="rounded-[2rem] border border-academy-line bg-white p-6 shadow-soft">
-          <Eyebrow>Tarif</Eyebrow>
+          <p className={`text-[.66rem] font-black uppercase tracking-[.24em] ${sessionTheme.eyebrow}`}>Tarif</p>
           <p className="mt-3 text-5xl font-black">{displayedPrice}</p>
           <p className="mt-2 font-semibold text-academy-muted">{priceDescription}</p>
           <div className="mt-5 grid grid-cols-2 gap-3">{benefits.map((item) => <div key={item} className="rounded-2xl bg-academy-bg p-4 text-center text-sm font-black">{item}</div>)}</div>
-          <ActionLink action={priceAction} variant="blue" className="mt-5 w-full" />
+          <ActionLink action={priceAction} variant={theme} className="mt-5 w-full" />
         </article>
 
         <article className="rounded-[2rem] bg-[#0D1725] p-6 text-white shadow-card">
-          <Eyebrow light>Financement</Eyebrow>
+          <p className={`text-[.66rem] font-black uppercase tracking-[.24em] ${sessionTheme.periodLabel}`}>Financement</p>
           <h3 className="mt-3 text-3xl font-black">Simulez votre reste à charge.</h3>
           <p className="mt-3 leading-7 text-white/65">Estimez le montant restant après vos aides et votre CPF.</p>
-          <ActionLink action={{ href: '/financements#simulateur', label: 'Ouvrir le simulateur →' }} variant="gold" className="mt-5 w-full" />
+          <ActionLink action={{ href: '/financements#simulateur', label: 'Ouvrir le simulateur →' }} variant={theme} className="mt-5 w-full" />
           <div className="mt-5 grid grid-cols-2 gap-3">{fundingOptions.map(([optionTitle, text]) => <div key={optionTitle} className="rounded-2xl border border-white/10 bg-white/7 p-4"><p className="font-black">{optionTitle}</p><p className="mt-1 text-xs text-white/50">{text}</p></div>)}</div>
         </article>
       </div>
