@@ -1,4 +1,4 @@
-export type SessionSeatAvailabilityTone = 'available' | 'moderate' | 'low' | 'critical' | 'full' | 'unknown';
+export type SessionSeatAvailabilityTone = 'available' | 'moderate' | 'low' | 'critical' | 'full';
 
 type SessionSeatAvailabilitySource = {
   seatsLeft?: number | string | null;
@@ -18,7 +18,6 @@ const badgeStyles: Record<SessionSeatAvailabilityTone, string> = {
   low: 'border-orange-300 bg-orange-100 text-orange-800 shadow-[0_0_22px_rgba(249,115,22,.14)]',
   critical: 'border-rose-300 bg-rose-100 text-rose-800 shadow-[0_0_24px_rgba(244,63,94,.18)]',
   full: 'border-red-300 bg-red-100 text-red-800',
-  unknown: 'border-stone-300 bg-stone-100 text-stone-700',
 };
 
 function normalizeSeatCount(value: SessionSeatAvailabilitySource['seatsLeft']) {
@@ -33,17 +32,14 @@ export function getSessionSeatAvailability(
   session: SessionSeatAvailabilitySource,
   capacity = 12,
 ): SessionSeatAvailability {
-  const count = normalizeSeatCount(session.seatsLeft);
+  const safeCapacity = Number.isFinite(capacity) && capacity > 0 ? Math.floor(capacity) : 12;
+  const storedCount = normalizeSeatCount(session.seatsLeft);
+  const count = storedCount === null ? safeCapacity : Math.min(storedCount, safeCapacity);
 
   if (session.status === 'FULL' || count === 0) {
     return { count: 0, label: 'Session complète', tone: 'full', badgeClassName: badgeStyles.full };
   }
 
-  if (count === null) {
-    return { count: null, label: 'Places restantes à confirmer', tone: 'unknown', badgeClassName: badgeStyles.unknown };
-  }
-
-  const safeCapacity = Number.isFinite(capacity) && capacity > 0 ? capacity : 12;
   const occupancyRatio = count / safeCapacity;
   const tone: SessionSeatAvailabilityTone = occupancyRatio >= 0.75
     ? 'available'
