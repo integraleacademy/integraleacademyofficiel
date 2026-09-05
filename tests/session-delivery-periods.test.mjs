@@ -111,3 +111,12 @@ test('le planning s’ouvre en liste et remplace le résumé financement par la 
   assert.ok(!planning.includes('Accompagnement financement'));
   assert.ok(!planning.includes("session.fundingNotes ? 'À étudier' : 'Accompagnement'"));
 });
+
+test('le planning affiche le titre administré de chaque session dans toutes les vues', () => {
+  const planning = read('src/app/planning/PlanningClient.tsx');
+
+  assert.ok(planning.includes("return session.title || session.training?.name || session.training?.title || 'Formation'"));
+  assert.match(planning, /function timelineTitle\(session: Session\) \{\s+return sessionTitle\(session\);\s+\}/);
+  assert.ok(planning.includes('{sessionTitle(session)}'));
+  assert.ok(planning.includes('{timelineTitle(session)}'));
+});
