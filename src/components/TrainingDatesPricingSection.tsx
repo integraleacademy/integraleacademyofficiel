@@ -196,7 +196,7 @@ export function TrainingDatesPricingSection({
   showLocationFilter = false,
   showSessionTitle = true,
   showOverallPeriodLabel = false,
-  seatCapacity,
+  seatCapacity = 12,
   underlineDisclosure = false,
   theme = 'green',
   priceAction,
