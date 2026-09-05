@@ -204,6 +204,7 @@ export function SsiapReferencePage({ sessions }: { sessions: any[] }) {
       eyebrow="Dates & tarifs"
       sessions={visibleSessions}
       theme="red"
+      seatCapacity={12}
       defaultPrice="980 €"
       defaultLocation="Puget-sur-Argens"
       priceDescription="Formation SSIAP 1 · examen final · option SST disponible"
