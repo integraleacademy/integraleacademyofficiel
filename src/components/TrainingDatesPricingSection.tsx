@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { formatSessionPeriod } from '@/lib/public-sessions';
+import { formatTrainingPrice } from '@/lib/training-price';
 
 export type TrainingDatesPricingSession = {
   id?: string | number | null;
@@ -16,6 +17,7 @@ export type TrainingDatesPricingSession = {
   showSeatsLeft?: boolean | null;
   location?: string | null;
   priceLabel?: string | number | null;
+  priceCents?: string | number | null;
 };
 
 type Action = {
@@ -88,28 +90,6 @@ function formatDate(value?: string | Date | null) {
   }).format(date).replace(/^0/, '');
 }
 
-function formatPrice(value: unknown, fallback: string) {
-  const candidate = value ?? fallback;
-  if (typeof candidate === 'number') {
-    return new Intl.NumberFormat('fr-FR', {
-      style: 'currency',
-      currency: 'EUR',
-      maximumFractionDigits: 0,
-    }).format(candidate);
-  }
-
-  const text = String(candidate || fallback).trim();
-  if (/^\d+(?:[.,]\d+)?$/.test(text)) {
-    return new Intl.NumberFormat('fr-FR', {
-      style: 'currency',
-      currency: 'EUR',
-      maximumFractionDigits: 0,
-    }).format(Number(text.replace(',', '.')));
-  }
-
-  return text;
-}
-
 function formatPublicPeriod(startDate?: string | Date | null, endDate?: string | Date | null, fallback = 'Dates à confirmer') {
   if (!startDate || !endDate) return fallback;
   const period = formatSessionPeriod(startDate, endDate);
@@ -168,7 +148,13 @@ export function TrainingDatesPricingSection({
   emptyAction,
   children,
 }: TrainingDatesPricingSectionProps) {
-  const displayedPrice = formatPrice(sessions.find((session) => session.priceLabel)?.priceLabel, defaultPrice);
+  const displayedPrice = formatTrainingPrice(
+    sessions.find((session) => (
+      session.priceCents !== null && session.priceCents !== undefined
+      || session.priceLabel !== null && session.priceLabel !== undefined
+    )),
+    defaultPrice,
+  );
 
   return <section id={id} className="scroll-mt-24 bg-academy-bg px-4 py-14 text-academy-ink sm:py-16 lg:py-20">
     <div className="page-container">
@@ -218,7 +204,7 @@ export function TrainingDatesPricingSection({
               <span className="inline-flex items-center gap-2"><PeriodIcon name="location" className="h-4 w-4 text-academy-gold-strong" />{session.location || defaultLocation}</span>
             </div>
             <div className="mt-auto flex flex-wrap items-end justify-between gap-4 pt-5">
-              <strong className="text-3xl">{formatPrice(session.priceLabel, defaultPrice)}</strong>
+              <strong className="text-3xl">{formatTrainingPrice(session, defaultPrice)}</strong>
               <ActionLink action={{ href: registrationHref(session), label: full ? 'Être alerté' : 'Choisir cette session →' }} variant={full ? 'light' : 'dark'} />
             </div>
           </article>;

@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
 import { computedSeats, formatSessionDate, formatSessionPeriod, hasDetailedDeliveryPeriods } from '@/lib/public-sessions';
+import { formatTrainingPrice } from '@/lib/training-price';
 
 type Session = any;
 type CategoryKey = 'security' | 'fire' | 'vtc' | 'bts';
@@ -304,21 +305,25 @@ function shortDate(value?: string | Date) {
   };
 }
 
+const fallbackPrices: Record<string, string> = {
+  aps: '1 650 €',
+  a3p: '4 200 €',
+  'a3p-apr': '4 200 €',
+  desp: '4 300 €',
+  'desp-dssp': '4 300 €',
+  'desp-initial': '4 300 €',
+  'ssiap-1': '980 €',
+  ssiap1: '980 €',
+};
+
 function displayPrice(session: Session) {
-  const raw = String(session.priceLabel || '').trim();
-  if (!raw) return 'Sur devis';
-  if (raw.includes('€')) return raw;
-  const normalized = Number(raw.replace(/\s/g, '').replace(',', '.'));
-  if (!Number.isNaN(normalized)) {
-    return new Intl.NumberFormat('fr-FR', { maximumFractionDigits: 2 }).format(normalized) + ' €';
-  }
-  return raw;
+  return formatTrainingPrice(session, fallbackPrices[session.training?.slug || ''] || 'Sur devis');
 }
 
 const fallbackDurationHours: Record<string, number> = {
   aps: 175,
-  a3p: 327,
-  'a3p-apr': 327,
+  a3p: 328,
+  'a3p-apr': 328,
   desp: 245,
   'desp-dssp': 245,
   'desp-initial': 245,
@@ -327,6 +332,9 @@ const fallbackDurationHours: Record<string, number> = {
 };
 
 function displayDuration(session: Session) {
+  const slug = session.training?.slug || '';
+  if (slug === 'a3p' || slug === 'a3p-apr') return '328 h';
+
   const durationSources = [session.durationLabel, session.publicNotes]
     .map((value) => String(value || '').trim())
     .filter(Boolean);
@@ -336,7 +344,7 @@ function displayDuration(session: Session) {
     if (match) return Number(match[1].replace(/\s/g, '')).toLocaleString('fr-FR') + ' h';
   }
 
-  const fallback = fallbackDurationHours[session.training?.slug || ''];
+  const fallback = fallbackDurationHours[slug];
   return fallback ? fallback.toLocaleString('fr-FR') + ' h' : 'À confirmer';
 }
 

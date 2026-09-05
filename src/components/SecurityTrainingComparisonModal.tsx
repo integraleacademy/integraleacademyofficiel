@@ -77,7 +77,7 @@ const comparisonDetails: Record<TrainingVisual, ComparisonDetails> = {
     certification: 'TFP A3P',
     certificationNote: 'Agent de protection physique des personnes',
     price: '4 200 €',
-    priceNote: 'Formation complète de 327 heures',
+    priceNote: 'Formation complète de 328 heures hors examen',
     cta: 'Découvrir l’A3P',
   },
   desp: {

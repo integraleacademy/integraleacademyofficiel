@@ -98,7 +98,7 @@ export function createHomeSecurityHighlights(
       shortTitle: 'A3P',
       title: 'Agent de protection physique des personnes',
       description: 'Préparer et sécuriser les déplacements de personnes exposées.',
-      duration: '327 h',
+      duration: '328 h hors examen',
       modality: 'Présentiel',
       location: 'Puget-sur-Argens',
       financing: 'CPF · France Travail',
