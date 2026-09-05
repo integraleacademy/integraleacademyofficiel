@@ -8,11 +8,11 @@ import { TrainingDatesPricingSection } from '@/components/TrainingDatesPricingSe
 const contactHref = (subject = 'inscription') => `/contact?formation=ssiap-1&objet=${encodeURIComponent(subject)}`;
 
 const fallbackSessions = [
-  { id: 'ssiap-1-octobre-2026', startDate: '2026-10-12T00:00:00.000Z', endDate: '2026-10-27T00:00:00.000Z', examDate: '2026-10-28T00:00:00.000Z', status: 'OPEN', seatsLeft: 8, location: 'Puget-sur-Argens', priceLabel: '980 €' },
-  { id: 'ssiap-1-fevrier-2027', startDate: '2027-02-15T00:00:00.000Z', endDate: '2027-02-26T00:00:00.000Z', examDate: '2027-03-01T00:00:00.000Z', status: 'OPEN', seatsLeft: null, location: 'Puget-sur-Argens', priceLabel: '980 €' },
-  { id: 'ssiap-1-mai-2027', startDate: '2027-05-24T00:00:00.000Z', endDate: '2027-06-04T00:00:00.000Z', examDate: '2027-06-07T00:00:00.000Z', status: 'OPEN', seatsLeft: null, location: 'Puget-sur-Argens', priceLabel: '980 €' },
-  { id: 'ssiap-1-septembre-2027', startDate: '2027-09-13T00:00:00.000Z', endDate: '2027-09-24T00:00:00.000Z', examDate: '2027-09-27T00:00:00.000Z', status: 'OPEN', seatsLeft: null, location: 'Puget-sur-Argens', priceLabel: '980 €' },
-  { id: 'ssiap-1-novembre-2027', startDate: '2027-11-08T00:00:00.000Z', endDate: '2027-11-22T00:00:00.000Z', examDate: '2027-11-23T00:00:00.000Z', status: 'OPEN', seatsLeft: null, location: 'Puget-sur-Argens', priceLabel: '980 €' },
+  { id: 'ssiap-1-octobre-2026', title: 'SSIAP 1 — Octobre 2026', startDate: '2026-10-12T00:00:00.000Z', endDate: '2026-10-27T00:00:00.000Z', examDate: '2026-10-28T00:00:00.000Z', status: 'OPEN', seatsTotal: 12, seatsLeft: 8, location: 'Puget-sur-Argens', priceLabel: '980 €' },
+  { id: 'ssiap-1-fevrier-2027', title: 'SSIAP 1 — Février 2027', startDate: '2027-02-15T00:00:00.000Z', endDate: '2027-02-26T00:00:00.000Z', examDate: '2027-03-01T00:00:00.000Z', status: 'OPEN', seatsTotal: 12, seatsLeft: null, location: 'Puget-sur-Argens', priceLabel: '980 €' },
+  { id: 'ssiap-1-mai-2027', title: 'SSIAP 1 — Mai 2027', startDate: '2027-05-24T00:00:00.000Z', endDate: '2027-06-04T00:00:00.000Z', examDate: '2027-06-07T00:00:00.000Z', status: 'OPEN', seatsTotal: 12, seatsLeft: null, location: 'Puget-sur-Argens', priceLabel: '980 €' },
+  { id: 'ssiap-1-septembre-2027', title: 'SSIAP 1 — Septembre 2027', startDate: '2027-09-13T00:00:00.000Z', endDate: '2027-09-24T00:00:00.000Z', examDate: '2027-09-27T00:00:00.000Z', status: 'OPEN', seatsTotal: 12, seatsLeft: null, location: 'Puget-sur-Argens', priceLabel: '980 €' },
+  { id: 'ssiap-1-novembre-2027', title: 'SSIAP 1 — Novembre 2027', startDate: '2027-11-08T00:00:00.000Z', endDate: '2027-11-22T00:00:00.000Z', examDate: '2027-11-23T00:00:00.000Z', status: 'OPEN', seatsTotal: 12, seatsLeft: null, location: 'Puget-sur-Argens', priceLabel: '980 €' },
 ];
 
 const heroFacts = [
