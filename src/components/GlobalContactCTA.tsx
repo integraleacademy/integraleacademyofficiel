@@ -29,7 +29,7 @@ function SparkleIcon() {
 
 export function GlobalContactCTA() {
   const pathname = usePathname();
-  const isBts = pathname?.startsWith('/bts');
+  const isBts = pathname?.startsWith('/bts') || pathname === '/dossiersbts';
   const contactName = isBts ? 'Aurélie' : 'Cassandre';
   const contactFullName = isBts ? 'Aurélie CHAUSSEZ' : 'Cassandre';
   const contactRole = isBts
