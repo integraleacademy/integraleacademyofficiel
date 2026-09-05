@@ -44,6 +44,9 @@ type TrainingDatesPricingSectionProps = {
   initialSessionLimit?: number;
   showLocationFilter?: boolean;
   showSessionTitle?: boolean;
+  showOverallPeriodLabel?: boolean;
+  seatCapacity?: number;
+  underlineDisclosure?: boolean;
   theme?: TrainingTheme;
   priceAction: Action;
   emptyAction?: Action;
@@ -190,6 +193,9 @@ export function TrainingDatesPricingSection({
   initialSessionLimit,
   showLocationFilter = false,
   showSessionTitle = false,
+  showOverallPeriodLabel = true,
+  seatCapacity,
+  underlineDisclosure = true,
   theme = 'green',
   priceAction,
   emptyAction,
@@ -224,6 +230,9 @@ export function TrainingDatesPricingSection({
         initialSessionLimit={initialSessionLimit}
         showLocationFilter={showLocationFilter}
         showSessionTitle={showSessionTitle}
+        showOverallPeriodLabel={showOverallPeriodLabel}
+        seatCapacity={seatCapacity}
+        underlineDisclosure={underlineDisclosure}
         emptyAction={emptyAction}
       />
 
