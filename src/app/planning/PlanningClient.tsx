@@ -7,7 +7,6 @@ import { formatTrainingPrice } from '@/lib/training-price';
 
 type Session = any;
 type CategoryKey = 'security' | 'fire' | 'vtc' | 'bts';
-type FilterKey = 'all' | CategoryKey;
 type FormationFilterKey = 'all' | 'aps' | 'a3p' | 'director' | 'ssiap' | 'vtc' | 'bts';
 type ViewMode = 'list' | 'calendar';
 type PlanningAccent = 'blue' | 'green' | 'orange' | 'red' | 'violet' | 'gold';
@@ -26,20 +25,11 @@ type IconName =
   | 'calendar'
   | 'check'
   | 'clock'
-  | 'filter'
   | 'location'
   | 'people'
   | 'search'
   | 'screen'
   | 'sparkles';
-
-const filters: { key: FilterKey; label: string }[] = [
-  { key: 'all', label: 'Toutes' },
-  { key: 'security', label: 'Sécurité privée' },
-  { key: 'fire', label: 'Incendie' },
-  { key: 'vtc', label: 'VTC' },
-  { key: 'bts', label: 'BTS' },
-];
 
 const categorySections: {
   key: CategoryKey;
@@ -244,9 +234,6 @@ function Icon({ name, className = 'h-5 w-5' }: { name: IconName; className?: str
   if (name === 'clock') {
     return <svg {...common}><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></svg>;
   }
-  if (name === 'filter') {
-    return <svg {...common}><path d="M4 6h16M7 12h10M10 18h4" /></svg>;
-  }
   if (name === 'location') {
     return <svg {...common}><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z" /><circle cx="12" cy="10" r="2.5" /></svg>;
   }
@@ -285,11 +272,6 @@ function formationMatchesSlug(formation: (typeof formationFilters)[number], slug
   return false;
 }
 
-function sessionCategory(session: Session): CategoryKey | null {
-  const slug = session.training?.slug;
-  return categorySections.find((section) => section.slugs.includes(slug))?.key || null;
-}
-
 function sessionTitle(session: Session) {
   return session.training?.name || session.training?.title || session.title || 'Formation';
 }
@@ -314,15 +296,6 @@ function monthKey(value?: string | Date) {
   if (!value) return '';
   const date = new Date(value);
   return date.getUTCFullYear() + '-' + String(date.getUTCMonth() + 1).padStart(2, '0');
-}
-
-function monthLabel(value?: string | Date) {
-  if (!value) return '';
-  return new Intl.DateTimeFormat('fr-FR', {
-    month: 'long',
-    timeZone: 'Europe/Paris',
-    year: 'numeric',
-  }).format(new Date(value));
 }
 
 function timelineMonthLabel(value: Date) {
@@ -842,16 +815,13 @@ function RegistrationModal({
 
 function MissingDates({
   sessions,
-  active,
   activeFormation,
 }: {
   sessions: Session[];
-  active: FilterKey;
   activeFormation: FormationFilterKey;
 }) {
   const selectedFormation = activeFormation === 'all' ? null : formationFilters.find((formation) => formation.key === activeFormation);
   const missing = alertOptions.filter((option) => {
-    if (active !== 'all' && option.category !== active) return false;
     if (selectedFormation && !option.slugs.some((slug) => selectedFormation.slugs.includes(slug))) return false;
     return !sessions.some((session) => option.slugs.includes(session.training?.slug));
   });
@@ -921,13 +891,8 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
     [initialSessions],
   );
   const nextSession = sortedSessions[0] || null;
-  const [active, setActive] = useState<FilterKey>('all');
   const [activeFormation, setActiveFormation] = useState<FormationFilterKey>('all');
-  const [query, setQuery] = useState('');
-  const [location, setLocation] = useState('all');
-  const [month, setMonth] = useState('all');
   const [view, setView] = useState<ViewMode>('list');
-  const [filtersOpen, setFiltersOpen] = useState(false);
   const [showAll, setShowAll] = useState(false);
   const [selectedSession, setSelectedSession] = useState<Session | null>(null);
 
@@ -935,11 +900,6 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
     () => Array.from(new Set(sortedSessions.map((session) => session.location).filter(Boolean))) as string[],
     [sortedSessions],
   );
-  const months = useMemo(() => {
-    const unique = new Map<string, string>();
-    sortedSessions.forEach((session) => unique.set(monthKey(session.startDate), monthLabel(session.startDate)));
-    return Array.from(unique.entries()).sort(([a], [b]) => a.localeCompare(b));
-  }, [sortedSessions]);
   const formationCount = useMemo(
     () => new Set(sortedSessions.map((session) => session.training?.slug || sessionTitle(session))).size,
     [sortedSessions],
@@ -952,34 +912,13 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
   const activePlanningTheme = planningThemeClass(selectedFormationDetails?.accent || 'gold');
 
   const filteredSessions = useMemo(() => {
-    const normalizedQuery = query.trim().toLocaleLowerCase('fr');
     const selectedFormation = activeFormation === 'all' ? null : formationFilters.find((formation) => formation.key === activeFormation);
-    return sortedSessions.filter((session) => {
-      if (active !== 'all' && sessionCategory(session) !== active) return false;
-      if (selectedFormation && !formationMatchesSlug(selectedFormation, session.training?.slug)) return false;
-      if (location !== 'all' && session.location !== location) return false;
-      if (month !== 'all' && monthKey(session.startDate) !== month) return false;
-      if (!normalizedQuery) return true;
-      const haystack = [
-        sessionTitle(session),
-        session.training?.slug,
-        session.location,
-        session.publicNotes,
-      ].filter(Boolean).join(' ').toLocaleLowerCase('fr');
-      return haystack.includes(normalizedQuery);
-    });
-  }, [active, activeFormation, location, month, query, sortedSessions]);
+    return selectedFormation
+      ? sortedSessions.filter((session) => formationMatchesSlug(selectedFormation, session.training?.slug))
+      : sortedSessions;
+  }, [activeFormation, sortedSessions]);
 
   const visibleSessions = showAll ? filteredSessions : filteredSessions.slice(0, 6);
-
-  function resetFilters() {
-    setActive('all');
-    setActiveFormation('all');
-    setQuery('');
-    setLocation('all');
-    setMonth('all');
-    setShowAll(false);
-  }
 
   function scrollToSessions() {
     window.requestAnimationFrame(() => document.getElementById('sessions')?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
@@ -987,10 +926,6 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
 
   function chooseFormation(formation: FormationFilterKey) {
     setActiveFormation(formation);
-    setActive('all');
-    setQuery('');
-    setLocation('all');
-    setMonth('all');
     setShowAll(false);
     setView('list');
     scrollToSessions();
@@ -1121,94 +1056,8 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
       </section>
 
       <section id="sessions" className={activePlanningTheme + ' page-container py-14 sm:py-20'}>
-        <div className="max-w-4xl">
-          <p className="text-[11px] font-black uppercase tracking-[.22em] text-academy-gold-strong">{selectedFormationDetails ? 'Formation sélectionnée' : 'Toutes les sessions'}</p>
-          <h2 className="mt-4 text-3xl font-black tracking-tight text-academy-ink dark:text-white sm:text-5xl">
-            {selectedFormationDetails ? <>Les prochaines dates <span className="planning-accent-text">{selectedFormationDetails.label}</span>.</> : 'Trouvez la date qui correspond à votre projet.'}
-          </h2>
-          <p className="mt-4 max-w-3xl text-base font-semibold leading-7 text-academy-muted sm:text-lg">Les résultats, les places restantes et les tarifs sont mis à jour depuis l’administration du site.</p>
-        </div>
-
-        <div className="sticky top-[4.4rem] z-30 mt-8 rounded-[1.6rem] border border-academy-line/70 bg-academy-surface/95 p-3 shadow-[0_16px_50px_rgba(54,40,20,.10)] backdrop-blur-xl">
-          <div className="grid gap-3 xl:grid-cols-[minmax(15rem,.8fr)_minmax(0,1.2fr)] xl:items-center">
-            <label className="relative block">
-              <span className="sr-only">Rechercher une formation</span>
-              <Icon name="search" className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-academy-muted" />
-              <input
-                value={query}
-                onChange={(event) => {
-                  setQuery(event.target.value);
-                  setShowAll(false);
-                }}
-                placeholder="Rechercher une formation…"
-                className="w-full rounded-full border border-academy-line bg-white py-3.5 pl-12 pr-4 text-sm font-bold text-academy-ink placeholder:text-academy-muted/60 dark:bg-white/5 dark:text-white"
-              />
-            </label>
-
-            <div className="flex items-center gap-2 overflow-x-auto pb-1 xl:pb-0">
-              <button
-                type="button"
-                aria-pressed={activeFormation === 'all'}
-                onClick={() => {
-                  setActiveFormation('all');
-                  setShowAll(false);
-                }}
-                className={'shrink-0 rounded-full px-3.5 py-3 text-xs font-black transition ' + (activeFormation === 'all' ? 'bg-[#101a29] text-white shadow-soft' : 'border border-academy-line bg-white text-academy-muted hover:border-academy-gold hover:text-academy-ink dark:bg-white/5')}
-              >
-                Toutes
-              </button>
-              {formationFilters.map((formation) => (
-                <button
-                  key={formation.key}
-                  type="button"
-                  aria-pressed={activeFormation === formation.key}
-                  onClick={() => {
-                    setActiveFormation(formation.key);
-                    setActive('all');
-                    setShowAll(false);
-                  }}
-                  className={planningThemeClass(formation.accent) + ' shrink-0 rounded-full border px-3.5 py-3 text-xs font-black transition ' + (activeFormation === formation.key ? 'planning-accent-selected' : 'border-academy-line bg-white text-academy-muted hover:border-academy-ink/25 hover:text-academy-ink dark:bg-white/5')}
-                >
-                  <span className="flex items-center gap-2">
-                    <span aria-hidden="true" className="planning-accent-indicator h-1.5 w-1.5 shrink-0 rounded-full" />
-                    {formation.label}
-                  </span>
-                </button>
-              ))}
-              <button type="button" onClick={() => setFiltersOpen((value) => !value)} className="planning-neutral-action inline-flex shrink-0 items-center gap-2 rounded-full border border-transparent px-4 py-3 text-xs font-black xl:hidden">
-                <Icon name="filter" className="h-4 w-4" />
-                Filtrer
-              </button>
-            </div>
-          </div>
-
-          <div className={(filtersOpen ? 'grid' : 'hidden') + ' mt-3 gap-3 border-t border-academy-line/60 pt-3 sm:grid-cols-2 xl:grid xl:grid-cols-[1fr_1fr_1fr_auto] xl:items-end'}>
-            <label className="grid gap-1.5 text-[9px] font-black uppercase tracking-[.14em] text-academy-muted">
-              Domaine
-              <select value={active} onChange={(event) => { setActive(event.target.value as FilterKey); setActiveFormation('all'); setShowAll(false); }} className="rounded-full border border-academy-line bg-white px-4 py-3 text-sm font-bold normal-case tracking-normal dark:bg-white/5">
-                {filters.map((filter) => <option key={filter.key} value={filter.key}>{filter.label}</option>)}
-              </select>
-            </label>
-            <label className="grid gap-1.5 text-[9px] font-black uppercase tracking-[.14em] text-academy-muted">
-              Centre
-              <select value={location} onChange={(event) => { setLocation(event.target.value); setShowAll(false); }} className="rounded-full border border-academy-line bg-white px-4 py-3 text-sm font-bold normal-case tracking-normal dark:bg-white/5">
-                <option value="all">Tous les centres</option>
-                {locations.map((item) => <option key={item} value={item}>{item}</option>)}
-              </select>
-            </label>
-            <label className="grid gap-1.5 text-[9px] font-black uppercase tracking-[.14em] text-academy-muted">
-              Période
-              <select value={month} onChange={(event) => { setMonth(event.target.value); setShowAll(false); }} className="rounded-full border border-academy-line bg-white px-4 py-3 text-sm font-bold normal-case tracking-normal dark:bg-white/5">
-                <option value="all">Toutes les dates</option>
-                {months.map(([key, label]) => <option key={key} value={key}>{label}</option>)}
-              </select>
-            </label>
-            <button type="button" onClick={resetFilters} className="planning-accent-hover rounded-full border border-academy-line bg-white px-4 py-3 text-xs font-black text-academy-muted transition hover:text-academy-ink dark:bg-white/5">Réinitialiser</button>
-          </div>
-        </div>
-
         {view === 'list' ? (
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <p className="text-2xl font-black text-academy-ink dark:text-white">
                 {filteredSessions.length} {filteredSessions.length > 1 ? 'sessions disponibles' : 'session disponible'}
@@ -1244,17 +1093,17 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
         ) : (
           <div className="mt-6 rounded-[2rem] border border-dashed border-academy-line bg-white/65 p-8 text-center shadow-soft dark:bg-white/5 sm:p-12">
             <Icon name="search" className="planning-accent-text mx-auto h-10 w-10" />
-            <h3 className="mt-4 text-2xl font-black text-academy-ink dark:text-white">Aucune session ne correspond à ces critères.</h3>
-            <p className="mx-auto mt-3 max-w-xl text-sm font-semibold leading-6 text-academy-muted">Modifiez les filtres ou créez une alerte pour être prévenu de la prochaine date disponible.</p>
+            <h3 className="mt-4 text-2xl font-black text-academy-ink dark:text-white">Aucune session ouverte pour cette formation.</h3>
+            <p className="mx-auto mt-3 max-w-xl text-sm font-semibold leading-6 text-academy-muted">Consultez toutes les sessions ou créez une alerte pour être prévenu de la prochaine date disponible.</p>
             <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
-              <button type="button" onClick={resetFilters} className="rounded-full bg-[#101a29] px-5 py-3 text-sm font-black text-white">Réinitialiser les filtres</button>
+              <button type="button" onClick={() => chooseFormation('all')} className="rounded-full bg-[#101a29] px-5 py-3 text-sm font-black text-white">Voir toutes les sessions</button>
               <Link href="/contact?motif=alerte-planning" className="planning-neutral-action rounded-full px-5 py-3 text-sm font-black">Créer une alerte</Link>
             </div>
           </div>
         )}
       </section>
 
-      <MissingDates sessions={sortedSessions} active={active} activeFormation={activeFormation} />
+      <MissingDates sessions={sortedSessions} activeFormation={activeFormation} />
 
       <section className="page-container py-16 sm:py-20">
         <div className="max-w-4xl">
