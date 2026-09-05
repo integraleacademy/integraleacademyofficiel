@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import { formatSessionPeriod } from '@/lib/public-sessions';
-import { getSessionSeatAvailability } from '@/lib/session-seat-availability';
+import { getSessionSeatAvailability, resolveSessionSeatCapacity } from '@/lib/session-seat-availability';
 import { sessionLocationFilters, sessionMatchesLocation, type SessionLocationFilterKey } from '@/lib/session-location-filter';
 import { formatTrainingPrice } from '@/lib/training-price';
 
@@ -36,6 +36,7 @@ export type TrainingSessionCardItem = {
   remoteEndDate?: string | null;
   examDate?: string | null;
   status?: string | null;
+  seatsTotal?: number | string | null;
   seatsLeft?: number | string | null;
   showSeatsLeft?: boolean | null;
   location?: string | null;
@@ -168,7 +169,8 @@ function SessionCard({
 }) {
   const full = isFull(session);
   const sessionTitle = String(session.title || '').trim();
-  const seatAvailability = seatCapacity ? getSessionSeatAvailability(session, seatCapacity) : null;
+  const capacity = resolveSessionSeatCapacity(session, seatCapacity);
+  const seatAvailability = getSessionSeatAvailability(session, capacity);
   const deliveryPeriods = [
     { label: 'Période complète', value: formatPublicPeriod(session.startDate, session.endDate), icon: 'calendar' as const, confirmed: Boolean(session.startDate && session.endDate) },
     { label: 'À distance', value: formatPublicPeriod(session.remoteStartDate, session.remoteEndDate, remotePeriodFallback), icon: 'screen' as const, confirmed: Boolean(session.remoteStartDate && session.remoteEndDate) },
@@ -182,7 +184,7 @@ function SessionCard({
       <span className={`rounded-full border px-3 py-1.5 text-xs font-black ${seatAvailability?.badgeClassName ?? (full ? 'border-stone-300 bg-stone-100 text-stone-700' : sessionTheme.badge)}`}>{seatAvailability?.label ?? seatsLabel(session)}</span>
     </div>
     {showSessionTitle && sessionTitle ? <h3 className="mt-5 text-xl font-black tracking-tight text-academy-ink">{sessionTitle}</h3> : null}
-    {showDeliveryPeriods ? <div className={`${showSessionTitle && sessionTitle ? 'mt-3' : 'mt-5'} rounded-[1.35rem] border border-academy-line/70 bg-white/65 p-2 shadow-[inset_0_1px_0_rgba(255,255,255,.8)]`}>
+    <div className={`${showSessionTitle && sessionTitle ? 'mt-3' : 'mt-5'} rounded-[1.35rem] border border-academy-line/70 bg-white/65 p-2 shadow-[inset_0_1px_0_rgba(255,255,255,.8)]`}>
       <div className="flex items-center gap-3 rounded-[1.05rem] bg-[#101a29] px-4 py-3.5 text-white shadow-[0_12px_28px_rgba(16,26,41,.16)]">
         <span className={`grid h-10 w-10 shrink-0 place-items-center rounded-xl ${sessionTheme.periodIcon}`}>
           <PeriodIcon name={mainPeriod.icon} className="h-[1.1rem] w-[1.1rem]" />
@@ -192,7 +194,7 @@ function SessionCard({
           <span className={`${showOverallPeriodLabel ? 'mt-1' : ''} block text-[.95rem] font-black leading-5 text-white`}>{mainPeriod.value}</span>
         </span>
       </div>
-      <div className="mt-2 grid gap-2 sm:grid-cols-2">
+      {showDeliveryPeriods ? <div className="mt-2 grid gap-2 sm:grid-cols-2">
         {detailPeriods.map((period) => <div key={period.label} className={`flex items-start gap-3 rounded-[1rem] border px-3.5 py-3 ${period.confirmed ? 'border-academy-line/70 bg-[#FBF8F1]' : 'border-dashed border-academy-line bg-white/75'}`}>
           <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-xl border border-academy-line/70 bg-white ${sessionTheme.detailIcon}`}><PeriodIcon name={period.icon} /></span>
           <span className="min-w-0">
@@ -200,8 +202,8 @@ function SessionCard({
             <span className={`mt-1 block text-sm font-black leading-5 ${period.confirmed ? 'text-academy-ink' : 'text-academy-muted'}`}>{period.value}</span>
           </span>
         </div>)}
-      </div>
-    </div> : <h3 className="mt-5 text-2xl font-black">{formatSessionPeriod(session.startDate, session.endDate)}</h3>}
+      </div> : null}
+    </div>
     <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2 border-t border-academy-line/60 pt-3 text-sm font-bold text-academy-muted">
       <span className="inline-flex items-center gap-2"><PeriodIcon name="calendar" className={`h-4 w-4 ${sessionTheme.detailIcon}`} />Examen : {formatDate(session.examDate)}</span>
       <span className="inline-flex items-center gap-2"><PeriodIcon name="location" className={`h-4 w-4 ${sessionTheme.detailIcon}`} />{session.location || defaultLocation}</span>

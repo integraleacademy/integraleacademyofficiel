@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { getSessionSeatAvailability } from '../src/lib/session-seat-availability';
+import { getSessionSeatAvailability, resolveSessionSeatCapacity } from '../src/lib/session-seat-availability';
 
 const referenceDate = new Date('2026-09-05T12:00:00.000Z');
 
@@ -43,4 +43,10 @@ test('le nombre automatique diminue à l’approche de la date de début', () =>
 test('une valeur administrée valide reste prioritaire sur le calcul automatique', () => {
   const availability = getSessionSeatAvailability({ seatsLeft: 5, startDate: '2026-09-07T00:00:00.000Z' }, 12, referenceDate);
   assert.equal(availability.count, 5);
+});
+
+test('la capacité propre à la session est utilisée hors APS', () => {
+  assert.equal(resolveSessionSeatCapacity({ seatsTotal: 20, seatsLeft: null }), 20);
+  assert.equal(resolveSessionSeatCapacity({ seatsTotal: null, seatsLeft: 15 }), 15);
+  assert.equal(resolveSessionSeatCapacity({ seatsTotal: 20, seatsLeft: 15 }, 12), 12);
 });

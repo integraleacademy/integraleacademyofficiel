@@ -14,6 +14,7 @@ export type TrainingDatesPricingSession = {
   remoteEndDate?: string | Date | null;
   examDate?: string | Date | null;
   status?: string | null;
+  seatsTotal?: number | string | null;
   seatsLeft?: number | string | null;
   showSeatsLeft?: boolean | null;
   location?: string | null;
@@ -167,6 +168,7 @@ function serializeSession(
     remoteEndDate: serializeDate(session.remoteEndDate),
     examDate: serializeDate(session.examDate),
     status: session.status,
+    seatsTotal: session.seatsTotal,
     seatsLeft: session.seatsLeft,
     showSeatsLeft: session.showSeatsLeft,
     location: session.location,
@@ -190,12 +192,12 @@ export function TrainingDatesPricingSection({
   showDeliveryPeriods = false,
   remotePeriodFallback = 'Dates à confirmer',
   inPersonPeriodFallback = 'Dates à confirmer',
-  initialSessionLimit,
+  initialSessionLimit = 2,
   showLocationFilter = false,
-  showSessionTitle = false,
-  showOverallPeriodLabel = true,
+  showSessionTitle = true,
+  showOverallPeriodLabel = false,
   seatCapacity,
-  underlineDisclosure = true,
+  underlineDisclosure = false,
   theme = 'green',
   priceAction,
   emptyAction,

@@ -4,6 +4,7 @@ export type SessionSeatAvailabilityTone = 'available' | 'moderate' | 'low' | 'cr
 
 type SessionSeatAvailabilitySource = {
   startDate?: string | Date | null;
+  seatsTotal?: number | string | null;
   seatsLeft?: number | string | null;
   status?: string | null;
 };
@@ -29,6 +30,20 @@ function normalizeSeatCount(value: SessionSeatAvailabilitySource['seatsLeft']) {
   const count = Number(value);
   if (!Number.isFinite(count)) return null;
   return Math.max(0, Math.floor(count));
+}
+
+export function resolveSessionSeatCapacity(
+  session: SessionSeatAvailabilitySource,
+  configuredCapacity?: number,
+) {
+  const explicitCapacity = normalizeSeatCount(configuredCapacity);
+  if (explicitCapacity !== null && explicitCapacity > 0) return explicitCapacity;
+
+  const storedCapacity = normalizeSeatCount(session.seatsTotal);
+  if (storedCapacity !== null && storedCapacity > 0) return storedCapacity;
+
+  const storedCount = normalizeSeatCount(session.seatsLeft);
+  return Math.max(12, storedCount ?? 12);
 }
 
 export function getSessionSeatAvailability(
