@@ -64,13 +64,13 @@ export function getSessionSeatAvailability(
   }
 
   const occupancyRatio = count / safeCapacity;
-  const tone: SessionSeatAvailabilityTone = occupancyRatio >= 0.75
-    ? 'available'
-    : occupancyRatio >= 0.5
-      ? 'moderate'
-      : occupancyRatio >= 0.25
-        ? 'low'
-        : 'critical';
+  const tone: SessionSeatAvailabilityTone = count <= 3
+    ? 'critical'
+    : occupancyRatio >= 0.75
+      ? 'available'
+      : occupancyRatio >= 0.5
+        ? 'moderate'
+        : 'low';
 
   return {
     count,
