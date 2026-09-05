@@ -10,9 +10,9 @@ import {
   a3pEnrollmentSteps,
   a3pFaq,
   a3pInsertionStats,
-  a3pOfficialReferences,
   a3pPrerequisites,
   a3pProgram,
+  a3pWorkConditions,
 } from '@/data/a3p';
 import { formatTrainingPrice } from '@/lib/training-price';
 
@@ -255,9 +255,45 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
       <div className="mt-8 rounded-[1.5rem] border border-academy-line bg-[#F4EEE4] p-5"><Label>Après réussite</Label><p className="mt-2 text-base font-black">TFP A3P <span className="text-yellow-700">→</span> Demande CNAPS <span className="text-yellow-700">→</span> Carte professionnelle <span className="text-yellow-700">→</span> Exercer</p><p className="mt-2 text-xs font-semibold text-academy-muted">La certification permet de justifier l’aptitude professionnelle nécessaire à la demande de carte. La délivrance de la carte reste une décision du CNAPS.</p></div>
     </Section>
 
-    <Section id="references-rncp" label="07 — Références officielles" title="Une certification clairement identifiée." intro={<>Les informations ci-dessous proviennent de la fiche France Compétences RNCP38002. L’enregistrement est actif jusqu’au 20 septembre 2028 ; il succède au RNCP35098.</>} tone="stone">
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{a3pOfficialReferences.map(([label, value]) => <article key={label} className="rounded-2xl border border-academy-line bg-[#FFFDF8] p-5 shadow-soft"><Label>{label}</Label><p className="mt-4 text-sm font-black leading-6">{value}</p></article>)}</div>
-      <div className="mt-5 rounded-[1.5rem] bg-[#0D1725] p-5 text-white sm:flex sm:items-center sm:justify-between sm:gap-6"><div><p className="font-black">Certificateur légal</p><p className="mt-1 max-w-3xl text-xs font-medium leading-6 text-white/60">{a3pConfig.certificateurLegalName}</p></div><a href={a3pConfig.rncpUrl} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex min-h-11 items-center justify-center rounded-full bg-academy-gold px-5 py-3 text-sm font-black text-academy-gold-text sm:mt-0">Consulter la fiche RNCP ↗</a></div>
+    <Section id="references-rncp" label="07 — Repères officiels" title="Certification, conditions d’exercice et données d’insertion." intro={<>Ces informations complètent la présentation commerciale avec les repères figurant dans la fiche RNCP38002 fournie.</>}>
+      <div className="grid gap-5 lg:grid-cols-[1.15fr_.85fr]">
+        <article className="rounded-[2rem] border border-academy-line bg-white p-6 shadow-soft lg:p-8">
+          <Label>Réalités du métier</Label>
+          <h3 className="mt-3 text-3xl font-black">Des conditions qui varient selon la mission.</h3>
+          <div className="mt-6 grid gap-3 sm:grid-cols-2">{a3pWorkConditions.map((item) => <div key={item} className="flex gap-3 rounded-2xl bg-academy-bg p-4 text-sm font-bold leading-6 text-academy-muted"><span className="mt-0.5 text-emerald-700">✓</span><span>{item}</span></div>)}</div>
+        </article>
+        <article className="rounded-[2rem] bg-[#0D1725] p-6 text-white shadow-card lg:p-8">
+          <Label light>Identification</Label>
+          <h3 className="mt-3 text-3xl font-black">TFP A3P · niveau 4</h3>
+          <dl className="mt-6 grid gap-3">{[
+            ['Répertoire', a3pConfig.rncp],
+            ['Certificateurs', 'CPNE / ADEF'],
+            ['Code ROME', 'K2503'],
+            ['Code NSF', '344'],
+            ['Formacode', '42812'],
+            ['Échéance RNCP', a3pConfig.rncpExpiry],
+          ].map(([term, value]) => <div key={term} className="flex items-center justify-between gap-4 rounded-2xl border border-white/10 bg-white/7 px-4 py-3"><dt className="text-sm font-semibold text-white/55">{term}</dt><dd className="text-right font-black text-white">{value}</dd></div>)}</dl>
+          <a href={a3pConfig.rncpUrl} target="_blank" rel="noopener noreferrer" className="mt-5 inline-flex font-black text-academy-gold transition hover:text-white">Consulter la fiche France compétences →</a>
+        </article>
+      </div>
+      <article className="mt-5 overflow-hidden rounded-[2rem] border border-academy-line bg-[#FFFDF8] p-6 shadow-soft lg:p-8">
+        <div className="flex flex-wrap items-end justify-between gap-4"><div><Label>Insertion nationale</Label><h3 className="mt-3 text-3xl font-black">Données historiques de la certification.</h3></div><p className="max-w-xl text-sm font-semibold leading-6 text-academy-muted">Statistiques nationales France compétences figurant dans la fiche RNCP fournie. Elles concernent la certification, pas les résultats propres à Intégrale Academy.</p></div>
+        <div className="mt-6 overflow-x-auto">
+          <table className="min-w-[720px] w-full border-separate border-spacing-y-2 text-left text-sm">
+            <thead><tr className="text-xs uppercase tracking-[.12em] text-academy-muted"><th className="px-4 py-2">Année</th><th className="px-4 py-2">Certifiés</th><th className="px-4 py-2">Insertion globale à 6 mois</th><th className="px-4 py-2">Métier visé à 6 mois</th><th className="px-4 py-2">Métier visé à 2 ans</th></tr></thead>
+            <tbody>{a3pInsertionStats.map((row) => <tr key={row.year} className="bg-white font-bold"><td className="rounded-l-2xl px-4 py-4 font-black">{row.year}</td><td className="px-4 py-4">{row.certified}</td><td className="px-4 py-4">{row.global}</td><td className="px-4 py-4">{row.targetJob}</td><td className="rounded-r-2xl px-4 py-4">{row.targetJobTwoYears}</td></tr>)}</tbody>
+          </table>
+        </div>
+        <details className="group mt-6 rounded-[1.4rem] border border-academy-line bg-white p-5">
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-black"><span>Autres informations de la fiche RNCP</span><span className="grid h-8 w-8 place-items-center rounded-full bg-academy-bg transition group-open:rotate-45">+</span></summary>
+          <div className="mt-5 grid gap-3 border-t border-academy-line pt-5 md:grid-cols-3">
+            <div className="rounded-2xl bg-academy-bg p-4"><p className="text-xs font-black uppercase tracking-[.12em] text-academy-muted">Voies d’accès recensées</p><p className="mt-2 text-sm font-bold leading-6">Apprentissage, formation continue, contrat de professionnalisation, candidature individuelle et VAE.</p></div>
+            <div className="rounded-2xl bg-academy-bg p-4"><p className="text-xs font-black uppercase tracking-[.12em] text-academy-muted">Blocs et correspondances</p><p className="mt-2 text-sm font-bold leading-6">{a3pConfig.certificationStructure}. Aucune correspondance déclarée avec une autre certification.</p></div>
+            <div className="rounded-2xl bg-academy-bg p-4"><p className="text-xs font-black uppercase tracking-[.12em] text-academy-muted">Historique</p><p className="mt-2 text-sm font-bold leading-6">La certification RNCP38002 remplace la certification antérieure RNCP35098.</p></div>
+          </div>
+          <p className="mt-4 text-xs font-semibold leading-5 text-academy-muted">Ces voies sont celles de la certification nationale ; leur disponibilité chez Intégrale Academy doit être confirmée avec l’équipe admissions.</p>
+        </details>
+      </article>
     </Section>
 
     <TrainingDatesPricingSection
@@ -286,10 +322,7 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
         <div className="rounded-[2rem] border border-academy-line bg-white p-7 shadow-soft"><Label>Employeurs et secteurs</Label><h2 className="mt-3 text-2xl font-black tracking-[-.04em]">Des contextes d’exercice variés.</h2><div className="mt-5 grid gap-2 sm:grid-cols-2">{a3pEmployerSectors.map((sector) => <span key={sector} className="rounded-xl bg-[#F3EEE5] px-3 py-2 text-[.65rem] font-black before:mr-2 before:text-emerald-600 before:content-['✓']">{sector}</span>)}</div></div>
       </div>
 
-      <div className="mt-5 grid gap-5 lg:grid-cols-[.72fr_1.28fr]">
-        <div className="rounded-[2rem] border border-academy-line bg-white p-7 shadow-soft"><Label>Rémunération</Label><h2 className="mt-3 text-2xl font-black tracking-[-.04em]">Un niveau variable selon les missions.</h2><p className="mt-4 text-sm font-semibold leading-7 text-academy-muted">Le type de mission, la durée, le niveau de risque et l’expérience influencent fortement la rémunération.</p><div className="mt-5 flex flex-wrap gap-2">{salaryFactors.map((factor) => <span key={factor} className="rounded-full bg-[#F3EEE5] px-3 py-2 text-[.65rem] font-black">{factor}</span>)}</div></div>
-        <div className="overflow-hidden rounded-[2rem] border border-academy-line bg-[#F4EFE7] p-6 shadow-soft"><Label>Données du certificateur</Label><h2 className="mt-3 text-2xl font-black tracking-[-.04em]">Insertion à 6 mois publiée sur RNCP38002.</h2><div className="mt-5 overflow-x-auto"><table className="w-full min-w-[34rem] text-left text-sm"><thead><tr className="border-b border-academy-line text-[.62rem] uppercase tracking-[.12em] text-academy-muted"><th className="px-3 py-3">Année</th><th className="px-3 py-3">Certifiés</th><th className="px-3 py-3">Insertion globale</th><th className="px-3 py-3">Dans le métier visé</th></tr></thead><tbody>{a3pInsertionStats.map((row) => <tr key={row.year} className="border-b border-academy-line/70 last:border-0"><td className="px-3 py-3 font-black">{row.year}</td><td className="px-3 py-3 font-bold">{row.certified}</td><td className="px-3 py-3 font-black text-emerald-700">{row.global}</td><td className="px-3 py-3 font-black text-yellow-700">{row.targetJob}</td></tr>)}</tbody></table></div><p className="mt-4 text-xs font-semibold leading-5 text-academy-muted">Statistiques nationales du certificateur, distinctes des résultats propres à Intégrale Academy.</p></div>
-      </div>
+      <div className="mt-5 rounded-[2rem] border border-academy-line bg-white p-7 shadow-soft"><Label>Rémunération</Label><h2 className="mt-3 text-2xl font-black tracking-[-.04em]">Un niveau variable selon les missions.</h2><p className="mt-4 max-w-4xl text-sm font-semibold leading-7 text-academy-muted">Le type de mission, la durée, le niveau de risque et l’expérience influencent fortement la rémunération.</p><div className="mt-5 flex flex-wrap gap-2">{salaryFactors.map((factor) => <span key={factor} className="rounded-full bg-[#F3EEE5] px-3 py-2 text-[.65rem] font-black">{factor}</span>)}</div></div>
 
       <div className="mt-5 grid items-center gap-6 rounded-[2rem] bg-academy-gold p-6 shadow-soft lg:grid-cols-[1.2fr_.55fr_auto]"><div><Label>Parcours recommandé</Label><h2 className="mt-2 text-2xl font-black tracking-[-.035em]">Double compétence APS + A3P</h2><p className="mt-2 text-xs font-semibold text-[#4F3B07]">Élargissez les missions accessibles et renforcez votre polyvalence.</p></div><div><p className="text-3xl font-black">{a3pConfig.apsA3pOffer.priceLabel}</p><p className="text-xs font-bold text-[#5B4514]">au lieu de {a3pConfig.apsA3pOffer.oldPriceLabel} · {a3pConfig.apsA3pOffer.discountLabel}</p></div><CTA href={a3pConfig.apsA3pOffer.href}>Découvrir le parcours →</CTA></div>
     </div></section>

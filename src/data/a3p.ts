@@ -12,6 +12,7 @@ export const a3pConfig = {
   nsf: '344 — Sécurité des biens et des personnes, police, surveillance',
   formacode: '42812 — Protection rapprochée',
   rome: 'K2503 — Sécurité et surveillance privées',
+  certificationStructure: 'Bloc unique · aucune capitalisation ni équivalence de blocs',
   rncpUrl: 'https://www.francecompetences.fr/recherche/rncp/38002/',
   durationHours: '328 heures hors examen',
   durationShort: '328 h',
@@ -158,15 +159,13 @@ export const a3pProgram = [
   },
 ];
 
-export const a3pOfficialReferences = [
-  ['Certification', 'TFP Agent de protection physique des personnes'],
-  ['Enregistrement', `${a3pConfig.rncp} · ${a3pConfig.level}`],
-  ['Échéance', a3pConfig.rncpExpiry],
-  ['Certificateur', a3pConfig.certificateur],
-  ['Code NSF', a3pConfig.nsf],
-  ['Formacode', a3pConfig.formacode],
-  ['Code ROME', a3pConfig.rome],
-  ['Structure', 'Bloc unique · aucune capitalisation ni équivalence de blocs'],
+export const a3pWorkConditions = [
+  'Protection et respect de la vie privée de personnalités, dirigeants et autres clients',
+  'Activité au domicile comme lors de déplacements privés ou professionnels',
+  'Travail seul ou en équipe selon la lettre de mission et le dispositif de protection',
+  'Déplacements possibles partout en France et à l’international',
+  'Communication permanente avec les équipiers au moyen d’un dispositif dédié',
+  'Missions non armées ; équipements particuliers possibles selon le niveau de risque',
 ];
 
 export const a3pEmployerSectors = [
@@ -181,9 +180,9 @@ export const a3pEmployerSectors = [
 ];
 
 export const a3pInsertionStats = [
-  { year: '2022', certified: '94', global: '78 %', targetJob: '43 %' },
-  { year: '2021', certified: '65', global: '80 %', targetJob: '70 %' },
-  { year: '2020', certified: '42', global: '88 %', targetJob: '65 %' },
+  { year: '2022', certified: '94 certifiés', global: '78 %', targetJob: '43 %', targetJobTwoYears: '—' },
+  { year: '2021', certified: '65 certifiés', global: '80 %', targetJob: '70 %', targetJobTwoYears: '20 %' },
+  { year: '2020', certified: '42 certifiés', global: '88 %', targetJob: '65 %', targetJobTwoYears: '0 %' },
 ];
 
 export const a3pEnrollmentSteps = [
