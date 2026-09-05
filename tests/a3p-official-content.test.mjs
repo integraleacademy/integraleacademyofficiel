@@ -38,7 +38,19 @@ test('les identifiants RNCP, les prérequis étrangers et les statistiques certi
 
   assert.match(data, /au moins cinq ans/);
   assert.match(data, /arrêté du 31 mars 2022/);
-  assert.match(data, /year: '2022', certified: '94', global: '78 %', targetJob: '43 %'/);
+  assert.match(data, /year: '2022', certified: '94 certifiés', global: '78 %', targetJob: '43 %', targetJobTwoYears: '—'/);
+});
+
+test('les repères officiels A3P reprennent la structure visuelle de la page APS', () => {
+  assert.match(component, /Certification, conditions d’exercice et données d’insertion\./);
+  assert.match(component, /Réalités du métier/);
+  assert.match(component, /TFP A3P · niveau 4/);
+  assert.match(component, /Insertion nationale/);
+  assert.match(component, /Métier visé à 2 ans/);
+  assert.match(component, /Autres informations de la fiche RNCP/);
+  assert.match(data, /targetJobTwoYears: '20 %'/);
+  assert.match(data, /Déplacements possibles partout en France et à l’international/);
+  assert.doesNotMatch(component, /Insertion à 6 mois publiée sur RNCP38002/);
 });
 
 test('les modalités d’examen et leurs trois seuils sont affichés', () => {
