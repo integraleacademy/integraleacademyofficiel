@@ -80,6 +80,10 @@ test('APS et DESP affichent les périodes utiles sur leurs pages et dans le plan
     assert.ok(planning.includes(label), `libellé planning manquant : ${label}`);
   }
   assert.ok(!planning.includes('Période complète'), 'le planning ne doit plus afficher la période complète');
+  assert.ok(
+    planning.includes("{ label: '', value: displayPlanningPeriod(session.startDate, session.endDate), icon: 'calendar' }"),
+    'les dates complètes doivent rester affichées dans le planning sans libellé',
+  );
 
   assert.ok(dateCards.includes("fallback = 'Dates à confirmer'"));
   assert.ok(dateCards.includes('remotePeriodFallback'));
