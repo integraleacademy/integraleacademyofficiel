@@ -40,6 +40,13 @@ test('la page APS trie les sessions et limite la vue initiale aux deux prochaine
   assert.ok(sessionsSection.includes('const additionalSessions = filteredSessions.slice(normalizedInitialLimit)'));
 });
 
+test('chaque carte APS affiche le titre renseigné dans l’administration', () => {
+  assert.ok(apsPage.includes('showSessionTitle'));
+  assert.ok(sessionsSection.includes('title?: string | null'));
+  assert.ok(sessionsSection.includes('title: session.title'));
+  assert.ok(sessionsSection.includes('{sessionTitle}</h3>'));
+});
+
 test('les sessions suivantes sont révélées par un contrôle natif et accessible', () => {
   assert.ok(sessionsSection.includes('<details className="group/session-list mt-5">'));
   assert.ok(sessionsSection.includes('aria-controls={additionalSessionsId}'));
