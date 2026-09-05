@@ -82,7 +82,7 @@ Les pages et liens sont repris depuis l'inventaire des pages actuelles : accueil
 ### Formations
 - APS : 175 h, 5 semaines, 1650 €, Puget-sur-Argens, CNAPS/RNCP 36648.
 - SSIAP 1 : 70 h, 2 semaines, tarifs 980 € et 1230 € avec SST, RS 5641, agrément SSIAP n°8323.
-- A3P/APR : 327 h, 9 semaines, 4200 €, RNCP 38002, hébergement possible.
+- A3P/APR : 328 h hors examen, 9 semaines, 4 200 €, RNCP 38002, hébergement possible.
 - DESP/DSSP : 245 h initial, 4300 €, VAE 3800 €, distanciel + présentiel Paris/Puget/Aurillac, RNCP 40385.
 - SST : mention INRS H34836/2020/SST-1/O/07, contenu détaillé à vérifier.
 - VTC : 105 h, 1 500 €, théorie e-learning, pratique Nice/Cannes/Toulon/Fréjus, agrément VTC-26-001.

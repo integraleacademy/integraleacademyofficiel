@@ -9,7 +9,8 @@
     "prisma:seed": "tsx prisma/seed.ts",
     "render:postdeploy": "prisma migrate deploy && tsx prisma/seed.ts",
     "db:seed": "prisma db seed",
-    "test:home-cards": "tsx --test tests/home-security-trainings.test.ts"
+    "test:home-cards": "tsx --test tests/home-security-trainings.test.ts",
+    "test:a3p": "node --test tests/a3p-official-content.test.mjs"
   },
   "dependencies": {
     "next": "15.3.3",
