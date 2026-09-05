@@ -86,7 +86,7 @@ test('les CTA, FAQ et sessions reçoivent la couleur du parcours', () => {
   assert.match(sessions, /variant=\{theme\} className="mt-5 w-full"/);
 });
 
-test('le planning applique la même couleur aux filtres, sessions, calendrier et inscription', () => {
+test('le planning conserve la charte avec des repères colorés subtils', () => {
   for (const [key, accent] of [
     ['aps', 'blue'],
     ['a3p', 'green'],
@@ -101,9 +101,15 @@ test('le planning applique la même couleur aux filtres, sessions, calendrier et
   assert.match(planning, /function planningAccentForSession\(session: Session\)/);
   assert.match(planning, /const themeClass = planningThemeForSession\(session\)/);
   assert.match(planning, /planning-accent-card/);
-  assert.match(planning, /planning-accent-chip/);
-  assert.match(planning, /planning-accent-bg planning-accent-shadow group absolute/);
-  assert.match(planning, /planningThemeForSession\(nextSession\)/);
+  assert.match(planning, /planning-accent-indicator/);
+  assert.match(planning, /planning-accent-selected/);
+  assert.match(planning, /planning-calendar-bar/);
+  assert.match(planning, /planning-formation-card-selected/);
+  assert.match(planning, /planning-neutral-action/);
+  assert.doesNotMatch(planning, /planning-accent-bg|planning-accent-shadow|planning-accent-chip/);
+  assert.match(globals, /\.planning-accent-selected \{[^}]*rgb\(var\(--planning-accent\) \/ \.075\)/);
+  assert.match(globals, /\.planning-calendar-bar \{[^}]*rgb\(var\(--planning-accent\) \/ \.16\)/);
+  assert.match(globals, /\.planning-neutral-action \{ background-color: #101a29;/);
   assert.doesNotMatch(planning, /#efb82f|#d39a17/);
   assert.match(globals, /\.planning-theme-orange \{ --planning-accent: 249 115 22; --planning-accent-strong: 180 83 9;[\s\S]*?--planning-accent-contrast: 67 20 7;/);
   assert.doesNotMatch(globals, /\.planning-theme-orange \{ --planning-accent: 194 65 12;/);
