@@ -400,6 +400,7 @@ function displayPlanningPeriod(startDate?: string | Date | null, endDate?: strin
 
 function deliveryPeriodRows(session: Session): { label: string; value: string; icon: IconName }[] {
   return [
+    { label: '', value: displayPlanningPeriod(session.startDate, session.endDate), icon: 'calendar' },
     { label: 'À distance', value: displayPlanningPeriod(session.remoteStartDate, session.remoteEndDate), icon: 'screen' },
     { label: 'En présentiel', value: displayPlanningPeriod(session.inPersonStartDate, session.inPersonEndDate), icon: 'location' },
   ];
@@ -453,13 +454,13 @@ function SessionCard({
             ) : null}
           </div>
           {showDeliveryPeriods ? <div className="mt-4 grid gap-2 sm:grid-cols-2">
-            {deliveryPeriodRows(session).map((period) => <div key={period.label} className="flex items-start gap-3 rounded-[1rem] border border-academy-line/60 bg-academy-bg/55 px-3.5 py-3 dark:border-white/10 dark:bg-white/5">
-              <span className="planning-accent-text grid h-9 w-9 shrink-0 place-items-center rounded-xl border border-academy-line/70 bg-white dark:border-white/10 dark:bg-white/10">
+            {deliveryPeriodRows(session).map((period, periodIndex) => <div key={period.label || 'dates'} className={`flex items-start gap-3 rounded-[1rem] border px-3.5 py-3 ${periodIndex === 0 ? 'planning-accent-soft sm:col-span-2' : 'border-academy-line/60 bg-academy-bg/55 dark:border-white/10 dark:bg-white/5'}`}>
+              <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-xl ${periodIndex === 0 ? 'planning-accent-icon' : 'planning-accent-text border border-academy-line/70 bg-white dark:border-white/10 dark:bg-white/10'}`}>
                 <Icon name={period.icon} className="h-4 w-4" />
               </span>
               <span className="min-w-0">
-                <span className="block text-[9px] font-black uppercase tracking-[.14em] text-academy-muted/70">{period.label}</span>
-                <span className="mt-1 block text-[13px] font-black leading-5 text-academy-ink dark:text-white sm:text-sm">{period.value}</span>
+                {period.label ? <span className="block text-[9px] font-black uppercase tracking-[.14em] text-academy-muted/70">{period.label}</span> : null}
+                <span className={`${period.label ? 'mt-1 ' : ''}block text-[13px] font-black leading-5 text-academy-ink dark:text-white sm:text-sm`}>{period.value}</span>
               </span>
             </div>)}
           </div> : <p className="mt-2 text-sm font-semibold leading-6 text-academy-muted">
@@ -707,8 +708,8 @@ function RegistrationModal({
           <div className="mt-7 grid gap-3 sm:grid-cols-2">
             {sessionDetails.map(([label, value]) => (
               <div key={label} className="rounded-2xl border border-academy-line/70 bg-white/70 p-4 dark:border-white/10 dark:bg-white/5">
-                <p className="text-[9px] font-black uppercase tracking-[.16em] text-academy-muted/70">{label}</p>
-                <p className="mt-2 text-sm font-black leading-6 text-academy-ink dark:text-white">{value}</p>
+                {label ? <p className="text-[9px] font-black uppercase tracking-[.16em] text-academy-muted/70">{label}</p> : null}
+                <p className={`${label ? 'mt-2 ' : ''}text-sm font-black leading-6 text-academy-ink dark:text-white`}>{value}</p>
               </div>
             ))}
           </div>
