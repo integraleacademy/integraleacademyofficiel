@@ -51,11 +51,24 @@ test('le calcul ignore les sessions passées, masquées, inactives et non-DESP',
 });
 
 test('la carte APS précise son format et ne porte plus le financement retiré', () => {
-  const aps = createHomeSecurityHighlights([], now).find((card) => card.visual === 'aps');
+  const aps = createHomeSecurityHighlights([
+    session('aps', '2026-09-07T00:00:00.000Z'),
+  ], now).find((card) => card.visual === 'aps');
 
   assert.ok(aps);
   assert.equal(aps.modality, 'Distanciel + Présentiel');
   assert.equal(aps.financing, undefined);
+  assert.equal(aps.nextSession, '7 septembre 2026');
+});
+
+test('la carte A3P ignore une rentrée déjà commencée', () => {
+  const a3p = createHomeSecurityHighlights([
+    session('a3p-apr', '2026-09-01T00:00:00.000Z'),
+    session('a3p-apr', '2026-11-09T00:00:00.000Z'),
+  ], '2026-09-05T10:00:00+02:00').find((card) => card.visual === 'a3p');
+
+  assert.ok(a3p);
+  assert.equal(a3p.nextSession, '9 novembre 2026');
 });
 
 test('la carte DESP affiche un repli explicite sans session publique à venir', () => {
