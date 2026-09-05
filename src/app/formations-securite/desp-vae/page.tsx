@@ -81,6 +81,7 @@ export default async function DespVaePage(){
     <TrainingDatesPricingSection
       sessions={sessions}
       theme="orange"
+      seatCapacity={20}
       defaultPrice={despVaeAdmin.price}
       defaultLocation="À distance · jury selon convocation"
       priceDescription="Accompagnement VAE individualisé · jury de certification"

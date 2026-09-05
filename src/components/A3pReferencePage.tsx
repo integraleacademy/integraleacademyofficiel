@@ -301,6 +301,7 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
       eyebrow="08 — Dates & tarifs"
       sessions={sessions}
       theme="green"
+      seatCapacity={12}
       defaultPrice={a3pConfig.priceLabel}
       defaultLocation={a3pConfig.location}
       priceDescription={`Formation complète de ${a3pConfig.durationHours} · examen final`}

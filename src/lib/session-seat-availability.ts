@@ -34,16 +34,13 @@ function normalizeSeatCount(value: SessionSeatAvailabilitySource['seatsLeft']) {
 
 export function resolveSessionSeatCapacity(
   session: SessionSeatAvailabilitySource,
-  configuredCapacity?: number,
+  maximumCapacity = 12,
 ) {
-  const explicitCapacity = normalizeSeatCount(configuredCapacity);
-  if (explicitCapacity !== null && explicitCapacity > 0) return explicitCapacity;
+  const safeMaximum = normalizeSeatCount(maximumCapacity) || 12;
 
   const storedCapacity = normalizeSeatCount(session.seatsTotal);
-  if (storedCapacity !== null && storedCapacity > 0) return storedCapacity;
-
-  const storedCount = normalizeSeatCount(session.seatsLeft);
-  return Math.max(12, storedCount ?? 12);
+  if (storedCapacity !== null && storedCapacity > 0 && storedCapacity <= safeMaximum) return storedCapacity;
+  return safeMaximum;
 }
 
 export function getSessionSeatAvailability(

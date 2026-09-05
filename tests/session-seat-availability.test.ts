@@ -45,8 +45,9 @@ test('une valeur administrée valide reste prioritaire sur le calcul automatique
   assert.equal(availability.count, 5);
 });
 
-test('la capacité propre à la session est utilisée hors APS', () => {
-  assert.equal(resolveSessionSeatCapacity({ seatsTotal: 20, seatsLeft: null }), 20);
-  assert.equal(resolveSessionSeatCapacity({ seatsTotal: null, seatsLeft: 15 }), 15);
-  assert.equal(resolveSessionSeatCapacity({ seatsTotal: 20, seatsLeft: 15 }, 12), 12);
+test('la capacité administrée est utilisée uniquement si elle respecte le maximum du parcours', () => {
+  assert.equal(resolveSessionSeatCapacity({ seatsTotal: 10, seatsLeft: null }, 12), 10);
+  assert.equal(resolveSessionSeatCapacity({ seatsTotal: 20, seatsLeft: null }, 20), 20);
+  assert.equal(resolveSessionSeatCapacity({ seatsTotal: 46, seatsLeft: null }, 12), 12);
+  assert.equal(resolveSessionSeatCapacity({ seatsTotal: 92, seatsLeft: null }, 12), 12);
 });

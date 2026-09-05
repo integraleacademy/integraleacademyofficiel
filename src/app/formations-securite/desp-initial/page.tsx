@@ -41,6 +41,7 @@ export default async function DespInitialPage(){
     <TrainingDatesPricingSection
       sessions={sessions}
       theme="orange"
+      seatCapacity={20}
       showDeliveryPeriods
       showLocationFilter
       defaultPrice={despInitialAdminData.priceLabel}
