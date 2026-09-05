@@ -2,67 +2,133 @@
 title: Formation APS
 category: formation
 tags: aps, agent de sécurité, cnaps, examen, cpf, france travail
-updated: 2026-06-20
+updated: 2026-09-05
 ---
 
 # Formation APS – Agent de Prévention et de Sécurité
 
-La formation Agent de Prévention et de Sécurité APS permet d’acquérir les compétences indispensables pour exercer le métier d’agent de sécurité privée et obtenir le Titre à Finalité Professionnelle Agent de Prévention et de Sécurité, titre RNCP n°36648 de niveau 3.
+La formation APS prépare au Titre à Finalité Professionnelle Agent de Prévention et de Sécurité, enregistré au RNCP sous le numéro 36648 au niveau 3. Le titre atteste l’aptitude professionnelle nécessaire pour demander ensuite la carte professionnelle « surveillance humaine ou surveillance par les systèmes électroniques de sécurité ou gardiennage » auprès du CNAPS.
 
-Cette formation s’adresse aux personnes qui souhaitent demander la carte professionnelle “surveillance humaine ou surveillance par les systèmes électroniques de sécurité ou gardiennage”, délivrée par le CNAPS / Ministère de l’Intérieur.
+## Références officielles
+
+- Certification : TFP Agent de Prévention et de Sécurité
+- Répertoire : RNCP36648
+- Niveau : niveau 3
+- Certificateurs : CPNE des entreprises de prévention et de sécurité / ADEF
+- Échéance indiquée sur la fiche RNCP fournie : 1er juillet 2027
+- Programme : CPNEFP version V3.2, mis à jour le 23 juillet 2026
+- Code ROME : K2503
+- Code NSF : 344
+- Formacode : 42854
+- Agrément ADEF Intégrale Academy : 8320032701
+
+Toute session débutant après le 1er juillet 2027 doit être présentée sous réserve du renouvellement de l’enregistrement RNCP ou de la certification qui le remplacera.
 
 ## Informations essentielles
 
-- Formation : TFP Agent de Prévention et de Sécurité APS
-- Niveau : niveau 3
-- Titre RNCP : 36648
-- Durée : 5 semaines, soit 175 heures
-- Lieu : Puget-sur-Argens, Côte d’Azur, entre Cannes et Saint-Tropez
-- Tarif : 1 650 €
-- Financements : CPF, France Travail, paiement en plusieurs fois
-- Objectif : obtenir les compétences nécessaires pour demander la carte professionnelle CNAPS
-- Examen : QCU sur tablette + mise en situation pratique devant des professionnels du secteur
+- Durée totale : 175 heures
+- Présentiel : 124 heures minimum, soit 71 % du parcours
+- Pratique : 63,5 heures, soit 36 % du parcours
+- Théorie en présentiel : 60,5 heures
+- Distanciel : 51 heures maximum, soit 29 % du parcours
+- Lieu du présentiel : Puget-sur-Argens
+- Tarif affiché : 1 650 €
+- Financements étudiés : CPF, France Travail, employeur ou OPCO, financement personnel
+- Examen : QCU contextualisés organisés électroniquement et deux mises en situation professionnelles individuelles
+- SST : inclus dans le parcours
 
-## Prérequis
+La répartition exacte des séquences à distance et en présentiel doit suivre le calendrier de chaque session. Les dates détaillées ne doivent pas être inventées lorsqu’elles ne sont pas enregistrées dans l’administration.
 
-Pour intégrer la formation, le candidat doit disposer d’une autorisation préalable d’entrée en formation délivrée par le CNAPS / Ministère de l’Intérieur, ou être déjà titulaire d’une carte professionnelle en cours de validité. Un test de français préalable à la formation est réalisé le premier jour sur tablette numérique.
+## Prérequis et admission
 
-Intégrale Sécurité Formations accompagne les candidats dans la demande d’autorisation préalable CNAPS lors de l’inscription.
+Le candidat doit disposer d’une autorisation préalable d’entrée en formation délivrée par le CNAPS, sauf s’il possède déjà une carte professionnelle valide pour l’activité concernée.
 
-## Objectifs
+Le dossier doit également permettre de vérifier :
 
-À l’issue de la formation, le candidat doit être capable d’assurer la protection des personnes et des biens, appliquer les règles juridiques liées à la sécurité privée, effectuer des rondes, surveiller un site, contrôler les accès, gérer une situation conflictuelle, réagir face à une alarme ou un incident, alerter les secours ou la hiérarchie, porter assistance à une personne, effectuer une palpation de sécurité ou une inspection visuelle des bagages dans le respect du cadre légal, et utiliser les bases de la télésurveillance et de la vidéoprotection.
+- une connaissance suffisante de la langue française ;
+- la connaissance des principes de la République ;
+- les conditions de moralité examinées par le CNAPS ;
+- une pièce d’identité valide et les justificatifs administratifs demandés ;
+- pour les ressortissants étrangers, la condition mentionnée dans la fiche RNCP fournie d’un titre de séjour détenu depuis au moins cinq ans pour demander l’autorisation préalable, sous réserve des règles applicables à chaque situation.
 
-## Programme
+Ces éléments sont vérifiés avant l’admission définitive. Ne pas présenter le contrôle de français comme une simple formalité réalisée le premier jour.
 
-Le programme comprend notamment : secours à personne SST, environnement juridique de la sécurité privée, gestion des conflits, transmission des consignes et informations, prévention des risques incendie, surveillance et gardiennage, palpation de sécurité et inspection des bagages, télésurveillance et vidéoprotection, gestion des alarmes et protection du travailleur isolé, sécurité événementielle, gestion des situations conflictuelles dégradées, risques professionnels et industriels.
+## Programme officiel – 14 unités de valeur
+
+| UV | Intitulé | Durée | Distanciel maximum | Pratique |
+|---|---|---:|---:|---:|
+| UV 1 | SST – secours à personne | 14 h | 0 h | 7 h |
+| UV 2 | Environnement juridique | 22 h | 20 h | 1 h |
+| UV 3 | Gestion des conflits | 14 h | 3 h | 7 h |
+| UV 4 | Module stratégique | 7 h | 4 h | 0 h |
+| UV 5 | Prévention des risques d’incendie | 7 h | 0 h | 3 h |
+| UV 6 | Appréhension dans le cadre du métier | 7 h | 3 h | 0 h |
+| UV 7 | Prévention des risques terroristes | 13 h | 7 h | 3,5 h |
+| UV 8 | Module professionnel | 45 h | 0 h | 25 h |
+| UV 9 | Palpation et inspection des bagages | 7 h | 0 h | 4 h |
+| UV 10 | Surveillance électronique | 7 h | 0 h | 4 h |
+| UV 11 | Gestion des risques | 11 h | 2 h | 5 h |
+| UV 12 | Événementiel spécifique | 7 h | 7 h | 0 h |
+| UV 13 | Situations conflictuelles dégradées | 7 h | 0 h | 4 h |
+| UV 14 | Risques industriels | 7 h | 5 h | 0 h |
+| **Total** |  | **175 h** | **51 h maximum** | **63,5 h** |
+
+Les contenus couvrent notamment le livre VI du Code de la sécurité intérieure, la déontologie, l’article 73 du Code de procédure pénale, les libertés publiques, les principes de la République, la main courante électronique, le feu réel, le secourisme tactique, le contrôle des personnes et des véhicules, la palpation, l’inspection visuelle des bagages, la vidéoprotection, la GTC/GTB, le PTI/DATI, les rassemblements, les ICPE, SEVESO, ORSEC, le SGH, le CLP et les zones ATEX.
 
 ## Examen final
 
-L’examen final comprend un questionnaire à choix unique sur tablette tactile avec questions tirées au sort. Le candidat doit obtenir une note supérieure à 12/20 à chaque module. Il comprend aussi une épreuve pratique avec mises en situation professionnelles, notamment autour de la ronde de sécurité et du poste de contrôle sécurité.
+L’examen se déroule en présentiel et comprend :
 
-Après réussite, le candidat obtient le TFP Agent de Prévention et de Sécurité niveau 3 et le certificat Sauveteur Secouriste du Travail SST.
+1. des QCU contextualisés organisés électroniquement à partir d’une banque de plus de 1 000 questions régulièrement actualisée ;
+2. une première mise en situation individuelle portant notamment sur la ronde, les anomalies et le compte rendu ;
+3. une seconde mise en situation individuelle au poste de contrôle face à un événement ou un incident professionnel ;
+4. une évaluation par un jury comprenant au minimum un représentant salarié et un représentant employeur, justifiant chacun d’au moins deux années d’exercice dans le domaine.
 
-## Dates de formation 2026
+Les documents fournis ne justifient pas d’afficher un seuil chiffré général de réussite pour chaque module. Ne pas en réintroduire un sans une source réglementaire correspondant à la version du référentiel publiée.
 
-Sessions restantes à partir du 20 juin 2026 :
+Après réussite, le candidat obtient le TFP APS et le certificat SST. Il doit ensuite effectuer une demande distincte de carte professionnelle auprès du CNAPS ; la carte n’est pas délivrée automatiquement avec le titre.
 
-- Du 8 juillet au 12 août 2026, examen le 13 août 2026
-- Du 7 septembre au 9 octobre 2026, examen le 12 octobre 2026
-- Du 3 novembre au 8 décembre 2026, examen le 9 décembre 2026
+## Débouchés
 
-## Financement
+Exemples d’emplois cités dans la fiche RNCP :
 
-Le tarif de la formation APS est de 1 650 €. Les financements possibles sont le Compte Personnel de Formation CPF, France Travail, ou le paiement en plusieurs fois par carte bancaire en x3, x4 ou x10. Pour utiliser le CPF ou faire une demande France Travail, le candidat doit disposer de son Identité Numérique La Poste.
+- agent de prévention et de sécurité ;
+- agent de sécurité privée ;
+- agent de surveillance et de gardiennage ;
+- agent rondier en sécurité privée ;
+- agent d’intervention mobile en sécurité privée ;
+- agent de sécurité pré-vol ;
+- agent de sécurité événementielle ;
+- agent de sécurité arrière-caisse ;
+- agent de contrôle d’accès.
+
+L’activité peut être exercée 24 h/24 et 7 j/7, la nuit, le week-end et les jours fériés. Selon le poste, elle s’effectue sur site fixe, en poste de sécurité, en ronde ou en intervention mobile, sous l’autorité d’un responsable. Le port d’une tenue professionnelle et l’utilisation d’un PTI/DATI peuvent être requis.
+
+## Données nationales d’insertion
+
+Ces chiffres proviennent de la fiche RNCP fournie et concernent la certification au niveau national, pas les résultats propres à Intégrale Academy.
+
+| Année | Certifiés | Insertion globale à 6 mois | Métier visé à 6 mois | Métier visé à 2 ans |
+|---|---:|---:|---:|---:|
+| 2020 | 7 560 | 91 % | 79 % | 65 % |
+| 2019 | 7 487 | 94 % | 87 % | 76 % |
+
+## Autres informations de la fiche RNCP
+
+- Voies d’accès recensées : apprentissage, formation continue, contrat de professionnalisation, candidature individuelle et VAE.
+- Capitalisation des blocs de compétences : sans objet.
+- Correspondances avec d’autres certifications : aucune.
+- Certification antérieure remplacée : RNCP34054.
+
+Ces mentions décrivent la certification nationale. Elles ne signifient pas que toutes les voies sont proposées par Intégrale Academy ; leur disponibilité doit être confirmée avec l’équipe admissions.
 
 ## Réponse commerciale recommandée
 
-La formation APS est la première étape pour intégrer le secteur de la sécurité privée. Elle prépare à un métier utile, concret et réglementé. Inviter le candidat à appeler le 04 22 47 07 68 pour vérifier son éligibilité, choisir une date de formation et lancer son dossier CNAPS.
+Présenter l’APS comme une formation réglementée, hybride et fortement pratique : 175 heures au total, avec 124 heures minimum en présentiel et 51 heures maximum à distance. Préciser que la réussite au TFP permet de demander la carte professionnelle CNAPS, sans en garantir la délivrance. Inviter le candidat à appeler le 04 22 47 07 68 pour vérifier ses prérequis, sa situation CNAPS, la prochaine session et les financements possibles.
 
 ## Coordonnées
 
 Intégrale Sécurité Formations  
 54 chemin du Carreou  
 83480 Puget-sur-Argens  
-Côte d’Azur – entre Cannes et Saint-Tropez  
 Téléphone : 04 22 47 07 68

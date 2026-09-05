@@ -365,7 +365,7 @@ function displayPlanningPeriod(startDate?: string | Date | null, endDate?: strin
 
 function deliveryPeriodRows(session: Session): { label: string; value: string; icon: IconName }[] {
   return [
-    { label: 'Session complète', value: displayPlanningPeriod(session.startDate, session.endDate), icon: 'calendar' },
+    { label: 'Période complète', value: displayPlanningPeriod(session.startDate, session.endDate), icon: 'calendar' },
     { label: 'À distance', value: displayPlanningPeriod(session.remoteStartDate, session.remoteEndDate), icon: 'screen' },
     { label: 'En présentiel', value: displayPlanningPeriod(session.inPersonStartDate, session.inPersonEndDate), icon: 'location' },
   ];

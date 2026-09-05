@@ -36,6 +36,8 @@ type TrainingDatesPricingSectionProps = {
   intro?: ReactNode;
   benefits?: string[];
   showDeliveryPeriods?: boolean;
+  remotePeriodFallback?: string;
+  inPersonPeriodFallback?: string;
   priceAction: Action;
   emptyAction?: Action;
   children?: ReactNode;
@@ -108,10 +110,10 @@ function formatPrice(value: unknown, fallback: string) {
   return text;
 }
 
-function formatPublicPeriod(startDate?: string | Date | null, endDate?: string | Date | null) {
-  if (!startDate || !endDate) return 'Dates à confirmer';
+function formatPublicPeriod(startDate?: string | Date | null, endDate?: string | Date | null, fallback = 'Dates à confirmer') {
+  if (!startDate || !endDate) return fallback;
   const period = formatSessionPeriod(startDate, endDate);
-  return period.includes('administration') ? 'Dates à confirmer' : period;
+  return period.includes('administration') ? fallback : period;
 }
 
 function isFull(session: TrainingDatesPricingSession) {
@@ -160,6 +162,8 @@ export function TrainingDatesPricingSection({
   intro = 'Les dates, examens, tarifs et places restantes proviennent des informations enregistrées par l’administration.',
   benefits = defaultBenefits,
   showDeliveryPeriods = false,
+  remotePeriodFallback = 'Dates à confirmer',
+  inPersonPeriodFallback = 'Dates à confirmer',
   priceAction,
   emptyAction,
   children,
@@ -177,9 +181,9 @@ export function TrainingDatesPricingSection({
         {sessions.map((session, index) => {
           const full = isFull(session);
           const deliveryPeriods = [
-            { label: 'Session complète', value: formatPublicPeriod(session.startDate, session.endDate), icon: 'calendar' as const, confirmed: Boolean(session.startDate && session.endDate) },
-            { label: 'À distance', value: formatPublicPeriod(session.remoteStartDate, session.remoteEndDate), icon: 'screen' as const, confirmed: Boolean(session.remoteStartDate && session.remoteEndDate) },
-            { label: 'En présentiel', value: formatPublicPeriod(session.inPersonStartDate, session.inPersonEndDate), icon: 'location' as const, confirmed: Boolean(session.inPersonStartDate && session.inPersonEndDate) },
+            { label: 'Période complète', value: formatPublicPeriod(session.startDate, session.endDate), icon: 'calendar' as const, confirmed: Boolean(session.startDate && session.endDate) },
+            { label: 'À distance', value: formatPublicPeriod(session.remoteStartDate, session.remoteEndDate, remotePeriodFallback), icon: 'screen' as const, confirmed: Boolean(session.remoteStartDate && session.remoteEndDate) },
+            { label: 'En présentiel', value: formatPublicPeriod(session.inPersonStartDate, session.inPersonEndDate, inPersonPeriodFallback), icon: 'location' as const, confirmed: Boolean(session.inPersonStartDate && session.inPersonEndDate) },
           ];
           const [mainPeriod, ...detailPeriods] = deliveryPeriods;
           return <article key={session.id ?? index} className={`flex h-full flex-col rounded-[1.8rem] border p-5 shadow-soft ${index === 0 ? 'border-emerald-300 bg-emerald-50/60' : 'border-academy-line bg-[#FFFDF8]'}`}>
