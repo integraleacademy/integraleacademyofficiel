@@ -400,7 +400,6 @@ function displayPlanningPeriod(startDate?: string | Date | null, endDate?: strin
 
 function deliveryPeriodRows(session: Session): { label: string; value: string; icon: IconName }[] {
   return [
-    { label: 'Période complète', value: displayPlanningPeriod(session.startDate, session.endDate), icon: 'calendar' },
     { label: 'À distance', value: displayPlanningPeriod(session.remoteStartDate, session.remoteEndDate), icon: 'screen' },
     { label: 'En présentiel', value: displayPlanningPeriod(session.inPersonStartDate, session.inPersonEndDate), icon: 'location' },
   ];
@@ -454,8 +453,8 @@ function SessionCard({
             ) : null}
           </div>
           {showDeliveryPeriods ? <div className="mt-4 grid gap-2 sm:grid-cols-2">
-            {deliveryPeriodRows(session).map((period, periodIndex) => <div key={period.label} className={`flex items-start gap-3 rounded-[1rem] border px-3.5 py-3 ${periodIndex === 0 ? 'planning-accent-soft sm:col-span-2' : 'border-academy-line/60 bg-academy-bg/55 dark:border-white/10 dark:bg-white/5'}`}>
-              <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-xl ${periodIndex === 0 ? 'planning-accent-icon' : 'planning-accent-text border border-academy-line/70 bg-white dark:border-white/10 dark:bg-white/10'}`}>
+            {deliveryPeriodRows(session).map((period) => <div key={period.label} className="flex items-start gap-3 rounded-[1rem] border border-academy-line/60 bg-academy-bg/55 px-3.5 py-3 dark:border-white/10 dark:bg-white/5">
+              <span className="planning-accent-text grid h-9 w-9 shrink-0 place-items-center rounded-xl border border-academy-line/70 bg-white dark:border-white/10 dark:bg-white/10">
                 <Icon name={period.icon} className="h-4 w-4" />
               </span>
               <span className="min-w-0">

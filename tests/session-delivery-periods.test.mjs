@@ -60,7 +60,7 @@ test('les périodes détaillées sont transmises au contexte de l’IA', () => {
   for (const field of fields) assert.ok(source.includes(`s.${field}`), `champ IA manquant : ${field}`);
 });
 
-test('APS et DESP affichent les trois périodes sur leurs pages et dans le planning public', () => {
+test('APS et DESP affichent les périodes utiles sur leurs pages et dans le planning public', () => {
   const formatter = read('src/lib/public-sessions.ts');
   const dateCards = `${read('src/components/TrainingDatesPricingSection.tsx')}\n${read('src/components/TrainingSessionCards.tsx')}`;
   const apsPage = read('src/components/ApsReferencePage.tsx');
@@ -75,8 +75,11 @@ test('APS et DESP affichent les trois périodes sur leurs pages et dans le plann
 
   for (const label of ['Période complète', 'À distance', 'En présentiel']) {
     assert.ok(dateCards.includes(label), `libellé des fiches formation manquant : ${label}`);
+  }
+  for (const label of ['À distance', 'En présentiel']) {
     assert.ok(planning.includes(label), `libellé planning manquant : ${label}`);
   }
+  assert.ok(!planning.includes('Période complète'), 'le planning ne doit plus afficher la période complète');
 
   assert.ok(dateCards.includes("fallback = 'Dates à confirmer'"));
   assert.ok(dateCards.includes('remotePeriodFallback'));
