@@ -300,6 +300,7 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
       id="dates-tarifs"
       eyebrow="08 — Dates & tarifs"
       sessions={sessions}
+      theme="green"
       defaultPrice={a3pConfig.priceLabel}
       defaultLocation={a3pConfig.location}
       priceDescription={`Formation complète de ${a3pConfig.durationHours} · examen final`}

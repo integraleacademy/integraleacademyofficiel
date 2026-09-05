@@ -80,6 +80,7 @@ export default async function DespVaePage(){
     <section id="comparatif-initial-vae" className="page-container py-8"><h2 className="text-2xl font-black">Comparer DESP initial et DESP VAE</h2><div className="mt-5 grid gap-4 md:grid-cols-2"><FeatureCard title="DESP initial">destiné aux personnes devant acquérir les compétences · 245 heures de formation · cours, études de cas et évaluations · parcours à distance et en présentiel.</FeatureCard><FeatureCard title="DESP VAE">destiné aux personnes maîtrisant déjà les compétences · pas de formation initiale de 245 heures · dossier fondé sur des expériences réelles · accompagnement à l’analyse et à la rédaction · présentation devant un jury.</FeatureCard></div><Note>Lorsque l’expérience ne couvre pas suffisamment les cinq activités du titre, la formation initiale est généralement plus adaptée.</Note><div className="mt-5"><Button href="/contact">Faire étudier mon parcours</Button></div></section>
     <TrainingDatesPricingSection
       sessions={sessions}
+      theme="orange"
       defaultPrice={despVaeAdmin.price}
       defaultLocation="À distance · jury selon convocation"
       priceDescription="Accompagnement VAE individualisé · jury de certification"
