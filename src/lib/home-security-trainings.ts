@@ -9,6 +9,8 @@ export type HomeTrainingSession = {
   } | null;
 };
 
+const apsSlugs = new Set(['aps']);
+const a3pSlugs = new Set(['a3p', 'a3p-apr']);
 const despSlugs = new Set(['desp', 'desp-dssp', 'desp-initial', 'desp-vae']);
 
 function parisDateKey(value: string | Date) {
@@ -33,8 +35,9 @@ function formatFrenchDate(value: string | Date) {
   return `${day === '1' ? '1er' : day} ${month} ${year}`.trim();
 }
 
-export function getNearestDespSessionLabel(
+function getNearestSessionLabel(
   sessions: HomeTrainingSession[],
+  slugs: ReadonlySet<string>,
   now: string | Date = new Date(),
 ) {
   const today = parisDateKey(now);
@@ -44,12 +47,19 @@ export function getNearestDespSessionLabel(
       return !Number.isNaN(startDate.getTime())
         && session.training?.isActive === true
         && session.status !== 'HIDDEN'
-        && despSlugs.has(session.training?.slug ?? '')
+        && slugs.has(session.training?.slug ?? '')
         && parisDateKey(startDate) >= today;
     })
     .sort((left, right) => +new Date(left.startDate) - +new Date(right.startDate))[0];
 
   return nearest ? formatFrenchDate(nearest.startDate) : 'Dates à venir';
+}
+
+export function getNearestDespSessionLabel(
+  sessions: HomeTrainingSession[],
+  now: string | Date = new Date(),
+) {
+  return getNearestSessionLabel(sessions, despSlugs, now);
 }
 
 export function createHomeSecurityHighlights(
@@ -65,7 +75,7 @@ export function createHomeSecurityHighlights(
       duration: '175 h',
       modality: 'Distanciel + Présentiel',
       location: 'Puget-sur-Argens',
-      nextSession: '7 septembre 2026',
+      nextSession: getNearestSessionLabel(sessions, apsSlugs, now),
       visual: 'aps',
       featured: true,
     },
@@ -102,7 +112,7 @@ export function createHomeSecurityHighlights(
       modality: 'Présentiel',
       location: 'Puget-sur-Argens',
       financing: 'CPF · France Travail',
-      nextSession: '1er septembre 2026',
+      nextSession: getNearestSessionLabel(sessions, a3pSlugs, now),
       visual: 'a3p',
     },
     {
