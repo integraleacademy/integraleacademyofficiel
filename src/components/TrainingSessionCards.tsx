@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import { formatSessionPeriod } from '@/lib/public-sessions';
+import { getSessionSeatAvailability } from '@/lib/session-seat-availability';
 import { sessionLocationFilters, sessionMatchesLocation, type SessionLocationFilterKey } from '@/lib/session-location-filter';
 import { formatTrainingPrice } from '@/lib/training-price';
 
@@ -55,6 +56,9 @@ type TrainingSessionCardsProps = {
   initialSessionLimit?: number;
   showLocationFilter?: boolean;
   showSessionTitle?: boolean;
+  showOverallPeriodLabel?: boolean;
+  seatCapacity?: number;
+  underlineDisclosure?: boolean;
   emptyAction?: Action;
 };
 
@@ -146,6 +150,8 @@ function SessionCard({
   defaultLocation,
   defaultPrice,
   showSessionTitle,
+  showOverallPeriodLabel,
+  seatCapacity,
 }: {
   session: TrainingSessionCardItem;
   index: number;
@@ -157,9 +163,12 @@ function SessionCard({
   defaultLocation: string;
   defaultPrice: string;
   showSessionTitle: boolean;
+  showOverallPeriodLabel: boolean;
+  seatCapacity?: number;
 }) {
   const full = isFull(session);
   const sessionTitle = String(session.title || '').trim();
+  const seatAvailability = seatCapacity ? getSessionSeatAvailability(session, seatCapacity) : null;
   const deliveryPeriods = [
     { label: 'Période complète', value: formatPublicPeriod(session.startDate, session.endDate), icon: 'calendar' as const, confirmed: Boolean(session.startDate && session.endDate) },
     { label: 'À distance', value: formatPublicPeriod(session.remoteStartDate, session.remoteEndDate, remotePeriodFallback), icon: 'screen' as const, confirmed: Boolean(session.remoteStartDate && session.remoteEndDate) },
@@ -170,7 +179,7 @@ function SessionCard({
   return <article className={`flex h-full flex-col rounded-[1.8rem] border p-5 shadow-soft ${index === 0 ? sessionTheme.featuredCard : 'border-academy-line bg-[#FFFDF8]'}`}>
     <div className="flex flex-wrap items-center justify-between gap-3">
       <span className={`rounded-full border px-3 py-1.5 text-[.64rem] font-black uppercase tracking-[.15em] ${sessionTheme.badge}`}>{index === 0 ? 'Prochaine session' : 'Session ouverte'}</span>
-      <span className={`rounded-full border px-3 py-1.5 text-xs font-black ${full ? 'border-stone-300 bg-stone-100 text-stone-700' : sessionTheme.badge}`}>{seatsLabel(session)}</span>
+      <span className={`rounded-full border px-3 py-1.5 text-xs font-black ${seatAvailability?.badgeClassName ?? (full ? 'border-stone-300 bg-stone-100 text-stone-700' : sessionTheme.badge)}`}>{seatAvailability?.label ?? seatsLabel(session)}</span>
     </div>
     {showSessionTitle && sessionTitle ? <h3 className="mt-5 text-xl font-black tracking-tight text-academy-ink">{sessionTitle}</h3> : null}
     {showDeliveryPeriods ? <div className={`${showSessionTitle && sessionTitle ? 'mt-3' : 'mt-5'} rounded-[1.35rem] border border-academy-line/70 bg-white/65 p-2 shadow-[inset_0_1px_0_rgba(255,255,255,.8)]`}>
@@ -179,8 +188,8 @@ function SessionCard({
           <PeriodIcon name={mainPeriod.icon} className="h-[1.1rem] w-[1.1rem]" />
         </span>
         <span className="min-w-0">
-          <span className={`block text-[.58rem] font-black uppercase tracking-[.16em] ${sessionTheme.periodLabel}`}>{mainPeriod.label}</span>
-          <span className="mt-1 block text-[.95rem] font-black leading-5 text-white">{mainPeriod.value}</span>
+          {showOverallPeriodLabel ? <span className={`block text-[.58rem] font-black uppercase tracking-[.16em] ${sessionTheme.periodLabel}`}>{mainPeriod.label}</span> : null}
+          <span className={`${showOverallPeriodLabel ? 'mt-1' : ''} block text-[.95rem] font-black leading-5 text-white`}>{mainPeriod.value}</span>
         </span>
       </div>
       <div className="mt-2 grid gap-2 sm:grid-cols-2">
@@ -216,6 +225,9 @@ export function TrainingSessionCards({
   initialSessionLimit,
   showLocationFilter = false,
   showSessionTitle = false,
+  showOverallPeriodLabel = true,
+  seatCapacity,
+  underlineDisclosure = true,
   emptyAction,
 }: TrainingSessionCardsProps) {
   const [locationFilter, setLocationFilter] = useState<SessionLocationFilterKey>('all');
@@ -242,6 +254,8 @@ export function TrainingSessionCards({
     defaultLocation,
     defaultPrice,
     showSessionTitle,
+    showOverallPeriodLabel,
+    seatCapacity,
   };
 
   return <>
@@ -275,7 +289,7 @@ export function TrainingSessionCards({
       {additionalSessions.length ? <details className="group/session-list mt-5">
         <summary
           aria-controls={additionalSessionsId}
-          className={`mx-auto flex min-h-11 w-fit cursor-pointer list-none items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-black underline decoration-2 underline-offset-4 outline-none transition focus-visible:ring-4 [&::-webkit-details-marker]:hidden ${sessionTheme.disclosure}`}
+          className={`mx-auto flex min-h-11 w-fit cursor-pointer list-none items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-black outline-none transition focus-visible:ring-4 [&::-webkit-details-marker]:hidden ${underlineDisclosure ? 'underline decoration-2 underline-offset-4' : 'no-underline'} ${sessionTheme.disclosure}`}
         >
           <span className="group-open/session-list:hidden">Voir les prochaines sessions</span>
           <span className="hidden group-open/session-list:inline">Masquer les prochaines sessions</span>
