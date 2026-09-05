@@ -42,6 +42,7 @@ export default async function DespInitialPage(){
       sessions={sessions}
       theme="orange"
       showDeliveryPeriods
+      showLocationFilter
       defaultPrice={despInitialAdminData.priceLabel}
       defaultLocation="Paris, Puget-sur-Argens ou Aurillac"
       priceDescription="Formation hybride de 245 heures · certification finale"

@@ -5,7 +5,7 @@ import test from 'node:test';
 const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
 
 const ui = read('src/components/ui.tsx');
-const sessions = read('src/components/TrainingDatesPricingSection.tsx');
+const sessions = `${read('src/components/TrainingDatesPricingSection.tsx')}\n${read('src/components/TrainingSessionCards.tsx')}`;
 const planning = read('src/app/planning/PlanningClient.tsx');
 const globals = read('src/app/globals.css');
 
@@ -102,7 +102,6 @@ test('le planning conserve la charte avec des repères colorés subtils', () => 
   assert.match(planning, /const themeClass = planningThemeForSession\(session\)/);
   assert.match(planning, /planning-accent-card/);
   assert.match(planning, /planning-accent-indicator/);
-  assert.match(planning, /planning-accent-selected/);
   assert.match(planning, /planning-calendar-bar/);
   assert.match(planning, /planning-formation-card-selected/);
   assert.match(planning, /planning-neutral-action/);

@@ -5,7 +5,7 @@ import test from 'node:test';
 const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
 
 const apsPage = read('src/components/ApsReferencePage.tsx');
-const dateCards = read('src/components/TrainingDatesPricingSection.tsx');
+const dateCards = `${read('src/components/TrainingDatesPricingSection.tsx')}\n${read('src/components/TrainingSessionCards.tsx')}`;
 const assistant = read('src/components/OrientationAssistant.tsx');
 const formations = read('src/data/formations.ts');
 const knowledge = read('src/knowledge/02-formations-aps.md');
