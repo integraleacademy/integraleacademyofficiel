@@ -5,8 +5,11 @@ import test from 'node:test';
 const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
 
 test('la carte SSIAP de l’accueil présente toute la gamme et ouvre le catalogue', () => {
-  const source = read('src/app/page.tsx');
+  const home = read('src/app/page.tsx');
+  const source = read('src/lib/home-security-trainings.ts');
 
+  assert.match(home, /createHomeSecurityHighlights\(await listSessions\(\)\)/);
+  assert.match(home, /<SecurityTrainingGrid items=\{securityHighlights\}/);
   assert.match(source, /slug: '\/formations-securite\/ssiap'/);
   assert.match(source, /shortTitle: 'SSIAP'/);
   assert.match(source, /title: 'Sécurité incendie'/);
