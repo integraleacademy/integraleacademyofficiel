@@ -6,6 +6,8 @@ const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf
 
 const ui = read('src/components/ui.tsx');
 const sessions = read('src/components/TrainingDatesPricingSection.tsx');
+const planning = read('src/app/planning/PlanningClient.tsx');
+const globals = read('src/app/globals.css');
 
 test('les composants partagés exposent toute la charte couleur des formations', () => {
   for (const theme of ['blue', 'green', 'orange', 'red', 'violet']) {
@@ -82,4 +84,25 @@ test('les CTA, FAQ et sessions reçoivent la couleur du parcours', () => {
 
   assert.match(sessions, /variant=\{full \? 'light' : theme\}/);
   assert.match(sessions, /variant=\{theme\} className="mt-5 w-full"/);
+});
+
+test('le planning applique la même couleur aux filtres, sessions, calendrier et inscription', () => {
+  for (const [key, accent] of [
+    ['aps', 'blue'],
+    ['a3p', 'green'],
+    ['director', 'orange'],
+    ['ssiap', 'red'],
+    ['vtc', 'violet'],
+  ]) {
+    assert.match(planning, new RegExp(`key: '${key}'[\\s\\S]{0,420}accent: '${accent}'`), `couleur planning incorrecte : ${key}`);
+    assert.ok(globals.includes(`.planning-theme-${accent}`), `variables planning manquantes : ${accent}`);
+  }
+
+  assert.match(planning, /function planningAccentForSession\(session: Session\)/);
+  assert.match(planning, /const themeClass = planningThemeForSession\(session\)/);
+  assert.match(planning, /planning-accent-card/);
+  assert.match(planning, /planning-accent-chip/);
+  assert.match(planning, /planning-accent-bg planning-accent-shadow group absolute/);
+  assert.match(planning, /planningThemeForSession\(nextSession\)/);
+  assert.doesNotMatch(planning, /#efb82f|#d39a17/);
 });

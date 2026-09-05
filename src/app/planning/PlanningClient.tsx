@@ -10,6 +10,16 @@ type CategoryKey = 'security' | 'fire' | 'vtc' | 'bts';
 type FilterKey = 'all' | CategoryKey;
 type FormationFilterKey = 'all' | 'aps' | 'a3p' | 'director' | 'ssiap' | 'vtc' | 'bts';
 type ViewMode = 'list' | 'calendar';
+type PlanningAccent = 'blue' | 'green' | 'orange' | 'red' | 'violet' | 'gold';
+
+const planningThemeClasses: Record<PlanningAccent, string> = {
+  blue: 'planning-theme-blue',
+  green: 'planning-theme-green',
+  orange: 'planning-theme-orange',
+  red: 'planning-theme-red',
+  violet: 'planning-theme-violet',
+  gold: 'planning-theme-gold',
+};
 
 type IconName =
   | 'arrow'
@@ -50,7 +60,7 @@ const categorySections: {
     title: 'Formations sécurité incendie',
     shortTitle: 'Incendie',
     intro: 'SSIAP 1 et parcours dédiés à la sécurité incendie.',
-    slugs: ['ssiap-1', 'ssiap1'],
+    slugs: ['ssiap-1', 'ssiap1', 'ssiap-2', 'ssiap2', 'ssiap-3', 'ssiap3', 'recyclage-remise-a-niveau-ssiap'],
   },
   {
     key: 'vtc',
@@ -85,6 +95,7 @@ const formationFilters: {
   description: string;
   category: CategoryKey;
   slugs: string[];
+  accent: PlanningAccent;
 }[] = [
   {
     key: 'aps',
@@ -93,6 +104,7 @@ const formationFilters: {
     description: 'Agent de prévention et de sécurité',
     category: 'security',
     slugs: ['aps'],
+    accent: 'blue',
   },
   {
     key: 'a3p',
@@ -101,6 +113,7 @@ const formationFilters: {
     description: 'Agent privé de protection de personnes',
     category: 'security',
     slugs: ['a3p', 'a3p-apr'],
+    accent: 'green',
   },
   {
     key: 'director',
@@ -109,6 +122,7 @@ const formationFilters: {
     description: 'Diriger une entreprise de sécurité privée',
     category: 'security',
     slugs: ['desp', 'desp-dssp', 'desp-initial', 'desp-vae'],
+    accent: 'orange',
   },
   {
     key: 'ssiap',
@@ -116,7 +130,8 @@ const formationFilters: {
     eyebrow: 'Sécurité incendie',
     description: 'Agent de sécurité incendie',
     category: 'fire',
-    slugs: ['ssiap-1', 'ssiap1'],
+    slugs: ['ssiap-1', 'ssiap1', 'ssiap-2', 'ssiap2', 'ssiap-3', 'ssiap3', 'recyclage-remise-a-niveau-ssiap'],
+    accent: 'red',
   },
   {
     key: 'vtc',
@@ -125,6 +140,7 @@ const formationFilters: {
     description: 'Préparer le métier et l’examen VTC',
     category: 'vtc',
     slugs: ['vtc'],
+    accent: 'violet',
   },
   {
     key: 'bts',
@@ -143,6 +159,7 @@ const formationFilters: {
       'bts-pi',
       'comptabilite-gestion',
     ],
+    accent: 'gold',
   },
 ];
 
@@ -153,6 +170,7 @@ const alertOptions: {
   category: CategoryKey;
   formation: string;
   slugs: string[];
+  accent: PlanningAccent;
 }[] = [
   {
     title: 'DESP / DSSP',
@@ -161,6 +179,7 @@ const alertOptions: {
     category: 'security',
     formation: 'desp',
     slugs: ['desp', 'desp-dssp', 'desp-initial', 'desp-vae'],
+    accent: 'orange',
   },
   {
     title: 'SSIAP 1',
@@ -169,6 +188,7 @@ const alertOptions: {
     category: 'fire',
     formation: 'ssiap-1',
     slugs: ['ssiap-1', 'ssiap1'],
+    accent: 'red',
   },
   {
     title: 'Chauffeur VTC',
@@ -177,6 +197,7 @@ const alertOptions: {
     category: 'vtc',
     formation: 'vtc',
     slugs: ['vtc'],
+    accent: 'violet',
   },
   {
     title: 'BTS en alternance',
@@ -195,6 +216,7 @@ const alertOptions: {
       'bts-pi',
       'comptabilite-gestion',
     ],
+    accent: 'gold',
   },
 ];
 
@@ -240,6 +262,29 @@ function Icon({ name, className = 'h-5 w-5' }: { name: IconName; className?: str
   return <svg {...common}><path d="m12 3 1.4 4.1L18 8.5l-4.6 1.4L12 14l-1.4-4.1L6 8.5l4.6-1.4L12 3ZM5 15l.8 2.2L8 18l-2.2.8L5 21l-.8-2.2L2 18l2.2-.8L5 15ZM19 13l.8 2.2L22 16l-2.2.8L19 19l-.8-2.2L16 16l2.2-.8L19 13Z" /></svg>;
 }
 
+function planningThemeClass(accent: PlanningAccent = 'gold') {
+  return planningThemeClasses[accent];
+}
+
+function planningAccentForSlug(value?: string): PlanningAccent {
+  const slug = String(value || '').toLocaleLowerCase('fr');
+  if (slug === 'aps' || slug.startsWith('aps-')) return 'blue';
+  if (slug === 'a3p' || slug.startsWith('a3p-') || slug === 'apr') return 'green';
+  if (slug.startsWith('desp') || slug.startsWith('dssp')) return 'orange';
+  if (slug.includes('ssiap')) return 'red';
+  if (slug === 'vtc' || slug.includes('chauffeur-vtc')) return 'violet';
+  return 'gold';
+}
+
+function formationMatchesSlug(formation: (typeof formationFilters)[number], slug?: string) {
+  if (!slug) return false;
+  if (formation.slugs.includes(slug)) return true;
+  if (formation.key === 'director') return slug.startsWith('desp') || slug.startsWith('dssp');
+  if (formation.key === 'ssiap') return slug.includes('ssiap');
+  if (formation.key === 'bts') return slug.startsWith('bts-');
+  return false;
+}
+
 function sessionCategory(session: Session): CategoryKey | null {
   const slug = session.training?.slug;
   return categorySections.find((section) => section.slugs.includes(slug))?.key || null;
@@ -250,7 +295,15 @@ function sessionTitle(session: Session) {
 }
 
 function formationFilterForSession(session: Session) {
-  return formationFilters.find((formation) => formation.slugs.includes(session.training?.slug));
+  return formationFilters.find((formation) => formationMatchesSlug(formation, session.training?.slug));
+}
+
+function planningAccentForSession(session: Session): PlanningAccent {
+  return formationFilterForSession(session)?.accent || planningAccentForSlug(session.training?.slug);
+}
+
+function planningThemeForSession(session: Session) {
+  return planningThemeClass(planningAccentForSession(session));
 }
 
 function timelineTitle(session: Session) {
@@ -391,21 +444,23 @@ function SessionCard({
   const date = shortDate(session.startDate);
   const seats = seatText(session);
   const showDeliveryPeriods = hasDetailedDeliveryPeriods(session);
+  const themeClass = planningThemeForSession(session);
 
   return (
-    <article className={'group relative overflow-hidden rounded-[1.6rem] border bg-white p-4 shadow-[0_18px_55px_rgba(54,40,20,.08)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_70px_rgba(54,40,20,.14)] dark:bg-white/5 sm:p-5 ' + (isNext ? 'border-academy-gold' : 'border-academy-line/70 dark:border-white/10')}>
+    <article className={themeClass + ' group relative overflow-hidden rounded-[1.6rem] border bg-white p-4 shadow-[0_18px_55px_rgba(54,40,20,.08)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_70px_rgba(54,40,20,.14)] dark:bg-white/5 sm:p-5 ' + (isNext ? 'planning-accent-border planning-accent-shadow' : 'border-academy-line/70 dark:border-white/10')}>
+      <span aria-hidden="true" className="planning-accent-bg absolute inset-y-0 left-0 w-1" />
       {isNext ? (
-        <span className="absolute left-4 top-0 rounded-b-xl bg-academy-gold px-3 py-1 text-[9px] font-black uppercase tracking-[.14em] text-academy-gold-text sm:left-5">
+        <span className="planning-accent-bg absolute left-4 top-0 rounded-b-xl px-3 py-1 text-[9px] font-black uppercase tracking-[.14em] sm:left-5">
           Prochaine session
         </span>
       ) : null}
 
       <div className="grid gap-4 pt-2 lg:grid-cols-[5.5rem_minmax(0,1.3fr)_minmax(17rem,.8fr)_auto] lg:items-center">
         <div className="flex items-center gap-3 lg:block">
-          <div className="grid h-[4.6rem] w-[4.6rem] shrink-0 place-items-center rounded-2xl bg-[#101a29] text-center shadow-[0_12px_30px_rgba(16,26,41,.18)]">
+          <div className="planning-accent-bg planning-accent-shadow grid h-[4.6rem] w-[4.6rem] shrink-0 place-items-center rounded-2xl text-center">
             <span>
-              <span className="block text-2xl font-black leading-none text-white">{date.day}</span>
-              <span className="mt-1 block text-[10px] font-black uppercase tracking-[.12em] text-academy-gold">{date.month}</span>
+              <span className="block text-2xl font-black leading-none">{date.day}</span>
+              <span className="planning-accent-on-solid-muted mt-1 block text-[10px] font-black uppercase tracking-[.12em]">{date.month}</span>
             </span>
           </div>
           <p className="text-[10px] font-black uppercase tracking-[.14em] text-academy-muted lg:mt-2 lg:text-center">
@@ -425,8 +480,8 @@ function SessionCard({
             ) : null}
           </div>
           {showDeliveryPeriods ? <div className="mt-4 grid gap-2 sm:grid-cols-2">
-            {deliveryPeriodRows(session).map((period, periodIndex) => <div key={period.label} className={`flex items-start gap-3 rounded-[1rem] border px-3.5 py-3 ${periodIndex === 0 ? 'border-academy-gold/50 bg-gradient-to-r from-academy-gold/20 to-academy-gold/[.07] sm:col-span-2' : 'border-academy-line/60 bg-academy-bg/55 dark:border-white/10 dark:bg-white/5'}`}>
-              <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-xl ${periodIndex === 0 ? 'bg-academy-gold text-academy-gold-text shadow-[0_8px_18px_rgba(234,183,53,.22)]' : 'border border-academy-line/70 bg-white text-academy-gold-strong dark:border-white/10 dark:bg-white/10'}`}>
+            {deliveryPeriodRows(session).map((period, periodIndex) => <div key={period.label} className={`flex items-start gap-3 rounded-[1rem] border px-3.5 py-3 ${periodIndex === 0 ? 'planning-accent-soft sm:col-span-2' : 'border-academy-line/60 bg-academy-bg/55 dark:border-white/10 dark:bg-white/5'}`}>
+              <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-xl ${periodIndex === 0 ? 'planning-accent-bg planning-accent-shadow' : 'planning-accent-text border border-academy-line/70 bg-white dark:border-white/10 dark:bg-white/10'}`}>
                 <Icon name={period.icon} className="h-4 w-4" />
               </span>
               <span className="min-w-0">
@@ -441,7 +496,7 @@ function SessionCard({
           {showDeliveryPeriods && session.examDate ? <p className="mt-2 text-sm font-semibold leading-6 text-academy-muted">Examen le {formatSessionDate(session.examDate)}</p> : null}
           {session.location ? (
             <p className="mt-2 flex items-center gap-2 text-sm font-black text-academy-muted">
-              <Icon name="location" className="h-4 w-4 shrink-0 text-academy-gold-strong" />
+              <Icon name="location" className="planning-accent-text h-4 w-4 shrink-0" />
               <span>{session.location}</span>
             </p>
           ) : null}
@@ -455,7 +510,7 @@ function SessionCard({
           <div className="rounded-2xl border border-academy-line/60 bg-academy-bg/65 px-3 py-2.5 dark:border-white/10 dark:bg-black/15">
             <span className="block text-[9px] font-black uppercase tracking-[.14em] text-academy-muted/70">Durée</span>
             <span className="mt-1 flex items-center gap-1.5 text-base font-black text-academy-ink dark:text-white">
-              <Icon name="clock" className="h-4 w-4 text-academy-gold-strong" />
+              <Icon name="clock" className="planning-accent-text h-4 w-4" />
               {displayDuration(session)}
             </span>
           </div>
@@ -465,14 +520,14 @@ function SessionCard({
           <button
             type="button"
             onClick={() => onRegister(session)}
-            className="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-[#101a29] px-5 py-3.5 text-sm font-black text-white shadow-[0_12px_28px_rgba(16,26,41,.16)] transition hover:-translate-y-0.5 hover:bg-black"
+            className="planning-accent-bg planning-accent-shadow inline-flex flex-1 items-center justify-center gap-2 rounded-full px-5 py-3.5 text-sm font-black transition hover:-translate-y-0.5 hover:brightness-95"
           >
             Voir la session
             <Icon name="arrow" className="h-4 w-4" />
           </button>
           <Link
             href={infoHref(session)}
-            className="inline-flex flex-1 items-center justify-center rounded-full border border-academy-line bg-white px-5 py-3 text-sm font-black text-academy-ink transition hover:border-academy-gold dark:bg-white/10 dark:text-white"
+            className="planning-accent-hover inline-flex flex-1 items-center justify-center rounded-full border border-academy-line bg-white px-5 py-3 text-sm font-black text-academy-ink transition dark:bg-white/10 dark:text-white"
           >
             Infos
           </Link>
@@ -566,15 +621,16 @@ function CalendarView({
           </div>
 
           <div>
-            {sessions.map((session, index) => {
+            {sessions.map((session) => {
               const position = sessionPosition(session);
               const formation = formationFilterForSession(session);
               const hasExam = Boolean(session.examDate);
+              const themeClass = planningThemeForSession(session);
 
               return (
                 <div key={session.id} className="grid min-h-24 grid-cols-[15rem_minmax(48rem,1fr)] border-b border-[#e6dece] last:border-b-0">
                   <div className="flex flex-col justify-center px-2 py-4">
-                    <p className="text-lg font-black tracking-tight">{timelineTitle(session)}</p>
+                    <p className={themeClass + ' planning-accent-text text-lg font-black tracking-tight'}>{timelineTitle(session)}</p>
                     <p className="mt-1 text-[11px] font-semibold text-[#6d685f]">{formation?.eyebrow || session.training?.shortDescription || 'Formation professionnelle'}</p>
                   </div>
 
@@ -587,7 +643,7 @@ function CalendarView({
                       type="button"
                       onClick={() => onRegister(session)}
                       title={hasExam ? 'Examen le ' + formatSessionDate(session.examDate) : 'Voir la session'}
-                      className={'group absolute top-1/2 flex h-12 -translate-y-1/2 items-center justify-between gap-3 rounded-full px-4 text-left text-xs font-black text-[#111923] shadow-[0_10px_25px_rgba(106,75,9,.14)] transition hover:-translate-y-[54%] hover:shadow-[0_14px_32px_rgba(106,75,9,.22)] ' + (index % 2 === 0 ? 'bg-[#efb82f]' : 'bg-[#d39a17]')}
+                      className={themeClass + ' planning-accent-bg planning-accent-shadow group absolute top-1/2 flex h-12 -translate-y-1/2 items-center justify-between gap-3 rounded-full px-4 text-left text-xs font-black transition hover:-translate-y-[54%] hover:brightness-95'}
                       style={{ left: position.left + '%', width: position.width + '%' }}
                     >
                       <span className="truncate">{timelineDateLabel(session.startDate)} → {timelineDateLabel(session.endDate)}</span>
@@ -637,6 +693,7 @@ function RegistrationModal({
   const hiddenSession = title + ' — ' + sessionLabel;
   const seats = seatText(session);
   const date = shortDate(session.startDate);
+  const themeClass = planningThemeForSession(session);
   const sessionDetails: [string, string][] = [
     ...(hasDetailedDeliveryPeriods(session) ? deliveryPeriodRows(session).map(({ label, value }) => [label, value] as [string, string]) : [['Période', sessionLabel] as [string, string]]),
     ['Examen', session.examDate ? formatSessionDate(session.examDate) : 'Selon le calendrier de la session'],
@@ -649,7 +706,7 @@ function RegistrationModal({
     <div className="fixed inset-0 z-[70] grid place-items-center px-3 py-4 sm:px-5" role="dialog" aria-modal="true" aria-labelledby="registration-modal-title">
       <button type="button" aria-label="Fermer la fenêtre" onClick={onClose} className="absolute inset-0 bg-[#07101e]/75 backdrop-blur-md" />
 
-      <div className="reveal relative grid max-h-[94vh] w-full max-w-6xl overflow-y-auto rounded-[2rem] border border-white/20 bg-academy-surface shadow-[0_35px_120px_rgba(0,0,0,.42)] lg:grid-cols-[1.35fr_.85fr]">
+      <div className={themeClass + ' reveal relative grid max-h-[94vh] w-full max-w-6xl overflow-y-auto rounded-[2rem] border border-white/20 bg-academy-surface shadow-[0_35px_120px_rgba(0,0,0,.42)] lg:grid-cols-[1.35fr_.85fr]'}>
         <button
           type="button"
           onClick={onClose}
@@ -660,9 +717,9 @@ function RegistrationModal({
         </button>
 
         <div className="p-5 sm:p-8 lg:p-10">
-          <p className="text-[11px] font-black uppercase tracking-[.2em] text-academy-gold-strong">Détail de la session</p>
+          <p className="planning-accent-text text-[11px] font-black uppercase tracking-[.2em]">Détail de la session</p>
           <div className="mt-5 flex flex-col gap-5 sm:flex-row sm:items-center">
-            <div className="grid h-24 w-24 shrink-0 place-items-center rounded-[1.5rem] bg-academy-gold text-center text-academy-gold-text">
+            <div className="planning-accent-bg planning-accent-shadow grid h-24 w-24 shrink-0 place-items-center rounded-[1.5rem] text-center">
               <span>
                 <span className="block text-4xl font-black leading-none">{date.day}</span>
                 <span className="mt-2 block text-[10px] font-black uppercase tracking-[.12em]">{date.month} {new Date(session.startDate).getUTCFullYear()}</span>
@@ -673,7 +730,7 @@ function RegistrationModal({
               <p className="mt-2 text-base font-semibold text-academy-muted">{session.training?.shortDescription || 'Formation professionnelle certifiante'}</p>
               <div className="mt-3 flex flex-wrap gap-2">
                 {seats ? <span className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-[10px] font-black text-emerald-700">{seats}</span> : null}
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-academy-gold/40 bg-academy-gold/15 px-3 py-1.5 text-[10px] font-black text-academy-gold-strong">
+                <span className="planning-accent-soft planning-accent-text inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[10px] font-black">
                   <Icon name="clock" className="h-3.5 w-3.5" />
                   {displayDuration(session)} de formation
                 </span>
@@ -684,7 +741,7 @@ function RegistrationModal({
           <div className="mt-7 grid gap-3 sm:grid-cols-2">
             {sessionDetails.map(([label, value]) => (
               <div key={label} className="rounded-2xl border border-academy-line/70 bg-white/70 p-4 dark:border-white/10 dark:bg-white/5">
-                <p className="text-[9px] font-black uppercase tracking-[.16em] text-academy-gold-strong">{label}</p>
+                <p className="planning-accent-text text-[9px] font-black uppercase tracking-[.16em]">{label}</p>
                 <p className="mt-2 text-sm font-black leading-6 text-academy-ink dark:text-white">{value}</p>
               </div>
             ))}
@@ -710,7 +767,7 @@ function RegistrationModal({
           </div>
 
           <div className="mt-8 rounded-2xl border border-academy-line/70 bg-academy-bg/70 p-4 dark:border-white/10 dark:bg-black/15">
-            <p className="text-[9px] font-black uppercase tracking-[.16em] text-academy-gold-strong">Financement</p>
+            <p className="planning-accent-text text-[9px] font-black uppercase tracking-[.16em]">Financement</p>
             <p className="mt-2 text-sm font-semibold leading-6 text-academy-muted">
               CPF, France Travail, employeur ou paiement personnel : l’équipe vous aide à identifier le dispositif adapté.
             </p>
@@ -718,17 +775,17 @@ function RegistrationModal({
         </div>
 
         <div className="bg-[#101a29] p-5 text-white sm:p-8 lg:p-10">
-          <p className="text-[11px] font-black uppercase tracking-[.2em] text-academy-gold">Votre inscription</p>
+          <p className="planning-accent-text-on-dark text-[11px] font-black uppercase tracking-[.2em]">Votre inscription</p>
           <h3 className="mt-3 pr-10 text-2xl font-black tracking-tight sm:text-3xl">Finalisez votre demande</h3>
           <p className="mt-2 text-sm leading-6 text-white/65">L’équipe vous répond sous 24 h ouvrées.</p>
 
           <div className="mt-7 grid grid-cols-3 gap-2">
             {['Projet', 'Coordonnées', 'Confirmation'].map((step, index) => (
               <div key={step} className="text-center">
-                <span className={'mx-auto grid h-8 w-8 place-items-center rounded-full text-xs font-black ' + (index === 0 ? 'bg-academy-gold text-academy-gold-text' : 'bg-white/10 text-white/55')}>
+                <span className={'mx-auto grid h-8 w-8 place-items-center rounded-full text-xs font-black ' + (index === 0 ? 'planning-accent-bg' : 'bg-white/10 text-white/55')}>
                   {index + 1}
                 </span>
-                <span className={'mt-2 block text-[8px] font-black uppercase tracking-[.1em] ' + (index === 0 ? 'text-academy-gold' : 'text-white/45')}>{step}</span>
+                <span className={'mt-2 block text-[8px] font-black uppercase tracking-[.1em] ' + (index === 0 ? 'planning-accent-text-on-dark' : 'text-white/45')}>{step}</span>
               </div>
             ))}
           </div>
@@ -764,7 +821,7 @@ function RegistrationModal({
               <input name="email" type="email" placeholder="E-mail" required className="rounded-2xl border border-white/15 bg-white/5 px-4 py-3.5 text-sm font-bold text-white placeholder:text-white/45" />
             </div>
             <textarea name="message" rows={3} placeholder="Précisez votre projet ou vos contraintes…" className="resize-none rounded-2xl border border-white/15 bg-white/5 px-4 py-3.5 text-sm font-bold text-white placeholder:text-white/45" />
-            <button type="submit" className="mt-1 inline-flex items-center justify-center gap-2 rounded-full bg-academy-gold px-5 py-4 text-sm font-black text-academy-gold-text transition hover:-translate-y-0.5">
+            <button type="submit" className="planning-accent-bg planning-accent-shadow mt-1 inline-flex items-center justify-center gap-2 rounded-full px-5 py-4 text-sm font-black transition hover:-translate-y-0.5 hover:brightness-95">
               Envoyer ma demande
               <Icon name="arrow" className="h-4 w-4" />
             </button>
@@ -816,19 +873,19 @@ function MissingDates({
             <Link
               key={option.title}
               href={alertHref(option.formation)}
-              className="group rounded-[1.5rem] border border-academy-line/70 bg-academy-surface p-5 shadow-[0_16px_45px_rgba(54,40,20,.06)] transition hover:-translate-y-1 hover:border-academy-gold"
+              className={planningThemeClass(option.accent) + ' planning-accent-card group rounded-[1.5rem] border bg-academy-surface p-5 shadow-[0_16px_45px_rgba(54,40,20,.06)] transition hover:-translate-y-1'}
             >
               <div className="flex items-center justify-between">
-                <span className="grid h-9 w-9 place-items-center rounded-full bg-[#101a29] text-[10px] font-black text-academy-gold">
+                <span className="planning-accent-bg grid h-9 w-9 place-items-center rounded-full text-[10px] font-black">
                   0{index + 1}
                 </span>
-                <span className="text-[9px] font-black uppercase tracking-[.14em] text-academy-gold-strong">{option.label}</span>
+                <span className="planning-accent-text text-[9px] font-black uppercase tracking-[.14em]">{option.label}</span>
               </div>
               <h3 className="mt-6 text-xl font-black text-academy-ink dark:text-white">{option.title}</h3>
               <p className="mt-3 min-h-[3.5rem] text-sm font-semibold leading-6 text-academy-muted">{option.description}</p>
               <span className="mt-6 flex items-center justify-between border-t border-academy-line/60 pt-4 text-xs font-black text-academy-ink dark:text-white">
                 Être prévenu à l’ouverture
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-academy-gold text-academy-gold-text transition group-hover:translate-x-1">
+                <span className="planning-accent-bg grid h-8 w-8 place-items-center rounded-full transition group-hover:translate-x-1">
                   <Icon name="arrow" className="h-4 w-4" />
                 </span>
               </span>
@@ -885,17 +942,18 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
     [sortedSessions],
   );
   const formationSessionCounts = useMemo(
-    () => Object.fromEntries(formationFilters.map((formation) => [formation.key, sortedSessions.filter((session) => formation.slugs.includes(session.training?.slug)).length])) as Record<Exclude<FormationFilterKey, 'all'>, number>,
+    () => Object.fromEntries(formationFilters.map((formation) => [formation.key, sortedSessions.filter((session) => formationMatchesSlug(formation, session.training?.slug)).length])) as Record<Exclude<FormationFilterKey, 'all'>, number>,
     [sortedSessions],
   );
   const selectedFormationDetails = activeFormation === 'all' ? null : formationFilters.find((formation) => formation.key === activeFormation) || null;
+  const activePlanningTheme = planningThemeClass(selectedFormationDetails?.accent || 'gold');
 
   const filteredSessions = useMemo(() => {
     const normalizedQuery = query.trim().toLocaleLowerCase('fr');
     const selectedFormation = activeFormation === 'all' ? null : formationFilters.find((formation) => formation.key === activeFormation);
     return sortedSessions.filter((session) => {
       if (active !== 'all' && sessionCategory(session) !== active) return false;
-      if (selectedFormation && !selectedFormation.slugs.includes(session.training?.slug)) return false;
+      if (selectedFormation && !formationMatchesSlug(selectedFormation, session.training?.slug)) return false;
       if (location !== 'all' && session.location !== location) return false;
       if (month !== 'all' && monthKey(session.startDate) !== month) return false;
       if (!normalizedQuery) return true;
@@ -1038,14 +1096,14 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
                   type="button"
                   aria-pressed={selected}
                   onClick={() => chooseFormation(formation.key)}
-                  className={'group flex min-h-[13.5rem] flex-col rounded-[1.45rem] border p-5 text-left transition duration-300 hover:-translate-y-1 ' + (selected ? 'border-academy-gold bg-academy-gold text-academy-gold-text shadow-[0_20px_60px_rgba(234,183,53,.18)]' : 'border-white/10 bg-white/[.055] hover:border-academy-gold/55 hover:bg-white/[.08]')}
+                  className={planningThemeClass(formation.accent) + ' group flex min-h-[13.5rem] flex-col rounded-[1.45rem] border p-5 text-left transition duration-300 hover:-translate-y-1 ' + (selected ? 'planning-accent-bg planning-accent-border planning-accent-shadow' : 'planning-accent-card bg-white/[.055]')}
                 >
-                  <span className={'text-[10px] font-black uppercase tracking-[.14em] ' + (selected ? 'text-academy-gold-text/65' : 'text-academy-gold')}>0{index + 1} · {formation.eyebrow}</span>
+                  <span className={'text-[10px] font-black uppercase tracking-[.14em] ' + (selected ? 'planning-accent-on-solid-muted' : 'planning-accent-text-on-dark')}>0{index + 1} · {formation.eyebrow}</span>
                   <span className="mt-5 block text-xl font-black tracking-tight">{formation.label}</span>
-                  <span className={'mt-2 block text-xs font-semibold leading-5 ' + (selected ? 'text-academy-gold-text/70' : 'text-white/48')}>{formation.description}</span>
+                  <span className={'mt-2 block text-xs font-semibold leading-5 ' + (selected ? 'planning-accent-on-solid-muted' : 'text-white/48')}>{formation.description}</span>
                   <span className={'mt-auto flex items-center justify-between border-t pt-4 text-[10px] font-black uppercase tracking-[.08em] ' + (selected ? 'border-black/10' : 'border-white/10')}>
                     {count ? count + (count > 1 ? ' sessions' : ' session') : 'Créer une alerte'}
-                    <span className={'grid h-7 w-7 place-items-center rounded-full transition group-hover:translate-x-1 ' + (selected ? 'bg-[#111b2a] text-white' : 'bg-academy-gold text-academy-gold-text')}>
+                    <span className={'grid h-7 w-7 place-items-center rounded-full transition group-hover:translate-x-1 ' + (selected ? 'bg-[#111b2a] text-white' : 'planning-accent-bg')}>
                       <Icon name="arrow" className="h-3.5 w-3.5" />
                     </span>
                   </span>
@@ -1056,11 +1114,11 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
         </div>
       </section>
 
-      <section id="sessions" className="page-container py-14 sm:py-20">
+      <section id="sessions" className={activePlanningTheme + ' page-container py-14 sm:py-20'}>
         <div className="max-w-4xl">
-          <p className="text-[11px] font-black uppercase tracking-[.22em] text-academy-gold-strong">{selectedFormationDetails ? 'Formation sélectionnée' : 'Toutes les sessions'}</p>
+          <p className="planning-accent-text text-[11px] font-black uppercase tracking-[.22em]">{selectedFormationDetails ? 'Formation sélectionnée' : 'Toutes les sessions'}</p>
           <h2 className="mt-4 text-3xl font-black tracking-tight text-academy-ink dark:text-white sm:text-5xl">
-            {selectedFormationDetails ? <>Les prochaines dates <span className="text-academy-gold-strong">{selectedFormationDetails.label}</span>.</> : 'Trouvez la date qui correspond à votre projet.'}
+            {selectedFormationDetails ? <>Les prochaines dates <span className="planning-accent-text">{selectedFormationDetails.label}</span>.</> : 'Trouvez la date qui correspond à votre projet.'}
           </h2>
           <p className="mt-4 max-w-3xl text-base font-semibold leading-7 text-academy-muted sm:text-lg">Les résultats, les places restantes et les tarifs sont mis à jour depuis l’administration du site.</p>
         </div>
@@ -1103,12 +1161,12 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
                     setActive('all');
                     setShowAll(false);
                   }}
-                  className={'shrink-0 rounded-full px-3.5 py-3 text-xs font-black transition ' + (activeFormation === formation.key ? 'bg-[#101a29] text-white shadow-soft' : 'border border-academy-line bg-white text-academy-muted hover:border-academy-gold hover:text-academy-ink dark:bg-white/5')}
+                  className={planningThemeClass(formation.accent) + ' shrink-0 rounded-full border px-3.5 py-3 text-xs font-black transition ' + (activeFormation === formation.key ? 'planning-accent-bg planning-accent-border planning-accent-shadow' : 'planning-accent-chip bg-white dark:bg-white/5')}
                 >
                   {formation.label}
                 </button>
               ))}
-              <button type="button" onClick={() => setFiltersOpen((value) => !value)} className="inline-flex shrink-0 items-center gap-2 rounded-full border border-academy-line bg-academy-gold px-4 py-3 text-xs font-black text-academy-gold-text xl:hidden">
+              <button type="button" onClick={() => setFiltersOpen((value) => !value)} className="planning-accent-bg inline-flex shrink-0 items-center gap-2 rounded-full border border-transparent px-4 py-3 text-xs font-black xl:hidden">
                 <Icon name="filter" className="h-4 w-4" />
                 Filtrer
               </button>
@@ -1136,7 +1194,7 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
                 {months.map(([key, label]) => <option key={key} value={key}>{label}</option>)}
               </select>
             </label>
-            <button type="button" onClick={resetFilters} className="rounded-full border border-academy-line bg-white px-4 py-3 text-xs font-black text-academy-muted transition hover:border-academy-gold hover:text-academy-ink dark:bg-white/5">Réinitialiser</button>
+            <button type="button" onClick={resetFilters} className="planning-accent-hover rounded-full border border-academy-line bg-white px-4 py-3 text-xs font-black text-academy-muted transition hover:text-academy-ink dark:bg-white/5">Réinitialiser</button>
           </div>
         </div>
 
@@ -1149,7 +1207,7 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
               <p className="mt-1 text-sm font-semibold text-academy-muted">Triées par prochaine date de rentrée</p>
             </div>
             <div className="flex w-fit rounded-full border border-academy-line bg-white p-1 dark:bg-white/5">
-              <button type="button" aria-pressed="true" className="rounded-full bg-[#101a29] px-4 py-2.5 text-xs font-black text-white">Vue liste</button>
+              <button type="button" aria-pressed="true" className="planning-accent-bg rounded-full px-4 py-2.5 text-xs font-black">Vue liste</button>
               <button type="button" aria-pressed="false" onClick={() => setView('calendar')} className="rounded-full px-4 py-2.5 text-xs font-black text-academy-muted transition hover:text-academy-ink">Vue calendrier</button>
             </div>
           </div>
@@ -1165,7 +1223,7 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
               </div>
               {filteredSessions.length > visibleSessions.length ? (
                 <div className="mt-7 text-center">
-                  <button type="button" onClick={() => setShowAll(true)} className="rounded-full border border-academy-line bg-white px-6 py-3.5 text-sm font-black text-academy-ink shadow-soft transition hover:-translate-y-0.5 hover:border-academy-gold dark:bg-white/5 dark:text-white">
+                  <button type="button" onClick={() => setShowAll(true)} className="planning-accent-hover rounded-full border border-academy-line bg-white px-6 py-3.5 text-sm font-black text-academy-ink shadow-soft transition hover:-translate-y-0.5 dark:bg-white/5 dark:text-white">
                     Voir toutes les dates ({filteredSessions.length})
                   </button>
                 </div>
@@ -1176,12 +1234,12 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
           )
         ) : (
           <div className="mt-6 rounded-[2rem] border border-dashed border-academy-line bg-white/65 p-8 text-center shadow-soft dark:bg-white/5 sm:p-12">
-            <Icon name="search" className="mx-auto h-10 w-10 text-academy-gold-strong" />
+            <Icon name="search" className="planning-accent-text mx-auto h-10 w-10" />
             <h3 className="mt-4 text-2xl font-black text-academy-ink dark:text-white">Aucune session ne correspond à ces critères.</h3>
             <p className="mx-auto mt-3 max-w-xl text-sm font-semibold leading-6 text-academy-muted">Modifiez les filtres ou créez une alerte pour être prévenu de la prochaine date disponible.</p>
             <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
               <button type="button" onClick={resetFilters} className="rounded-full bg-[#101a29] px-5 py-3 text-sm font-black text-white">Réinitialiser les filtres</button>
-              <Link href="/contact?motif=alerte-planning" className="rounded-full bg-academy-gold px-5 py-3 text-sm font-black text-academy-gold-text">Créer une alerte</Link>
+              <Link href="/contact?motif=alerte-planning" className="planning-accent-bg rounded-full px-5 py-3 text-sm font-black">Créer une alerte</Link>
             </div>
           </div>
         )}
@@ -1266,7 +1324,7 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
         <Link href="tel:0422470768" className="rounded-2xl bg-[#101a29] px-3 py-3 text-center text-xs font-black text-white">Appeler</Link>
         <Link href="/contact?motif=alerte-planning" className="rounded-2xl border border-academy-line bg-white px-3 py-3 text-center text-xs font-black text-academy-ink">Alerte</Link>
         {nextSession ? (
-          <button type="button" onClick={() => setSelectedSession(nextSession)} className="rounded-2xl bg-academy-gold px-3 py-3 text-center text-xs font-black text-academy-gold-text">S’inscrire</button>
+          <button type="button" onClick={() => setSelectedSession(nextSession)} className={planningThemeForSession(nextSession) + ' planning-accent-bg rounded-2xl px-3 py-3 text-center text-xs font-black'}>S’inscrire</button>
         ) : (
           <Link href="/contact" className="rounded-2xl bg-academy-gold px-3 py-3 text-center text-xs font-black text-academy-gold-text">Infos</Link>
         )}
