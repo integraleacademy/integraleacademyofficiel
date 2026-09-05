@@ -8,6 +8,11 @@ test('le badge affiche toujours le nombre exact de places restantes', () => {
   assert.equal(getSessionSeatAvailability({ seatsLeft: 4, status: 'FULL' }, 12).label, 'Session complète');
 });
 
+test('le compteur public ne dépasse jamais la capacité APS de 12 places', () => {
+  assert.equal(getSessionSeatAvailability({ seatsLeft: 25 }, 12).label, '12 places restantes');
+  assert.equal(getSessionSeatAvailability({ seatsLeft: 25 }, 12).count, 12);
+});
+
 test('la couleur devient plus urgente à mesure que les places diminuent', () => {
   assert.equal(getSessionSeatAvailability({ seatsLeft: 12 }, 12).tone, 'available');
   assert.equal(getSessionSeatAvailability({ seatsLeft: 8 }, 12).tone, 'moderate');
@@ -16,8 +21,8 @@ test('la couleur devient plus urgente à mesure que les places diminuent', () =>
   assert.equal(getSessionSeatAvailability({ seatsLeft: 0 }, 12).tone, 'full');
 });
 
-test('une session sans compteur reste explicite sans inventer de places', () => {
+test('une session ouverte sans compteur démarre à la capacité maximale', () => {
   const availability = getSessionSeatAvailability({ seatsLeft: null }, 12);
-  assert.equal(availability.label, 'Places restantes à confirmer');
-  assert.equal(availability.tone, 'unknown');
+  assert.equal(availability.label, '12 places restantes');
+  assert.equal(availability.tone, 'available');
 });
