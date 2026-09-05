@@ -8,6 +8,7 @@ import { formatTrainingPrice } from '@/lib/training-price';
 type Session = any;
 type CategoryKey = 'security' | 'fire' | 'vtc' | 'bts';
 type FormationFilterKey = 'all' | 'aps' | 'a3p' | 'director' | 'ssiap' | 'vtc' | 'bts';
+type LocationFilterKey = 'all' | 'paris' | 'cote-azur';
 type ViewMode = 'list' | 'calendar';
 type PlanningAccent = 'blue' | 'green' | 'orange' | 'red' | 'violet' | 'gold';
 
@@ -19,6 +20,12 @@ const planningThemeClasses: Record<PlanningAccent, string> = {
   violet: 'planning-theme-violet',
   gold: 'planning-theme-gold',
 };
+
+const locationFilters: { key: LocationFilterKey; label: string }[] = [
+  { key: 'all', label: 'Tous' },
+  { key: 'paris', label: 'Paris' },
+  { key: 'cote-azur', label: 'Côte d’Azur' },
+];
 
 type IconName =
   | 'arrow'
@@ -276,6 +283,22 @@ function sessionTitle(session: Session) {
   return session.training?.name || session.training?.title || session.title || 'Formation';
 }
 
+function normalizedLocation(value?: string) {
+  return String(value || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLocaleLowerCase('fr')
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
+}
+
+function sessionMatchesLocation(session: Session, filter: LocationFilterKey) {
+  if (filter === 'all') return true;
+  const location = normalizedLocation(session.location);
+  if (filter === 'paris') return /(^| )paris( |$)/.test(location);
+  return location.includes('cote d azur') || location.includes('puget sur argens');
+}
+
 function formationFilterForSession(session: Session) {
   return formationFilters.find((formation) => formationMatchesSlug(formation, session.training?.slug));
 }
@@ -513,11 +536,9 @@ function SessionCard({
 function CalendarView({
   sessions,
   onRegister,
-  onListView,
 }: {
   sessions: Session[];
   onRegister: (session: Session) => void;
-  onListView: () => void;
 }) {
   const timeline = useMemo(() => {
     const firstSessionDate = new Date(Math.min(...sessions.map((session) => +new Date(session.startDate))));
@@ -566,14 +587,6 @@ function CalendarView({
           </p>
         </div>
 
-        <div className="flex w-fit rounded-full bg-black/35 p-1.5">
-          <button type="button" onClick={onListView} className="rounded-full bg-[#f7f3eb] px-5 py-3 text-xs font-black text-[#171712] transition hover:-translate-y-0.5 sm:px-7">
-            Vue liste
-          </button>
-          <button type="button" aria-pressed="true" className="rounded-full px-5 py-3 text-xs font-black text-white sm:px-7">
-            Vue calendrier
-          </button>
-        </div>
       </div>
 
       <p className="relative mt-5 text-[10px] font-black uppercase tracking-[.14em] text-white/45 sm:hidden">
@@ -892,6 +905,7 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
   );
   const nextSession = sortedSessions[0] || null;
   const [activeFormation, setActiveFormation] = useState<FormationFilterKey>('all');
+  const [locationFilter, setLocationFilter] = useState<LocationFilterKey>('all');
   const [view, setView] = useState<ViewMode>('list');
   const [showAll, setShowAll] = useState(false);
   const [selectedSession, setSelectedSession] = useState<Session | null>(null);
@@ -913,10 +927,11 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
 
   const filteredSessions = useMemo(() => {
     const selectedFormation = activeFormation === 'all' ? null : formationFilters.find((formation) => formation.key === activeFormation);
-    return selectedFormation
-      ? sortedSessions.filter((session) => formationMatchesSlug(selectedFormation, session.training?.slug))
-      : sortedSessions;
-  }, [activeFormation, sortedSessions]);
+    return sortedSessions.filter((session) => {
+      if (selectedFormation && !formationMatchesSlug(selectedFormation, session.training?.slug)) return false;
+      return sessionMatchesLocation(session, locationFilter);
+    });
+  }, [activeFormation, locationFilter, sortedSessions]);
 
   const visibleSessions = showAll ? filteredSessions : filteredSessions.slice(0, 6);
 
@@ -1056,20 +1071,44 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
       </section>
 
       <section id="sessions" className={activePlanningTheme + ' page-container py-14 sm:py-20'}>
-        {view === 'list' ? (
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-              <p className="text-2xl font-black text-academy-ink dark:text-white">
-                {filteredSessions.length} {filteredSessions.length > 1 ? 'sessions disponibles' : 'session disponible'}
-              </p>
-              <p className="mt-1 text-sm font-semibold text-academy-muted">Triées par prochaine date de rentrée</p>
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <p className="text-2xl font-black text-academy-ink dark:text-white">
+              {filteredSessions.length} {filteredSessions.length > 1 ? 'sessions disponibles' : 'session disponible'}
+            </p>
+            <p className="mt-1 text-sm font-semibold text-academy-muted">
+              {view === 'list' ? 'Triées par prochaine date de rentrée' : 'Affichées dans le calendrier'}
+            </p>
+          </div>
+
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+            <div className="flex w-fit items-center rounded-full border border-academy-line bg-white p-1 dark:bg-white/5" aria-label="Filtrer les sessions par centre">
+              <span className="hidden px-3 text-[9px] font-black uppercase tracking-[.12em] text-academy-muted sm:inline">Centre</span>
+              {locationFilters.map((filter) => {
+                const selected = locationFilter === filter.key;
+                return (
+                  <button
+                    key={filter.key}
+                    type="button"
+                    aria-pressed={selected}
+                    onClick={() => {
+                      setLocationFilter(filter.key);
+                      setShowAll(false);
+                    }}
+                    className={'rounded-full px-3.5 py-2.5 text-xs font-black transition sm:px-4 ' + (selected ? 'planning-neutral-action' : 'text-academy-muted hover:text-academy-ink')}
+                  >
+                    {filter.label}
+                  </button>
+                );
+              })}
             </div>
+
             <div className="flex w-fit rounded-full border border-academy-line bg-white p-1 dark:bg-white/5">
-              <button type="button" aria-pressed="true" className="planning-neutral-action rounded-full px-4 py-2.5 text-xs font-black">Vue liste</button>
-              <button type="button" aria-pressed="false" onClick={() => setView('calendar')} className="rounded-full px-4 py-2.5 text-xs font-black text-academy-muted transition hover:text-academy-ink">Vue calendrier</button>
+              <button type="button" aria-pressed={view === 'list'} onClick={() => setView('list')} className={'rounded-full px-4 py-2.5 text-xs font-black transition ' + (view === 'list' ? 'planning-neutral-action' : 'text-academy-muted hover:text-academy-ink')}>Vue liste</button>
+              <button type="button" aria-pressed={view === 'calendar'} onClick={() => setView('calendar')} className={'rounded-full px-4 py-2.5 text-xs font-black transition ' + (view === 'calendar' ? 'planning-neutral-action' : 'text-academy-muted hover:text-academy-ink')}>Vue calendrier</button>
             </div>
           </div>
-        ) : null}
+        </div>
 
         {filteredSessions.length ? (
           view === 'list' ? (
@@ -1088,15 +1127,15 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
               ) : null}
             </>
           ) : (
-            <div className="mt-8"><CalendarView sessions={filteredSessions} onRegister={setSelectedSession} onListView={() => setView('list')} /></div>
+            <div className="mt-8"><CalendarView sessions={filteredSessions} onRegister={setSelectedSession} /></div>
           )
         ) : (
           <div className="mt-6 rounded-[2rem] border border-dashed border-academy-line bg-white/65 p-8 text-center shadow-soft dark:bg-white/5 sm:p-12">
             <Icon name="search" className="planning-accent-text mx-auto h-10 w-10" />
-            <h3 className="mt-4 text-2xl font-black text-academy-ink dark:text-white">Aucune session ouverte pour cette formation.</h3>
-            <p className="mx-auto mt-3 max-w-xl text-sm font-semibold leading-6 text-academy-muted">Consultez toutes les sessions ou créez une alerte pour être prévenu de la prochaine date disponible.</p>
+            <h3 className="mt-4 text-2xl font-black text-academy-ink dark:text-white">Aucune session ouverte pour cette sélection.</h3>
+            <p className="mx-auto mt-3 max-w-xl text-sm font-semibold leading-6 text-academy-muted">Choisissez un autre centre, consultez toutes les sessions ou créez une alerte pour être prévenu de la prochaine date disponible.</p>
             <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
-              <button type="button" onClick={() => chooseFormation('all')} className="rounded-full bg-[#101a29] px-5 py-3 text-sm font-black text-white">Voir toutes les sessions</button>
+              <button type="button" onClick={() => { setLocationFilter('all'); chooseFormation('all'); }} className="rounded-full bg-[#101a29] px-5 py-3 text-sm font-black text-white">Voir toutes les sessions</button>
               <Link href="/contact?motif=alerte-planning" className="planning-neutral-action rounded-full px-5 py-3 text-sm font-black">Créer une alerte</Link>
             </div>
           </div>
