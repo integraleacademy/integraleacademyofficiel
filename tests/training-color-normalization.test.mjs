@@ -105,4 +105,6 @@ test('le planning applique la même couleur aux filtres, sessions, calendrier et
   assert.match(planning, /planning-accent-bg planning-accent-shadow group absolute/);
   assert.match(planning, /planningThemeForSession\(nextSession\)/);
   assert.doesNotMatch(planning, /#efb82f|#d39a17/);
+  assert.match(globals, /\.planning-theme-orange \{ --planning-accent: 249 115 22; --planning-accent-strong: 180 83 9;[\s\S]*?--planning-accent-contrast: 67 20 7;/);
+  assert.doesNotMatch(globals, /\.planning-theme-orange \{ --planning-accent: 194 65 12;/);
 });
