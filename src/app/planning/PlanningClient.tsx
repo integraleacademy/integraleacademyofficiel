@@ -274,7 +274,7 @@ function formationMatchesSlug(formation: (typeof formationFilters)[number], slug
 }
 
 function sessionTitle(session: Session) {
-  return session.training?.name || session.training?.title || session.title || 'Formation';
+  return session.title || session.training?.name || session.training?.title || 'Formation';
 }
 
 function formationFilterForSession(session: Session) {
@@ -290,7 +290,7 @@ function planningThemeForSession(session: Session) {
 }
 
 function timelineTitle(session: Session) {
-  return formationFilterForSession(session)?.label || sessionTitle(session);
+  return sessionTitle(session);
 }
 
 function monthKey(value?: string | Date) {
