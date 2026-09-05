@@ -2,7 +2,8 @@
 
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
-import { computedSeats, formatSessionDate, formatSessionPeriod, hasDetailedDeliveryPeriods } from '@/lib/public-sessions';
+import { formatSessionDate, formatSessionPeriod, hasDetailedDeliveryPeriods } from '@/lib/public-sessions';
+import { getSessionSeatAvailability, resolveSessionSeatCapacity } from '@/lib/session-seat-availability';
 import { sessionLocationFilters, sessionMatchesLocation, type SessionLocationFilterKey } from '@/lib/session-location-filter';
 import { formatTrainingPrice } from '@/lib/training-price';
 
@@ -375,12 +376,16 @@ function displayDuration(session: Session) {
   return fallback ? fallback.toLocaleString('fr-FR') + ' h' : 'À confirmer';
 }
 
-function seatText(session: Session) {
-  const seats = computedSeats(session);
-  if (seats === null || Number.isNaN(seats)) return null;
-  if (seats <= 0) return 'Session complète';
-  if (seats === 1) return '1 place restante';
-  return seats + ' places restantes';
+function maximumSeatCapacity(session: Session) {
+  const slug = String(session.training?.slug || '').toLocaleLowerCase('fr');
+  if (slug.startsWith('desp') || slug.startsWith('dssp')) return 20;
+  if (slug === 'sst' || slug.startsWith('sst-')) return 10;
+  return 12;
+}
+
+function planningSeatAvailability(session: Session) {
+  const capacity = resolveSessionSeatCapacity(session, maximumSeatCapacity(session));
+  return getSessionSeatAvailability(session, capacity);
 }
 
 function infoHref(session?: Session) {
@@ -416,7 +421,7 @@ function SessionCard({
   onRegister: (session: Session) => void;
 }) {
   const date = shortDate(session.startDate);
-  const seats = seatText(session);
+  const seatAvailability = planningSeatAvailability(session);
   const showDeliveryPeriods = hasDetailedDeliveryPeriods(session);
   const themeClass = planningThemeForSession(session);
 
@@ -447,11 +452,9 @@ function SessionCard({
             <h3 className="text-xl font-black tracking-tight text-academy-ink dark:text-white sm:text-2xl">
               {sessionTitle(session)}
             </h3>
-            {seats ? (
-              <span className={'session-seats-badge rounded-full border px-3 py-1 text-[10px] font-black ' + (seats === 'Session complète' ? 'border-rose-200 bg-rose-50 text-rose-700' : 'border-emerald-200 bg-emerald-50 text-emerald-700')}>
-                {seats}
-              </span>
-            ) : null}
+            <span className={'session-seats-badge rounded-full border px-3 py-1 text-[10px] font-black ' + seatAvailability.badgeClassName}>
+              {seatAvailability.label}
+            </span>
           </div>
           {showDeliveryPeriods ? <div className="mt-4 grid gap-2 sm:grid-cols-2">
             {deliveryPeriodRows(session).map((period, periodIndex) => <div key={period.label || 'dates'} className={`flex items-start gap-3 rounded-[1rem] border px-3.5 py-3 ${periodIndex === 0 ? 'planning-accent-soft sm:col-span-2' : 'border-academy-line/60 bg-academy-bg/55 dark:border-white/10 dark:bg-white/5'}`}>
@@ -658,7 +661,7 @@ function RegistrationModal({
   const title = sessionTitle(session);
   const sessionLabel = formatSessionPeriod(session.startDate, session.endDate);
   const hiddenSession = title + ' — ' + sessionLabel;
-  const seats = seatText(session);
+  const seatAvailability = planningSeatAvailability(session);
   const date = shortDate(session.startDate);
   const themeClass = planningThemeForSession(session);
   const sessionDetails: [string, string][] = [
@@ -696,7 +699,7 @@ function RegistrationModal({
               <h2 id="registration-modal-title" className="text-3xl font-black tracking-tight text-academy-ink dark:text-white sm:text-4xl">{title}</h2>
               <p className="mt-2 text-base font-semibold text-academy-muted">{session.training?.shortDescription || 'Formation professionnelle certifiante'}</p>
               <div className="mt-3 flex flex-wrap gap-2">
-                {seats ? <span className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-[10px] font-black text-emerald-700">{seats}</span> : null}
+                <span className={'rounded-full border px-3 py-1.5 text-[10px] font-black ' + seatAvailability.badgeClassName}>{seatAvailability.label}</span>
                 <span className="planning-accent-soft planning-accent-text inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[10px] font-black">
                   <Icon name="clock" className="h-3.5 w-3.5" />
                   {displayDuration(session)} de formation
