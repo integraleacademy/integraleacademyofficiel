@@ -47,6 +47,14 @@ test('chaque carte APS affiche le titre renseigné dans l’administration', () 
   assert.ok(sessionsSection.includes('{sessionTitle}</h3>'));
 });
 
+test('les cartes APS gardent les dates sans leur libellé et affichent les places exactes', () => {
+  assert.ok(apsPage.includes('showOverallPeriodLabel={false}'));
+  assert.ok(apsPage.includes('seatCapacity={12}'));
+  assert.ok(apsPage.includes('underlineDisclosure={false}'));
+  assert.ok(sessionsSection.includes("showOverallPeriodLabel ? <span"));
+  assert.ok(sessionsSection.includes('seatAvailability?.label'));
+});
+
 test('les sessions suivantes sont révélées par un contrôle natif et accessible', () => {
   assert.ok(sessionsSection.includes('<details className="group/session-list mt-5">'));
   assert.ok(sessionsSection.includes('aria-controls={additionalSessionsId}'));
