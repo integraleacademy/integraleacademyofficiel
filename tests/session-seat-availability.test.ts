@@ -20,6 +20,7 @@ test('la couleur devient plus urgente à mesure que les places diminuent', () =>
   assert.equal(getSessionSeatAvailability({ seatsLeft: 12 }, 12).tone, 'available');
   assert.equal(getSessionSeatAvailability({ seatsLeft: 8 }, 12).tone, 'moderate');
   assert.equal(getSessionSeatAvailability({ seatsLeft: 5 }, 12).tone, 'low');
+  assert.equal(getSessionSeatAvailability({ seatsLeft: 3 }, 12).tone, 'critical');
   assert.equal(getSessionSeatAvailability({ seatsLeft: 2 }, 12).tone, 'critical');
   assert.equal(getSessionSeatAvailability({ seatsLeft: 0 }, 12).tone, 'full');
 });
