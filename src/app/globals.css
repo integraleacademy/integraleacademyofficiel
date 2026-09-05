@@ -122,20 +122,25 @@
 .planning-theme-red { --planning-accent: 220 38 38; --planning-accent-strong: 185 28 28; --planning-accent-light: 252 165 165; --planning-accent-contrast: 255 255 255; }
 .planning-theme-violet { --planning-accent: 124 58 237; --planning-accent-strong: 109 40 217; --planning-accent-light: 196 181 253; --planning-accent-contrast: 255 255 255; }
 .planning-theme-gold { --planning-accent: 230 176 58; --planning-accent-strong: 139 88 18; --planning-accent-light: 253 224 71; --planning-accent-contrast: 31 22 10; }
-.planning-accent-bg { background-color: rgb(var(--planning-accent)); color: rgb(var(--planning-accent-contrast)); }
 .planning-accent-text { color: rgb(var(--planning-accent-strong)); }
-.planning-accent-text-on-dark { color: rgb(var(--planning-accent-light)); }
-.planning-accent-on-solid-muted { color: rgb(var(--planning-accent-contrast) / .72); }
-.planning-accent-border { border-color: rgb(var(--planning-accent) / .72); }
-.planning-accent-soft { border-color: rgb(var(--planning-accent) / .38); background: linear-gradient(90deg, rgb(var(--planning-accent) / .15), rgb(var(--planning-accent) / .05)); }
-.planning-accent-shadow { box-shadow: 0 18px 48px rgb(var(--planning-accent) / .20); }
-.planning-accent-hover:hover { border-color: rgb(var(--planning-accent) / .72); }
-.planning-accent-card { border-color: rgb(var(--planning-accent) / .38); }
-.planning-accent-card:hover { border-color: rgb(var(--planning-accent) / .82); background-color: rgb(var(--planning-accent) / .11); box-shadow: 0 18px 46px rgb(var(--planning-accent) / .13); }
-.planning-accent-chip { border-color: rgb(var(--planning-accent) / .32); color: rgb(var(--planning-accent-strong)); }
-.planning-accent-chip:hover { border-color: rgb(var(--planning-accent) / .72); background-color: rgb(var(--planning-accent) / .08); }
-.planning-accent-bg:focus-visible, .planning-accent-chip:focus-visible, .planning-accent-card:focus-visible { outline-color: rgb(var(--planning-accent)); }
-.dark .planning-accent-text, .dark .planning-accent-chip, [data-theme="dark"] .planning-accent-text, [data-theme="dark"] .planning-accent-chip { color: rgb(var(--planning-accent-light)); }
+.planning-accent-indicator { background-color: rgb(var(--planning-accent)); }
+.planning-accent-border { border-color: rgb(var(--planning-accent) / .36); }
+.planning-accent-soft { border-color: rgb(var(--planning-accent) / .20); background: linear-gradient(90deg, rgb(var(--planning-accent) / .075), rgb(var(--planning-accent) / .025)); }
+.planning-accent-hover:hover { border-color: rgb(var(--planning-accent) / .38); }
+.planning-accent-card { border-color: rgb(var(--planning-accent) / .14); }
+.planning-accent-card:hover { border-color: rgb(var(--planning-accent) / .32); background-color: rgb(var(--planning-accent) / .035); box-shadow: 0 18px 46px rgb(16 26 41 / .08); }
+.planning-accent-icon { border: 1px solid rgb(var(--planning-accent) / .20); background-color: rgb(var(--planning-accent) / .075); color: rgb(var(--planning-accent-strong)); }
+.planning-accent-selected { border-color: rgb(var(--planning-accent) / .30); background-color: rgb(var(--planning-accent) / .075); color: rgb(var(--planning-accent-strong)); box-shadow: 0 8px 22px rgb(16 26 41 / .07); }
+.planning-calendar-bar { border: 1px solid rgb(var(--planning-accent) / .24); background: linear-gradient(90deg, rgb(var(--planning-accent) / .16), rgb(var(--planning-accent) / .075)); color: #111923; box-shadow: inset 3px 0 0 rgb(var(--planning-accent) / .82), 0 8px 20px rgb(16 26 41 / .08); }
+.planning-neutral-action { background-color: #101a29; color: #fff; box-shadow: 0 12px 28px rgb(16 26 41 / .15); }
+.planning-neutral-action:hover { background-color: #17263a; }
+.planning-formation-card { border-color: rgb(255 255 255 / .11); background-color: rgb(255 255 255 / .045); color: #fff; }
+.planning-formation-card:hover { border-color: rgb(255 255 255 / .24); background-color: rgb(255 255 255 / .075); }
+.planning-formation-card-selected { border-color: rgb(230 176 58 / .68); background-color: rgb(255 255 255 / .09); box-shadow: 0 18px 42px rgb(0 0 0 / .16); }
+.planning-accent-selected:focus-visible, .planning-accent-card:focus-visible, .planning-formation-card:focus-visible { outline-color: rgb(var(--planning-accent)); }
+.dark .planning-accent-text, [data-theme="dark"] .planning-accent-text { color: rgb(var(--planning-accent-light)); }
+.dark .planning-accent-icon, .dark .planning-accent-selected, [data-theme="dark"] .planning-accent-icon, [data-theme="dark"] .planning-accent-selected { border-color: rgb(var(--planning-accent) / .30); background-color: rgb(var(--planning-accent) / .13); color: rgb(var(--planning-accent-light)); }
+.dark .planning-neutral-action, [data-theme="dark"] .planning-neutral-action { border: 1px solid rgb(255 255 255 / .16); background-color: rgb(255 255 255 / .12); color: #fff; }
 @keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
 
 .status-dot { height: .625rem; width: .625rem; border-radius: 9999px; background: rgb(var(--success)); box-shadow: 0 0 0 0 rgb(var(--success) / .55), 0 0 18px rgb(var(--success) / .42); animation: statusPulse 2.4s ease-out infinite; }

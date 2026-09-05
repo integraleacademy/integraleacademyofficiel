@@ -447,20 +447,20 @@ function SessionCard({
   const themeClass = planningThemeForSession(session);
 
   return (
-    <article className={themeClass + ' group relative overflow-hidden rounded-[1.6rem] border bg-white p-4 shadow-[0_18px_55px_rgba(54,40,20,.08)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_70px_rgba(54,40,20,.14)] dark:bg-white/5 sm:p-5 ' + (isNext ? 'planning-accent-border planning-accent-shadow' : 'border-academy-line/70 dark:border-white/10')}>
-      <span aria-hidden="true" className="planning-accent-bg absolute inset-y-0 left-0 w-1" />
+    <article className={themeClass + ' group relative overflow-hidden rounded-[1.6rem] border bg-white p-4 shadow-[0_18px_55px_rgba(54,40,20,.08)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_70px_rgba(54,40,20,.14)] dark:bg-white/5 sm:p-5 ' + (isNext ? 'planning-accent-border' : 'border-academy-line/70 dark:border-white/10')}>
+      <span aria-hidden="true" className="planning-accent-indicator absolute inset-y-0 left-0 w-1" />
       {isNext ? (
-        <span className="planning-accent-bg absolute left-4 top-0 rounded-b-xl px-3 py-1 text-[9px] font-black uppercase tracking-[.14em] sm:left-5">
+        <span className="absolute left-4 top-0 rounded-b-xl bg-[#101a29] px-3 py-1 text-[9px] font-black uppercase tracking-[.14em] text-white sm:left-5">
           Prochaine session
         </span>
       ) : null}
 
       <div className="grid gap-4 pt-2 lg:grid-cols-[5.5rem_minmax(0,1.3fr)_minmax(17rem,.8fr)_auto] lg:items-center">
         <div className="flex items-center gap-3 lg:block">
-          <div className="planning-accent-bg planning-accent-shadow grid h-[4.6rem] w-[4.6rem] shrink-0 place-items-center rounded-2xl text-center">
+          <div className="planning-neutral-action grid h-[4.6rem] w-[4.6rem] shrink-0 place-items-center rounded-2xl text-center">
             <span>
               <span className="block text-2xl font-black leading-none">{date.day}</span>
-              <span className="planning-accent-on-solid-muted mt-1 block text-[10px] font-black uppercase tracking-[.12em]">{date.month}</span>
+              <span className="mt-1 block text-[10px] font-black uppercase tracking-[.12em] text-white/58">{date.month}</span>
             </span>
           </div>
           <p className="text-[10px] font-black uppercase tracking-[.14em] text-academy-muted lg:mt-2 lg:text-center">
@@ -481,7 +481,7 @@ function SessionCard({
           </div>
           {showDeliveryPeriods ? <div className="mt-4 grid gap-2 sm:grid-cols-2">
             {deliveryPeriodRows(session).map((period, periodIndex) => <div key={period.label} className={`flex items-start gap-3 rounded-[1rem] border px-3.5 py-3 ${periodIndex === 0 ? 'planning-accent-soft sm:col-span-2' : 'border-academy-line/60 bg-academy-bg/55 dark:border-white/10 dark:bg-white/5'}`}>
-              <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-xl ${periodIndex === 0 ? 'planning-accent-bg planning-accent-shadow' : 'planning-accent-text border border-academy-line/70 bg-white dark:border-white/10 dark:bg-white/10'}`}>
+              <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-xl ${periodIndex === 0 ? 'planning-accent-icon' : 'planning-accent-text border border-academy-line/70 bg-white dark:border-white/10 dark:bg-white/10'}`}>
                 <Icon name={period.icon} className="h-4 w-4" />
               </span>
               <span className="min-w-0">
@@ -520,14 +520,14 @@ function SessionCard({
           <button
             type="button"
             onClick={() => onRegister(session)}
-            className="planning-accent-bg planning-accent-shadow inline-flex flex-1 items-center justify-center gap-2 rounded-full px-5 py-3.5 text-sm font-black transition hover:-translate-y-0.5 hover:brightness-95"
+            className="planning-neutral-action inline-flex flex-1 items-center justify-center gap-2 rounded-full px-5 py-3.5 text-sm font-black transition hover:-translate-y-0.5"
           >
             Voir la session
             <Icon name="arrow" className="h-4 w-4" />
           </button>
           <Link
             href={infoHref(session)}
-            className="planning-accent-hover inline-flex flex-1 items-center justify-center rounded-full border border-academy-line bg-white px-5 py-3 text-sm font-black text-academy-ink transition dark:bg-white/10 dark:text-white"
+            className="inline-flex flex-1 items-center justify-center rounded-full border border-academy-line bg-white px-5 py-3 text-sm font-black text-academy-ink transition hover:border-academy-ink/35 dark:bg-white/10 dark:text-white"
           >
             Infos
           </Link>
@@ -629,8 +629,11 @@ function CalendarView({
 
               return (
                 <div key={session.id} className="grid min-h-24 grid-cols-[15rem_minmax(48rem,1fr)] border-b border-[#e6dece] last:border-b-0">
-                  <div className="flex flex-col justify-center px-2 py-4">
-                    <p className={themeClass + ' planning-accent-text text-lg font-black tracking-tight'}>{timelineTitle(session)}</p>
+                  <div className={themeClass + ' flex flex-col justify-center px-2 py-4'}>
+                    <div className="flex items-center gap-2">
+                      <span aria-hidden="true" className="planning-accent-indicator h-2 w-2 shrink-0 rounded-full" />
+                      <p className="text-lg font-black tracking-tight">{timelineTitle(session)}</p>
+                    </div>
                     <p className="mt-1 text-[11px] font-semibold text-[#6d685f]">{formation?.eyebrow || session.training?.shortDescription || 'Formation professionnelle'}</p>
                   </div>
 
@@ -643,7 +646,7 @@ function CalendarView({
                       type="button"
                       onClick={() => onRegister(session)}
                       title={hasExam ? 'Examen le ' + formatSessionDate(session.examDate) : 'Voir la session'}
-                      className={themeClass + ' planning-accent-bg planning-accent-shadow group absolute top-1/2 flex h-12 -translate-y-1/2 items-center justify-between gap-3 rounded-full px-4 text-left text-xs font-black transition hover:-translate-y-[54%] hover:brightness-95'}
+                      className={themeClass + ' planning-calendar-bar group absolute top-1/2 flex h-12 -translate-y-1/2 items-center justify-between gap-3 rounded-full px-4 text-left text-xs font-black transition hover:-translate-y-[54%]'}
                       style={{ left: position.left + '%', width: position.width + '%' }}
                     >
                       <span className="truncate">{timelineDateLabel(session.startDate)} → {timelineDateLabel(session.endDate)}</span>
@@ -719,7 +722,7 @@ function RegistrationModal({
         <div className="p-5 sm:p-8 lg:p-10">
           <p className="planning-accent-text text-[11px] font-black uppercase tracking-[.2em]">Détail de la session</p>
           <div className="mt-5 flex flex-col gap-5 sm:flex-row sm:items-center">
-            <div className="planning-accent-bg planning-accent-shadow grid h-24 w-24 shrink-0 place-items-center rounded-[1.5rem] text-center">
+            <div className="planning-neutral-action grid h-24 w-24 shrink-0 place-items-center rounded-[1.5rem] text-center">
               <span>
                 <span className="block text-4xl font-black leading-none">{date.day}</span>
                 <span className="mt-2 block text-[10px] font-black uppercase tracking-[.12em]">{date.month} {new Date(session.startDate).getUTCFullYear()}</span>
@@ -741,7 +744,7 @@ function RegistrationModal({
           <div className="mt-7 grid gap-3 sm:grid-cols-2">
             {sessionDetails.map(([label, value]) => (
               <div key={label} className="rounded-2xl border border-academy-line/70 bg-white/70 p-4 dark:border-white/10 dark:bg-white/5">
-                <p className="planning-accent-text text-[9px] font-black uppercase tracking-[.16em]">{label}</p>
+                <p className="text-[9px] font-black uppercase tracking-[.16em] text-academy-muted/70">{label}</p>
                 <p className="mt-2 text-sm font-black leading-6 text-academy-ink dark:text-white">{value}</p>
               </div>
             ))}
@@ -767,7 +770,7 @@ function RegistrationModal({
           </div>
 
           <div className="mt-8 rounded-2xl border border-academy-line/70 bg-academy-bg/70 p-4 dark:border-white/10 dark:bg-black/15">
-            <p className="planning-accent-text text-[9px] font-black uppercase tracking-[.16em]">Financement</p>
+            <p className="text-[9px] font-black uppercase tracking-[.16em] text-academy-muted/70">Financement</p>
             <p className="mt-2 text-sm font-semibold leading-6 text-academy-muted">
               CPF, France Travail, employeur ou paiement personnel : l’équipe vous aide à identifier le dispositif adapté.
             </p>
@@ -775,17 +778,17 @@ function RegistrationModal({
         </div>
 
         <div className="bg-[#101a29] p-5 text-white sm:p-8 lg:p-10">
-          <p className="planning-accent-text-on-dark text-[11px] font-black uppercase tracking-[.2em]">Votre inscription</p>
+          <p className="text-[11px] font-black uppercase tracking-[.2em] text-academy-gold">Votre inscription</p>
           <h3 className="mt-3 pr-10 text-2xl font-black tracking-tight sm:text-3xl">Finalisez votre demande</h3>
           <p className="mt-2 text-sm leading-6 text-white/65">L’équipe vous répond sous 24 h ouvrées.</p>
 
           <div className="mt-7 grid grid-cols-3 gap-2">
             {['Projet', 'Coordonnées', 'Confirmation'].map((step, index) => (
               <div key={step} className="text-center">
-                <span className={'mx-auto grid h-8 w-8 place-items-center rounded-full text-xs font-black ' + (index === 0 ? 'planning-accent-bg' : 'bg-white/10 text-white/55')}>
+                <span className={'mx-auto grid h-8 w-8 place-items-center rounded-full text-xs font-black ' + (index === 0 ? 'bg-academy-gold text-academy-gold-text' : 'bg-white/10 text-white/55')}>
                   {index + 1}
                 </span>
-                <span className={'mt-2 block text-[8px] font-black uppercase tracking-[.1em] ' + (index === 0 ? 'planning-accent-text-on-dark' : 'text-white/45')}>{step}</span>
+                <span className={'mt-2 block text-[8px] font-black uppercase tracking-[.1em] ' + (index === 0 ? 'text-academy-gold' : 'text-white/45')}>{step}</span>
               </div>
             ))}
           </div>
@@ -821,7 +824,7 @@ function RegistrationModal({
               <input name="email" type="email" placeholder="E-mail" required className="rounded-2xl border border-white/15 bg-white/5 px-4 py-3.5 text-sm font-bold text-white placeholder:text-white/45" />
             </div>
             <textarea name="message" rows={3} placeholder="Précisez votre projet ou vos contraintes…" className="resize-none rounded-2xl border border-white/15 bg-white/5 px-4 py-3.5 text-sm font-bold text-white placeholder:text-white/45" />
-            <button type="submit" className="planning-accent-bg planning-accent-shadow mt-1 inline-flex items-center justify-center gap-2 rounded-full px-5 py-4 text-sm font-black transition hover:-translate-y-0.5 hover:brightness-95">
+            <button type="submit" className="mt-1 inline-flex items-center justify-center gap-2 rounded-full bg-academy-gold px-5 py-4 text-sm font-black text-academy-gold-text shadow-soft transition hover:-translate-y-0.5">
               Envoyer ma demande
               <Icon name="arrow" className="h-4 w-4" />
             </button>
@@ -876,7 +879,7 @@ function MissingDates({
               className={planningThemeClass(option.accent) + ' planning-accent-card group rounded-[1.5rem] border bg-academy-surface p-5 shadow-[0_16px_45px_rgba(54,40,20,.06)] transition hover:-translate-y-1'}
             >
               <div className="flex items-center justify-between">
-                <span className="planning-accent-bg grid h-9 w-9 place-items-center rounded-full text-[10px] font-black">
+                <span className="planning-accent-icon grid h-9 w-9 place-items-center rounded-full text-[10px] font-black">
                   0{index + 1}
                 </span>
                 <span className="planning-accent-text text-[9px] font-black uppercase tracking-[.14em]">{option.label}</span>
@@ -885,7 +888,7 @@ function MissingDates({
               <p className="mt-3 min-h-[3.5rem] text-sm font-semibold leading-6 text-academy-muted">{option.description}</p>
               <span className="mt-6 flex items-center justify-between border-t border-academy-line/60 pt-4 text-xs font-black text-academy-ink dark:text-white">
                 Être prévenu à l’ouverture
-                <span className="planning-accent-bg grid h-8 w-8 place-items-center rounded-full transition group-hover:translate-x-1">
+                <span className="planning-neutral-action grid h-8 w-8 place-items-center rounded-full transition group-hover:translate-x-1">
                   <Icon name="arrow" className="h-4 w-4" />
                 </span>
               </span>
@@ -1096,14 +1099,17 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
                   type="button"
                   aria-pressed={selected}
                   onClick={() => chooseFormation(formation.key)}
-                  className={planningThemeClass(formation.accent) + ' group flex min-h-[13.5rem] flex-col rounded-[1.45rem] border p-5 text-left transition duration-300 hover:-translate-y-1 ' + (selected ? 'planning-accent-bg planning-accent-border planning-accent-shadow' : 'planning-accent-card bg-white/[.055]')}
+                  className={planningThemeClass(formation.accent) + ' planning-formation-card group flex min-h-[13.5rem] flex-col rounded-[1.45rem] border p-5 text-left transition duration-300 hover:-translate-y-1 ' + (selected ? 'planning-formation-card-selected' : '')}
                 >
-                  <span className={'text-[10px] font-black uppercase tracking-[.14em] ' + (selected ? 'planning-accent-on-solid-muted' : 'planning-accent-text-on-dark')}>0{index + 1} · {formation.eyebrow}</span>
+                  <span className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[.14em] text-white/55">
+                    <span aria-hidden="true" className="planning-accent-indicator h-2 w-2 shrink-0 rounded-full" />
+                    0{index + 1} · {formation.eyebrow}
+                  </span>
                   <span className="mt-5 block text-xl font-black tracking-tight">{formation.label}</span>
-                  <span className={'mt-2 block text-xs font-semibold leading-5 ' + (selected ? 'planning-accent-on-solid-muted' : 'text-white/48')}>{formation.description}</span>
-                  <span className={'mt-auto flex items-center justify-between border-t pt-4 text-[10px] font-black uppercase tracking-[.08em] ' + (selected ? 'border-black/10' : 'border-white/10')}>
+                  <span className="mt-2 block text-xs font-semibold leading-5 text-white/48">{formation.description}</span>
+                  <span className="mt-auto flex items-center justify-between border-t border-white/10 pt-4 text-[10px] font-black uppercase tracking-[.08em]">
                     {count ? count + (count > 1 ? ' sessions' : ' session') : 'Créer une alerte'}
-                    <span className={'grid h-7 w-7 place-items-center rounded-full transition group-hover:translate-x-1 ' + (selected ? 'bg-[#111b2a] text-white' : 'planning-accent-bg')}>
+                    <span className={'grid h-7 w-7 place-items-center rounded-full transition group-hover:translate-x-1 ' + (selected ? 'bg-academy-gold text-academy-gold-text' : 'bg-white/10 text-white')}>
                       <Icon name="arrow" className="h-3.5 w-3.5" />
                     </span>
                   </span>
@@ -1116,7 +1122,7 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
 
       <section id="sessions" className={activePlanningTheme + ' page-container py-14 sm:py-20'}>
         <div className="max-w-4xl">
-          <p className="planning-accent-text text-[11px] font-black uppercase tracking-[.22em]">{selectedFormationDetails ? 'Formation sélectionnée' : 'Toutes les sessions'}</p>
+          <p className="text-[11px] font-black uppercase tracking-[.22em] text-academy-gold-strong">{selectedFormationDetails ? 'Formation sélectionnée' : 'Toutes les sessions'}</p>
           <h2 className="mt-4 text-3xl font-black tracking-tight text-academy-ink dark:text-white sm:text-5xl">
             {selectedFormationDetails ? <>Les prochaines dates <span className="planning-accent-text">{selectedFormationDetails.label}</span>.</> : 'Trouvez la date qui correspond à votre projet.'}
           </h2>
@@ -1161,12 +1167,15 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
                     setActive('all');
                     setShowAll(false);
                   }}
-                  className={planningThemeClass(formation.accent) + ' shrink-0 rounded-full border px-3.5 py-3 text-xs font-black transition ' + (activeFormation === formation.key ? 'planning-accent-bg planning-accent-border planning-accent-shadow' : 'planning-accent-chip bg-white dark:bg-white/5')}
+                  className={planningThemeClass(formation.accent) + ' shrink-0 rounded-full border px-3.5 py-3 text-xs font-black transition ' + (activeFormation === formation.key ? 'planning-accent-selected' : 'border-academy-line bg-white text-academy-muted hover:border-academy-ink/25 hover:text-academy-ink dark:bg-white/5')}
                 >
-                  {formation.label}
+                  <span className="flex items-center gap-2">
+                    <span aria-hidden="true" className="planning-accent-indicator h-1.5 w-1.5 shrink-0 rounded-full" />
+                    {formation.label}
+                  </span>
                 </button>
               ))}
-              <button type="button" onClick={() => setFiltersOpen((value) => !value)} className="planning-accent-bg inline-flex shrink-0 items-center gap-2 rounded-full border border-transparent px-4 py-3 text-xs font-black xl:hidden">
+              <button type="button" onClick={() => setFiltersOpen((value) => !value)} className="planning-neutral-action inline-flex shrink-0 items-center gap-2 rounded-full border border-transparent px-4 py-3 text-xs font-black xl:hidden">
                 <Icon name="filter" className="h-4 w-4" />
                 Filtrer
               </button>
@@ -1207,7 +1216,7 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
               <p className="mt-1 text-sm font-semibold text-academy-muted">Triées par prochaine date de rentrée</p>
             </div>
             <div className="flex w-fit rounded-full border border-academy-line bg-white p-1 dark:bg-white/5">
-              <button type="button" aria-pressed="true" className="planning-accent-bg rounded-full px-4 py-2.5 text-xs font-black">Vue liste</button>
+              <button type="button" aria-pressed="true" className="planning-neutral-action rounded-full px-4 py-2.5 text-xs font-black">Vue liste</button>
               <button type="button" aria-pressed="false" onClick={() => setView('calendar')} className="rounded-full px-4 py-2.5 text-xs font-black text-academy-muted transition hover:text-academy-ink">Vue calendrier</button>
             </div>
           </div>
@@ -1239,7 +1248,7 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
             <p className="mx-auto mt-3 max-w-xl text-sm font-semibold leading-6 text-academy-muted">Modifiez les filtres ou créez une alerte pour être prévenu de la prochaine date disponible.</p>
             <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
               <button type="button" onClick={resetFilters} className="rounded-full bg-[#101a29] px-5 py-3 text-sm font-black text-white">Réinitialiser les filtres</button>
-              <Link href="/contact?motif=alerte-planning" className="planning-accent-bg rounded-full px-5 py-3 text-sm font-black">Créer une alerte</Link>
+              <Link href="/contact?motif=alerte-planning" className="planning-neutral-action rounded-full px-5 py-3 text-sm font-black">Créer une alerte</Link>
             </div>
           </div>
         )}
@@ -1324,7 +1333,7 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
         <Link href="tel:0422470768" className="rounded-2xl bg-[#101a29] px-3 py-3 text-center text-xs font-black text-white">Appeler</Link>
         <Link href="/contact?motif=alerte-planning" className="rounded-2xl border border-academy-line bg-white px-3 py-3 text-center text-xs font-black text-academy-ink">Alerte</Link>
         {nextSession ? (
-          <button type="button" onClick={() => setSelectedSession(nextSession)} className={planningThemeForSession(nextSession) + ' planning-accent-bg rounded-2xl px-3 py-3 text-center text-xs font-black'}>S’inscrire</button>
+          <button type="button" onClick={() => setSelectedSession(nextSession)} className="planning-neutral-action rounded-2xl px-3 py-3 text-center text-xs font-black">S’inscrire</button>
         ) : (
           <Link href="/contact" className="rounded-2xl bg-academy-gold px-3 py-3 text-center text-xs font-black text-academy-gold-text">Infos</Link>
         )}
