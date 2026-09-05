@@ -255,6 +255,7 @@ export function DespChoiceReferencePage({ sessions }: { sessions: TrainingDatesP
       <TrainingDatesPricingSection
         sessions={sessions}
         theme="orange"
+        seatCapacity={20}
         showDeliveryPeriods
         showLocationFilter
         defaultPrice="À partir de 3 800 €"
