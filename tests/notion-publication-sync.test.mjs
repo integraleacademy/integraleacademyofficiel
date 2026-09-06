@@ -6,6 +6,10 @@ const workflow = readFileSync(
   new URL('../.github/workflows/notion-site-officiel-pr-sync.yml', import.meta.url),
   'utf8',
 );
+const publishWorkflow = readFileSync(
+  new URL('../.github/workflows/notion-work-publish.yml', import.meta.url),
+  'utf8',
+);
 
 test('la fermeture d’une PR Work Notion déclenche la synchronisation', () => {
   assert.match(workflow, /pull_request:\s*\n\s+branches: \[main\]\s*\n\s+types: \[closed\]/);
@@ -43,4 +47,13 @@ test('le workflow refuse toute page hors du périmètre Notion attendu', () => {
   const writePosition = workflow.indexOf('notion_request("PATCH", payload)');
   assert.ok(readPosition >= 0, 'lecture préalable de la page absente');
   assert.ok(writePosition > readPosition, 'le PATCH doit intervenir après le contrôle de périmètre');
+});
+
+test('une fusion par GitHub Actions déclenche explicitement la synchronisation Notion', () => {
+  assert.match(workflow, /workflow_dispatch:\s*\n\s+inputs:/);
+  assert.ok(workflow.includes("github.event_name == 'workflow_dispatch'"));
+  assert.ok(publishWorkflow.includes('actions: write'));
+  assert.ok(publishWorkflow.includes('gh workflow run notion-site-officiel-pr-sync.yml'));
+  assert.ok(publishWorkflow.includes('-f page_id="$PAGE_ID"'));
+  assert.ok(publishWorkflow.includes('-f pr_number="$PR_NUMBER"'));
 });
