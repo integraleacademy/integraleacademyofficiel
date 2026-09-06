@@ -33,6 +33,15 @@ test('les repères visuels propres à la page APS utilisent le bleu', () => {
   assert.doesNotMatch(programMarkup, /emerald|academy-gold|yellow-/);
 });
 
+test('la simulation animée de ronde reste visible dans le bloc pratique', () => {
+  assert.ok(apsPage.includes("index === 0 ? styles.practicalPrimary : ''"));
+  assert.ok(apsPage.includes('styles.practiceVisual'));
+  assert.ok(apsPage.includes('styles.scanLine'));
+  assert.ok(apsPage.includes('Simulation animée d’une ronde de sécurité'));
+  assert.match(apsStyles, /\.scanLine[\s\S]*?animation: radar 5\.5s linear infinite;/);
+  assert.match(apsStyles, /@keyframes radar/);
+});
+
 test('la page APS trie les sessions et limite la vue initiale aux deux prochaines', () => {
   assert.ok(apsPage.includes('sortSessionsChronologically(sessions.length ? sessions : fallbackSessions)'));
   assert.ok(apsPage.includes('initialSessionLimit={2}'));
