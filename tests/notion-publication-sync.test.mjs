@@ -57,3 +57,8 @@ test('une fusion par GitHub Actions déclenche explicitement la synchronisation 
   assert.ok(publishWorkflow.includes('-f page_id="$PAGE_ID"'));
   assert.ok(publishWorkflow.includes('-f pr_number="$PR_NUMBER"'));
 });
+
+test('le workflow de publication refuse une PR d’un autre auteur', () => {
+  assert.ok(publishWorkflow.includes('--json state,baseRefName,headRefName,headRefOid,body,author'));
+  assert.ok(publishWorkflow.includes('[ "$author" != "integraleacademy" ]'));
+});
