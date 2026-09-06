@@ -20,13 +20,14 @@ test('les quatre pages affichent leur animation métier dédiée', () => {
   }
 });
 
-test('les cinq pages BTS affichent chacune une scène métier dédiée', () => {
+test('les six pages BTS affichent chacune une scène métier dédiée', () => {
   for (const [path, variant] of [
     ['src/components/BtsMosReferencePage.tsx', 'mos'],
     ['src/components/BtsNdrcReferencePage.tsx', 'ndrc'],
     ['src/components/BtsMcoReferencePage.tsx', 'mco'],
     ['src/components/BtsCiReferencePage.tsx', 'ci'],
     ['src/components/BtsCgReferencePage.tsx', 'cg'],
+    ['src/components/BtsPiReferencePage.tsx', 'pi'],
   ]) {
     const source = read(path);
     assert.ok(source.includes("import { MissionAnimation } from '@/components/MissionAnimation';"), `import manquant : ${path}`);
@@ -53,13 +54,14 @@ test('chaque scène décrit un geste métier distinct et accessible', () => {
     'Simulation animée du pilotage des ventes et d’une unité commerciale en BTS MCO',
     'Simulation animée d’une opération commerciale import-export en BTS Commerce International',
     'Simulation animée du traitement comptable jusqu’au tableau de bord en BTS Comptabilité et Gestion',
+    'Simulation animée du parcours immobilier du mandat à la signature en BTS Professions Immobilières',
     'Simulation animée du parcours de formation initiale DESP vers le pilotage d’une entreprise de sécurité',
     'Simulation animée de la constitution d’un dossier de preuves DESP VAE jusqu’au jury',
   ]) {
     assert.ok(component.includes(label), `libellé accessible manquant : ${label}`);
   }
 
-  for (const marker of ['a3pRoute', 'networkActive', 'floorPlan', 'vtcRoute', 'mosRoute', 'ndrcRoute', 'mcoRoute', 'ciRouteOne', 'cgRoute', 'despInitialRoute', 'evidencePaths']) {
+  for (const marker of ['a3pRoute', 'networkActive', 'floorPlan', 'vtcRoute', 'mosRoute', 'ndrcRoute', 'mcoRoute', 'ciRouteOne', 'cgRoute', 'piRoute', 'despInitialRoute', 'evidencePaths']) {
     assert.ok(component.includes(marker), `scénario métier manquant : ${marker}`);
   }
 
