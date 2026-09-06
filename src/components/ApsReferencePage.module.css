@@ -141,12 +141,24 @@
 .courseNav {
   position: sticky;
   z-index: 40;
-  top: 0;
+  top: 3.5rem;
   border-bottom: 1px solid rgba(13,23,37,.1);
   padding: .65rem 1rem;
   background: rgba(255,253,248,.95);
   box-shadow: 0 14px 38px rgba(13,23,37,.1);
   backdrop-filter: blur(18px);
+}
+
+@media (min-width: 640px) {
+  .courseNav {
+    top: 3.875rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .courseNav {
+    top: 4.75rem;
+  }
 }
 
 .courseNavShell {

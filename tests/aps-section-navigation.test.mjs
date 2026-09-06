@@ -50,7 +50,8 @@ test('la section active est annoncée et mise à jour pendant le défilement', (
 });
 
 test('la navigation reste lisible et utilisable sur ordinateur comme sur mobile', () => {
-  assert.match(styles, /\.courseNav\s*\{[^}]*position:\s*sticky;[^}]*backdrop-filter:\s*blur\(18px\);/s);
+  assert.match(styles, /\.courseNav\s*\{[^}]*position:\s*sticky;[^}]*top:\s*3\.5rem;[^}]*backdrop-filter:\s*blur\(18px\);/s);
+  assert.match(styles, /@media \(min-width: 1280px\)[\s\S]*\.courseNav\s*\{[^}]*top:\s*4\.75rem;/);
   assert.match(styles, /\.courseNavScroller\s*\{[^}]*overflow-x:\s*auto;/s);
   assert.match(styles, /\.courseNavLink\s*\{[^}]*font-size:\s*\.75rem;/s);
   assert.match(styles, /\.courseNavLinkActive\s*\{[^}]*background:\s*#0d1725;/s);
