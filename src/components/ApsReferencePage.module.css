@@ -138,16 +138,171 @@
   background: rgba(255,255,255,.075);
 }
 
-.nav {
-  box-shadow: 0 14px 45px rgba(13,23,37,.08);
+.courseNav {
+  position: sticky;
+  z-index: 40;
+  top: 0;
+  border-bottom: 1px solid rgba(13,23,37,.1);
+  padding: .65rem 1rem;
+  background: rgba(255,253,248,.95);
+  box-shadow: 0 14px 38px rgba(13,23,37,.1);
+  backdrop-filter: blur(18px);
 }
 
-.navRail {
-  border: 1px solid rgba(24,34,46,.08);
-  border-radius: 999px;
-  padding: .45rem .55rem .45rem 1rem;
-  background: rgba(255,253,248,.96);
-  box-shadow: 0 8px 28px rgba(13,23,37,.08);
+.courseNavShell {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: .75rem;
+  align-items: center;
+}
+
+.courseNavIdentity {
+  display: flex;
+  min-width: max-content;
+  align-items: center;
+  gap: .65rem;
+  border-right: 1px solid rgba(13,23,37,.1);
+  padding-right: .85rem;
+  color: #0d1725;
+  text-decoration: none;
+}
+
+.courseNavMark {
+  display: grid;
+  width: 2.55rem;
+  height: 2.55rem;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: .85rem;
+  color: white;
+  background: #2563eb;
+  box-shadow: 0 8px 20px rgba(37,99,235,.2);
+  font-size: .65rem;
+  font-weight: 900;
+  letter-spacing: .08em;
+}
+
+.courseNavIdentityCopy {
+  display: grid;
+  gap: .05rem;
+}
+
+.courseNavKicker {
+  color: #64748b;
+  font-size: .55rem;
+  font-weight: 900;
+  letter-spacing: .16em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.courseNavTitle {
+  font-size: .92rem;
+  font-weight: 950;
+  letter-spacing: -.025em;
+  line-height: 1.1;
+}
+
+.courseNavScroller {
+  min-width: 0;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+
+.courseNavScroller::-webkit-scrollbar {
+  display: none;
+}
+
+.courseNavLinks {
+  display: flex;
+  width: max-content;
+  min-width: 100%;
+  gap: .3rem;
+  align-items: center;
+}
+
+.courseNavLink {
+  display: inline-flex;
+  min-height: 2.55rem;
+  align-items: center;
+  gap: .42rem;
+  border: 1px solid transparent;
+  border-radius: .8rem;
+  padding: .55rem .65rem;
+  color: #526071;
+  background: #f4efe6;
+  font-size: .75rem;
+  font-weight: 850;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color .2s ease, background .2s ease, border-color .2s ease, transform .2s ease;
+}
+
+.courseNavLink:hover {
+  transform: translateY(-1px);
+  border-color: #bfdbfe;
+  color: #0d1725;
+  background: #eff6ff;
+}
+
+.courseNavLinkActive {
+  border-color: #0d1725;
+  color: white;
+  background: #0d1725;
+  box-shadow: 0 8px 20px rgba(13,23,37,.16);
+}
+
+.courseNavLinkActive:hover {
+  border-color: #0d1725;
+  color: white;
+  background: #0d1725;
+}
+
+.courseNavIndex {
+  color: #2563eb;
+  font-size: .58rem;
+  font-weight: 950;
+  letter-spacing: .06em;
+}
+
+.courseNavLinkActive .courseNavIndex {
+  color: #93c5fd;
+}
+
+.courseNavCta {
+  display: inline-flex;
+  min-height: 2.65rem;
+  min-width: max-content;
+  align-items: center;
+  justify-content: center;
+  gap: .65rem;
+  border-radius: .85rem;
+  padding: .65rem .75rem .65rem 1rem;
+  color: #231a07;
+  background: linear-gradient(135deg, #f7d57d, #f0b52e);
+  box-shadow: 0 10px 24px rgba(218,164,49,.2);
+  font-size: .78rem;
+  font-weight: 950;
+  text-decoration: none;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.courseNavCta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 30px rgba(218,164,49,.28);
+}
+
+.courseNavCtaArrow {
+  display: grid;
+  width: 1.65rem;
+  height: 1.65rem;
+  place-items: center;
+  border-radius: .55rem;
+  color: white;
+  background: #0d1725;
+  font-size: .78rem;
 }
 
 .section {
@@ -676,13 +831,59 @@
 
 }
 
-@media (max-width: 1023px) {
-  .navRail {
-    border-radius: 1.25rem;
+@media (max-width: 1180px) {
+  .courseNavShell {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .courseNavIdentity {
+    border-right: 0;
+  }
+
+  .courseNavScroller {
+    grid-column: 1 / -1;
+    grid-row: 2;
   }
 }
 
 @media (max-width: 767px) {
+  .courseNav {
+    padding: .5rem .75rem;
+  }
+
+  .courseNavShell {
+    gap: .5rem;
+  }
+
+  .courseNavMark {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: .72rem;
+  }
+
+  .courseNavTitle {
+    font-size: .84rem;
+  }
+
+  .courseNavCta {
+    min-height: 2.35rem;
+    gap: .45rem;
+    padding: .5rem .55rem .5rem .75rem;
+    font-size: .72rem;
+  }
+
+  .courseNavCtaArrow {
+    width: 1.45rem;
+    height: 1.45rem;
+    border-radius: .45rem;
+  }
+
+  .courseNavLink {
+    min-height: 2.4rem;
+    padding: .5rem .62rem;
+    font-size: .72rem;
+  }
+
   .heroPhoto {
     object-position: 66% center;
   }
@@ -727,6 +928,8 @@
   }
 
   .liftCard,
+  .courseNavLink,
+  .courseNavCta,
   .practicalCard,
   .programItem,
   .examCard,
