@@ -16,6 +16,7 @@ jobs:
   sync:
     name: Mettre à jour le statut Notion
     if: >-
+      github.event.pull_request.user.login == 'integraleacademy' &&
       startsWith(github.event.pull_request.head.ref, 'work/notion-site-officiel-') &&
       contains(github.event.pull_request.body, '<!-- notion-page-id:')
     runs-on: ubuntu-latest
@@ -60,6 +61,8 @@ jobs:
           BRANCH: ${{ github.event.pull_request.head.ref }}
           MERGED: ${{ github.event.pull_request.merged }}
           RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          EXPECTED_DATABASE_ID: 7f12fe92-dbc4-40c8-af4e-77578b5dbfc0
+          EXPECTED_PLATFORM: Site internet officiel
         run: |
           python - <<'PY'
           import json
@@ -85,6 +88,77 @@ jobs:
                   return []
               return [{"type": "text", "text": {"content": value}}]
 
+          def normalize_id(value):
+              return "".join(
+                  character for character in (value or "") if character.isalnum()
+              ).lower()
+
+          def notion_request(method, payload=None):
+              data = None
+              if payload is not None:
+                  data = json.dumps(payload, ensure_ascii=False).encode("utf-8")
+              request = urllib.request.Request(
+                  f"https://api.notion.com/v1/pages/{os.environ['PAGE_ID']}",
+                  data=data,
+                  method=method,
+                  headers={
+                      "Authorization": f"Bearer {token}",
+                      "Notion-Version": "2022-06-28",
+                      "Content-Type": "application/json",
+                  },
+              )
+
+              for attempt in range(1, 4):
+                  try:
+                      with urllib.request.urlopen(request, timeout=20) as response:
+                          if response.status != 200:
+                              raise SystemExit(
+                                  f"Notion a répondu avec le statut HTTP {response.status}."
+                              )
+                          return json.load(response)
+                  except urllib.error.HTTPError as exc:
+                      detail = exc.read().decode("utf-8", errors="replace")
+                      transient = exc.code == 429 or 500 <= exc.code <= 599
+                      if not transient or attempt == 3:
+                          raise SystemExit(
+                              f"Échec de la requête Notion {method} ({exc.code}) : {detail}"
+                          )
+                      retry_after = exc.headers.get("Retry-After", "")
+                      requested_delay = (
+                          int(retry_after) if retry_after.isdigit() else 2 ** (attempt - 1)
+                      )
+                      delay = min(requested_delay, 30)
+                      print(
+                          f"Notion indisponible ({exc.code}), "
+                          f"nouvelle tentative dans {delay}s."
+                      )
+                      time.sleep(delay)
+                  except urllib.error.URLError as exc:
+                      if attempt == 3:
+                          raise SystemExit(f"Notion reste inaccessible : {exc.reason}")
+                      delay = 2 ** (attempt - 1)
+                      print(f"Notion inaccessible, nouvelle tentative dans {delay}s.")
+                      time.sleep(delay)
+
+          page = notion_request("GET")
+          parent = page.get("parent") or {}
+          if (
+              parent.get("type") != "database_id"
+              or normalize_id(parent.get("database_id"))
+              != normalize_id(os.environ["EXPECTED_DATABASE_ID"])
+          ):
+              raise SystemExit(
+                  "La page Notion n’appartient pas à la base « 🧠 Mon cerveau » attendue."
+              )
+
+          platform_property = (page.get("properties") or {}).get("Plateforme") or {}
+          platform = (platform_property.get("select") or {}).get("name")
+          if platform != os.environ["EXPECTED_PLATFORM"]:
+              raise SystemExit(
+                  "La page Notion n’a pas la plateforme "
+                  "« Site internet officiel » attendue."
+              )
+
           payload = {
               "properties": {
                   "Statut": {"select": {"name": status}},
@@ -97,43 +171,7 @@ jobs:
               }
           }
 
-          request = urllib.request.Request(
-              f"https://api.notion.com/v1/pages/{os.environ['PAGE_ID']}",
-              data=json.dumps(payload, ensure_ascii=False).encode("utf-8"),
-              method="PATCH",
-              headers={
-                  "Authorization": f"Bearer {token}",
-                  "Notion-Version": "2022-06-28",
-                  "Content-Type": "application/json",
-              },
-          )
-
-          for attempt in range(1, 4):
-              try:
-                  with urllib.request.urlopen(request, timeout=20) as response:
-                      if response.status != 200:
-                          raise SystemExit(
-                              f"Notion a répondu avec le statut HTTP {response.status}."
-                          )
-                  break
-              except urllib.error.HTTPError as exc:
-                  detail = exc.read().decode("utf-8", errors="replace")
-                  transient = exc.code == 429 or 500 <= exc.code <= 599
-                  if not transient or attempt == 3:
-                      raise SystemExit(
-                          f"Échec de la mise à jour Notion ({exc.code}) : {detail}"
-                      )
-                  retry_after = exc.headers.get("Retry-After", "")
-                  delay = int(retry_after) if retry_after.isdigit() else 2 ** (attempt - 1)
-                  print(f"Notion indisponible ({exc.code}), nouvelle tentative dans {delay}s.")
-                  time.sleep(delay)
-              except urllib.error.URLError as exc:
-                  if attempt == 3:
-                      raise SystemExit(f"Notion reste inaccessible : {exc.reason}")
-                  delay = 2 ** (attempt - 1)
-                  print(f"Notion inaccessible, nouvelle tentative dans {delay}s.")
-                  time.sleep(delay)
-
+          notion_request("PATCH", payload)
           print(f"Page Notion synchronisée avec le statut « {status} ».")
           PY
 
