@@ -26,6 +26,7 @@
 .mco { --accent: #34d399; --accent-rgb: 52, 211, 153; }
 .ci { --accent: #22d3ee; --accent-rgb: 34, 211, 238; }
 .cg { --accent: #f4c45a; --accent-rgb: 244, 196, 90; }
+.pi { --accent: #f4c45a; --accent-rgb: 244, 196, 90; }
 .despInitial { --accent: #fb923c; --accent-rgb: 251, 146, 60; }
 .despVae { --accent: #fb923c; --accent-rgb: 251, 146, 60; }
 
@@ -462,6 +463,7 @@
 .cartIcon,
 .planeIcon,
 .ledgerIcon,
+.keyIcon,
 .briefcaseIcon {
   fill: none;
   stroke: #fff;
@@ -629,6 +631,26 @@
   font-weight: 900;
   letter-spacing: .1em;
   text-anchor: middle;
+}
+
+.propertyPlan path {
+  fill: rgba(var(--accent-rgb), .025);
+  stroke: rgba(255, 255, 255, .11);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+
+.propertyPlan text {
+  fill: rgba(255, 255, 255, .28);
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: .13em;
+}
+
+.keyIcon {
+  stroke: var(--accent);
+  stroke-width: 3;
 }
 
 .documentStack rect,
