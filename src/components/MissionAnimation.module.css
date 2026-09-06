@@ -21,6 +21,13 @@
 .desp { --accent: #fb923c; --accent-rgb: 251, 146, 60; }
 .ssiap { --accent: #f87171; --accent-rgb: 248, 113, 113; }
 .vtc { --accent: #a78bfa; --accent-rgb: 167, 139, 250; }
+.mos { --accent: #38bdf8; --accent-rgb: 56, 189, 248; }
+.ndrc { --accent: #a78bfa; --accent-rgb: 167, 139, 250; }
+.mco { --accent: #34d399; --accent-rgb: 52, 211, 153; }
+.ci { --accent: #22d3ee; --accent-rgb: 34, 211, 238; }
+.cg { --accent: #f4c45a; --accent-rgb: 244, 196, 90; }
+.despInitial { --accent: #fb923c; --accent-rgb: 251, 146, 60; }
+.despVae { --accent: #fb923c; --accent-rgb: 251, 146, 60; }
 
 .compact {
   width: 100%;
@@ -147,6 +154,7 @@
 }
 
 .routeShadow,
+.pipelineShadow,
 .routeActive,
 .networkLine,
 .networkActive,
@@ -160,6 +168,11 @@
 .routeShadow {
   stroke: rgba(1, 8, 15, .72);
   stroke-width: 15;
+}
+
+.pipelineShadow {
+  stroke: rgba(1, 8, 15, .68);
+  stroke-width: 12;
 }
 
 .routeActive {
@@ -248,6 +261,7 @@
 }
 
 .despNode rect,
+.sceneNode rect,
 .controlPanel rect,
 .destination rect {
   fill: rgba(8, 21, 34, .9);
@@ -255,6 +269,7 @@
 }
 
 .despNode text,
+.sceneNode text,
 .destination text,
 .controlPanel text {
   fill: rgba(255, 255, 255, .48);
@@ -265,13 +280,15 @@
 }
 
 .despNode .nodeValue,
+.sceneNode .nodeValue,
 .destination .nodeValue {
   fill: #fff;
   font-size: 10px;
   letter-spacing: .03em;
 }
 
-.despNode circle {
+.despNode circle,
+.sceneNode circle {
   fill: var(--accent);
   filter: drop-shadow(0 0 8px rgba(var(--accent-rgb), .95));
   animation: nodeBlink 2.6s ease-in-out infinite;
@@ -421,8 +438,321 @@
   stroke-width: 2;
 }
 
-.motionGroup { display: block; }
-.staticGroup { display: none; }
+.teamHalo,
+.contactHalo,
+.cargoHalo {
+  fill: rgba(var(--accent-rgb), .08);
+  stroke: rgba(var(--accent-rgb), .58);
+  stroke-width: 2;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: vehiclePulse 2.2s ease-out infinite;
+}
+
+.teamIcon {
+  fill: var(--accent);
+  stroke: rgba(255, 255, 255, .82);
+  stroke-linejoin: round;
+  stroke-width: 2;
+  filter: drop-shadow(0 0 9px rgba(var(--accent-rgb), .8));
+}
+
+.teamCheck,
+.messageIcon,
+.cartIcon,
+.planeIcon,
+.ledgerIcon,
+.briefcaseIcon {
+  fill: none;
+  stroke: #fff;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.5;
+  filter: drop-shadow(0 0 7px rgba(var(--accent-rgb), .65));
+}
+
+.messageIcon {
+  fill: var(--accent);
+  stroke: rgba(255, 255, 255, .88);
+}
+
+.messageDot {
+  fill: #081522;
+}
+
+.roster rect,
+.crmPanel > rect,
+.kpiPanel > rect,
+.balancePanel > rect {
+  fill: rgba(8, 21, 34, .9);
+  stroke: rgba(255, 255, 255, .15);
+}
+
+.roster circle {
+  fill: var(--accent);
+  stroke: #e0f2fe;
+  stroke-width: 2;
+}
+
+.roster text,
+.crmPanel text,
+.kpiPanel text,
+.balancePanel text {
+  fill: rgba(255, 255, 255, .52);
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: .1em;
+  text-anchor: middle;
+}
+
+.crmPanel text,
+.kpiPanel > text:first-of-type {
+  text-anchor: start;
+}
+
+.crmPanel path {
+  fill: none;
+  stroke: var(--accent);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3;
+  filter: drop-shadow(0 0 6px rgba(var(--accent-rgb), .7));
+  stroke-dasharray: 160;
+  animation: chartDraw 5s ease-in-out infinite;
+}
+
+.crmPanel circle,
+.kpiPanel circle {
+  fill: var(--accent);
+  filter: drop-shadow(0 0 8px rgba(var(--accent-rgb), .9));
+  animation: nodeBlink 2s ease-in-out infinite;
+}
+
+.storePlan > rect {
+  fill: rgba(var(--accent-rgb), .025);
+  stroke: rgba(255, 255, 255, .14);
+  stroke-width: 2;
+}
+
+.storePlan path {
+  fill: rgba(255, 255, 255, .035);
+  stroke: rgba(255, 255, 255, .13);
+  stroke-width: 2;
+}
+
+.storePlan text {
+  fill: rgba(255, 255, 255, .34);
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: .14em;
+}
+
+.cartIcon {
+  stroke: var(--accent);
+  stroke-width: 3;
+}
+
+.kpiPanel > path {
+  fill: none;
+  stroke: rgba(255, 255, 255, .09);
+  stroke-width: 1;
+}
+
+.kpiBarOne,
+.kpiBarTwo,
+.kpiBarThree,
+.kpiBarFour {
+  fill: var(--accent);
+  opacity: .78;
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  animation: kpiGrow 3.8s ease-in-out infinite;
+}
+
+.kpiBarTwo { animation-delay: -.45s; opacity: .84; }
+.kpiBarThree { animation-delay: -.9s; opacity: .91; }
+.kpiBarFour { animation-delay: -1.35s; }
+
+.kpiPanel .kpiValue,
+.balancePanel .kpiValue {
+  fill: #fff;
+  font-size: 9px;
+  letter-spacing: .08em;
+}
+
+.globe circle,
+.globe ellipse,
+.globe path {
+  fill: none;
+  stroke: rgba(255, 255, 255, .1);
+  stroke-width: 2;
+}
+
+.globe circle {
+  fill: rgba(var(--accent-rgb), .025);
+  stroke: rgba(var(--accent-rgb), .2);
+}
+
+.worldArc {
+  fill: none;
+  stroke: rgba(var(--accent-rgb), .46);
+  stroke-linecap: round;
+  stroke-width: 2;
+  stroke-dasharray: 5 9;
+  filter: drop-shadow(0 0 6px rgba(var(--accent-rgb), .48));
+  animation: routeFlow 1.7s linear infinite;
+}
+
+.cargoBox {
+  fill: var(--accent);
+  stroke: #ecfeff;
+  stroke-width: 2;
+  filter: drop-shadow(0 0 8px rgba(var(--accent-rgb), .8));
+}
+
+.cargoLine {
+  fill: none;
+  stroke: rgba(5, 19, 29, .6);
+  stroke-width: 1.5;
+}
+
+.worldNode circle {
+  fill: #071521;
+  stroke: var(--accent);
+  stroke-width: 3;
+  filter: drop-shadow(0 0 7px rgba(var(--accent-rgb), .7));
+}
+
+.worldNode text {
+  fill: rgba(255, 255, 255, .62);
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: .1em;
+  text-anchor: middle;
+}
+
+.documentStack rect,
+.evidenceCard rect,
+.dossierNode rect {
+  fill: rgba(8, 21, 34, .93);
+  stroke: rgba(255, 255, 255, .18);
+  stroke-width: 2;
+}
+
+.documentStack path,
+.evidenceCard path,
+.dossierNode path {
+  fill: none;
+  stroke: rgba(var(--accent-rgb), .75);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+
+.documentStack text,
+.evidenceCard text,
+.dossierNode text {
+  fill: rgba(255, 255, 255, .55);
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: .12em;
+  text-anchor: middle;
+}
+
+.dossierNode rect {
+  fill: rgba(var(--accent-rgb), .09);
+  stroke: rgba(var(--accent-rgb), .66);
+  filter: drop-shadow(0 0 14px rgba(var(--accent-rgb), .22));
+}
+
+.dossierNode circle {
+  fill: rgba(var(--accent-rgb), .22);
+  stroke: var(--accent);
+  stroke-width: 2;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: hubBreathe 2.8s ease-in-out infinite;
+}
+
+.stepNode > circle {
+  fill: rgba(var(--accent-rgb), .12);
+  stroke: var(--accent);
+  stroke-width: 2;
+  filter: drop-shadow(0 0 9px rgba(var(--accent-rgb), .4));
+}
+
+.stepNumber,
+.stepLabel,
+.stepValue {
+  fill: #fff;
+  font-size: 10px;
+  font-weight: 950;
+  text-anchor: middle;
+}
+
+.stepLabel {
+  fill: var(--accent);
+  font-size: 7px;
+  letter-spacing: .11em;
+}
+
+.stepValue {
+  fill: rgba(255, 255, 255, .42);
+  font-size: 6px;
+  letter-spacing: .08em;
+}
+
+.certificationNode > path,
+.juryNode > path {
+  fill: none;
+  stroke: #fff;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 4;
+}
+
+.certificationNode text,
+.juryNode text {
+  fill: var(--accent);
+  font-size: 8px;
+  font-weight: 950;
+  letter-spacing: .14em;
+  text-anchor: middle;
+}
+
+.flowPacket > circle:not([class]) {
+  fill: var(--accent);
+  filter: drop-shadow(0 0 8px rgba(var(--accent-rgb), .9));
+}
+
+.balancePanel > circle {
+  fill: rgba(var(--accent-rgb), .08);
+  stroke: rgba(var(--accent-rgb), .32);
+  stroke-width: 2;
+}
+
+.gaugeTrack {
+  fill: none;
+  stroke: rgba(255, 255, 255, .2);
+  stroke-linecap: round;
+  stroke-width: 7;
+}
+
+.gaugeNeedle {
+  fill: none;
+  stroke: var(--accent);
+  stroke-linecap: round;
+  stroke-width: 4;
+  transform-box: fill-box;
+  transform-origin: 0 100%;
+  animation: gaugeMove 3.6s ease-in-out infinite;
+}
+
+.motionGroup,
+.flowPacket { display: block; }
+
+.staticGroup,
+.staticMarker { display: none; }
 
 @keyframes sheen {
   0%, 62% { transform: translateX(-100%); }
@@ -469,6 +799,22 @@
   50% { opacity: 1; transform: scale(1.08); }
 }
 
+@keyframes chartDraw {
+  0%, 12% { stroke-dashoffset: 160; opacity: .35; }
+  48%, 80% { stroke-dashoffset: 0; opacity: 1; }
+  100% { stroke-dashoffset: -160; opacity: .35; }
+}
+
+@keyframes kpiGrow {
+  0%, 100% { transform: scaleY(.42); opacity: .48; }
+  45%, 70% { transform: scaleY(1); opacity: 1; }
+}
+
+@keyframes gaugeMove {
+  0%, 100% { transform: rotate(-28deg); }
+  50% { transform: rotate(18deg); }
+}
+
 @media (max-width: 640px) {
   .visual { min-height: 300px; border-radius: 1.55rem; }
   .compact { min-height: 100%; border-radius: 0; }
@@ -502,7 +848,25 @@
 
   .motionGroup,
   .despPacket,
-  .signalPacket { display: none; }
+  .signalPacket,
+  .flowPacket { display: none; }
 
-  .staticGroup { display: block; }
+  .staticGroup,
+  .staticMarker { display: block; }
+
+  .teamHalo,
+  .contactHalo,
+  .cargoHalo,
+  .crmPanel path,
+  .crmPanel circle,
+  .kpiPanel circle,
+  .kpiBarOne,
+  .kpiBarTwo,
+  .kpiBarThree,
+  .kpiBarFour,
+  .worldArc,
+  .dossierNode circle,
+  .gaugeNeedle {
+    animation: none;
+  }
 }
