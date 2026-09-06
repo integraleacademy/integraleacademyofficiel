@@ -52,6 +52,24 @@ test('les cinq étapes et les quatre solutions de financement sont conservées',
   assert.ok(enrollmentSection.includes('financingOptions.map'));
 });
 
+test('le parcours reprend précisément les cinq étapes du support commercial', () => {
+  for (const wording of [
+    'Planifiez votre premier rendez-vous',
+    'Échangeons sur votre projet',
+    'Créez votre Identité Numérique',
+    'Lors d’un second entretien téléphonique',
+    'Recevez votre convocation officielle',
+    'nous vous envoyons votre convocation officielle par e-mail',
+  ]) {
+    assert.ok(apsPage.includes(wording), `étape commerciale manquante : ${wording}`);
+  }
+
+  assert.ok(apsPage.includes("const identityNumeriqueUrl = 'https://lidentitenumerique.laposte.fr/'"));
+  assert.ok(enrollmentSection.includes('href={identityNumeriqueUrl}'));
+  assert.ok(enrollmentSection.includes('Appeler le 04 22 47 07 68'));
+  assert.ok(enrollmentSection.includes('CPF ou France Travail ? Anticipez votre Identité Numérique.'));
+});
+
 test('les actions d’inscription et de financement restent accessibles et sûres', () => {
   assert.ok(enrollmentSection.includes("apsContact('commencer mon inscription')"));
   assert.ok(enrollmentSection.includes('href={apsCpfUrl} variant="blue" external'));
