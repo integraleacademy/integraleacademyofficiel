@@ -28,7 +28,7 @@ test('la section reprend la hiérarchie visuelle de l’admission BTS MOS', () =
     '[background-size:48px_48px]',
     'sm:grid-cols-2 lg:grid-cols-5',
     'border border-white/10 bg-white/7',
-    'Simple, claire, accompagnée.',
+    'Nous vous accompagnons de A à Z',
   ]) {
     assert.ok(enrollmentSection.includes(token), `repère visuel manquant : ${token}`);
   }
@@ -59,7 +59,7 @@ test('le parcours reprend précisément les cinq étapes du support commercial',
     'Créez votre Identité Numérique',
     'Lors d’un second entretien téléphonique',
     'Recevez votre convocation officielle',
-    'nous vous envoyons votre convocation officielle par e-mail',
+    'nous vous envoyons votre convocation officielle en formation',
   ]) {
     assert.ok(apsPage.includes(wording), `étape commerciale manquante : ${wording}`);
   }
@@ -68,6 +68,10 @@ test('le parcours reprend précisément les cinq étapes du support commercial',
   assert.ok(enrollmentSection.includes('href={identityNumeriqueUrl}'));
   assert.ok(enrollmentSection.includes('Appeler le 04 22 47 07 68'));
   assert.ok(enrollmentSection.includes('CPF ou France Travail ? Anticipez votre Identité Numérique.'));
+  assert.ok(enrollmentSection.includes('Du premier appel à votre entrée en formation.'));
+  assert.ok(enrollmentSection.includes('jusqu’à votre formation et l’obtention de votre diplôme'));
+  assert.ok(!enrollmentSection.includes('La prise en charge dépend de votre situation'));
+  assert.ok(!enrollmentSection.includes('Simple, claire, accompagnée.'));
 });
 
 test('les actions d’inscription et de financement restent accessibles et sûres', () => {
