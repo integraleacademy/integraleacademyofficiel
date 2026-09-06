@@ -6,6 +6,10 @@ const apsPage = readFileSync(
   new URL('../src/components/ApsReferencePage.tsx', import.meta.url),
   'utf8',
 );
+const apsStyles = readFileSync(
+  new URL('../src/components/ApsReferencePage.module.css', import.meta.url),
+  'utf8',
+);
 
 const datesStart = apsPage.indexOf('<TrainingDatesPricingSection');
 const datesEnd = apsPage.indexOf('</TrainingDatesPricingSection>', datesStart);
@@ -32,6 +36,25 @@ test('la section reprend la hiérarchie visuelle de l’admission BTS MOS', () =
   ]) {
     assert.ok(enrollmentSection.includes(token), `repère visuel manquant : ${token}`);
   }
+});
+
+test('la promesse reste sur une seule ligne dans une mise en scène premium', () => {
+  for (const token of [
+    'styles.enrollmentHero',
+    'styles.enrollmentPromise',
+    'styles.enrollmentJourney',
+    'styles.enrollmentCardFeatured',
+    'styles.enrollmentIcon',
+    'styles.enrollmentFinancePrimary',
+    'styles.enrollmentFinanceOptions',
+  ]) {
+    assert.ok(enrollmentSection.includes(token), `élément de design manquant : ${token}`);
+  }
+
+  assert.match(apsStyles, /\.enrollmentPromise\s*\{[^}]*white-space:\s*nowrap;/s);
+  assert.match(apsStyles, /\.enrollmentJourney::before\s*\{/);
+  assert.match(apsStyles, /@keyframes promiseShimmer/);
+  assert.match(apsStyles, /@media \(prefers-reduced-motion: reduce\)/);
 });
 
 test('les cinq étapes et les quatre solutions de financement sont conservées', () => {

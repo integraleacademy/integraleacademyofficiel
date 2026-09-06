@@ -353,28 +353,315 @@
   box-shadow: 0 20px 45px rgba(13,23,37,.1);
 }
 
+.enrollmentSection {
+  background:
+    radial-gradient(circle at 8% 8%, rgba(37, 99, 235, .2), transparent 26rem),
+    radial-gradient(circle at 92% 76%, rgba(14, 165, 233, .12), transparent 31rem),
+    #0a1725;
+}
+
+.enrollmentSection::before,
+.enrollmentSection::after {
+  position: absolute;
+  z-index: -5;
+  content: "";
+  border-radius: 999px;
+  pointer-events: none;
+  filter: blur(3px);
+}
+
+.enrollmentSection::before {
+  width: 34rem;
+  height: 34rem;
+  left: -20rem;
+  top: 8rem;
+  border: 1px solid rgba(96, 165, 250, .13);
+  box-shadow: 0 0 0 5rem rgba(59, 130, 246, .025), 0 0 0 10rem rgba(59, 130, 246, .018);
+  animation: enrollmentFloat 12s ease-in-out infinite alternate;
+}
+
+.enrollmentSection::after {
+  width: 26rem;
+  height: 26rem;
+  right: -14rem;
+  bottom: 4rem;
+  background: rgba(245, 195, 78, .06);
+  filter: blur(72px);
+}
+
+.enrollmentHero {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 88% 15%, rgba(96, 165, 250, .18), transparent 23rem),
+    linear-gradient(135deg, rgba(255,255,255,.075), rgba(255,255,255,.025));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 28px 80px rgba(0,0,0,.18);
+  backdrop-filter: blur(18px);
+}
+
+.enrollmentHero::before {
+  position: absolute;
+  inset: 0 14% auto;
+  height: 1px;
+  content: "";
+  background: linear-gradient(90deg, transparent, rgba(147,197,253,.7), rgba(245,195,78,.55), transparent);
+}
+
+.enrollmentHero::after {
+  position: absolute;
+  width: 17rem;
+  height: 17rem;
+  right: -8rem;
+  top: -10rem;
+  content: "";
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 50%;
+  box-shadow: 0 0 0 3.5rem rgba(255,255,255,.02), 0 0 0 7rem rgba(255,255,255,.012);
+  pointer-events: none;
+}
+
+.enrollmentPromise {
+  position: relative;
+  width: max-content;
+  max-width: 100%;
+  white-space: nowrap;
+  font-size: clamp(.82rem, 3.4vw, 3rem);
+  line-height: 1.08;
+  letter-spacing: -.045em;
+  color: transparent;
+  background: linear-gradient(100deg, #7dd3fc 0%, #dbeafe 36%, #93c5fd 58%, #f9dc8a 78%, #93c5fd 100%);
+  background-size: 210% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: promiseShimmer 8s linear infinite;
+}
+
+.enrollmentIntro {
+  position: relative;
+  border-left: 2px solid rgba(96,165,250,.62);
+  padding-left: 1.2rem;
+}
+
+.enrollmentCtaWrap {
+  min-width: 15rem;
+  isolation: isolate;
+}
+
+.enrollmentCtaWrap::before {
+  position: absolute;
+  z-index: -1;
+  width: 82%;
+  height: 72%;
+  content: "";
+  border-radius: 999px;
+  background: rgba(245,195,78,.3);
+  filter: blur(24px);
+  animation: enrollmentPulse 3.8s ease-in-out infinite;
+}
+
+.enrollmentPrimaryCta {
+  min-width: 15rem;
+  border: 1px solid rgba(255,255,255,.36);
+  box-shadow: 0 18px 46px rgba(245,195,78,.22), inset 0 1px 0 rgba(255,255,255,.5);
+}
+
+.enrollmentJourney {
+  position: relative;
+}
+
+.enrollmentGrid {
+  position: relative;
+  z-index: 1;
+}
+
 .enrollmentCard {
   position: relative;
-  min-height: 245px;
+  display: flex;
+  min-height: 320px;
+  flex-direction: column;
   overflow: hidden;
-  transition: transform .32s ease, box-shadow .32s ease, border-color .32s ease;
+  background:
+    radial-gradient(circle at 100% 100%, rgba(96,165,250,.08), transparent 38%),
+    linear-gradient(155deg, rgba(255,255,255,.075), rgba(255,255,255,.025));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.07), 0 18px 46px rgba(0,0,0,.14);
+  backdrop-filter: blur(14px);
+  transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s ease, border-color .35s ease, background .35s ease;
+}
+
+.enrollmentCard::before {
+  position: absolute;
+  inset: 0 18% auto;
+  height: 1px;
+  content: "";
+  background: linear-gradient(90deg, transparent, rgba(147,197,253,.6), transparent);
+  transition: inset .35s ease, background .35s ease;
 }
 
 .enrollmentCard::after {
   position: absolute;
   content: "";
-  width: 5rem;
-  height: 5rem;
-  right: -2.5rem;
-  bottom: -2.5rem;
+  width: 8rem;
+  height: 8rem;
+  right: -5rem;
+  bottom: -5rem;
   border-radius: 50%;
-  background: rgba(245,195,78,.12);
+  background: rgba(245,195,78,.16);
+  filter: blur(2px);
+  transition: transform .45s ease, background .35s ease;
+}
+
+.enrollmentCardFeatured {
+  border-color: rgba(96,165,250,.34);
+  background:
+    radial-gradient(circle at 85% 8%, rgba(59,130,246,.18), transparent 36%),
+    linear-gradient(155deg, rgba(255,255,255,.095), rgba(255,255,255,.035));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 22px 58px rgba(0,0,0,.19);
+}
+
+.enrollmentCardTop {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.enrollmentNumber {
+  display: grid;
+  width: 2.85rem;
+  height: 2.85rem;
+  place-items: center;
+  border: 1px solid rgba(255,255,255,.28);
+  border-radius: 1rem;
+  color: #fff;
+  background: linear-gradient(145deg, #2563eb, #38bdf8);
+  box-shadow: 0 12px 28px rgba(37,99,235,.34), inset 0 1px 0 rgba(255,255,255,.35);
+  font-size: .72rem;
+  font-weight: 900;
+  letter-spacing: .08em;
+}
+
+.enrollmentIcon {
+  display: grid;
+  width: 2.65rem;
+  height: 2.65rem;
+  place-items: center;
+  border: 1px solid rgba(147,197,253,.18);
+  border-radius: .95rem;
+  color: #bfdbfe;
+  background: rgba(59,130,246,.1);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.05);
+}
+
+.enrollmentCardTitle,
+.enrollmentCardText,
+.enrollmentCardLink {
+  position: relative;
+  z-index: 1;
+}
+
+.enrollmentCardTitle {
+  min-height: 3rem;
+  text-wrap: balance;
+}
+
+.enrollmentCardText {
+  text-wrap: pretty;
+}
+
+.enrollmentCardLink {
+  margin-top: auto;
+  padding-top: 1.25rem;
+  text-decoration: none;
 }
 
 .enrollmentCard:hover {
-  transform: translateY(-6px);
-  border-color: rgba(218,164,49,.5);
-  box-shadow: 0 20px 48px rgba(13,23,37,.11);
+  z-index: 2;
+  transform: translateY(-9px);
+  border-color: rgba(125,211,252,.55);
+  background:
+    radial-gradient(circle at 90% 10%, rgba(59,130,246,.22), transparent 38%),
+    linear-gradient(155deg, rgba(255,255,255,.11), rgba(255,255,255,.04));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.12), 0 28px 65px rgba(0,0,0,.28);
+}
+
+.enrollmentCard:hover::before {
+  inset: 0 5% auto;
+  background: linear-gradient(90deg, transparent, rgba(125,211,252,.9), rgba(245,195,78,.72), transparent);
+}
+
+.enrollmentCard:hover::after {
+  transform: scale(1.45) translate(-.6rem, -.6rem);
+  background: rgba(245,195,78,.22);
+}
+
+.enrollmentFinanceGrid {
+  position: relative;
+}
+
+.enrollmentFinancePrimary,
+.enrollmentFinanceOptions {
+  position: relative;
+  overflow: hidden;
+}
+
+.enrollmentFinancePrimary {
+  background:
+    radial-gradient(circle at 100% 0%, rgba(96,165,250,.18), transparent 16rem),
+    linear-gradient(145deg, #fffdf8, #f8f4eb);
+  box-shadow: 0 30px 80px rgba(0,0,0,.22), inset 0 1px 0 #fff;
+}
+
+.enrollmentFinancePrimary::after {
+  position: absolute;
+  width: 13rem;
+  height: 13rem;
+  right: -7rem;
+  bottom: -8rem;
+  content: "";
+  border: 1px solid rgba(37,99,235,.11);
+  border-radius: 50%;
+  box-shadow: 0 0 0 2.5rem rgba(37,99,235,.025), 0 0 0 5rem rgba(37,99,235,.018);
+}
+
+.identityCallout {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  background: linear-gradient(135deg, #eff6ff, #e0f2fe);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 14px 35px rgba(37,99,235,.09);
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.identityCallout::after {
+  position: absolute;
+  width: 5rem;
+  height: 180%;
+  left: -7rem;
+  top: -40%;
+  content: "";
+  transform: rotate(20deg);
+  background: rgba(255,255,255,.5);
+  transition: left .65s ease;
+  pointer-events: none;
+}
+
+.identityCallout:hover {
+  transform: translateY(-3px);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 20px 44px rgba(37,99,235,.14);
+}
+
+.identityCallout:hover::after {
+  left: 115%;
+}
+
+.enrollmentFinanceOptions {
+  background:
+    radial-gradient(circle at 92% 4%, rgba(56,189,248,.18), transparent 24rem),
+    radial-gradient(circle at 2% 100%, rgba(245,195,78,.1), transparent 22rem),
+    linear-gradient(145deg, rgba(59,130,246,.13), rgba(255,255,255,.035));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 28px 70px rgba(0,0,0,.18);
 }
 
 .financePanel {
@@ -403,13 +690,30 @@
 }
 
 .financeCard {
-  transition: transform .3s ease, background .3s ease, border-color .3s ease;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(145deg, rgba(255,255,255,.075), rgba(255,255,255,.025));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.055), 0 14px 35px rgba(0,0,0,.1);
+  transition: transform .3s ease, background .3s ease, border-color .3s ease, box-shadow .3s ease;
+}
+
+.financeCard::before {
+  position: absolute;
+  width: .42rem;
+  height: .42rem;
+  right: 1rem;
+  top: 1rem;
+  content: "";
+  border-radius: 50%;
+  background: #7dd3fc;
+  box-shadow: 0 0 0 .35rem rgba(125,211,252,.08), 0 0 1.2rem rgba(125,211,252,.45);
 }
 
 .financeCard:hover {
   transform: translateY(-5px);
-  border-color: rgba(245,195,78,.36);
-  background: rgba(255,255,255,.11);
+  border-color: rgba(125,211,252,.42);
+  background: linear-gradient(145deg, rgba(255,255,255,.115), rgba(255,255,255,.045));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.09), 0 22px 48px rgba(0,0,0,.18);
 }
 
 .outcomeCard {
@@ -549,6 +853,20 @@
   to { transform: scale(1.055) translate3d(-.5%, -.5%, 0); }
 }
 
+@keyframes promiseShimmer {
+  to { background-position: -210% center; }
+}
+
+@keyframes enrollmentPulse {
+  0%, 100% { transform: scale(.92); opacity: .48; }
+  50% { transform: scale(1.08); opacity: .82; }
+}
+
+@keyframes enrollmentFloat {
+  from { transform: translate3d(0, 0, 0) scale(.96); }
+  to { transform: translate3d(2.5rem, -1.5rem, 0) scale(1.04); }
+}
+
 @media (min-width: 1024px) {
   .practicalPrimary {
     grid-column: span 2;
@@ -569,6 +887,18 @@
   .examCard {
     position: relative;
     z-index: 1;
+  }
+
+  .enrollmentJourney::before {
+    position: absolute;
+    z-index: 0;
+    height: 1px;
+    left: 4%;
+    right: 4%;
+    top: 2.65rem;
+    content: "";
+    background: linear-gradient(90deg, transparent, rgba(96,165,250,.5) 8%, rgba(125,211,252,.35) 72%, rgba(245,195,78,.5) 92%, transparent);
+    box-shadow: 0 0 1.2rem rgba(96,165,250,.24);
   }
 }
 
@@ -593,6 +923,27 @@
     min-height: 430px;
     border-radius: 1.55rem;
   }
+
+  .enrollmentHero {
+    border-radius: 1.55rem;
+  }
+
+  .enrollmentIntro {
+    padding-left: .9rem;
+  }
+
+  .enrollmentCtaWrap,
+  .enrollmentPrimaryCta {
+    min-width: 0;
+  }
+
+  .enrollmentCard {
+    min-height: 0;
+  }
+
+  .enrollmentCardTitle {
+    min-height: 0;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -601,7 +952,10 @@
   .sessionCard::before,
   .practiceVisual::after,
   .scanLine,
-  .adviserCard {
+  .adviserCard,
+  .enrollmentSection::before,
+  .enrollmentPromise,
+  .enrollmentCtaWrap::before {
     animation: none;
   }
 
@@ -610,6 +964,7 @@
   .programItem,
   .examCard,
   .enrollmentCard,
+  .identityCallout,
   .financeCard,
   .outcomeCard,
   .jobCard,
