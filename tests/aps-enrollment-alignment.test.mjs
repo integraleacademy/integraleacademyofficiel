@@ -25,26 +25,24 @@ test('le parcours inscription APS devient une section dédiée après les dates 
   assert.doesNotMatch(apsPage.slice(datesStart, datesEnd), /Inscription & financement/);
 });
 
-test('la section reprend la hiérarchie visuelle de l’admission BTS MOS', () => {
+test('la section conserve une hiérarchie claire et cohérente', () => {
   for (const token of [
     'relative isolate overflow-hidden bg-[#0A1725]',
-    'radial-gradient(circle_at_14%_12%',
-    '[background-size:48px_48px]',
     'sm:grid-cols-2 lg:grid-cols-5',
     'border border-white/10 bg-white/7',
+    'rounded-[1.5rem]',
     'Nous vous accompagnons de A à Z',
   ]) {
     assert.ok(enrollmentSection.includes(token), `repère visuel manquant : ${token}`);
   }
 });
 
-test('la promesse reste sur une seule ligne dans une mise en scène premium', () => {
+test('la promesse reste sur une seule ligne dans une mise en scène épurée', () => {
   for (const token of [
-    'styles.enrollmentHero',
+    'styles.enrollmentHeader',
     'styles.enrollmentPromise',
-    'styles.enrollmentJourney',
-    'styles.enrollmentCardFeatured',
-    'styles.enrollmentIcon',
+    'styles.enrollmentCard',
+    'styles.enrollmentNumber',
     'styles.enrollmentFinancePrimary',
     'styles.enrollmentFinanceOptions',
   ]) {
@@ -52,8 +50,10 @@ test('la promesse reste sur une seule ligne dans une mise en scène premium', ()
   }
 
   assert.match(apsStyles, /\.enrollmentPromise\s*\{[^}]*white-space:\s*nowrap;/s);
-  assert.match(apsStyles, /\.enrollmentJourney::before\s*\{/);
-  assert.match(apsStyles, /@keyframes promiseShimmer/);
+  assert.match(apsStyles, /\.enrollmentCard::before\s*\{[^}]*background:\s*#60a5fa;/s);
+  assert.doesNotMatch(apsStyles, /\.enrollmentCard::after\s*\{/);
+  assert.doesNotMatch(apsStyles, /@keyframes promiseShimmer/);
+  assert.doesNotMatch(apsPage, /EnrollmentStepIcon|styles\.enrollmentIcon|styles\.enrollmentCardFeatured/);
   assert.match(apsStyles, /@media \(prefers-reduced-motion: reduce\)/);
 });
 
