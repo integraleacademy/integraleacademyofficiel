@@ -8,6 +8,7 @@ import { getSessionSeatAvailability } from '@/lib/session-seat-availability';
 import styles from './ApsReferencePage.module.css';
 
 const apsCpfUrl = 'https://www.moncompteformation.gouv.fr/espace-prive/html/#/formation/recherche/84089988400026_CQPAPS2022/84089988400026_CQPAPS2022?contexteFormation=ACTIVITE_PROFESSIONNELLE';
+const identityNumeriqueUrl = 'https://lidentitenumerique.laposte.fr/';
 const apsContact = (subject = 'inscription') => `/contact?formation=aps&objet=${encodeURIComponent(subject)}`;
 
 const fallbackSessions = [
@@ -82,16 +83,16 @@ const practicalExercises = [
 ];
 
 const enrollmentSteps = [
-  ['01', 'Prenez contact', 'Appelez-nous au 04 22 47 07 68 ou demandez un rendez-vous. Un conseiller échange avec vous sur votre projet, votre situation et la session souhaitée.'],
-  ['02', 'Vérifions votre admissibilité', 'Nous contrôlons les prérequis, les pièces d’identité et votre niveau de français, puis nous vous expliquons la démarche CNAPS.'],
-  ['03', 'Choisissez votre financement', 'CPF, France Travail, employeur, OPCO ou financement personnel : nous identifions avec vous la solution adaptée et les démarches à effectuer.'],
-  ['04', 'Finalisons les démarches', 'Nous vous accompagnons pour l’autorisation préalable CNAPS et la constitution du dossier de financement et d’inscription.'],
-  ['05', 'Recevez votre convocation', 'Après validation du financement et du dossier administratif, votre inscription est confirmée et vous recevez toutes les informations de démarrage.'],
+  ['01', 'Planifiez votre premier rendez-vous', 'Appelez-nous au 04 22 47 07 68 pour convenir d’un rendez-vous téléphonique. Nous prenons le temps de comprendre votre projet de formation.'],
+  ['02', 'Échangeons sur votre projet', 'Lors de ce premier entretien, nous abordons ensemble tous les détails pratiques, le calendrier, l’organisation de la formation et les prérequis liés à votre situation.'],
+  ['03', 'Créez votre Identité Numérique', 'Si vous utilisez votre CPF ou demandez un financement à France Travail, créez votre Identité Numérique La Poste afin de sécuriser et valider vos démarches en ligne.'],
+  ['04', 'Finalisons votre inscription', 'Lors d’un second entretien téléphonique, nous finalisons ensemble votre inscription : demande de financement à France Travail ou validation de vos droits CPF.'],
+  ['05', 'Recevez votre convocation officielle', 'Dès que votre financement et votre dossier sont validés, votre inscription est confirmée et nous vous envoyons votre convocation officielle par e-mail.'],
 ];
 
 const financingOptions = [
-  ['CPF', 'Mobilisez vos droits disponibles depuis Mon Compte Formation. Une Identité Numérique La Poste peut être nécessaire pour confirmer l’achat.'],
-  ['France Travail', 'Votre conseiller peut étudier une prise en charge selon votre projet professionnel. Nous préparons les éléments utiles à votre demande.'],
+  ['CPF', 'Mobilisez vos droits disponibles depuis Mon Compte Formation. Préparez votre Identité Numérique La Poste avant la validation de votre inscription.'],
+  ['France Travail', 'Votre conseiller peut étudier une prise en charge selon votre projet professionnel. Nous préparons la demande avec vous lors du second rendez-vous téléphonique.'],
   ['Employeur ou OPCO', 'La formation peut être financée dans le cadre d’un projet de recrutement, d’une évolution professionnelle ou du plan de développement des compétences.'],
   ['Financement personnel', 'Vous financez directement votre parcours. Des facilités de paiement peuvent être étudiées avec notre équipe selon votre dossier.'],
 ];
@@ -353,9 +354,9 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
         <div className="mt-3 flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-end">
           <div>
             <h2 className="max-w-4xl text-3xl font-black tracking-[-.05em] sm:text-4xl lg:text-5xl">
-              Votre inscription en cinq étapes. <span className="text-blue-300">Simple, claire, accompagnée.</span>
+              Du premier appel à votre convocation. <span className="text-blue-300">Simple, claire, accompagnée.</span>
             </h2>
-            <p className="mt-5 max-w-3xl text-base font-medium leading-8 text-white/62">Vous n’avez pas à deviner quelle démarche effectuer : notre équipe vérifie votre situation, vous indique les justificatifs nécessaires et suit votre dossier jusqu’à la confirmation de votre entrée en formation.</p>
+            <p className="mt-5 max-w-3xl text-base font-medium leading-8 text-white/62">Tout commence par un rendez-vous téléphonique au 04 22 47 07 68. Nous étudions votre projet, préparons avec vous les démarches CPF ou France Travail, puis suivons votre inscription jusqu’à l’envoi de votre convocation officielle.</p>
           </div>
           <CTA href={apsContact('commencer mon inscription')} variant="gold">Commencer mon inscription →</CTA>
         </div>
@@ -366,6 +367,8 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
               <span className="grid h-11 w-11 place-items-center rounded-full bg-blue-500 text-xs font-black text-white">{number}</span>
               <h3 className="mt-7 text-lg font-black">{title}</h3>
               <p className="mt-3 text-sm leading-6 text-white/55">{text}</p>
+              {number === '01' && <a href="tel:0422470768" className="mt-5 inline-flex text-sm font-black text-blue-200 transition hover:text-white">Appeler le 04 22 47 07 68 →</a>}
+              {number === '03' && <a href={identityNumeriqueUrl} target="_blank" rel="noopener noreferrer" className="mt-5 inline-flex text-sm font-black text-blue-200 transition hover:text-white">Créer mon Identité Numérique →</a>}
             </article>
           ))}
         </div>
@@ -373,8 +376,13 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
         <div className="mt-6 grid gap-5 lg:grid-cols-[.78fr_1.22fr]">
           <article className="rounded-[2rem] bg-[#FFFDF8] p-6 text-academy-ink shadow-card lg:p-8">
             <Eyebrow>Votre financement</Eyebrow>
-            <h3 className="mt-3 text-3xl font-black tracking-[-.04em]">Construisons votre solution.</h3>
+            <h3 className="mt-3 text-3xl font-black tracking-[-.04em]">Préparez votre financement.</h3>
             <p className="mt-4 leading-7 text-academy-muted">La prise en charge dépend de votre situation et de l’accord du financeur. Nous vous aidons à présenter une demande complète, sans promettre une acceptation automatique.</p>
+            <div className="mt-5 rounded-2xl border border-blue-200 bg-blue-50 p-4">
+              <p className="font-black text-blue-950">CPF ou France Travail ? Anticipez votre Identité Numérique.</p>
+              <p className="mt-2 text-sm font-semibold leading-6 text-blue-950/70">Créez votre Identité Numérique La Poste avant votre second rendez-vous afin de pouvoir valider vos droits CPF ou votre demande de financement.</p>
+              <a href={identityNumeriqueUrl} target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex text-sm font-black text-blue-700 transition hover:text-blue-950">En savoir plus sur l’Identité Numérique →</a>
+            </div>
             <div className="mt-6 flex flex-col gap-3">
               <CTA href={apsCpfUrl} variant="blue" external>Consulter la formation sur Mon Compte Formation →</CTA>
               <CTA href={apsContact('étude de financement APS')} variant="light">Faire étudier mon financement</CTA>
