@@ -10,6 +10,7 @@ type MissionAnimationVariant =
   | 'mco'
   | 'ci'
   | 'cg'
+  | 'pi'
   | 'despInitial'
   | 'despVae';
 
@@ -82,6 +83,13 @@ const copy: Record<MissionAnimationVariant, { kicker: string; status: string; ti
     title: 'Des pièces aux décisions',
     caption: 'Enregistrer · vérifier · analyser',
     label: 'Simulation animée du traitement comptable jusqu’au tableau de bord en BTS Comptabilité et Gestion',
+  },
+  pi: {
+    kicker: 'Transaction simulée',
+    status: 'Mandat actif',
+    title: 'Du mandat à la signature',
+    caption: 'Estimer · visiter · négocier',
+    label: 'Simulation animée du parcours immobilier du mandat à la signature en BTS Professions Immobilières',
   },
   despInitial: {
     kicker: 'Parcours dirigeant',
@@ -372,6 +380,43 @@ function CgScene() {
   );
 }
 
+const piRoute = 'M76 226 C145 111 229 92 302 157 S411 241 482 172 S534 96 572 99';
+
+function PiScene() {
+  const steps = [
+    [76, 226, 'MANDAT', 'ACTIF'],
+    [220, 102, 'VISITE', 'PLANIFIÉE'],
+    [407, 224, 'DOSSIER', 'COMPLET'],
+    [570, 99, 'SIGNATURE', 'VALIDÉE'],
+  ];
+
+  return (
+    <svg viewBox="0 0 640 320" preserveAspectRatio="xMidYMid meet">
+      <g className={styles.propertyPlan}>
+        <path d="M28 282V171l82-57 82 57v111M52 282v-95h116v95M75 211h25v25H75zM121 211h25v25h-25zM94 282v-29h31v29" />
+        <path d="M456 282V199h145v83M476 219h25v25h-25zM517 219h25v25h-25zM558 219h25v25h-25zM476 258h25v24h-25zM558 258h25v24h-25zM524 282v-28h28v28" />
+        <text x="52" y="103">BIEN · LOT A03</text><text x="480" y="188">RÉSIDENCE</text>
+      </g>
+      <path className={styles.pipelineShadow} d={piRoute} />
+      <path className={styles.routeActive} d={piRoute} />
+      {steps.map(([x, y, label, value]) => (
+        <g key={label} className={styles.sceneNode} transform={`translate(${x} ${y})`}>
+          <rect x="-50" y="-28" width="100" height="56" rx="15" />
+          <text y="-4">{label}</text><text className={styles.nodeValue} y="15">{value}</text><circle cx="38" cy="-14" r="4" />
+        </g>
+      ))}
+      <g className={styles.flowPacket}>
+        <animateMotion dur="7.2s" repeatCount="indefinite" path={piRoute} />
+        <circle className={styles.contactHalo} r="24" />
+        <path className={styles.keyIcon} d="M-3 1a8 8 0 1 1-5-7.5A8 8 0 0 1-3 1Zm0 0 17 17m-5-5 5-5m0 10 5-5" />
+      </g>
+      <g className={styles.staticMarker} transform="translate(302 157)">
+        <circle className={styles.contactHalo} r="24" /><path className={styles.keyIcon} d="M-3 1a8 8 0 1 1-5-7.5A8 8 0 0 1-3 1Zm0 0 17 17m-5-5 5-5m0 10 5-5" />
+      </g>
+    </svg>
+  );
+}
+
 const despInitialRoute = 'M60 188 C120 106 181 106 235 178 S339 248 392 169 S497 81 579 134';
 
 function DespInitialScene() {
@@ -447,6 +492,7 @@ const scenes = {
   mco: <McoScene />,
   ci: <CiScene />,
   cg: <CgScene />,
+  pi: <PiScene />,
   despInitial: <DespInitialScene />,
   despVae: <DespVaeScene />,
 };
