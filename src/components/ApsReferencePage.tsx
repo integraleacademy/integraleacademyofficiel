@@ -83,11 +83,11 @@ const practicalExercises = [
 ];
 
 const enrollmentSteps = [
-  ['01', 'Planifiez votre premier rendez-vous', 'Appelez-nous au 04 22 47 07 68 pour convenir d’un rendez-vous téléphonique. Nous prenons le temps de comprendre votre projet de formation.'],
+  ['01', 'Planifiez votre premier rendez-vous', 'Appelez-nous au 04 22 47 07 68 pour convenir d’un rendez-vous téléphonique. Lors de ce RDV, nous prendrons le temps de comprendre votre projet de formation et de vous guider dans les démarches à accomplir.'],
   ['02', 'Échangeons sur votre projet', 'Lors de ce premier entretien, nous abordons ensemble tous les détails pratiques, le calendrier, l’organisation de la formation et les prérequis liés à votre situation.'],
-  ['03', 'Créez votre Identité Numérique', 'Si vous utilisez votre CPF ou demandez un financement à France Travail, créez votre Identité Numérique La Poste afin de sécuriser et valider vos démarches en ligne.'],
-  ['04', 'Finalisons votre inscription', 'Lors d’un second entretien téléphonique, nous finalisons ensemble votre inscription : demande de financement à France Travail ou validation de vos droits CPF.'],
-  ['05', 'Recevez votre convocation officielle', 'Dès que votre financement et votre dossier sont validés, votre inscription est confirmée et nous vous envoyons votre convocation officielle par e-mail.'],
+  ['03', 'Créez votre Identité Numérique', 'Si vous souhaitez utiliser votre compte CPF ou demandez un financement à France Travail, vous devez créer votre Identité Numérique La Poste afin de sécuriser et valider vos démarches en ligne.'],
+  ['04', 'Finalisons votre inscription', 'Lors d’un second entretien téléphonique, nous finalisons ensemble votre inscription : mise en place du financement et démarches administratives.'],
+  ['05', 'Recevez votre convocation officielle', 'Dès que tout est finalisé, votre inscription est confirmée et nous vous envoyons votre convocation officielle en formation.'],
 ];
 
 const financingOptions = [
@@ -354,9 +354,9 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
         <div className="mt-3 flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-end">
           <div>
             <h2 className="max-w-4xl text-3xl font-black tracking-[-.05em] sm:text-4xl lg:text-5xl">
-              Du premier appel à votre convocation. <span className="text-blue-300">Simple, claire, accompagnée.</span>
+              Du premier appel à votre entrée en formation. <span className="text-blue-300">Nous vous accompagnons de A à Z</span>
             </h2>
-            <p className="mt-5 max-w-3xl text-base font-medium leading-8 text-white/62">Tout commence par un rendez-vous téléphonique au 04 22 47 07 68. Nous étudions votre projet, préparons avec vous les démarches CPF ou France Travail, puis suivons votre inscription jusqu’à l’envoi de votre convocation officielle.</p>
+            <p className="mt-5 max-w-3xl text-base font-medium leading-8 text-white/62">Tout commence par un rendez-vous téléphonique avec un membre de notre équipe. Contactez-nous au 04 22 47 07 68 pour réserver votre RDV téléphonique. Nous étudions votre projet en détails et nous vous accompagnons dans toutes vos démarches du financement, l’inscription, jusqu’à votre formation et l’obtention de votre diplôme.</p>
           </div>
           <CTA href={apsContact('commencer mon inscription')} variant="gold">Commencer mon inscription →</CTA>
         </div>
@@ -377,7 +377,6 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
           <article className="rounded-[2rem] bg-[#FFFDF8] p-6 text-academy-ink shadow-card lg:p-8">
             <Eyebrow>Votre financement</Eyebrow>
             <h3 className="mt-3 text-3xl font-black tracking-[-.04em]">Préparez votre financement.</h3>
-            <p className="mt-4 leading-7 text-academy-muted">La prise en charge dépend de votre situation et de l’accord du financeur. Nous vous aidons à présenter une demande complète, sans promettre une acceptation automatique.</p>
             <div className="mt-5 rounded-2xl border border-blue-200 bg-blue-50 p-4">
               <p className="font-black text-blue-950">CPF ou France Travail ? Anticipez votre Identité Numérique.</p>
               <p className="mt-2 text-sm font-semibold leading-6 text-blue-950/70">Créez votre Identité Numérique La Poste avant votre second rendez-vous afin de pouvoir valider vos droits CPF ou votre demande de financement.</p>
