@@ -210,7 +210,7 @@ function HeroSession({ session }: { session: any }) {
 export function ApsReferencePage({ sessions }: { sessions: any[] }) {
   const visibleSessions = sortSessionsChronologically(sessions.length ? sessions : fallbackSessions);
   const next = visibleSessions[0];
-  return <main className={`${styles.page} relative overflow-hidden pb-24 lg:pb-0`}>
+  return <main className={`${styles.page} relative pb-24 lg:pb-0`}>
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ '@context': 'https://schema.org', '@graph': [
       { '@type': 'Course', name: 'Formation Agent de Prévention et de Sécurité APS', description: 'Formation TFP APS de 175 heures à Puget-sur-Argens : 124 heures minimum en présentiel, dont 63,5 heures de pratique et 60,5 heures de théorie, et 51 heures maximum à distance.', provider: { '@type': 'Organization', name: 'Intégrale Academy', telephone: '04 22 47 07 68' } },
       { '@type': 'FAQPage', mainEntity: faq.map(item => ({ '@type': 'Question', name: item.q, acceptedAnswer: { '@type': 'Answer', text: item.a } })) },
