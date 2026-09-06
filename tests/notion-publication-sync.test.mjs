@@ -23,3 +23,9 @@ test('une PR fusionnée passe automatiquement à Publié dans Notion', () => {
 test('la validation après publication reste exclusivement manuelle', () => {
   assert.doesNotMatch(workflow, /"Validé après publication"\s*:/);
 });
+
+test('les erreurs temporaires de Notion sont retentées avant échec', () => {
+  assert.ok(workflow.includes('for attempt in range(1, 4)'));
+  assert.ok(workflow.includes('exc.code == 429 or 500 <= exc.code <= 599'));
+  assert.ok(workflow.includes('Retry-After'));
+});
