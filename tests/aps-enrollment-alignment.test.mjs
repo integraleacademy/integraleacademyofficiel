@@ -1,0 +1,60 @@
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import test from 'node:test';
+
+const apsPage = readFileSync(
+  new URL('../src/components/ApsReferencePage.tsx', import.meta.url),
+  'utf8',
+);
+
+const datesStart = apsPage.indexOf('<TrainingDatesPricingSection');
+const datesEnd = apsPage.indexOf('</TrainingDatesPricingSection>', datesStart);
+const enrollmentStart = apsPage.indexOf('<section id="inscription-financement"');
+const enrollmentEnd = apsPage.indexOf('</section>', enrollmentStart);
+const enrollmentSection = apsPage.slice(enrollmentStart, enrollmentEnd);
+
+test('le parcours inscription APS devient une section dédiée après les dates et tarifs', () => {
+  assert.ok(datesStart >= 0, 'section dates et tarifs introuvable');
+  assert.ok(datesEnd > datesStart, 'fin de la section dates et tarifs introuvable');
+  assert.ok(enrollmentStart > datesEnd, 'la section inscription doit suivre les dates et tarifs');
+  assert.ok(enrollmentEnd > enrollmentStart, 'fin de la section inscription introuvable');
+  assert.doesNotMatch(apsPage.slice(datesStart, datesEnd), /Inscription & financement/);
+});
+
+test('la section reprend la hiérarchie visuelle de l’admission BTS MOS', () => {
+  for (const token of [
+    'relative isolate overflow-hidden bg-[#0A1725]',
+    'radial-gradient(circle_at_14%_12%',
+    '[background-size:48px_48px]',
+    'sm:grid-cols-2 lg:grid-cols-5',
+    'border border-white/10 bg-white/7',
+    'Simple, claire, accompagnée.',
+  ]) {
+    assert.ok(enrollmentSection.includes(token), `repère visuel manquant : ${token}`);
+  }
+});
+
+test('les cinq étapes et les quatre solutions de financement sont conservées', () => {
+  const stepsBlock = apsPage.slice(
+    apsPage.indexOf('const enrollmentSteps = ['),
+    apsPage.indexOf('const financingOptions = ['),
+  );
+  const financingBlock = apsPage.slice(
+    apsPage.indexOf('const financingOptions = ['),
+    apsPage.indexOf('const jobs = ['),
+  );
+
+  assert.equal((stepsBlock.match(/\['0[1-5]'/g) || []).length, 5);
+  for (const title of ['CPF', 'France Travail', 'Employeur ou OPCO', 'Financement personnel']) {
+    assert.ok(financingBlock.includes(`['${title}'`), `financement manquant : ${title}`);
+  }
+  assert.ok(enrollmentSection.includes('enrollmentSteps.map'));
+  assert.ok(enrollmentSection.includes('financingOptions.map'));
+});
+
+test('les actions d’inscription et de financement restent accessibles et sûres', () => {
+  assert.ok(enrollmentSection.includes("apsContact('commencer mon inscription')"));
+  assert.ok(enrollmentSection.includes('href={apsCpfUrl} variant="blue" external'));
+  assert.ok(enrollmentSection.includes("apsContact('étude de financement APS')"));
+  assert.match(apsPage, /target="_blank" rel="noopener noreferrer"/);
+});

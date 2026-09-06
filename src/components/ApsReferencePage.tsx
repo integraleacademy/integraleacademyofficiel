@@ -343,15 +343,59 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
         <p className="font-black">Validité de l’enregistrement RNCP</p>
         <p className="mt-2 text-sm font-semibold leading-6">La fiche RNCP36648 fournie indique un enregistrement jusqu’au 1er juillet 2027. Toute session débutant après cette date est proposée sous réserve du renouvellement de l’enregistrement ou de la certification qui le remplacera.</p>
       </div>
-      <div className="mt-10">
-        <div className="flex flex-wrap items-end justify-between gap-4">
-          <div><Eyebrow>08 — Inscription & financement</Eyebrow><h3 className="mt-3 text-3xl font-black">Un parcours simple, accompagné de A à Z.</h3><p className="mt-3 max-w-3xl leading-7 text-academy-muted">Vous n’avez pas à deviner quelle démarche effectuer : notre équipe vérifie votre situation, vous indique les justificatifs nécessaires et suit votre dossier jusqu’à la confirmation de votre entrée en formation.</p></div>
-          <CTA href={apsContact('commencer mon inscription')} variant="dark">Commencer mon inscription →</CTA>
-        </div>
-        <div className="mt-6 grid gap-3 md:grid-cols-5">{enrollmentSteps.map(([number,title,text]) => <article key={number} className={`${styles.enrollmentCard} rounded-[1.4rem] border border-academy-line bg-[#FFFDF8] p-5`}><span className="grid h-10 w-10 place-items-center rounded-full bg-academy-gold text-xs font-black">{number}</span><h4 className="mt-5 text-lg font-black">{title}</h4><p className="mt-3 text-sm leading-6 text-academy-muted">{text}</p></article>)}</div>
-        <div className={`${styles.financePanel} mt-10 rounded-[2rem] p-6 text-white lg:p-8`}><div className={`${styles.financeContent} grid gap-5 lg:grid-cols-[.7fr_1.3fr]`}><div><Eyebrow light>Solutions possibles</Eyebrow><h4 className="mt-3 text-3xl font-black">Comment financer votre formation APS&nbsp;?</h4><p className="mt-4 leading-7 text-white/65">La prise en charge dépend de votre situation et de l’accord du financeur. Nous vous aidons à présenter une demande complète, sans promettre une acceptation automatique.</p></div><div className="grid gap-3 sm:grid-cols-2">{financingOptions.map(([title,text]) => <article key={title} className={`${styles.financeCard} rounded-2xl border border-white/10 bg-white/7 p-5`}><h5 className="text-lg font-black text-academy-gold">{title}</h5><p className="mt-2 text-sm leading-6 text-white/65">{text}</p></article>)}</div></div><div className={`${styles.financeContent} mt-6 flex flex-col gap-3 sm:flex-row`}><CTA href={apsCpfUrl} variant="gold" external>Consulter la formation sur Mon Compte Formation →</CTA><CTA href={apsContact('étude de financement APS')} variant="outline">Faire étudier mon financement</CTA></div></div>
-      </div>
     </TrainingDatesPricingSection>
+
+    <section id="inscription-financement" className="relative isolate overflow-hidden bg-[#0A1725] px-4 py-14 text-white sm:py-16 lg:py-20">
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_14%_12%,rgba(59,130,246,.28),transparent_27%),linear-gradient(145deg,#07111D,#112641)]" />
+      <div className="absolute inset-0 -z-10 opacity-20 [background-image:linear-gradient(rgba(255,255,255,.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.08)_1px,transparent_1px)] [background-size:48px_48px]" />
+      <div className="page-container">
+        <Eyebrow light>08 — Inscription & financement</Eyebrow>
+        <div className="mt-3 flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-end">
+          <div>
+            <h2 className="max-w-4xl text-3xl font-black tracking-[-.05em] sm:text-4xl lg:text-5xl">
+              Votre inscription en cinq étapes. <span className="text-blue-300">Simple, claire, accompagnée.</span>
+            </h2>
+            <p className="mt-5 max-w-3xl text-base font-medium leading-8 text-white/62">Vous n’avez pas à deviner quelle démarche effectuer : notre équipe vérifie votre situation, vous indique les justificatifs nécessaires et suit votre dossier jusqu’à la confirmation de votre entrée en formation.</p>
+          </div>
+          <CTA href={apsContact('commencer mon inscription')} variant="gold">Commencer mon inscription →</CTA>
+        </div>
+
+        <div className="mt-9 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+          {enrollmentSteps.map(([number, title, text]) => (
+            <article key={number} className={`${styles.enrollmentCard} rounded-[1.6rem] border border-white/10 bg-white/7 p-5`}>
+              <span className="grid h-11 w-11 place-items-center rounded-full bg-blue-500 text-xs font-black text-white">{number}</span>
+              <h3 className="mt-7 text-lg font-black">{title}</h3>
+              <p className="mt-3 text-sm leading-6 text-white/55">{text}</p>
+            </article>
+          ))}
+        </div>
+
+        <div className="mt-6 grid gap-5 lg:grid-cols-[.78fr_1.22fr]">
+          <article className="rounded-[2rem] bg-[#FFFDF8] p-6 text-academy-ink shadow-card lg:p-8">
+            <Eyebrow>Votre financement</Eyebrow>
+            <h3 className="mt-3 text-3xl font-black tracking-[-.04em]">Construisons votre solution.</h3>
+            <p className="mt-4 leading-7 text-academy-muted">La prise en charge dépend de votre situation et de l’accord du financeur. Nous vous aidons à présenter une demande complète, sans promettre une acceptation automatique.</p>
+            <div className="mt-6 flex flex-col gap-3">
+              <CTA href={apsCpfUrl} variant="blue" external>Consulter la formation sur Mon Compte Formation →</CTA>
+              <CTA href={apsContact('étude de financement APS')} variant="light">Faire étudier mon financement</CTA>
+            </div>
+          </article>
+
+          <article className="rounded-[2rem] border border-blue-300/25 bg-blue-400/10 p-6 shadow-card lg:p-8">
+            <Eyebrow light>Solutions possibles</Eyebrow>
+            <h3 className="mt-3 text-3xl font-black tracking-[-.04em]">Quatre voies, un accompagnement personnalisé.</h3>
+            <div className="mt-6 grid gap-3 sm:grid-cols-2">
+              {financingOptions.map(([title, text]) => (
+                <article key={title} className={`${styles.financeCard} rounded-2xl border border-white/10 bg-white/7 p-5`}>
+                  <h4 className="text-lg font-black text-blue-200">{title}</h4>
+                  <p className="mt-2 text-sm leading-6 text-white/60">{text}</p>
+                </article>
+              ))}
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
 
     <Section id="debouches" eyebrow="09 — Débouchés & emploi" title={<>Un premier titre pour intégrer un secteur qui recrute.</>} intro={<>Les besoins sont réguliers dans de nombreux environnements : commerce, industrie, logistique, santé, bureaux, événementiel et sites sensibles. Le TFP APS ouvre l’accès à des missions variées, sous réserve d’obtenir la carte professionnelle CNAPS.</>} tone="paper"><div className="mb-8 grid gap-4 md:grid-cols-3"><article className={`${styles.outcomeCard} rounded-[1.7rem] border border-blue-200 bg-blue-50 p-6`}><p className="text-sm font-black uppercase tracking-[.16em] text-blue-700">Un besoin permanent</p><h3 className="mt-3 text-2xl font-black">Des recrutements toute l’année</h3><p className="mt-3 leading-7 text-blue-950/70">Les entreprises de sécurité doivent couvrir des prestations de jour, de nuit, en semaine, le week-end et lors de grands événements.</p></article><article className={`${styles.outcomeCard} rounded-[1.7rem] border border-sky-200 bg-sky-50 p-6`}><p className="text-sm font-black uppercase tracking-[.16em] text-sky-700">Des missions variées</p><h3 className="mt-3 text-2xl font-black">De nombreux sites à sécuriser</h3><p className="mt-3 leading-7 text-sky-950/70">Vous pouvez travailler sur un site fixe, effectuer des rondes, contrôler des accès, sécuriser un événement ou intervenir sur plusieurs sites.</p></article><article className={`${styles.outcomeCard} rounded-[1.7rem] border border-yellow-300 bg-yellow-50 p-6`}><p className="text-sm font-black uppercase tracking-[.16em] text-yellow-800">Des évolutions possibles</p><h3 className="mt-3 text-2xl font-black">Construire un parcours</h3><p className="mt-3 leading-7 text-yellow-950/70">Avec l’expérience et des qualifications complémentaires, vous pouvez viser des fonctions de chef de poste, de sécurité incendie, de télésurveillance ou d’encadrement.</p></article></div><div className="grid gap-4 md:grid-cols-4">{[['Réussir le TFP APS','Valider les épreuves'],['Recevoir le titre niveau 3','Obtenir la certification'],['Demander la carte CNAPS','Constituer le dossier'],['Commencer à exercer','Après délivrance de la carte']].map(([title,text],index) => <article key={title} className={`${styles.examCard} rounded-[1.7rem] border border-academy-line bg-white p-5 text-center`}><span className="mx-auto grid h-11 w-11 place-items-center rounded-full bg-academy-gold font-black">0{index+1}</span><h3 className="mt-6 text-lg font-black">{title}</h3><p className="mt-2 text-sm text-academy-muted">{text}</p></article>)}</div><div className="mt-5 rounded-[1.4rem] border border-yellow-300 bg-yellow-50 p-4 font-bold text-yellow-900">Important : le TFP APS ne déclenche pas automatiquement la carte professionnelle.</div><div className="mt-8 grid gap-5 lg:grid-cols-2"><article className="rounded-[2rem] border border-academy-line bg-white p-6"><Eyebrow>Débouchés</Eyebrow><h3 className="mt-3 text-3xl font-black">Les métiers accessibles</h3><div className="mt-5 grid gap-3 sm:grid-cols-2">{jobs.map(([icon,title]) => <div key={title} className={styles.jobCard}><span className={styles.jobIcon}>{icon}</span><span className="text-sm font-black leading-5">{title}</span></div>)}</div></article><article className="relative overflow-hidden rounded-[2rem] bg-[#0D1725] p-6 text-white"><div className="absolute -right-20 -top-20 h-56 w-56 rounded-full border border-white/10 shadow-[0_0_0_45px_rgba(255,255,255,.025),0_0_0_90px_rgba(255,255,255,.015)]"/><div className="relative"><Eyebrow light>Double compétence</Eyebrow><h3 className="mt-3 text-3xl font-black">APS + SSIAP 1</h3><p className="mt-4 max-w-md leading-7 text-white/65">Élargissez vos opportunités en associant surveillance humaine et sécurité incendie.</p><div className="mt-7 grid gap-3"><div className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/7 p-4"><span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-white/10 text-sm font-black text-sky-200">01</span><div><p className="font-black">Obtenir le TFP APS</p><p className="mt-1 text-xs font-semibold text-white/45">Socle de la surveillance humaine</p></div></div><div className="ml-5 h-5 w-px bg-gradient-to-b from-white/25 to-academy-gold"/><div className="flex items-center gap-4 rounded-2xl border border-academy-gold/40 bg-academy-gold/12 p-4"><span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-academy-gold text-sm font-black text-academy-gold-text">02</span><div><p className="font-black text-[#F9DC8A]">Ajouter le SSIAP 1</p><p className="mt-1 text-xs font-semibold text-white/50">Spécialisation sécurité incendie</p></div></div><div className="ml-5 h-5 w-px bg-gradient-to-b from-academy-gold to-blue-300"/><div className="flex items-center gap-4 rounded-2xl border border-blue-300/20 bg-blue-300/10 p-4"><span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-blue-300 text-sm font-black text-blue-950">03</span><div><p className="font-black text-blue-200">Élargir les postes accessibles</p><p className="mt-1 text-xs font-semibold text-white/50">Selon les qualifications exigées par l’employeur</p></div></div></div><CTA href="/formations-securite/ssiap-1" variant="gold" className="mt-6">Découvrir le SSIAP 1 →</CTA></div></article></div><article className="mt-5 rounded-[2rem] border border-academy-line bg-white p-6"><h3 className="text-2xl font-black">Où travailler ?</h3><p className="mt-2 leading-7 text-academy-muted">Les agents APS interviennent aussi bien dans des lieux ouverts au public que sur des sites professionnels à accès contrôlé.</p><div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{workplaces.map(item => <div key={item} className={`${styles.workplace} rounded-2xl bg-academy-bg p-4 text-center font-black`}>{item}</div>)}</div></article><div className="mt-5 rounded-[1.5rem] border border-academy-line bg-[#FFFDF8] p-5"><p className="font-black">Bon à savoir : horaires et conditions varient selon les postes.</p><p className="mt-2 text-sm leading-6 text-academy-muted">Le secteur propose des emplois de jour ou de nuit, à temps plein ou partiel, sur site fixe ou mobile. Disponibilité, ponctualité, présentation, maîtrise de soi et qualité du compte rendu sont particulièrement recherchées par les employeurs.</p></div></Section>
 
