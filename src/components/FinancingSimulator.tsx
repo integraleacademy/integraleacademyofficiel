@@ -14,9 +14,10 @@ const paymentOptions = [
 const formationOptions = [
   { label: 'APS', amount: 1650 },
   { label: 'SSIAP 1', amount: 980 },
-  { label: 'VTC', amount: 1500 },
-  { label: 'BTS en alternance', amount: 0 },
-  { label: 'DESP / DSSP', amount: 4300 },
+  { label: 'A3P / APR', amount: 4200 },
+  { label: 'DESP initial', amount: 4300 },
+  { label: 'DESP en VAE', amount: 3800 },
+  { label: 'Chauffeur VTC', amount: 1500 },
 ];
 
 function clampAmount(value: number, max: number) {
@@ -100,12 +101,14 @@ export default function FinancingSimulator() {
     setCpfAmount((current) => clampAmount(current, formationAmount));
   }, [formationAmount]);
 
-  return <section id="simulateur" className="scroll-mt-24 bg-[#080f1f] px-4 py-14 text-white md:py-20">
-    <div className="page-container overflow-hidden rounded-[2.25rem] border border-white/10 bg-[radial-gradient(circle_at_8%_10%,rgba(244,196,90,.20),transparent_28%),linear-gradient(135deg,#0b1327,#050814_58%,#101827)] p-5 shadow-[0_34px_120px_rgba(0,0,0,.45)] md:p-8">
-      <div className="mb-8 max-w-3xl">
-        <p className="text-xs font-black uppercase tracking-[.28em] text-academy-gold">Financement</p>
-        <h2 className="mt-3 text-3xl font-black tracking-tight md:text-5xl">Simulez votre reste à charge</h2>
-        <p className="mt-4 text-base leading-7 text-stone-300 md:text-lg">Estimez en quelques secondes le montant restant à financer selon votre CPF.</p>
+  return <section id="simulateur" className="scroll-mt-24 bg-[#08111f] px-4 py-14 text-white md:py-24">
+    <div className="page-container overflow-hidden rounded-[2rem] border border-white/10 bg-[radial-gradient(circle_at_8%_10%,rgba(244,196,90,.17),transparent_28%),linear-gradient(135deg,#101b2e,#070d18_58%,#111b2c)] p-5 shadow-[0_34px_120px_rgba(0,0,0,.38)] md:p-9">
+      <div className="mb-9 grid gap-5 lg:grid-cols-[1fr_.48fr] lg:items-end">
+        <div className="max-w-3xl">
+          <p className="text-xs font-black uppercase tracking-[.28em] text-academy-gold">Simulateur de financement</p>
+          <h2 className="mt-3 text-3xl font-black tracking-tight md:text-5xl">Calculez une première estimation de votre reste à charge.</h2>
+        </div>
+        <p className="text-sm leading-7 text-stone-300 md:text-base">Choisissez votre formation, indiquez le montant disponible sur votre CPF, puis testez un échéancier.</p>
       </div>
 
       <div className="grid gap-6 lg:grid-cols-[1.05fr_.95fr]">
@@ -153,7 +156,7 @@ export default function FinancingSimulator() {
           </div>
           <div className="mt-6 grid gap-3 sm:grid-cols-2">
             <Link href="/contact" className="inline-flex items-center justify-center rounded-full bg-academy-gold px-5 py-3 text-sm font-black text-academy-gold-text transition hover:-translate-y-0.5 hover:brightness-105">Demander une étude de financement</Link>
-            <Link href="tel:0422470768" className="inline-flex items-center justify-center rounded-full border border-white/15 bg-white/10 px-5 py-3 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-white/15">Être rappelé</Link>
+            <Link href="tel:0422470768" className="inline-flex items-center justify-center rounded-full border border-white/15 bg-white/10 px-5 py-3 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-white/15">Appeler un conseiller</Link>
           </div>
         </aside>
       </div>
