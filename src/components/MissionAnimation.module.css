@@ -1,0 +1,508 @@
+.visual {
+  --accent: #f4c45a;
+  --accent-rgb: 244, 196, 90;
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  max-width: 960px;
+  min-height: 400px;
+  margin-inline: auto;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, .13);
+  border-radius: 2rem;
+  background:
+    radial-gradient(circle at 78% 18%, rgba(var(--accent-rgb), .2), transparent 30%),
+    linear-gradient(145deg, #14263a 0%, #081522 62%, #06111c 100%);
+  color: #fff;
+  box-shadow: 0 28px 75px rgba(2, 9, 18, .25);
+}
+
+.a3p { --accent: #34d399; --accent-rgb: 52, 211, 153; }
+.desp { --accent: #fb923c; --accent-rgb: 251, 146, 60; }
+.ssiap { --accent: #f87171; --accent-rgb: 248, 113, 113; }
+.vtc { --accent: #a78bfa; --accent-rgb: 167, 139, 250; }
+
+.compact {
+  width: 100%;
+  max-width: none;
+  min-height: 100%;
+  height: 100%;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.compact .topbar,
+.compact .footer { display: none; }
+
+.compact .stage { inset: 0; }
+
+.grid {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: .75;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, .045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, .045) 1px, transparent 1px);
+  background-size: 34px 34px;
+  mask-image: linear-gradient(to bottom, #000 20%, transparent 96%);
+}
+
+.grid::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(112deg, transparent 22%, rgba(var(--accent-rgb), .08) 48%, transparent 73%);
+  content: '';
+  transform: translateX(-100%);
+  animation: sheen 8s ease-in-out infinite;
+}
+
+.topbar,
+.footer {
+  position: absolute;
+  z-index: 3;
+  right: 20px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.topbar {
+  top: 18px;
+  font-size: .61rem;
+  font-weight: 900;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: rgba(255, 255, 255, .8);
+}
+
+.status {
+  border: 1px solid rgba(var(--accent-rgb), .3);
+  border-radius: 999px;
+  background: rgba(var(--accent-rgb), .1);
+  padding: 7px 10px;
+  color: var(--accent);
+}
+
+.statusDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 0 rgba(var(--accent-rgb), .55), 0 0 16px rgba(var(--accent-rgb), .9);
+  animation: statusPulse 2.3s ease-out infinite;
+}
+
+.stage {
+  position: absolute;
+  inset: 48px 12px 54px;
+}
+
+.stage svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.footer {
+  bottom: 17px;
+  align-items: end;
+}
+
+.footer strong,
+.footer span {
+  display: block;
+}
+
+.footer strong {
+  font-size: .82rem;
+  font-weight: 950;
+  letter-spacing: -.01em;
+}
+
+.footer span {
+  color: rgba(255, 255, 255, .48);
+  font-size: .58rem;
+  font-weight: 850;
+  letter-spacing: .12em;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+.mapTrace,
+.vtcStreet {
+  fill: none;
+  stroke: rgba(255, 255, 255, .075);
+  stroke-width: 2;
+}
+
+.routeShadow,
+.routeActive,
+.networkLine,
+.networkActive,
+.signalLine,
+.evacRoute {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.routeShadow {
+  stroke: rgba(1, 8, 15, .72);
+  stroke-width: 15;
+}
+
+.routeActive {
+  stroke: var(--accent);
+  stroke-width: 3;
+  stroke-dasharray: 9 10;
+  filter: drop-shadow(0 0 8px rgba(var(--accent-rgb), .82));
+  animation: routeFlow 1.4s linear infinite;
+}
+
+.routePoint circle,
+.vtcPin circle {
+  fill: #0a1723;
+  stroke: var(--accent);
+  stroke-width: 4;
+}
+
+.routePoint text,
+.vtcPin text {
+  fill: #fff;
+  font-size: 10px;
+  font-weight: 950;
+  text-anchor: middle;
+}
+
+.protectionZone {
+  fill: rgba(var(--accent-rgb), .06);
+  stroke: rgba(var(--accent-rgb), .7);
+  stroke-width: 2;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: protectionPulse 2.4s ease-out infinite;
+}
+
+.protectee {
+  fill: #f4c45a;
+  stroke: #fff6d8;
+  stroke-width: 4;
+  filter: drop-shadow(0 0 12px rgba(244, 196, 90, .85));
+}
+
+.guard {
+  fill: var(--accent);
+  stroke: #d1fae5;
+  stroke-width: 3;
+  filter: drop-shadow(0 0 9px rgba(var(--accent-rgb), .8));
+}
+
+.formationLine {
+  fill: none;
+  stroke: rgba(var(--accent-rgb), .5);
+  stroke-dasharray: 3 4;
+  stroke-width: 2;
+}
+
+.mapMarker path,
+.mapMarker circle {
+  fill: none;
+  stroke: rgba(255, 255, 255, .38);
+  stroke-width: 2;
+}
+
+.mapMarker text {
+  fill: rgba(255, 255, 255, .38);
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: .12em;
+}
+
+.networkLine {
+  stroke: rgba(255, 255, 255, .1);
+  stroke-width: 8;
+}
+
+.networkActive {
+  stroke: rgba(var(--accent-rgb), .48);
+  stroke-width: 2;
+  stroke-dasharray: 4 10;
+  animation: networkFlow 1.8s linear infinite;
+}
+
+.despPacket circle,
+.signalPacket circle {
+  fill: var(--accent);
+  filter: drop-shadow(0 0 9px rgba(var(--accent-rgb), .95));
+}
+
+.despNode rect,
+.controlPanel rect,
+.destination rect {
+  fill: rgba(8, 21, 34, .9);
+  stroke: rgba(255, 255, 255, .15);
+}
+
+.despNode text,
+.destination text,
+.controlPanel text {
+  fill: rgba(255, 255, 255, .48);
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: .1em;
+  text-anchor: middle;
+}
+
+.despNode .nodeValue,
+.destination .nodeValue {
+  fill: #fff;
+  font-size: 10px;
+  letter-spacing: .03em;
+}
+
+.despNode circle {
+  fill: var(--accent);
+  filter: drop-shadow(0 0 8px rgba(var(--accent-rgb), .95));
+  animation: nodeBlink 2.6s ease-in-out infinite;
+}
+
+.hubOuter {
+  fill: rgba(var(--accent-rgb), .035);
+  stroke: rgba(var(--accent-rgb), .2);
+  stroke-width: 2;
+}
+
+.hubRing {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2;
+  stroke-dasharray: 14 9 3 9;
+  transform-box: fill-box;
+  transform-origin: center;
+  filter: drop-shadow(0 0 7px rgba(var(--accent-rgb), .65));
+  animation: hubRotate 7s linear infinite;
+}
+
+.hubCore {
+  fill: rgba(var(--accent-rgb), .15);
+  stroke: rgba(var(--accent-rgb), .65);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: hubBreathe 2.8s ease-in-out infinite;
+}
+
+.hub path {
+  fill: none;
+  stroke: #fff;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 5;
+}
+
+.hub text {
+  fill: var(--accent);
+  font-size: 8px;
+  font-weight: 950;
+  letter-spacing: .13em;
+  text-anchor: middle;
+}
+
+.floorPlan path {
+  fill: none;
+  stroke: rgba(255, 255, 255, .16);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3;
+}
+
+.floorPlan .door {
+  stroke: rgba(255, 255, 255, .34);
+  stroke-width: 5;
+}
+
+.roomLabels text {
+  fill: rgba(255, 255, 255, .31);
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: .14em;
+}
+
+.scanBar {
+  fill: var(--accent);
+  opacity: .3;
+  filter: drop-shadow(0 0 13px rgba(var(--accent-rgb), .85));
+  animation: fireScan 5.2s ease-in-out infinite;
+}
+
+.signalLine {
+  stroke: var(--accent);
+  stroke-width: 3;
+  stroke-dasharray: 8 8;
+  filter: drop-shadow(0 0 7px rgba(var(--accent-rgb), .7));
+  animation: routeFlow 1.2s linear infinite;
+}
+
+.alarmRing,
+.alarmRingTwo {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: alarmPulse 2.1s ease-out infinite;
+}
+
+.alarmRingTwo { animation-delay: 1.05s; }
+
+.alarmCore {
+  fill: #dc2626;
+  stroke: #fecaca;
+  stroke-width: 3;
+  filter: drop-shadow(0 0 11px rgba(248, 113, 113, .95));
+}
+
+.detector path {
+  fill: #fff;
+  opacity: .9;
+}
+
+.controlPanel circle {
+  fill: var(--accent);
+  filter: drop-shadow(0 0 8px rgba(var(--accent-rgb), .95));
+  animation: nodeBlink 1.7s ease-in-out infinite;
+}
+
+.evacRoute {
+  stroke: rgba(134, 239, 172, .7);
+  stroke-width: 3;
+  stroke-dasharray: 7 7;
+  animation: routeFlow 1.5s linear infinite reverse;
+}
+
+.exitMarker path {
+  fill: none;
+  stroke: #86efac;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3;
+}
+
+.vehicleHalo {
+  fill: rgba(var(--accent-rgb), .08);
+  stroke: rgba(var(--accent-rgb), .5);
+  stroke-width: 2;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: vehiclePulse 2s ease-out infinite;
+}
+
+.vehicle path {
+  fill: var(--accent);
+  stroke: #ede9fe;
+  stroke-linejoin: round;
+  stroke-width: 2;
+  filter: drop-shadow(0 0 9px rgba(var(--accent-rgb), .8));
+}
+
+.vehicle circle {
+  fill: #081522;
+  stroke: #fff;
+  stroke-width: 2;
+}
+
+.motionGroup { display: block; }
+.staticGroup { display: none; }
+
+@keyframes sheen {
+  0%, 62% { transform: translateX(-100%); }
+  82%, 100% { transform: translateX(100%); }
+}
+
+@keyframes statusPulse {
+  0% { box-shadow: 0 0 0 0 rgba(var(--accent-rgb), .58), 0 0 16px rgba(var(--accent-rgb), .9); }
+  72%, 100% { box-shadow: 0 0 0 12px rgba(var(--accent-rgb), 0), 0 0 12px rgba(var(--accent-rgb), .62); }
+}
+
+@keyframes routeFlow { to { stroke-dashoffset: -38; } }
+@keyframes networkFlow { to { stroke-dashoffset: -42; } }
+@keyframes hubRotate { to { transform: rotate(360deg); } }
+
+@keyframes protectionPulse {
+  0%, 100% { opacity: .45; transform: scale(.84); }
+  50% { opacity: 1; transform: scale(1.08); }
+}
+
+@keyframes hubBreathe {
+  0%, 100% { opacity: .72; transform: scale(.94); }
+  50% { opacity: 1; transform: scale(1.06); }
+}
+
+@keyframes nodeBlink {
+  0%, 100% { opacity: .5; }
+  50% { opacity: 1; }
+}
+
+@keyframes fireScan {
+  0%, 8% { transform: translateX(0); opacity: .08; }
+  48%, 58% { transform: translateX(492px); opacity: .38; }
+  92%, 100% { transform: translateX(0); opacity: .08; }
+}
+
+@keyframes alarmPulse {
+  0% { opacity: .9; transform: scale(.35); }
+  78%, 100% { opacity: 0; transform: scale(1.35); }
+}
+
+@keyframes vehiclePulse {
+  0%, 100% { opacity: .5; transform: scale(.82); }
+  50% { opacity: 1; transform: scale(1.08); }
+}
+
+@media (max-width: 640px) {
+  .visual { min-height: 300px; border-radius: 1.55rem; }
+  .compact { min-height: 100%; border-radius: 0; }
+  .topbar, .footer { right: 14px; left: 14px; }
+  .topbar { top: 13px; font-size: .53rem; }
+  .status { padding: 6px 8px; }
+  .stage { inset: 45px 5px 51px; }
+  .footer { bottom: 13px; }
+  .footer strong { font-size: .72rem; }
+  .footer span { max-width: 52%; font-size: .51rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grid::after,
+  .statusDot,
+  .routeActive,
+  .protectionZone,
+  .networkActive,
+  .despNode circle,
+  .hubRing,
+  .hubCore,
+  .scanBar,
+  .signalLine,
+  .alarmRing,
+  .alarmRingTwo,
+  .controlPanel circle,
+  .evacRoute,
+  .vehicleHalo {
+    animation: none;
+  }
+
+  .motionGroup,
+  .despPacket,
+  .signalPacket { display: none; }
+
+  .staticGroup { display: block; }
+}
