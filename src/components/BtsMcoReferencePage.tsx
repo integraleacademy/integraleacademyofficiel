@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { BtsCompleteInformation, BtsStudentBenefits } from '@/components/BtsExpandedContent';
+import { MissionAnimation } from '@/components/MissionAnimation';
 import { PremiumFAQSection } from '@/components/ui';
 
 const applicationUrl = 'https://inscriptionsbts.onrender.com/';
@@ -377,6 +378,7 @@ export function BtsMcoReferencePage() {
             <div key={job} className="rounded-2xl border border-academy-line bg-academy-bg p-4 text-center font-black">{job}</div>
           ))}
         </div>
+        <MissionAnimation variant="mco" className="mt-8" />
       </Section>
 
       <Section
