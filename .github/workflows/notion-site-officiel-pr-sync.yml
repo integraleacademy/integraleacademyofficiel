@@ -1,0 +1,124 @@
+name: Notion Site officiel - synchroniser la PR
+
+on:
+  pull_request:
+    branches: [main]
+    types: [closed]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: notion-site-officiel-pr-sync-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    name: Mettre à jour le statut Notion
+    if: >-
+      startsWith(github.event.pull_request.head.ref, 'work/notion-site-officiel-') &&
+      contains(github.event.pull_request.body, '<!-- notion-page-id:')
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Extraire la page Notion de la PR
+        id: metadata
+        env:
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: |
+          python - <<'PY'
+          import os
+          import re
+          from pathlib import Path
+
+          body = os.environ.get("PR_BODY", "")
+          match = re.search(
+              r"<!--\s*notion-page-id:\s*([0-9a-fA-F-]{32,36})\s*-->",
+              body,
+          )
+          if not match:
+              raise SystemExit("Aucun marqueur notion-page-id valide dans la PR.")
+
+          compact = re.sub(r"[^0-9a-fA-F]", "", match.group(1)).lower()
+          if len(compact) != 32:
+              raise SystemExit("Identifiant Notion invalide.")
+
+          page_id = (
+              f"{compact[:8]}-{compact[8:12]}-{compact[12:16]}-"
+              f"{compact[16:20]}-{compact[20:]}"
+          )
+          with Path(os.environ["GITHUB_OUTPUT"]).open("a", encoding="utf-8") as output:
+              output.write(f"page_id={page_id}\n")
+          PY
+
+      - name: Répercuter la fermeture de la PR dans Notion
+        env:
+          NOTION_API_TOKEN: ${{ secrets.NOTION_API_TOKEN }}
+          PAGE_ID: ${{ steps.metadata.outputs.page_id }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          BRANCH: ${{ github.event.pull_request.head.ref }}
+          MERGED: ${{ github.event.pull_request.merged }}
+          RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import urllib.error
+          import urllib.request
+          from datetime import datetime, timezone
+
+          token = os.environ.get("NOTION_API_TOKEN", "").strip()
+          if not token:
+              raise SystemExit(
+                  "Le secret GitHub NOTION_API_TOKEN est absent ou inaccessible."
+              )
+
+          merged = os.environ.get("MERGED", "").lower() == "true"
+          status = "Publié" if merged else "En attente"
+          error = "" if merged else "La pull request a été fermée sans être fusionnée."
+          now = datetime.now(timezone.utc).isoformat(timespec="seconds")
+
+          def rich_text(value):
+              if not value:
+                  return []
+              return [{"type": "text", "text": {"content": value}}]
+
+          payload = {
+              "properties": {
+                  "Statut": {"select": {"name": status}},
+                  "Publié en bas": {"checkbox": merged},
+                  "PR GitHub": {"url": os.environ["PR_URL"]},
+                  "Branche GitHub": {"rich_text": rich_text(os.environ["BRANCH"])},
+                  "Run GitHub": {"url": os.environ["RUN_URL"]},
+                  "Erreur automatisation": {"rich_text": rich_text(error)},
+                  "Dernier traitement IA": {"date": {"start": now}},
+              }
+          }
+
+          request = urllib.request.Request(
+              f"https://api.notion.com/v1/pages/{os.environ['PAGE_ID']}",
+              data=json.dumps(payload, ensure_ascii=False).encode("utf-8"),
+              method="PATCH",
+              headers={
+                  "Authorization": f"Bearer {token}",
+                  "Notion-Version": "2022-06-28",
+                  "Content-Type": "application/json",
+              },
+          )
+
+          try:
+              with urllib.request.urlopen(request, timeout=20) as response:
+                  if response.status != 200:
+                      raise SystemExit(
+                          f"Notion a répondu avec le statut HTTP {response.status}."
+                      )
+          except urllib.error.HTTPError as exc:
+              detail = exc.read().decode("utf-8", errors="replace")
+              raise SystemExit(f"Échec de la mise à jour Notion ({exc.code}) : {detail}")
+
+          print(f"Page Notion synchronisée avec le statut « {status} ».")
+          PY
+
+          # La propriété « Validé après publication » est volontairement absente :
+          # elle reste strictement manuelle et réservée à Clément.
