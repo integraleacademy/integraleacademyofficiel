@@ -43,10 +43,10 @@ jobs:
           set -euo pipefail
           requested_pr="${INPUT_PR:-${EVENT_PR:-}}"
           case "$requested_pr" in ''|*[!0-9]*) echo "::error::Numéro de PR invalide : $requested_pr"; exit 1 ;; esac
-          pr_json="$(gh pr view "$requested_pr" --repo "$GITHUB_REPOSITORY" --json state,baseRefName,headRefName,headRefOid,body)"
+          pr_json="$(gh pr view "$requested_pr" --repo "$GITHUB_REPOSITORY" --json state,baseRefName,headRefName,headRefOid,body,author)"
           state="$(printf '%s' "$pr_json" | jq -r '.state')"; base="$(printf '%s' "$pr_json" | jq -r '.baseRefName')"
-          head_ref="$(printf '%s' "$pr_json" | jq -r '.headRefName')"; head_sha="$(printf '%s' "$pr_json" | jq -r '.headRefOid')"; body="$(printf '%s' "$pr_json" | jq -r '.body // ""')"
-          if [ "$state" != "OPEN" ] || [ "$base" != "main" ] || [[ "$head_ref" != work/notion-site-officiel-* ]]; then exit 0; fi
+          head_ref="$(printf '%s' "$pr_json" | jq -r '.headRefName')"; head_sha="$(printf '%s' "$pr_json" | jq -r '.headRefOid')"; body="$(printf '%s' "$pr_json" | jq -r '.body // ""')"; author="$(printf '%s' "$pr_json" | jq -r '.author.login // ""')"
+          if [ "$state" != "OPEN" ] || [ "$base" != "main" ] || [ "$author" != "integraleacademy" ] || [[ "$head_ref" != work/notion-site-officiel-* ]]; then exit 0; fi
           if [[ "$body" != *"<!-- notion-page-id:"* ]] || [[ "$body" != *"Checklist"* ]] || [[ "$body" != *"Tests"* ]]; then echo "::error::PR incomplètement documentée."; exit 1; fi
           page_id="$(printf '%s\n' "$body" | sed -nE 's/.*<!--[[:space:]]*notion-page-id:[[:space:]]*([0-9a-fA-F-]{32,36})[[:space:]]*-->.*/\1/p' | head -n 1)"
           [ -n "$page_id" ] || { echo "::error::Identifiant Notion introuvable."; exit 1; }
