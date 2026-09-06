@@ -15,7 +15,7 @@ on:
         required: true
         type: string
       branch:
-        description: Branche Work fusionnée
+        description: Branche Work de la PR fusionnée
         required: true
         type: string
       pr_number:
@@ -34,12 +34,13 @@ jobs:
   sync:
     name: Mettre à jour le statut Notion
     if: >-
-      github.event_name == 'workflow_dispatch' ||
-      (
-        github.event.pull_request.user.login == 'integraleacademy' &&
-        startsWith(github.event.pull_request.head.ref, 'work/notion-site-officiel-') &&
-        contains(github.event.pull_request.body, '<!-- notion-page-id:')
-      )
+      (github.event_name == 'workflow_dispatch' &&
+      startsWith(inputs.branch, 'work/notion-site-officiel-') &&
+      startsWith(inputs.pr_url, 'https://github.com/integraleacademy/integraleacademyofficiel/pull/')) ||
+      (github.event_name == 'pull_request' &&
+      github.event.pull_request.user.login == 'integraleacademy' &&
+      startsWith(github.event.pull_request.head.ref, 'work/notion-site-officiel-') &&
+      contains(github.event.pull_request.body, '<!-- notion-page-id:'))
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
@@ -47,17 +48,17 @@ jobs:
       - name: Extraire la page Notion de la PR
         id: metadata
         env:
-          PR_BODY: ${{ github.event.pull_request.body || '' }}
-          INPUT_PAGE_ID: ${{ inputs.page_id || '' }}
+          INPUT_PAGE_ID: ${{ inputs.page_id }}
+          PR_BODY: ${{ github.event.pull_request.body }}
         run: |
           python - <<'PY'
           import os
           import re
           from pathlib import Path
 
-          provided = os.environ.get("INPUT_PAGE_ID", "").strip()
-          if provided:
-              raw_page_id = provided
+          supplied_page_id = os.environ.get("INPUT_PAGE_ID", "").strip()
+          if supplied_page_id:
+              raw_page_id = supplied_page_id
           else:
               body = os.environ.get("PR_BODY", "")
               match = re.search(
@@ -84,9 +85,9 @@ jobs:
         env:
           NOTION_API_TOKEN: ${{ secrets.NOTION_API_TOKEN }}
           PAGE_ID: ${{ steps.metadata.outputs.page_id }}
-          PR_URL: ${{ github.event.pull_request.html_url || inputs.pr_url }}
-          BRANCH: ${{ github.event.pull_request.head.ref || inputs.branch }}
-          MERGED: ${{ github.event_name == 'workflow_dispatch' && 'true' || github.event.pull_request.merged }}
+          PR_URL: ${{ inputs.pr_url || github.event.pull_request.html_url }}
+          BRANCH: ${{ inputs.branch || github.event.pull_request.head.ref }}
+          MERGED: ${{ github.event_name == 'workflow_dispatch' || github.event.pull_request.merged }}
           RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
           EXPECTED_DATABASE_ID: cfb1a7f4-3fa2-4586-a017-dbf23f690183
           EXPECTED_DATA_SOURCE_ID: 7f12fe92-dbc4-40c8-af4e-77578b5dbfc0
