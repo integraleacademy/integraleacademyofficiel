@@ -28,6 +28,7 @@ jobs:
       pr_number: ${{ steps.meta.outputs.pr_number }}
       head_ref: ${{ steps.meta.outputs.head_ref }}
       head_sha: ${{ steps.meta.outputs.head_sha }}
+      page_id: ${{ steps.meta.outputs.page_id }}
     steps:
       - name: Contrôler le périmètre, l'ordre et l'approbation de la version courante
         id: meta
@@ -47,6 +48,8 @@ jobs:
           head_ref="$(printf '%s' "$pr_json" | jq -r '.headRefName')"; head_sha="$(printf '%s' "$pr_json" | jq -r '.headRefOid')"; body="$(printf '%s' "$pr_json" | jq -r '.body // ""')"
           if [ "$state" != "OPEN" ] || [ "$base" != "main" ] || [[ "$head_ref" != work/notion-site-officiel-* ]]; then exit 0; fi
           if [[ "$body" != *"<!-- notion-page-id:"* ]] || [[ "$body" != *"Checklist"* ]] || [[ "$body" != *"Tests"* ]]; then echo "::error::PR incomplètement documentée."; exit 1; fi
+          page_id="$(printf '%s\n' "$body" | sed -nE 's/.*<!--[[:space:]]*notion-page-id:[[:space:]]*([0-9a-fA-F-]{32,36})[[:space:]]*-->.*/\1/p' | head -n 1)"
+          [ -n "$page_id" ] || { echo "::error::Identifiant Notion introuvable."; exit 1; }
           first_number="$(gh pr list --repo "$GITHUB_REPOSITORY" --state open --base main --limit 100 --json number,headRefName,body --jq '[.[] | select(.headRefName | startswith("work/notion-site-officiel-")) | select((.body // "") | contains("<!-- notion-page-id:")) | .number] | sort | .[0] // empty')"
           if [ -n "$first_number" ] && [ "$requested_pr" != "$first_number" ]; then exit 0; fi
           marker="<!-- work-independent-review: approved sha=${head_sha} -->"
@@ -57,7 +60,7 @@ jobs:
             approved="$(printf '%s' "$reviews" | jq -r --arg sha "$head_sha" --arg marker "$marker" '[.[] | select(.user.login == "integraleacademy" and .commit_id == $sha and ((.body // "") | contains($marker)))] | length')"
             [ "$approved" != "0" ] || exit 0
           fi
-          echo "pr_number=$requested_pr" >> "$GITHUB_OUTPUT"; echo "head_ref=$head_ref" >> "$GITHUB_OUTPUT"; echo "head_sha=$head_sha" >> "$GITHUB_OUTPUT"
+          echo "pr_number=$requested_pr" >> "$GITHUB_OUTPUT"; echo "head_ref=$head_ref" >> "$GITHUB_OUTPUT"; echo "head_sha=$head_sha" >> "$GITHUB_OUTPUT"; echo "page_id=$page_id" >> "$GITHUB_OUTPUT"
 
   test:
     name: Tester le site officiel complet
@@ -98,6 +101,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
+      actions: write
       contents: write
       pull-requests: write
     steps:
@@ -107,6 +111,7 @@ jobs:
           PR_NUMBER: ${{ needs.inspect.outputs.pr_number }}
           EXPECTED_HEAD: ${{ needs.inspect.outputs.head_sha }}
           HEAD_REF: ${{ needs.inspect.outputs.head_ref }}
+          PAGE_ID: ${{ needs.inspect.outputs.page_id }}
         run: |
           set -euo pipefail
           current="$(gh pr view "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" --json state,headRefOid,isDraft --jq '[.state,.headRefOid,.isDraft] | @tsv')"
@@ -118,4 +123,14 @@ jobs:
           behind="$(gh api "repos/${GITHUB_REPOSITORY}/compare/main...${HEAD_REF}" --jq '.behind_by')"
           [ "$behind" = "0" ] || { echo "::error::La PR n'est plus à jour avec main."; exit 1; }
           if [ "$is_draft" = "true" ]; then gh pr ready "$PR_NUMBER" --repo "$GITHUB_REPOSITORY"; fi
-          gh pr merge "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" --merge --delete-branch
+          if ! gh pr merge "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" --merge --delete-branch; then
+            merged_at="$(gh pr view "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" --json mergedAt --jq '.mergedAt // empty')"
+            [ -n "$merged_at" ] || exit 1
+          fi
+          gh workflow run notion-site-officiel-pr-sync.yml \
+            --repo "$GITHUB_REPOSITORY" \
+            --ref main \
+            -f page_id="$PAGE_ID" \
+            -f pr_url="https://github.com/$GITHUB_REPOSITORY/pull/$PR_NUMBER" \
+            -f branch="$HEAD_REF" \
+            -f pr_number="$PR_NUMBER"
