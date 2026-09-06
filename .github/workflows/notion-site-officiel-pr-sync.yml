@@ -61,7 +61,8 @@ jobs:
           BRANCH: ${{ github.event.pull_request.head.ref }}
           MERGED: ${{ github.event.pull_request.merged }}
           RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          EXPECTED_DATABASE_ID: 7f12fe92-dbc4-40c8-af4e-77578b5dbfc0
+          EXPECTED_DATABASE_ID: cfb1a7f4-3fa2-4586-a017-dbf23f690183
+          EXPECTED_DATA_SOURCE_ID: 7f12fe92-dbc4-40c8-af4e-77578b5dbfc0
           EXPECTED_PLATFORM: Site internet officiel
         run: |
           python - <<'PY'
@@ -142,11 +143,15 @@ jobs:
 
           page = notion_request("GET")
           parent = page.get("parent") or {}
-          if (
-              parent.get("type") != "database_id"
-              or normalize_id(parent.get("database_id"))
-              != normalize_id(os.environ["EXPECTED_DATABASE_ID"])
-          ):
+          parent_ids = {
+              normalize_id(parent.get("database_id")),
+              normalize_id(parent.get("data_source_id")),
+          } - {""}
+          expected_parent_ids = {
+              normalize_id(os.environ["EXPECTED_DATABASE_ID"]),
+              normalize_id(os.environ["EXPECTED_DATA_SOURCE_ID"]),
+          }
+          if not parent_ids & expected_parent_ids:
               raise SystemExit(
                   "La page Notion n’appartient pas à la base « 🧠 Mon cerveau » attendue."
               )
