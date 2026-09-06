@@ -4,21 +4,38 @@ on:
   pull_request:
     branches: [main]
     types: [closed]
+  workflow_dispatch:
+    inputs:
+      page_id:
+        description: Identifiant de la page Notion à publier
+        required: true
+        type: string
+      pr_url:
+        description: URL de la PR fusionnée
+        required: true
+        type: string
+      branch:
+        description: Branche Work de la PR fusionnée
+        required: true
+        type: string
 
 permissions:
   contents: read
 
 concurrency:
-  group: notion-site-officiel-pr-sync-${{ github.event.pull_request.number }}
+  group: notion-site-officiel-pr-sync-${{ github.event.pull_request.number || inputs.page_id || github.run_id }}
   cancel-in-progress: false
 
 jobs:
   sync:
     name: Mettre à jour le statut Notion
     if: >-
+      (github.event_name == 'workflow_dispatch' &&
+      startsWith(inputs.branch, 'work/notion-site-officiel-')) ||
+      (github.event_name == 'pull_request' &&
       github.event.pull_request.user.login == 'integraleacademy' &&
       startsWith(github.event.pull_request.head.ref, 'work/notion-site-officiel-') &&
-      contains(github.event.pull_request.body, '<!-- notion-page-id:')
+      contains(github.event.pull_request.body, '<!-- notion-page-id:'))
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
@@ -26,6 +43,7 @@ jobs:
       - name: Extraire la page Notion de la PR
         id: metadata
         env:
+          INPUT_PAGE_ID: ${{ inputs.page_id }}
           PR_BODY: ${{ github.event.pull_request.body }}
         run: |
           python - <<'PY'
@@ -33,15 +51,20 @@ jobs:
           import re
           from pathlib import Path
 
-          body = os.environ.get("PR_BODY", "")
-          match = re.search(
-              r"<!--\s*notion-page-id:\s*([0-9a-fA-F-]{32,36})\s*-->",
-              body,
-          )
-          if not match:
-              raise SystemExit("Aucun marqueur notion-page-id valide dans la PR.")
+          supplied_page_id = os.environ.get("INPUT_PAGE_ID", "").strip()
+          if supplied_page_id:
+              raw_page_id = supplied_page_id
+          else:
+              body = os.environ.get("PR_BODY", "")
+              match = re.search(
+                  r"<!--\s*notion-page-id:\s*([0-9a-fA-F-]{32,36})\s*-->",
+                  body,
+              )
+              if not match:
+                  raise SystemExit("Aucun marqueur notion-page-id valide dans la PR.")
+              raw_page_id = match.group(1)
 
-          compact = re.sub(r"[^0-9a-fA-F]", "", match.group(1)).lower()
+          compact = re.sub(r"[^0-9a-fA-F]", "", raw_page_id).lower()
           if len(compact) != 32:
               raise SystemExit("Identifiant Notion invalide.")
 
@@ -57,9 +80,9 @@ jobs:
         env:
           NOTION_API_TOKEN: ${{ secrets.NOTION_API_TOKEN }}
           PAGE_ID: ${{ steps.metadata.outputs.page_id }}
-          PR_URL: ${{ github.event.pull_request.html_url }}
-          BRANCH: ${{ github.event.pull_request.head.ref }}
-          MERGED: ${{ github.event.pull_request.merged }}
+          PR_URL: ${{ inputs.pr_url || github.event.pull_request.html_url }}
+          BRANCH: ${{ inputs.branch || github.event.pull_request.head.ref }}
+          MERGED: ${{ github.event_name == 'workflow_dispatch' || github.event.pull_request.merged }}
           RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
           EXPECTED_DATABASE_ID: cfb1a7f4-3fa2-4586-a017-dbf23f690183
           EXPECTED_DATA_SOURCE_ID: 7f12fe92-dbc4-40c8-af4e-77578b5dbfc0
