@@ -1,4 +1,5 @@
 import { OrientationAssistant } from '@/components/OrientationAssistant';
+import { MissionAnimation } from '@/components/MissionAnimation';
 import { TrainingDatesPricingSection, type TrainingDatesPricingSession } from '@/components/TrainingDatesPricingSection';
 import { VaeEligibilityModal } from '@/components/VaeEligibilityModal';
 import { Button, ConversionStrip, FAQ, Hero, SectionTitle } from '@/components/ui';
@@ -212,6 +213,7 @@ export function DespChoiceReferencePage({ sessions }: { sessions: TrainingDatesP
               secondaryCta="Tester mon éligibilité à la VAE"
             />
           </div>
+          <MissionAnimation variant="desp" className="mt-8" />
         </div>
       </section>
 

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import { MissionAnimation } from '@/components/MissionAnimation';
 import { PremiumFAQSection } from '@/components/ui';
 import styles from './vtc.module.css';
 
@@ -89,12 +90,7 @@ export default function VtcPage() {
           <div className={styles.cockpit}>
             <div className={styles.cockpitTop}><span>Votre itinéraire vers le métier</span><span className={styles.live}>● PRÊT À DÉMARRER</span></div>
             <div className={styles.routeMap}>
-              <svg viewBox="0 0 580 310" preserveAspectRatio="none" aria-hidden="true">
-                <path className={styles.roadBack} d="M-20 270 C80 250 72 150 170 160 S270 270 348 186 S415 72 605 48"/>
-                <path className={styles.road} d="M-20 270 C80 250 72 150 170 160 S270 270 348 186 S415 72 605 48"/>
-              </svg>
-              <span className={`${styles.pin} ${styles.pinOne}`}>1</span><span className={`${styles.pin} ${styles.pinTwo}`}>2</span><span className={`${styles.pin} ${styles.pinThree}`}>3</span>
-              <div className={styles.destination}><span>ARRIVÉE</span><strong>Votre carte VTC</strong></div>
+              <MissionAnimation variant="vtc" compact />
             </div>
             <div className={styles.cockpitStats}>
               <div><span>Durée</span><strong>105 h</strong><small>Parcours complet</small></div>
