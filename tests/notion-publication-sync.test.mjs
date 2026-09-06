@@ -33,9 +33,10 @@ test('les erreurs temporaires de Notion sont retentées avec un délai borné', 
 
 test('le workflow refuse toute page hors du périmètre Notion attendu', () => {
   assert.ok(workflow.includes("github.event.pull_request.user.login == 'integraleacademy'"));
-  assert.ok(workflow.includes('EXPECTED_DATABASE_ID: 7f12fe92-dbc4-40c8-af4e-77578b5dbfc0'));
+  assert.ok(workflow.includes('EXPECTED_DATABASE_ID: cfb1a7f4-3fa2-4586-a017-dbf23f690183'));
+  assert.ok(workflow.includes('EXPECTED_DATA_SOURCE_ID: 7f12fe92-dbc4-40c8-af4e-77578b5dbfc0'));
   assert.ok(workflow.includes('EXPECTED_PLATFORM: Site internet officiel'));
-  assert.ok(workflow.includes('parent.get("type") != "database_id"'));
+  assert.ok(workflow.includes('if not parent_ids & expected_parent_ids:'));
   assert.ok(workflow.includes('platform != os.environ["EXPECTED_PLATFORM"]'));
 
   const readPosition = workflow.indexOf('page = notion_request("GET")');
