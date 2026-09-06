@@ -191,16 +191,6 @@ function Eyebrow({ children, light = false }: { children: ReactNode; light?: boo
   return <p className={`text-[.66rem] font-black uppercase tracking-[.24em] ${light ? 'text-blue-300' : 'text-blue-700'}`}>{children}</p>;
 }
 
-function EnrollmentStepIcon({ step }: { step: string }) {
-  const iconClass = 'h-5 w-5';
-
-  if (step === '01') return <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" className={iconClass}><path d="M8.1 3.5 5.7 4.6c-.9.4-1.3 1.4-1 2.3 2.1 6.1 6.3 10.3 12.4 12.4.9.3 1.9-.1 2.3-1l1.1-2.4-4.3-2-1.2 1.8c-2.9-1.2-5.5-3.8-6.7-6.7l1.8-1.2-2-4.3Z" stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round"/></svg>;
-  if (step === '02') return <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" className={iconClass}><path d="M4 5.5h16v10H9l-5 3v-13Z" stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round"/><path d="M8 9h8M8 12h5" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"/></svg>;
-  if (step === '03') return <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" className={iconClass}><rect x="3.5" y="5" width="17" height="14" rx="2.5" stroke="currentColor" strokeWidth="1.7"/><circle cx="9" cy="11" r="2.2" stroke="currentColor" strokeWidth="1.7"/><path d="M6.5 16c.6-1.5 1.4-2.2 2.5-2.2s1.9.7 2.5 2.2M14.5 10h3M14.5 13h3" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"/></svg>;
-  if (step === '04') return <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" className={iconClass}><path d="M8 4h8M9 3v3M15 3v3M6 5h12v16H6V5Z" stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round"/><path d="m9 11 1.4 1.4L13 9.8M9 16h6" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"/></svg>;
-  return <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" className={iconClass}><path d="M3.5 6.5h17v12h-17v-12Z" stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round"/><path d="m4.5 8 7.5 5 7.5-5" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"/><path d="m8.5 18 3.5-3 3.5 3" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"/></svg>;
-}
-
 function Section({ id, eyebrow, title, intro, children, tone = 'cream' }: { id?: string; eyebrow: string; title: ReactNode; intro?: ReactNode; children: ReactNode; tone?: 'cream' | 'paper' | 'stone' | 'dark' }) {
   const colors = tone === 'dark' ? 'bg-[#0D1725] text-white' : tone === 'paper' ? 'bg-[#FFFDF8] text-academy-ink' : tone === 'stone' ? 'bg-[#EFE7D9] text-academy-ink' : 'bg-academy-bg text-academy-ink';
   return <section id={id} className={`${styles.section} ${colors} scroll-mt-24 px-4 py-14 sm:py-16 lg:py-24`}><div className="page-container"><div className="mb-8 grid gap-5 lg:grid-cols-[.75fr_1.25fr] lg:items-end lg:gap-16"><div><Eyebrow light={tone === 'dark'}>{eyebrow}</Eyebrow><h2 className={`${styles.sectionHeading} mt-3 max-w-3xl text-3xl font-black tracking-[-.045em] sm:text-4xl lg:text-5xl`}>{title}</h2></div>{intro && <div className={`${styles.sectionIntro} max-w-3xl text-base font-medium leading-8 ${tone === 'dark' ? 'text-white/65' : 'text-academy-muted'}`}>{intro}</div>}</div>{children}</div></section>;
@@ -357,11 +347,9 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
     </TrainingDatesPricingSection>
 
     <section id="inscription-financement" className={`${styles.enrollmentSection} relative isolate overflow-hidden bg-[#0A1725] px-4 py-14 text-white sm:py-16 lg:py-20`}>
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_14%_12%,rgba(59,130,246,.28),transparent_27%),linear-gradient(145deg,#07111D,#112641)]" />
-      <div className="absolute inset-0 -z-10 opacity-20 [background-image:linear-gradient(rgba(255,255,255,.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.08)_1px,transparent_1px)] [background-size:48px_48px]" />
       <div className="page-container">
         <Eyebrow light>08 — Inscription & financement</Eyebrow>
-        <div className={`${styles.enrollmentHero} mt-3 grid gap-8 rounded-[2.2rem] border border-white/10 p-5 sm:p-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-12 lg:p-10`}>
+        <div className={`${styles.enrollmentHeader} mt-3 grid gap-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-12`}>
           <div className="min-w-0">
             <h2 className="max-w-5xl text-3xl font-black tracking-[-.05em] sm:text-4xl lg:text-5xl">
               <span className="block">Du premier appel à votre entrée en formation.</span>
@@ -374,21 +362,16 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
           </div>
         </div>
 
-        <div className={`${styles.enrollmentJourney} mt-8`}>
-          <div className={`${styles.enrollmentGrid} grid gap-3 sm:grid-cols-2 lg:grid-cols-5`}>
-            {enrollmentSteps.map(([number, title, text]) => (
-              <article key={number} className={`${styles.enrollmentCard} ${(number === '01' || number === '03') ? styles.enrollmentCardFeatured : ''} rounded-[1.7rem] border border-white/10 bg-white/7 p-5`}>
-                <div className={styles.enrollmentCardTop}>
-                  <span className={styles.enrollmentNumber}>{number}</span>
-                  <span className={styles.enrollmentIcon}><EnrollmentStepIcon step={number} /></span>
-                </div>
-                <h3 className={`${styles.enrollmentCardTitle} mt-7 text-lg font-black`}>{title}</h3>
-                <p className={`${styles.enrollmentCardText} mt-3 text-sm leading-6 text-white/62`}>{text}</p>
-                {number === '01' && <a href="tel:0422470768" className={`${styles.enrollmentCardLink} mt-5 inline-flex text-sm font-black text-blue-200 transition hover:text-white`}>Appeler le 04 22 47 07 68 →</a>}
-                {number === '03' && <a href={identityNumeriqueUrl} target="_blank" rel="noopener noreferrer" className={`${styles.enrollmentCardLink} mt-5 inline-flex text-sm font-black text-blue-200 transition hover:text-white`}>Créer mon Identité Numérique →</a>}
-              </article>
-            ))}
-          </div>
+        <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+          {enrollmentSteps.map(([number, title, text]) => (
+            <article key={number} className={`${styles.enrollmentCard} rounded-[1.5rem] border border-white/10 bg-white/7 p-5`}>
+              <span className={styles.enrollmentNumber}>{number}</span>
+              <h3 className={`${styles.enrollmentCardTitle} mt-6 text-lg font-black`}>{title}</h3>
+              <p className={`${styles.enrollmentCardText} mt-3 text-sm leading-6 text-white/62`}>{text}</p>
+              {number === '01' && <a href="tel:0422470768" className={`${styles.enrollmentCardLink} mt-5 inline-flex text-sm font-black text-blue-200 transition hover:text-white`}>Appeler le 04 22 47 07 68 →</a>}
+              {number === '03' && <a href={identityNumeriqueUrl} target="_blank" rel="noopener noreferrer" className={`${styles.enrollmentCardLink} mt-5 inline-flex text-sm font-black text-blue-200 transition hover:text-white`}>Créer mon Identité Numérique →</a>}
+            </article>
+          ))}
         </div>
 
         <div className={`${styles.enrollmentFinanceGrid} mt-6 grid gap-5 lg:grid-cols-[.78fr_1.22fr]`}>
