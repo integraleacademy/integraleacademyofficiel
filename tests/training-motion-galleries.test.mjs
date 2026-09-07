@@ -7,6 +7,7 @@ const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf
 const gallery = read('src/components/TrainingMotionGallery.tsx');
 const styles = read('src/components/TrainingMotionGallery.module.css');
 const pages = {
+  home: read('src/app/page.tsx'),
   a3p: read('src/components/A3pReferencePage.tsx'),
   ssiap: read('src/components/SsiapReferencePage.tsx'),
   sst: read('src/components/SstReferencePage.tsx'),
@@ -22,6 +23,7 @@ const pages = {
 };
 
 const expectedStories = {
+  home: ['Protéger les personnes et les biens', 'Prévenir le risque incendie', 'Porter secours', 'Conduire avec professionnalisme', 'Manager et développer', 'Aller jusqu’au diplôme'],
   a3p: ['Préparer la mission', 'Analyser les risques', 'Reconnaître les lieux', 'Protéger en déplacement', 'Sécuriser les trajets', 'Briefer et débriefer'],
   ssiap: ['Effectuer une ronde', 'Vérifier les équipements', 'Exploiter le SSI', 'Lever le doute et alerter', 'Faciliter l’évacuation', 'Accueillir les secours'],
   sst: ['Protéger la zone', 'Examiner la victime', 'Alerter les secours', 'Réaliser le geste adapté', 'Pratiquer la réanimation', 'Utiliser un défibrillateur'],
@@ -36,7 +38,7 @@ const expectedStories = {
   vtc: ['Organiser la réservation', 'Préparer l’itinéraire', 'Accueillir le passager', 'Conduire en sécurité', 'Calculer et facturer', 'Fidéliser la clientèle'],
 };
 
-test('chaque formation affiche sa galerie motion design dédiée', () => {
+test('chaque page ciblée affiche sa galerie motion design dédiée', () => {
   for (const [variant, source] of Object.entries(pages)) {
     assert.ok(source.includes(`import { TrainingMotionGallery } from '@/components/TrainingMotionGallery';`), `import manquant pour ${variant}`);
     assert.ok(source.includes(`<TrainingMotionGallery variant="${variant}"`), `galerie manquante pour ${variant}`);
@@ -94,4 +96,10 @@ test('la page VTC conserve son animation d’itinéraire et ajoute sa galerie vi
   assert.match(pages.vtc, /<TrainingMotionGallery variant="vtc"/);
   assert.match(gallery, /vtc:[\s\S]*?theme: 'violet'/);
   assert.match(styles, /\.violet\s*\{[\s\S]*?--accent:\s*#7c3aed/);
+});
+
+test('l’accueil présente une galerie éditoriale sobre aux couleurs de l’école', () => {
+  assert.match(pages.home, /<TrainingMotionGallery variant="home" headingLevel=\{2\}/);
+  assert.match(gallery, /home:[\s\S]*?theme: 'academy'/);
+  assert.match(styles, /\.academy\s*\{[\s\S]*?--accent:\s*#18324f[\s\S]*?--accent-2:\s*#c99522/);
 });
