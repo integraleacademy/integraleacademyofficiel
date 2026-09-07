@@ -35,6 +35,9 @@ export function TrainingSectionNavigation({
   const scrollerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const nav = navRef.current;
+    if (!nav) return;
+
     const updateFromHash = () => {
       if (items.some((item) => item.href === window.location.hash)) {
         setActiveHref(window.location.hash);
@@ -44,6 +47,37 @@ export function TrainingSectionNavigation({
     const sections = items
       .map((item) => document.getElementById(item.href.slice(1)))
       .filter((section): section is HTMLElement => Boolean(section));
+
+    const initialHash = window.location.hash;
+    const originalScrollMargins = new Map(
+      sections.map((section) => [section, section.style.scrollMarginTop]),
+    );
+    const getAnchorOffset = () => {
+      const parsedTop = Number.parseFloat(window.getComputedStyle(nav).top);
+      const stickyTop = Number.isFinite(parsedTop) ? parsedTop : 0;
+      return Math.ceil(stickyTop + nav.offsetHeight + 20);
+    };
+    const updateAnchorOffsets = () => {
+      const scrollMarginTop = `${getAnchorOffset()}px`;
+      sections.forEach((section) => {
+        section.style.scrollMarginTop = scrollMarginTop;
+      });
+    };
+    const alignInitialHash = () => {
+      if (!initialHash || window.location.hash !== initialHash) return;
+      const target = sections.find((section) => `#${section.id}` === initialHash);
+      if (!target) return;
+
+      const expectedTop = getAnchorOffset();
+      const currentTop = target.getBoundingClientRect().top;
+      if (Math.abs(currentTop - expectedTop) < 2) return;
+
+      const root = document.documentElement;
+      const previousScrollBehavior = root.style.scrollBehavior;
+      root.style.scrollBehavior = 'auto';
+      window.scrollTo(0, Math.max(0, window.scrollY + currentTop - expectedTop));
+      root.style.scrollBehavior = previousScrollBehavior;
+    };
 
     let animationFrame = 0;
     const updateActiveSection = () => {
@@ -71,19 +105,45 @@ export function TrainingSectionNavigation({
       threshold: 0,
     });
 
+    const resizeObserver = new ResizeObserver(() => {
+      updateAnchorOffsets();
+      requestUpdate();
+    });
+    const handleResize = () => {
+      updateAnchorOffsets();
+      requestUpdate();
+    };
+
     sections.forEach((section) => observer.observe(section));
+    resizeObserver.observe(nav);
+    updateAnchorOffsets();
     updateFromHash();
     requestUpdate();
+    const initialAlignmentFrame = window.requestAnimationFrame(() => {
+      alignInitialHash();
+      requestUpdate();
+    });
+    const initialAlignmentTimeout = window.setTimeout(() => {
+      updateAnchorOffsets();
+      alignInitialHash();
+      requestUpdate();
+    }, 250);
     window.addEventListener('hashchange', updateFromHash);
     window.addEventListener('scroll', requestUpdate, { passive: true });
-    window.addEventListener('resize', requestUpdate);
+    window.addEventListener('resize', handleResize);
 
     return () => {
       observer.disconnect();
+      resizeObserver.disconnect();
       window.cancelAnimationFrame(animationFrame);
+      window.cancelAnimationFrame(initialAlignmentFrame);
+      window.clearTimeout(initialAlignmentTimeout);
       window.removeEventListener('hashchange', updateFromHash);
       window.removeEventListener('scroll', requestUpdate);
-      window.removeEventListener('resize', requestUpdate);
+      window.removeEventListener('resize', handleResize);
+      originalScrollMargins.forEach((scrollMarginTop, section) => {
+        section.style.scrollMarginTop = scrollMarginTop;
+      });
     };
   }, [items]);
 

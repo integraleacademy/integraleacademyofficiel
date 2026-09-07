@@ -27,6 +27,11 @@ const btsPages = [
 test('le nouveau sommaire reprend le comportement lisible et fixe de la page APS', () => {
   assert.match(navigation, /^'use client';/);
   assert.match(navigation, /IntersectionObserver/);
+  assert.match(navigation, /getComputedStyle\(nav\)\.top/);
+  assert.match(navigation, /nav\.offsetHeight \+ 20/);
+  assert.match(navigation, /section\.style\.scrollMarginTop = scrollMarginTop/);
+  assert.match(navigation, /new ResizeObserver/);
+  assert.match(navigation, /alignInitialHash/);
   assert.match(navigation, /aria-current=\{active \? 'location' : undefined\}/);
   assert.doesNotMatch(navigation, /index|padStart\(2/);
   assert.match(navigationStyles, /\.courseNav\s*\{[^}]*position:\s*sticky;[^}]*top:\s*55px;/s);
