@@ -57,6 +57,31 @@ test('les photos du bloc immersion sont remplacées par deux scènes motion desi
   assert.match(apsStyles, /@media \(prefers-reduced-motion: reduce\)[\s\S]*?\.baggageSweep,[\s\S]*?\.patdownSweep,/);
 });
 
+test('la partie métier présente six illustrations APS animées et accessibles', () => {
+  const storiesBlock = apsPage.slice(
+    apsPage.indexOf('const apsVisualStories = ['),
+    apsPage.indexOf('const audiences = ['),
+  );
+
+  for (const title of [
+    'Les rondes de sécurité',
+    'La vigilance de nuit',
+    'Le contrôle d’accès',
+    'La surveillance vidéo',
+    'Observer et rendre compte',
+    'Réagir et alerter',
+  ]) {
+    assert.ok(storiesBlock.includes(title), `illustration APS manquante : ${title}`);
+  }
+
+  assert.ok(apsPage.includes('<ApsStoryIllustration key={kind}'));
+  assert.ok(apsPage.includes('role="img" aria-label={description}'));
+  assert.match(apsStyles, /\.visualStoriesGrid[\s\S]*?scroll-snap-type:\s*x mandatory;/);
+  assert.match(apsStyles, /@keyframes storyNightSweep/);
+  assert.match(apsStyles, /@keyframes storyVideoSweep/);
+  assert.match(apsStyles, /@media \(prefers-reduced-motion: reduce\)[\s\S]*?\.storyNightBeam,[\s\S]*?\.storyVideoScan,/);
+});
+
 test('la page APS trie les sessions et limite la vue initiale aux deux prochaines', () => {
   assert.ok(apsPage.includes('sortSessionsChronologically(sessions.length ? sessions : fallbackSessions)'));
   assert.ok(apsPage.includes('initialSessionLimit={2}'));

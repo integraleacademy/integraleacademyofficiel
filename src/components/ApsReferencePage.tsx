@@ -36,6 +36,17 @@ const missions = [
   ['✚', 'Secours aux personnes', 'Porter assistance dans le cadre des compétences du SST.', false],
 ];
 
+const apsVisualStories = [
+  ['patrol', 'Les rondes de sécurité', 'Animation d’un agent effectuant une ronde autour d’un bâtiment'],
+  ['night', 'La vigilance de nuit', 'Animation d’une lampe balayant un site pendant une surveillance de nuit'],
+  ['access', 'Le contrôle d’accès', 'Animation d’un agent vérifiant un badge devant une barrière de contrôle'],
+  ['video', 'La surveillance vidéo', 'Animation d’un écran de vidéoprotection affichant quatre zones surveillées'],
+  ['report', 'Observer et rendre compte', 'Animation d’un compte rendu complété après une observation'],
+  ['alert', 'Réagir et alerter', 'Animation d’une radio transmettant une alerte depuis le terrain'],
+] as const;
+
+type ApsVisualStoryKind = typeof apsVisualStories[number][0];
+
 const audiences = ['Reconversion professionnelle', 'Demandeurs d’emploi', 'Salariés en évolution', 'Débutants motivés', 'Futurs titulaires CNAPS', 'Projet APS + SSIAP 1'];
 
 const prerequisites = [
@@ -336,6 +347,146 @@ function PatdownProtocolMotion() {
   </article>;
 }
 
+function ApsStoryIllustration({ kind, title, description }: { kind: ApsVisualStoryKind; title: string; description: string }) {
+  const visual = (() => {
+    if (kind === 'patrol') return <svg className={styles.storySvg} viewBox="0 0 320 210" aria-hidden="true" focusable="false">
+      <g className={styles.storyBuilding}>
+        <rect x="164" y="39" width="116" height="104" rx="5" fill="#fff" stroke="#8bb8f2" strokeWidth="3" />
+        <rect x="164" y="39" width="116" height="12" rx="5" fill="#2f70db" />
+        <rect x="181" y="68" width="22" height="19" rx="3" fill="#c8dcf8" />
+        <rect x="212" y="68" width="22" height="19" rx="3" fill="#c8dcf8" />
+        <rect x="243" y="68" width="22" height="19" rx="3" fill="#c8dcf8" />
+        <rect x="181" y="96" width="22" height="19" rx="3" fill="#c8dcf8" />
+        <rect x="212" y="96" width="22" height="19" rx="3" fill="#c8dcf8" />
+        <rect x="243" y="96" width="22" height="19" rx="3" fill="#c8dcf8" />
+        <rect x="239" y="119" width="25" height="24" rx="2" fill="#172233" />
+      </g>
+      <g className={styles.storyPatrolAgent}>
+        <circle cx="83" cy="74" r="13" fill="#172233" />
+        <path d="M73 72c5-7 15-7 20 0" fill="none" stroke="#fff" strokeOpacity=".55" strokeLinecap="round" />
+        <path d="M65 101c3-13 9-20 18-20s16 7 19 20l11 24-12 5-9-20-2 38H76l-2-38-8 20-12-5z" fill="#2f70db" />
+        <path d="m73 85 10 14 11-14" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M77 148l-3 31M89 148l4 31" stroke="#172233" strokeWidth="9" strokeLinecap="round" />
+      </g>
+      <path className={styles.storyRoute} d="M34 181H246" fill="none" stroke="#2f70db" strokeWidth="4" strokeLinecap="round" strokeDasharray="8 10" />
+      <g className={styles.storyMapPin}>
+        <path d="M270 154c-12 0-20 8-20 19 0 15 20 32 20 32s20-17 20-32c0-11-8-19-20-19z" fill="#2f70db" />
+        <circle cx="270" cy="173" r="6" fill="#fff" />
+      </g>
+    </svg>;
+
+    if (kind === 'night') return <svg className={styles.storySvg} viewBox="0 0 320 210" aria-hidden="true" focusable="false">
+      <circle cx="160" cy="105" r="88" fill="none" stroke="#9ec4f4" strokeOpacity=".42" strokeWidth="2" />
+      <circle cx="160" cy="105" r="76" fill="none" stroke="#9ec4f4" strokeOpacity=".28" />
+      <g className={styles.storyNightBeam}>
+        <path d="M111 92 247 43v123L111 111z" fill="#2f70db" fillOpacity=".15" />
+        <rect x="43" y="86" width="75" height="30" rx="10" fill="#172233" />
+        <path d="M55 101h35" stroke="#fff" strokeWidth="3" strokeLinecap="round" />
+        <rect x="102" y="78" width="30" height="46" rx="8" fill="#2f70db" />
+      </g>
+      <g className={styles.storyNightBuilding}>
+        <rect x="202" y="72" width="77" height="73" rx="4" fill="#fff" stroke="#9ec4f4" strokeWidth="2" />
+        <rect x="202" y="72" width="77" height="8" rx="4" fill="#2f70db" />
+        <rect x="215" y="91" width="14" height="13" rx="2" fill="#c8dcf8" />
+        <rect x="237" y="91" width="14" height="13" rx="2" fill="#c8dcf8" />
+        <rect x="259" y="91" width="10" height="13" rx="2" fill="#c8dcf8" />
+        <rect x="215" y="113" width="14" height="13" rx="2" fill="#c8dcf8" />
+        <rect x="237" y="113" width="14" height="13" rx="2" fill="#c8dcf8" />
+        <rect x="249" y="126" width="17" height="19" rx="2" fill="#172233" />
+      </g>
+      <path d="M48 174H272" stroke="#9ec4f4" strokeWidth="3" strokeLinecap="round" />
+    </svg>;
+
+    if (kind === 'access') return <svg className={styles.storySvg} viewBox="0 0 320 210" aria-hidden="true" focusable="false">
+      <g className={styles.storyAccessAgent}>
+        <circle cx="65" cy="76" r="12" fill="#172233" />
+        <path d="M56 73c5-6 14-6 18 0" fill="none" stroke="#fff" strokeOpacity=".55" strokeLinecap="round" />
+        <path d="M49 104c3-14 8-20 16-20 9 0 14 6 17 20l9 22-11 5-8-18-2 36H58l-2-36-7 18-11-5z" fill="#2f70db" />
+        <path d="M59 149l-3 27M69 149l3 27" stroke="#172233" strokeWidth="8" strokeLinecap="round" />
+      </g>
+      <g className={styles.storyAccessGate}>
+        <rect x="144" y="48" width="45" height="126" rx="8" fill="#172233" />
+        <rect x="199" y="48" width="45" height="126" rx="8" fill="#172233" />
+        <rect x="153" y="61" width="27" height="37" rx="4" fill="#fff" />
+        <circle className={styles.storyAccessSignal} cx="166.5" cy="78" r="7" fill="#2f70db" />
+        <g className={styles.storyAccessArm}>
+          <rect x="154" y="118" width="98" height="6" rx="3" fill="#2f70db" />
+        </g>
+      </g>
+      <g className={styles.storyAccessBadge}>
+        <rect x="262" y="70" width="39" height="55" rx="7" fill="#fff" />
+        <circle cx="281.5" cy="87" r="7" fill="#2f70db" />
+        <path d="M272 104h19M276 112h11" stroke="#9ec4f4" strokeWidth="2" strokeLinecap="round" />
+      </g>
+    </svg>;
+
+    if (kind === 'video') return <svg className={styles.storySvg} viewBox="0 0 320 210" aria-hidden="true" focusable="false">
+      <g className={styles.storyMonitor}>
+        <rect x="39" y="25" width="242" height="143" rx="12" fill="#172233" />
+        <rect x="47" y="34" width="226" height="124" rx="5" fill="#fff" />
+        {[0, 1, 2, 3].map(index => {
+          const x = index % 2 === 0 ? 55 : 166;
+          const y = index < 2 ? 43 : 101;
+          return <g key={index}>
+            <rect x={x} y={y} width="99" height="49" rx="2" fill="#d8e7fa" />
+            <polyline className={styles.storyVideoTrace} points={`${x + 8},${y + 39} ${x + 28},${y + 13} ${x + 46},${y + 30} ${x + 68},${y + 22} ${x + 91},${y + 40}`} fill="none" stroke="#2f70db" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+          </g>;
+        })}
+        <path d="M160 168v18M139 188h42" stroke="#172233" strokeWidth="7" strokeLinecap="round" />
+      </g>
+      <rect className={styles.storyVideoScan} x="49" y="34" width="34" height="124" fill="#7dd3fc" fillOpacity=".13" />
+    </svg>;
+
+    if (kind === 'report') return <svg className={styles.storySvg} viewBox="0 0 320 210" aria-hidden="true" focusable="false">
+      <g className={styles.storyClipboard}>
+        <rect x="111" y="22" width="151" height="166" rx="12" fill="#fff" stroke="#9ec4f4" strokeWidth="5" />
+        <rect x="156" y="14" width="60" height="20" rx="7" fill="#2f70db" />
+        <path d="M129 57h116" stroke="#9ec4f4" strokeWidth="2" />
+        <text x="129" y="49" fill="#172233" fontSize="13" fontWeight="900">COMPTE RENDU</text>
+        {[0, 1, 2].map(index => <g key={index} className={styles.storyReportRow} style={{ animationDelay: `${index * .35}s` }}>
+          <circle cx="136" cy={83 + index * 34} r="8" fill="#2f70db" />
+          <path d={`m132 ${83 + index * 34} 3 3 5-7`} fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          <path className={styles.storyReportLine} d={`M157 ${80 + index * 34}h76M157 ${89 + index * 34}h48`} stroke="#9ec4f4" strokeWidth="3" strokeLinecap="round" />
+        </g>)}
+      </g>
+      <g className={styles.storyObserverCard}>
+        <rect x="34" y="107" width="112" height="67" rx="11" fill="#2f70db" />
+        <text x="49" y="133" fill="#fff" fontSize="12" fontWeight="900">OBSERVER</text>
+        <path d="M49 148h67M49 158h54" stroke="#fff" strokeWidth="3" strokeLinecap="round" />
+      </g>
+    </svg>;
+
+    return <svg className={styles.storySvg} viewBox="0 0 320 210" aria-hidden="true" focusable="false">
+      <g className={styles.storyAlertWaves} fill="none" stroke="#2f70db" strokeLinecap="round">
+        <path d="M88 74c-16 15-16 47 0 62" strokeWidth="4" />
+        <path d="M69 58c-27 25-27 68 0 94" strokeWidth="3" strokeOpacity=".55" />
+        <path d="M232 74c16 15 16 47 0 62" strokeWidth="4" />
+        <path d="M251 58c27 25 27 68 0 94" strokeWidth="3" strokeOpacity=".55" />
+      </g>
+      <g className={styles.storyRadio}>
+        <path d="M179 39 199 14" stroke="#172233" strokeWidth="7" strokeLinecap="round" />
+        <rect x="115" y="38" width="91" height="145" rx="18" fill="#172233" />
+        <rect x="130" y="57" width="61" height="43" rx="8" fill="#d8e7fa" />
+        <circle cx="160.5" cy="78.5" r="12" fill="#2f70db" />
+        <path d="M153 79h15" stroke="#fff" strokeWidth="3" strokeLinecap="round" />
+        <rect x="134" y="118" width="53" height="8" rx="4" fill="#2f70db" />
+        <rect x="134" y="136" width="35" height="7" rx="3.5" fill="#9ec4f4" />
+        <circle className={styles.storyRadioButton} cx="175" cy="153" r="12" fill="#2f70db" />
+      </g>
+      <g className={styles.storyAlertBadge}>
+        <circle cx="239" cy="46" r="22" fill="#fff" stroke="#9ec4f4" strokeWidth="3" />
+        <path d="M239 34v15" stroke="#2f70db" strokeWidth="5" strokeLinecap="round" />
+        <circle cx="239" cy="57" r="2.8" fill="#2f70db" />
+      </g>
+    </svg>;
+  })();
+
+  return <article className={styles.storyCard} data-story={kind}>
+    <div className={styles.storyVisual} role="img" aria-label={description}>{visual}</div>
+    <h4>{title}</h4>
+  </article>;
+}
+
 function CompactAssistant() {
   return <details className="group mt-3 overflow-hidden rounded-[1.35rem] border border-academy-line bg-white text-academy-ink shadow-soft"><summary className="flex cursor-pointer list-none items-center gap-3 p-4"><span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-academy-gold font-black text-academy-gold-text">✦</span><span className="min-w-0 flex-1"><strong className="block text-sm font-black">Une question avant de vous inscrire&nbsp;?</strong><small className="block text-xs font-semibold text-academy-muted">L’assistant vérifie les informations essentielles.</small></span><span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-academy-ink font-black text-white transition group-open:rotate-90">→</span></summary><div className="border-t border-academy-line bg-academy-bg p-3 sm:p-4"><OrientationAssistant initialFormationKey="aps" hideInfoAction /></div></details>;
 }
@@ -393,7 +544,17 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
 
     <ApsSectionNavigation registrationHref={apsRegistrationFormUrl} />
 
-    <Section id="metier" eyebrow="01 — Le métier" title={<>Un métier de terrain, de vigilance et de sang-froid.</>} intro={<>L’agent APS prévient les risques, protège les personnes et les biens, applique les consignes et rend compte de chaque événement.</>}><div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-12">{missions.map(([icon,title,text,featured],index) => <article key={String(title)} className={`${styles.liftCard} ${index === 0 || index === 4 ? 'lg:col-span-5' : index === 1 || index === 3 ? 'lg:col-span-3' : 'lg:col-span-4'} rounded-[1.8rem] border p-6 shadow-soft ${featured ? 'border-[#26384F] bg-[#0D1725] text-white' : 'border-academy-line bg-[#FFFDF8]'}`}><span className={styles.cardNumber}>MISSION 0{index+1}</span><span className={`grid h-12 w-12 place-items-center rounded-2xl text-xl font-black ${featured ? 'bg-white/10 text-sky-300' : 'bg-academy-bg text-yellow-700'}`}>{icon}</span><h3 className="mt-7 text-xl font-black">{title}</h3><p className={`mt-3 leading-7 ${featured ? 'text-white/65' : 'text-academy-muted'}`}>{text}</p></article>)}</div><div className={`${styles.liftCard} mt-8 grid gap-5 rounded-[2rem] border border-academy-line bg-white p-6 shadow-soft lg:grid-cols-[.7fr_1.3fr] lg:p-8`}><div><Eyebrow>À qui s’adresse la formation ?</Eyebrow><h3 className="mt-3 text-3xl font-black">Un parcours accessible, un métier réglementé.</h3><p className="mt-4 leading-7 text-academy-muted">Aucune expérience préalable dans la sécurité n’est obligatoire.</p></div><div className="grid gap-3 sm:grid-cols-2">{audiences.map((item,index) => <div key={item} className="flex items-center gap-3 rounded-2xl bg-academy-bg p-4 font-bold"><span className={`grid h-8 w-8 shrink-0 place-items-center rounded-full text-xs font-black ${index === 5 ? 'bg-orange-100 text-orange-700' : 'bg-sky-100 text-sky-700'}`}>✓</span>{item}</div>)}</div></div></Section>
+    <Section id="metier" eyebrow="01 — Le métier" title={<>Un métier de terrain, de vigilance et de sang-froid.</>} intro={<>L’agent APS prévient les risques, protège les personnes et les biens, applique les consignes et rend compte de chaque événement.</>}>
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-12">{missions.map(([icon,title,text,featured],index) => <article key={String(title)} className={`${styles.liftCard} ${index === 0 || index === 4 ? 'lg:col-span-5' : index === 1 || index === 3 ? 'lg:col-span-3' : 'lg:col-span-4'} rounded-[1.8rem] border p-6 shadow-soft ${featured ? 'border-[#26384F] bg-[#0D1725] text-white' : 'border-academy-line bg-[#FFFDF8]'}`}><span className={styles.cardNumber}>MISSION 0{index+1}</span><span className={`grid h-12 w-12 place-items-center rounded-2xl text-xl font-black ${featured ? 'bg-white/10 text-sky-300' : 'bg-academy-bg text-yellow-700'}`}>{icon}</span><h3 className="mt-7 text-xl font-black">{title}</h3><p className={`mt-3 leading-7 ${featured ? 'text-white/65' : 'text-academy-muted'}`}>{text}</p></article>)}</div>
+      <div className={styles.visualStoriesBlock}>
+        <div className={styles.visualStoriesIntro}>
+          <div><Eyebrow>APS en mouvement</Eyebrow><h3>Les réflexes métier, en images.</h3></div>
+          <p>Des gestes simples à visualiser, puis à répéter sur le terrain jusqu’à ce qu’ils deviennent naturels.</p>
+        </div>
+        <div className={styles.visualStoriesGrid}>{apsVisualStories.map(([kind,title,description]) => <ApsStoryIllustration key={kind} kind={kind} title={title} description={description} />)}</div>
+      </div>
+      <div className={`${styles.liftCard} mt-8 grid gap-5 rounded-[2rem] border border-academy-line bg-white p-6 shadow-soft lg:grid-cols-[.7fr_1.3fr] lg:p-8`}><div><Eyebrow>À qui s’adresse la formation ?</Eyebrow><h3 className="mt-3 text-3xl font-black">Un parcours accessible, un métier réglementé.</h3><p className="mt-4 leading-7 text-academy-muted">Aucune expérience préalable dans la sécurité n’est obligatoire.</p></div><div className="grid gap-3 sm:grid-cols-2">{audiences.map((item,index) => <div key={item} className="flex items-center gap-3 rounded-2xl bg-academy-bg p-4 font-bold"><span className={`grid h-8 w-8 shrink-0 place-items-center rounded-full text-xs font-black ${index === 5 ? 'bg-orange-100 text-orange-700' : 'bg-sky-100 text-sky-700'}`}>✓</span>{item}</div>)}</div></div>
+    </Section>
 
     <Section id="admission" eyebrow="02 — Admission" title={<>Votre dossier est-il prêt pour l’APS&nbsp;?</>} intro={<>Nous contrôlons chaque condition avant votre entrée en formation et vous accompagnons dans la démarche d’autorisation préalable.</>} tone="dark"><div className="grid gap-4 md:grid-cols-2">{prerequisites.map(([title,text]) => <article key={title} className={`${styles.liftCard} rounded-[1.7rem] border border-white/10 bg-white/7 p-5`}><span className="grid h-9 w-9 place-items-center rounded-full bg-blue-400/15 font-black text-blue-300">✓</span><h3 className="mt-4 text-xl font-black">{title}</h3><p className="mt-2 leading-7 text-white/62">{text}</p></article>)}</div><div className="mt-7 flex flex-col items-start justify-between gap-5 rounded-[1.8rem] bg-gradient-to-r from-[#F7D57D] to-[#F0B52E] p-6 text-academy-gold-text lg:flex-row lg:items-center"><div><p className="text-xl font-black">Bonne nouvelle : nous préparons votre demande CNAPS.</p><p className="mt-1 font-semibold opacity-75">Vous fournissez les documents, notre équipe vous accompagne dans le dépôt.</p></div><CTA href={apsContact('autorisation préalable CNAPS')} variant="dark">Faire vérifier mon dossier →</CTA></div><div className="mt-8 grid gap-3 md:grid-cols-4">{cnapsSteps.map((item,index) => <div key={item} className="rounded-[1.4rem] bg-white p-4 text-academy-ink"><span className="grid h-9 w-9 place-items-center rounded-full bg-[#0D1725] text-xs font-black text-academy-gold">0{index+1}</span><p className="mt-5 font-black">{item}</p></div>)}</div></Section>
 

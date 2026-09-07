@@ -374,6 +374,261 @@
   letter-spacing: .18em;
 }
 
+.visualStoriesBlock {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  margin-top: 2rem;
+  border: 1px solid rgba(147,197,253,.62);
+  border-radius: 2rem;
+  padding: clamp(1rem, 2.6vw, 2rem);
+  background:
+    radial-gradient(circle at 92% 0%, rgba(59,130,246,.15), transparent 28rem),
+    linear-gradient(145deg, #f8fbff, #edf5ff);
+  box-shadow: 0 24px 70px rgba(30,64,175,.1);
+}
+
+.visualStoriesBlock::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  content: "";
+  opacity: .45;
+  background-image:
+    linear-gradient(rgba(47,112,219,.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(47,112,219,.055) 1px, transparent 1px);
+  background-size: 38px 38px;
+  mask-image: linear-gradient(to bottom, black, transparent 66%);
+  pointer-events: none;
+}
+
+.visualStoriesIntro {
+  position: relative;
+  display: grid;
+  gap: 1rem;
+  align-items: end;
+  margin-bottom: 1.4rem;
+}
+
+.visualStoriesIntro h3 {
+  margin-top: .55rem;
+  color: #0d1725;
+  font-size: clamp(1.8rem, 3vw, 2.65rem);
+  font-weight: 900;
+  letter-spacing: -.045em;
+  line-height: 1.02;
+  text-wrap: balance;
+}
+
+.visualStoriesIntro > p {
+  max-width: 39rem;
+  color: #526174;
+  font-size: .95rem;
+  font-weight: 600;
+  line-height: 1.7;
+}
+
+.visualStoriesGrid {
+  display: grid;
+  grid-auto-columns: minmax(17rem, 86%);
+  grid-auto-flow: column;
+  gap: .9rem;
+  overflow-x: auto;
+  padding: .15rem .1rem .65rem;
+  scroll-snap-type: x mandatory;
+  scrollbar-color: rgba(47,112,219,.34) transparent;
+  scrollbar-width: thin;
+}
+
+.storyCard {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  min-height: 285px;
+  flex-direction: column;
+  overflow: hidden;
+  scroll-snap-align: start;
+  border: 1px solid rgba(139,184,242,.68);
+  border-radius: 1.65rem;
+  padding: .7rem .7rem 1rem;
+  background: rgba(231,241,255,.92);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 14px 34px rgba(47,112,219,.08);
+  transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease, background .3s ease;
+}
+
+.storyCard:hover {
+  transform: translateY(-5px);
+  border-color: rgba(47,112,219,.72);
+  background: #edf5ff;
+  box-shadow: inset 0 1px 0 #fff, 0 22px 44px rgba(47,112,219,.14);
+}
+
+.storyCard[data-story="night"] {
+  background: rgba(237,245,255,.94);
+}
+
+.storyCard[data-story="report"] {
+  border-top: 4px solid #2f70db;
+  border-top-left-radius: .6rem;
+}
+
+.storyCard[data-story="access"] {
+  border-top-right-radius: 3.5rem;
+  border-bottom-left-radius: 3.5rem;
+}
+
+.storyVisual {
+  position: relative;
+  min-height: 215px;
+  flex: 1;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.82);
+  border-radius: 1.25rem;
+  background: rgba(255,255,255,.22);
+}
+
+.storyCard[data-story="night"] .storyVisual {
+  border-color: transparent;
+  border-radius: 50%;
+  background: rgba(210,228,251,.52);
+}
+
+.storySvg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.storyCard h4 {
+  position: relative;
+  margin-top: .9rem;
+  padding: 0 .55rem;
+  color: #172233;
+  font-size: .93rem;
+  font-weight: 900;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.storyPatrolAgent {
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  animation: storyPatrolWalk 4.2s ease-in-out infinite;
+}
+
+.storyRoute {
+  animation: storyRouteFlow 2.8s linear infinite;
+}
+
+.storyMapPin {
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  animation: storyPinBounce 2.8s ease-in-out infinite;
+}
+
+.storyNightBeam {
+  transform-origin: 122px 101px;
+  animation: storyNightSweep 5.4s ease-in-out infinite;
+}
+
+.storyNightBuilding {
+  animation: storyBuildingGlow 5.4s ease-in-out infinite;
+}
+
+.storyAccessArm {
+  transform-origin: 154px 121px;
+  animation: storyAccessOpen 4.8s ease-in-out infinite;
+}
+
+.storyAccessSignal,
+.storyAccessBadge {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.storyAccessSignal {
+  animation: storySignalPulse 2.4s ease-out infinite;
+}
+
+.storyAccessBadge {
+  animation: storyBadgeFloat 3.8s ease-in-out infinite;
+}
+
+.storyVideoTrace {
+  stroke-dasharray: 155;
+  stroke-dashoffset: 155;
+  animation: storyTraceDraw 5.5s ease-in-out infinite;
+}
+
+.storyVideoScan {
+  transform: translate3d(-46px,0,0);
+  animation: storyVideoSweep 5.5s ease-in-out infinite;
+}
+
+.storyReportRow {
+  transform-box: fill-box;
+  transform-origin: left center;
+  animation: storyReportReveal 3.4s ease-in-out infinite;
+}
+
+.storyReportLine {
+  transform-box: fill-box;
+  transform-origin: left center;
+  animation: storyLineReveal 3.4s ease-in-out infinite;
+}
+
+.storyObserverCard {
+  animation: storyObserverFloat 4s ease-in-out infinite;
+}
+
+.storyAlertWaves path {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: storyAlertWave 2.6s ease-in-out infinite;
+}
+
+.storyAlertWaves path:nth-child(2),
+.storyAlertWaves path:nth-child(4) {
+  animation-delay: .35s;
+}
+
+.storyRadio {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: storyRadioFloat 4.4s ease-in-out infinite;
+}
+
+.storyRadioButton,
+.storyAlertBadge {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: storySignalPulse 2.4s ease-out infinite;
+}
+
+@media (min-width: 640px) {
+  .visualStoriesGrid {
+    grid-auto-columns: initial;
+    grid-auto-flow: row;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    overflow: visible;
+    padding-bottom: .1rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .visualStoriesIntro {
+    grid-template-columns: .8fr 1.2fr;
+  }
+
+  .visualStoriesIntro > p {
+    justify-self: end;
+  }
+
+  .visualStoriesGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
 .practicalCard {
   position: relative;
   min-height: 245px;
@@ -1050,6 +1305,82 @@
   left: 125%;
 }
 
+@keyframes storyPatrolWalk {
+  0%, 100% { transform: translate3d(-4px,0,0) rotate(-1deg); }
+  50% { transform: translate3d(8px,-2px,0) rotate(1deg); }
+}
+
+@keyframes storyRouteFlow {
+  to { stroke-dashoffset: -36; }
+}
+
+@keyframes storyPinBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+
+@keyframes storyNightSweep {
+  0%, 100% { transform: rotate(-5deg); }
+  50% { transform: rotate(6deg); }
+}
+
+@keyframes storyBuildingGlow {
+  0%, 100% { opacity: .76; }
+  50% { opacity: 1; }
+}
+
+@keyframes storyAccessOpen {
+  0%, 35%, 100% { transform: rotate(0); }
+  50%, 78% { transform: rotate(-54deg); }
+}
+
+@keyframes storySignalPulse {
+  0%, 100% { transform: scale(.82); opacity: .55; }
+  50% { transform: scale(1.16); opacity: 1; }
+}
+
+@keyframes storyBadgeFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+
+@keyframes storyTraceDraw {
+  0%, 12% { stroke-dashoffset: 155; opacity: .32; }
+  48%, 82% { stroke-dashoffset: 0; opacity: 1; }
+  100% { stroke-dashoffset: -155; opacity: .32; }
+}
+
+@keyframes storyVideoSweep {
+  0%, 10% { transform: translate3d(-46px,0,0); opacity: 0; }
+  48%, 58% { opacity: .85; }
+  90%, 100% { transform: translate3d(226px,0,0); opacity: 0; }
+}
+
+@keyframes storyReportReveal {
+  0%, 12%, 100% { transform: translateX(-5px); opacity: .35; }
+  38%, 78% { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes storyLineReveal {
+  0%, 15% { transform: scaleX(.28); }
+  48%, 100% { transform: scaleX(1); }
+}
+
+@keyframes storyObserverFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes storyAlertWave {
+  0%, 100% { transform: scale(.88); opacity: .25; }
+  50% { transform: scale(1.06); opacity: .9; }
+}
+
+@keyframes storyRadioFloat {
+  0%, 100% { transform: translateY(0) rotate(-1deg); }
+  50% { transform: translateY(-5px) rotate(1deg); }
+}
+
 @keyframes radar {
   to { transform: rotate(360deg); }
 }
@@ -1294,6 +1625,23 @@
   .patdownZones circle,
   .patdownSweep,
   .protocolPath,
+  .storyPatrolAgent,
+  .storyRoute,
+  .storyMapPin,
+  .storyNightBeam,
+  .storyNightBuilding,
+  .storyAccessArm,
+  .storyAccessSignal,
+  .storyAccessBadge,
+  .storyVideoTrace,
+  .storyVideoScan,
+  .storyReportRow,
+  .storyReportLine,
+  .storyObserverCard,
+  .storyAlertWaves path,
+  .storyRadio,
+  .storyRadioButton,
+  .storyAlertBadge,
   .practiceVisual::after,
   .scanLine,
   .adviserCard {
@@ -1303,6 +1651,7 @@
   .liftCard,
   .courseNavLink,
   .courseNavCta,
+  .storyCard,
   .immersionMotionCard,
   .practicalCard,
   .programItem,
