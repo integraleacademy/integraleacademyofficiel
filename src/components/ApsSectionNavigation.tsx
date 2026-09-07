@@ -1,20 +1,17 @@
 'use client';
 
-import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import styles from './ApsReferencePage.module.css';
 
 const sectionItems = [
-  { index: '01', label: 'Métier', href: '#metier' },
-  { index: '02', label: 'Admission', href: '#admission' },
-  { index: '03', label: 'Format hybride', href: '#hybride' },
-  { index: '04', label: 'Pratique', href: '#pratique' },
-  { index: '05', label: 'Programme', href: '#programme' },
-  { index: '06', label: 'Examen', href: '#examen' },
-  { index: '07', label: 'Dates & tarifs', href: '#dates-tarifs' },
-  { index: '08', label: 'Inscription', href: '#inscription-financement' },
-  { index: '09', label: 'Débouchés', href: '#debouches' },
-  { index: '10', label: 'FAQ', href: '#faq-aps' },
+  { label: 'Métier', href: '#metier' },
+  { label: 'Immersion', href: '#pratique' },
+  { label: 'Programme', href: '#programme' },
+  { label: 'Examen', href: '#examen' },
+  { label: 'Dates & tarifs', href: '#dates-tarifs' },
+  { label: 'Inscriptions', href: '#inscription-financement' },
+  { label: 'Débouchés', href: '#debouches' },
+  { label: 'FAQ', href: '#faq-aps' },
 ] as const;
 
 export function ApsSectionNavigation({ registrationHref }: { registrationHref: string }) {
@@ -87,7 +84,6 @@ export function ApsSectionNavigation({ registrationHref }: { registrationHref: s
                   className={`${styles.courseNavLink} ${active ? styles.courseNavLinkActive : ''}`}
                   onClick={() => setActiveHref(item.href)}
                 >
-                  <span className={styles.courseNavIndex}>{item.index}</span>
                   <span>{item.label}</span>
                 </a>
               );
@@ -95,10 +91,10 @@ export function ApsSectionNavigation({ registrationHref }: { registrationHref: s
           </div>
         </div>
 
-        <Link href={registrationHref} className={styles.courseNavCta}>
+        <a href={registrationHref} className={styles.courseNavCta}>
           <span>Je m’inscris</span>
           <span aria-hidden="true" className={styles.courseNavCtaArrow}>→</span>
-        </Link>
+        </a>
       </div>
     </nav>
   );
