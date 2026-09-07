@@ -87,16 +87,6 @@
   --line: rgba(167, 139, 250, .52);
 }
 
-.academy {
-  --accent: #18324f;
-  --accent-2: #c99522;
-  --accent-rgb: 24, 50, 79;
-  --soft: #e8eef5;
-  --surface: #f7f3eb;
-  --line: rgba(24, 50, 79, .2);
-  margin-top: 0;
-}
-
 .intro {
   position: relative;
   display: grid;
@@ -113,7 +103,6 @@
   text-transform: uppercase;
 }
 
-.intro h2,
 .intro h3 {
   margin-top: .55rem;
   color: #0d1725;
