@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import { BtsCompleteInformation, BtsStudentBenefits } from '@/components/BtsExpandedContent';
 import { BtsSectionNavigation } from '@/components/BtsSectionNavigation';
 import { MissionAnimation } from '@/components/MissionAnimation';
+import { TrainingMotionGallery } from '@/components/TrainingMotionGallery';
 import { PremiumFAQSection } from '@/components/ui';
 
 const applicationUrl = 'https://inscriptionsbts.onrender.com/';
@@ -368,6 +369,7 @@ export function BtsNdrcReferencePage() {
           ))}
         </div>
         <MissionAnimation variant="ndrc" className="mt-8" />
+        <TrainingMotionGallery variant="btsNdrc" />
       </Section>
 
       <Section
