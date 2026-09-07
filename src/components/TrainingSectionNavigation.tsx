@@ -48,9 +48,9 @@ export function TrainingSectionNavigation({
     let animationFrame = 0;
     const updateActiveSection = () => {
       const navBounds = navRef.current?.getBoundingClientRect();
-      const activationLine = navBounds && navBounds.top <= 80
-        ? navBounds.bottom + 12
-        : Math.min(window.innerHeight * .25, 180);
+      const stickyOffset = navBounds && navBounds.top <= 80 ? navBounds.bottom + 12 : 0;
+      const viewportOffset = Math.min(window.innerHeight * .3, 260);
+      const activationLine = Math.max(stickyOffset, viewportOffset);
       const positions = sections.map((section) => ({ section, top: section.getBoundingClientRect().top }));
       const current = positions
         .filter(({ top }) => top <= activationLine)
