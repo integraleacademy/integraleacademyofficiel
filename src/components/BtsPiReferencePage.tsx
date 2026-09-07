@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import { BtsCompleteInformation, BtsStudentBenefits } from '@/components/BtsExpandedContent';
 import { BtsSectionNavigation } from '@/components/BtsSectionNavigation';
 import { MissionAnimation } from '@/components/MissionAnimation';
+import { TrainingMotionGallery } from '@/components/TrainingMotionGallery';
 import { PremiumFAQSection } from '@/components/ui';
 
 const applicationUrl = 'https://inscriptionsbts.onrender.com/';
@@ -365,6 +366,7 @@ export function BtsPiReferencePage() {
           ))}
         </div>
         <MissionAnimation variant="pi" className="mt-8" />
+        <TrainingMotionGallery variant="btsPi" />
       </Section>
 
       <Section
