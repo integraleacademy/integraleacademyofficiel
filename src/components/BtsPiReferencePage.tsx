@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { BtsCompleteInformation, BtsStudentBenefits } from '@/components/BtsExpandedContent';
+import { BtsSectionNavigation } from '@/components/BtsSectionNavigation';
 import { MissionAnimation } from '@/components/MissionAnimation';
 import { PremiumFAQSection } from '@/components/ui';
 
@@ -205,7 +206,7 @@ function HeroRoadmap() {
 
 export function BtsPiReferencePage() {
   return (
-    <main className="relative overflow-hidden pb-24 lg:pb-0">
+    <main className="relative overflow-x-clip pb-24 lg:pb-0">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -292,23 +293,7 @@ export function BtsPiReferencePage() {
         </div>
       </section>
 
-      <nav aria-label="Sommaire du BTS Professions Immobilières" className="sticky top-0 z-30 hidden border-b border-academy-line bg-[#FFFDF8]/95 px-4 py-3 backdrop-blur lg:block">
-        <div className="page-container flex items-center justify-between gap-5">
-          <span className="text-xs font-black">BTS PI</span>
-          <div className="flex items-center gap-5 text-xs font-extrabold text-academy-muted">
-            {[
-              ['Pour qui ?', '#pour-qui'],
-              ['Compétences', '#competences'],
-              ['Formats', '#formats'],
-              ['Alternance', '#alternance'],
-              ['Programme', '#programme'],
-              ['Admission', '#admission'],
-              ['FAQ', '#faq-pi'],
-            ].map(([label, href]) => <Link key={href} href={href} className="transition hover:text-academy-ink">{label}</Link>)}
-          </div>
-          <CTA href={applicationUrl} variant="gold" className="min-h-10 px-4 py-2" external>Je candidate</CTA>
-        </div>
-      </nav>
+      <BtsSectionNavigation code="PI" competencyHref="#competences" competencyLabel="Compétences" faqHref="#faq-pi" registrationHref={applicationUrl} />
 
       <BtsStudentBenefits courseName="BTS Professions Immobilières" />
 
