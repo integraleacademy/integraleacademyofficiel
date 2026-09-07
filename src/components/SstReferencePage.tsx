@@ -3,6 +3,7 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { PremiumFAQSection } from '@/components/ui';
 import { TrainingDatesPricingSection, type TrainingDatesPricingSession } from '@/components/TrainingDatesPricingSection';
+import { TrainingMotionGallery } from '@/components/TrainingMotionGallery';
 
 const contactHref = (subject = 'inscription') => `/contact?formation=sst&objet=${encodeURIComponent(subject)}`;
 
@@ -152,6 +153,7 @@ export function SstReferencePage({ sessions }: { sessions: TrainingDatesPricingS
 
     <Section id="role-sst" eyebrow="01 — Le rôle du SST" title={<>Bien plus que des gestes de secours.</>} intro={<>Le SST intervient face à un accident et contribue chaque jour à prévenir les risques dans son entreprise.</>}>
       <div className="grid gap-5 lg:grid-cols-[1.35fr_.65fr]"><article className="rounded-[2rem] bg-[#0D1725] p-6 text-white shadow-card lg:p-8"><h3 className="text-2xl font-black">Face à un accident</h3><p className="mt-2 text-white/60">Une méthode claire pour agir sans perdre de temps.</p><div className="mt-7 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">{emergencySteps.map(([number, title, text], index) => <div key={number} className="rounded-2xl border border-white/10 bg-white/6 p-4"><span className={`grid h-9 w-9 place-items-center rounded-full text-xs font-black ${index < 2 ? 'bg-emerald-500 text-white' : 'bg-[#F04C3A] text-white'}`}>{number}</span><h4 className="mt-4 text-lg font-black">{title}</h4><p className="mt-2 text-xs font-semibold leading-5 text-white/55">{text}</p></div>)}</div></article><div className="grid gap-5"><article className="rounded-[2rem] border border-emerald-200 bg-emerald-50/70 p-6"><h3 className="text-2xl font-black text-emerald-900">Prévenir au quotidien</h3><div className="mt-4 space-y-3">{preventionActions.map(item => <p key={item} className="flex items-start gap-3 font-bold text-emerald-950/75"><span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-emerald-600 text-xs text-white">✓</span>{item}</p>)}</div></article><article className="rounded-[2rem] border border-academy-line bg-[#FFFDF8] p-6 shadow-soft"><h3 className="text-2xl font-black">Pour qui ?</h3><div className="mt-4 flex flex-wrap gap-2">{['Salariés', 'Candidats sécurité', 'Entreprises'].map(item => <span key={item} className="rounded-full border border-academy-line bg-white px-3 py-2 text-xs font-black">{item}</span>)}</div><span className="mt-4 inline-flex rounded-full bg-[#F04C3A] px-4 py-2 text-xs font-black text-white">✓ Aucun prérequis</span></article></div></div>
+      <TrainingMotionGallery variant="sst" />
       <div className="mt-5 rounded-[1.8rem] bg-[#0D1725] p-5 text-white"><h3 className="text-xl font-black">Une compétence utile dans tous les secteurs</h3><div className="mt-4 flex flex-wrap gap-2">{sectors.map(item => <span key={item} className="rounded-full border border-emerald-400/35 bg-emerald-400/7 px-4 py-2 text-xs font-black text-emerald-200">{item}</span>)}</div></div>
     </Section>
 

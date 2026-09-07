@@ -1,0 +1,1018 @@
+.gallery {
+  --accent: #2563eb;
+  --accent-2: #60a5fa;
+  --accent-rgb: 37, 99, 235;
+  --soft: #dbeafe;
+  --surface: #edf5ff;
+  --line: rgba(96, 165, 250, .55);
+  --ink: #172233;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  margin-top: 2rem;
+  border: 1px solid var(--line);
+  border-radius: 2rem;
+  padding: clamp(1rem, 2.6vw, 2rem);
+  background:
+    radial-gradient(circle at 92% 0%, rgba(var(--accent-rgb), .14), transparent 28rem),
+    linear-gradient(145deg, #fbfdff, var(--surface));
+  box-shadow: 0 24px 70px rgba(var(--accent-rgb), .1);
+}
+
+.gallery::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  content: "";
+  opacity: .42;
+  background-image:
+    linear-gradient(rgba(var(--accent-rgb), .055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--accent-rgb), .055) 1px, transparent 1px);
+  background-size: 38px 38px;
+  mask-image: linear-gradient(to bottom, #000, transparent 68%);
+  pointer-events: none;
+}
+
+.green {
+  --accent: #059669;
+  --accent-2: #34d399;
+  --accent-rgb: 5, 150, 105;
+  --soft: #d1fae5;
+  --surface: #ebfbf4;
+  --line: rgba(52, 211, 153, .5);
+}
+
+.red {
+  --accent: #dc2626;
+  --accent-2: #fb7185;
+  --accent-rgb: 220, 38, 38;
+  --soft: #fee2e2;
+  --surface: #fff0f0;
+  --line: rgba(248, 113, 113, .5);
+}
+
+.rescue {
+  --accent: #059669;
+  --accent-2: #f04c3a;
+  --accent-rgb: 5, 150, 105;
+  --soft: #d1fae5;
+  --surface: #effbf5;
+  --line: rgba(52, 211, 153, .5);
+}
+
+.orange {
+  --accent: #ea580c;
+  --accent-2: #fb923c;
+  --accent-rgb: 234, 88, 12;
+  --soft: #ffedd5;
+  --surface: #fff5e9;
+  --line: rgba(251, 146, 60, .52);
+}
+
+.intro {
+  position: relative;
+  display: grid;
+  gap: 1rem;
+  align-items: end;
+  margin-bottom: 1.4rem;
+}
+
+.eyebrow {
+  color: var(--accent);
+  font-size: .66rem;
+  font-weight: 950;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+}
+
+.intro h3 {
+  margin-top: .55rem;
+  color: #0d1725;
+  font-size: clamp(1.8rem, 3vw, 2.65rem);
+  font-weight: 950;
+  letter-spacing: -.045em;
+  line-height: 1.02;
+  text-wrap: balance;
+}
+
+.intro > p {
+  max-width: 39rem;
+  color: #526174;
+  font-size: .95rem;
+  font-weight: 650;
+  line-height: 1.7;
+}
+
+.cards {
+  display: grid;
+  grid-auto-columns: minmax(17rem, 86%);
+  grid-auto-flow: column;
+  gap: .9rem;
+  overflow-x: auto;
+  padding: .15rem .1rem .65rem;
+  scroll-snap-type: x mandatory;
+  scrollbar-color: rgba(var(--accent-rgb), .34) transparent;
+  scrollbar-width: thin;
+}
+
+.card {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  min-height: 285px;
+  flex-direction: column;
+  overflow: hidden;
+  scroll-snap-align: start;
+  border: 1px solid var(--line);
+  border-radius: 1.65rem;
+  padding: .7rem .7rem 1rem;
+  background: color-mix(in srgb, var(--surface) 91%, white);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .92), 0 14px 34px rgba(var(--accent-rgb), .08);
+  transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease, background .3s ease;
+}
+
+.card:nth-child(3n + 2) {
+  border-top-left-radius: .8rem;
+}
+
+.card:nth-child(3n) {
+  border-top-right-radius: 3.25rem;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--surface) 72%, white);
+  box-shadow: inset 0 1px 0 #fff, 0 22px 44px rgba(var(--accent-rgb), .14);
+}
+
+.visual {
+  position: relative;
+  min-height: 215px;
+  flex: 1;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, .88);
+  border-radius: 1.25rem;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(255,255,255,.9), rgba(255,255,255,.22) 64%),
+    var(--soft);
+}
+
+.scene {
+  display: block;
+  width: 100%;
+  height: 100%;
+  color: var(--accent);
+}
+
+.scene * {
+  vector-effect: non-scaling-stroke;
+}
+
+.card h4 {
+  margin-top: .9rem;
+  padding: 0 .55rem;
+  color: var(--ink);
+  font-size: .93rem;
+  font-weight: 950;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.mapGrid {
+  fill: none;
+  stroke: rgba(var(--accent-rgb), .1);
+  stroke-width: 1.5;
+}
+
+.route,
+.guardLink,
+.safetyLine,
+.heartbeat,
+.orgLines,
+.chartLine,
+.growthArrow,
+.exitArrow,
+.alertWaves path,
+.speaking,
+.daeCable path,
+.phoneIcon path,
+.scan path,
+.arrow path {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.route {
+  stroke-dasharray: 9 10;
+  animation: routeFlow 2.2s linear infinite;
+}
+
+.packet {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: packetTrip 5.4s ease-in-out infinite;
+}
+
+.packet circle {
+  fill: var(--ink);
+  stroke: #fff;
+  stroke-width: 3;
+}
+
+.packet path {
+  fill: none;
+  stroke: var(--accent-2);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.pin,
+.checkBadge,
+.vehicleShield,
+.financeBadge,
+.clientCard,
+.evidenceTag,
+.briefcase {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: float 3.8s ease-in-out infinite;
+}
+
+.pin path,
+.checkBadge circle,
+.vehicleShield path:first-child,
+.financeBadge circle,
+.evidenceTag rect,
+.clientCard rect,
+.briefcase rect {
+  fill: var(--accent);
+}
+
+.pin circle,
+.checkBadge path,
+.vehicleShield path:last-child,
+.financeBadge path,
+.evidenceTag path,
+.clientCard path,
+.briefcase path {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.target circle,
+.targetRings circle,
+.radarRing,
+.orbit {
+  fill: none;
+  stroke: rgba(var(--accent-rgb), .32);
+  stroke-width: 2;
+}
+
+.target path {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+
+.target {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pulse 2.7s ease-in-out infinite;
+}
+
+.radarSweep {
+  fill: rgba(var(--accent-rgb), .15);
+  transform-origin: 160px 105px;
+  animation: radarRotate 5.4s linear infinite;
+}
+
+.signal,
+.statusDot circle {
+  fill: var(--accent-2);
+  filter: drop-shadow(0 0 8px rgba(var(--accent-rgb), .7));
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: signalPulse 2.3s ease-out infinite;
+}
+
+.shield path:first-child {
+  fill: var(--accent);
+  stroke: rgba(255,255,255,.8);
+  stroke-width: 2;
+}
+
+.shield path:last-child {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.shield,
+.protectedPerson,
+.manager {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: breathe 3.1s ease-in-out infinite;
+}
+
+.building > rect:first-child,
+.worksite > rect:first-child,
+.businessBuilding > rect:first-child,
+.profile > rect:first-child,
+.complianceDoc > rect:first-child,
+.approvalDoc > rect:first-child,
+.clipboard > rect:first-child,
+.certificate > rect:first-child,
+.dashboard > rect:first-child,
+.panel > rect:first-child,
+.presentation rect {
+  fill: #fff;
+  stroke: rgba(var(--accent-rgb), .52);
+  stroke-width: 3;
+}
+
+.building > rect:not(:first-child),
+.worksite > rect:not(:first-child),
+.businessBuilding > rect:not(:first-child) {
+  fill: var(--soft);
+}
+
+.building path,
+.worksite path,
+.businessBuilding path,
+.profile path,
+.complianceDoc path,
+.approvalDoc path,
+.clipboard path,
+.certificate path,
+.dashboard path,
+.panel path,
+.presentation path {
+  fill: none;
+  stroke: rgba(var(--accent-rgb), .55);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.scan {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: scanMove 4.8s ease-in-out infinite;
+}
+
+.scan circle {
+  fill: rgba(var(--accent-rgb), .12);
+  stroke: var(--accent);
+  stroke-width: 3;
+}
+
+.protectedPerson circle,
+.protectedPerson path,
+.manager circle,
+.manager path {
+  fill: var(--ink);
+}
+
+.guards circle,
+.guards path,
+.teamMember circle,
+.teamMember path,
+.agent circle,
+.agent path,
+.walkers circle,
+.walkers path,
+.juryPeople circle,
+.juryPeople > g > path {
+  fill: var(--accent);
+}
+
+.guards > g:first-child,
+.walkers > g:first-child {
+  animation-delay: -.7s;
+}
+
+.guards > g,
+.walkers > g,
+.agent,
+.juryPeople > g {
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  animation: figureMove 4s ease-in-out infinite;
+}
+
+.guardLink {
+  stroke-width: 2;
+  stroke-dasharray: 5 7;
+  animation: routeFlow 2.2s linear infinite;
+}
+
+.protectionHalo,
+.cprPulse circle {
+  fill: none;
+  stroke: rgba(var(--accent-rgb), .32);
+  stroke-width: 2;
+  transform-origin: 160px 107px;
+  animation: haloPulse 2.8s ease-out infinite;
+}
+
+.protectionHalo:nth-child(2),
+.cprPulse circle:last-child {
+  animation-delay: .55s;
+}
+
+.vehicle path:first-child,
+.rescueTruck path:first-child {
+  fill: var(--accent);
+}
+
+.vehicle path:nth-of-type(2),
+.vehicle path:nth-of-type(3),
+.rescueTruck path:nth-of-type(2),
+.rescueTruck path:nth-of-type(3) {
+  fill: var(--ink);
+  stroke: rgba(255,255,255,.4);
+  stroke-width: 2;
+}
+
+.vehicle circle,
+.rescueTruck circle {
+  fill: var(--ink);
+  stroke: #fff;
+  stroke-width: 3;
+}
+
+.vehicle,
+.rescueTruck {
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  animation: vehicleMove 4.6s ease-in-out infinite;
+}
+
+.speech path:first-child {
+  fill: var(--accent);
+}
+
+.speech path:not(:first-child) {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.speech {
+  animation: float 4s ease-in-out infinite;
+}
+
+.fire path {
+  fill: var(--accent-2);
+  filter: drop-shadow(0 0 8px rgba(var(--accent-rgb), .35));
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  animation: fireFlicker 1.6s ease-in-out infinite;
+}
+
+.extinguisher rect:first-child,
+.firstAidKit rect:first-child,
+.dae rect:first-child,
+.phone rect:first-child {
+  fill: var(--accent);
+}
+
+.extinguisher rect:not(:first-child),
+.firstAidKit rect:not(:first-child),
+.dae rect:not(:first-child),
+.phone rect:not(:first-child) {
+  fill: #fff;
+}
+
+.extinguisher path,
+.firstAidKit path,
+.dae path,
+.phone path,
+.phoneIcon path {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.extinguisher circle,
+.dae circle,
+.phone circle {
+  fill: var(--soft);
+  stroke: var(--ink);
+  stroke-width: 3;
+}
+
+.gauge circle,
+.magnifier circle {
+  fill: rgba(255,255,255,.9);
+  stroke: var(--accent);
+  stroke-width: 5;
+}
+
+.gauge path,
+.magnifier path {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.gauge,
+.magnifier {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: magnify 4.4s ease-in-out infinite;
+}
+
+.panel circle {
+  fill: var(--soft);
+  stroke: var(--accent);
+  stroke-width: 3;
+}
+
+.panel circle:first-of-type {
+  fill: var(--accent-2);
+}
+
+.panelScan {
+  fill: rgba(var(--accent-rgb), .16);
+  animation: panelSweep 4.2s ease-in-out infinite;
+}
+
+.siren path:first-child,
+.siren rect {
+  fill: var(--accent-2);
+  stroke: var(--ink);
+  stroke-width: 3;
+}
+
+.siren path:last-child {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 5;
+  stroke-linecap: round;
+}
+
+.siren {
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  animation: sirenFlash 1.7s ease-in-out infinite;
+}
+
+.alertWaves path {
+  stroke-width: 3;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: wave 2.2s ease-in-out infinite;
+}
+
+.alertWaves path:nth-child(2) {
+  animation-delay: .35s;
+}
+
+.exitDoor rect:first-child {
+  fill: var(--ink);
+}
+
+.exitDoor path {
+  fill: var(--soft);
+  stroke: var(--accent);
+  stroke-width: 2;
+}
+
+.exitDoor circle {
+  fill: var(--accent-2);
+}
+
+.exitSign {
+  fill: var(--accent);
+}
+
+.walkers {
+  animation: walkersMove 4.4s ease-in-out infinite;
+}
+
+.exitArrow {
+  stroke-dasharray: 8 9;
+  animation: routeFlow 1.8s linear infinite;
+}
+
+.rescueTruck path:nth-of-type(4),
+.beacon path {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+
+.beacon rect {
+  fill: var(--accent-2);
+}
+
+.beacon {
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  animation: beacon 1.25s ease-in-out infinite;
+}
+
+.hazard path:first-child {
+  fill: var(--accent-2);
+  stroke: var(--ink);
+  stroke-width: 4;
+}
+
+.hazard path:not(:first-child) {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 5;
+  stroke-linecap: round;
+}
+
+.hazard,
+.cones {
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  animation: hazardBounce 3.4s ease-in-out infinite;
+}
+
+.cones path {
+  fill: var(--soft);
+  stroke: var(--accent);
+  stroke-width: 3;
+}
+
+.safetyLine {
+  stroke-dasharray: 10 9;
+  animation: routeFlow 2.1s linear infinite;
+}
+
+.personOutline circle,
+.personOutline path,
+.cprPerson circle,
+.cprPerson path {
+  fill: var(--soft);
+  stroke: var(--ink);
+  stroke-width: 3;
+}
+
+.scanDots circle {
+  fill: var(--accent-2);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: signalPulse 2.1s ease-out infinite;
+}
+
+.scanDots circle:nth-child(2) { animation-delay: .35s; }
+.scanDots circle:nth-child(3) { animation-delay: .7s; }
+
+.phoneIcon {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: phoneRing 2.8s ease-in-out infinite;
+}
+
+.bandage rect {
+  fill: #fff;
+  stroke: var(--accent-2);
+  stroke-width: 4;
+}
+
+.bandage circle {
+  fill: var(--soft);
+}
+
+.bandage {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: bandageDrop 4s ease-in-out infinite;
+}
+
+.heartbeat {
+  stroke: var(--accent-2);
+  stroke-dasharray: 330;
+  stroke-dashoffset: 330;
+  animation: lineDraw 4s ease-in-out infinite;
+}
+
+.cprHands path:first-child {
+  fill: var(--accent);
+}
+
+.cprHands path:last-child {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 4;
+}
+
+.cprHands {
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  animation: compress 1.25s ease-in-out infinite;
+}
+
+.daeCable path {
+  stroke: var(--accent);
+}
+
+.daeCable circle {
+  fill: #fff;
+  stroke: var(--accent-2);
+  stroke-width: 4;
+}
+
+.profile circle {
+  fill: var(--soft);
+  stroke: var(--accent);
+  stroke-width: 3;
+}
+
+.checkRow circle,
+.skillBlock rect {
+  fill: var(--soft);
+  stroke: var(--accent);
+  stroke-width: 3;
+}
+
+.checkRow path:first-of-type,
+.skillBlock path {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.checkRow path:last-of-type {
+  fill: none;
+  stroke: rgba(var(--accent-rgb), .42);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.checkRow,
+.skillBlock,
+.teamMember {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: rowReveal 3.6s ease-in-out infinite var(--delay, 0s);
+}
+
+.folder path:first-child {
+  fill: var(--accent);
+}
+
+.folder path:last-child {
+  fill: var(--accent-2);
+}
+
+.paperStack rect {
+  fill: #fff;
+  stroke: rgba(var(--accent-rgb), .55);
+  stroke-width: 3;
+}
+
+.paperStack path {
+  fill: none;
+  stroke: rgba(var(--accent-rgb), .55);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.paperStack {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: paperSort 4.5s ease-in-out infinite;
+}
+
+.skillBlock circle {
+  fill: var(--accent);
+}
+
+.skillBlocks {
+  filter: drop-shadow(0 10px 18px rgba(var(--accent-rgb), .12));
+}
+
+.orbit {
+  stroke-dasharray: 7 10;
+  transform-origin: 160px 105px;
+  animation: radarRotate 12s linear infinite reverse;
+}
+
+.juryDesk rect {
+  fill: var(--ink);
+}
+
+.juryDesk path {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 5;
+}
+
+.juryPeople > g:nth-child(2) circle,
+.juryPeople > g:nth-child(2) > path {
+  fill: var(--accent-2);
+}
+
+.speaking {
+  stroke-width: 2;
+  animation: wave 2s ease-in-out infinite;
+}
+
+.certificate circle {
+  fill: var(--accent);
+}
+
+.certificate > path:last-child {
+  stroke: #fff;
+  stroke-width: 4;
+}
+
+.ribbon path {
+  fill: var(--accent-2);
+}
+
+.certificate,
+.ribbon {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: certificateLift 4.2s ease-in-out infinite;
+}
+
+.growthArrow {
+  stroke-dasharray: 270;
+  stroke-dashoffset: 270;
+  animation: lineDraw 4.6s ease-in-out infinite;
+}
+
+.chartLine {
+  stroke: var(--accent-2);
+  stroke-dasharray: 230;
+  stroke-dashoffset: 230;
+  animation: lineDraw 4.2s ease-in-out infinite;
+}
+
+.targetRings circle {
+  transform-origin: 167px 108px;
+  animation: targetPulse 3s ease-out infinite;
+}
+
+.targetRings circle:nth-child(2) { animation-delay: .3s; }
+.targetRings circle:nth-child(3) { animation-delay: .6s; }
+
+.arrow {
+  transform-box: fill-box;
+  transform-origin: left bottom;
+  animation: arrowAim 4.3s ease-in-out infinite;
+}
+
+.orgLines {
+  stroke-width: 3;
+  stroke-dasharray: 260;
+  stroke-dashoffset: 260;
+  animation: lineDraw 4.8s ease-in-out infinite;
+}
+
+.approvalDoc,
+.stamp {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.stamp circle {
+  fill: rgba(255,255,255,.88);
+  stroke: var(--accent);
+  stroke-width: 4;
+}
+
+.stamp path {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.stamp {
+  animation: stamp 4.5s ease-in-out infinite;
+}
+
+@media (min-width: 640px) {
+  .cards {
+    grid-auto-columns: initial;
+    grid-auto-flow: row;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    overflow: visible;
+    padding-bottom: .1rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .intro {
+    grid-template-columns: .8fr 1.2fr;
+  }
+
+  .intro > p {
+    justify-self: end;
+  }
+
+  .cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@keyframes routeFlow { to { stroke-dashoffset: -38; } }
+
+@keyframes packetTrip {
+  0%, 100% { transform: translate(43px, 160px); }
+  33% { transform: translate(135px, 95px); }
+  66% { transform: translate(223px, 124px); }
+  84% { transform: translate(285px, 52px); }
+}
+
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+@keyframes pulse { 0%, 100% { transform: scale(.94); } 50% { transform: scale(1.06); } }
+@keyframes radarRotate { to { transform: rotate(360deg); } }
+
+@keyframes signalPulse {
+  0%, 100% { transform: scale(.76); opacity: .48; }
+  48% { transform: scale(1.25); opacity: 1; }
+}
+
+@keyframes breathe { 0%, 100% { transform: scale(.97); } 50% { transform: scale(1.035); } }
+@keyframes scanMove { 0%, 100% { transform: translateX(-16px); opacity: .35; } 50% { transform: translateX(16px); opacity: 1; } }
+@keyframes figureMove { 0%, 100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(-5px) rotate(1deg); } }
+
+@keyframes haloPulse {
+  0%, 100% { transform: scale(.84); opacity: .25; }
+  55% { transform: scale(1.08); opacity: .9; }
+}
+
+@keyframes vehicleMove { 0%, 100% { transform: translateX(-7px); } 50% { transform: translateX(8px); } }
+
+@keyframes fireFlicker {
+  0%, 100% { transform: scale(.94) rotate(-2deg); }
+  45% { transform: scale(1.07) rotate(2deg); }
+}
+
+@keyframes magnify { 0%, 100% { transform: translate(-5px, 3px); } 50% { transform: translate(7px, -5px); } }
+@keyframes panelSweep { 0%, 100% { transform: translateX(0); opacity: .15; } 50% { transform: translateX(80px); opacity: .85; } }
+@keyframes sirenFlash { 0%, 100% { opacity: .66; } 50% { opacity: 1; filter: drop-shadow(0 0 10px rgba(var(--accent-rgb), .55)); } }
+@keyframes wave { 0%, 100% { transform: scale(.88); opacity: .28; } 50% { transform: scale(1.04); opacity: .95; } }
+@keyframes walkersMove { 0%, 100% { transform: translateX(-5px); } 50% { transform: translateX(12px); } }
+@keyframes beacon { 0%, 100% { opacity: .4; } 50% { opacity: 1; filter: drop-shadow(0 0 10px var(--accent-2)); } }
+@keyframes hazardBounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+@keyframes phoneRing { 0%, 12%, 24%, 100% { transform: rotate(0); } 6%, 18% { transform: rotate(-4deg); } }
+@keyframes bandageDrop { 0%, 100% { transform: translateY(-4px) rotate(-2deg); } 50% { transform: translateY(3px) rotate(2deg); } }
+
+@keyframes lineDraw {
+  0%, 12% { stroke-dashoffset: 330; opacity: .25; }
+  52%, 84% { stroke-dashoffset: 0; opacity: 1; }
+  100% { stroke-dashoffset: -330; opacity: .25; }
+}
+
+@keyframes compress { 0%, 100% { transform: translateY(-3px); } 50% { transform: translateY(9px); } }
+
+@keyframes rowReveal {
+  0%, 12%, 100% { transform: translateY(5px); opacity: .35; }
+  42%, 78% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes paperSort { 0%, 100% { transform: rotate(-1deg) translateY(0); } 50% { transform: rotate(1deg) translateY(-5px); } }
+@keyframes certificateLift { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+
+@keyframes targetPulse {
+  0%, 100% { transform: scale(.88); opacity: .28; }
+  55% { transform: scale(1.03); opacity: .95; }
+}
+
+@keyframes arrowAim { 0%, 100% { transform: translate(-6px, 5px); } 50% { transform: translate(5px, -4px); } }
+
+@keyframes stamp {
+  0%, 20%, 100% { transform: translate(7px, -18px) rotate(6deg) scale(.92); opacity: .55; }
+  42%, 78% { transform: translate(0, 0) rotate(0) scale(1); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gallery *,
+  .gallery *::before,
+  .gallery *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
