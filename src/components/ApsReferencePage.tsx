@@ -198,6 +198,144 @@ function Section({ id, eyebrow, title, intro, children, tone = 'cream' }: { id?:
   return <section id={id} className={`${styles.section} ${colors} scroll-mt-24 px-4 py-14 sm:py-16 lg:py-24`}><div className="page-container"><div className="mb-8 grid gap-5 lg:grid-cols-[.75fr_1.25fr] lg:items-end lg:gap-16"><div><Eyebrow light={tone === 'dark'}>{eyebrow}</Eyebrow><h2 className={`${styles.sectionHeading} mt-3 max-w-3xl text-3xl font-black tracking-[-.045em] sm:text-4xl lg:text-5xl`}>{title}</h2></div>{intro && <div className={`${styles.sectionIntro} max-w-3xl text-base font-medium leading-8 ${tone === 'dark' ? 'text-white/65' : 'text-academy-muted'}`}>{intro}</div>}</div>{children}</div></section>;
 }
 
+function BaggageInspectionMotion() {
+  return <article className={`${styles.immersionMotionCard} ${styles.baggageMotionCard}`}>
+    <div className={styles.motionGrid} aria-hidden="true" />
+    <div className={styles.motionCardHeader} aria-hidden="true">
+      <span className={styles.motionModule}>Simulation APS · module 09</span>
+      <span className={styles.motionLive}><i /> Exercice en cours</span>
+    </div>
+    <div className={styles.baggageStage} role="img" aria-label="Animation d’un bagage inspecté par un faisceau de contrôle, puis d’un accès autorisé">
+      <svg className={styles.baggageMotionSvg} viewBox="0 0 760 320" aria-hidden="true" focusable="false">
+        <defs>
+          <linearGradient id="aps-scanner-shell" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stopColor="#162a43" />
+            <stop offset="1" stopColor="#0b1727" />
+          </linearGradient>
+          <linearGradient id="aps-bag-body" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stopColor="#163b61" stopOpacity=".96" />
+            <stop offset="1" stopColor="#0b2038" stopOpacity=".96" />
+          </linearGradient>
+          <linearGradient id="aps-scan-beam" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stopColor="#38bdf8" stopOpacity="0" />
+            <stop offset=".5" stopColor="#7dd3fc" stopOpacity=".72" />
+            <stop offset="1" stopColor="#38bdf8" stopOpacity="0" />
+          </linearGradient>
+          <radialGradient id="aps-signal" cx="50%" cy="50%" r="50%">
+            <stop offset="0" stopColor="#67e8f9" stopOpacity=".36" />
+            <stop offset="1" stopColor="#67e8f9" stopOpacity="0" />
+          </radialGradient>
+          <clipPath id="aps-bag-clip">
+            <rect x="176" y="119" width="288" height="126" rx="24" />
+          </clipPath>
+        </defs>
+
+        <g className={styles.scannerShell}>
+          <rect x="46" y="34" width="532" height="236" rx="32" fill="url(#aps-scanner-shell)" stroke="#7dd3fc" strokeOpacity=".24" />
+          <path d="M82 78H542" stroke="#7dd3fc" strokeOpacity=".16" />
+          <circle cx="82" cy="57" r="4" fill="#38bdf8" />
+          <circle cx="98" cy="57" r="4" fill="#38bdf8" fillOpacity=".42" />
+          <circle cx="114" cy="57" r="4" fill="#38bdf8" fillOpacity=".2" />
+          <path d="M88 244H538" stroke="#7dd3fc" strokeOpacity=".32" strokeWidth="3" strokeLinecap="round" />
+          <path d="M112 252V266M190 252V266M268 252V266M346 252V266M424 252V266M502 252V266" stroke="#7dd3fc" strokeOpacity=".2" strokeWidth="3" strokeLinecap="round" />
+        </g>
+
+        <g className={styles.bagBody}>
+          <path d="M264 119V102c0-18 14-31 31-31h51c17 0 31 13 31 31v17" fill="none" stroke="#7dd3fc" strokeOpacity=".64" strokeWidth="8" strokeLinecap="round" />
+          <rect x="176" y="119" width="288" height="126" rx="24" fill="url(#aps-bag-body)" stroke="#7dd3fc" strokeOpacity=".74" strokeWidth="2" />
+          <path d="M320 124V240" stroke="#7dd3fc" strokeOpacity=".18" />
+          <rect x="208" y="146" width="42" height="72" rx="12" fill="#38bdf8" fillOpacity=".14" stroke="#7dd3fc" strokeOpacity=".45" />
+          <path d="M218 146v-8h22v8" fill="none" stroke="#7dd3fc" strokeOpacity=".48" strokeWidth="4" strokeLinecap="round" />
+          <rect x="274" y="154" width="58" height="54" rx="10" fill="#818cf8" fillOpacity=".14" stroke="#a5b4fc" strokeOpacity=".42" />
+          <circle cx="390" cy="176" r="26" fill="#22d3ee" fillOpacity=".1" stroke="#67e8f9" strokeOpacity=".4" />
+          <path d="M378 176h24M390 164v24" stroke="#67e8f9" strokeOpacity=".48" strokeLinecap="round" />
+        </g>
+
+        <g clipPath="url(#aps-bag-clip)">
+          <g className={styles.baggageSweep}>
+            <rect x="136" y="108" width="86" height="150" fill="url(#aps-scan-beam)" />
+            <path d="M179 112V252" stroke="#bae6fd" strokeWidth="2" strokeOpacity=".9" />
+          </g>
+        </g>
+
+        <g className={styles.accessGate}>
+          <circle cx="654" cy="103" r="62" fill="url(#aps-signal)" />
+          <rect x="619" y="58" width="70" height="196" rx="22" fill="#11243a" stroke="#7dd3fc" strokeOpacity=".35" />
+          <rect x="635" y="76" width="38" height="38" rx="12" fill="#22c55e" fillOpacity=".14" stroke="#86efac" strokeOpacity=".54" />
+          <path d="m645 95 7 7 13-16" fill="none" stroke="#86efac" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+          <g className={styles.gateArm}>
+            <rect x="548" y="207" width="108" height="14" rx="7" fill="#dbeafe" />
+            <path d="M566 207v14M590 207v14M614 207v14" stroke="#2563eb" strokeWidth="9" />
+          </g>
+          <circle className={styles.gatePulse} cx="654" cy="163" r="6" fill="#67e8f9" />
+          <path d="M642 178h24M642 188h17" stroke="#7dd3fc" strokeOpacity=".38" strokeWidth="3" strokeLinecap="round" />
+        </g>
+      </svg>
+      <div className={styles.motionReadout} aria-hidden="true"><span>Analyse</span><strong>Méthode validée</strong></div>
+    </div>
+    <div className={styles.motionCaption}>
+      <span className={styles.motionEyebrow}>Mise en situation réelle</span>
+      <h3>Inspection visuelle des bagages et contrôle d’accès</h3>
+      <p>Adopter la bonne méthode, respecter le cadre légal, communiquer clairement et sécuriser un accès sans créer de tension.</p>
+    </div>
+  </article>;
+}
+
+function PatdownProtocolMotion() {
+  return <article className={`${styles.immersionMotionCard} ${styles.patdownMotionCard}`}>
+    <div className={styles.motionGrid} aria-hidden="true" />
+    <div className={styles.motionCardHeader} aria-hidden="true">
+      <span className={styles.motionModule}>Protocole guidé</span>
+      <span className={styles.motionLive}><i /> Geste contrôlé</span>
+    </div>
+    <div className={styles.patdownStage} role="img" aria-label="Animation pédagogique des zones contrôlées pendant une palpation de sécurité">
+      <svg className={styles.patdownMotionSvg} viewBox="0 0 560 210" aria-hidden="true" focusable="false">
+        <defs>
+          <linearGradient id="aps-body-line" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stopColor="#bae6fd" />
+            <stop offset="1" stopColor="#3b82f6" />
+          </linearGradient>
+          <linearGradient id="aps-patdown-beam" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stopColor="#38bdf8" stopOpacity="0" />
+            <stop offset=".5" stopColor="#7dd3fc" stopOpacity=".7" />
+            <stop offset="1" stopColor="#38bdf8" stopOpacity="0" />
+          </linearGradient>
+        </defs>
+        <g className={styles.patdownSilhouette} fill="none" stroke="url(#aps-body-line)" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="278" cy="41" r="21" strokeWidth="3" />
+          <path d="M246 82c8-15 18-22 32-22s24 7 32 22l11 45M235 127l11-45M256 82l-5 61 27 18 27-18-5-61M263 160l-10 37M293 160l10 37" strokeWidth="3" />
+          <path d="M251 116h54" strokeOpacity=".32" strokeWidth="2" />
+        </g>
+        <g className={styles.patdownZones}>
+          <circle cx="248" cy="94" r="15" />
+          <circle cx="308" cy="94" r="15" />
+          <circle cx="278" cy="137" r="17" />
+          <circle cx="258" cy="177" r="12" />
+          <circle cx="298" cy="177" r="12" />
+        </g>
+        <g className={styles.patdownSweep}>
+          <rect x="190" y="34" width="176" height="34" rx="17" fill="url(#aps-patdown-beam)" />
+          <path d="M198 51h160" stroke="#bae6fd" strokeOpacity=".74" strokeWidth="2" strokeLinecap="round" />
+        </g>
+        <g className={styles.protocolPath} fill="none" stroke="#7dd3fc" strokeOpacity=".35" strokeWidth="2" strokeLinecap="round">
+          <path d="M93 48h62c20 0 29 10 29 29v56c0 19 9 29 29 29h13" strokeDasharray="5 8" />
+          <path d="M333 73h18c20 0 29 10 29 29v40c0 19 9 29 29 29h61" strokeDasharray="5 8" />
+        </g>
+        <g className={styles.protocolNodes}>
+          <circle cx="88" cy="48" r="13" /><path d="m82 48 4 4 8-9" />
+          <circle cx="475" cy="171" r="13" /><path d="m469 171 4 4 8-9" />
+        </g>
+      </svg>
+      <div className={styles.protocolLabels} aria-hidden="true"><span>Consentement</span><span>Positionnement</span><span>Respect</span></div>
+    </div>
+    <div className={styles.motionCaption}>
+      <span className={styles.motionEyebrow}>Atelier encadré</span>
+      <h3>Palpation de sécurité</h3>
+      <p>Positionnement, consentement, gestes professionnels et respect de la personne.</p>
+    </div>
+  </article>;
+}
+
 function CompactAssistant() {
   return <details className="group mt-3 overflow-hidden rounded-[1.35rem] border border-academy-line bg-white text-academy-ink shadow-soft"><summary className="flex cursor-pointer list-none items-center gap-3 p-4"><span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-academy-gold font-black text-academy-gold-text">✦</span><span className="min-w-0 flex-1"><strong className="block text-sm font-black">Une question avant de vous inscrire&nbsp;?</strong><small className="block text-xs font-semibold text-academy-muted">L’assistant vérifie les informations essentielles.</small></span><span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-academy-ink font-black text-white transition group-open:rotate-90">→</span></summary><div className="border-t border-academy-line bg-academy-bg p-3 sm:p-4"><OrientationAssistant initialFormationKey="aps" hideInfoAction /></div></details>;
 }
@@ -259,7 +397,7 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
 
     <Section id="admission" eyebrow="02 — Admission" title={<>Votre dossier est-il prêt pour l’APS&nbsp;?</>} intro={<>Nous contrôlons chaque condition avant votre entrée en formation et vous accompagnons dans la démarche d’autorisation préalable.</>} tone="dark"><div className="grid gap-4 md:grid-cols-2">{prerequisites.map(([title,text]) => <article key={title} className={`${styles.liftCard} rounded-[1.7rem] border border-white/10 bg-white/7 p-5`}><span className="grid h-9 w-9 place-items-center rounded-full bg-blue-400/15 font-black text-blue-300">✓</span><h3 className="mt-4 text-xl font-black">{title}</h3><p className="mt-2 leading-7 text-white/62">{text}</p></article>)}</div><div className="mt-7 flex flex-col items-start justify-between gap-5 rounded-[1.8rem] bg-gradient-to-r from-[#F7D57D] to-[#F0B52E] p-6 text-academy-gold-text lg:flex-row lg:items-center"><div><p className="text-xl font-black">Bonne nouvelle : nous préparons votre demande CNAPS.</p><p className="mt-1 font-semibold opacity-75">Vous fournissez les documents, notre équipe vous accompagne dans le dépôt.</p></div><CTA href={apsContact('autorisation préalable CNAPS')} variant="dark">Faire vérifier mon dossier →</CTA></div><div className="mt-8 grid gap-3 md:grid-cols-4">{cnapsSteps.map((item,index) => <div key={item} className="rounded-[1.4rem] bg-white p-4 text-academy-ink"><span className="grid h-9 w-9 place-items-center rounded-full bg-[#0D1725] text-xs font-black text-academy-gold">0{index+1}</span><p className="mt-5 font-black">{item}</p></div>)}</div></Section>
 
-    <Section id="pratique" eyebrow="03 — Immersion terrain" title={<>Vous ne regardez pas seulement&nbsp;: vous pratiquez.</>} intro={<>La formation vous place dans des situations proches du réel. Chaque geste est expliqué, répété, observé puis débriefé avec le formateur.</>} tone="dark"><div className="grid gap-5 lg:grid-cols-[1.08fr_.92fr]"><figure className={`${styles.practicePhotoCard} min-h-[520px]`}><Image src="/images/aps/aps-training-bag-inspection.jpg" alt="Exercice d’inspection visuelle des bagages en formation APS" fill sizes="(min-width: 1024px) 54vw, 100vw" className={styles.practicePhoto}/><div className={styles.practicePhotoOverlay}/><figcaption className="absolute inset-x-0 bottom-0 z-10 p-6 sm:p-8"><span className="inline-flex rounded-full border border-white/25 bg-black/25 px-3 py-1.5 text-[.62rem] font-black uppercase tracking-[.18em] text-white backdrop-blur">Mise en situation réelle</span><h3 className="mt-4 max-w-xl text-3xl font-black sm:text-4xl">Inspection visuelle des bagages et contrôle d’accès</h3><p className="mt-3 max-w-xl leading-7 text-white/72">Adopter la bonne méthode, respecter le cadre légal, communiquer clairement et sécuriser un accès sans créer de tension.</p></figcaption></figure><div className="grid gap-5"><figure className={`${styles.practicePhotoCard} min-h-[330px]`}><Image src="/images/aps/aps-training-patdown.jpg" alt="Exercice encadré de palpation de sécurité pendant la formation APS" fill sizes="(min-width: 1024px) 46vw, 100vw" className={styles.practicePhoto}/><div className={styles.practicePhotoOverlay}/><figcaption className="absolute inset-x-0 bottom-0 z-10 p-6"><p className="text-[.62rem] font-black uppercase tracking-[.18em] text-[#F9DC8A]">Atelier encadré</p><h3 className="mt-2 text-2xl font-black">Palpation de sécurité</h3><p className="mt-2 text-sm leading-6 text-white/70">Positionnement, consentement, gestes professionnels et respect de la personne.</p></figcaption></figure><div className="grid gap-3 sm:grid-cols-2">{[['↻','Observer'],['⌕','Contrôler'],['!','Réagir'],['⌁','Rendre compte']].map(([icon,label]) => <div key={label} className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/7 p-4"><span className="grid h-10 w-10 place-items-center rounded-xl bg-academy-gold font-black text-academy-gold-text">{icon}</span><span className="font-black">{label}</span></div>)}</div></div></div>
+    <Section id="pratique" eyebrow="03 — Immersion terrain" title={<>Vous ne regardez pas seulement&nbsp;: vous pratiquez.</>} intro={<>La formation vous place dans des situations proches du réel. Chaque geste est expliqué, répété, observé puis débriefé avec le formateur.</>} tone="dark"><div className="grid gap-5 lg:grid-cols-[1.08fr_.92fr]"><BaggageInspectionMotion /><div className="grid gap-5"><PatdownProtocolMotion /><div className="grid gap-3 sm:grid-cols-2">{[['↻','Observer'],['⌕','Contrôler'],['!','Réagir'],['⌁','Rendre compte']].map(([icon,label]) => <div key={label} className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/7 p-4"><span className="grid h-10 w-10 place-items-center rounded-xl bg-academy-gold font-black text-academy-gold-text">{icon}</span><span className="font-black">{label}</span></div>)}</div></div></div>
       <div className="mt-8 grid auto-rows-fr gap-3 sm:grid-cols-2 lg:grid-cols-4">
         {practicalExercises.map(([icon,title,text],index) => <article key={title} className={`${styles.practicalCard} ${index === 0 ? styles.practicalPrimary : ''} rounded-[1.5rem] border border-white/10 bg-white/7 p-5`}>
           <div className="relative z-10">
