@@ -18,6 +18,7 @@ const pages = {
   btsCi: read('src/components/BtsCiReferencePage.tsx'),
   btsPi: read('src/components/BtsPiReferencePage.tsx'),
   btsCg: read('src/components/BtsCgReferencePage.tsx'),
+  vtc: read('src/app/vtc/page.tsx'),
 };
 
 const expectedStories = {
@@ -32,6 +33,7 @@ const expectedStories = {
   btsCi: ['Étudier les marchés', 'Organiser les flux', 'Piloter la logistique', 'Maîtriser les formalités', 'Négocier à l’international', 'Suivre la performance export'],
   btsPi: ['Découvrir et estimer un bien', 'Comprendre le projet client', 'Organiser les visites', 'Négocier la transaction', 'Sécuriser les dossiers', 'Gérer biens et copropriétés'],
   btsCg: ['Enregistrer les opérations', 'Contrôler les écritures', 'Respecter les obligations', 'Construire les budgets', 'Analyser les écarts', 'Préparer la clôture'],
+  vtc: ['Organiser la réservation', 'Préparer l’itinéraire', 'Accueillir le passager', 'Conduire en sécurité', 'Calculer et facturer', 'Fidéliser la clientèle'],
 };
 
 test('chaque formation affiche sa galerie motion design dédiée', () => {
@@ -85,4 +87,11 @@ test('les six BTS conservent leur scène principale en plus de leur galerie dét
   ]) {
     assert.match(pages[variant], new RegExp(`<MissionAnimation variant="${animation}"`));
   }
+});
+
+test('la page VTC conserve son animation d’itinéraire et ajoute sa galerie violette', () => {
+  assert.match(pages.vtc, /<MissionAnimation variant="vtc"/);
+  assert.match(pages.vtc, /<TrainingMotionGallery variant="vtc"/);
+  assert.match(gallery, /vtc:[\s\S]*?theme: 'violet'/);
+  assert.match(styles, /\.violet\s*\{[\s\S]*?--accent:\s*#7c3aed/);
 });
