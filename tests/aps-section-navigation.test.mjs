@@ -16,16 +16,14 @@ const styles = readFileSync(
 );
 
 test('la page APS utilise un sommaire dédié au lieu de l’ancienne barre compacte', () => {
-  assert.match(page, /<ApsSectionNavigation registrationHref=\{sessionHref\(next\)\} \/>/);
+  assert.match(page, /<ApsSectionNavigation registrationHref=\{apsRegistrationFormUrl\} \/>/);
   assert.doesNotMatch(page, /hidden bg-\[#F6F1E8\]\/88/);
   assert.doesNotMatch(page, /styles\.navRail/);
 });
 
-test('le sommaire donne accès aux dix étapes importantes, dont l’inscription', () => {
+test('le sommaire affiche uniquement les huit rubriques utiles avec les bons libellés', () => {
   for (const target of [
     '#metier',
-    '#admission',
-    '#hybride',
     '#pratique',
     '#programme',
     '#examen',
@@ -37,8 +35,29 @@ test('le sommaire donne accès aux dix étapes importantes, dont l’inscription
     assert.ok(navigation.includes(`href: '${target}'`), `ancre manquante : ${target}`);
   }
 
-  assert.equal((navigation.match(/href: '#/g) || []).length, 10);
+  assert.equal((navigation.match(/href: '#/g) || []).length, 8);
+  assert.doesNotMatch(navigation, /href: '#admission'/);
+  assert.doesNotMatch(navigation, /href: '#hybride'/);
+  assert.doesNotMatch(navigation, /index: '0\d'/);
+  assert.doesNotMatch(navigation, /courseNavIndex/);
+  assert.match(navigation, /label: 'Immersion'/);
+  assert.match(navigation, /label: 'Inscriptions'/);
   assert.match(navigation, /Je m’inscris/);
+});
+
+test('le bouton d’inscription ouvre le formulaire demandé', () => {
+  assert.match(page, /const apsRegistrationFormUrl = 'https:\/\/assistance-alw9\.onrender\.com\/demande-informations-formations';/);
+  assert.match(page, /<ApsSectionNavigation registrationHref=\{apsRegistrationFormUrl\} \/>/);
+  assert.match(navigation, /<a href=\{registrationHref\} className=\{styles\.courseNavCta\}>/);
+});
+
+test('le bloc format hybride est placé juste après le programme', () => {
+  const programmePosition = page.indexOf('<Section id="programme"');
+  const hybridePosition = page.indexOf('id="hybride"');
+  const examenPosition = page.indexOf('<Section id="examen"');
+
+  assert.ok(programmePosition >= 0 && hybridePosition > programmePosition);
+  assert.ok(examenPosition > hybridePosition);
 });
 
 test('la section active est annoncée et mise à jour pendant le défilement', () => {
