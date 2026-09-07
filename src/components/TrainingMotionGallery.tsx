@@ -12,7 +12,8 @@ type TrainingMotionGalleryVariant =
   | 'btsNdrc'
   | 'btsCi'
   | 'btsPi'
-  | 'btsCg';
+  | 'btsCg'
+  | 'vtc';
 
 type SceneKind =
   | 'mission-map' | 'risk-radar' | 'site-check' | 'close-protection' | 'secure-vehicle' | 'briefing'
@@ -27,7 +28,7 @@ const galleries: Record<TrainingMotionGalleryVariant, {
   eyebrow: string;
   title: string;
   intro: string;
-  theme: 'green' | 'red' | 'rescue' | 'orange' | 'blue';
+  theme: 'green' | 'red' | 'rescue' | 'orange' | 'blue' | 'violet';
   stories: readonly Story[];
 }> = {
   a3p: {
@@ -182,6 +183,20 @@ const galleries: Record<TrainingMotionGalleryVariant, {
       ['finance', 'Construire les budgets', 'Animation d’un budget comparant les prévisions aux résultats réalisés'],
       ['risk-radar', 'Analyser les écarts', 'Animation d’indicateurs analysés pour repérer les écarts significatifs'],
       ['approval', 'Préparer la clôture', 'Animation d’un dossier de clôture finalisé après les derniers contrôles'],
+    ],
+  },
+  vtc: {
+    eyebrow: 'VTC en mouvement',
+    title: 'Le métier de chauffeur VTC, en images.',
+    intro: 'De la réservation à la fidélisation, visualisez les gestes qui transforment un trajet en véritable service professionnel.',
+    theme: 'violet',
+    stories: [
+      ['emergency-call', 'Organiser la réservation', 'Animation d’une réservation reçue puis confirmée avec toutes les informations utiles'],
+      ['mission-map', 'Préparer l’itinéraire', 'Animation d’un trajet optimisé avant la prise en charge du passager'],
+      ['profile-review', 'Accueillir le passager', 'Animation des besoins d’un passager identifiés pour personnaliser son accueil'],
+      ['secure-vehicle', 'Conduire en sécurité', 'Animation d’un véhicule suivant un itinéraire avec une conduite sûre et souple'],
+      ['finance', 'Calculer et facturer', 'Animation d’une prestation chiffrée puis facturée de manière professionnelle'],
+      ['commercial', 'Fidéliser la clientèle', 'Animation d’une relation client développée après une prestation réussie'],
     ],
   },
 };
