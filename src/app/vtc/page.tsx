@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { MissionAnimation } from '@/components/MissionAnimation';
+import { TrainingSectionNavigation } from '@/components/TrainingSectionNavigation';
 import { PremiumFAQSection } from '@/components/ui';
 import styles from './vtc.module.css';
 
@@ -11,6 +12,17 @@ export const metadata: Metadata = {
 };
 
 const contactHref = (subject: string) => `/contact?formation=vtc&objet=${encodeURIComponent(subject)}`;
+const registrationFormUrl = 'https://assistance-alw9.onrender.com/demande-informations-formations';
+const navigationItems = [
+  { label: 'Formule', href: '#formule' },
+  { label: 'Formation', href: '#formation' },
+  { label: 'Dates & tarifs', href: '#dates-tarifs' },
+  { label: 'Parcours', href: '#parcours' },
+  { label: 'Programme', href: '#programme' },
+  { label: 'Examen', href: '#examen' },
+  { label: 'Inscriptions', href: '#inscription' },
+  { label: 'FAQ', href: '#faq-vtc' },
+] as const;
 
 const icons = {
   arrow: <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>,
@@ -116,14 +128,22 @@ export default function VtcPage() {
       </div>
     </section>
 
-    <section className={styles.promise}>
+    <TrainingSectionNavigation
+      mark="VTC"
+      title="Chauffeur VTC"
+      items={navigationItems}
+      registrationHref={registrationFormUrl}
+      theme="violet"
+    />
+
+    <section id="formule" className={styles.promise}>
       <div className={styles.container}>
         <div className={styles.sectionHead}><div><span>01 — Une formule vraiment complète</span><h2>Tout ce qu’il vous faut.<br/><em>Rien à ajouter.</em></h2></div><p>Chaque élément du parcours est pensé pour vous rapprocher concrètement de la réussite, de votre première connexion à votre passage devant le jury.</p></div>
         <div className={styles.includedGrid}>{included.map(([n,title,text])=><article key={n}><span className={styles.number}>{n}</span><div className={styles.miniIcon}><Icon name={n==='03'||n==='04'?'car':'check'}/></div><h3>{title}</h3><p>{text}</p></article>)}</div>
       </div>
     </section>
 
-    <section className={styles.elearning}>
+    <section id="formation" className={styles.elearning}>
       <div className={styles.container}>
         <div className={styles.elearningLayout}>
           <div className={styles.platformMockup}>
@@ -140,7 +160,7 @@ export default function VtcPage() {
       </div>
     </section>
 
-    <section className={styles.dates}>
+    <section id="dates-tarifs" className={styles.dates}>
       <div className={styles.container}>
         <div className={styles.datesHeading}><div><span>04 — Prochaines échéances</span><h2>Votre calendrier<br/><em>jusqu’à l’examen.</em></h2></div><p>La théorie démarre dès la finalisation de votre inscription. Ces échéances vous permettent ensuite d’organiser votre passage aux épreuves.</p></div>
         <div className={styles.dateTable}>
@@ -151,7 +171,7 @@ export default function VtcPage() {
       </div>
     </section>
 
-    <section className={styles.journey}>
+    <section id="parcours" className={styles.journey}>
       <div className={styles.container}>
         <div className={styles.journeyLayout}>
           <div className={styles.journeyIntro}><span>05 — Votre parcours</span><h2>De votre projet<br/>à vos <em>premières courses.</em></h2><p>Vous savez toujours où vous en êtes et quelle est la prochaine étape.</p><CTA href={contactHref('Recevoir le détail du parcours VTC')}>Recevoir le programme</CTA></div>
@@ -168,14 +188,14 @@ export default function VtcPage() {
       </div>
     </section>
 
-    <section className={styles.program}>
+    <section id="programme" className={styles.program}>
       <div className={styles.container}>
         <div className={styles.sectionHead}><div><span>06 — Les compétences</span><h2>Bien plus que conduire.<br/><em>Devenez professionnel.</em></h2></div><p>Le programme suit les compétences évaluées à l’examen et celles qui feront la différence face à vos futurs clients.</p></div>
         <div className={styles.programGrid}>{program.map(([letter,title,text],index)=><article key={letter} className={index===6?styles.programFeatured:''}><span>{letter}</span><div><h3>{title}</h3><p>{text}</p></div><Icon name="arrow"/></article>)}</div>
       </div>
     </section>
 
-    <section className={styles.exam}>
+    <section id="examen" className={styles.exam}>
       <div className={styles.container}>
         <div className={styles.examHeading}><span>07 — L’examen VTC expliqué simplement</span><h2>Deux épreuves.<br/><em>Une préparation complète.</em></h2><p>L’examen est organisé par la Chambre de métiers et de l’artisanat. Nous vous préparons aux connaissances attendues comme aux conditions réelles de l’épreuve pratique.</p></div>
         <div className={styles.examGrid}>
@@ -192,7 +212,7 @@ export default function VtcPage() {
       </div>
     </section>
 
-    <section className={styles.offer}>
+    <section id="inscription" className={styles.offer}>
       <div className={styles.container}>
         <div className={styles.offerCard}>
           <div className={styles.offerCopy}><span>09 — L’offre Intégrale</span><h2>Votre projet VTC,<br/><em>clé en main.</em></h2><p>Une seule formule lisible, sans découvrir au dernier moment qu’il faut encore payer la pratique, le véhicule ou l’examen.</p><ul><li><Icon name="check"/> 105 heures de préparation</li><li><Icon name="check"/> E-learning accessible 24h/24</li><li><Icon name="check"/> Formation pratique encadrée</li><li><Icon name="check"/> Livre officiel inclus</li><li><Icon name="check"/> Frais d’examen inclus</li><li><Icon name="check"/> Véhicule double commande inclus</li></ul></div>
@@ -227,6 +247,6 @@ export default function VtcPage() {
       </div>
     </section>
 
-    <PremiumFAQSection theme="violet" badge="11 — FAQ VTC" title="Vos questions avant de prendre le volant" description="Tarif, financement, prérequis, examen et organisation : toutes les réponses utiles avant de démarrer." items={faq} contactHref={contactHref('Question sur la formation VTC')} contactLabel="Poser ma question" />
+    <div id="faq-vtc"><PremiumFAQSection theme="violet" badge="11 — FAQ VTC" title="Vos questions avant de prendre le volant" description="Tarif, financement, prérequis, examen et organisation : toutes les réponses utiles avant de démarrer." items={faq} contactHref={contactHref('Question sur la formation VTC')} contactLabel="Poser ma question" /></div>
   </main>;
 }

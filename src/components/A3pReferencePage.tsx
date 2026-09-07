@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { OrientationAssistant } from '@/components/OrientationAssistant';
 import { MissionAnimation } from '@/components/MissionAnimation';
 import { PremiumFAQSection } from '@/components/ui';
+import { TrainingSectionNavigation } from '@/components/TrainingSectionNavigation';
 import { TrainingDatesPricingSection } from '@/components/TrainingDatesPricingSection';
 import {
   a3pConfig,
@@ -168,9 +169,20 @@ const examSteps = [
 
 const jobs = ['Agent de protection rapprochée', 'Agent de protection physique des personnes', 'Garde du corps', 'Conducteur de sécurité', 'Agent privé de protection'];
 const salaryFactors = ['Niveau de risque', 'Durée', 'Horaires', 'Mobilité', 'Conduite', 'Langues', 'Expérience', 'Réputation'];
+const registrationFormUrl = 'https://assistance-alw9.onrender.com/demande-informations-formations';
+const a3pNavigationItems = [
+  { label: 'Métier', href: '#metier' },
+  { label: 'Immersion', href: '#pedagogie' },
+  { label: 'Programme', href: '#programme' },
+  { label: 'Examen', href: '#certification' },
+  { label: 'Dates & tarifs', href: '#dates-tarifs' },
+  { label: 'Inscriptions', href: '#inscription' },
+  { label: 'Débouchés', href: '#debouches' },
+  { label: 'FAQ', href: '#faq-a3p' },
+] as const;
 
 export function A3pReferencePage({ sessions }: { sessions: any[] }) {
-  return <main className="relative overflow-hidden pb-24 lg:pb-0">
+  return <main className="relative overflow-x-clip pb-24 lg:pb-0">
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
       '@context': 'https://schema.org',
       '@graph': [
@@ -203,7 +215,13 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
       </div>
     </section>
 
-    <nav className="border-b border-academy-line bg-[#FFFDF8] px-4" aria-label="Navigation dans la page A3P"><div className="page-container flex min-h-16 items-center gap-7 overflow-x-auto py-3 text-xs font-black [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"><Link href="#metier" className="text-emerald-700">Le métier</Link><Link href="#admission">Admission</Link><Link href="#programme">Programme</Link><Link href="#pedagogie">Pédagogie</Link><Link href="#certification">Certification</Link><Link href="#references-rncp">Références RNCP</Link><Link href="#dates-tarifs">Dates & tarifs</Link><Link href="#inscription">Inscription</Link><Link href="#faq-a3p">FAQ</Link></div></nav>
+    <TrainingSectionNavigation
+      mark="A3P"
+      title="TFP A3P"
+      items={a3pNavigationItems}
+      registrationHref={registrationFormUrl}
+      theme="green"
+    />
 
     <Section id="metier" label="01 — Le métier" title={<>Protéger, anticiper, <span className="decoration-emerald-500 decoration-[.16em] underline underline-offset-[-.03em]">décider.</span></>} intro="L’agent de protection physique des personnes assure la sécurité de dirigeants, personnalités, artistes ou toute personne exposée. Son rôle : préparer la mission, analyser les risques et protéger avec efficacité, proportionnalité et discrétion.">
       <div className="grid gap-4 md:grid-cols-3">{métierCards.map(([number, title, body]) => <article key={title} className="rounded-[1.75rem] border border-academy-line bg-[#FFFDF8] p-6 shadow-soft"><span className="grid h-10 w-10 place-items-center rounded-full bg-[#0D1725] text-xs font-black text-emerald-300">{number}</span><h3 className="mt-8 text-xl font-black tracking-[-.03em]">{title}</h3><p className="mt-3 text-sm font-semibold leading-7 text-academy-muted">{body}</p></article>)}</div>
@@ -318,7 +336,7 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
       <div className="mt-5 grid gap-5 rounded-[1.75rem] border border-emerald-200 bg-emerald-50 p-6 lg:grid-cols-[1fr_auto] lg:items-center"><div><Label>Accessibilité et handicap</Label><h3 className="mt-2 text-2xl font-black text-emerald-950">Anticipez vos besoins d’aménagement.</h3><p className="mt-3 max-w-4xl text-sm font-semibold leading-7 text-emerald-900/75">Signalez votre situation avant l’inscription. L’équipe étudie avec vous les adaptations possibles au regard des objectifs, des exercices pratiques et des exigences de certification ; si nécessaire, elle vous oriente vers une solution adaptée.</p></div><CTA href={a3pContact('accessibilite-handicap')} className="shrink-0">Étudier mes besoins →</CTA></div>
     </Section>
 
-    <section className="bg-[#FFFDF8] px-4 py-14 sm:py-18 lg:py-20"><div className="page-container">
+    <section id="debouches" className="bg-[#FFFDF8] px-4 py-14 sm:py-18 lg:py-20"><div className="page-container">
       <div className="grid gap-5 lg:grid-cols-[.85fr_1.15fr]"><div className="rounded-[2rem] border border-emerald-200 bg-[linear-gradient(145deg,#D1FAE5,#F0FDF4)] p-7 shadow-soft"><Label>Hébergement</Label><h2 className="mt-3 text-3xl font-black tracking-[-.045em]">Restez sur place pendant votre formation.</h2><p className="mt-4 text-sm font-semibold leading-7 text-academy-muted">Une solution collective peut être proposée au campus, sous réserve de disponibilité et de réservation préalable.</p><p className="mt-6 text-5xl font-black tracking-[-.05em] text-emerald-800">{a3pConfig.accommodationPriceLabel}</p><p className="mt-2 text-xs font-semibold leading-6 text-academy-muted">{a3pConfig.accommodationNote}</p><CTA href={a3pContact('hebergement-a3p')} className="mt-6">Vérifier les disponibilités →</CTA></div><div className="grid grid-cols-2 gap-3 rounded-[2rem] border border-emerald-100 bg-emerald-50/60 p-5 sm:p-6">{['Dortoir collectif', 'Cuisine équipée', 'Salle de bain & douche', 'Machine à laver', 'Sèche-linge', 'Espaces communs'].map((item) => <span key={item} className="rounded-2xl border border-emerald-100 bg-white p-4 text-xs font-black before:mr-2 before:text-emerald-600 before:content-['✓']">{item}</span>)}</div></div>
 
       <div className="mt-14 grid gap-5 lg:grid-cols-[1.05fr_.95fr]">
