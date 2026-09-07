@@ -14,6 +14,14 @@ const styles = readFileSync(
   new URL('../src/components/ApsReferencePage.module.css', import.meta.url),
   'utf8',
 );
+const sharedNavigation = readFileSync(
+  new URL('../src/components/TrainingSectionNavigation.tsx', import.meta.url),
+  'utf8',
+);
+const sharedNavigationStyles = readFileSync(
+  new URL('../src/components/TrainingSectionNavigation.module.css', import.meta.url),
+  'utf8',
+);
 
 test('la page APS utilise un sommaire dédié au lieu de l’ancienne barre compacte', () => {
   assert.match(page, /<ApsSectionNavigation registrationHref=\{apsRegistrationFormUrl\} \/>/);
@@ -48,7 +56,8 @@ test('le sommaire affiche uniquement les huit rubriques utiles avec les bons lib
 test('le bouton d’inscription ouvre le formulaire demandé', () => {
   assert.match(page, /const apsRegistrationFormUrl = 'https:\/\/assistance-alw9\.onrender\.com\/demande-informations-formations';/);
   assert.match(page, /<ApsSectionNavigation registrationHref=\{apsRegistrationFormUrl\} \/>/);
-  assert.match(navigation, /<a href=\{registrationHref\} className=\{styles\.courseNavCta\}>/);
+  assert.match(navigation, /<TrainingSectionNavigation/);
+  assert.match(navigation, /registrationHref=\{registrationHref\}/);
 });
 
 test('le bloc format hybride est placé juste après le programme', () => {
@@ -61,22 +70,24 @@ test('le bloc format hybride est placé juste après le programme', () => {
 });
 
 test('la section active est annoncée et mise à jour pendant le défilement', () => {
-  assert.match(navigation, /^'use client';/);
-  assert.match(navigation, /IntersectionObserver/);
-  assert.match(navigation, /aria-current=\{active \? 'location' : undefined\}/);
-  assert.match(navigation, /setActiveHref/);
-  assert.match(navigation, /prefers-reduced-motion: reduce/);
+  assert.match(navigation, /import \{ TrainingSectionNavigation \}/);
+  assert.match(sharedNavigation, /^'use client';/);
+  assert.match(sharedNavigation, /IntersectionObserver/);
+  assert.match(sharedNavigation, /aria-current=\{active \? 'location' : undefined\}/);
+  assert.match(sharedNavigation, /setActiveHref/);
+  assert.match(sharedNavigation, /prefers-reduced-motion: reduce/);
+  assert.match(sharedNavigation, /style\.scrollMarginTop/);
 });
 
 test('la navigation reste lisible et utilisable sur ordinateur comme sur mobile', () => {
   assert.match(page, /<main className=\{`\$\{styles\.page\} relative pb-24 lg:pb-0`\}>/);
   assert.doesNotMatch(page, /styles\.page\} relative overflow-hidden/);
   assert.match(styles, /\.page\s*\{[^}]*overflow-x:\s*clip;/s);
-  assert.match(styles, /\.courseNav\s*\{[^}]*position:\s*sticky;[^}]*top:\s*55px;[^}]*backdrop-filter:\s*blur\(18px\);/s);
-  assert.match(styles, /@media \(min-width: 1280px\)[\s\S]*\.courseNav\s*\{[^}]*top:\s*75px;/);
-  assert.match(styles, /\.courseNavScroller\s*\{[^}]*overflow-x:\s*auto;/s);
-  assert.match(styles, /\.courseNavLink\s*\{[^}]*font-size:\s*\.75rem;/s);
-  assert.match(styles, /\.courseNavLinkActive\s*\{[^}]*background:\s*#0d1725;/s);
-  assert.match(styles, /@media \(max-width: 1180px\)[\s\S]*\.courseNavScroller\s*\{[^}]*grid-row:\s*2;/);
-  assert.doesNotMatch(styles, /\.courseNav\s*\{[^}]*display:\s*none;/s);
+  assert.match(sharedNavigationStyles, /\.courseNav\s*\{[^}]*position:\s*sticky;[^}]*top:\s*55px;[^}]*backdrop-filter:\s*blur\(18px\);/s);
+  assert.match(sharedNavigationStyles, /@media \(min-width: 1280px\)[\s\S]*\.courseNav\s*\{[^}]*top:\s*75px;/);
+  assert.match(sharedNavigationStyles, /\.courseNavScroller\s*\{[^}]*overflow-x:\s*auto;/s);
+  assert.match(sharedNavigationStyles, /\.courseNavLink\s*\{[^}]*font-size:\s*\.75rem;/s);
+  assert.match(sharedNavigationStyles, /\.courseNavLinkActive[\s\S]*background:\s*#0d1725;/);
+  assert.match(sharedNavigationStyles, /@media \(max-width: 1180px\)[\s\S]*\.courseNavScroller\s*\{[^}]*grid-row:\s*2;/);
+  assert.doesNotMatch(sharedNavigationStyles, /\.courseNav\s*\{[^}]*display:\s*none;/s);
 });
