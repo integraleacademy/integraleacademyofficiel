@@ -1,7 +1,18 @@
 import type { CSSProperties } from 'react';
 import styles from './TrainingMotionGallery.module.css';
 
-type TrainingMotionGalleryVariant = 'a3p' | 'ssiap' | 'sst' | 'despVae' | 'despInitial';
+type TrainingMotionGalleryVariant =
+  | 'a3p'
+  | 'ssiap'
+  | 'sst'
+  | 'despVae'
+  | 'despInitial'
+  | 'btsMos'
+  | 'btsMco'
+  | 'btsNdrc'
+  | 'btsCi'
+  | 'btsPi'
+  | 'btsCg';
 
 type SceneKind =
   | 'mission-map' | 'risk-radar' | 'site-check' | 'close-protection' | 'secure-vehicle' | 'briefing'
@@ -16,7 +27,7 @@ const galleries: Record<TrainingMotionGalleryVariant, {
   eyebrow: string;
   title: string;
   intro: string;
-  theme: 'green' | 'red' | 'rescue' | 'orange';
+  theme: 'green' | 'red' | 'rescue' | 'orange' | 'blue';
   stories: readonly Story[];
 }> = {
   a3p: {
@@ -87,6 +98,90 @@ const galleries: Record<TrainingMotionGalleryVariant, {
       ['commercial', 'Développer l’activité', 'Animation d’une stratégie commerciale atteignant ses objectifs'],
       ['team', 'Recruter et manager', 'Animation d’une équipe organisée et coordonnée par son dirigeant'],
       ['approval', 'Préparer les démarches CNAPS', 'Animation d’un dossier dirigeant contrôlé avant son dépôt auprès du CNAPS'],
+    ],
+  },
+  btsMos: {
+    eyebrow: 'BTS MOS en mouvement',
+    title: 'Le management de la sécurité, en images.',
+    intro: 'Du terrain au pilotage, visualisez les responsabilités qui structurent une prestation de sécurité.',
+    theme: 'blue',
+    stories: [
+      ['mission-map', 'Planifier les missions', 'Animation d’un responsable organisant les moyens et les missions d’une prestation de sécurité'],
+      ['site-check', 'Superviser le terrain', 'Animation d’un site dont les accès et les points de contrôle sont supervisés'],
+      ['team', 'Coordonner les équipes', 'Animation d’une équipe d’agents coordonnée par son responsable opérationnel'],
+      ['fire-panel', 'Piloter depuis le poste', 'Animation d’un poste de sécurité centralisant les informations opérationnelles'],
+      ['briefing', 'Rendre compte au client', 'Animation d’un compte rendu de prestation présenté clairement au client'],
+      ['compliance', 'Garantir la conformité', 'Animation d’un contrôle des procédures et obligations applicables à la prestation'],
+    ],
+  },
+  btsMco: {
+    eyebrow: 'BTS MCO en mouvement',
+    title: 'Le commerce et le management, en images.',
+    intro: 'Du conseil client au pilotage des résultats, découvrez les compétences d’un manager commercial opérationnel.',
+    theme: 'blue',
+    stories: [
+      ['business', 'Piloter l’unité commerciale', 'Animation d’une unité commerciale organisée autour de ses clients et de ses objectifs'],
+      ['profile-review', 'Comprendre les clients', 'Animation d’un profil client analysé afin de proposer une réponse personnalisée'],
+      ['commercial', 'Développer les ventes', 'Animation d’une action commerciale atteignant progressivement son objectif'],
+      ['evidence', 'Gérer l’offre et les stocks', 'Animation de références et documents de stock classés et contrôlés'],
+      ['finance', 'Suivre la performance', 'Animation d’indicateurs commerciaux suivis dans un tableau de bord'],
+      ['team', 'Animer l’équipe', 'Animation d’une équipe commerciale organisée et accompagnée par son manager'],
+    ],
+  },
+  btsNdrc: {
+    eyebrow: 'BTS NDRC en mouvement',
+    title: 'La relation client à 360°, en images.',
+    intro: 'Prospection, négociation et fidélisation : visualisez une relation commerciale devenue pleinement omnicanale.',
+    theme: 'blue',
+    stories: [
+      ['risk-radar', 'Identifier les prospects', 'Animation d’un marché analysé pour repérer de nouvelles opportunités commerciales'],
+      ['emergency-call', 'Entrer en relation', 'Animation d’une prise de contact menée par téléphone et outils numériques'],
+      ['commercial', 'Négocier et vendre', 'Animation d’une négociation commerciale progressant jusqu’à la conclusion'],
+      ['profile-review', 'Personnaliser le suivi', 'Animation d’une fiche client enrichie pour adapter chaque échange'],
+      ['briefing', 'Fidéliser les clients', 'Animation d’un suivi structuré maintenant une relation client durable'],
+      ['competencies', 'Animer les réseaux', 'Animation d’un réseau de contacts et partenaires qui se développe'],
+    ],
+  },
+  btsCi: {
+    eyebrow: 'BTS CI en mouvement',
+    title: 'Les échanges internationaux, en images.',
+    intro: 'Des marchés étrangers à la livraison, visualisez les étapes d’une opération commerciale internationale.',
+    theme: 'blue',
+    stories: [
+      ['risk-radar', 'Étudier les marchés', 'Animation d’opportunités repérées et comparées sur plusieurs marchés internationaux'],
+      ['mission-map', 'Organiser les flux', 'Animation d’un itinéraire commercial reliant plusieurs partenaires internationaux'],
+      ['secure-vehicle', 'Piloter la logistique', 'Animation d’une expédition suivie tout au long de son acheminement'],
+      ['compliance', 'Maîtriser les formalités', 'Animation de documents douaniers et réglementaires vérifiés avant expédition'],
+      ['briefing', 'Négocier à l’international', 'Animation d’un échange commercial préparé dans un contexte interculturel'],
+      ['finance', 'Suivre la performance export', 'Animation d’indicateurs permettant de piloter une activité internationale'],
+    ],
+  },
+  btsPi: {
+    eyebrow: 'BTS PI en mouvement',
+    title: 'L’immobilier, en images.',
+    intro: 'De l’estimation à la gestion, visualisez les missions qui rythment une activité immobilière.',
+    theme: 'blue',
+    stories: [
+      ['site-check', 'Découvrir et estimer un bien', 'Animation d’un bien immobilier observé et analysé avant son estimation'],
+      ['profile-review', 'Comprendre le projet client', 'Animation du projet d’un acquéreur, vendeur, bailleur ou locataire analysé'],
+      ['mission-map', 'Organiser les visites', 'Animation d’un parcours de visites préparé entre plusieurs biens immobiliers'],
+      ['commercial', 'Négocier la transaction', 'Animation d’une négociation immobilière menée vers un accord équilibré'],
+      ['evidence', 'Sécuriser les dossiers', 'Animation des pièces d’un mandat, bail ou dossier de transaction vérifiées'],
+      ['team', 'Gérer biens et copropriétés', 'Animation des différents interlocuteurs coordonnés autour d’un immeuble'],
+    ],
+  },
+  btsCg: {
+    eyebrow: 'BTS CG en mouvement',
+    title: 'La gestion et la comptabilité, en images.',
+    intro: 'De la pièce comptable au tableau de bord, visualisez les opérations qui rendent une entreprise plus fiable.',
+    theme: 'blue',
+    stories: [
+      ['evidence', 'Enregistrer les opérations', 'Animation de pièces comptables classées puis enregistrées avec méthode'],
+      ['feasibility', 'Contrôler les écritures', 'Animation d’écritures comptables vérifiées une à une avant validation'],
+      ['compliance', 'Respecter les obligations', 'Animation d’un dossier fiscal et social contrôlé avant son échéance'],
+      ['finance', 'Construire les budgets', 'Animation d’un budget comparant les prévisions aux résultats réalisés'],
+      ['risk-radar', 'Analyser les écarts', 'Animation d’indicateurs analysés pour repérer les écarts significatifs'],
+      ['approval', 'Préparer la clôture', 'Animation d’un dossier de clôture finalisé après les derniers contrôles'],
     ],
   },
 };
