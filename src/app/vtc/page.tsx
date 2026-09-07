@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { MissionAnimation } from '@/components/MissionAnimation';
+import { TrainingMotionGallery } from '@/components/TrainingMotionGallery';
 import { TrainingSectionNavigation } from '@/components/TrainingSectionNavigation';
 import { PremiumFAQSection } from '@/components/ui';
 import styles from './vtc.module.css';
@@ -192,6 +193,7 @@ export default function VtcPage() {
       <div className={styles.container}>
         <div className={styles.sectionHead}><div><span>06 — Les compétences</span><h2>Bien plus que conduire.<br/><em>Devenez professionnel.</em></h2></div><p>Le programme suit les compétences évaluées à l’examen et celles qui feront la différence face à vos futurs clients.</p></div>
         <div className={styles.programGrid}>{program.map(([letter,title,text],index)=><article key={letter} className={index===6?styles.programFeatured:''}><span>{letter}</span><div><h3>{title}</h3><p>{text}</p></div><Icon name="arrow"/></article>)}</div>
+        <TrainingMotionGallery variant="vtc" />
       </div>
     </section>
 
