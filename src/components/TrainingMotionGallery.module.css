@@ -318,7 +318,6 @@
   stroke-linejoin: round;
 }
 
-.shield,
 .protectedPerson,
 .manager {
   transform-box: fill-box;
@@ -398,15 +397,8 @@
   fill: var(--accent);
 }
 
-.guards > g:first-child,
-.walkers > g:first-child {
-  animation-delay: -.7s;
-}
-
-.guards > g,
-.walkers > g,
-.agent,
-.juryPeople > g {
+.guards,
+.juryPeople {
   transform-box: fill-box;
   transform-origin: center bottom;
   animation: figureMove 4s ease-in-out infinite;
@@ -533,7 +525,6 @@
   stroke-linejoin: round;
 }
 
-.gauge,
 .magnifier {
   transform-box: fill-box;
   transform-origin: center;
