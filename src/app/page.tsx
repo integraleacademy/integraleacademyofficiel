@@ -7,7 +7,6 @@ import { GoogleReviewsSection } from '@/components/GoogleReviewsSection';
 import { HomePageAnimations } from '@/components/HomePageAnimations';
 import { SecurityTrainingComparisonModal } from '@/components/SecurityTrainingComparisonModal';
 import { SecurityTrainingGrid } from '@/components/SecurityTrainingGrid';
-import { TrainingMotionGallery } from '@/components/TrainingMotionGallery';
 import { VtcTrainingCard } from '@/components/VtcTrainingCard';
 import { PremiumFAQSection } from '@/components/ui';
 import { VisualSection } from '@/components/visuals';
@@ -169,12 +168,6 @@ export default async function Home() {
           </div>
         </div>
       </section>
-
-      <div className={styles.motionShowcase}>
-        <div className={styles.container}>
-          <TrainingMotionGallery variant="home" headingLevel={2} />
-        </div>
-      </div>
 
       <VisualSection tone="security">
         <section id="formations-securite" className="scroll-mt-28 page-container py-14 md:py-16">
