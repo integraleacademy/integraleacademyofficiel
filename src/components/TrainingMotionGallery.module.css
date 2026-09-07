@@ -69,6 +69,15 @@
   --line: rgba(251, 146, 60, .52);
 }
 
+.blue {
+  --accent: #2563eb;
+  --accent-2: #60a5fa;
+  --accent-rgb: 37, 99, 235;
+  --soft: #dbeafe;
+  --surface: #edf5ff;
+  --line: rgba(96, 165, 250, .5);
+}
+
 .intro {
   position: relative;
   display: grid;

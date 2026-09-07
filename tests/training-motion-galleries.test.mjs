@@ -12,6 +12,12 @@ const pages = {
   sst: read('src/components/SstReferencePage.tsx'),
   despVae: read('src/app/formations-securite/desp-vae/page.tsx'),
   despInitial: read('src/app/formations-securite/desp-initial/page.tsx'),
+  btsMos: read('src/components/BtsMosReferencePage.tsx'),
+  btsMco: read('src/components/BtsMcoReferencePage.tsx'),
+  btsNdrc: read('src/components/BtsNdrcReferencePage.tsx'),
+  btsCi: read('src/components/BtsCiReferencePage.tsx'),
+  btsPi: read('src/components/BtsPiReferencePage.tsx'),
+  btsCg: read('src/components/BtsCgReferencePage.tsx'),
 };
 
 const expectedStories = {
@@ -20,6 +26,12 @@ const expectedStories = {
   sst: ['Protéger la zone', 'Examiner la victime', 'Alerter les secours', 'Réaliser le geste adapté', 'Pratiquer la réanimation', 'Utiliser un défibrillateur'],
   despVae: ['Analyser votre parcours', 'Établir la faisabilité', 'Rassembler les preuves', 'Démontrer les compétences', 'Préparer le jury', 'Faire reconnaître l’expérience'],
   despInitial: ['Construire le projet', 'Garantir la conformité', 'Piloter les finances', 'Développer l’activité', 'Recruter et manager', 'Préparer les démarches CNAPS'],
+  btsMos: ['Planifier les missions', 'Superviser le terrain', 'Coordonner les équipes', 'Piloter depuis le poste', 'Rendre compte au client', 'Garantir la conformité'],
+  btsMco: ['Piloter l’unité commerciale', 'Comprendre les clients', 'Développer les ventes', 'Gérer l’offre et les stocks', 'Suivre la performance', 'Animer l’équipe'],
+  btsNdrc: ['Identifier les prospects', 'Entrer en relation', 'Négocier et vendre', 'Personnaliser le suivi', 'Fidéliser les clients', 'Animer les réseaux'],
+  btsCi: ['Étudier les marchés', 'Organiser les flux', 'Piloter la logistique', 'Maîtriser les formalités', 'Négocier à l’international', 'Suivre la performance export'],
+  btsPi: ['Découvrir et estimer un bien', 'Comprendre le projet client', 'Organiser les visites', 'Négocier la transaction', 'Sécuriser les dossiers', 'Gérer biens et copropriétés'],
+  btsCg: ['Enregistrer les opérations', 'Contrôler les écritures', 'Respecter les obligations', 'Construire les budgets', 'Analyser les écarts', 'Préparer la clôture'],
 };
 
 test('chaque formation affiche sa galerie motion design dédiée', () => {
@@ -60,4 +72,17 @@ test('les animations respectent la préférence de mouvement réduit', () => {
 test('A3P et SSIAP conservent leur scène principale en plus des cartes détaillées', () => {
   assert.match(pages.a3p, /<MissionAnimation variant="a3p"/);
   assert.match(pages.ssiap, /<MissionAnimation variant="ssiap"/);
+});
+
+test('les six BTS conservent leur scène principale en plus de leur galerie détaillée', () => {
+  for (const [variant, animation] of [
+    ['btsMos', 'mos'],
+    ['btsMco', 'mco'],
+    ['btsNdrc', 'ndrc'],
+    ['btsCi', 'ci'],
+    ['btsPi', 'pi'],
+    ['btsCg', 'cg'],
+  ]) {
+    assert.match(pages[variant], new RegExp(`<MissionAnimation variant="${animation}"`));
+  }
 });
