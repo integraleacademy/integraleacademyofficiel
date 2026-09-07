@@ -31,6 +31,7 @@ export function TrainingSectionNavigation({
 }: TrainingSectionNavigationProps) {
   const firstHref = items[0]?.href ?? '#top';
   const [activeHref, setActiveHref] = useState<string>(firstHref);
+  const navRef = useRef<HTMLElement>(null);
   const scrollerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -44,12 +45,27 @@ export function TrainingSectionNavigation({
       .map((item) => document.getElementById(item.href.slice(1)))
       .filter((section): section is HTMLElement => Boolean(section));
 
-    const observer = new IntersectionObserver((entries) => {
-      const current = entries
-        .filter((entry) => entry.isIntersecting)
-        .sort((first, second) => first.boundingClientRect.top - second.boundingClientRect.top)[0];
+    let animationFrame = 0;
+    const updateActiveSection = () => {
+      const navBounds = navRef.current?.getBoundingClientRect();
+      const activationLine = navBounds && navBounds.top <= 80
+        ? navBounds.bottom + 12
+        : Math.min(window.innerHeight * .25, 180);
+      const positions = sections.map((section) => ({ section, top: section.getBoundingClientRect().top }));
+      const current = positions
+        .filter(({ top }) => top <= activationLine)
+        .sort((first, second) => second.top - first.top)[0]
+        ?? positions.sort((first, second) => first.top - second.top)[0];
 
-      if (current) setActiveHref(`#${current.target.id}`);
+      if (current) setActiveHref(`#${current.section.id}`);
+    };
+    const requestUpdate = () => {
+      window.cancelAnimationFrame(animationFrame);
+      animationFrame = window.requestAnimationFrame(updateActiveSection);
+    };
+
+    const observer = new IntersectionObserver(() => {
+      requestUpdate();
     }, {
       rootMargin: '-110px 0px -68% 0px',
       threshold: 0,
@@ -57,11 +73,17 @@ export function TrainingSectionNavigation({
 
     sections.forEach((section) => observer.observe(section));
     updateFromHash();
+    requestUpdate();
     window.addEventListener('hashchange', updateFromHash);
+    window.addEventListener('scroll', requestUpdate, { passive: true });
+    window.addEventListener('resize', requestUpdate);
 
     return () => {
       observer.disconnect();
+      window.cancelAnimationFrame(animationFrame);
       window.removeEventListener('hashchange', updateFromHash);
+      window.removeEventListener('scroll', requestUpdate);
+      window.removeEventListener('resize', requestUpdate);
     };
   }, [items]);
 
@@ -76,7 +98,7 @@ export function TrainingSectionNavigation({
   }, [activeHref]);
 
   return (
-    <nav aria-label={ariaLabel} className={styles.courseNav} data-theme={theme}>
+    <nav ref={navRef} aria-label={ariaLabel} className={styles.courseNav} data-theme={theme}>
       <div className={`${styles.courseNavShell} page-container`}>
         <a href={firstHref} className={styles.courseNavIdentity} onClick={() => setActiveHref(firstHref)}>
           <span className={styles.courseNavMark}>{mark}</span>
