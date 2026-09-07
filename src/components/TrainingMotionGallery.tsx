@@ -2,6 +2,7 @@ import type { CSSProperties } from 'react';
 import styles from './TrainingMotionGallery.module.css';
 
 type TrainingMotionGalleryVariant =
+  | 'home'
   | 'a3p'
   | 'ssiap'
   | 'sst'
@@ -28,9 +29,23 @@ const galleries: Record<TrainingMotionGalleryVariant, {
   eyebrow: string;
   title: string;
   intro: string;
-  theme: 'green' | 'red' | 'rescue' | 'orange' | 'blue' | 'violet';
+  theme: 'academy' | 'green' | 'red' | 'rescue' | 'orange' | 'blue' | 'violet';
   stories: readonly Story[];
 }> = {
+  home: {
+    eyebrow: 'Intégrale Academy en mouvement',
+    title: 'Votre futur métier, en images.',
+    intro: 'Sécurité, prévention, secours, VTC et BTS : découvrez les univers qui donnent vie à votre projet professionnel.',
+    theme: 'academy',
+    stories: [
+      ['site-check', 'Protéger les personnes et les biens', 'Animation d’un site dont les accès sont surveillés par un professionnel de la sécurité'],
+      ['fire-panel', 'Prévenir le risque incendie', 'Animation d’un poste de sécurité détectant et localisant un risque incendie'],
+      ['first-aid', 'Porter secours', 'Animation d’une trousse de premiers secours prête pour une intervention rapide'],
+      ['secure-vehicle', 'Conduire avec professionnalisme', 'Animation d’un chauffeur VTC préparant un trajet sûr et confortable'],
+      ['business', 'Manager et développer', 'Animation d’une activité pilotée grâce aux compétences acquises en BTS'],
+      ['certificate', 'Aller jusqu’au diplôme', 'Animation d’un diplôme obtenu au terme d’un parcours de formation accompagné'],
+    ],
+  },
   a3p: {
     eyebrow: 'A3P en mouvement',
     title: 'La protection rapprochée, en images.',
@@ -396,14 +411,15 @@ function Scene({ kind }: { kind: SceneKind }) {
   </svg>;
 }
 
-export function TrainingMotionGallery({ variant, className = '' }: { variant: TrainingMotionGalleryVariant; className?: string }) {
+export function TrainingMotionGallery({ variant, className = '', headingLevel = 3 }: { variant: TrainingMotionGalleryVariant; className?: string; headingLevel?: 2 | 3 }) {
   const gallery = galleries[variant];
+  const Heading = headingLevel === 2 ? 'h2' : 'h3';
 
   return <section className={`${styles.gallery} ${styles[gallery.theme]} ${className}`} aria-labelledby={`${variant}-motion-title`}>
     <div className={styles.intro}>
       <div>
         <p className={styles.eyebrow}>{gallery.eyebrow}</p>
-        <h3 id={`${variant}-motion-title`}>{gallery.title}</h3>
+        <Heading id={`${variant}-motion-title`}>{gallery.title}</Heading>
       </div>
       <p>{gallery.intro}</p>
     </div>
