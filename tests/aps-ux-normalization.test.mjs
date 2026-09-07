@@ -42,6 +42,21 @@ test('la simulation animée de ronde reste visible dans le bloc pratique', () =>
   assert.match(apsStyles, /@keyframes radar/);
 });
 
+test('les photos du bloc immersion sont remplacées par deux scènes motion design accessibles', () => {
+  const immersionStart = apsPage.indexOf('<Section id="pratique"');
+  const immersionEnd = apsPage.indexOf('<Section id="programme"', immersionStart);
+  const immersion = apsPage.slice(immersionStart, immersionEnd);
+
+  assert.ok(immersion.includes('<BaggageInspectionMotion />'));
+  assert.ok(immersion.includes('<PatdownProtocolMotion />'));
+  assert.doesNotMatch(immersion, /aps-training-(?:bag-inspection|patdown)\.jpg/);
+  assert.ok(apsPage.includes('role="img" aria-label="Animation d’un bagage inspecté'));
+  assert.ok(apsPage.includes('role="img" aria-label="Animation pédagogique des zones contrôlées'));
+  assert.match(apsStyles, /@keyframes baggageSweep/);
+  assert.match(apsStyles, /@keyframes patdownSweep/);
+  assert.match(apsStyles, /@media \(prefers-reduced-motion: reduce\)[\s\S]*?\.baggageSweep,[\s\S]*?\.patdownSweep,/);
+});
+
 test('la page APS trie les sessions et limite la vue initiale aux deux prochaines', () => {
   assert.ok(apsPage.includes('sortSessionsChronologically(sessions.length ? sessions : fallbackSessions)'));
   assert.ok(apsPage.includes('initialSessionLimit={2}'));
