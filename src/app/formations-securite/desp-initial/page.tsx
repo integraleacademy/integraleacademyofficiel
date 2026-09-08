@@ -1,7 +1,7 @@
 import { isPublicUpcomingSession } from '@/components/PublicTrainingSessions';
 import { TrainingDatesPricingSection } from '@/components/TrainingDatesPricingSection';
 import { TrainingSectionNavigation } from '@/components/TrainingSectionNavigation';
-import { TrainingMotionGallery } from '@/components/TrainingMotionGallery';
+import { DespIllustratedCards, type DespIllustratedCard } from '@/components/DespIllustratedCards';
 import { Button, ConversionStrip, FeatureCard, PremiumFAQSection } from '@/components/ui';
 import { DespHero } from '@/components/DespHero';
 import { listSessions } from '@/lib/training-data';
@@ -28,7 +28,51 @@ const navigationItems = [
   { label: 'FAQ', href: '#faq-desp-initial' },
 ] as const;
 
-const jobMissions = ['Créer ou reprendre une entreprise','Piloter la stratégie et les finances','Garantir la conformité réglementaire','Recruter et manager les équipes','Développer l’activité commerciale','Répondre aux appels d’offres','Superviser les prestations','Gérer les relations avec les clients'];
+const jobMissions = [
+  {
+    title: 'Créer ou reprendre une entreprise',
+    description: 'Étudier le marché, définir le positionnement et construire un projet de création ou de reprise cohérent.',
+    scenes: [{ kind: 'business', description: 'Animation d’un projet de création ou de reprise d’entreprise qui prend forme' }],
+  },
+  {
+    title: 'Piloter la stratégie et les finances',
+    description: 'Construire le prévisionnel, suivre la trésorerie et analyser les indicateurs pour orienter les décisions de l’entreprise.',
+    scenes: [{ kind: 'finance', description: 'Animation d’un tableau de bord financier suivi par le dirigeant' }],
+  },
+  {
+    title: 'Garantir la conformité réglementaire',
+    description: 'Contrôler les obligations de l’entreprise et préparer les dossiers nécessaires aux démarches auprès du CNAPS.',
+    scenes: [
+      { kind: 'compliance', description: 'Animation d’un contrôle réglementaire des obligations de sécurité privée' },
+      { kind: 'approval', description: 'Animation d’un dossier dirigeant contrôlé avant son dépôt auprès du CNAPS' },
+    ],
+  },
+  {
+    title: 'Recruter et manager les équipes',
+    description: 'Organiser les recrutements, répartir les responsabilités et accompagner les équipes dans leur travail quotidien.',
+    scenes: [{ kind: 'team', description: 'Animation d’une équipe organisée et coordonnée par son dirigeant' }],
+  },
+  {
+    title: 'Développer l’activité commerciale',
+    description: 'Définir une offre, prospecter et construire une stratégie commerciale adaptée aux besoins des clients.',
+    scenes: [{ kind: 'commercial', description: 'Animation d’une stratégie commerciale atteignant ses objectifs' }],
+  },
+  {
+    title: 'Répondre aux appels d’offres',
+    description: 'Analyser le cahier des charges, rassembler les pièces et préparer une proposition technique et financière structurée.',
+    scenes: [{ kind: 'evidence', description: 'Animation de documents rassemblés dans un dossier de réponse à un appel d’offres' }],
+  },
+  {
+    title: 'Superviser les prestations',
+    description: 'Organiser les moyens, vérifier les consignes et suivre la qualité des prestations réalisées sur les sites clients.',
+    scenes: [{ kind: 'site-check', description: 'Animation d’un site dont les accès et les points de contrôle sont supervisés' }],
+  },
+  {
+    title: 'Gérer les relations avec les clients',
+    description: 'Recueillir les besoins, rendre compte des prestations et suivre les engagements pour entretenir la relation client.',
+    scenes: [{ kind: 'briefing', description: 'Animation d’un compte rendu de prestation et d’un échange avec le client' }],
+  },
+] as const satisfies readonly DespIllustratedCard[];
 const audience = ['créateurs d’entreprise','repreneurs d’une société de sécurité','responsables d’agence','responsables d’exploitation','managers de la sécurité privée','chefs d’équipe souhaitant évoluer','dirigeants souhaitant régulariser ou développer leur activité','personnes en reconversion disposant d’un projet sérieux de création ou de reprise'];
 const prerequisites = ['être majeur','maîtriser le français à l’oral et à l’écrit','disposer d’un niveau baccalauréat ou équivalent','ou être titulaire du SSIAP 3','ou justifier d’une expérience sur un poste à responsabilités','ou obtenir un avis favorable à l’entretien préalable d’admission selon le profil'];
 const cnaps = ['la condition de nationalité applicable','l’honorabilité','l’absence de condamnations incompatibles','l’absence d’interdiction de gérer ou de faillite personnelle incompatible','l’absence d’activité incompatible','l’aptitude professionnelle','la cohérence et la complétude du dossier'];
@@ -73,7 +117,7 @@ export default async function DespInitialPage(){
       emptyAction={{ href: `${contactHref}&objet=alerte-planning`, label: 'Recevoir les prochaines dates →' }}
     />
     <ConversionStrip theme="orange"/>
-    <TextSection id="metier" title="Quel est le rôle d’un dirigeant d’entreprise de sécurité privée ?" intro="Le dirigeant d’entreprise de sécurité privée crée, reprend, dirige ou développe une structure exerçant une ou plusieurs activités réglementées de sécurité privée. Il veille au respect du Livre VI du Code de la sécurité intérieure, pilote la stratégie de l’entreprise, contrôle son équilibre financier, développe son activité commerciale et encadre les équipes."><CardGrid items={jobMissions}/><TrainingMotionGallery variant="despInitial"/><Note>Le dirigeant ne réalise pas nécessairement lui-même les missions opérationnelles. S’il exerce personnellement des activités d’agent de sécurité, il doit également détenir la carte professionnelle correspondant à l’activité exercée.</Note></TextSection>
+    <TextSection id="metier" title="Quel est le rôle d’un dirigeant d’entreprise de sécurité privée ?" intro="Le dirigeant d’entreprise de sécurité privée crée, reprend, dirige ou développe une structure exerçant une ou plusieurs activités réglementées de sécurité privée. Il veille au respect du Livre VI du Code de la sécurité intérieure, pilote la stratégie de l’entreprise, contrôle son équilibre financier, développe son activité commerciale et encadre les équipes."><DespIllustratedCards items={jobMissions}/><Note>Le dirigeant ne réalise pas nécessairement lui-même les missions opérationnelles. S’il exerce personnellement des activités d’agent de sécurité, il doit également détenir la carte professionnelle correspondant à l’activité exercée.</Note></TextSection>
     <Info title="À qui s’adresse la formation ?" items={audience}/><NoteSection>La formation ne s’adresse pas uniquement aux agents de sécurité expérimentés. Une expérience du secteur constitue un avantage, mais l’admission dépend de l’ensemble du profil et des conditions du certificateur.</NoteSection>
     <TextSection title="Quels sont les prérequis pour entrer en DESP initial ?"><CardGrid items={prerequisites}/><Note>Chaque candidature est étudiée individuellement. Un entretien préalable permet de vérifier le niveau, l’expérience, la cohérence du projet et la capacité à suivre une formation intensive de niveau 5.</Note></TextSection>
     <TextSection title="Quelles conditions faut-il remplir pour obtenir l’agrément dirigeant ?" intro="Le CNAPS vérifie notamment :"><CardGrid items={cnaps}/><Note>La réussite au titre DESP ne garantit pas automatiquement la délivrance de l’agrément. La décision appartient au CNAPS après enquête administrative.</Note><div className="mt-5"><Button href={contactHref} variant="orange">Faire vérifier mes prérequis</Button></div></TextSection>
