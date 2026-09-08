@@ -36,8 +36,20 @@ const expectedStories = {
   vtc: ['Organiser la réservation', 'Préparer l’itinéraire', 'Accueillir le passager', 'Conduire en sécurité', 'Calculer et facturer', 'Fidéliser la clientèle'],
 };
 
-test('chaque formation affiche sa galerie motion design dédiée', () => {
+test('chaque formation affiche ses scènes dans la galerie ou les cartes métier', () => {
   for (const [variant, source] of Object.entries(pages)) {
+    if (variant === 'a3p') {
+      const immersion = source.slice(source.indexOf('<Section id="pedagogie"'), source.indexOf('<Section id="certification"'));
+      const card = immersion.slice(immersion.indexOf('<article key={practice.title}'), immersion.indexOf('</article>'));
+      assert.ok(card.includes('<TrainingMotionIllustration kind={practice.scene} theme="green" description={practice.visualDescription} />'));
+      assert.doesNotMatch(source, /<TrainingMotionGallery variant="a3p"/);
+      const practices = source.slice(source.indexOf('const practices = ['), source.indexOf('const examSteps = ['));
+      for (const scene of ['mission-map', 'risk-radar', 'site-check', 'close-protection', 'secure-vehicle', 'hazard', 'cpr', 'briefing']) {
+        assert.ok(practices.includes(`scene: '${scene}'`), `visuel A3P manquant : ${scene}`);
+      }
+      assert.ok(practices.includes('Secours aux personnes'));
+      continue;
+    }
     assert.ok(source.includes(`import { TrainingMotionGallery } from '@/components/TrainingMotionGallery';`), `import manquant pour ${variant}`);
     assert.ok(source.includes(`<TrainingMotionGallery variant="${variant}"`), `galerie manquante pour ${variant}`);
   }

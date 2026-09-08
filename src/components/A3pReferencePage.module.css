@@ -1,0 +1,66 @@
+.practiceCard {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, .1);
+  border-radius: 1.5rem;
+  padding: 1.25rem;
+  background: rgba(255, 255, 255, .04);
+  transition: transform .3s ease, border-color .3s ease, background .3s ease;
+}
+
+.practiceCard:hover {
+  transform: translateY(-5px);
+  border-color: rgba(110, 231, 183, .38);
+  background: rgba(255, 255, 255, .07);
+}
+
+.practiceNumber {
+  display: grid;
+  width: 2.5rem;
+  height: 2.5rem;
+  place-items: center;
+  border: 1px solid rgba(110, 231, 183, .3);
+  border-radius: .85rem;
+  background: rgba(16, 185, 129, .14);
+  color: #6ee7b7;
+  font-size: .75rem;
+  font-weight: 900;
+}
+
+.practiceCard h3 {
+  margin-top: 1rem;
+  color: #fff;
+  font-size: 1.125rem;
+  font-weight: 900;
+  line-height: 1.4;
+}
+
+.practiceCard > p {
+  margin-top: .5rem;
+  margin-bottom: 1.5rem;
+  color: rgba(255, 255, 255, .65);
+  font-size: .875rem;
+  line-height: 1.7;
+}
+
+.practiceVisual {
+  height: 210px;
+  margin-top: auto;
+  overflow: hidden;
+  border: 1px solid rgba(110, 231, 183, .6);
+  border-radius: 1.2rem;
+  padding: .35rem;
+  background: linear-gradient(145deg, #f0fdf7, #d1fae5);
+}
+
+.practiceVisual > div {
+  width: 100%;
+  height: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .practiceCard { transition: none; }
+  .practiceCard:hover { transform: none; }
+}
