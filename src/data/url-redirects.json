@@ -20,8 +20,8 @@
   { "source": "/formations-vtc", "destination": "/vtc" },
   { "source": "/candidature", "destination": "https://inscriptionsbts.onrender.com/" },
   { "source": "/assistance", "destination": "https://assistance-alw9.onrender.com/" },
-  { "source": "/rdvteldirigeant", "destination": "/contact?formation=desp&type=rdv" },
-  { "source": "/reservationrdvvtc", "destination": "/contact?formation=vtc&type=rdv" },
+  { "source": "/rdvteldirigeant", "destination": "https://assistance-alw9.onrender.com/demande-informations-formations?formation=DESP_INIT" },
+  { "source": "/reservationrdvvtc", "destination": "https://assistance-alw9.onrender.com/demande-informations-formations?formation=VTC" },
   { "source": "/formulairevtc", "destination": "/dossiersfc#vtc" },
   { "source": "/dossiervtc", "destination": "/dossiersfc#vtc" },
   { "source": "/pages-sitemap.xml", "destination": "/sitemap.xml" }

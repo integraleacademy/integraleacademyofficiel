@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
-import { ContactForm } from '@/components/ContactForm';
+import { ContactRequestCard } from '@/components/ContactRequestCard';
+import { informationRequestHref } from '@/lib/contact-request';
 import { contact } from '@/data/site';
 
 export const metadata = {
@@ -73,7 +74,8 @@ function ArrowLink({ href, children, light = false, external = false }: { href: 
   return external ? <a href={href} target="_blank" rel="noopener noreferrer" className={classes}>{content}</a> : <Link href={href} className={classes}>{content}</Link>;
 }
 
-export default function Page() {
+export default async function Page({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
+  const requestHref = informationRequestHref(await searchParams);
   return (
     <div className="overflow-hidden">
       <section className="relative isolate overflow-hidden bg-[#101a29] px-4 py-14 text-white sm:py-20 lg:py-24">
@@ -219,7 +221,7 @@ export default function Page() {
             </div>
           </div>
 
-          <ContactForm />
+          <ContactRequestCard href={requestHref} />
         </div>
       </section>
 
