@@ -27,10 +27,10 @@ Toute session débutant après le 1er juillet 2027 doit être présentée sous r
 ## Informations essentielles
 
 - Durée totale : 175 heures
-- Présentiel : 124 heures minimum, soit 71 % du parcours
+- Présentiel : 124 heures, soit 71 % du parcours
 - Pratique : 63,5 heures, soit 36 % du parcours
 - Théorie en présentiel : 60,5 heures
-- Distanciel : 51 heures maximum, soit 29 % du parcours
+- Distanciel : 51 heures, soit 29 % du parcours
 - Lieu du présentiel : Puget-sur-Argens
 - Tarif affiché : 1 650 €
 - Financements étudiés : CPF, France Travail, employeur ou OPCO, financement personnel
@@ -71,7 +71,7 @@ Ces éléments sont vérifiés avant l’admission définitive. Ne pas présente
 | UV 12 | Événementiel spécifique | 7 h | 7 h | 0 h |
 | UV 13 | Situations conflictuelles dégradées | 7 h | 0 h | 4 h |
 | UV 14 | Risques industriels | 7 h | 5 h | 0 h |
-| **Total** |  | **175 h** | **51 h maximum** | **63,5 h** |
+| **Total** |  | **175 h** | **51 h** | **63,5 h** |
 
 Les contenus couvrent notamment le livre VI du Code de la sécurité intérieure, la déontologie, l’article 73 du Code de procédure pénale, les libertés publiques, les principes de la République, la main courante électronique, le feu réel, le secourisme tactique, le contrôle des personnes et des véhicules, la palpation, l’inspection visuelle des bagages, la vidéoprotection, la GTC/GTB, le PTI/DATI, les rassemblements, les ICPE, SEVESO, ORSEC, le SGH, le CLP et les zones ATEX.
 
@@ -124,7 +124,7 @@ Ces mentions décrivent la certification nationale. Elles ne signifient pas que 
 
 ## Réponse commerciale recommandée
 
-Présenter l’APS comme une formation réglementée, hybride et fortement pratique : 175 heures au total, avec 124 heures minimum en présentiel et 51 heures maximum à distance. Préciser que la réussite au TFP permet de demander la carte professionnelle CNAPS, sans en garantir la délivrance. Inviter le candidat à appeler le 04 22 47 07 68 pour vérifier ses prérequis, sa situation CNAPS, la prochaine session et les financements possibles.
+Présenter l’APS comme une formation réglementée, hybride et fortement pratique : 175 heures au total, avec 124 heures en présentiel et 51 heures à distance. Préciser que la réussite au TFP permet de demander la carte professionnelle CNAPS, sans en garantir la délivrance. Inviter le candidat à appeler le 04 22 47 07 68 pour vérifier ses prérequis, sa situation CNAPS, la prochaine session et les financements possibles.
 
 ## Coordonnées
 

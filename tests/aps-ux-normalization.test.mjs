@@ -35,26 +35,22 @@ test('les repères visuels propres à la page APS utilisent le bleu', () => {
 
 test('la simulation animée de ronde reste visible dans le bloc pratique', () => {
   assert.ok(apsPage.includes("index === 0 ? styles.practicalPrimary : ''"));
-  assert.ok(apsPage.includes('styles.practiceVisual'));
-  assert.ok(apsPage.includes('styles.scanLine'));
-  assert.ok(apsPage.includes('Simulation animée d’une ronde de sécurité'));
+  assert.ok(apsPage.includes('<ApsStoryIllustration kind="patrol"'));
+  assert.ok(apsPage.includes('Animation d’un agent effectuant une ronde autour d’un bâtiment'));
   assert.match(apsStyles, /\.scanLine[\s\S]*?animation: radar 5\.5s linear infinite;/);
   assert.match(apsStyles, /@keyframes radar/);
 });
 
-test('les photos du bloc immersion sont remplacées par deux scènes motion design accessibles', () => {
+test('le bloc immersion réutilise les illustrations de la galerie métier', () => {
   const immersionStart = apsPage.indexOf('<Section id="pratique"');
   const immersionEnd = apsPage.indexOf('<Section id="programme"', immersionStart);
   const immersion = apsPage.slice(immersionStart, immersionEnd);
-
-  assert.ok(immersion.includes('<BaggageInspectionMotion />'));
-  assert.ok(immersion.includes('<PatdownProtocolMotion />'));
+  for (const kind of ['baggage', 'patdown', 'access']) {
+    assert.ok(immersion.includes(`<ApsStoryIllustration kind="${kind}"`));
+  }
   assert.doesNotMatch(immersion, /aps-training-(?:bag-inspection|patdown)\.jpg/);
-  assert.ok(apsPage.includes('role="img" aria-label="Animation d’un bagage inspecté'));
-  assert.ok(apsPage.includes('role="img" aria-label="Animation pédagogique des zones contrôlées'));
-  assert.match(apsStyles, /@keyframes baggageSweep/);
-  assert.match(apsStyles, /@keyframes patdownSweep/);
-  assert.match(apsStyles, /@media \(prefers-reduced-motion: reduce\)[\s\S]*?\.baggageSweep,[\s\S]*?\.patdownSweep,/);
+  assert.ok(apsPage.includes('role="img" aria-label={description}'));
+  assert.match(apsStyles, /@media \(prefers-reduced-motion: reduce\)[\s\S]*?\.storyBagCheck, \.storyPatdownAgent, \.storyPatdownZones \{ animation: none;/);
 });
 
 test('la partie métier présente six illustrations APS animées et accessibles', () => {

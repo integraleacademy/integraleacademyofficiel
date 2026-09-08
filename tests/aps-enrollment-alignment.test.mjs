@@ -12,7 +12,7 @@ const apsStyles = readFileSync(
 );
 
 const datesStart = apsPage.indexOf('<TrainingDatesPricingSection');
-const datesEnd = apsPage.indexOf('</TrainingDatesPricingSection>', datesStart);
+const datesEnd = apsPage.indexOf('    />', datesStart);
 const enrollmentStart = apsPage.indexOf('<section id="inscription-financement"');
 const enrollmentEnd = apsPage.indexOf('</section>', enrollmentStart);
 const enrollmentSection = apsPage.slice(enrollmentStart, enrollmentEnd);
@@ -98,7 +98,7 @@ test('le parcours reprend précisément les cinq étapes du support commercial',
 });
 
 test('les actions d’inscription et de financement restent accessibles et sûres', () => {
-  assert.ok(enrollmentSection.includes("apsContact('commencer mon inscription')"));
+  assert.ok(enrollmentSection.includes("href={apsRegistrationFormUrl}"));
   assert.ok(enrollmentSection.includes('href={apsCpfUrl} variant="blue" external'));
   assert.ok(enrollmentSection.includes("apsContact('étude de financement APS')"));
   assert.match(apsPage, /target="_blank" rel="noopener noreferrer"/);

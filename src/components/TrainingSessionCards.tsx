@@ -57,6 +57,7 @@ type TrainingSessionCardsProps = {
   initialSessionLimit?: number;
   showLocationFilter?: boolean;
   showSessionTitle?: boolean;
+  showSessionPrice?: boolean;
   showOverallPeriodLabel?: boolean;
   seatCapacity?: number;
   underlineDisclosure?: boolean;
@@ -151,6 +152,7 @@ function SessionCard({
   defaultLocation,
   defaultPrice,
   showSessionTitle,
+  showSessionPrice,
   showOverallPeriodLabel,
   seatCapacity,
 }: {
@@ -164,6 +166,7 @@ function SessionCard({
   defaultLocation: string;
   defaultPrice: string;
   showSessionTitle: boolean;
+  showSessionPrice: boolean;
   showOverallPeriodLabel: boolean;
   seatCapacity?: number;
 }) {
@@ -209,7 +212,7 @@ function SessionCard({
       <span className="inline-flex items-center gap-2"><PeriodIcon name="location" className={`h-4 w-4 ${sessionTheme.detailIcon}`} />{session.location || defaultLocation}</span>
     </div>
     <div className="mt-auto flex flex-wrap items-end justify-between gap-4 pt-5">
-      <strong className="text-3xl">{formatTrainingPrice(session, defaultPrice)}</strong>
+      {showSessionPrice && <strong className="text-3xl">{formatTrainingPrice(session, defaultPrice)}</strong>}
       <ActionLink action={{ href: session.registrationHref, label: full ? 'Être alerté' : 'Choisir cette session →' }} variant={full ? 'light' : theme} />
     </div>
   </article>;
@@ -227,6 +230,7 @@ export function TrainingSessionCards({
   initialSessionLimit,
   showLocationFilter = false,
   showSessionTitle = false,
+  showSessionPrice = true,
   showOverallPeriodLabel = true,
   seatCapacity,
   underlineDisclosure = true,
@@ -256,6 +260,7 @@ export function TrainingSessionCards({
     defaultLocation,
     defaultPrice,
     showSessionTitle,
+    showSessionPrice,
     showOverallPeriodLabel,
     seatCapacity,
   };
