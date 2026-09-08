@@ -12,6 +12,7 @@ import { despVaeAdmin, despVaeFaq } from '@/data/despVae';
 export const dynamic = 'force-dynamic';
 
 export const metadata = {
+  alternates: { canonical: '/vaedirigeant' },
   title: 'DESP VAE - Validation acquis dirigeant sécurité privée',
   description: 'DESP en VAE RNCP 40385 : accompagnement dossier de preuves, dossier de validation et jury pour profils expérimentés en sécurité privée.',
 };

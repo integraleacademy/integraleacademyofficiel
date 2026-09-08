@@ -38,7 +38,7 @@ function DossierStack({ dossiers, isBts }: { dossiers: readonly PresentationDoss
 }
 
 function DossierCard({ dossier, isBts }: { dossier: PresentationDossier; isBts: boolean }) {
-  return <a href={dossier.href} target="_blank" rel="noopener noreferrer" aria-label={`Consulter le dossier de présentation ${dossier.title} sur Canva (nouvel onglet)`} className="group flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-academy-line bg-academy-surface shadow-soft transition duration-300 hover:-translate-y-1.5 hover:border-academy-gold/60 hover:shadow-card focus:outline-none focus:ring-4 focus:ring-academy-gold/30" data-dossier-card>
+  return <a id={dossier.id} href={dossier.href} target="_blank" rel="noopener noreferrer" aria-label={`Consulter le dossier de présentation ${dossier.title} sur Canva (nouvel onglet)`} className="group flex h-full scroll-mt-32 flex-col overflow-hidden rounded-[1.75rem] border border-academy-line bg-academy-surface shadow-soft transition duration-300 hover:-translate-y-1.5 hover:border-academy-gold/60 hover:shadow-card focus:outline-none focus:ring-4 focus:ring-academy-gold/30" data-dossier-card>
     <div className="relative mx-4 mt-4 aspect-[600/850] overflow-hidden rounded-[1.25rem] bg-academy-soft">
       <img src={dossier.image} alt={`Couverture du dossier de présentation ${dossier.title}`} width="600" height="850" loading="lazy" decoding="async" className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.035]" />
       <span className="absolute inset-x-3 bottom-3 flex items-center justify-between gap-3 rounded-full bg-[#172235]/92 px-4 py-3 text-xs font-black text-white shadow-lg backdrop-blur transition group-hover:bg-academy-gold group-hover:text-academy-gold-text">

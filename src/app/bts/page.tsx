@@ -11,6 +11,7 @@ import {
   Highlight,
 } from "@/components/ui";
 export const metadata = {
+  alternates: { canonical: '/bts' },
   title: "BTS en alternance",
   description:
     "BTS MOS, MCO, NDRC, Commerce International, Professions Immobilières et Comptabilité Gestion chez Intégrale Academy.",

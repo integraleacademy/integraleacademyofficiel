@@ -4,6 +4,7 @@ import { appointmentFormUrl } from '@/components/ui';
 import styles from './entreprises.module.css';
 
 export const metadata: Metadata = {
+  alternates: { canonical: '/entreprises' },
   title: 'Solutions entreprises en sécurité privée',
   description: 'Alternance sécurité, POEI et BTS MOS : Intégrale Academy accompagne les entreprises dans le recrutement, la formation et l’intégration de leurs futurs professionnels de la sécurité privée.',
 };

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { SITE_ORIGIN } from '@/lib/site-urls';
 import './globals.css';
 import './global-contact-cta-continuous.css';
 import './home-height-animation.css';
@@ -9,6 +10,7 @@ import { GlobalContactCTA } from '@/components/GlobalContactCTA';
 import { GlobalMobileCTA } from '@/components/GlobalMobileCTA';
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_ORIGIN),
   title: { default:'Intégrale Academy - Formations sécurité, VTC et BTS', template:'%s | Intégrale Academy' },
   description:'Centre de formation professionnelle spécialisé sécurité privée, sécurité incendie, VTC et BTS en alternance.',
   icons: {

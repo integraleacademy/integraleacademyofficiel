@@ -8,6 +8,7 @@ import { PremiumFAQSection } from '@/components/ui';
 import styles from './vtc.module.css';
 
 export const metadata: Metadata = {
+  alternates: { canonical: '/vtc' },
   title: 'Formation Chauffeur VTC tout inclus',
   description: 'Préparez l’examen VTC avec une formule tout inclus à 1 500 € : théorie en ligne, pratique, véhicule double commande et frais d’examen.',
 };

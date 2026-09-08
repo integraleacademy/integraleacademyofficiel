@@ -1,0 +1,392 @@
+{
+  "stats": {
+    "canonical_pages": 38,
+    "redirects": 26,
+    "assets": 30,
+    "internal_paths": 38
+  },
+  "errors": [],
+  "missing_fragments": [],
+  "pages": {
+    "/formations-securite": {
+      "status": 200,
+      "title": "Formations sécurité | Intégrale Academy",
+      "canonical": [
+        "https://www.integraleacademy.com/formations-securite"
+      ],
+      "h1": [
+        "Formations sécurité : formation certifiante et métier reconnu"
+      ]
+    },
+    "/": {
+      "status": 200,
+      "title": "Accueil",
+      "canonical": [
+        "https://www.integraleacademy.com"
+      ],
+      "h1": [
+        "Votre futur métier mérite une formation à la hauteur."
+      ]
+    },
+    "/ecole": {
+      "status": 200,
+      "title": "Notre école | Intégrale Academy | Intégrale Academy",
+      "canonical": [
+        "https://www.integraleacademy.com/ecole"
+      ],
+      "h1": [
+        "Une école construite sur l’expérience. Portée par une équipe."
+      ]
+    },
+    "/centres": {
+      "status": 200,
+      "title": "Nos centres | Intégrale Academy",
+      "canonical": [
+        "https://www.integraleacademy.com/centres"
+      ],
+      "h1": [
+        "Nos centres de formation"
+      ]
+    },
+    "/bts": {
+      "status": 200,
+      "title": "BTS en alternance | Intégrale Academy",
+      "canonical": [
+        "https://www.integraleacademy.com/bts"
+      ],
+      "h1": [
+        "BTS en alternance , en présentiel ou à distance"
+      ]
+    },
+    "/contact": {
+      "status": 200,
+      "title": "Contact & admissions | Intégrale Academy",
+      "canonical": [
+        "https://www.integraleacademy.com/contact"
+      ],
+      "h1": [
+        "Votre projet mérite une réponse claire."
+      ]
+    },
+    "/planning": {
+      "status": 200,
+      "title": "Planning des prochaines formations | Intégrale Academy",
+      "canonical": [
+        "https://www.integraleacademy.com/planning"
+      ],
+      "h1": [
+        "Trouvez votre formation. Choisissez votre date."
+      ]
+    },
+    "/tarifs": {
+      "status": 200,
+      "title": "Tarifs des formations professionnelles | Intégrale Academy",
+      "canonical": [
+        "https://www.integraleacademy.com/tarifs"
+      ],
+      "h1": [
+        "Choisissez votre formation avec une vision claire du budget."
+      ]
+    },
+    "/faq": {
+      "status": 200,
+      "title": "Questions fréquentes sur les BTS | Intégrale Academy",
+      "canonical": [
+        "https://www.integraleacademy.com/faq"
+      ],
+      "h1": [
+        "Vos questions sur les BTS"
+      ]
+    },
+    "/financements/alternance": {
+      "status": 200,
+      "title": "Alternance | Intégrale Academy",
+      "canonical": [
+        "https://www.integraleacademy.com/financements/alternance"
+      ],
+      "h1": [
+        "Financement en alternance"
+      ]
+    },
+    "/entreprises": {
+      "status": 200,
+      "title": "Solutions entreprises en sécurité privée | Intégrale Academy",
+      "canonical": [
+        "https://www.integraleacademy.com/entreprises"
+      ],
+      "h1": [
+        "Recrutez, formez et fidélisez vos futurs professionnels de la sécurité."
+      ]
+    },
+    "/financements": {
+      "status": 200,
+      "title": "Financer sa formation | Intégrale Academy",
+      "canonical": [
+        "https://www.integraleacademy.com/financements"
+      ],
+      "h1": [
+        "Votre projet mérite une solution adaptée."
+      ]
+    },
+    "/financements/france-travail": {
+      "status": 200,
+      "title": "France Travail | Intégrale Academy",
+      "canonical": [
+        "https://www.integraleacademy.com/financements/france-travail"
+      ],
+      "h1": [
+        "Financement France Travail"
+      ]
+    },
+    "/dossiersbts": {
+      "status": 200,
+      "title": "Dossiers de présentation des BTS | Intégrale Academy",
+      "canonical": [
+        "https://www.integraleacademy.com/dossiersbts"
+      ],
+      "h1": [
+        "Découvrez nos BTS en alternance"
+      ]
+    },
+    "/financements/cpf": {
+      "status": 200,
+      "title": "CPF | Intégrale Academy",
+      "canonical": [
+        "https://www.integraleacademy.com/financements/cpf"
+      ],
+      "h1": [
+        "Financement CPF"
+      ]
+    },
+    "/mentions-legales": {
+      "status": 200,
+      "title": "Mentions légales | Intégrale Academy",
+      "canonical": [
+        "https://www.integraleacademy.com/mentions-legales"
+      ],
+      "h1": [
+        "Mentions légales, en toute transparence."
+      ]
+    },
+    "/politique-confidentialite": {
+      "status": 200,
+      "title": "Politique de confidentialité | Intégrale Academy",
+      "canonical": [
+        "https://www.integraleacademy.com/politique-confidentialite"
+      ],
+      "h1": [
+        "Politique de confidentialité"
+      ]
+    },
+    "/dossiersfc": {
+      "status": 200,
+      "title": "Dossiers de présentation des formations professionnelles | Intégrale Academy",
+      "canonical": [
+        "https://www.integraleacademy.com/dossiersfc"
+      ],
+      "h1": [
+        "Découvrez nos formations professionnelles"
+      ]
+    },
+    "/formations-securite/ssiap": {
+      "status": 200,
+      "title": "Formations SSIAP – Sécurité incendie | Intégrale Academy | Intégrale Academy",
+      "canonical": [
+        "https://www.integraleacademy.com/formations-securite/ssiap"
+      ],
+      "h1": [
+        "Toutes nos formations SSIAP."
+      ]
+    },
+    "/formations-securite/recyclage-remise-a-niveau-ssiap": {
+      "status": 200,
+      "title": "Recyclage et remise à niveau SSIAP 1, 2 et 3 | Intégrale Academy | Intégrale Academy",
+      "canonical": [
+        "https://www.integraleacademy.com/formations-securite/recyclage-remise-a-niveau-ssiap"
+      ],
+      "h1": [
+        "Maintenez votre qualification SSIAP à jour."
+      ]
+    },
+    "/formations-securite/ssiap-3": {
+      "status": 200,
+      "title": "Formation SSIAP 3 à Puget-sur-Argens | Intégrale Academy | Intégrale Academy",
+      "canonical": [
+        "https://www.integraleacademy.com/formations-securite/ssiap-3"
+      ],
+      "h1": [
+        "Pilotez un service de sécurité incendie."
+      ]
+    },
+    "/formations-securite/ssiap-2": {
+      "status": 200,
+      "title": "Formation SSIAP 2 à Puget-sur-Argens | Intégrale Academy | Intégrale Academy",
+      "canonical": [
+        "https://www.integraleacademy.com/formations-securite/ssiap-2"
+      ],
+      "h1": [
+        "Devenez chef d’équipe de sécurité incendie."
+      ]
+    },
+    "/formations-securite/aps": {
+      "status": 200,
+      "title": "Formation APS – Devenez Agent de Sécurité Privée | Intégrale Sécurité Formations | Intégrale Academy",
+      "canonical": [
+        "https://www.integraleacademy.com/formations-securite/aps"
+      ],
+      "h1": [
+        "Formation agent de prévention et de sécurité"
+      ]
+    },
+    "/formations-securite/ssiap-1": {
+      "status": 200,
+      "title": "Formation SSIAP 1 à Puget-sur-Argens | Intégrale Academy | Intégrale Academy",
+      "canonical": [
+        "https://www.integraleacademy.com/formations-securite/ssiap-1"
+      ],
+      "h1": [
+        "Devenez agent de sécurité incendie."
+      ]
+    },
+    "/formations-securite/a3p-apr": {
+      "status": 200,
+      "title": "Formation A3P / APR – Agent de protection rapprochée | Intégrale Academy | Intégrale Academy",
+      "canonical": [
+        "https://www.integraleacademy.com/formations-securite/a3p-apr"
+      ],
+      "h1": [
+        "Devenez agent de protection rapprochée."
+      ]
+    },
+    "/formations-securite/sst": {
+      "status": 200,
+      "title": "Formation SST à Puget-sur-Argens | Intégrale Academy",
+      "canonical": [
+        "https://www.integraleacademy.com/formations-securite/sst"
+      ],
+      "h1": [
+        "Devenez le premier maillon des secours au travail."
+      ]
+    },
+    "/despvaeouinitial": {
+      "status": 200,
+      "title": "Formation DESP - Dirigeant entreprise sécurité privée | Intégrale Academy",
+      "canonical": [
+        "https://www.integraleacademy.com/despvaeouinitial"
+      ],
+      "h1": [
+        "Dirigeant d’entreprise de sécurité privée : formation reconnue ou VAE ?"
+      ]
+    },
+    "/vaedirigeant": {
+      "status": 200,
+      "title": "DESP VAE - Validation acquis dirigeant sécurité privée | Intégrale Academy",
+      "canonical": [
+        "https://www.integraleacademy.com/vaedirigeant"
+      ],
+      "h1": [
+        "DESP en VAE : valorisez votre expérience de dirigeant sécurité privée"
+      ]
+    },
+    "/dirigeant": {
+      "status": 200,
+      "title": "Formation DESP initial – Dirigeant de sécurité privée | Intégrale Academy | Intégrale Academy",
+      "canonical": [
+        "https://www.integraleacademy.com/dirigeant"
+      ],
+      "h1": [
+        "Formation DESP initial : devenez dirigeant d’entreprise de sécurité privée"
+      ]
+    },
+    "/formations-securite/cpsp": {
+      "status": 200,
+      "title": "Formation CPSP - Chef de poste sécurité privée | Intégrale Academy",
+      "canonical": [
+        "https://www.integraleacademy.com/formations-securite/cpsp"
+      ],
+      "h1": [
+        "CPSP - Chef de poste en sécurité privée"
+      ]
+    },
+    "/vtc": {
+      "status": 200,
+      "title": "Formation Chauffeur VTC tout inclus | Intégrale Academy",
+      "canonical": [
+        "https://www.integraleacademy.com/vtc"
+      ],
+      "h1": [
+        "Prenez le volant. Créez votre avenir."
+      ]
+    },
+    "/bts/ndrc": {
+      "status": 200,
+      "title": "BTS NDRC en alternance | Intégrale Academy",
+      "canonical": [
+        "https://www.integraleacademy.com/bts/ndrc"
+      ],
+      "h1": [
+        "Transformez chaque contact en opportunité."
+      ]
+    },
+    "/bts/mos": {
+      "status": 200,
+      "title": "BTS MOS en alternance | Intégrale Academy",
+      "canonical": [
+        "https://www.integraleacademy.com/bts/mos"
+      ],
+      "h1": [
+        "Devenez celui qui pilote la sécurité."
+      ]
+    },
+    "/bts/professions-immobilieres": {
+      "status": 200,
+      "title": "BTS Professions Immobilières en alternance | Intégrale Academy",
+      "canonical": [
+        "https://www.integraleacademy.com/bts/professions-immobilieres"
+      ],
+      "h1": [
+        "Entrez dans l’immobilier par la grande porte."
+      ]
+    },
+    "/bts/commerce-international": {
+      "status": 200,
+      "title": "BTS Commerce International en alternance | Intégrale Academy",
+      "canonical": [
+        "https://www.integraleacademy.com/bts/commerce-international"
+      ],
+      "h1": [
+        "Faites du monde votre terrain de jeu."
+      ]
+    },
+    "/bts/mco": {
+      "status": 200,
+      "title": "BTS MCO en alternance | Intégrale Academy",
+      "canonical": [
+        "https://www.integraleacademy.com/bts/mco"
+      ],
+      "h1": [
+        "Prenez les commandes du commerce."
+      ]
+    },
+    "/bts/comptabilite-gestion": {
+      "status": 200,
+      "title": "BTS Comptabilité et Gestion en alternance | Intégrale Academy",
+      "canonical": [
+        "https://www.integraleacademy.com/bts/comptabilite-gestion"
+      ],
+      "h1": [
+        "Transformez les chiffres en décisions."
+      ]
+    },
+    "/gestion": {
+      "status": 200,
+      "title": "Tests et ressources de formation | Intégrale Academy",
+      "canonical": [
+        "https://www.integraleacademy.com/gestion"
+      ],
+      "h1": [
+        "Tests et ressources de formation"
+      ]
+    }
+  }
+}

@@ -5,6 +5,7 @@ import { appointmentFormUrl } from '@/components/ui';
 import styles from './financements.module.css';
 
 export const metadata: Metadata = {
+  alternates: { canonical: '/financements' },
   title: 'Financer sa formation',
   description: 'CPF, France Travail, alternance, entreprise, OPCO ou financement personnel : découvrez les solutions envisageables et faites-vous accompagner par Intégrale Academy.',
 };

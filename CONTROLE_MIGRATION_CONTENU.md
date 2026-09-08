@@ -1,5 +1,7 @@
 # Contrôle migration contenu
 
+> Inventaire historique du contenu. Pour les URL et redirections préparées le 8 septembre 2026, consulter [Audit_migration_URLs.md](docs/Audit_migration_URLs.md). Les statuts ci-dessous ne prouvent pas que les redirections sont déployées.
+
 | Ancienne URL | Nouvelle URL | contenu principal repris | durée reprise | tarif repris | prérequis repris | programme repris | dates reprises | coordonnées reprises | liens repris | placeholders supprimés | statut final |
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | / | / | oui | non concerné | non concerné | non concerné | oui | non concerné | oui | oui | oui | OK |
