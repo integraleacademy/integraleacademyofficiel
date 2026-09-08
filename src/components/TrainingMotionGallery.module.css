@@ -1020,7 +1020,10 @@
 @media (prefers-reduced-motion: reduce) {
   .gallery *,
   .gallery *::before,
-  .gallery *::after {
+  .gallery *::after,
+  .illustration *,
+  .illustration *::before,
+  .illustration *::after {
     animation: none !important;
     transition: none !important;
   }

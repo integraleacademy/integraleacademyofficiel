@@ -416,6 +416,6 @@ export function TrainingMotionGallery({ variant, className = '' }: { variant: Tr
   </section>;
 }
 
-export function TrainingMotionIllustration({ kind, theme = 'blue', description }: { kind: SceneKind; theme?: 'blue' | 'red'; description: string }) {
+export function TrainingMotionIllustration({ kind, theme = 'blue', description }: { kind: SceneKind; theme?: 'blue' | 'red' | 'green'; description: string }) {
   return <div className={`${styles.illustration} ${styles[theme]}`} role="img" aria-label={description}><Scene kind={kind} /></div>;
 }

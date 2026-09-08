@@ -5,7 +5,8 @@ import { MissionAnimation } from '@/components/MissionAnimation';
 import { PremiumFAQSection } from '@/components/ui';
 import { TrainingSectionNavigation } from '@/components/TrainingSectionNavigation';
 import { TrainingDatesPricingSection } from '@/components/TrainingDatesPricingSection';
-import { TrainingMotionGallery } from '@/components/TrainingMotionGallery';
+import { TrainingMotionIllustration } from '@/components/TrainingMotionGallery';
+import styles from './A3pReferencePage.module.css';
 import {
   a3pConfig,
   a3pContact,
@@ -159,7 +160,16 @@ const programPhases = [
   ['04', 'Certification hors durée', 'QCU contextualisés, évaluations pratiques, dossier de mission complète et soutenance devant le jury.'],
 ];
 
-const practices = ['Préparation de mission', 'Reconnaissance de sites', 'Déplacements pédestres', 'Dispositifs véhiculés', 'Scénarios professionnels', 'Briefings & débriefings'];
+const practices = [
+  { title: 'Préparation de mission', text: 'Recueillir les informations, définir les moyens et préparer les itinéraires pour organiser une mission complète.', scene: 'mission-map', visualDescription: 'Animation d’un itinéraire préparé avant une mission de protection rapprochée' },
+  { title: 'Analyse des risques', text: 'Identifier les menaces et les vulnérabilités, puis adapter le dispositif à la personne protégée et à son environnement.', scene: 'risk-radar', visualDescription: 'Animation d’un radar identifiant les risques autour de la personne protégée' },
+  { title: 'Reconnaissance de sites', text: 'Étudier les accès, les zones d’arrivée, les cheminements et les solutions de repli avant le déroulement de la mission.', scene: 'site-check', visualDescription: 'Animation d’un site dont les accès et les zones de repli sont vérifiés' },
+  { title: 'Déplacements pédestres', text: 'Travailler les positionnements, les déplacements en équipe et la communication autour de la personne protégée.', scene: 'close-protection', visualDescription: 'Animation d’un dispositif rapproché autour d’une personne protégée' },
+  { title: 'Dispositifs véhiculés', text: 'Préparer les trajets, les arrivées et les départs, puis coordonner les déplacements avec les autres membres du dispositif.', scene: 'secure-vehicle', visualDescription: 'Animation d’un véhicule suivant un itinéraire sécurisé' },
+  { title: 'Scénarios professionnels', text: 'Réagir à une situation imprévue, reconnaître une anomalie et coordonner une réponse adaptée pendant les exercices encadrés.', scene: 'hazard', visualDescription: 'Animation d’une zone présentant un danger à identifier et à sécuriser pendant un scénario professionnel' },
+  { title: 'Secours aux personnes', text: 'S’entraîner aux gestes de secours, à l’alerte et à la coordination de l’intervention dans le cadre des séquences de secourisme.', scene: 'cpr', visualDescription: 'Animation de compressions thoraciques sur une personne allongée pendant un exercice de secours' },
+  { title: 'Briefings & débriefings', text: 'Partager les consignes, répartir les rôles, rendre compte de la mission et analyser les décisions avec le formateur.', scene: 'briefing', visualDescription: 'Animation d’un briefing d’équipe suivi d’un compte rendu de mission' },
+] as const;
 
 const examSteps = [
   ['QCU contextualisés', 'Les connaissances de chaque UV sont vérifiées dans des situations proches du métier.'],
@@ -227,7 +237,6 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
     <Section id="metier" label="01 — Le métier" title={<>Protéger, anticiper, <span className="decoration-emerald-500 decoration-[.16em] underline underline-offset-[-.03em]">décider.</span></>} intro="L’agent de protection physique des personnes assure la sécurité de dirigeants, personnalités, artistes ou toute personne exposée. Son rôle : préparer la mission, analyser les risques et protéger avec efficacité, proportionnalité et discrétion.">
       <div className="grid gap-4 md:grid-cols-3">{métierCards.map(([number, title, body]) => <article key={title} className="rounded-[1.75rem] border border-academy-line bg-[#FFFDF8] p-6 shadow-soft"><span className="grid h-10 w-10 place-items-center rounded-full bg-[#0D1725] text-xs font-black text-emerald-300">{number}</span><h3 className="mt-8 text-xl font-black tracking-[-.03em]">{title}</h3><p className="mt-3 text-sm font-semibold leading-7 text-academy-muted">{body}</p></article>)}</div>
       <MissionAnimation variant="a3p" className="mt-5" />
-      <TrainingMotionGallery variant="a3p" />
       <div className="mt-5 grid items-center gap-6 rounded-[2rem] bg-[#0D1725] p-6 text-white shadow-card lg:grid-cols-[.8fr_1.2fr]">
         <div><Label light>Une mission, cinq temps forts</Label><h3 className="mt-3 text-2xl font-black">De la préparation au débriefing.</h3><p className="mt-2 text-sm text-white/60">Une lecture concrète du métier avant le détail du programme.</p></div>
         <div className="flex items-start justify-between gap-2 overflow-x-auto">{['Briefing', 'Reconnaissance', 'Dispositif', 'Déplacement', 'Débriefing'].map((step, index) => <div key={step} className="flex min-w-[5.5rem] flex-1 items-center gap-2"><div className="text-center"><span className="mx-auto grid h-9 w-9 place-items-center rounded-full border border-emerald-300/35 bg-white/[.07] text-xs font-black text-emerald-300">0{index + 1}</span><p className="mt-2 text-[.65rem] font-black">{step}</p></div>{index < 4 && <span className="mb-5 text-emerald-300">→</span>}</div>)}</div>
@@ -260,10 +269,17 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
     </Section>
 
     <Section id="pedagogie" label="05 — Immersion & pédagogie" title={<>Un terrain d’entraînement qui <span className="text-emerald-300">ressemble au vrai.</span></>} intro="Zones urbaines, axes routiers et environnements variés permettent de construire des exercices réalistes entre Cannes et Saint-Tropez." tone="dark">
-      <div className="grid gap-5 lg:grid-cols-[1.05fr_.95fr]">
-        <div className="relative min-h-[26rem] overflow-hidden rounded-[2rem] border border-white/15 bg-[#142337] p-7 shadow-card"><div className="absolute inset-0 opacity-50 [background-image:linear-gradient(rgba(255,255,255,.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.05)_1px,transparent_1px)] [background-size:42px_42px]" /><div className="absolute -bottom-16 left-20 h-1 w-[85%] -rotate-[42deg] border-t-2 border-dashed border-emerald-500" /><div className="absolute left-24 top-20 h-1 w-[78%] rotate-[40deg] border-t border-dashed border-emerald-300" /><span className="relative inline-flex rounded-full border border-white/15 bg-white/10 px-4 py-2 text-[.65rem] font-black uppercase tracking-[.15em]">Campus de Puget-sur-Argens</span><div className="relative mt-40 max-w-xl"><h3 className="text-3xl font-black tracking-[-.04em] sm:text-4xl">Entraînez-vous dans des configurations variées.</h3><p className="mt-4 text-sm font-medium leading-7 text-white/60">La progression alterne démonstrations, exercices individuels, travail en équipe, scénarios professionnels et débriefings.</p></div></div>
-        <div className="grid grid-cols-2 gap-3">{practices.map((practice, index) => <article key={practice} className="flex min-h-36 flex-col justify-between rounded-[1.5rem] border border-white/10 bg-[#182537] p-5"><span className="text-xs font-black text-emerald-300">0{index + 1}</span><h3 className="text-base font-black leading-6">{practice}</h3></article>)}</div>
+      <div className="grid gap-5 md:grid-cols-2">
+        {practices.map((practice, index) => <article key={practice.title} className={styles.practiceCard}>
+          <span className={styles.practiceNumber}>0{index + 1}</span>
+          <h3>{practice.title}</h3>
+          <p>{practice.text}</p>
+          <div className={styles.practiceVisual}>
+            <TrainingMotionIllustration kind={practice.scene} theme="green" description={practice.visualDescription} />
+          </div>
+        </article>)}
       </div>
+      <div className="mt-7 rounded-[1.7rem] border border-emerald-300/25 bg-emerald-400/10 p-6"><Label light>Campus de Puget-sur-Argens</Label><h3 className="mt-3 text-xl font-black text-emerald-200">Entraînez-vous dans des configurations variées.</h3><p className="mt-2 max-w-4xl text-sm font-medium leading-7 text-white/65">La progression alterne démonstrations, exercices individuels, travail en équipe, scénarios professionnels et débriefings.</p></div>
     </Section>
 
     <Section id="certification" label="06 — Certification" title={<>Un examen qui valide <span className="decoration-emerald-500 decoration-[.16em] underline underline-offset-[-.03em]">vos décisions.</span></>} intro="L’évaluation vérifie les connaissances réglementaires et votre capacité à préparer puis exécuter une mission de protection physique des personnes." tone="paper">
