@@ -34,49 +34,53 @@ test('les repères visuels propres à la page APS utilisent le bleu', () => {
 });
 
 test('la simulation animée de ronde reste visible dans le bloc pratique', () => {
-  assert.ok(apsPage.includes("['patrol', 'Les rondes de sécurité'"));
+  assert.ok(apsPage.includes("['patrol', 'night']"));
   assert.ok(apsPage.includes('Animation d’un agent effectuant une ronde autour d’un bâtiment'));
-  assert.match(apsStyles, /\.scanLine[\s\S]*?animation: radar 5\.5s linear infinite;/);
-  assert.match(apsStyles, /@keyframes radar/);
+  assert.match(apsStyles, /\.storyPatrolAgent[\s\S]*?animation: storyPatrolWalk/);
 });
 
-test('le bloc immersion réutilise les illustrations de la galerie métier', () => {
+test('chaque carte immersion intègre ses propres illustrations', () => {
+  const exercises = apsPage.slice(apsPage.indexOf('const practicalExercises = ['), apsPage.indexOf('const enrollmentSteps = ['));
+  for (const [title, kinds] of [
+    ['Rondes de sécurité', ['patrol', 'night']],
+    ['Palpation de sécurité', ['patdown']],
+    ['Inspection visuelle des bagages', ['baggage']],
+    ['Contrôle d’accès et gestion des flux', ['access']],
+    ['Poste de sécurité', ['video', 'report']],
+    ['Incidents et conflits', ['alert']],
+    ['Prévention incendie', ['extinguisher']],
+    ['Secours aux personnes', ['cpr']],
+  ]) {
+    const card = exercises.split('\n').find(line => line.includes(title));
+    assert.ok(card, `carte manquante : ${title}`);
+    for (const kind of kinds) assert.ok(card.includes(`'${kind}'`), `visuel ${kind} manquant dans ${title}`);
+  }
   const immersionStart = apsPage.indexOf('<Section id="pratique"');
   const immersionEnd = apsPage.indexOf('<Section id="programme"', immersionStart);
   const immersion = apsPage.slice(immersionStart, immersionEnd);
-  for (const kind of ['baggage', 'patdown']) {
-    assert.ok(immersion.includes(`<ApsStoryIllustration kind="${kind}"`));
-  }
-  assert.ok(immersion.includes('apsVisualStories.map'));
-  assert.doesNotMatch(immersion, /aps-training-(?:bag-inspection|patdown)\.jpg/);
+  const cardMarkup = immersion.slice(immersion.indexOf('<article key={title}'), immersion.indexOf('</article>'));
+  assert.ok(cardMarkup.includes('<ApsPracticalVisual kind={kind} />'));
+  assert.doesNotMatch(immersion, /visualStoriesBlock|Les réflexes métier, en images|apsVisualStories\.map/);
+  assert.ok(apsPage.includes('kind="extinguisher" theme="red"'));
+  assert.ok(apsPage.includes('kind="cpr"'));
   assert.ok(apsPage.includes('role="img" aria-label={description}'));
   assert.match(apsStyles, /@media \(prefers-reduced-motion: reduce\)[\s\S]*?\.storyBagCheck, \.storyPatdownAgent, \.storyPatdownZones \{ animation: none;/);
 });
 
-test('les six illustrations métier sont regroupées dans l’immersion terrain', () => {
+test('les six illustrations métier restent accessibles dans les cartes', () => {
   const storiesBlock = apsPage.slice(
-    apsPage.indexOf('const apsVisualStories = ['),
+    apsPage.indexOf('const apsVisualDescriptions = {'),
     apsPage.indexOf('const audiences = ['),
   );
 
-  for (const title of [
-    'Les rondes de sécurité',
-    'La vigilance de nuit',
-    'Le contrôle d’accès',
-    'La surveillance vidéo',
-    'Observer et rendre compte',
-    'Réagir et alerter',
-  ]) {
-    assert.ok(storiesBlock.includes(title), `illustration APS manquante : ${title}`);
+  for (const kind of ['patrol', 'night', 'access', 'video', 'report', 'alert']) {
+    assert.ok(storiesBlock.includes(`${kind}: 'Animation`), `description accessible manquante : ${kind}`);
   }
 
-  assert.ok(apsPage.includes('<ApsStoryIllustration key={kind}'));
+  assert.ok(apsPage.includes('<ApsStoryIllustration kind={kind} />'));
   assert.ok(apsPage.includes('role="img" aria-label={description}'));
   const metier = apsPage.slice(apsPage.indexOf('<Section id="metier"'), apsPage.indexOf('<Section id="admission"'));
-  const immersion = apsPage.slice(apsPage.indexOf('<Section id="pratique"'), apsPage.indexOf('<Section id="programme"'));
   assert.doesNotMatch(metier, /apsVisualStories\.map|Les réflexes métier, en images/);
-  assert.ok(immersion.includes('Les réflexes métier, en images.'));
-  assert.ok(immersion.includes('apsVisualStories.map'));
   assert.match(apsStyles, /@keyframes storyNightSweep/);
   assert.match(apsStyles, /@keyframes storyVideoSweep/);
   assert.match(apsStyles, /@media \(prefers-reduced-motion: reduce\)[\s\S]*?\.storyNightBeam,[\s\S]*?\.storyVideoScan,/);
