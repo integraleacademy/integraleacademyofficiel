@@ -1,5 +1,7 @@
 # Migration contenu — URLs ancien site
 
+> Inventaire historique du contenu. Pour les URL et redirections préparées le 8 septembre 2026, consulter [Audit_migration_URLs.md](docs/Audit_migration_URLs.md). Les statuts ci-dessous ne prouvent pas que les redirections sont déployées.
+
 | URL ancienne | Titre de la page | Type de page | URL nouvelle prévue | Statut |
 |---|---|---|---|---|
 | https://www.integraleacademy.com/ | Intégrale Academy – formations professionnelles et BTS en alternance | Accueil | / | migré |

@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import { contact, legalRefs } from '@/data/site';
 
 export const metadata = {
+  alternates: { canonical: '/mentions-legales' },
   title: 'Mentions légales',
   description: 'Mentions légales d’Intégrale Academy : éditeur, identification de la société, publication, hébergement, propriété intellectuelle et données personnelles.',
 };
@@ -224,7 +225,7 @@ export default function Page() {
             </LegalSection>
 
             <LegalSection id="hebergement" number="03" icon="globe" eyebrow="Hébergement" title="Prestataire technique actuel">
-              <p>L’application web accessible sur le domaine <strong className="text-academy-ink dark:text-white">integraleacademyofficiel-1.onrender.com</strong> est hébergée par :</p>
+              <p>L’application web accessible sur le domaine <strong className="text-academy-ink dark:text-white">www.integraleacademy.com</strong> est hébergée par :</p>
               <div className="mt-5 rounded-[1.35rem] bg-[#101a29] p-5 text-white sm:p-6">
                 <p className="text-[10px] font-black uppercase tracking-[.15em] text-academy-gold">Render Services, Inc.</p>
                 <p className="mt-3 text-lg font-black">525 Brannan Street, Suite 300<br />San Francisco, CA 94107 · États-Unis</p>

@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import test from 'node:test';
 
 const data = readFileSync('src/data/presentation-dossiers.ts', 'utf8');
@@ -25,7 +25,9 @@ test('les onze dossiers historiques et leurs liens Canva sont conservés', () =>
   }
 
   assert.equal((data.match(/href: 'https:\/\/www\.canva\.com\/design\//g) ?? []).length, 11);
-  assert.equal((data.match(/image: 'https:\/\/static\.wixstatic\.com\/media\//g) ?? []).length, 11);
+  const covers = [...data.matchAll(/image: '(\/images\/dossiers\/[^']+)'/g)].map((match) => match[1]);
+  assert.equal(covers.length, 11);
+  for (const cover of covers) assert.ok(existsSync(`public${cover}`), `Couverture manquante : ${cover}`);
 });
 
 test('la galerie est accessible, responsive et ouvre les documents dans un nouvel onglet', () => {

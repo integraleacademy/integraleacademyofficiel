@@ -25,6 +25,7 @@ export async function generateMetadata({
   const { slug } = await params;
   if (slug === "mos") {
     return {
+      alternates: { canonical: `/bts/${slug}` },
       title: "BTS MOS en alternance",
       description:
         "Préparez le BTS Management Opérationnel de la Sécurité en alternance, à Puget-sur-Argens ou 100 % à distance en visioconférence.",
@@ -32,6 +33,7 @@ export async function generateMetadata({
   }
   if (slug === "mco") {
     return {
+      alternates: { canonical: `/bts/${slug}` },
       title: "BTS MCO en alternance",
       description:
         "Préparez le BTS Management Commercial Opérationnel en alternance, à Puget-sur-Argens ou 100 % à distance en visioconférence.",
@@ -39,6 +41,7 @@ export async function generateMetadata({
   }
   if (slug === "commerce-international") {
     return {
+      alternates: { canonical: `/bts/${slug}` },
       title: "BTS Commerce International en alternance",
       description:
         "Préparez le BTS Commerce International en alternance, à Puget-sur-Argens ou 100 % à distance en visioconférence. Diplôme d’État de niveau 5, RNCP 41759.",
@@ -46,6 +49,7 @@ export async function generateMetadata({
   }
   if (slug === "professions-immobilieres") {
     return {
+      alternates: { canonical: `/bts/${slug}` },
       title: "BTS Professions Immobilières en alternance",
       description:
         "Préparez le BTS Professions Immobilières en alternance, à Puget-sur-Argens ou 100 % à distance en visioconférence. Diplôme d’État de niveau 5, RNCP 38380.",
@@ -53,6 +57,7 @@ export async function generateMetadata({
   }
   if (slug === "comptabilite-gestion") {
     return {
+      alternates: { canonical: `/bts/${slug}` },
       title: "BTS Comptabilité et Gestion en alternance",
       description:
         "Préparez le BTS Comptabilité et Gestion en alternance, à Puget-sur-Argens ou 100 % à distance en visioconférence. Diplôme d’État de niveau 5, RNCP 39159.",
@@ -60,13 +65,15 @@ export async function generateMetadata({
   }
   if (slug === "ndrc") {
     return {
+      alternates: { canonical: `/bts/${slug}` },
       title: "BTS NDRC en alternance",
       description:
         "Préparez le BTS Négociation et Digitalisation de la Relation Client en alternance, à Puget-sur-Argens ou 100 % à distance en visioconférence. Diplôme d’État de niveau 5, RNCP 38368.",
     };
   }
   const f = bts.find((x) => x.slug.endsWith(slug));
-  return { title: f?.title || "BTS", description: f?.desc };
+  return {
+      alternates: { canonical: `/bts/${slug}` }, title: f?.title || "BTS", description: f?.desc };
 }
 
 const btsApplicationUrl = "https://inscriptionsbts.onrender.com/";

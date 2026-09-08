@@ -1,5 +1,6 @@
 import 'server-only';
 import { getPrisma } from '@/lib/db';
+import { canonicalSiteHref } from '@/lib/site-urls';
 
 export const sessionStatuses = ['OPEN','FULL','COMING_SOON','HIDDEN'] as const;
 export type SessionStatus = typeof sessionStatuses[number];
@@ -10,9 +11,9 @@ const baseTrainings = [
  {id:'seed-a3p-apr',slug:'a3p-apr',name:'A3P',title:'Agent de protection physique des personnes',category:'sécurité privée',description:'',pageUrl:'/formations-securite/a3p-apr',isActive:true,createdAt:new Date(),updatedAt:new Date()},
  {id:'seed-bts-mos',slug:'bts-mos',name:'BTS MOS',title:'Management Opérationnel de la Sécurité',category:'bts',description:'',pageUrl:'/bts/mos',isActive:true,createdAt:new Date(),updatedAt:new Date()},
  {id:'seed-bts-mco',slug:'bts-mco',name:'BTS MCO',title:'Management Commercial Opérationnel',category:'bts',description:'',pageUrl:'/bts/mco',isActive:true,createdAt:new Date(),updatedAt:new Date()},
- {id:'seed-vtc',slug:'vtc',name:'VTC',title:'Chauffeur VTC',category:'vtc',description:'',pageUrl:'/formations-vtc',isActive:true,createdAt:new Date(),updatedAt:new Date()},
- {id:'seed-desp-dssp',slug:'desp-dssp',name:'DESP / DSSP',title:'Dirigeant d’entreprise de sécurité privée',category:'direction',description:'',pageUrl:'/formations-securite/desp',isActive:true,createdAt:new Date(),updatedAt:new Date()},
- {id:'seed-desp-initial',slug:'desp-initial',name:'DESP initial',title:'Formation DESP initial',category:'direction',description:'',pageUrl:'/formations-securite/desp-initial',isActive:true,createdAt:new Date(),updatedAt:new Date()},
+ {id:'seed-vtc',slug:'vtc',name:'VTC',title:'Chauffeur VTC',category:'vtc',description:'',pageUrl:'/vtc',isActive:true,createdAt:new Date(),updatedAt:new Date()},
+ {id:'seed-desp-dssp',slug:'desp-dssp',name:'DESP / DSSP',title:'Dirigeant d’entreprise de sécurité privée',category:'direction',description:'',pageUrl:'/despvaeouinitial',isActive:true,createdAt:new Date(),updatedAt:new Date()},
+ {id:'seed-desp-initial',slug:'desp-initial',name:'DESP initial',title:'Formation DESP initial',category:'direction',description:'',pageUrl:'/dirigeant',isActive:true,createdAt:new Date(),updatedAt:new Date()},
 ];
 const baseSessions = [{id:'seed-a3p-septembre-2026',trainingId:'seed-a3p-apr',training:baseTrainings[2],title:'Session A3P septembre 2026',startDate:new Date('2026-09-01'),endDate:new Date('2026-10-27'),examDate:new Date('2026-10-28'),priceCents:420000,priceLabel:'4 200 €',location:'Puget-sur-Argens / Côte d’Azur',status:'OPEN',seatsTotal:null,seatsLeft:4,showSeatsLeft:true,durationLabel:'328 heures hors examen',registrationUrl:'/formations-securite/a3p-apr',fundingNotes:'Financement possible selon votre situation : CPF, France Travail ou financement personnel à vérifier avec l’équipe.',publicNotes:'Formation de 328 heures hors examen, dont 92 heures et 50 minutes de pratique ; hébergement collectif possible sur réservation.',internalNotes:'',sortOrder:0,isHighlighted:true,createdAt:new Date(),updatedAt:new Date()},
 {id:'seed-a3p-novembre-2026',trainingId:'seed-a3p-apr',training:baseTrainings[2],title:'Session A3P novembre 2026',startDate:new Date('2026-11-09'),endDate:new Date('2027-01-19'),examDate:new Date('2027-01-20'),priceCents:420000,priceLabel:'4 200 €',location:'Puget-sur-Argens / Côte d’Azur',status:'OPEN',seatsTotal:null,seatsLeft:null,showSeatsLeft:true,durationLabel:'328 heures hors examen',registrationUrl:'/formations-securite/a3p-apr',fundingNotes:'Financement possible selon votre situation : CPF, France Travail ou financement personnel à vérifier avec l’équipe.',publicNotes:'Formation de 328 heures hors examen, dont 92 heures et 50 minutes de pratique ; hébergement collectif possible sur réservation.',internalNotes:'',sortOrder:1,isHighlighted:false,createdAt:new Date(),updatedAt:new Date()},
@@ -32,8 +33,25 @@ const despFallbackSessions = [
 
 function norm(s:string){return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
 export function detectTrainingSlugs(q:string){const n=norm(q); const slugs:string[]=[]; if(/\baps\b|agent de securite|agent de prevention/.test(n)) slugs.push('aps'); if(/ssiap|incendie|securite incendie/.test(n)) slugs.push('ssiap-1'); if(/a3p|apr|protection rapprochee|garde du corps|bodyguard/.test(n)) slugs.push('a3p-apr'); if(/bts|\bmos\b|\bmco\b|ndrc|alternance/.test(n)) slugs.push('bts-mos','bts-mco'); if(/vtc|chauffeur vtc|carte vtc/.test(n)) slugs.push('vtc'); if(/desp|dssp|dirigeant/.test(n)) slugs.push('desp-dssp'); return [...new Set(slugs)];}
-export async function listTrainings(){const p=await getPrisma(); return p? p.training.findMany({orderBy:[{category:'asc'},{name:'asc'}]}) : baseTrainings;}
-export async function listSessions(){const p=await getPrisma(); return p? p.trainingSession.findMany({include:{training:true},orderBy:[{sortOrder:'asc'},{startDate:'asc'}]}) : [...baseSessions, ...despFallbackSessions];}
+function normalizeTrainingUrl<T extends { pageUrl: string }>(training: T): T {
+  return { ...training, pageUrl: canonicalSiteHref(training.pageUrl) };
+}
+
+export async function listTrainings() {
+  const p = await getPrisma();
+  const trainings = p ? await p.training.findMany({ orderBy: [{ category: 'asc' }, { name: 'asc' }] }) : baseTrainings;
+  return trainings.map(normalizeTrainingUrl);
+}
+
+export async function listSessions() {
+  const p = await getPrisma();
+  const sessions = p ? await p.trainingSession.findMany({ include: { training: true }, orderBy: [{ sortOrder: 'asc' }, { startDate: 'asc' }] }) : [...baseSessions, ...despFallbackSessions];
+  return sessions.map((session) => ({
+    ...session,
+    training: session.training ? normalizeTrainingUrl(session.training) : session.training,
+    registrationUrl: session.registrationUrl ? canonicalSiteHref(session.registrationUrl) : session.registrationUrl,
+  }));
+}
 export async function listLeads(){const p=await getPrisma(); return p? p.chatLead.findMany({orderBy:{createdAt:'desc'}}) : [];}
 export async function dashboardStats(){const [t,s,l]=await Promise.all([listTrainings(),listSessions(),listLeads()]); return {activeTrainings:t.filter((x:any)=>x.isActive).length,openSessions:s.filter((x:any)=>x.status==='OPEN').length,leadCount:l.length,lastLead:l[0]||null};}
 export async function getRelevantDynamicTrainingData(question:string){

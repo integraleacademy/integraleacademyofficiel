@@ -189,7 +189,7 @@ export function DespChoiceReferencePage({ sessions }: { sessions: TrainingDatesP
               ]}
               audience="Candidats qui veulent apprendre le métier de dirigeant étape par étape."
               cta="Voir les infos DESP initial"
-              href="/formations-securite/desp-initial"
+              href="/dirigeant"
             />
             <DespPathCard
               tone="dark"
@@ -209,7 +209,7 @@ export function DespChoiceReferencePage({ sessions }: { sessions: TrainingDatesP
               audience="Expérience justifiée en management, création, gestion d’entreprise."
               audienceTitle="Conditions :"
               cta="Voir les infos DESP VAE"
-              href="/formations-securite/desp-vae"
+              href="/vaedirigeant"
               secondaryCta="Tester mon éligibilité à la VAE"
             />
           </div>

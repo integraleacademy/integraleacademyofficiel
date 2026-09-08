@@ -116,7 +116,7 @@ export function createHomeSecurityHighlights(
       visual: 'a3p',
     },
     {
-      slug: '/formations-securite/desp',
+      slug: '/despvaeouinitial',
       shortTitle: 'DESP',
       title: 'Dirigeant d’entreprise de sécurité privée',
       description: 'Créer, reprendre ou piloter une entreprise de sécurité privée.',

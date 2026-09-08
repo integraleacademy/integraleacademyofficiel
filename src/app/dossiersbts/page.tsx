@@ -5,7 +5,7 @@ import { btsPresentationDossiers } from '@/data/presentation-dossiers';
 export const metadata: Metadata = {
   title: 'Dossiers de présentation des BTS',
   description: 'Consultez les dossiers de présentation des BTS MOS, PI, MCO, NDRC et Commerce international proposés en alternance par Intégrale Academy.',
-  alternates: { canonical: 'https://integraleacademyofficiel-1.onrender.com/dossiersbts' },
+  alternates: { canonical: '/dossiersbts' },
 };
 
 export default function Page() {

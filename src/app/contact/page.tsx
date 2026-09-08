@@ -4,6 +4,7 @@ import { ContactForm } from '@/components/ContactForm';
 import { contact } from '@/data/site';
 
 export const metadata = {
+  alternates: { canonical: '/contact' },
   title: 'Contact & admissions',
   description: 'Échangez avec l’équipe Intégrale Academy pour choisir une formation, trouver une session, étudier votre financement ou construire une solution entreprise.',
 };

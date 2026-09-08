@@ -6,6 +6,7 @@ import TariffsPageContent, {
 import { allFormations } from '@/data/formations';
 
 export const metadata = {
+  alternates: { canonical: '/tarifs' },
   title: 'Tarifs des formations professionnelles',
   description:
     'Comparez les tarifs, durées et financements des formations Intégrale Academy : APS, SSIAP 1, SST, A3P, DESP, VAE et VTC.',
@@ -57,14 +58,14 @@ const offerPresentation: Record<string, OfferPresentation> = {
     tone: 'lime',
     eyebrow: 'Certification INRS',
   },
-  '/formations-securite/desp-initial': {
+  '/dirigeant': {
     shortTitle: 'DESP initial',
     category: 'leadership',
     categoryLabel: 'Direction',
     tone: 'orange',
     eyebrow: 'Titre professionnel · Niveau 5',
   },
-  '/formations-securite/desp-vae': {
+  '/vaedirigeant': {
     shortTitle: 'DESP en VAE',
     category: 'leadership',
     categoryLabel: 'Validation des acquis',

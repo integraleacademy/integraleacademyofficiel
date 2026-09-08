@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import { contact, legalRefs } from '@/data/site';
 
 export const metadata = {
+  alternates: { canonical: '/ecole' },
   title: 'Notre école | Intégrale Academy',
   description: 'Découvrez Intégrale Academy : une école fondée en 2018, une équipe engagée, un campus de 400 m² et des formations professionnelles encadrées et reconnues.',
 };

@@ -3,6 +3,7 @@ import { PremiumFAQSection } from '@/components/ui';
 import { ssiapOfficialReference } from '@/data/ssiap-catalogue';
 
 export const metadata = {
+  alternates: { canonical: '/formations-securite/ssiap' },
   title: 'Formations SSIAP – Sécurité incendie | Intégrale Academy',
   description:
     'Découvrez toutes les formations SSIAP : SSIAP 1, SSIAP 2, SSIAP 3, recyclages et remises à niveau à Puget-sur-Argens.',

@@ -10,6 +10,7 @@ import {
 import { formations } from '@/data/site';
 
 export const metadata = {
+  alternates: { canonical: '/formations-securite' },
   title: 'Formations sécurité',
   description:
     'Formations sécurité privée Intégrale Academy : APS, tous les parcours SSIAP, SST, A3P / APR et DESP avec lieux, financements et inscriptions.',
@@ -17,7 +18,7 @@ export const metadata = {
 
 export default function Page() {
   const items = formations
-    .filter((formation) => formation.category === 'security' && formation.slug !== '/formations-securite/desp-initial')
+    .filter((formation) => formation.category === 'security' && formation.slug !== '/dirigeant')
     .map((formation) =>
       formation.slug === '/formations-securite/ssiap-1'
         ? {
