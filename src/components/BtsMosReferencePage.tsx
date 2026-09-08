@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 import { BtsCompleteInformation, BtsStudentBenefits } from '@/components/BtsExpandedContent';
 import { BtsSectionNavigation } from '@/components/BtsSectionNavigation';
 import { MissionAnimation } from '@/components/MissionAnimation';
-import { TrainingMotionGallery } from '@/components/TrainingMotionGallery';
+import { TrainingIllustratedCards, type TrainingIllustratedCard } from '@/components/TrainingIllustratedCards';
 import { PremiumFAQSection } from '@/components/ui';
 
 const applicationUrl = 'https://inscriptionsbts.onrender.com/';
@@ -15,11 +15,41 @@ const contactHref = (subject = 'BTS MOS') =>
   `mailto:${aurelieEmail}?subject=${encodeURIComponent(subject)}`;
 
 const careerSteps = [
-  ['01', 'Préparer', 'Concevoir une prestation', 'Analyser les besoins, prévoir les moyens et rédiger des consignes claires.', 'blue'],
-  ['02', 'Organiser', 'Coordonner le terrain', 'Répartir les missions, contrôler la qualité et réagir face aux imprévus.', 'green'],
-  ['03', 'Manager', 'Animer une équipe', 'Communiquer, accompagner les agents et faire progresser le collectif.', 'coral'],
-  ['04', 'Conseiller', 'Suivre la relation client', 'Présenter les résultats, proposer des solutions et fidéliser le client.', 'gold'],
-];
+  {
+    number: "01", label: "Préparer",
+    title: "Concevoir une prestation",
+    description: "Analyser les besoins, prévoir les moyens et rédiger des consignes claires.",
+    scenes: [
+      { kind: "mission-map", description: "Animation d’un responsable organisant les moyens et les missions d’une prestation de sécurité" },
+      { kind: "compliance", description: "Animation d’un contrôle des procédures et obligations applicables à la prestation" },
+    ],
+  },
+  {
+    number: "02", label: "Organiser",
+    title: "Coordonner le terrain",
+    description: "Répartir les missions, contrôler la qualité et réagir face aux imprévus.",
+    scenes: [
+      { kind: "site-check", description: "Animation d’un site dont les accès et les points de contrôle sont supervisés" },
+      { kind: "fire-panel", description: "Animation d’un poste de sécurité centralisant les informations opérationnelles" },
+    ],
+  },
+  {
+    number: "03", label: "Manager",
+    title: "Animer une équipe",
+    description: "Communiquer, accompagner les agents et faire progresser le collectif.",
+    scenes: [
+      { kind: "team", description: "Animation d’une équipe d’agents coordonnée par son responsable opérationnel" },
+    ],
+  },
+  {
+    number: "04", label: "Conseiller",
+    title: "Suivre la relation client",
+    description: "Présenter les résultats, proposer des solutions et fidéliser le client.",
+    scenes: [
+      { kind: "briefing", description: "Animation d’un compte rendu de prestation présenté clairement au client" },
+    ],
+  },
+] as const satisfies readonly TrainingIllustratedCard[];
 
 const program = [
   ['01', 'Culture générale et expression', 'Développer votre capacité à comprendre, argumenter, synthétiser et communiquer avec précision.'],
@@ -334,27 +364,10 @@ export function BtsMosReferencePage() {
         intro={<>Le BTS MOS ne forme pas uniquement à « faire de la sécurité ». Il prépare à organiser une prestation, coordonner des agents et rendre compte à un client.</>}
         tone="paper"
       >
-        <div className="grid gap-5 lg:grid-cols-[.68fr_1.32fr]">
-          <article className="rounded-[2rem] bg-[#0D1725] p-7 text-white shadow-card lg:p-9">
-            <Eyebrow light>Votre montée en compétences</Eyebrow>
-            <h3 className="mt-4 text-3xl font-black tracking-[-.04em]">Une vision complète de la sécurité privée.</h3>
-            <p className="mt-4 leading-7 text-white/62">Vous progressez de la compréhension du terrain au pilotage d’une équipe et d’une prestation.</p>
-            <p className="mt-12 text-7xl font-black text-academy-gold">4</p>
-            <p className="mt-2 text-xs font-black uppercase tracking-[.18em] text-white/70">grands blocs professionnels</p>
-          </article>
-          <div className="grid gap-4 sm:grid-cols-2">
-            {careerSteps.map(([number, label, title, text, tone]) => {
-              const accent = tone === 'blue' ? 'bg-sky-400' : tone === 'green' ? 'bg-emerald-400' : tone === 'coral' ? 'bg-[#FF6B55]' : 'bg-academy-gold';
-              return (
-                <article key={number} className="relative overflow-hidden rounded-[1.7rem] border border-academy-line bg-[#FFFDF8] p-5 shadow-soft">
-                  <span className={`absolute inset-x-5 top-0 h-1 rounded-full ${accent}`} />
-                  <p className="mt-2 text-[.62rem] font-black uppercase tracking-[.16em] text-academy-muted">{number} · {label}</p>
-                  <h3 className="mt-5 text-xl font-black">{title}</h3>
-                  <p className="mt-3 text-sm leading-6 text-academy-muted">{text}</p>
-                </article>
-              );
-            })}
-          </div>
+        <TrainingIllustratedCards items={careerSteps} theme="blue" />
+        <div className="mt-6 grid items-center gap-5 rounded-[1.7rem] border border-blue-200 bg-blue-50 p-6 sm:grid-cols-[1fr_auto]">
+          <div><Eyebrow>Votre montée en compétences</Eyebrow><h3 className="mt-3 text-2xl font-black text-blue-950">Une vision complète de la sécurité privée.</h3><p className="mt-3 max-w-3xl text-sm leading-7 text-blue-950/70">Vous progressez de la compréhension du terrain au pilotage d’une équipe et d’une prestation.</p></div>
+          <div className="rounded-2xl border border-blue-200 bg-white/70 px-6 py-4"><p className="text-4xl font-black text-blue-700">4</p><p className="mt-2 max-w-[14rem] text-xs font-black uppercase tracking-[.12em] text-blue-950/70">grands blocs professionnels</p></div>
         </div>
         <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {['Chef de poste', 'Chef d’équipe sécurité', 'Assistant d’exploitation', 'Coordinateur sécurité'].map((job) => (
@@ -362,7 +375,6 @@ export function BtsMosReferencePage() {
           ))}
         </div>
         <MissionAnimation variant="mos" className="mt-8" />
-        <TrainingMotionGallery variant="btsMos" />
       </Section>
 
       <Section

@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 import { BtsCompleteInformation, BtsStudentBenefits } from '@/components/BtsExpandedContent';
 import { BtsSectionNavigation } from '@/components/BtsSectionNavigation';
 import { MissionAnimation } from '@/components/MissionAnimation';
-import { TrainingMotionGallery } from '@/components/TrainingMotionGallery';
+import { TrainingIllustratedCards, type TrainingIllustratedCard } from '@/components/TrainingIllustratedCards';
 import { PremiumFAQSection } from '@/components/ui';
 
 const applicationUrl = 'https://inscriptionsbts.onrender.com/';
@@ -15,11 +15,41 @@ const contactHref = (subject = 'BTS MCO') =>
   `mailto:${aurelieEmail}?subject=${encodeURIComponent(subject)}`;
 
 const careerSteps = [
-  ['01', 'Vendre', 'Conseiller et fidéliser', 'Comprendre le besoin, vendre dans un contexte omnicanal et entretenir durablement la relation client.', 'blue'],
-  ['02', 'Animer', 'Dynamiser l’offre', 'Mettre en valeur les produits et services, créer des animations et concevoir la communication commerciale.', 'green'],
-  ['03', 'Gérer', 'Piloter les résultats', 'Suivre les stocks, les budgets, les objectifs et analyser les performances de l’unité commerciale.', 'coral'],
-  ['04', 'Manager', 'Faire grandir l’équipe', 'Organiser le travail, recruter, motiver et évaluer les collaborateurs.', 'gold'],
-];
+  {
+    number: "01", label: "Vendre",
+    title: "Conseiller et fidéliser",
+    description: "Comprendre le besoin, vendre dans un contexte omnicanal et entretenir durablement la relation client.",
+    scenes: [
+      { kind: "profile-review", description: "Animation d’un profil client analysé afin de proposer une réponse personnalisée" },
+    ],
+  },
+  {
+    number: "02", label: "Animer",
+    title: "Dynamiser l’offre",
+    description: "Mettre en valeur les produits et services, créer des animations et concevoir la communication commerciale.",
+    scenes: [
+      { kind: "commercial", description: "Animation d’une action commerciale atteignant progressivement son objectif" },
+      { kind: "business", description: "Animation d’une unité commerciale organisée autour de ses clients et de ses objectifs" },
+    ],
+  },
+  {
+    number: "03", label: "Gérer",
+    title: "Piloter les résultats",
+    description: "Suivre les stocks, les budgets, les objectifs et analyser les performances de l’unité commerciale.",
+    scenes: [
+      { kind: "evidence", description: "Animation de références et documents de stock classés et contrôlés" },
+      { kind: "finance", description: "Animation d’indicateurs commerciaux suivis dans un tableau de bord" },
+    ],
+  },
+  {
+    number: "04", label: "Manager",
+    title: "Faire grandir l’équipe",
+    description: "Organiser le travail, recruter, motiver et évaluer les collaborateurs.",
+    scenes: [
+      { kind: "team", description: "Animation d’une équipe commerciale organisée et accompagnée par son manager" },
+    ],
+  },
+] as const satisfies readonly TrainingIllustratedCard[];
 
 const program = [
   ['01', 'Culture générale et expression', 'Développer votre capacité à comprendre, argumenter, synthétiser et communiquer avec précision.'],
@@ -335,27 +365,10 @@ export function BtsMcoReferencePage() {
         intro={<>Le BTS MCO vous apprend à comprendre les clients, développer les ventes, gérer une unité commerciale et animer une équipe.</>}
         tone="paper"
       >
-        <div className="grid gap-5 lg:grid-cols-[.68fr_1.32fr]">
-          <article className="rounded-[2rem] bg-[#0D1725] p-7 text-white shadow-card lg:p-9">
-            <Eyebrow light>Votre montée en compétences</Eyebrow>
-            <h3 className="mt-4 text-3xl font-black tracking-[-.04em]">Une vision complète du commerce moderne.</h3>
-            <p className="mt-4 leading-7 text-white/62">Vous progressez de la vente conseil au pilotage des résultats, jusqu’au management d’une équipe commerciale.</p>
-            <p className="mt-12 text-7xl font-black text-academy-gold">4</p>
-            <p className="mt-2 text-xs font-black uppercase tracking-[.18em] text-white/70">grands blocs professionnels</p>
-          </article>
-          <div className="grid gap-4 sm:grid-cols-2">
-            {careerSteps.map(([number, label, title, text, tone]) => {
-              const accent = tone === 'blue' ? 'bg-sky-400' : tone === 'green' ? 'bg-emerald-400' : tone === 'coral' ? 'bg-[#FF6B55]' : 'bg-academy-gold';
-              return (
-                <article key={number} className="relative overflow-hidden rounded-[1.7rem] border border-academy-line bg-[#FFFDF8] p-5 shadow-soft">
-                  <span className={`absolute inset-x-5 top-0 h-1 rounded-full ${accent}`} />
-                  <p className="mt-2 text-[.62rem] font-black uppercase tracking-[.16em] text-academy-muted">{number} · {label}</p>
-                  <h3 className="mt-5 text-xl font-black">{title}</h3>
-                  <p className="mt-3 text-sm leading-6 text-academy-muted">{text}</p>
-                </article>
-              );
-            })}
-          </div>
+        <TrainingIllustratedCards items={careerSteps} theme="blue" />
+        <div className="mt-6 grid items-center gap-5 rounded-[1.7rem] border border-blue-200 bg-blue-50 p-6 sm:grid-cols-[1fr_auto]">
+          <div><Eyebrow>Votre montée en compétences</Eyebrow><h3 className="mt-3 text-2xl font-black text-blue-950">Une vision complète du commerce moderne.</h3><p className="mt-3 max-w-3xl text-sm leading-7 text-blue-950/70">Vous progressez de la vente conseil au pilotage des résultats, jusqu’au management d’une équipe commerciale.</p></div>
+          <div className="rounded-2xl border border-blue-200 bg-white/70 px-6 py-4"><p className="text-4xl font-black text-blue-700">4</p><p className="mt-2 max-w-[14rem] text-xs font-black uppercase tracking-[.12em] text-blue-950/70">grands blocs professionnels</p></div>
         </div>
         <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {['Conseiller de vente', 'Chargé de clientèle', 'Manager adjoint', 'Responsable de rayon'].map((job) => (
@@ -363,7 +376,6 @@ export function BtsMcoReferencePage() {
           ))}
         </div>
         <MissionAnimation variant="mco" className="mt-8" />
-        <TrainingMotionGallery variant="btsMco" />
       </Section>
 
       <Section

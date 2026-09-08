@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 import { BtsCompleteInformation, BtsStudentBenefits } from '@/components/BtsExpandedContent';
 import { BtsSectionNavigation } from '@/components/BtsSectionNavigation';
 import { MissionAnimation } from '@/components/MissionAnimation';
-import { TrainingMotionGallery } from '@/components/TrainingMotionGallery';
+import { TrainingIllustratedCards, type TrainingIllustratedCard } from '@/components/TrainingIllustratedCards';
 import { PremiumFAQSection } from '@/components/ui';
 
 const applicationUrl = 'https://inscriptionsbts.onrender.com/';
@@ -15,11 +15,41 @@ const contactHref = (subject = 'BTS Commerce International') =>
   `mailto:${aurelieEmail}?subject=${encodeURIComponent(subject)}`;
 
 const skillCards = [
-  ['01', 'Relier', 'Créer la relation', 'Prospecter, négocier et fidéliser dans un environnement interculturel.', 'cyan'],
-  ['02', 'Coordonner', 'Gérer les opérations', 'Organiser les flux, les documents, les risques et le suivi import-export.', 'green'],
-  ['03', 'Développer', 'Conquérir des marchés', 'Analyser les opportunités et construire un développement commercial international.', 'coral'],
-  ['04', 'Communiquer', 'Travailler entre cultures', 'Mobiliser l’anglais, une seconde langue vivante et les bons codes professionnels.', 'gold'],
-] as const;
+  {
+    number: "01", label: "Relier",
+    title: "Créer la relation",
+    description: "Prospecter, négocier et fidéliser dans un environnement interculturel.",
+    scenes: [
+      { kind: "mission-map", description: "Animation d’un itinéraire commercial reliant plusieurs partenaires internationaux" },
+    ],
+  },
+  {
+    number: "02", label: "Coordonner",
+    title: "Gérer les opérations",
+    description: "Organiser les flux, les documents, les risques et le suivi import-export.",
+    scenes: [
+      { kind: "secure-vehicle", description: "Animation d’une expédition suivie tout au long de son acheminement" },
+      { kind: "compliance", description: "Animation de documents douaniers et réglementaires vérifiés avant expédition" },
+    ],
+  },
+  {
+    number: "03", label: "Développer",
+    title: "Conquérir des marchés",
+    description: "Analyser les opportunités et construire un développement commercial international.",
+    scenes: [
+      { kind: "risk-radar", description: "Animation d’opportunités repérées et comparées sur plusieurs marchés internationaux" },
+      { kind: "finance", description: "Animation d’indicateurs permettant de piloter une activité internationale" },
+    ],
+  },
+  {
+    number: "04", label: "Communiquer",
+    title: "Travailler entre cultures",
+    description: "Mobiliser l’anglais, une seconde langue vivante et les bons codes professionnels.",
+    scenes: [
+      { kind: "briefing", description: "Animation d’un échange commercial préparé dans un contexte interculturel" },
+    ],
+  },
+] as const satisfies readonly TrainingIllustratedCard[];
 
 const program = [
   ['01', 'Culture générale et expression', 'Développer votre capacité à comprendre, synthétiser, argumenter et communiquer avec précision.'],
@@ -335,27 +365,10 @@ export function BtsCiReferencePage() {
         intro={<>Le BTS CI vous apprend à développer une relation commerciale interculturelle, coordonner des opérations et conquérir de nouveaux marchés.</>}
         tone="paper"
       >
-        <div className="grid gap-5 lg:grid-cols-[.68fr_1.32fr]">
-          <article className="rounded-[2rem] bg-[#0D1725] p-7 text-white shadow-card lg:p-9">
-            <Eyebrow light>Votre montée en compétences</Eyebrow>
-            <h3 className="mt-4 text-3xl font-black tracking-[-.04em]">Une vision complète des échanges mondiaux.</h3>
-            <p className="mt-4 leading-7 text-white/62">Vous progressez de la prospection à la négociation, puis jusqu’au suivi logistique, douanier et commercial des opérations.</p>
-            <p className="mt-12 text-7xl font-black text-academy-gold">3+1</p>
-            <p className="mt-2 text-xs font-black uppercase tracking-[.18em] text-white/70">blocs et compétence transversale</p>
-          </article>
-          <div className="grid gap-4 sm:grid-cols-2">
-            {skillCards.map(([number, label, title, text, tone]) => {
-              const accent = tone === 'cyan' ? 'bg-cyan-400' : tone === 'green' ? 'bg-emerald-400' : tone === 'coral' ? 'bg-[#FF6B55]' : 'bg-academy-gold';
-              return (
-                <article key={number} className="relative overflow-hidden rounded-[1.7rem] border border-academy-line bg-[#FFFDF8] p-5 shadow-soft">
-                  <span className={`absolute inset-x-5 top-0 h-1 rounded-full ${accent}`} />
-                  <p className="mt-2 text-[.62rem] font-black uppercase tracking-[.16em] text-academy-muted">{number} · {label}</p>
-                  <h3 className="mt-5 text-xl font-black">{title}</h3>
-                  <p className="mt-3 text-sm leading-6 text-academy-muted">{text}</p>
-                </article>
-              );
-            })}
-          </div>
+        <TrainingIllustratedCards items={skillCards} theme="blue" />
+        <div className="mt-6 grid items-center gap-5 rounded-[1.7rem] border border-blue-200 bg-blue-50 p-6 sm:grid-cols-[1fr_auto]">
+          <div><Eyebrow>Votre montée en compétences</Eyebrow><h3 className="mt-3 text-2xl font-black text-blue-950">Une vision complète des échanges mondiaux.</h3><p className="mt-3 max-w-3xl text-sm leading-7 text-blue-950/70">Vous progressez de la prospection à la négociation, puis jusqu’au suivi logistique, douanier et commercial des opérations.</p></div>
+          <div className="rounded-2xl border border-blue-200 bg-white/70 px-6 py-4"><p className="text-4xl font-black text-blue-700">3+1</p><p className="mt-2 max-w-[14rem] text-xs font-black uppercase tracking-[.12em] text-blue-950/70">blocs et compétence transversale</p></div>
         </div>
         <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {['Assistant import-export', 'Gestionnaire import-export', 'Assistant ADV export', 'Agent de transit'].map((job) => (
@@ -363,7 +376,6 @@ export function BtsCiReferencePage() {
           ))}
         </div>
         <MissionAnimation variant="ci" className="mt-8" />
-        <TrainingMotionGallery variant="btsCi" />
       </Section>
 
       <Section

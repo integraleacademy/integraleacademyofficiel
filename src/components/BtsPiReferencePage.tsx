@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 import { BtsCompleteInformation, BtsStudentBenefits } from '@/components/BtsExpandedContent';
 import { BtsSectionNavigation } from '@/components/BtsSectionNavigation';
 import { MissionAnimation } from '@/components/MissionAnimation';
-import { TrainingMotionGallery } from '@/components/TrainingMotionGallery';
+import { TrainingIllustratedCards, type TrainingIllustratedCard } from '@/components/TrainingIllustratedCards';
 import { PremiumFAQSection } from '@/components/ui';
 
 const applicationUrl = 'https://inscriptionsbts.onrender.com/';
@@ -15,11 +15,41 @@ const contactHref = (subject = 'BTS Professions Immobilières') =>
   `mailto:${aurelieEmail}?subject=${encodeURIComponent(subject)}`;
 
 const skillCards = [
-  ['01', 'Vendre', 'Conduire le projet client', 'Prospecter, estimer, négocier et accompagner une vente ou une location.', 'cyan'],
-  ['02', 'Gérer', 'Administrer les biens', 'Suivre les locations, les dossiers, les loyers et la relation entre bailleurs et locataires.', 'green'],
-  ['03', 'Copropriété', 'Faire vivre les immeubles', 'Préparer les décisions, suivre les budgets, les travaux, les sinistres et les contentieux.', 'coral'],
-  ['04', 'Conseiller', 'Valoriser le patrimoine', 'Intégrer le droit, l’urbanisme, le bâti, le climat et les outils numériques au conseil.', 'gold'],
-] as const;
+  {
+    number: "01", label: "Vendre",
+    title: "Conduire le projet client",
+    description: "Prospecter, estimer, négocier et accompagner une vente ou une location.",
+    scenes: [
+      { kind: "profile-review", description: "Animation du projet d’un acquéreur, vendeur, bailleur ou locataire analysé" },
+      { kind: "commercial", description: "Animation d’une négociation immobilière menée vers un accord équilibré" },
+    ],
+  },
+  {
+    number: "02", label: "Gérer",
+    title: "Administrer les biens",
+    description: "Suivre les locations, les dossiers, les loyers et la relation entre bailleurs et locataires.",
+    scenes: [
+      { kind: "evidence", description: "Animation des pièces d’un mandat, bail ou dossier de transaction vérifiées" },
+      { kind: "mission-map", description: "Animation d’un parcours de visites préparé entre plusieurs biens immobiliers" },
+    ],
+  },
+  {
+    number: "03", label: "Copropriété",
+    title: "Faire vivre les immeubles",
+    description: "Préparer les décisions, suivre les budgets, les travaux, les sinistres et les contentieux.",
+    scenes: [
+      { kind: "team", description: "Animation des différents interlocuteurs coordonnés autour d’un immeuble" },
+    ],
+  },
+  {
+    number: "04", label: "Conseiller",
+    title: "Valoriser le patrimoine",
+    description: "Intégrer le droit, l’urbanisme, le bâti, le climat et les outils numériques au conseil.",
+    scenes: [
+      { kind: "site-check", description: "Animation d’un bien immobilier observé et analysé avant son estimation" },
+    ],
+  },
+] as const satisfies readonly TrainingIllustratedCard[];
 
 const program = [
   ['01', 'Culture générale et expression', 'Développer votre capacité à comprendre, synthétiser, argumenter et communiquer avec précision.'],
@@ -338,27 +368,10 @@ export function BtsPiReferencePage() {
         intro={<>Le BTS PI vous apprend à prospecter, conseiller, négocier, sécuriser les dossiers et accompagner chaque client jusqu’à l’aboutissement de son projet.</>}
         tone="paper"
       >
-        <div className="grid gap-5 lg:grid-cols-[.68fr_1.32fr]">
-          <article className="rounded-[2rem] bg-[#0D1725] p-7 text-white shadow-card lg:p-9">
-            <Eyebrow light>Votre montée en compétences</Eyebrow>
-            <h3 className="mt-4 text-3xl font-black tracking-[-.04em]">Une vision complète des métiers immobiliers.</h3>
-            <p className="mt-4 leading-7 text-white/62">Vous progressez de la prospection au mandat, puis de la visite à la signature, sans oublier la gestion et la copropriété.</p>
-            <p className="mt-12 text-7xl font-black text-academy-gold">3+1</p>
-            <p className="mt-2 text-xs font-black uppercase tracking-[.18em] text-white/70">pôles et identité professionnelle</p>
-          </article>
-          <div className="grid gap-4 sm:grid-cols-2">
-            {skillCards.map(([number, label, title, text, tone]) => {
-              const accent = tone === 'cyan' ? 'bg-cyan-400' : tone === 'green' ? 'bg-emerald-400' : tone === 'coral' ? 'bg-[#FF6B55]' : 'bg-academy-gold';
-              return (
-                <article key={number} className="relative overflow-hidden rounded-[1.7rem] border border-academy-line bg-[#FFFDF8] p-5 shadow-soft">
-                  <span className={`absolute inset-x-5 top-0 h-1 rounded-full ${accent}`} />
-                  <p className="mt-2 text-[.62rem] font-black uppercase tracking-[.16em] text-academy-muted">{number} · {label}</p>
-                  <h3 className="mt-5 text-xl font-black">{title}</h3>
-                  <p className="mt-3 text-sm leading-6 text-academy-muted">{text}</p>
-                </article>
-              );
-            })}
-          </div>
+        <TrainingIllustratedCards items={skillCards} theme="blue" />
+        <div className="mt-6 grid items-center gap-5 rounded-[1.7rem] border border-blue-200 bg-blue-50 p-6 sm:grid-cols-[1fr_auto]">
+          <div><Eyebrow>Votre montée en compétences</Eyebrow><h3 className="mt-3 text-2xl font-black text-blue-950">Une vision complète des métiers immobiliers.</h3><p className="mt-3 max-w-3xl text-sm leading-7 text-blue-950/70">Vous progressez de la prospection au mandat, puis de la visite à la signature, sans oublier la gestion et la copropriété.</p></div>
+          <div className="rounded-2xl border border-blue-200 bg-white/70 px-6 py-4"><p className="text-4xl font-black text-blue-700">3+1</p><p className="mt-2 max-w-[14rem] text-xs font-black uppercase tracking-[.12em] text-blue-950/70">pôles et identité professionnelle</p></div>
         </div>
         <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {['Négociateur immobilier', 'Conseiller location', 'Gestionnaire locatif', 'Assistant copropriété'].map((job) => (
@@ -366,7 +379,6 @@ export function BtsPiReferencePage() {
           ))}
         </div>
         <MissionAnimation variant="pi" className="mt-8" />
-        <TrainingMotionGallery variant="btsPi" />
       </Section>
 
       <Section

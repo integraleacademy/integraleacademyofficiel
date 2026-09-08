@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 import { BtsCompleteInformation, BtsStudentBenefits } from '@/components/BtsExpandedContent';
 import { BtsSectionNavigation } from '@/components/BtsSectionNavigation';
 import { MissionAnimation } from '@/components/MissionAnimation';
-import { TrainingMotionGallery } from '@/components/TrainingMotionGallery';
+import { TrainingIllustratedCards, type TrainingIllustratedCard } from '@/components/TrainingIllustratedCards';
 import { PremiumFAQSection } from '@/components/ui';
 
 const applicationUrl = 'https://inscriptionsbts.onrender.com/';
@@ -15,11 +15,41 @@ const contactHref = (subject = 'BTS NDRC') =>
   `mailto:${aurelieEmail}?subject=${encodeURIComponent(subject)}`;
 
 const careerSteps = [
-  ['01', 'Prospecter', 'Créer des opportunités', 'Cibler les bons prospects, préparer une démarche commerciale et obtenir des rendez-vous.', 'blue'],
-  ['02', 'Négocier', 'Transformer le besoin en solution', 'Découvrir, argumenter, traiter les objections, conclure et construire une relation durable.', 'coral'],
-  ['03', 'Digitaliser', 'Vendre sur tous les canaux', 'Maîtriser la relation à distance, les réseaux sociaux, le e-commerce et les outils CRM.', 'green'],
-  ['04', 'Animer', 'Faire vivre un réseau', 'Développer des partenaires, des distributeurs ou une communauté de vendeurs.', 'gold'],
-];
+  {
+    number: "01", label: "Prospecter",
+    title: "Créer des opportunités",
+    description: "Cibler les bons prospects, préparer une démarche commerciale et obtenir des rendez-vous.",
+    scenes: [
+      { kind: "risk-radar", description: "Animation d’un marché analysé pour repérer de nouvelles opportunités commerciales" },
+      { kind: "emergency-call", description: "Animation d’une prise de contact menée par téléphone et outils numériques" },
+    ],
+  },
+  {
+    number: "02", label: "Négocier",
+    title: "Transformer le besoin en solution",
+    description: "Découvrir, argumenter, traiter les objections, conclure et construire une relation durable.",
+    scenes: [
+      { kind: "commercial", description: "Animation d’une négociation commerciale progressant jusqu’à la conclusion" },
+      { kind: "briefing", description: "Animation d’un suivi structuré maintenant une relation client durable" },
+    ],
+  },
+  {
+    number: "03", label: "Digitaliser",
+    title: "Vendre sur tous les canaux",
+    description: "Maîtriser la relation à distance, les réseaux sociaux, le e-commerce et les outils CRM.",
+    scenes: [
+      { kind: "profile-review", description: "Animation d’une fiche client enrichie pour adapter chaque échange" },
+    ],
+  },
+  {
+    number: "04", label: "Animer",
+    title: "Faire vivre un réseau",
+    description: "Développer des partenaires, des distributeurs ou une communauté de vendeurs.",
+    scenes: [
+      { kind: "competencies", description: "Animation d’un réseau de contacts et partenaires qui se développe" },
+    ],
+  },
+] as const satisfies readonly TrainingIllustratedCard[];
 
 const program = [
   ['01', 'Culture générale et expression', 'Développer votre capacité à comprendre, argumenter, synthétiser et communiquer avec précision.'],
@@ -341,27 +371,10 @@ export function BtsNdrcReferencePage() {
         intro={<>Face à face, téléphone, visioconférence, e-mail, réseaux sociaux ou e-commerce : vous savez créer une relation fluide, personnalisée et durable.</>}
         tone="paper"
       >
-        <div className="grid gap-5 lg:grid-cols-[.68fr_1.32fr]">
-          <article className="rounded-[2rem] bg-[#0D1725] p-7 text-white shadow-card lg:p-9">
-            <Eyebrow light>Votre montée en compétences</Eyebrow>
-            <h3 className="mt-4 text-3xl font-black tracking-[-.04em]">Du premier message à la fidélisation.</h3>
-            <p className="mt-4 leading-7 text-white/62">Vous apprenez à comprendre un marché, trouver des prospects, conduire un entretien, conclure une vente et entretenir la relation.</p>
-            <p className="mt-12 text-7xl font-black text-academy-gold">360°</p>
-            <p className="mt-2 text-xs font-black uppercase tracking-[.18em] text-white/70">de relation client omnicanale</p>
-          </article>
-          <div className="grid gap-4 sm:grid-cols-2">
-            {careerSteps.map(([number, label, title, text, tone]) => {
-              const accent = tone === 'blue' ? 'bg-sky-400' : tone === 'green' ? 'bg-emerald-400' : tone === 'coral' ? 'bg-[#FF6B55]' : 'bg-academy-gold';
-              return (
-                <article key={number} className="relative overflow-hidden rounded-[1.7rem] border border-academy-line bg-[#FFFDF8] p-5 shadow-soft">
-                  <span className={`absolute inset-x-5 top-0 h-1 rounded-full ${accent}`} />
-                  <p className="mt-2 text-[.62rem] font-black uppercase tracking-[.16em] text-academy-muted">{number} · {label}</p>
-                  <h3 className="mt-5 text-xl font-black">{title}</h3>
-                  <p className="mt-3 text-sm leading-6 text-academy-muted">{text}</p>
-                </article>
-              );
-            })}
-          </div>
+        <TrainingIllustratedCards items={careerSteps} theme="blue" />
+        <div className="mt-6 grid items-center gap-5 rounded-[1.7rem] border border-blue-200 bg-blue-50 p-6 sm:grid-cols-[1fr_auto]">
+          <div><Eyebrow>Votre montée en compétences</Eyebrow><h3 className="mt-3 text-2xl font-black text-blue-950">Du premier message à la fidélisation.</h3><p className="mt-3 max-w-3xl text-sm leading-7 text-blue-950/70">Vous apprenez à comprendre un marché, trouver des prospects, conduire un entretien, conclure une vente et entretenir la relation.</p></div>
+          <div className="rounded-2xl border border-blue-200 bg-white/70 px-6 py-4"><p className="text-4xl font-black text-blue-700">360°</p><p className="mt-2 max-w-[14rem] text-xs font-black uppercase tracking-[.12em] text-blue-950/70">de relation client omnicanale</p></div>
         </div>
         <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {['Commercial terrain', 'Chargé de clientèle', 'Commercial e-commerce', 'Animateur de réseau'].map((job) => (
@@ -369,7 +382,6 @@ export function BtsNdrcReferencePage() {
           ))}
         </div>
         <MissionAnimation variant="ndrc" className="mt-8" />
-        <TrainingMotionGallery variant="btsNdrc" />
       </Section>
 
       <Section
