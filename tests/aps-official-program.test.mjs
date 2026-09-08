@@ -17,13 +17,13 @@ test('les volumes horaires APS correspondent au programme V3.2 fourni', () => {
   assert.doesNotMatch(apsSources, /\b62\s*(?:h|heures)\b/i);
   assert.doesNotMatch(apsSources, /\b113\s*(?:h|heures)\b/i);
 
-  for (const expected of ['175 heures', '51 heures maximum', '124 heures minimum', '63,5 heures', '60,5 heures']) {
+  for (const expected of ['175 heures', '51 heures', '124 heures', '63,5 heures', '60,5 heures']) {
     assert.ok(apsSources.includes(expected), `volume APS manquant : ${expected}`);
   }
 
-  assert.ok(apsPage.includes("['71 %','du parcours au minimum en présentiel']"));
+  assert.ok(apsPage.includes("['71 %','du parcours en présentiel']"));
   assert.ok(apsPage.includes("['36 %','du parcours consacré à la pratique']"));
-  assert.ok(apsPage.includes("['29 %','du parcours au maximum à distance']"));
+  assert.ok(apsPage.includes("['29 %','du parcours à distance']"));
 });
 
 test('la page principale décrit les 14 UV et les contenus structurants', () => {
@@ -65,7 +65,7 @@ test('la nature et la durée de validité de la certification sont correctement 
   assert.ok(apsPage.includes('Programme CPNEFP version V3.2 mis à jour le 23 juillet 2026'));
   assert.ok(apsPage.includes("['Certificateurs','CPNE / ADEF']"));
   assert.ok(apsPage.includes('1er juillet 2027'));
-  assert.ok(apsPage.includes('sous réserve du renouvellement de l’enregistrement'));
+  assert.ok(!apsPage.includes('Validité de l’enregistrement RNCP'));
   assert.ok(apsPage.includes('RNCP34054'));
 });
 

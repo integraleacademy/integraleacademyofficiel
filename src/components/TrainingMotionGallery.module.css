@@ -1025,3 +1025,10 @@
     transition: none !important;
   }
 }
+
+.illustration {
+  --ink: #172233;
+  width: 100%;
+  min-width: 0;
+  aspect-ratio: 320 / 210;
+}

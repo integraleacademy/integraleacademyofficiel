@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { ApsSectionNavigation } from '@/components/ApsSectionNavigation';
+import { TrainingMotionIllustration } from '@/components/TrainingMotionGallery';
 import { OrientationAssistant } from '@/components/OrientationAssistant';
 import { PremiumFAQSection } from '@/components/ui';
 import { TrainingDatesPricingSection } from '@/components/TrainingDatesPricingSection';
@@ -21,8 +22,8 @@ const fallbackSessions = [
 const heroFacts = [
   ['Certification', 'TFP APS', 'Titre à finalité professionnelle'],
   ['Niveau', 'Niveau 3', 'RNCP 36648'],
-  ['Format', '51 h max.', 'à distance'],
-  ['Campus', '124 h min.', 'en présentiel à Puget'],
+  ['Format', '51 h', 'à distance'],
+  ['Campus', '124 h', 'en présentiel à Puget'],
   ['Secourisme', 'SST inclus', 'dans le parcours'],
   ['Agrément', 'ADEF', '8320032701'],
 ];
@@ -45,7 +46,7 @@ const apsVisualStories = [
   ['alert', 'Réagir et alerter', 'Animation d’une radio transmettant une alerte depuis le terrain'],
 ] as const;
 
-type ApsVisualStoryKind = typeof apsVisualStories[number][0];
+type ApsVisualStoryKind = typeof apsVisualStories[number][0] | 'baggage' | 'patdown';
 
 const audiences = ['Reconversion professionnelle', 'Demandeurs d’emploi', 'Salariés en évolution', 'Débutants motivés', 'Futurs titulaires CNAPS', 'Projet APS + SSIAP 1'];
 
@@ -62,19 +63,19 @@ const cnapsSteps = ['Échange conseiller', 'Vérification du dossier', 'Demande 
 
 const program = [
   ['UV 1', 'SST — Secours à personne', '14 h', 'Présentiel · 7 h de pratique', 'Situer le cadre de l’intervention, protéger, examiner, alerter et secourir, puis contribuer à la prévention des risques professionnels.'],
-  ['UV 2', 'Environnement juridique', '22 h', 'Jusqu’à 20 h à distance · 1 h de pratique', 'Livre VI du Code de la sécurité intérieure, déontologie et secret professionnel, responsabilités civiles et pénales, légitime défense, état de nécessité, article 73, libertés publiques, CNIL, droit de propriété, principes de la République et convention collective.'],
-  ['UV 3', 'Gestion des conflits', '14 h', 'Jusqu’à 3 h à distance · 7 h de pratique', 'Origines et types de conflits, émotions, techniques verbales, posture, évaluation de la dangerosité, résolution et gestion des conséquences au travers de mises en situation.'],
-  ['UV 4', 'Module stratégique', '7 h', 'Jusqu’à 4 h à distance', 'Comprendre, transmettre et restituer les consignes, rédiger un rapport circonstancié, utiliser les outils informatiques et exploiter une main courante électronique.'],
+  ['UV 2', 'Environnement juridique', '22 h', '20 h à distance · 1 h de pratique', 'Livre VI du Code de la sécurité intérieure, déontologie et secret professionnel, responsabilités civiles et pénales, légitime défense, état de nécessité, article 73, libertés publiques, CNIL, droit de propriété, principes de la République et convention collective.'],
+  ['UV 3', 'Gestion des conflits', '14 h', '3 h à distance · 7 h de pratique', 'Origines et types de conflits, émotions, techniques verbales, posture, évaluation de la dangerosité, résolution et gestion des conséquences au travers de mises en situation.'],
+  ['UV 4', 'Module stratégique', '7 h', '4 h à distance', 'Comprendre, transmettre et restituer les consignes, rédiger un rapport circonstancié, utiliser les outils informatiques et exploiter une main courante électronique.'],
   ['UV 5', 'Prévention des risques d’incendie', '7 h', 'Présentiel · 3 h de pratique', 'Phénomène de l’incendie, alarmes, évacuation, mise en sécurité, accueil des secours et manipulation des moyens de première intervention sur feu réel.'],
-  ['UV 6', 'Appréhension dans le cadre du métier', '7 h', 'Jusqu’à 3 h à distance', 'Appliquer l’article 73 du Code de procédure pénale et appréhender une personne dans le strict respect des textes et des missions confiées à l’agent APS.'],
-  ['UV 7', 'Prévention des risques terroristes', '13 h', 'Jusqu’à 7 h à distance · 3,5 h de pratique', 'Identifier les menaces et matériels, détecter les comportements suspects, se protéger, protéger les autres, alerter, faciliter l’intervention des forces de l’ordre et appliquer les premières notions de secourisme tactique.'],
+  ['UV 6', 'Appréhension dans le cadre du métier', '7 h', '3 h à distance', 'Appliquer l’article 73 du Code de procédure pénale et appréhender une personne dans le strict respect des textes et des missions confiées à l’agent APS.'],
+  ['UV 7', 'Prévention des risques terroristes', '13 h', '7 h à distance · 3,5 h de pratique', 'Identifier les menaces et matériels, détecter les comportements suspects, se protéger, protéger les autres, alerter, faciliter l’intervention des forces de l’ordre et appliquer les premières notions de secourisme tactique.'],
   ['UV 8', 'Module professionnel', '45 h', 'Présentiel · 25 h de pratique', 'Accueil et communication, préparation d’une intervention, préservation des traces et indices, contrôle des personnes, véhicules, objets et matériels, prise en compte du poste de sécurité et rondes de surveillance.'],
   ['UV 9', 'Palpation et inspection des bagages', '7 h', 'Présentiel · 4 h de pratique', 'Cadre légal, agréments et sanctions, point d’inspection-filtrage, découverte d’un objet prohibé, prise en compte des mineurs et des personnes en situation de handicap, palpation et inspection visuelle.'],
   ['UV 10', 'Surveillance électronique', '7 h', 'Présentiel · 4 h de pratique', 'Cadres juridiques de la télésurveillance et de la vidéoprotection, chaîne de télésécurité et principes d’installation d’un système de vidéoprotection.'],
-  ['UV 11', 'Gestion des risques', '11 h', 'Jusqu’à 2 h à distance · 5 h de pratique', 'Alarmes intrusion et incendie, levée de doute, accueil des secours, GTC/GTB, protection du travailleur isolé, PTI/DATI et sensibilisation au risque électrique.'],
-  ['UV 12', 'Événementiel spécifique', '7 h', 'Jusqu’à 7 h à distance', 'Cadre légal des rassemblements, sécurisation des événements, acteurs et publics, zones d’accès, filtrage, billetterie, fraude, mouvements de foule et procédures d’urgence.'],
+  ['UV 11', 'Gestion des risques', '11 h', '2 h à distance · 5 h de pratique', 'Alarmes intrusion et incendie, levée de doute, accueil des secours, GTC/GTB, protection du travailleur isolé, PTI/DATI et sensibilisation au risque électrique.'],
+  ['UV 12', 'Événementiel spécifique', '7 h', '7 h à distance', 'Cadre légal des rassemblements, sécurisation des événements, acteurs et publics, zones d’accès, filtrage, billetterie, fraude, mouvements de foule et procédures d’urgence.'],
   ['UV 13', 'Situations conflictuelles dégradées', '7 h', 'Présentiel · 4 h de pratique', 'Comprendre et maîtriser le stress, récupérer après l’événement et agir de manière actuelle, nécessaire et proportionnée face à une agression.'],
-  ['UV 14', 'Risques industriels', '7 h', 'Jusqu’à 5 h à distance', 'Évaluation des risques professionnels, document unique, ICPE, SEVESO, ORSEC, équipements de protection, produits dangereux, SGH, CLP et zones ATEX.'],
+  ['UV 14', 'Risques industriels', '7 h', '5 h à distance', 'Évaluation des risques professionnels, document unique, ICPE, SEVESO, ORSEC, équipements de protection, produits dangereux, SGH, CLP et zones ATEX.'],
 ];
 
 const examSteps = [
@@ -140,13 +141,13 @@ const nationalStats = [
 
 const faq = [
   { q: 'Faut-il une autorisation CNAPS avant d’entrer en formation ?', a: 'Oui, sauf si vous possédez déjà une carte professionnelle en cours de validité pour l’activité concernée. Intégrale Academy vous accompagne dans la préparation et le dépôt de la demande.' },
-  { q: 'La formation APS est-elle entièrement à distance ?', a: 'Non. Sur les 175 heures, 51 heures au maximum peuvent être réalisées à distance et 124 heures au minimum se déroulent en présentiel à Puget-sur-Argens. L’examen est obligatoirement organisé en présentiel.' },
-  { q: 'Quelle est la part de pratique ?', a: 'Le programme prévoit 63,5 heures de pratique et 60,5 heures de théorie en présentiel. Les 51 heures restantes au maximum peuvent être réalisées à distance.' },
-  { q: 'Le e-learning est-il obligatoire ?', a: 'Oui lorsqu’il est prévu dans le calendrier de la session. Il représente au maximum 51 heures, doit être suivi et validé, et la progression est contrôlée par l’équipe pédagogique.' },
+  { q: 'La formation APS est-elle entièrement à distance ?', a: 'Non. Sur les 175 heures, 51 heures sont réalisées à distance et 124 heures se déroulent en présentiel à Puget-sur-Argens. L’examen est obligatoirement organisé en présentiel.' },
+  { q: 'Quelle est la part de pratique ?', a: 'Le programme prévoit 63,5 heures de pratique et 60,5 heures de théorie en présentiel. Les 51 heures restantes sont réalisées à distance.' },
+  { q: 'Le e-learning est-il obligatoire ?', a: 'Oui lorsqu’il est prévu dans le calendrier de la session. Il représente 51 heures, doit être suivi et validé, et la progression est contrôlée par l’équipe pédagogique.' },
   { q: 'Comment se déroule l’examen APS ?', a: 'L’examen associe des QCU contextualisés organisés électroniquement et deux mises en situation professionnelles individuelles, notamment autour de la ronde et du poste de contrôle.' },
   { q: 'La formation permet-elle d’obtenir directement la carte professionnelle ?', a: 'La réussite permet d’obtenir le TFP APS, qui justifie l’aptitude professionnelle. Vous devez ensuite déposer une demande de carte professionnelle auprès du CNAPS.' },
   { q: 'Quelles conditions concernent les ressortissants étrangers ?', a: 'La fiche RNCP indique qu’un ressortissant étranger doit être titulaire d’un titre de séjour depuis au moins cinq ans pour demander l’autorisation préalable. L’équipe vérifie les règles et pièces applicables à chaque situation.' },
-  { q: 'Quel est le prix de la formation ?', a: 'Le tarif affiché est de 1 650 €. Les dates, places restantes et éventuelles informations tarifaires administrées restent affichées sur chaque session.' },
+  { q: 'Quel est le prix de la formation ?', a: 'Le tarif affiché est de 1 650 €. Retrouvez le prix dans la carte Tarif et les dates et places disponibles dans les cartes de session.' },
   { q: 'Puis-je financer la formation avec mon CPF ?', a: 'Oui, selon votre éligibilité et l’offre active. France Travail, un employeur, un OPCO ou un paiement personnel peuvent également être étudiés.' },
   { q: 'Le SST est-il inclus ?', a: 'Oui. Le parcours comprend la préparation au certificat Sauveteur Secouriste du Travail.' },
   { q: 'Une expérience dans la sécurité est-elle obligatoire ?', a: 'Non. La formation est accessible aux débutants qui remplissent les conditions administratives et linguistiques réglementaires.' },
@@ -157,8 +158,8 @@ function formatDate(value?: string | null, compact = false) {
   return new Intl.DateTimeFormat('fr-FR', { timeZone: 'Europe/Paris', day: '2-digit', month: 'short', year: 'numeric' }).format(new Date(value)).replace(/^0/, compact ? '' : '0');
 }
 
-function sessionHref(session: any) {
-  return session?.id ? `/contact?formation=aps&session=${encodeURIComponent(String(session.id))}` : apsContact('prochaine session');
+function sessionHref() {
+  return apsRegistrationFormUrl;
 }
 
 function isSessionFull(session: any) {
@@ -209,146 +210,40 @@ function Section({ id, eyebrow, title, intro, children, tone = 'cream' }: { id?:
   return <section id={id} className={`${styles.section} ${colors} scroll-mt-24 px-4 py-14 sm:py-16 lg:py-24`}><div className="page-container"><div className="mb-8 grid gap-5 lg:grid-cols-[.75fr_1.25fr] lg:items-end lg:gap-16"><div><Eyebrow light={tone === 'dark'}>{eyebrow}</Eyebrow><h2 className={`${styles.sectionHeading} mt-3 max-w-3xl text-3xl font-black tracking-[-.045em] sm:text-4xl lg:text-5xl`}>{title}</h2></div>{intro && <div className={`${styles.sectionIntro} max-w-3xl text-base font-medium leading-8 ${tone === 'dark' ? 'text-white/65' : 'text-academy-muted'}`}>{intro}</div>}</div>{children}</div></section>;
 }
 
-function BaggageInspectionMotion() {
-  return <article className={`${styles.immersionMotionCard} ${styles.baggageMotionCard}`}>
-    <div className={styles.motionGrid} aria-hidden="true" />
-    <div className={styles.motionCardHeader} aria-hidden="true">
-      <span className={styles.motionModule}>Simulation APS · module 09</span>
-      <span className={styles.motionLive}><i /> Exercice en cours</span>
-    </div>
-    <div className={styles.baggageStage} role="img" aria-label="Animation d’un bagage inspecté par un faisceau de contrôle, puis d’un accès autorisé">
-      <svg className={styles.baggageMotionSvg} viewBox="0 0 760 320" aria-hidden="true" focusable="false">
-        <defs>
-          <linearGradient id="aps-scanner-shell" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stopColor="#162a43" />
-            <stop offset="1" stopColor="#0b1727" />
-          </linearGradient>
-          <linearGradient id="aps-bag-body" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stopColor="#163b61" stopOpacity=".96" />
-            <stop offset="1" stopColor="#0b2038" stopOpacity=".96" />
-          </linearGradient>
-          <linearGradient id="aps-scan-beam" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0" stopColor="#38bdf8" stopOpacity="0" />
-            <stop offset=".5" stopColor="#7dd3fc" stopOpacity=".72" />
-            <stop offset="1" stopColor="#38bdf8" stopOpacity="0" />
-          </linearGradient>
-          <radialGradient id="aps-signal" cx="50%" cy="50%" r="50%">
-            <stop offset="0" stopColor="#67e8f9" stopOpacity=".36" />
-            <stop offset="1" stopColor="#67e8f9" stopOpacity="0" />
-          </radialGradient>
-          <clipPath id="aps-bag-clip">
-            <rect x="176" y="119" width="288" height="126" rx="24" />
-          </clipPath>
-        </defs>
-
-        <g className={styles.scannerShell}>
-          <rect x="46" y="34" width="532" height="236" rx="32" fill="url(#aps-scanner-shell)" stroke="#7dd3fc" strokeOpacity=".24" />
-          <path d="M82 78H542" stroke="#7dd3fc" strokeOpacity=".16" />
-          <circle cx="82" cy="57" r="4" fill="#38bdf8" />
-          <circle cx="98" cy="57" r="4" fill="#38bdf8" fillOpacity=".42" />
-          <circle cx="114" cy="57" r="4" fill="#38bdf8" fillOpacity=".2" />
-          <path d="M88 244H538" stroke="#7dd3fc" strokeOpacity=".32" strokeWidth="3" strokeLinecap="round" />
-          <path d="M112 252V266M190 252V266M268 252V266M346 252V266M424 252V266M502 252V266" stroke="#7dd3fc" strokeOpacity=".2" strokeWidth="3" strokeLinecap="round" />
-        </g>
-
-        <g className={styles.bagBody}>
-          <path d="M264 119V102c0-18 14-31 31-31h51c17 0 31 13 31 31v17" fill="none" stroke="#7dd3fc" strokeOpacity=".64" strokeWidth="8" strokeLinecap="round" />
-          <rect x="176" y="119" width="288" height="126" rx="24" fill="url(#aps-bag-body)" stroke="#7dd3fc" strokeOpacity=".74" strokeWidth="2" />
-          <path d="M320 124V240" stroke="#7dd3fc" strokeOpacity=".18" />
-          <rect x="208" y="146" width="42" height="72" rx="12" fill="#38bdf8" fillOpacity=".14" stroke="#7dd3fc" strokeOpacity=".45" />
-          <path d="M218 146v-8h22v8" fill="none" stroke="#7dd3fc" strokeOpacity=".48" strokeWidth="4" strokeLinecap="round" />
-          <rect x="274" y="154" width="58" height="54" rx="10" fill="#818cf8" fillOpacity=".14" stroke="#a5b4fc" strokeOpacity=".42" />
-          <circle cx="390" cy="176" r="26" fill="#22d3ee" fillOpacity=".1" stroke="#67e8f9" strokeOpacity=".4" />
-          <path d="M378 176h24M390 164v24" stroke="#67e8f9" strokeOpacity=".48" strokeLinecap="round" />
-        </g>
-
-        <g clipPath="url(#aps-bag-clip)">
-          <g className={styles.baggageSweep}>
-            <rect x="136" y="108" width="86" height="150" fill="url(#aps-scan-beam)" />
-            <path d="M179 112V252" stroke="#bae6fd" strokeWidth="2" strokeOpacity=".9" />
-          </g>
-        </g>
-
-        <g className={styles.accessGate}>
-          <circle cx="654" cy="103" r="62" fill="url(#aps-signal)" />
-          <rect x="619" y="58" width="70" height="196" rx="22" fill="#11243a" stroke="#7dd3fc" strokeOpacity=".35" />
-          <rect x="635" y="76" width="38" height="38" rx="12" fill="#22c55e" fillOpacity=".14" stroke="#86efac" strokeOpacity=".54" />
-          <path d="m645 95 7 7 13-16" fill="none" stroke="#86efac" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
-          <g className={styles.gateArm}>
-            <rect x="548" y="207" width="108" height="14" rx="7" fill="#dbeafe" />
-            <path d="M566 207v14M590 207v14M614 207v14" stroke="#2563eb" strokeWidth="9" />
-          </g>
-          <circle className={styles.gatePulse} cx="654" cy="163" r="6" fill="#67e8f9" />
-          <path d="M642 178h24M642 188h17" stroke="#7dd3fc" strokeOpacity=".38" strokeWidth="3" strokeLinecap="round" />
-        </g>
-      </svg>
-      <div className={styles.motionReadout} aria-hidden="true"><span>Analyse</span><strong>Méthode validée</strong></div>
-    </div>
-    <div className={styles.motionCaption}>
-      <span className={styles.motionEyebrow}>Mise en situation réelle</span>
-      <h3>Inspection visuelle des bagages et contrôle d’accès</h3>
-      <p>Adopter la bonne méthode, respecter le cadre légal, communiquer clairement et sécuriser un accès sans créer de tension.</p>
-    </div>
-  </article>;
-}
-
-function PatdownProtocolMotion() {
-  return <article className={`${styles.immersionMotionCard} ${styles.patdownMotionCard}`}>
-    <div className={styles.motionGrid} aria-hidden="true" />
-    <div className={styles.motionCardHeader} aria-hidden="true">
-      <span className={styles.motionModule}>Protocole guidé</span>
-      <span className={styles.motionLive}><i /> Geste contrôlé</span>
-    </div>
-    <div className={styles.patdownStage} role="img" aria-label="Animation pédagogique des zones contrôlées pendant une palpation de sécurité">
-      <svg className={styles.patdownMotionSvg} viewBox="0 0 560 210" aria-hidden="true" focusable="false">
-        <defs>
-          <linearGradient id="aps-body-line" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stopColor="#bae6fd" />
-            <stop offset="1" stopColor="#3b82f6" />
-          </linearGradient>
-          <linearGradient id="aps-patdown-beam" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stopColor="#38bdf8" stopOpacity="0" />
-            <stop offset=".5" stopColor="#7dd3fc" stopOpacity=".7" />
-            <stop offset="1" stopColor="#38bdf8" stopOpacity="0" />
-          </linearGradient>
-        </defs>
-        <g className={styles.patdownSilhouette} fill="none" stroke="url(#aps-body-line)" strokeLinecap="round" strokeLinejoin="round">
-          <circle cx="278" cy="41" r="21" strokeWidth="3" />
-          <path d="M246 82c8-15 18-22 32-22s24 7 32 22l11 45M235 127l11-45M256 82l-5 61 27 18 27-18-5-61M263 160l-10 37M293 160l10 37" strokeWidth="3" />
-          <path d="M251 116h54" strokeOpacity=".32" strokeWidth="2" />
-        </g>
-        <g className={styles.patdownZones}>
-          <circle cx="248" cy="94" r="15" />
-          <circle cx="308" cy="94" r="15" />
-          <circle cx="278" cy="137" r="17" />
-          <circle cx="258" cy="177" r="12" />
-          <circle cx="298" cy="177" r="12" />
-        </g>
-        <g className={styles.patdownSweep}>
-          <rect x="190" y="34" width="176" height="34" rx="17" fill="url(#aps-patdown-beam)" />
-          <path d="M198 51h160" stroke="#bae6fd" strokeOpacity=".74" strokeWidth="2" strokeLinecap="round" />
-        </g>
-        <g className={styles.protocolPath} fill="none" stroke="#7dd3fc" strokeOpacity=".35" strokeWidth="2" strokeLinecap="round">
-          <path d="M93 48h62c20 0 29 10 29 29v56c0 19 9 29 29 29h13" strokeDasharray="5 8" />
-          <path d="M333 73h18c20 0 29 10 29 29v40c0 19 9 29 29 29h61" strokeDasharray="5 8" />
-        </g>
-        <g className={styles.protocolNodes}>
-          <circle cx="88" cy="48" r="13" /><path d="m82 48 4 4 8-9" />
-          <circle cx="475" cy="171" r="13" /><path d="m469 171 4 4 8-9" />
-        </g>
-      </svg>
-      <div className={styles.protocolLabels} aria-hidden="true"><span>Consentement</span><span>Positionnement</span><span>Respect</span></div>
-    </div>
-    <div className={styles.motionCaption}>
-      <span className={styles.motionEyebrow}>Atelier encadré</span>
-      <h3>Palpation de sécurité</h3>
-      <p>Positionnement, consentement, gestes professionnels et respect de la personne.</p>
-    </div>
-  </article>;
-}
-
-function ApsStoryIllustration({ kind, title, description }: { kind: ApsVisualStoryKind; title: string; description: string }) {
+function ApsStoryIllustration({ kind, title, description, caption }: { kind: ApsVisualStoryKind; title: string; description: string; caption?: string }) {
   const visual = (() => {
+    if (kind === 'baggage') return <svg className={styles.storySvg} viewBox="0 0 320 210" aria-hidden="true" focusable="false">
+      <rect x="38" y="166" width="244" height="11" rx="5" fill="#9ec4f4" />
+      <path d="M49 178v19M270 178v19" stroke="#172233" strokeWidth="6" strokeLinecap="round" />
+      <g className={styles.storyBag}>
+        <path d="M94 92V78c0-18 13-29 29-29h33c16 0 29 11 29 29v14" fill="none" stroke="#172233" strokeWidth="7" />
+        <rect x="68" y="87" width="148" height="77" rx="16" fill="#2f70db" />
+        <path d="M79 108h126M91 90v68M191 90v68" stroke="#9ec4f4" strokeWidth="3" />
+        <rect x="108" y="122" width="67" height="27" rx="7" fill="#fff" />
+      </g>
+      <g className={styles.storyBagCheck}>
+        <circle cx="227" cy="77" r="31" fill="#fff" stroke="#172233" strokeWidth="6" />
+        <path d="m249 100 23 23" stroke="#172233" strokeWidth="11" strokeLinecap="round" />
+        <path d="m213 78 10 10 19-23" fill="none" stroke="#2f70db" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" />
+      </g>
+    </svg>;
+
+    if (kind === 'patdown') return <svg className={styles.storySvg} viewBox="0 0 320 210" aria-hidden="true" focusable="false">
+      <circle cx="199" cy="43" r="15" fill="#172233" />
+      <path d="M199 64v72M199 75l-45 20M199 75l44 20M199 136l-24 52M199 136l24 52" fill="none" stroke="#9ec4f4" strokeWidth="14" strokeLinecap="round" />
+      <g className={styles.storyPatdownAgent}>
+        <circle cx="86" cy="61" r="14" fill="#172233" />
+        <path d="M68 91c3-15 9-21 18-21s15 6 18 21l4 49H65z" fill="#2f70db" />
+        <path d="m75 140-5 49M94 140l7 49" stroke="#172233" strokeWidth="9" strokeLinecap="round" />
+        <path d="m100 92 38 19 33-8" fill="none" stroke="#2f70db" strokeWidth="11" strokeLinecap="round" />
+        <path d="m74 90 45 42 51-4" fill="none" stroke="#2f70db" strokeWidth="11" strokeLinecap="round" />
+      </g>
+      <g className={styles.storyPatdownZones} fill="none" stroke="#2f70db" strokeWidth="2.5" strokeDasharray="4 5">
+        <circle cx="199" cy="99" r="18" /><circle cx="187" cy="160" r="13" />
+      </g>
+      <rect x="243" y="26" width="49" height="32" rx="10" fill="#fff" /><path d="m256 42 7 7 14-16" fill="none" stroke="#2f70db" strokeWidth="4" strokeLinecap="round" />
+    </svg>;
+
     if (kind === 'patrol') return <svg className={styles.storySvg} viewBox="0 0 320 210" aria-hidden="true" focusable="false">
       <g className={styles.storyBuilding}>
         <rect x="164" y="39" width="116" height="104" rx="5" fill="#fff" stroke="#8bb8f2" strokeWidth="3" />
@@ -484,17 +379,18 @@ function ApsStoryIllustration({ kind, title, description }: { kind: ApsVisualSto
   return <article className={styles.storyCard} data-story={kind}>
     <div className={styles.storyVisual} role="img" aria-label={description}>{visual}</div>
     <h4>{title}</h4>
+    {caption && <p className={styles.storyCaption}>{caption}</p>}
   </article>;
 }
 
 function CompactAssistant() {
-  return <details className="group mt-3 overflow-hidden rounded-[1.35rem] border border-academy-line bg-white text-academy-ink shadow-soft"><summary className="flex cursor-pointer list-none items-center gap-3 p-4"><span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-academy-gold font-black text-academy-gold-text">✦</span><span className="min-w-0 flex-1"><strong className="block text-sm font-black">Une question avant de vous inscrire&nbsp;?</strong><small className="block text-xs font-semibold text-academy-muted">L’assistant vérifie les informations essentielles.</small></span><span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-academy-ink font-black text-white transition group-open:rotate-90">→</span></summary><div className="border-t border-academy-line bg-academy-bg p-3 sm:p-4"><OrientationAssistant initialFormationKey="aps" hideInfoAction /></div></details>;
+  return <div className="mt-3"><OrientationAssistant initialFormationKey="aps" hideInfoAction variant="modalTrigger" /></div>;
 }
 
 function HeroSession({ session }: { session: any }) {
   const full = isSessionFull(session);
   const seatAvailability = getSessionSeatAvailability(session, 12);
-  return <aside className={`${styles.sessionCard} rounded-[2rem] border border-white/80 bg-[#FFFDF8] p-5 text-academy-ink sm:p-6 lg:p-7`}><div className="grid gap-6 lg:grid-cols-[1.05fr_1.15fr_.9fr] lg:items-center"><div><div className="flex flex-wrap items-center gap-2"><span className="rounded-full bg-blue-50 px-3 py-1.5 text-[.62rem] font-black uppercase tracking-[.16em] text-blue-800 ring-1 ring-blue-200">Prochaine session</span><span className={`rounded-full border px-3 py-1.5 text-[.68rem] font-black ${seatAvailability.badgeClassName}`}>{seatAvailability.label}</span></div><h2 className={`${styles.sessionDate} mt-4 text-3xl font-black tracking-[-.04em] sm:text-4xl`}>{formatDate(session?.startDate, true)} <span className="text-yellow-600">→</span><br />{formatDate(session?.endDate, true)}</h2><p className="mt-2 text-sm font-extrabold text-academy-muted">Examen final le {formatDate(session?.examDate, true)}</p></div><div className="grid grid-cols-2 gap-2.5">{[['Durée', '175 heures'], ['Tarif', priceLabel(session?.priceLabel)], ['Lieu', session?.location || 'Puget-sur-Argens'], ['Format', 'Hybride']].map(([key, value]) => <div key={key} className={`${styles.metric} rounded-2xl border border-[#E8DECE] bg-[#F5EFE4] p-3.5`}><p className="text-[.6rem] font-black uppercase tracking-[.16em] text-[#837968]">{key}</p><p className="mt-1 text-sm font-black sm:text-base">{value}</p></div>)}</div><div><CTA href={sessionHref(session)} variant={full ? 'light' : 'dark'} className="w-full">{full ? 'Être alerté de la prochaine session' : 'Réserver ma place →'}</CTA><p className="mt-3 text-center text-xs font-bold text-academy-muted">Un conseiller vérifie votre dossier avant validation.</p><CompactAssistant /></div></div></aside>;
+  return <aside className={`${styles.sessionCard} rounded-[2rem] border border-white/80 bg-[#FFFDF8] p-5 text-academy-ink sm:p-6 lg:p-7`}><div className="grid gap-6 lg:grid-cols-[1.05fr_1.15fr_.9fr] lg:items-center"><div><div className="flex flex-wrap items-center gap-2"><span className="rounded-full bg-blue-50 px-3 py-1.5 text-[.62rem] font-black uppercase tracking-[.16em] text-blue-800 ring-1 ring-blue-200">Prochaine session</span><span className={`rounded-full border px-3 py-1.5 text-[.68rem] font-black ${seatAvailability.badgeClassName}`}>{seatAvailability.label}</span></div><h2 className={`${styles.sessionDate} mt-4 text-3xl font-black tracking-[-.04em] sm:text-4xl`}>{formatDate(session?.startDate, true)} <span className="text-yellow-600">→</span><br />{formatDate(session?.endDate, true)}</h2><p className="mt-2 text-sm font-extrabold text-academy-muted">Examen final le {formatDate(session?.examDate, true)}</p></div><div className="grid grid-cols-2 gap-2.5">{[['Durée', '175 heures'], ['Tarif', priceLabel(session?.priceLabel)], ['Lieu', session?.location || 'Puget-sur-Argens'], ['Format', 'Hydrique (Distanciel + Présentiel)']].map(([key, value]) => <div key={key} className={`${styles.metric} rounded-2xl border border-[#E8DECE] bg-[#F5EFE4] p-3.5`}><p className="text-[.6rem] font-black uppercase tracking-[.16em] text-[#837968]">{key}</p><p className="mt-1 text-sm font-black sm:text-base">{value}</p></div>)}</div><div><CTA href={sessionHref()} variant={full ? 'light' : 'dark'} className="w-full">{full ? 'Être alerté de la prochaine session' : 'Réserver ma place →'}</CTA><p className="mt-3 text-center text-xs font-bold text-academy-muted">Un conseiller vérifie votre dossier avant validation.</p><CompactAssistant /></div></div></aside>;
 }
 
 export function ApsReferencePage({ sessions }: { sessions: any[] }) {
@@ -502,7 +398,7 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
   const next = visibleSessions[0];
   return <main className={`${styles.page} relative pb-24 lg:pb-0`}>
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ '@context': 'https://schema.org', '@graph': [
-      { '@type': 'Course', name: 'Formation Agent de Prévention et de Sécurité APS', description: 'Formation TFP APS de 175 heures à Puget-sur-Argens : 124 heures minimum en présentiel, dont 63,5 heures de pratique et 60,5 heures de théorie, et 51 heures maximum à distance.', provider: { '@type': 'Organization', name: 'Intégrale Academy', telephone: '04 22 47 07 68' } },
+      { '@type': 'Course', name: 'Formation Agent de Prévention et de Sécurité APS', description: 'Formation TFP APS de 175 heures à Puget-sur-Argens : 124 heures en présentiel, dont 63,5 heures de pratique et 60,5 heures de théorie, et 51 heures à distance.', provider: { '@type': 'Organization', name: 'Intégrale Academy', telephone: '04 22 47 07 68' } },
       { '@type': 'FAQPage', mainEntity: faq.map(item => ({ '@type': 'Question', name: item.q, acceptedAnswer: { '@type': 'Answer', text: item.a } })) },
       { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Accueil', item: '/' }, { '@type': 'ListItem', position: 2, name: 'Formations sécurité', item: '/formations-securite' }, { '@type': 'ListItem', position: 3, name: 'APS', item: '/formations-securite/aps' }] },
     ] }) }} />
@@ -556,16 +452,20 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
       <div className={`${styles.liftCard} mt-8 grid gap-5 rounded-[2rem] border border-academy-line bg-white p-6 shadow-soft lg:grid-cols-[.7fr_1.3fr] lg:p-8`}><div><Eyebrow>À qui s’adresse la formation ?</Eyebrow><h3 className="mt-3 text-3xl font-black">Un parcours accessible, un métier réglementé.</h3><p className="mt-4 leading-7 text-academy-muted">Aucune expérience préalable dans la sécurité n’est obligatoire.</p></div><div className="grid gap-3 sm:grid-cols-2">{audiences.map((item,index) => <div key={item} className="flex items-center gap-3 rounded-2xl bg-academy-bg p-4 font-bold"><span className={`grid h-8 w-8 shrink-0 place-items-center rounded-full text-xs font-black ${index === 5 ? 'bg-orange-100 text-orange-700' : 'bg-sky-100 text-sky-700'}`}>✓</span>{item}</div>)}</div></div>
     </Section>
 
-    <Section id="admission" eyebrow="02 — Admission" title={<>Votre dossier est-il prêt pour l’APS&nbsp;?</>} intro={<>Nous contrôlons chaque condition avant votre entrée en formation et vous accompagnons dans la démarche d’autorisation préalable.</>} tone="dark"><div className="grid gap-4 md:grid-cols-2">{prerequisites.map(([title,text]) => <article key={title} className={`${styles.liftCard} rounded-[1.7rem] border border-white/10 bg-white/7 p-5`}><span className="grid h-9 w-9 place-items-center rounded-full bg-blue-400/15 font-black text-blue-300">✓</span><h3 className="mt-4 text-xl font-black">{title}</h3><p className="mt-2 leading-7 text-white/62">{text}</p></article>)}</div><div className="mt-7 flex flex-col items-start justify-between gap-5 rounded-[1.8rem] bg-gradient-to-r from-[#F7D57D] to-[#F0B52E] p-6 text-academy-gold-text lg:flex-row lg:items-center"><div><p className="text-xl font-black">Bonne nouvelle : nous préparons votre demande CNAPS.</p><p className="mt-1 font-semibold opacity-75">Vous fournissez les documents, notre équipe vous accompagne dans le dépôt.</p></div><CTA href={apsContact('autorisation préalable CNAPS')} variant="dark">Faire vérifier mon dossier →</CTA></div><div className="mt-8 grid gap-3 md:grid-cols-4">{cnapsSteps.map((item,index) => <div key={item} className="rounded-[1.4rem] bg-white p-4 text-academy-ink"><span className="grid h-9 w-9 place-items-center rounded-full bg-[#0D1725] text-xs font-black text-academy-gold">0{index+1}</span><p className="mt-5 font-black">{item}</p></div>)}</div></Section>
+    <Section id="admission" eyebrow="02 — Admission" title={<>Votre dossier est-il prêt pour l’APS&nbsp;?</>} intro={<>Nous contrôlons chaque condition avant votre entrée en formation et vous accompagnons dans la démarche d’autorisation préalable.</>} tone="stone"><div className="grid gap-4 md:grid-cols-2">{prerequisites.map(([title,text]) => <article key={title} className={`${styles.liftCard} rounded-[1.7rem] border border-[#D8CEBD] bg-white/90 p-5`}><span className="grid h-9 w-9 place-items-center rounded-full bg-blue-100 font-black text-blue-700">✓</span><h3 className="mt-4 text-xl font-black">{title}</h3><p className="mt-2 leading-7 text-academy-muted">{text}</p></article>)}</div><div className="mt-7 flex flex-col items-start justify-between gap-5 rounded-[1.8rem] bg-gradient-to-r from-[#F7D57D] to-[#F0B52E] p-6 text-academy-gold-text lg:flex-row lg:items-center"><div><p className="text-xl font-black">Bonne nouvelle : nous préparons votre demande CNAPS.</p><p className="mt-1 font-semibold opacity-75">Vous fournissez les documents, notre équipe vous accompagne dans le dépôt.</p></div><CTA href={apsContact('autorisation préalable CNAPS')} variant="dark">Faire vérifier mon dossier →</CTA></div><div className="mt-8 grid gap-3 md:grid-cols-4">{cnapsSteps.map((item,index) => <div key={item} className="rounded-[1.4rem] bg-white p-4 text-academy-ink"><span className="grid h-9 w-9 place-items-center rounded-full bg-[#0D1725] text-xs font-black text-academy-gold">0{index+1}</span><p className="mt-5 font-black">{item}</p></div>)}</div></Section>
 
-    <Section id="pratique" eyebrow="03 — Immersion terrain" title={<>Vous ne regardez pas seulement&nbsp;: vous pratiquez.</>} intro={<>La formation vous place dans des situations proches du réel. Chaque geste est expliqué, répété, observé puis débriefé avec le formateur.</>} tone="dark"><div className="grid gap-5 lg:grid-cols-[1.08fr_.92fr]"><BaggageInspectionMotion /><div className="grid gap-5"><PatdownProtocolMotion /><div className="grid gap-3 sm:grid-cols-2">{[['↻','Observer'],['⌕','Contrôler'],['!','Réagir'],['⌁','Rendre compte']].map(([icon,label]) => <div key={label} className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/7 p-4"><span className="grid h-10 w-10 place-items-center rounded-xl bg-academy-gold font-black text-academy-gold-text">{icon}</span><span className="font-black">{label}</span></div>)}</div></div></div>
+    <Section id="pratique" eyebrow="03 — Immersion terrain" title={<>Vous ne regardez pas seulement&nbsp;: vous pratiquez.</>} intro={<>La formation vous place dans des situations proches du réel. Chaque geste est expliqué, répété, observé puis débriefé avec le formateur.</>} tone="dark"><div className={styles.immersionStories}>
+        <ApsStoryIllustration kind="baggage" title="Inspection visuelle des bagages" description="Illustration animée d’un bagage et d’un contrôle visuel à la loupe" caption="Observer méthodiquement, identifier un objet interdit et appliquer les consignes du site." />
+        <ApsStoryIllustration kind="patdown" title="Palpation de sécurité" description="Illustration animée d’un agent et des zones de contrôle d’une palpation encadrée" caption="Travailler le positionnement et les gestes professionnels, avec consentement et dans le respect du cadre légal." />
+        <ApsStoryIllustration kind="access" title="Contrôle d’accès" description="Animation d’un agent vérifiant un badge devant une barrière de contrôle" caption="Vérifier les autorisations, accueillir le public et gérer les flux avec calme et précision." />
+      </div>
       <div className="mt-8 grid auto-rows-fr gap-3 sm:grid-cols-2 lg:grid-cols-4">
         {practicalExercises.map(([icon,title,text],index) => <article key={title} className={`${styles.practicalCard} ${index === 0 ? styles.practicalPrimary : ''} rounded-[1.5rem] border border-white/10 bg-white/7 p-5`}>
           <div className="relative z-10">
             <div className="flex items-start justify-between gap-3"><span className={`${styles.practicalIcon} grid h-10 w-10 place-items-center rounded-xl bg-academy-gold font-black text-academy-gold-text`}>{icon}</span><span className="text-[.58rem] font-black tracking-[.16em] text-white/30">0{index+1}</span></div>
             <h3 className="mt-4 text-lg font-black">{title}</h3>
             <p className="mt-2 text-sm leading-6 text-white/60">{text}</p>
-            {index === 0 && <div className={`${styles.practiceVisual} mt-6`} role="img" aria-label="Simulation animée d’une ronde de sécurité"><div className={styles.scanLine}/><span className="absolute left-4 top-4 rounded-full border border-white/10 bg-black/20 px-3 py-1.5 text-[.62rem] font-black uppercase tracking-[.16em] text-sky-200">Simulation terrain</span><span className="absolute bottom-4 left-4 text-xs font-bold text-white/45">Observer · contrôler · signaler</span></div>}
+            {index === 0 && <div className="mt-6"><ApsStoryIllustration kind="patrol" title="Observer · contrôler · signaler" description="Animation d’un agent effectuant une ronde autour d’un bâtiment" /></div>}
           </div>
         </article>)}
       </div><div className="mt-7 grid gap-4 rounded-[1.7rem] border border-blue-300/25 bg-blue-400/10 p-6 lg:grid-cols-[auto_1fr] lg:items-center"><span className="grid h-14 w-14 place-items-center rounded-2xl bg-blue-300 text-2xl font-black text-blue-950">✓</span><div><p className="text-xl font-black text-blue-200">L’objectif : transformer les connaissances en réflexes professionnels.</p><p className="mt-2 max-w-4xl leading-7 text-white/68">Observation, positionnement, communication, respect du cadre légal, compte rendu et choix d’une réponse adaptée sont analysés après chaque scénario.</p></div></div></Section>
@@ -596,31 +496,53 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
 
     <Section
       id="hybride"
-      eyebrow="05 — Format hybride"
+      eyebrow="05 — Distanciel + Présentiel"
       title={<>La souplesse du distanciel, l’exigence du terrain.</>}
-      intro={<>Le programme réglementaire totalise 175 heures : 124 heures minimum en présentiel et 51 heures maximum à distance.</>}
+      intro={<>Notre parcours de 175 heures se répartit ainsi : 124 heures en présentiel et 51 heures à distance.</>}
       tone="paper"
     >
       <div className="grid overflow-hidden rounded-[2rem] border border-academy-line shadow-card lg:grid-cols-2">
         <article className="bg-[#0D1725] p-7 text-white lg:p-9">
-          <span className="text-5xl font-black text-sky-300">51 h max.</span>
+          <span className="text-5xl font-black text-sky-300">51 h</span>
           <h3 className="mt-2 text-2xl font-black">à distance</h3>
           <div className="mt-6 grid gap-3">{['Plateforme accessible 24h/24','Vidéos et supports','Exercices et tests','Progression suivie'].map(item => <p key={item} className="flex gap-3 font-bold text-white/72"><span className="text-sky-300">✓</span>{item}</p>)}</div>
         </article>
         <article className="bg-white p-7 lg:p-9">
-          <span className="text-5xl font-black text-blue-700">124 h min.</span>
+          <span className="text-5xl font-black text-blue-700">124 h</span>
           <h3 className="mt-2 text-2xl font-black">en présentiel</h3>
           <div className="mt-6 grid gap-3">{['63,5 h de pratique','60,5 h de théorie en présentiel','Rondes et mises en situation','Préparation à l’examen'].map(item => <p key={item} className="flex gap-3 font-bold text-academy-muted"><span className="text-blue-600">✓</span>{item}</p>)}</div>
         </article>
       </div>
       <div className="mt-5 grid gap-3 sm:grid-cols-3">
-        {[['71 %','du parcours au minimum en présentiel'],['36 %','du parcours consacré à la pratique'],['29 %','du parcours au maximum à distance']].map(([value,label]) => <div key={value} className="rounded-[1.4rem] border border-academy-line bg-white p-5 text-center"><p className="text-3xl font-black text-academy-ink">{value}</p><p className="mt-2 text-sm font-bold leading-6 text-academy-muted">{label}</p></div>)}
+        {[['71 %','du parcours en présentiel'],['36 %','du parcours consacré à la pratique'],['29 %','du parcours à distance']].map(([value,label]) => <div key={value} className="rounded-[1.4rem] border border-academy-line bg-white p-5 text-center"><p className="text-3xl font-black text-academy-ink">{value}</p><p className="mt-2 text-sm font-bold leading-6 text-academy-muted">{label}</p></div>)}
       </div>
       <div className="mt-5 rounded-[1.5rem] border border-academy-gold/60 bg-academy-gold/10 p-5"><p className="font-black">Vous n’êtes jamais seul devant votre écran.</p><p className="mt-1 text-sm font-semibold text-academy-muted">Votre progression à distance est suivie et l’équipe pédagogique reste disponible. Les enseignements en présentiel associent théorie, exercices et mises en situation.</p></div>
-      <div className="mt-10"><Eyebrow>Organisation</Eyebrow><h3 className="mt-3 text-3xl font-black">Une session, quatre temps forts.</h3><div className="mt-6 grid gap-3 md:grid-cols-4">{[['Accueil au centre','Présentation du parcours'],['Jusqu’à 51 h à distance','Notions autorisées en distanciel'],['Au moins 124 h au campus','Théorie et pratique encadrées'],['Examen en présentiel','Évaluation devant jury']].map(([title,text],index) => <div key={title} className={`rounded-[1.5rem] border p-5 ${index===3 ? 'border-academy-gold bg-academy-gold/10' : 'border-academy-line bg-academy-bg'}`}><span className="text-3xl font-black text-yellow-600">0{index+1}</span><h4 className="mt-6 text-lg font-black">{title}</h4><p className="mt-2 text-sm leading-6 text-academy-muted">{text}</p></div>)}</div></div>
+      <div className="mt-10"><Eyebrow>Organisation</Eyebrow><h3 className="mt-3 text-3xl font-black">Une session, quatre temps forts.</h3><div className="mt-6 grid gap-3 md:grid-cols-4">{[['Accueil au centre','Présentation du parcours'],['51 h à distance','Notions autorisées en distanciel'],['124 h au campus','Théorie et pratique encadrées'],['Examen en présentiel','Évaluation devant jury']].map(([title,text],index) => <div key={title} className={`rounded-[1.5rem] border p-5 ${index===3 ? 'border-academy-gold bg-academy-gold/10' : 'border-academy-line bg-academy-bg'}`}><span className="text-3xl font-black text-yellow-600">0{index+1}</span><h4 className="mt-6 text-lg font-black">{title}</h4><p className="mt-2 text-sm leading-6 text-academy-muted">{text}</p></div>)}</div></div>
     </Section>
 
-    <Section id="examen" eyebrow="06 — Examen" title={<>Un examen qui valide vos réflexes.</>} intro={<>Des QCU contextualisés et deux épreuves individuelles de mise en situation sont évalués devant des professionnels du secteur.</>} tone="paper"><div className={`${styles.examGrid} grid gap-4 lg:grid-cols-4`}>{examSteps.map(([number,title,text],index) => <article key={number} className={`${styles.examCard} rounded-[1.7rem] border p-5 ${index===3 ? 'border-academy-gold bg-academy-gold/10' : 'border-academy-line bg-white'}`}><span className="grid h-11 w-11 place-items-center rounded-full bg-academy-gold font-black text-academy-gold-text">{number}</span><h3 className="mt-6 text-xl font-black">{title}</h3><p className="mt-2 text-sm leading-6 text-academy-muted">{text}</p></article>)}</div><div className="mt-6 rounded-[1.5rem] border border-blue-200 bg-blue-50 p-5 text-center font-black text-blue-800">Après réussite : obtention du TFP APS de niveau 3 et du certificat SST. La carte professionnelle fait ensuite l’objet d’une demande distincte auprès du CNAPS.</div></Section>
+    <Section id="examen" eyebrow="06 — Examen" title={<>Un examen qui valide vos réflexes.</>} intro={<>Connaissances, gestes professionnels et capacité à réagir : l’évaluation finale associe des QCU et deux mises en situation individuelles, en présentiel.</>} tone="paper">
+      <div className={`${styles.examGrid} grid gap-4 sm:grid-cols-2 lg:grid-cols-4`}>
+        {examSteps.map(([number,title,text],index) => <article key={number} className={`${styles.examCard} rounded-[1.7rem] border p-5 ${index===3 ? 'border-academy-gold bg-academy-gold/10' : 'border-academy-line bg-white'}`}><span className="grid h-11 w-11 place-items-center rounded-full bg-academy-gold font-black text-academy-gold-text">{number}</span><h3 className="mt-6 text-xl font-black">{title}</h3><p className="mt-2 text-sm leading-6 text-academy-muted">{text}</p></article>)}
+      </div>
+      <div className={styles.examDetails}>
+        <article>
+          <Eyebrow>L’épreuve théorique</Eyebrow><h3>Comprendre une situation, choisir la bonne réponse.</h3>
+          <p>Les questionnaires à choix unique sont présentés sur un support électronique. Chaque question vous place dans un contexte professionnel et appelle une seule réponse.</p>
+          <ul><li>Mobiliser les connaissances juridiques et les consignes de sécurité.</li><li>Identifier la conduite adaptée à un événement ou à un risque.</li><li>Distinguer les missions de l’agent et les limites de son intervention.</li></ul>
+        </article>
+        <article>
+          <Eyebrow>Les épreuves pratiques</Eyebrow><h3>Agir sur le terrain et au poste de sécurité.</h3>
+          <p>Les deux mises en situation permettent d’observer votre méthode de travail, votre communication et votre réponse à un événement.</p>
+          <ul><li><strong>En ronde :</strong> prendre les consignes, contrôler les points sensibles, détecter une anomalie et en rendre compte.</li><li><strong>Au poste de sécurité :</strong> traiter une information ou une alarme, appliquer les procédures et coordonner l’alerte.</li><li><strong>Dans les deux cas :</strong> garder une posture professionnelle et assurer la traçabilité des actions.</li></ul>
+        </article>
+      </div>
+      <div className={styles.examPracticalInfo}>
+        <article><span>Avant l’examen</span><h3>Vous vous préparez progressivement.</h3><p>Entraînements aux QCU, exercices de ronde, utilisation de la main courante et mises en situation rythment le parcours. La convocation précise la date, l’horaire, le lieu et les pièces à présenter.</p></article>
+        <article><span>Secourisme</span><h3>Le SST a sa propre évaluation.</h3><p>Le certificat Sauveteur Secouriste du Travail est délivré après validation des compétences lors des épreuves certificatives du module SST.</p></article>
+        <article><span>Après les résultats</span><h3>Du titre à l’exercice du métier.</h3><p>La réussite aux épreuves du TFP APS permet d’obtenir le titre de niveau 3. Vous déposez ensuite une demande de carte professionnelle auprès du CNAPS. Si une épreuve reste à valider, l’équipe vous explique les suites adaptées à votre résultat.</p></article>
+      </div>
+      <p className="mt-6 text-sm font-semibold text-academy-muted">Modalités de certification : <a href="https://www.francecompetences.fr/recherche/rncp/36648/" target="_blank" rel="noopener noreferrer" className="font-bold text-blue-700 underline underline-offset-4">consulter la fiche officielle du TFP APS</a>.</p>
+    </Section>
 
     <TrainingDatesPricingSection
       id="dates-tarifs"
@@ -633,19 +555,16 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
       showOverallPeriodLabel={false}
       seatCapacity={12}
       underlineDisclosure={false}
-      remotePeriodFallback="51 h maximum · calendrier détaillé à confirmer"
-      inPersonPeriodFallback="124 h minimum · calendrier détaillé à confirmer"
+      remotePeriodFallback="51 h · calendrier détaillé à confirmer"
+      inPersonPeriodFallback="124 h · calendrier détaillé à confirmer"
       defaultPrice="1 650 €"
       defaultLocation="Puget-sur-Argens"
       priceDescription="Formation complète · SST inclus · examen final"
       registrationHref={sessionHref}
+      showSessionPrice={false}
+      intro="Comparez les dates, les périodes à distance et en présentiel, puis choisissez la session qui vous convient."
       priceAction={{ href: apsCpfUrl, label: 'S’inscrire avec mon CPF 🔐', external: true }}
-    >
-      <div className="mt-7 rounded-[1.5rem] border border-amber-300 bg-amber-50 p-5 text-amber-950">
-        <p className="font-black">Validité de l’enregistrement RNCP</p>
-        <p className="mt-2 text-sm font-semibold leading-6">La fiche RNCP36648 fournie indique un enregistrement jusqu’au 1er juillet 2027. Toute session débutant après cette date est proposée sous réserve du renouvellement de l’enregistrement ou de la certification qui le remplacera.</p>
-      </div>
-    </TrainingDatesPricingSection>
+    />
 
     <section id="inscription-financement" className={`${styles.enrollmentSection} relative isolate overflow-hidden bg-[#0A1725] px-4 py-14 text-white sm:py-16 lg:py-20`}>
       <div className="page-container">
@@ -659,7 +578,7 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
             <p className={`${styles.enrollmentIntro} mt-6 max-w-4xl text-base font-medium leading-8 text-white/70`}>Tout commence par un rendez-vous téléphonique avec un membre de notre équipe. Contactez-nous au 04 22 47 07 68 pour réserver votre RDV téléphonique. Nous étudions votre projet en détails et nous vous accompagnons dans toutes vos démarches du financement, l’inscription, jusqu’à votre formation et l’obtention de votre diplôme.</p>
           </div>
           <div className={`${styles.enrollmentCtaWrap} relative flex w-full items-center justify-center lg:w-auto`}>
-            <CTA href={apsContact('commencer mon inscription')} variant="gold" className={`${styles.enrollmentPrimaryCta} w-full lg:w-auto`}>Commencer mon inscription →</CTA>
+            <CTA href={apsRegistrationFormUrl} variant="gold" className={`${styles.enrollmentPrimaryCta} w-full lg:w-auto`}>Commencer mon inscription →</CTA>
           </div>
         </div>
 
@@ -706,7 +625,17 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
       </div>
     </section>
 
-    <Section id="debouches" eyebrow="09 — Débouchés & emploi" title={<>Un premier titre pour intégrer un secteur qui recrute.</>} intro={<>Les besoins sont réguliers dans de nombreux environnements : commerce, industrie, logistique, santé, bureaux, événementiel et sites sensibles. Le TFP APS ouvre l’accès à des missions variées, sous réserve d’obtenir la carte professionnelle CNAPS.</>} tone="paper"><div className="mb-8 grid gap-4 md:grid-cols-3"><article className={`${styles.outcomeCard} rounded-[1.7rem] border border-blue-200 bg-blue-50 p-6`}><p className="text-sm font-black uppercase tracking-[.16em] text-blue-700">Un besoin permanent</p><h3 className="mt-3 text-2xl font-black">Des recrutements toute l’année</h3><p className="mt-3 leading-7 text-blue-950/70">Les entreprises de sécurité doivent couvrir des prestations de jour, de nuit, en semaine, le week-end et lors de grands événements.</p></article><article className={`${styles.outcomeCard} rounded-[1.7rem] border border-sky-200 bg-sky-50 p-6`}><p className="text-sm font-black uppercase tracking-[.16em] text-sky-700">Des missions variées</p><h3 className="mt-3 text-2xl font-black">De nombreux sites à sécuriser</h3><p className="mt-3 leading-7 text-sky-950/70">Vous pouvez travailler sur un site fixe, effectuer des rondes, contrôler des accès, sécuriser un événement ou intervenir sur plusieurs sites.</p></article><article className={`${styles.outcomeCard} rounded-[1.7rem] border border-yellow-300 bg-yellow-50 p-6`}><p className="text-sm font-black uppercase tracking-[.16em] text-yellow-800">Des évolutions possibles</p><h3 className="mt-3 text-2xl font-black">Construire un parcours</h3><p className="mt-3 leading-7 text-yellow-950/70">Avec l’expérience et des qualifications complémentaires, vous pouvez viser des fonctions de chef de poste, de sécurité incendie, de télésurveillance ou d’encadrement.</p></article></div><div className="grid gap-4 md:grid-cols-4">{[['Réussir le TFP APS','Valider les épreuves'],['Recevoir le titre niveau 3','Obtenir la certification'],['Demander la carte CNAPS','Constituer le dossier'],['Commencer à exercer','Après délivrance de la carte']].map(([title,text],index) => <article key={title} className={`${styles.examCard} rounded-[1.7rem] border border-academy-line bg-white p-5 text-center`}><span className="mx-auto grid h-11 w-11 place-items-center rounded-full bg-academy-gold font-black">0{index+1}</span><h3 className="mt-6 text-lg font-black">{title}</h3><p className="mt-2 text-sm text-academy-muted">{text}</p></article>)}</div><div className="mt-5 rounded-[1.4rem] border border-yellow-300 bg-yellow-50 p-4 font-bold text-yellow-900">Important : le TFP APS ne déclenche pas automatiquement la carte professionnelle.</div><div className="mt-8 grid gap-5 lg:grid-cols-2"><article className="rounded-[2rem] border border-academy-line bg-white p-6"><Eyebrow>Débouchés</Eyebrow><h3 className="mt-3 text-3xl font-black">Les métiers accessibles</h3><div className="mt-5 grid gap-3 sm:grid-cols-2">{jobs.map(([icon,title]) => <div key={title} className={styles.jobCard}><span className={styles.jobIcon}>{icon}</span><span className="text-sm font-black leading-5">{title}</span></div>)}</div></article><article className="relative overflow-hidden rounded-[2rem] bg-[#0D1725] p-6 text-white"><div className="absolute -right-20 -top-20 h-56 w-56 rounded-full border border-white/10 shadow-[0_0_0_45px_rgba(255,255,255,.025),0_0_0_90px_rgba(255,255,255,.015)]"/><div className="relative"><Eyebrow light>Double compétence</Eyebrow><h3 className="mt-3 text-3xl font-black">APS + SSIAP 1</h3><p className="mt-4 max-w-md leading-7 text-white/65">Élargissez vos opportunités en associant surveillance humaine et sécurité incendie.</p><div className="mt-7 grid gap-3"><div className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/7 p-4"><span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-white/10 text-sm font-black text-sky-200">01</span><div><p className="font-black">Obtenir le TFP APS</p><p className="mt-1 text-xs font-semibold text-white/45">Socle de la surveillance humaine</p></div></div><div className="ml-5 h-5 w-px bg-gradient-to-b from-white/25 to-academy-gold"/><div className="flex items-center gap-4 rounded-2xl border border-academy-gold/40 bg-academy-gold/12 p-4"><span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-academy-gold text-sm font-black text-academy-gold-text">02</span><div><p className="font-black text-[#F9DC8A]">Ajouter le SSIAP 1</p><p className="mt-1 text-xs font-semibold text-white/50">Spécialisation sécurité incendie</p></div></div><div className="ml-5 h-5 w-px bg-gradient-to-b from-academy-gold to-blue-300"/><div className="flex items-center gap-4 rounded-2xl border border-blue-300/20 bg-blue-300/10 p-4"><span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-blue-300 text-sm font-black text-blue-950">03</span><div><p className="font-black text-blue-200">Élargir les postes accessibles</p><p className="mt-1 text-xs font-semibold text-white/50">Selon les qualifications exigées par l’employeur</p></div></div></div><CTA href="/formations-securite/ssiap-1" variant="gold" className="mt-6">Découvrir le SSIAP 1 →</CTA></div></article></div><article className="mt-5 rounded-[2rem] border border-academy-line bg-white p-6"><h3 className="text-2xl font-black">Où travailler ?</h3><p className="mt-2 leading-7 text-academy-muted">Les agents APS interviennent aussi bien dans des lieux ouverts au public que sur des sites professionnels à accès contrôlé.</p><div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{workplaces.map(item => <div key={item} className={`${styles.workplace} rounded-2xl bg-academy-bg p-4 text-center font-black`}>{item}</div>)}</div></article><div className="mt-5 rounded-[1.5rem] border border-academy-line bg-[#FFFDF8] p-5"><p className="font-black">Bon à savoir : horaires et conditions varient selon les postes.</p><p className="mt-2 text-sm leading-6 text-academy-muted">Le secteur propose des emplois de jour ou de nuit, à temps plein ou partiel, sur site fixe ou mobile. Disponibilité, ponctualité, présentation, maîtrise de soi et qualité du compte rendu sont particulièrement recherchées par les employeurs.</p></div></Section>
+    <Section id="debouches" eyebrow="09 — Débouchés & emploi" title={<>Un premier titre pour intégrer un secteur qui recrute.</>} intro={<>Les besoins sont réguliers dans de nombreux environnements : commerce, industrie, logistique, santé, bureaux, événementiel et sites sensibles. Le TFP APS ouvre l’accès à des missions variées, sous réserve d’obtenir la carte professionnelle CNAPS.</>} tone="paper"><div className="mb-8 grid gap-4 md:grid-cols-3"><article className={`${styles.outcomeCard} rounded-[1.7rem] border border-blue-200 bg-blue-50 p-6`}><p className="text-sm font-black uppercase tracking-[.16em] text-blue-700">Un besoin permanent</p><h3 className="mt-3 text-2xl font-black">Des recrutements toute l’année</h3><p className="mt-3 leading-7 text-blue-950/70">Les entreprises de sécurité doivent couvrir des prestations de jour, de nuit, en semaine, le week-end et lors de grands événements.</p></article><article className={`${styles.outcomeCard} rounded-[1.7rem] border border-sky-200 bg-sky-50 p-6`}><p className="text-sm font-black uppercase tracking-[.16em] text-sky-700">Des missions variées</p><h3 className="mt-3 text-2xl font-black">De nombreux sites à sécuriser</h3><p className="mt-3 leading-7 text-sky-950/70">Vous pouvez travailler sur un site fixe, effectuer des rondes, contrôler des accès, sécuriser un événement ou intervenir sur plusieurs sites.</p></article><article className={`${styles.outcomeCard} rounded-[1.7rem] border border-yellow-300 bg-yellow-50 p-6`}><p className="text-sm font-black uppercase tracking-[.16em] text-yellow-800">Des évolutions possibles</p><h3 className="mt-3 text-2xl font-black">Construire un parcours</h3><p className="mt-3 leading-7 text-yellow-950/70">Avec l’expérience et des qualifications complémentaires, vous pouvez viser des fonctions de chef de poste, de sécurité incendie, de télésurveillance ou d’encadrement.</p></article></div><div className="grid gap-4 md:grid-cols-4">{[['Réussir le TFP APS','Valider les épreuves'],['Recevoir le titre niveau 3','Obtenir la certification'],['Demander la carte CNAPS','Constituer le dossier'],['Commencer à exercer','Après délivrance de la carte']].map(([title,text],index) => <article key={title} className={`${styles.examCard} rounded-[1.7rem] border border-academy-line bg-white p-5 text-center`}><span className="mx-auto grid h-11 w-11 place-items-center rounded-full bg-academy-gold font-black">0{index+1}</span><h3 className="mt-6 text-lg font-black">{title}</h3><p className="mt-2 text-sm text-academy-muted">{text}</p></article>)}</div><div className="mt-5 rounded-[1.4rem] border border-yellow-300 bg-yellow-50 p-4 font-bold text-yellow-900">Important : le TFP APS ne déclenche pas automatiquement la carte professionnelle.</div><div className="mt-8 grid gap-5 lg:grid-cols-2"><article className="rounded-[2rem] border border-academy-line bg-white p-6"><Eyebrow>Débouchés</Eyebrow><h3 className="mt-3 text-3xl font-black">Les métiers accessibles</h3><div className="mt-5 grid gap-3 sm:grid-cols-2">{jobs.map(([icon,title]) => <div key={title} className={styles.jobCard}><span className={styles.jobIcon}>{icon}</span><span className="text-sm font-black leading-5">{title}</span></div>)}</div></article><article className={styles.dualSkill}>
+        <p className={styles.dualEyebrow}>Double compétence</p>
+        <h3>Deux expertises.<br /><span>Plus de possibilités.</span></h3>
+        <p className={styles.dualIntro}>Associez le TFP APS et le SSIAP 1 pour élargir vos missions dans la surveillance humaine et la sécurité incendie.</p>
+        <div className={styles.dualPanels}>
+          <div className={styles.dualSecurity}><span className={styles.dualLabel}>TFP APS</span><TrainingMotionIllustration kind="site-check" theme="blue" description="Illustration animée de la surveillance et du contrôle d’un bâtiment" /><h4>Prévenir & surveiller</h4><p>Rondes, contrôle d’accès, protection des personnes et des biens.</p></div>
+          <span className={styles.dualPlus} aria-hidden="true">+</span>
+          <div className={styles.dualFire}><span className={styles.dualLabel}>SSIAP 1</span><TrainingMotionIllustration kind="extinguisher" theme="red" description="Illustration animée d’un extincteur rouge et de la vérification de son indicateur" /><h4>Alerter & protéger</h4><p>Prévention incendie, évacuation et assistance aux personnes.</p></div>
+        </div>
+        <div className={styles.dualFooter}><span>Surveillance humaine <b>+</b> Sécurité incendie</span><CTA href="/formations-securite/ssiap-1" variant="dark" className="w-full">Découvrir le SSIAP 1 →</CTA><p>Deux qualifications complémentaires, chacune avec ses prérequis et son examen.</p></div>
+      </article></div><article className="mt-5 rounded-[2rem] border border-academy-line bg-white p-6"><h3 className="text-2xl font-black">Où travailler ?</h3><p className="mt-2 leading-7 text-academy-muted">Les agents APS interviennent aussi bien dans des lieux ouverts au public que sur des sites professionnels à accès contrôlé.</p><div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{workplaces.map(item => <div key={item} className={`${styles.workplace} rounded-2xl bg-academy-bg p-4 text-center font-black`}>{item}</div>)}</div></article><div className="mt-5 rounded-[1.5rem] border border-academy-line bg-[#FFFDF8] p-5"><p className="font-black">Bon à savoir : horaires et conditions varient selon les postes.</p><p className="mt-2 text-sm leading-6 text-academy-muted">Le secteur propose des emplois de jour ou de nuit, à temps plein ou partiel, sur site fixe ou mobile. Disponibilité, ponctualité, présentation, maîtrise de soi et qualité du compte rendu sont particulièrement recherchées par les employeurs.</p></div></Section>
 
     <Section id="reperes-rncp" eyebrow="10 — Repères officiels" title={<>Certification, conditions d’exercice et données d’insertion.</>} intro={<>Ces informations complètent la présentation commerciale avec les repères figurant dans la fiche RNCP36648 fournie.</>}>
       <div className="grid gap-5 lg:grid-cols-[1.15fr_.85fr]">
@@ -746,6 +675,6 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
 
     <section className="bg-academy-bg px-4 pb-20 pt-8"><div className={`${styles.finalCta} page-container rounded-[2.4rem] border border-white/10 shadow-card`}><div className={`${styles.finalCtaContent} grid items-center lg:grid-cols-[1.05fr_.95fr]`}><div className="p-7 sm:p-9 lg:p-12"><Eyebrow light>Une question sur votre projet ?</Eyebrow><h2 className="mt-4 text-4xl font-black tracking-[-.05em] sm:text-5xl">Faites le premier pas vers votre futur métier.</h2><p className="mt-5 max-w-xl text-lg leading-8 text-white/65">Cassandre vérifie votre éligibilité, votre dossier CNAPS et votre financement. Vous repartez avec des réponses claires et les prochaines étapes adaptées à votre situation.</p><div className="mt-6 flex flex-col gap-3 sm:flex-row"><CTA href={apsContact('rendez-vous avec Cassandre')} variant="gold">Réserver un rendez-vous →</CTA><CTA href="tel:0422470768" variant="outline">Appeler Cassandre</CTA></div><div className="mt-7 flex flex-wrap gap-2 text-xs font-bold text-white/60"><span className="rounded-full border border-white/10 bg-white/5 px-3 py-2">✓ Sans engagement</span><span className="rounded-full border border-white/10 bg-white/5 px-3 py-2">✓ Étude personnalisée</span><span className="rounded-full border border-white/10 bg-white/5 px-3 py-2">✓ Réponse sur le CNAPS et le financement</span></div></div><div className="relative min-h-[390px] p-7"><div className="absolute left-1/2 top-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/10 shadow-[0_0_0_50px_rgba(255,255,255,.025),0_0_0_100px_rgba(255,255,255,.015)]"/><div className={`${styles.adviserCard} absolute inset-x-7 bottom-9 rounded-[1.8rem] border border-white/70 bg-white/95 p-5 text-academy-ink backdrop-blur`}><div className="flex items-center gap-4"><div className="relative"><div className="absolute -inset-1 rounded-[1.15rem] bg-gradient-to-br from-academy-gold to-sky-400 opacity-70 blur"/><Image src="/images/cassandre-memoji.png" width={88} height={88} alt="Cassandre, responsable commerciale Intégrale Academy" className="relative h-20 w-20 rounded-2xl bg-white object-cover"/></div><div><p className="text-xs font-black uppercase tracking-[.18em] text-yellow-700">Votre conseillère</p><p className="mt-1 text-2xl font-black">Cassandre</p><p className="text-sm font-semibold text-academy-muted">Responsable commerciale</p></div></div><a href="tel:0422470768" className="mt-4 block rounded-full bg-academy-gold px-5 py-3 text-center font-black text-academy-gold-text transition hover:brightness-105">04 22 47 07 68</a></div></div></div></div></section>
 
-    <div className="fixed inset-x-0 bottom-0 z-40 border-t border-academy-line bg-[#FFFDF8]/96 p-3 pb-[calc(.75rem+env(safe-area-inset-bottom))] shadow-[0_-12px_40px_rgba(0,0,0,.12)] backdrop-blur lg:hidden"><div className="mx-auto flex max-w-lg gap-2"><CTA href="tel:0422470768" variant="light" className="min-w-0 flex-1 px-3">Appeler</CTA><CTA href={sessionHref(next)} variant="gold" className="min-w-0 flex-[1.4] px-3">Réserver ma place</CTA></div></div>
+    <div className="fixed inset-x-0 bottom-0 z-40 border-t border-academy-line bg-[#FFFDF8]/96 p-3 pb-[calc(.75rem+env(safe-area-inset-bottom))] shadow-[0_-12px_40px_rgba(0,0,0,.12)] backdrop-blur lg:hidden"><div className="mx-auto flex max-w-lg gap-2"><CTA href="tel:0422470768" variant="light" className="min-w-0 flex-1 px-3">Appeler</CTA><CTA href={sessionHref()} variant="gold" className="min-w-0 flex-[1.4] px-3">Réserver ma place</CTA></div></div>
   </main>;
 }

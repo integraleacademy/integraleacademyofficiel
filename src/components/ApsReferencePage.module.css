@@ -1665,3 +1665,78 @@
     transition: none;
   }
 }
+
+/* The terrain scenes share the visual language of the APS story gallery. */
+.immersionStories {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.immersionStories .storyCard { border-radius: 1.75rem; }
+.immersionStories .storyVisual { min-height: 0; aspect-ratio: 320 / 210; flex: none; }
+.immersionStories .storyCard h4 { font-size: 1.15rem; margin-top: 1.15rem; }
+.storyCaption { padding: 0 .65rem .3rem; margin-top: .75rem; color: #425773; font-size: .9rem; line-height: 1.75; text-align: center; }
+.storyBagCheck { animation: storyInspection 4s ease-in-out infinite; }
+.storyPatdownAgent { animation: storyPatrolWalk 4.2s ease-in-out infinite; }
+.storyPatdownZones { animation: storySignalPulse 3s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
+@keyframes storyInspection { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(-18px, 8px); } }
+
+.examDetails { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; margin-top: 1.5rem; }
+.examDetails article { border: 1px solid #dbe5f4; border-radius: 1.7rem; padding: clamp(1.3rem, 2.5vw, 2rem); background: #f0f6ff; }
+.examDetails h3 { margin-top: .8rem; font-size: clamp(1.35rem, 2vw, 1.65rem); font-weight: 900; line-height: 1.2; letter-spacing: -.03em; }
+.examDetails article > p:not(:first-child), .examDetails ul { margin-top: 1rem; font-size: .95rem; line-height: 1.8; color: #425773; }
+.examDetails ul { padding-left: 1.2rem; list-style: disc; }
+.examDetails li + li { margin-top: .6rem; }
+.examPracticalInfo { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+.examPracticalInfo article { border-top: 2px solid #b7cff0; padding-top: 1.2rem; }
+.examPracticalInfo span { color: #1d4ed8; font-size: .65rem; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; }
+.examPracticalInfo h3 { margin-top: .75rem; font-size: 1.1rem; line-height: 1.35; font-weight: 900; }
+.examPracticalInfo p { margin-top: .6rem; font-size: .9rem; line-height: 1.8; color: #5b6575; }
+
+.dualSkill {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-width: 0;
+  padding: clamp(1.25rem, 2.5vw, 2rem);
+  border: 1px solid #dbe3ee;
+  border-radius: 2rem;
+  background: linear-gradient(135deg, #f1f7ff, #fff 45%, #fff2ef);
+  box-shadow: 0 16px 55px #1722330a;
+  color: #172233;
+}
+.dualEyebrow { color: #526580; font-size: .65rem; font-weight: 900; text-transform: uppercase; letter-spacing: .22em; }
+.dualSkill > h3 { margin-top: 1rem; font-size: clamp(2rem, 3vw, 2.75rem); font-weight: 900; line-height: 1.03; letter-spacing: -.05em; }
+.dualSkill > h3 span { color: #c24135; }
+.dualIntro { margin-top: 1rem; max-width: 32rem; color: #5b6575; font-size: .95rem; line-height: 1.8; }
+.dualPanels { position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; margin-top: 1.5rem; }
+.dualPanels > div { min-width: 0; padding: 1rem .85rem; border: 1px solid; border-radius: 1.4rem; }
+.dualPanels .dualSecurity { background: #edf5ff; border-color: #c7dbf7; }
+.dualPanels .dualFire { background: #fff0ed; border-color: #facbc4; }
+.dualLabel { display: inline-flex; border-radius: 99px; padding: .4rem .65rem; background: #2563eb; color: #fff; font-size: .65rem; font-weight: 900; letter-spacing: .07em; }
+.dualFire .dualLabel { background: #d6342a; }
+.dualPlus { position: absolute; z-index: 1; left: 50%; top: 45%; transform: translate(-50%, -50%); display: grid; place-items: center; width: 2.5rem; height: 2.5rem; border-radius: 50%; background: #fff; border: 1px solid #e5e7eb; box-shadow: 0 6px 20px #17223315; font-size: 1.6rem; font-weight: 800; }
+.dualPanels h4 { font-size: .92rem; font-weight: 900; line-height: 1.3; }
+.dualPanels p { margin-top: .5rem; color: #526078; font-size: .8rem; line-height: 1.7; }
+.dualFooter { margin-top: 1.4rem; }
+.dualFooter > span { display: block; margin-bottom: 1rem; font-size: .8rem; font-weight: 800; text-align: center; }
+.dualFooter b { color: #d6342a; padding: 0 .25rem; }
+.dualFooter > p { margin-top: .8rem; color: #697589; font-size: .73rem; line-height: 1.6; text-align: center; }
+
+@media (max-width: 767px) {
+  .immersionStories, .examDetails, .examPracticalInfo { grid-template-columns: minmax(0, 1fr); }
+  .immersionStories .storyVisual { max-height: 250px; }
+  .immersionStories .storySvg { max-width: 370px; margin: auto; }
+  .dualSkill { padding: 1.25rem; }
+  .dualPanels { gap: .6rem; }
+  .dualPanels > div { padding: .85rem .6rem; }
+  .dualPlus { width: 2rem; height: 2rem; font-size: 1.2rem; }
+}
+@media (max-width: 360px) {
+  .dualPanels { grid-template-columns: minmax(0, 1fr); gap: 1rem; }
+  .dualPlus { top: 50%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .storyBagCheck, .storyPatdownAgent, .storyPatdownZones { animation: none; }
+}

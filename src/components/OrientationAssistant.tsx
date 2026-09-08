@@ -4,7 +4,7 @@ import Link from 'next/link';
 import FinancingSimulator from './FinancingSimulator';
 import { VaeEligibilityModal } from './VaeEligibilityModal';
 import { usePathname } from 'next/navigation';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { computedSeats, formatSessionDate } from '@/lib/public-sessions';
 import { securityFormations } from '@/data/formations';
 import { createPortal } from 'react-dom';
@@ -39,18 +39,22 @@ const formations: AssistantFormation[] = [
 type AssistantFormationDetails = { title: string; shortLabel: string; sessionSlugs: string[]; price: string; keyPoints: string[] };
 
 const formationDetails: Record<FormationKey, AssistantFormationDetails> = {
-  aps: { title: 'Formation Agent de sécurité privée (APS)', shortLabel: 'APS', sessionSlugs: ['aps'], price: apsFormation?.price || 'Tarif sur demande', keyPoints: ['Formation hybride : 51 h maximum à distance + 124 h minimum en présentiel', `Durée : ${apsFormation?.duration || '175 heures au total'}`, `Lieu : ${apsFormation?.locations || 'Puget-sur-Argens, Côte d’Azur'}`, `Certification : ${apsFormation?.certification || 'TFP APS · RNCP n°36648 · niveau 3'}`, 'Examen final en présentiel : QCU contextualisés + deux mises en situation individuelles', `Financements : ${apsFormation?.financing || 'CPF, France Travail ou paiement en plusieurs fois'}`] },
+  aps: { title: 'Formation Agent de sécurité privée (APS)', shortLabel: 'APS', sessionSlugs: ['aps'], price: apsFormation?.price || 'Tarif sur demande', keyPoints: ['Format : Hydrique (Distanciel + Présentiel) · 51 h à distance + 124 h en présentiel', `Durée : ${apsFormation?.duration || '175 heures au total'}`, `Lieu : ${apsFormation?.locations || 'Puget-sur-Argens, Côte d’Azur'}`, `Certification : ${apsFormation?.certification || 'TFP APS · RNCP n°36648 · niveau 3'}`, 'Examen final en présentiel : QCU contextualisés + deux mises en situation individuelles', `Financements : ${apsFormation?.financing || 'CPF, France Travail ou paiement en plusieurs fois'}`] },
   a3p: { title: 'Formation Agent de protection physique des personnes (A3P)', shortLabel: 'A3P', sessionSlugs: ['a3p-apr'], price: '4 200 €', keyPoints: ['Formation en présentiel orientée protection rapprochée', 'Durée : 9 semaines · 328 heures hors examen, dont 92 h 50 de pratique', 'Lieu : Puget-sur-Argens · hébergement collectif possible sur demande', 'Certification : TFP A3P · RNCP n°38002 · CNAPS', 'Évaluations théoriques et mises en situation professionnelles', 'Financements : CPF, France Travail et facilités de paiement selon dossier'] },
   desp: { title: 'Formation Dirigeant d’entreprise de sécurité privée (DESP)', shortLabel: 'DESP', sessionSlugs: ['desp-dssp', 'desp-initial'], price: '4 300 € initial · 3 800 € VAE', keyPoints: ['Deux parcours : formation initiale ou validation des acquis de l’expérience (VAE)', 'Durée : initial 7 semaines · 245 heures ; VAE environ 1 mois', 'Lieux : distanciel + Paris, Puget-sur-Argens ou Aurillac selon les sessions', 'Certification : DESP · RNCP n°40385 · agrément dirigeant CNAPS', 'Évaluation : QCU, mises en situation et jury professionnel', 'Financements : CPF, France Travail et facilités de paiement selon dossier'] },
   vtc: { title: 'Formation Chauffeur VTC', shortLabel: 'VTC', sessionSlugs: ['vtc'], price: '1 500 € tout inclus', keyPoints: ['Formation mixte : théorie en e-learning et pratique en présentiel', 'Durée : 105 heures', 'Pratique : Nice, Cannes, Toulon ou Fréjus', 'Certification : RS n°5637 · agrément préfectoral VTC-26-001', 'Le tarif inclut le livre, la pratique, le véhicule et les frais d’examen', 'Financement CPF selon éligibilité avec accompagnement administratif'] },
   bts: { title: 'BTS en alternance', shortLabel: 'BTS', sessionSlugs: ['bts-mos', 'bts-mco'], price: 'Sans frais pour l’apprenti', keyPoints: ['Parcours : MOS, MCO, NDRC, Commerce international, Professions immobilières et Comptabilité-Gestion', 'Durée habituelle : 2 ans en alternance', 'Modalités : présentiel ou distanciel selon le BTS et le dossier', 'Certification : diplôme national de niveau 5 délivré par le Ministère de l’Éducation nationale', 'Admission : niveau bac ou titre équivalent et projet d’alternance', 'Financement : prise en charge par l’entreprise et son OPCO selon le contrat'] },
 };
 
-export function OrientationAssistant({initialFormationKey, initialStep, hideInfoAction = false, variant = 'default'}:{initialFormationKey?:FormationKey; initialStep?:Step; hideInfoAction?:boolean; variant?:'default'|'homeDock'} = {}){
+export function OrientationAssistant({initialFormationKey, initialStep, hideInfoAction = false, variant = 'default'}:{initialFormationKey?:FormationKey; initialStep?:Step; hideInfoAction?:boolean; variant?:'default'|'homeDock'|'modalTrigger'} = {}){
   const pathname = usePathname();
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const dialogId = useId();
   const [isOpen, setIsOpen] = useState(true);
   const [isExpanded, setIsExpanded] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const sessionsActive = variant !== 'modalTrigger' || isExpanded;
   const [step, setStep] = useState<Step>(initialStep ?? (initialFormationKey ? 2 : 'formations'));
   const [sessions, setSessions] = useState<AssistantSession[]>([]);
   const [selectedKey, setSelectedKey] = useState<FormationKey | null>(initialFormationKey ?? null);
@@ -76,15 +80,30 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
   }, []);
 
   useEffect(() => {
+    if (!sessionsActive) return;
     fetch('/api/sessions')
       .then(response => response.ok ? response.json() : Promise.reject())
       .then(data => setSessions(Array.isArray(data.sessions) ? data.sessions : []))
       .catch(() => setSessions([]));
-  }, []);
+  }, [sessionsActive]);
 
   useEffect(() => () => {
     if (loadingTimeoutRef.current) window.clearTimeout(loadingTimeoutRef.current);
   }, []);
+
+  useEffect(() => {
+    if (variant !== 'modalTrigger' || !isExpanded || !isMounted) return;
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+    const previousOverflow = document.body.style.overflow;
+    dialog.showModal();
+    document.body.style.overflow = 'hidden';
+    return () => {
+      dialog.close();
+      document.body.style.overflow = previousOverflow;
+      triggerRef.current?.focus();
+    };
+  }, [variant, isExpanded, isMounted]);
 
   function chooseFormation(key: FormationKey){
     if (loadingTimeoutRef.current) window.clearTimeout(loadingTimeoutRef.current);
@@ -171,7 +190,7 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
           <h2 className="mt-2 text-2xl font-black tracking-tight sm:text-3xl">Notre assistant va vous aider</h2>
           <p className="mt-2 text-sm font-medium leading-6 text-stone-600">{step === 'formations' ? 'Je souhaite des renseignements concernant la formation :' : selectedFormation?.label}</p>
         </div>
-        <button type="button" onClick={minimizeAssistant} className={isExpanded ? 'shrink-0 rounded-full border border-academy-line bg-white px-4 py-2 text-sm font-black text-stone-600 transition hover:bg-stone-50 hover:text-academy-ink' : 'grid h-10 w-10 shrink-0 place-items-center rounded-full border border-academy-line bg-white text-lg font-black text-stone-500 transition hover:bg-stone-50 hover:text-academy-ink'} aria-label="Réduire l’assistant">{isExpanded ? 'Réduire' : '×'}</button>
+        <button type="button" onClick={minimizeAssistant} className={isExpanded ? 'shrink-0 rounded-full border border-academy-line bg-white px-4 py-2 text-sm font-black text-stone-600 transition hover:bg-stone-50 hover:text-academy-ink' : 'grid h-10 w-10 shrink-0 place-items-center rounded-full border border-academy-line bg-white text-lg font-black text-stone-500 transition hover:bg-stone-50 hover:text-academy-ink'} aria-label={variant === 'modalTrigger' ? 'Fermer l’assistant' : 'Réduire l’assistant'}>{variant === 'modalTrigger' ? 'Fermer ×' : isExpanded ? 'Réduire' : '×'}</button>
       </div>
 
 
@@ -228,6 +247,25 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
       </div>
     </div>
   </aside>;
+
+  if (variant === 'modalTrigger') {
+    return <>
+      <button ref={triggerRef} type="button" aria-haspopup="dialog" aria-expanded={isExpanded} aria-controls={dialogId} onClick={() => setIsExpanded(true)} className="flex w-full items-center gap-3 rounded-[1.35rem] border border-academy-line bg-white p-4 text-left text-academy-ink shadow-soft transition hover:border-blue-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
+        <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-blue-50 text-xl font-black text-blue-700" aria-hidden="true">✦</span>
+        <span className="min-w-0 flex-1"><strong className="block text-sm font-black">Notre assistant va vous aider</strong><small className="mt-1 block text-xs font-semibold text-academy-muted">Les réponses à vos questions sur l’APS.</small></span>
+        <span className="text-lg font-black text-blue-700" aria-hidden="true">↗</span>
+      </button>
+      {isExpanded && isMounted && createPortal(
+        <dialog ref={dialogRef} id={dialogId} aria-label="Notre assistant va vous aider" onCancel={() => resetAssistantState()} onClick={(event) => {
+          if (event.target !== event.currentTarget) return;
+          const rect = event.currentTarget.getBoundingClientRect();
+          if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) resetAssistantState();
+        }} className="m-auto max-h-[calc(100dvh-24px)] max-w-[calc(100vw-24px)] overflow-visible rounded-[2rem] border-0 bg-transparent p-0 backdrop:bg-slate-950/60 backdrop:backdrop-blur-sm">
+          {assistantPanel}
+        </dialog>, document.body
+      )}
+    </>;
+  }
 
   if (isExpanded) {
     const expandedPanel = <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-academy-ink/45 p-3 backdrop-blur-sm sm:p-6" role="presentation">{assistantPanel}</div>;
