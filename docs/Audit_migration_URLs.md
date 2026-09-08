@@ -34,7 +34,7 @@ Les liens de l’accueil, du catalogue, des comparateurs, de l’assistant d’o
 | `/gestion` | `/gestion` | Adresse conservée |
 | `/candidature` | `https://inscriptionsbts.onrender.com/` | Redirection permanente préparée |
 | `/bts` | `/bts` | Adresse conservée |
-| `/rdvteldirigeant` | `/contact?formation=desp&type=rdv` | Redirection permanente préparée |
+| `/rdvteldirigeant` | `https://assistance-alw9.onrender.com/demande-informations-formations?formation=DESP_INIT` | Redirection permanente vers le CRM |
 | `/btsndrc` | `/bts/ndrc` | Redirection permanente préparée |
 | `/despvaeouinitial` | `/despvaeouinitial` | Adresse conservée |
 | `/btsmco` | `/bts/mco` | Redirection permanente préparée |
@@ -44,19 +44,19 @@ Les liens de l’accueil, du catalogue, des comparateurs, de l’assistant d’o
 | `/planning` | `/planning` | Adresse conservée |
 | `/` | `/` | Adresse conservée |
 | `/cpsp` | `/formations-securite/cpsp` | Redirection permanente préparée |
-| `/reservationrdvvtc` | `/contact?formation=vtc&type=rdv` | Redirection permanente préparée |
+| `/reservationrdvvtc` | `https://assistance-alw9.onrender.com/demande-informations-formations?formation=VTC` | Redirection permanente vers le CRM |
 | `/a3p` | `/formations-securite/a3p-apr` | Redirection permanente préparée |
 | `/ssiap1` | `/formations-securite/ssiap-1` | Redirection permanente préparée |
 | `/faq` | `/faq` | Adresse conservée |
 | `/cap` | `À décider` | En attente |
-| `/rdvvtc` | `À décider` | En attente |
+| `/rdvvtc` | `/rdvvtc` | Confirmation de rappel reprise, hors indexation |
 | `/securiteprivee` | `/formations-securite/aps` | Redirection permanente préparée |
 | `/dossiersfc` | `/dossiersfc` | Adresse conservée |
 | `/vtc` | `/vtc` | Adresse conservée |
 | `/btsprofessionsimmobilieres` | `/bts/professions-immobilieres` | Redirection permanente préparée |
 | `/dossiervtc` | `/dossiersfc#vtc` | Redirection permanente préparée |
 | `/securiteprivee-1` | `/formations-securite` | Redirection permanente préparée |
-| `/rdvconfirmedirigeant` | `À décider` | En attente |
+| `/rdvconfirmedirigeant` | `/rdvconfirmedirigeant` | Confirmation de rappel reprise, hors indexation |
 | `/commerceinternational` | `/bts/commerce-international` | Redirection permanente préparée |
 | `/alternance` | `/financements/alternance` | Redirection permanente préparée |
 | `/ecole` | `/ecole` | Adresse conservée |
@@ -65,7 +65,7 @@ Les liens de l’accueil, du catalogue, des comparateurs, de l’assistant d’o
 
 `/faq` est reprise avec les questions communes déjà présentes dans le catalogue BTS du nouveau site. L’ancienne FAQ contient des références à 2025 : il ne s’agit pas d’une copie exhaustive de ses anciens textes.
 
-`/formulairevtc` et `/dossiervtc` rejoignent directement la carte du dossier VTC sur `/dossiersfc#vtc`. Les demandes de rappel rejoignent la page contact avec les paramètres de formation. Ces chemins ne déclenchent aucun envoi lors d’une simple visite.
+`/formulairevtc` et `/dossiervtc` rejoignent directement la carte du dossier VTC sur `/dossiersfc#vtc`. Les demandes de rappel rejoignent le formulaire existant du CRM avec la formation présélectionnée. Ces chemins ne déclenchent aucun envoi lors d’une simple visite.
 
 ## Autres redirections préparées
 
@@ -100,10 +100,20 @@ Les redirections utilisent HTTP 308, le statut permanent natif de Next.js. Les p
 | Page | Constat | Traitement restant |
 |---|---|---|
 | `/cap` | Présente dans le sitemap de l’ancien site ; cinq CAP y sont proposés avec des informations 2025. Aucune page CAP correspondante dans le nouveau site. | Confirmer si l’offre CAP est conservée. Si oui, reprendre la page et actualiser son contenu ; sinon, organiser son retrait avec une réponse adaptée. Aucune redirection vers une formation sans rapport n’a été ajoutée. |
-| `/rdvvtc` | Ancienne page « demande de rappel confirmée ». | Identifier le formulaire ou l’automatisation qui utilise cette URL et le suivi publicitaire associé avant de la reprendre ou de la retirer. |
-| `/rdvconfirmedirigeant` | Ancienne page de confirmation de demande de rappel dirigeant. | Même contrôle du formulaire et des événements de conversion. |
 
-Ces trois URL restent non reprises dans la version préparée. Elles empêchent de considérer la reprise du sitemap historique comme totalement achevée.
+La page `/cap` reste non reprise : la décision sur l’offre CAP empêche de considérer la reprise du sitemap historique comme totalement achevée.
+
+### Complément de vérification du 8 septembre 2026
+
+La PR 372 est fusionnée dans `main` au commit `b1b7bfd8124432fe705fdf68e2abb5b8cd48077f`. Render confirme le déploiement `dep-dag4oq97lnhs7386otlg` en état `live`. Les 38 pages publiques du contrôle HTTP ont répondu 200. Le domaine `www.integraleacademy.com` sert toujours l’ancien site Wix.
+
+La reprise du contrôle a identifié le parcours des deux confirmations : dans la version courante de `integraleacademy/assistance`, la route publique `POST /rappel` enregistre la demande puis redirige vers `/rdvvtc` ou `/rdvconfirmedirigeant`. Ces deux pages sont donc conservées aux mêmes adresses, avec leur message de confirmation et des liens vers les formations. Elles sont exclues de l’indexation et du sitemap. Aucun nouvel événement publicitaire n’est ajouté sur leur simple consultation ; le suivi configuré dans les plateformes publicitaires reste à contrôler lors de la bascule.
+
+Les anciennes demandes de rappel `/rdvteldirigeant` et `/reservationrdvvtc` pointaient vers un formulaire de contact qui affichait un message local sans transmettre les informations. Elles sont corrigées pour rejoindre directement `/demande-informations-formations` sur le CRM. Les codes `DESP_INIT` et `VTC` sont reconnus par le formulaire courant, qui présélectionne `formation` depuis l’URL. Les paramètres publicitaires sont conservés par les redirections.
+
+Sur `/contact`, le formulaire sans transmission est remplacé par un accès au formulaire du CRM, accompagné des contacts e-mail pour les BTS et les autres demandes. Le lien reprend la formation reconnue et les paramètres de campagne de la page. Les noms, e-mails et paramètres arbitraires ne sont pas recopiés dans cette URL. La vérification ne soumet aucune demande réelle.
+
+Validation du complément : compilation de production avec TypeScript réussie, sept tests de migration réussis, vérification des deux pages de confirmation dans le HTML généré et des deux redirections 308 dans le manifeste de production. Le contrôle final des adresses déployées est effectué après publication. L’affichage et l’envoi complet du formulaire externe ne sont pas validés par ces tests.
 
 ## Contrôles à faire au changement de domaine
 
