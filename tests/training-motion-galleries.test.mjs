@@ -7,6 +7,7 @@ const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf
 const gallery = read('src/components/TrainingMotionGallery.tsx');
 const styles = read('src/components/TrainingMotionGallery.module.css');
 const despCards = read('src/components/DespIllustratedCards.tsx');
+const illustratedCards = read('src/components/TrainingIllustratedCards.tsx');
 const pages = {
   a3p: read('src/components/A3pReferencePage.tsx'),
   ssiap: read('src/components/SsiapReferencePage.tsx'),
@@ -38,6 +39,8 @@ const expectedStories = {
 };
 
 test('chaque formation affiche ses scènes dans la galerie ou les cartes métier', () => {
+  const sharedCard = illustratedCards.slice(illustratedCards.indexOf('<article key={item.title}'), illustratedCards.indexOf('</article>'));
+  assert.ok(sharedCard.includes('<TrainingMotionIllustration kind={scene.kind} theme={theme} description={scene.description} />'));
   for (const [variant, source] of Object.entries(pages)) {
     if (variant === 'a3p') {
       const immersion = source.slice(source.indexOf('<Section id="pedagogie"'), source.indexOf('<Section id="certification"'));
@@ -58,12 +61,29 @@ test('chaque formation affiche ses scènes dans la galerie ou les cartes métier
       const section = source.slice(source.indexOf(`id="${sectionId}"`), source.indexOf(initial ? '</TextSection>' : '</section>', source.indexOf(`id="${sectionId}"`)));
       assert.ok(section.includes(`<DespIllustratedCards items={${items}}/>`), `${variant} : visuels absents des cartes existantes`);
       assert.doesNotMatch(source, /<TrainingMotionGallery/);
-      const card = despCards.slice(despCards.indexOf('<article key={item.title}'), despCards.indexOf('</article>'));
-      assert.ok(card.includes('<TrainingMotionIllustration kind={scene.kind} theme="orange" description={scene.description} />'));
+      assert.ok(despCards.includes('<TrainingIllustratedCards items={items} theme="orange" />'));
       const scenes = initial
         ? ['business', 'compliance', 'finance', 'commercial', 'team', 'approval', 'evidence', 'site-check', 'briefing']
         : ['profile-review', 'feasibility', 'approval', 'evidence', 'competencies', 'jury', 'certificate'];
       for (const scene of scenes) assert.ok(source.includes(`kind: '${scene}'`), `${variant} : visuel manquant ${scene}`);
+      continue;
+    }
+    if (variant.startsWith('bts') || variant === 'vtc') {
+      const vtc = variant === 'vtc';
+      const sectionId = vtc ? 'programme' : ['btsMos', 'btsMco'].includes(variant) ? 'metier' : 'competences';
+      const items = vtc ? 'program' : ['btsMos', 'btsMco', 'btsNdrc'].includes(variant) ? 'careerSteps' : 'skillCards';
+      const sectionStart = source.indexOf(`id="${sectionId}"`);
+      const section = source.slice(sectionStart, source.indexOf(vtc ? '</section>' : '</Section>', sectionStart));
+      assert.ok(section.includes(`<TrainingIllustratedCards items={${items}} theme="${vtc ? 'violet' : 'blue'}" />`), `${variant} : visuels absents des cartes existantes`);
+      assert.doesNotMatch(source, /<TrainingMotionGallery/);
+      const dataStart = source.indexOf(`const ${items} = [`);
+      const data = source.slice(dataStart, source.indexOf('] as const satisfies readonly TrainingIllustratedCard[];', dataStart));
+      assert.equal((data.match(/\btitle:/g) || []).length, vtc ? 7 : 4, `${variant} : cartes manquantes`);
+      const galleryStart = gallery.indexOf(`  ${variant}: {`);
+      const originalGallery = gallery.slice(galleryStart, gallery.indexOf('\n  },', galleryStart));
+      for (const [, scene] of originalGallery.matchAll(/\['([^']+)',/g)) {
+        assert.ok(data.includes(`kind: "${scene}"`), `${variant} : ancien visuel manquant ${scene}`);
+      }
       continue;
     }
     assert.ok(source.includes(`import { TrainingMotionGallery } from '@/components/TrainingMotionGallery';`), `import manquant pour ${variant}`);
@@ -104,7 +124,7 @@ test('A3P et SSIAP conservent leur scène principale en plus des cartes détaill
   assert.match(pages.ssiap, /<MissionAnimation variant="ssiap"/);
 });
 
-test('les six BTS conservent leur scène principale en plus de leur galerie détaillée', () => {
+test('les six BTS conservent leur scène principale en plus de leurs cartes détaillées', () => {
   for (const [variant, animation] of [
     ['btsMos', 'mos'],
     ['btsMco', 'mco'],
@@ -117,9 +137,9 @@ test('les six BTS conservent leur scène principale en plus de leur galerie dét
   }
 });
 
-test('la page VTC conserve son animation d’itinéraire et ajoute sa galerie violette', () => {
+test('la page VTC conserve son animation d’itinéraire et illustre les cartes en violet', () => {
   assert.match(pages.vtc, /<MissionAnimation variant="vtc"/);
-  assert.match(pages.vtc, /<TrainingMotionGallery variant="vtc"/);
+  assert.match(pages.vtc, /<TrainingIllustratedCards items=\{program\} theme="violet"/);
   assert.match(gallery, /vtc:[\s\S]*?theme: 'violet'/);
   assert.match(styles, /\.violet\s*\{[\s\S]*?--accent:\s*#7c3aed/);
 });

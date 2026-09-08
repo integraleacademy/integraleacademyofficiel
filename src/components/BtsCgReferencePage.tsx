@@ -2,7 +2,7 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { BtsSectionNavigation } from '@/components/BtsSectionNavigation';
 import { MissionAnimation } from '@/components/MissionAnimation';
-import { TrainingMotionGallery } from '@/components/TrainingMotionGallery';
+import { TrainingIllustratedCards, type TrainingIllustratedCard } from '@/components/TrainingIllustratedCards';
 import { PremiumFAQSection } from '@/components/ui';
 
 const applicationUrl = 'https://inscriptionsbts.onrender.com/';
@@ -14,11 +14,41 @@ const contactHref = (subject = 'BTS Comptabilité et Gestion') =>
   `mailto:${aurelieEmail}?subject=${encodeURIComponent(subject)}`;
 
 const skillCards = [
-  ['01', 'Comptabiliser', 'Fiabiliser les opérations', 'Clients, fournisseurs, trésorerie, rapprochements bancaires et clôture.', 'cyan'],
-  ['02', 'Déclarer', 'Maîtriser fiscalité et social', 'TVA, impôts, paie, obligations sociales et veille réglementaire.', 'coral'],
-  ['03', 'Analyser', 'Mesurer la performance', 'Coûts, budgets, trésorerie, rentabilité et diagnostic financier.', 'green'],
-  ['04', 'Piloter', 'Éclairer les décisions', 'Tableaux de bord, reporting, données fiables et outils numériques.', 'gold'],
-] as const;
+  {
+    number: "01", label: "Comptabiliser",
+    title: "Fiabiliser les opérations",
+    description: "Clients, fournisseurs, trésorerie, rapprochements bancaires et clôture.",
+    scenes: [
+      { kind: "evidence", description: "Animation de pièces comptables classées puis enregistrées avec méthode" },
+      { kind: "feasibility", description: "Animation d’écritures comptables vérifiées une à une avant validation" },
+    ],
+  },
+  {
+    number: "02", label: "Déclarer",
+    title: "Maîtriser fiscalité et social",
+    description: "TVA, impôts, paie, obligations sociales et veille réglementaire.",
+    scenes: [
+      { kind: "compliance", description: "Animation d’un dossier fiscal et social contrôlé avant son échéance" },
+    ],
+  },
+  {
+    number: "03", label: "Analyser",
+    title: "Mesurer la performance",
+    description: "Coûts, budgets, trésorerie, rentabilité et diagnostic financier.",
+    scenes: [
+      { kind: "finance", description: "Animation d’un budget comparant les prévisions aux résultats réalisés" },
+      { kind: "risk-radar", description: "Animation d’indicateurs analysés pour repérer les écarts significatifs" },
+    ],
+  },
+  {
+    number: "04", label: "Piloter",
+    title: "Éclairer les décisions",
+    description: "Tableaux de bord, reporting, données fiables et outils numériques.",
+    scenes: [
+      { kind: "approval", description: "Animation d’un dossier de clôture finalisé après les derniers contrôles" },
+    ],
+  },
+] as const satisfies readonly TrainingIllustratedCard[];
 
 const program = [
   ['01', 'Culture générale et expression', 'Comprendre, synthétiser, argumenter et communiquer avec précision dans les situations professionnelles.'],
@@ -199,13 +229,13 @@ export function BtsCgReferencePage() {
       </Section>
 
       <Section id="competences" eyebrow="02 — Bien plus que saisir des chiffres" title={<>Vous rendez l’entreprise plus fiable, plus lisible et mieux pilotée.</>} intro={<>Vous apprenez à produire une information juste, respecter les obligations, analyser la performance et aider les dirigeants à prendre de meilleures décisions.</>} tone="paper">
-        <div className="grid gap-5 lg:grid-cols-[.68fr_1.32fr]">
-          <article className="rounded-[2rem] bg-[#0D1725] p-7 text-white shadow-card lg:p-9"><Eyebrow light>Votre montée en compétences</Eyebrow><h3 className="mt-4 text-3xl font-black tracking-[-.04em]">De la pièce comptable au tableau de bord.</h3><p className="mt-4 leading-7 text-white/62">Vous progressez du traitement quotidien des opérations jusqu’à l’analyse financière, en utilisant les outils numériques du métier.</p><p className="mt-12 text-7xl font-black text-academy-gold">3+1</p><p className="mt-2 text-xs font-black uppercase tracking-[.18em] text-white/70">blocs métier et système d’information</p></article>
-          <div className="grid gap-4 sm:grid-cols-2">{skillCards.map(([number, label, title, text, tone]) => { const accent = tone === 'cyan' ? 'bg-cyan-400' : tone === 'green' ? 'bg-emerald-400' : tone === 'coral' ? 'bg-[#FF6B55]' : 'bg-academy-gold'; return <article key={number} className="relative overflow-hidden rounded-[1.7rem] border border-academy-line bg-[#FFFDF8] p-5 shadow-soft"><span className={`absolute inset-x-5 top-0 h-1 rounded-full ${accent}`} /><p className="mt-2 text-[.62rem] font-black uppercase tracking-[.16em] text-academy-muted">{number} · {label}</p><h3 className="mt-5 text-xl font-black">{title}</h3><p className="mt-3 text-sm leading-6 text-academy-muted">{text}</p></article>; })}</div>
+        <TrainingIllustratedCards items={skillCards} theme="blue" />
+        <div className="mt-6 grid items-center gap-5 rounded-[1.7rem] border border-blue-200 bg-blue-50 p-6 sm:grid-cols-[1fr_auto]">
+          <div><Eyebrow>Votre montée en compétences</Eyebrow><h3 className="mt-3 text-2xl font-black text-blue-950">De la pièce comptable au tableau de bord.</h3><p className="mt-3 max-w-3xl text-sm leading-7 text-blue-950/70">Vous progressez du traitement quotidien des opérations jusqu’à l’analyse financière, en utilisant les outils numériques du métier.</p></div>
+          <div className="rounded-2xl border border-blue-200 bg-white/70 px-6 py-4"><p className="text-4xl font-black text-blue-700">3+1</p><p className="mt-2 max-w-[14rem] text-xs font-black uppercase tracking-[.12em] text-blue-950/70">blocs métier et système d’information</p></div>
         </div>
         <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{['Assistant comptable', 'Collaborateur en cabinet', 'Comptable junior', 'Assistant contrôle de gestion'].map((job) => <div key={job} className="rounded-2xl border border-academy-line bg-academy-bg p-4 text-center font-black">{job}</div>)}</div>
         <MissionAnimation variant="cg" className="mt-8" />
-        <TrainingMotionGallery variant="btsCg" />
       </Section>
 
       <Section id="formats" eyebrow="03 — Deux formats, le même BTS" title={<>Choisissez la façon d’étudier qui vous correspond vraiment.</>} intro={<>Le format est un choix d’organisation. Le diplôme, le programme officiel, les cours en direct et l’accompagnement restent les mêmes.</>}>

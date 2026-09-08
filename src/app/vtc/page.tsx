@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { MissionAnimation } from '@/components/MissionAnimation';
-import { TrainingMotionGallery } from '@/components/TrainingMotionGallery';
+import { TrainingIllustratedCards, type TrainingIllustratedCard } from '@/components/TrainingIllustratedCards';
 import { TrainingSectionNavigation } from '@/components/TrainingSectionNavigation';
 import { PremiumFAQSection } from '@/components/ui';
 import styles from './vtc.module.css';
@@ -47,14 +47,65 @@ const included = [
 ];
 
 const program = [
-  ['A', 'Réglementation T3P', 'Comprendre le cadre du transport public particulier de personnes.'],
-  ['B', 'Gestion', 'Calculer ses coûts, sa marge et organiser une activité rentable.'],
-  ['C', 'Sécurité routière', 'Adopter une conduite sûre, souple et professionnelle.'],
-  ['D', 'Français & anglais', 'Accueillir, comprendre et accompagner tous les passagers.'],
-  ['E', 'Développement commercial', 'Trouver des clients, valoriser son service et les fidéliser.'],
-  ['F', 'Réglementation VTC', 'Maîtriser les obligations propres au métier et au véhicule.'],
-  ['G', 'Épreuve pratique', 'Préparer une course, conduire, accueillir, facturer et encaisser.'],
-];
+  {
+    number: "A",
+    title: "Réglementation T3P",
+    description: "Comprendre le cadre du transport public particulier de personnes.",
+    scenes: [
+      { kind: "compliance", description: "Animation d’un contrôle des règles applicables au transport public particulier de personnes" },
+    ],
+  },
+  {
+    number: "B",
+    title: "Gestion",
+    description: "Calculer ses coûts, sa marge et organiser une activité rentable.",
+    scenes: [
+      { kind: "finance", description: "Animation d’une prestation chiffrée puis facturée de manière professionnelle" },
+    ],
+  },
+  {
+    number: "C",
+    title: "Sécurité routière",
+    description: "Adopter une conduite sûre, souple et professionnelle.",
+    scenes: [
+      { kind: "secure-vehicle", description: "Animation d’un véhicule suivant un itinéraire avec une conduite sûre et souple" },
+    ],
+  },
+  {
+    number: "D",
+    title: "Français & anglais",
+    description: "Accueillir, comprendre et accompagner tous les passagers.",
+    scenes: [
+      { kind: "profile-review", description: "Animation des besoins d’un passager identifiés pour personnaliser son accueil" },
+    ],
+  },
+  {
+    number: "E",
+    title: "Développement commercial",
+    description: "Trouver des clients, valoriser son service et les fidéliser.",
+    scenes: [
+      { kind: "commercial", description: "Animation d’une relation client développée après une prestation réussie" },
+    ],
+  },
+  {
+    number: "F",
+    title: "Réglementation VTC",
+    description: "Maîtriser les obligations propres au métier et au véhicule.",
+    scenes: [
+      { kind: "approval", description: "Animation d’un dossier vérifié au regard des obligations du chauffeur et du véhicule VTC" },
+    ],
+  },
+  {
+    number: "G",
+    title: "Épreuve pratique",
+    description: "Préparer une course, conduire, accueillir, facturer et encaisser.",
+    wide: true,
+    scenes: [
+      { kind: "emergency-call", description: "Animation d’une réservation reçue puis confirmée avec toutes les informations utiles" },
+      { kind: "mission-map", description: "Animation d’un trajet optimisé avant la prise en charge du passager" },
+    ],
+  },
+] as const satisfies readonly TrainingIllustratedCard[];
 
 const examDates = [
   ['11 septembre 2026', '29 septembre 2026', '26 octobre 2026'],
@@ -192,8 +243,7 @@ export default function VtcPage() {
     <section id="programme" className={styles.program}>
       <div className={styles.container}>
         <div className={styles.sectionHead}><div><span>06 — Les compétences</span><h2>Bien plus que conduire.<br/><em>Devenez professionnel.</em></h2></div><p>Le programme suit les compétences évaluées à l’examen et celles qui feront la différence face à vos futurs clients.</p></div>
-        <div className={styles.programGrid}>{program.map(([letter,title,text],index)=><article key={letter} className={index===6?styles.programFeatured:''}><span>{letter}</span><div><h3>{title}</h3><p>{text}</p></div><Icon name="arrow"/></article>)}</div>
-        <TrainingMotionGallery variant="vtc" />
+        <TrainingIllustratedCards items={program} theme="violet" />
       </div>
     </section>
 
