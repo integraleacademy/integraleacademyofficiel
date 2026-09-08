@@ -38,12 +38,12 @@ const missions = [
 ];
 
 const apsVisualStories = [
-  ['patrol', 'Les rondes de sécurité', 'Animation d’un agent effectuant une ronde autour d’un bâtiment'],
-  ['night', 'La vigilance de nuit', 'Animation d’une lampe balayant un site pendant une surveillance de nuit'],
-  ['access', 'Le contrôle d’accès', 'Animation d’un agent vérifiant un badge devant une barrière de contrôle'],
-  ['video', 'La surveillance vidéo', 'Animation d’un écran de vidéoprotection affichant quatre zones surveillées'],
-  ['report', 'Observer et rendre compte', 'Animation d’un compte rendu complété après une observation'],
-  ['alert', 'Réagir et alerter', 'Animation d’une radio transmettant une alerte depuis le terrain'],
+  ['patrol', 'Les rondes de sécurité', 'Animation d’un agent effectuant une ronde autour d’un bâtiment', 'Suivre un itinéraire, repérer les anomalies et transmettre les observations.'],
+  ['night', 'La vigilance de nuit', 'Animation d’une lampe balayant un site pendant une surveillance de nuit', 'Observer les zones sensibles et adapter sa vigilance aux conditions de nuit.'],
+  ['access', 'Le contrôle d’accès', 'Animation d’un agent vérifiant un badge devant une barrière de contrôle', 'Vérifier les autorisations, accueillir le public et gérer les flux avec calme et précision.'],
+  ['video', 'La surveillance vidéo', 'Animation d’un écran de vidéoprotection affichant quatre zones surveillées', 'Observer les écrans de vidéoprotection et repérer une situation inhabituelle.'],
+  ['report', 'Observer et rendre compte', 'Animation d’un compte rendu complété après une observation', 'Rédiger un compte rendu précis pour assurer la traçabilité des événements.'],
+  ['alert', 'Réagir et alerter', 'Animation d’une radio transmettant une alerte depuis le terrain', 'Donner l’alerte et transmettre les informations utiles par radio.'],
 ] as const;
 
 type ApsVisualStoryKind = typeof apsVisualStories[number][0] | 'baggage' | 'patdown';
@@ -442,30 +442,29 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
 
     <Section id="metier" eyebrow="01 — Le métier" title={<>Un métier de terrain, de vigilance et de sang-froid.</>} intro={<>L’agent APS prévient les risques, protège les personnes et les biens, applique les consignes et rend compte de chaque événement.</>}>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-12">{missions.map(([icon,title,text,featured],index) => <article key={String(title)} className={`${styles.liftCard} ${index === 0 || index === 4 ? 'lg:col-span-5' : index === 1 || index === 3 ? 'lg:col-span-3' : 'lg:col-span-4'} rounded-[1.8rem] border p-6 shadow-soft ${featured ? 'border-[#26384F] bg-[#0D1725] text-white' : 'border-academy-line bg-[#FFFDF8]'}`}><span className={styles.cardNumber}>MISSION 0{index+1}</span><span className={`grid h-12 w-12 place-items-center rounded-2xl text-xl font-black ${featured ? 'bg-white/10 text-sky-300' : 'bg-academy-bg text-yellow-700'}`}>{icon}</span><h3 className="mt-7 text-xl font-black">{title}</h3><p className={`mt-3 leading-7 ${featured ? 'text-white/65' : 'text-academy-muted'}`}>{text}</p></article>)}</div>
-      <div className={styles.visualStoriesBlock}>
-        <div className={styles.visualStoriesIntro}>
-          <div><Eyebrow>APS en mouvement</Eyebrow><h3>Les réflexes métier, en images.</h3></div>
-          <p>Des gestes simples à visualiser, puis à répéter sur le terrain jusqu’à ce qu’ils deviennent naturels.</p>
-        </div>
-        <div className={styles.visualStoriesGrid}>{apsVisualStories.map(([kind,title,description]) => <ApsStoryIllustration key={kind} kind={kind} title={title} description={description} />)}</div>
-      </div>
       <div className={`${styles.liftCard} mt-8 grid gap-5 rounded-[2rem] border border-academy-line bg-white p-6 shadow-soft lg:grid-cols-[.7fr_1.3fr] lg:p-8`}><div><Eyebrow>À qui s’adresse la formation ?</Eyebrow><h3 className="mt-3 text-3xl font-black">Un parcours accessible, un métier réglementé.</h3><p className="mt-4 leading-7 text-academy-muted">Aucune expérience préalable dans la sécurité n’est obligatoire.</p></div><div className="grid gap-3 sm:grid-cols-2">{audiences.map((item,index) => <div key={item} className="flex items-center gap-3 rounded-2xl bg-academy-bg p-4 font-bold"><span className={`grid h-8 w-8 shrink-0 place-items-center rounded-full text-xs font-black ${index === 5 ? 'bg-orange-100 text-orange-700' : 'bg-sky-100 text-sky-700'}`}>✓</span>{item}</div>)}</div></div>
     </Section>
 
     <Section id="admission" eyebrow="02 — Admission" title={<>Votre dossier est-il prêt pour l’APS&nbsp;?</>} intro={<>Nous contrôlons chaque condition avant votre entrée en formation et vous accompagnons dans la démarche d’autorisation préalable.</>} tone="stone"><div className="grid gap-4 md:grid-cols-2">{prerequisites.map(([title,text]) => <article key={title} className={`${styles.liftCard} rounded-[1.7rem] border border-[#D8CEBD] bg-white/90 p-5`}><span className="grid h-9 w-9 place-items-center rounded-full bg-blue-100 font-black text-blue-700">✓</span><h3 className="mt-4 text-xl font-black">{title}</h3><p className="mt-2 leading-7 text-academy-muted">{text}</p></article>)}</div><div className="mt-7 flex flex-col items-start justify-between gap-5 rounded-[1.8rem] bg-gradient-to-r from-[#F7D57D] to-[#F0B52E] p-6 text-academy-gold-text lg:flex-row lg:items-center"><div><p className="text-xl font-black">Bonne nouvelle : nous préparons votre demande CNAPS.</p><p className="mt-1 font-semibold opacity-75">Vous fournissez les documents, notre équipe vous accompagne dans le dépôt.</p></div><CTA href={apsContact('autorisation préalable CNAPS')} variant="dark">Faire vérifier mon dossier →</CTA></div><div className="mt-8 grid gap-3 md:grid-cols-4">{cnapsSteps.map((item,index) => <div key={item} className="rounded-[1.4rem] bg-white p-4 text-academy-ink"><span className="grid h-9 w-9 place-items-center rounded-full bg-[#0D1725] text-xs font-black text-academy-gold">0{index+1}</span><p className="mt-5 font-black">{item}</p></div>)}</div></Section>
 
-    <Section id="pratique" eyebrow="03 — Immersion terrain" title={<>Vous ne regardez pas seulement&nbsp;: vous pratiquez.</>} intro={<>La formation vous place dans des situations proches du réel. Chaque geste est expliqué, répété, observé puis débriefé avec le formateur.</>} tone="dark"><div className={styles.immersionStories}>
-        <ApsStoryIllustration kind="baggage" title="Inspection visuelle des bagages" description="Illustration animée d’un bagage et d’un contrôle visuel à la loupe" caption="Observer méthodiquement, identifier un objet interdit et appliquer les consignes du site." />
-        <ApsStoryIllustration kind="patdown" title="Palpation de sécurité" description="Illustration animée d’un agent et des zones de contrôle d’une palpation encadrée" caption="Travailler le positionnement et les gestes professionnels, avec consentement et dans le respect du cadre légal." />
-        <ApsStoryIllustration kind="access" title="Contrôle d’accès" description="Animation d’un agent vérifiant un badge devant une barrière de contrôle" caption="Vérifier les autorisations, accueillir le public et gérer les flux avec calme et précision." />
+    <Section id="pratique" eyebrow="03 — Immersion terrain" title={<>Vous ne regardez pas seulement&nbsp;: vous pratiquez.</>} intro={<>La formation vous place dans des situations proches du réel. Chaque geste est expliqué, répété, observé puis débriefé avec le formateur.</>} tone="dark">
+      <div className={styles.visualStoriesBlock}>
+        <div className={styles.visualStoriesIntro}>
+          <div><Eyebrow>APS en mouvement</Eyebrow><h3>Les réflexes métier, en images.</h3></div>
+          <p>Des gestes simples à visualiser, puis à répéter sur le terrain jusqu’à ce qu’ils deviennent naturels.</p>
+        </div>
+        <div className={styles.immersionStories}>
+          <ApsStoryIllustration kind="baggage" title="Inspection visuelle des bagages" description="Illustration animée d’un bagage et d’un contrôle visuel à la loupe" caption="Observer méthodiquement, identifier un objet interdit et appliquer les consignes du site." />
+          <ApsStoryIllustration kind="patdown" title="Palpation de sécurité" description="Illustration animée d’un agent et des zones de contrôle d’une palpation encadrée" caption="Travailler le positionnement et les gestes professionnels, avec consentement et dans le respect du cadre légal." />
+          {apsVisualStories.map(([kind,title,description,caption]) => <ApsStoryIllustration key={kind} kind={kind} title={title} description={description} caption={caption} />)}
+        </div>
       </div>
       <div className="mt-8 grid auto-rows-fr gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        {practicalExercises.map(([icon,title,text],index) => <article key={title} className={`${styles.practicalCard} ${index === 0 ? styles.practicalPrimary : ''} rounded-[1.5rem] border border-white/10 bg-white/7 p-5`}>
+        {practicalExercises.map(([icon,title,text],index) => <article key={title} className={`${styles.practicalCard} rounded-[1.5rem] border border-white/10 bg-white/7 p-5`}>
           <div className="relative z-10">
             <div className="flex items-start justify-between gap-3"><span className={`${styles.practicalIcon} grid h-10 w-10 place-items-center rounded-xl bg-academy-gold font-black text-academy-gold-text`}>{icon}</span><span className="text-[.58rem] font-black tracking-[.16em] text-white/30">0{index+1}</span></div>
             <h3 className="mt-4 text-lg font-black">{title}</h3>
             <p className="mt-2 text-sm leading-6 text-white/60">{text}</p>
-            {index === 0 && <div className="mt-6"><ApsStoryIllustration kind="patrol" title="Observer · contrôler · signaler" description="Animation d’un agent effectuant une ronde autour d’un bâtiment" /></div>}
           </div>
         </article>)}
       </div><div className="mt-7 grid gap-4 rounded-[1.7rem] border border-blue-300/25 bg-blue-400/10 p-6 lg:grid-cols-[auto_1fr] lg:items-center"><span className="grid h-14 w-14 place-items-center rounded-2xl bg-blue-300 text-2xl font-black text-blue-950">✓</span><div><p className="text-xl font-black text-blue-200">L’objectif : transformer les connaissances en réflexes professionnels.</p><p className="mt-2 max-w-4xl leading-7 text-white/68">Observation, positionnement, communication, respect du cadre légal, compte rendu et choix d’une réponse adaptée sont analysés après chaque scénario.</p></div></div></Section>

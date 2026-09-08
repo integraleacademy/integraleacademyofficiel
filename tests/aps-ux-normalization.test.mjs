@@ -34,8 +34,7 @@ test('les repères visuels propres à la page APS utilisent le bleu', () => {
 });
 
 test('la simulation animée de ronde reste visible dans le bloc pratique', () => {
-  assert.ok(apsPage.includes("index === 0 ? styles.practicalPrimary : ''"));
-  assert.ok(apsPage.includes('<ApsStoryIllustration kind="patrol"'));
+  assert.ok(apsPage.includes("['patrol', 'Les rondes de sécurité'"));
   assert.ok(apsPage.includes('Animation d’un agent effectuant une ronde autour d’un bâtiment'));
   assert.match(apsStyles, /\.scanLine[\s\S]*?animation: radar 5\.5s linear infinite;/);
   assert.match(apsStyles, /@keyframes radar/);
@@ -45,15 +44,16 @@ test('le bloc immersion réutilise les illustrations de la galerie métier', () 
   const immersionStart = apsPage.indexOf('<Section id="pratique"');
   const immersionEnd = apsPage.indexOf('<Section id="programme"', immersionStart);
   const immersion = apsPage.slice(immersionStart, immersionEnd);
-  for (const kind of ['baggage', 'patdown', 'access']) {
+  for (const kind of ['baggage', 'patdown']) {
     assert.ok(immersion.includes(`<ApsStoryIllustration kind="${kind}"`));
   }
+  assert.ok(immersion.includes('apsVisualStories.map'));
   assert.doesNotMatch(immersion, /aps-training-(?:bag-inspection|patdown)\.jpg/);
   assert.ok(apsPage.includes('role="img" aria-label={description}'));
   assert.match(apsStyles, /@media \(prefers-reduced-motion: reduce\)[\s\S]*?\.storyBagCheck, \.storyPatdownAgent, \.storyPatdownZones \{ animation: none;/);
 });
 
-test('la partie métier présente six illustrations APS animées et accessibles', () => {
+test('les six illustrations métier sont regroupées dans l’immersion terrain', () => {
   const storiesBlock = apsPage.slice(
     apsPage.indexOf('const apsVisualStories = ['),
     apsPage.indexOf('const audiences = ['),
@@ -72,7 +72,11 @@ test('la partie métier présente six illustrations APS animées et accessibles'
 
   assert.ok(apsPage.includes('<ApsStoryIllustration key={kind}'));
   assert.ok(apsPage.includes('role="img" aria-label={description}'));
-  assert.match(apsStyles, /\.visualStoriesGrid[\s\S]*?scroll-snap-type:\s*x mandatory;/);
+  const metier = apsPage.slice(apsPage.indexOf('<Section id="metier"'), apsPage.indexOf('<Section id="admission"'));
+  const immersion = apsPage.slice(apsPage.indexOf('<Section id="pratique"'), apsPage.indexOf('<Section id="programme"'));
+  assert.doesNotMatch(metier, /apsVisualStories\.map|Les réflexes métier, en images/);
+  assert.ok(immersion.includes('Les réflexes métier, en images.'));
+  assert.ok(immersion.includes('apsVisualStories.map'));
   assert.match(apsStyles, /@keyframes storyNightSweep/);
   assert.match(apsStyles, /@keyframes storyVideoSweep/);
   assert.match(apsStyles, /@media \(prefers-reduced-motion: reduce\)[\s\S]*?\.storyNightBeam,[\s\S]*?\.storyVideoScan,/);

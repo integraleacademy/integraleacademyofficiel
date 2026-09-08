@@ -1669,8 +1669,12 @@
 /* The terrain scenes share the visual language of the APS story gallery. */
 .immersionStories {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1.25rem;
+}
+
+@media (min-width: 1280px) {
+  .immersionStories { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
 
 .immersionStories .storyCard { border-radius: 1.75rem; }
