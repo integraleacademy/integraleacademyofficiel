@@ -6,6 +6,7 @@ const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf
 
 const gallery = read('src/components/TrainingMotionGallery.tsx');
 const styles = read('src/components/TrainingMotionGallery.module.css');
+const despCards = read('src/components/DespIllustratedCards.tsx');
 const pages = {
   a3p: read('src/components/A3pReferencePage.tsx'),
   ssiap: read('src/components/SsiapReferencePage.tsx'),
@@ -48,6 +49,21 @@ test('chaque formation affiche ses scènes dans la galerie ou les cartes métier
         assert.ok(practices.includes(`scene: '${scene}'`), `visuel A3P manquant : ${scene}`);
       }
       assert.ok(practices.includes('Secours aux personnes'));
+      continue;
+    }
+    if (variant === 'despInitial' || variant === 'despVae') {
+      const initial = variant === 'despInitial';
+      const sectionId = initial ? 'metier' : 'parcours';
+      const items = initial ? 'jobMissions' : 'steps';
+      const section = source.slice(source.indexOf(`id="${sectionId}"`), source.indexOf(initial ? '</TextSection>' : '</section>', source.indexOf(`id="${sectionId}"`)));
+      assert.ok(section.includes(`<DespIllustratedCards items={${items}}/>`), `${variant} : visuels absents des cartes existantes`);
+      assert.doesNotMatch(source, /<TrainingMotionGallery/);
+      const card = despCards.slice(despCards.indexOf('<article key={item.title}'), despCards.indexOf('</article>'));
+      assert.ok(card.includes('<TrainingMotionIllustration kind={scene.kind} theme="orange" description={scene.description} />'));
+      const scenes = initial
+        ? ['business', 'compliance', 'finance', 'commercial', 'team', 'approval', 'evidence', 'site-check', 'briefing']
+        : ['profile-review', 'feasibility', 'approval', 'evidence', 'competencies', 'jury', 'certificate'];
+      for (const scene of scenes) assert.ok(source.includes(`kind: '${scene}'`), `${variant} : visuel manquant ${scene}`);
       continue;
     }
     assert.ok(source.includes(`import { TrainingMotionGallery } from '@/components/TrainingMotionGallery';`), `import manquant pour ${variant}`);

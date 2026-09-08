@@ -2,7 +2,7 @@ import { VaeEligibilityModal } from '@/components/VaeEligibilityModal';
 import { isPublicUpcomingSession } from '@/components/PublicTrainingSessions';
 import { TrainingDatesPricingSection } from '@/components/TrainingDatesPricingSection';
 import { TrainingSectionNavigation } from '@/components/TrainingSectionNavigation';
-import { TrainingMotionGallery } from '@/components/TrainingMotionGallery';
+import { DespIllustratedCards, type DespIllustratedCard } from '@/components/DespIllustratedCards';
 import { Button, ConversionStrip, FeatureCard, PremiumFAQSection } from '@/components/ui';
 import { DespHero } from '@/components/DespHero';
 import { listSessions } from '@/lib/training-data';
@@ -60,13 +60,40 @@ const why = [
 const profiles = ['dirigeants ou anciens dirigeants d’une entreprise', 'associés d’une entreprise de sécurité privée', 'directeurs d’agence', 'responsables d’exploitation', 'responsables sécurité', 'responsables administratifs, commerciaux ou financiers', 'managers ayant exercé des responsabilités importantes', 'créateurs ou repreneurs disposant déjà d’une expérience concrète', 'professionnels ayant piloté des équipes et des prestations'];
 const domains = ['cadrage d’un projet de création ou de reprise', 'conformité réglementaire de la sécurité privée', 'gestion financière, juridique et administrative', 'gestion marketing et commerciale', 'recrutement, management et pilotage des équipes'];
 const steps = [
-  ['Étape 1 — Diagnostic du parcours', 'Un conseiller analyse les fonctions exercées, les responsabilités, la durée et la nature des expériences ainsi que les preuves disponibles.'],
-  ['Étape 2 — Dossier de faisabilité', 'Le candidat décrit son parcours et les activités en lien avec le DESP afin de demander officiellement la recevabilité de sa démarche.'],
-  ['Étape 3 — Décision de recevabilité', 'Le certificateur étudie le dossier. Une décision favorable autorise la poursuite du parcours, mais ne garantit pas la délivrance du titre.'],
-  ['Étape 4 — Dossier de validation', 'Le candidat décrit précisément des situations professionnelles réelles et démontre les compétences mobilisées dans chacun des cinq domaines du référentiel.'],
-  ['Étape 5 — Préparation du jury', 'L’accompagnement permet de structurer la présentation, anticiper les questions et expliquer clairement les choix professionnels réalisés.'],
-  ['Étape 6 — Jury de certification', 'Le jury étudie le dossier et interroge le candidat sur ses expériences, ses décisions et sa maîtrise des compétences attendues.'],
-];
+  {
+    title: 'Diagnostic du parcours',
+    description: 'Un conseiller analyse les fonctions exercées, les responsabilités, la durée et la nature des expériences ainsi que les preuves disponibles.',
+    scenes: [{ kind: 'profile-review', description: 'Animation d’un parcours professionnel analysé au regard du référentiel DESP' }],
+  },
+  {
+    title: 'Dossier de faisabilité',
+    description: 'Le candidat décrit son parcours et les activités en lien avec le DESP afin de demander officiellement la recevabilité de sa démarche.',
+    scenes: [{ kind: 'feasibility', description: 'Animation d’un dossier de faisabilité complété puis vérifié' }],
+  },
+  {
+    title: 'Décision de recevabilité',
+    description: 'Le certificateur étudie le dossier. Une décision favorable autorise la poursuite du parcours, mais ne garantit pas la délivrance du titre.',
+    scenes: [{ kind: 'approval', description: 'Animation d’un dossier examiné pour la décision de recevabilité du parcours VAE' }],
+  },
+  {
+    title: 'Dossier de validation',
+    description: 'Le candidat décrit précisément des situations professionnelles réelles et démontre les compétences mobilisées dans chacun des cinq domaines du référentiel.',
+    scenes: [
+      { kind: 'evidence', description: 'Animation de pièces professionnelles classées dans un dossier de preuves' },
+      { kind: 'competencies', description: 'Animation des cinq domaines de compétences DESP présentés dans le dossier de validation' },
+    ],
+  },
+  {
+    title: 'Préparation du jury',
+    description: 'L’accompagnement permet de structurer la présentation, anticiper les questions et expliquer clairement les choix professionnels réalisés.',
+    scenes: [{ kind: 'jury', description: 'Animation d’une présentation orale préparée face à un jury professionnel' }],
+  },
+  {
+    title: 'Jury de certification',
+    description: 'Le jury étudie le dossier et interroge le candidat sur ses expériences, ses décisions et sa maîtrise des compétences attendues.',
+    scenes: [{ kind: 'certificate', description: 'Animation du titre DESP obtenu après validation du jury' }],
+  },
+] as const satisfies readonly DespIllustratedCard[];
 const proofs = [
   ['Création ou reprise', ['business plan', 'étude de marché', 'statuts', 'prévisionnel', 'plan de financement', 'documents de création ou de reprise']],
   ['Réglementation et CNAPS', ['agréments et autorisations', 'procédures internes', 'contrôles de cartes professionnelles', 'contrats de sous-traitance', 'documents de conformité', 'consignes réglementaires']],
@@ -94,10 +121,12 @@ export default async function DespVaePage(){
     <section className="page-container py-10"><div className="grid gap-4 md:grid-cols-3"><FeatureCard title="Durée">{despVaeAdmin.duration}<br/><br/>{despVaeAdmin.durationNote}</FeatureCard><FeatureCard title="Public concerné">Profils expérimentés en sécurité, encadrement, gestion, création ou direction d’entreprise.</FeatureCard><FeatureCard title="Prérequis">Expérience justifiée en management, création, gestion d’entreprise ou responsabilités proches du référentiel DESP.</FeatureCard><FeatureCard title="Lieux">Accompagnement VAE possible en visioconférence ; jury selon convocation. L’accompagnement peut être réalisé à distance selon l’organisation convenue. Le lieu, la date et le format du jury dépendent de la convocation du certificateur.</FeatureCard><FeatureCard title="Financement">CPF, entreprise, OPCO, France Travail ou financement personnel selon dossier.</FeatureCard><FeatureCard title="Certification / examen">Titre RNCP Dirigeant d’entreprise de sécurité privée – niveau 5<br/><br/>La certification permet de justifier de l’aptitude professionnelle nécessaire à la demande d’agrément dirigeant. L’agrément est ensuite délivré séparément par le CNAPS après étude du dossier.<br/><br/>{despVaeAdmin.rncp} · {despVaeAdmin.level} · Certificateur : {despVaeAdmin.certifier} · Échéance actuelle : {despVaeAdmin.deadline}<br/>Tarif actuel de l’accompagnement : {despVaeAdmin.price}</FeatureCard></div></section>
     <section id="eligibilite" className="page-container scroll-mt-36 py-8"><div className="rounded-[2rem] border border-orange-300/50 bg-gradient-to-br from-orange-100 via-orange-300 to-orange-100 p-7 text-orange-950 shadow-soft"><p className="text-xs font-black uppercase tracking-[.22em] text-academy-muted">Test rapide</p><h2 className="mt-3 text-3xl font-black">Tester mon éligibilité à la VAE</h2><p className="mt-4 leading-7 font-semibold text-orange-950/85">Répondez à quelques questions pour savoir si votre profil semble compatible avec une démarche VAE DESP.</p><div className="mt-7"><VaeEligibilityModal/></div></div></section>
     <TextBlock id="vae" eyebrow="Comprendre" title="Obtenir le DESP grâce à votre expérience"><p>La Validation des acquis de l’expérience permet de faire reconnaître officiellement les compétences acquises au cours de votre parcours professionnel ou extra-professionnel.</p><p>Elle ne consiste pas à suivre les 245 heures de la formation initiale. Le candidat doit démontrer, à l’aide de situations réelles et de preuves, qu’il maîtrise les compétences attendues d’un dirigeant d’entreprise de sécurité privée.</p><Note>La VAE n’est ni une équivalence automatique, ni un raccourci fondé uniquement sur le nombre d’années d’expérience. La décision appartient au jury de certification.</Note></TextBlock>
-    <div className="page-container pb-10"><TrainingMotionGallery variant="despVae" className="mt-0" /></div>
     <Info title="À qui s’adresse la VAE DESP ?" items={profiles}/><TextBlock title="Recevabilité"><p>Il n’existe pas de durée minimale générale d’expérience pour engager une VAE. La recevabilité dépend avant tout du lien direct entre les activités réellement exercées et le référentiel du titre.</p></TextBlock>
     <Info title="Les cinq domaines à maîtriser" intro="Le candidat doit pouvoir démontrer une expérience significative dans les domaines suivants :" items={domains}/><TextBlock title="Point de vigilance"><p>Une expérience limitée à l’activité opérationnelle d’agent de sécurité ne suffit généralement pas à démontrer les compétences de direction, de gestion, de commerce et de management attendues.</p></TextBlock>
-    <Info id="parcours" title="Le parcours VAE en six étapes" items={steps.map(([title,text])=>`${title} — ${text}`)}/>
+    <section id="parcours" className="page-container scroll-mt-36 py-10 sm:py-14">
+      <div className="mb-8 max-w-3xl"><p className="text-xs font-black uppercase tracking-[.24em] text-orange-600">DESP VAE</p><h2 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl">Le parcours VAE en six étapes</h2></div>
+      <DespIllustratedCards items={steps}/>
+    </section>
     <section id="preuves" className="page-container scroll-mt-36 py-8"><h2 className="text-2xl font-black">Quelles preuves fournir ?</h2><div className="mt-5 grid gap-4 md:grid-cols-2">{proofs.map(([title,items])=><FeatureCard key={title as string} title={title as string}>{(items as string[]).join(' · ')}</FeatureCard>)}</div><Note>Les preuves doivent être authentiques, compréhensibles et directement liées aux activités décrites.</Note><Note>Les données personnelles, informations sensibles, noms de clients, tarifs confidentiels et éléments relevant du secret des affaires doivent être anonymisés lorsque cela est nécessaire.</Note></section>
     <section id="comparatif-initial-vae" className="page-container py-8"><h2 className="text-2xl font-black">Comparer DESP initial et DESP VAE</h2><div className="mt-5 grid gap-4 md:grid-cols-2"><FeatureCard title="DESP initial">destiné aux personnes devant acquérir les compétences · 245 heures de formation · cours, études de cas et évaluations · parcours à distance et en présentiel.</FeatureCard><FeatureCard title="DESP VAE">destiné aux personnes maîtrisant déjà les compétences · pas de formation initiale de 245 heures · dossier fondé sur des expériences réelles · accompagnement à l’analyse et à la rédaction · présentation devant un jury.</FeatureCard></div><Note>Lorsque l’expérience ne couvre pas suffisamment les cinq activités du titre, la formation initiale est généralement plus adaptée.</Note><div className="mt-5"><Button href="/contact" variant="orange">Faire étudier mon parcours</Button></div></section>
     <TrainingDatesPricingSection

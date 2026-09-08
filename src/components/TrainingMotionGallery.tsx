@@ -15,7 +15,7 @@ type TrainingMotionGalleryVariant =
   | 'btsCg'
   | 'vtc';
 
-type SceneKind =
+export type SceneKind =
   | 'mission-map' | 'risk-radar' | 'site-check' | 'close-protection' | 'secure-vehicle' | 'briefing'
   | 'fire-round' | 'extinguisher' | 'fire-panel' | 'fire-alert' | 'evacuation' | 'rescue-arrival'
   | 'hazard' | 'examine' | 'emergency-call' | 'first-aid' | 'cpr' | 'dae'
@@ -416,6 +416,6 @@ export function TrainingMotionGallery({ variant, className = '' }: { variant: Tr
   </section>;
 }
 
-export function TrainingMotionIllustration({ kind, theme = 'blue', description }: { kind: SceneKind; theme?: 'blue' | 'red' | 'green'; description: string }) {
+export function TrainingMotionIllustration({ kind, theme = 'blue', description }: { kind: SceneKind; theme?: 'blue' | 'red' | 'green' | 'orange'; description: string }) {
   return <div className={`${styles.illustration} ${styles[theme]}`} role="img" aria-label={description}><Scene kind={kind} /></div>;
 }
