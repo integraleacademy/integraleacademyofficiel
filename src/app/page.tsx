@@ -21,13 +21,6 @@ export const dynamic = 'force-dynamic';
 
 export const metadata = createPageMetadata('/');
 
-const journeyCards = [
-  { number: '01', icon: '◆', title: 'Découvrir les formations', description: 'Sécurité, incendie, direction, VTC et BTS.', href: '#formations-securite', tone: 'dark' },
-  { number: '02', icon: '€', title: 'Trouver un financement', description: 'CPF, France Travail, alternance, OPCO ou personnel.', href: '/financements', tone: 'light' },
-  { number: '03', icon: '↗', title: 'Recruter ou former', description: 'Une entrée dédiée aux besoins des entreprises.', href: '/entreprises', tone: 'blue' },
-  { number: '04', icon: 'CM', title: 'Parler à Cassandre', description: 'Un échange humain, gratuit et sans engagement.', href: '/contact', tone: 'light' },
-] as const;
-
 const btsCommon = {
   certification: 'Diplôme d’État',
   level: 'Bac +2',
@@ -133,46 +126,12 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className={styles.journey}>
-        <div className={styles.container}>
-          <div className={styles.sectionHeading} data-home-journey-heading>
-            <div>
-              <span>Préparez votre inscription</span>
-              <h2>Quatre étapes. Une équipe à chaque étape.</h2>
-            </div>
-            <p>La page vous guide sans vous demander de comprendre seul les financements, les prérequis ou les démarches administratives.</p>
-          </div>
-
-          <div className={styles.journeyGrid} data-home-journey-grid>
-            <article className={styles.journeyLead} data-home-journey-card>
-              <span className={styles.cardEyebrow}>Votre parcours Intégrale Academy</span>
-              <h3>Vous avancez avec un plan clair.</h3>
-              <p>Commencez par choisir un métier. Nous vous aidons ensuite à vérifier les conditions, trouver une solution de financement et préparer votre inscription.</p>
-              <div className={styles.journeySteps}>
-                <span>01 · Choisir</span><span>02 · Financer</span><span>03 · S’inscrire</span><span>04 · Se former</span>
-              </div>
-            </article>
-
-            <div className={styles.journeyCards}>
-              {journeyCards.map((card) => (
-                <Link key={card.number} href={card.href} data-home-journey-card className={`${styles.journeyCard} ${styles[card.tone]}`}>
-                  <span className={styles.journeyIcon}>{card.icon}</span>
-                  <h3>{card.title}</h3>
-                  <p>{card.description}</p>
-                  <span className={styles.cardArrow} aria-hidden="true">→</span>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
       <VisualSection tone="security">
         <section id="formations-securite" className="scroll-mt-28 page-container py-14 md:py-16">
           <div data-security-training-heading data-training-heading className={styles.securityTrainingHeading}>
             <div>
               <span className={styles.securityTrainingEyebrow}>Formations en sécurité privée</span>
-              <h2>Trouvez la formation adaptée à votre projet.</h2>
+              <h2>Formations professionnelles Métiers de la sécurité privée</h2>
               <p>Comparez les durées, les modalités, les lieux et les prochaines sessions en un seul regard.</p>
             </div>
             <div className={styles.securityTrainingActions}>
@@ -206,7 +165,7 @@ export default async function Home() {
           <div data-training-heading className={styles.securityTrainingHeading}>
             <div>
               <span className={styles.securityTrainingEyebrow}>BTS en alternance</span>
-              <h2>Trouvez le BTS adapté à votre projet.</h2>
+              <h2>BTS en alternance</h2>
               <p>Six diplômes d’État pour construire un projet solide, en présentiel à Puget-sur-Argens ou 100 % à distance en visioconférence.</p>
             </div>
             <div className={styles.securityTrainingActions}>
