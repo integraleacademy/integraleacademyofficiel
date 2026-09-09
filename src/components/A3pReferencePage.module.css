@@ -1,3 +1,76 @@
+.hero {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding-bottom: 2rem;
+  background: #08111d;
+}
+
+.heroPhoto {
+  z-index: -3;
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(.92) contrast(1.04);
+  transform: scale(1.015);
+  animation: heroDrift 16s ease-in-out infinite alternate;
+}
+
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background:
+    linear-gradient(90deg, rgba(4,10,18,.98) 0%, rgba(6,14,24,.92) 31%, rgba(7,16,27,.52) 57%, rgba(7,15,25,.12) 82%),
+    linear-gradient(0deg, rgba(6,13,22,.82) 0%, transparent 38%, rgba(5,11,19,.2) 100%);
+}
+
+.hero::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  content: '';
+  opacity: .2;
+  background-image: linear-gradient(rgba(255,255,255,.055) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.055) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: linear-gradient(to bottom, black, transparent 88%);
+}
+
+.heroContent {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: center;
+  gap: 2rem;
+  padding-block: clamp(2rem, 4vw, 4rem);
+}
+
+.heroContent > * { min-width: 0; }
+.heroTitle { text-wrap: balance; text-shadow: 0 18px 60px rgba(0,0,0,.34); }
+.heroTagline { text-wrap: balance; text-shadow: 0 12px 38px rgba(0,0,0,.3); }
+.heroTitleAccent { color: transparent; background: linear-gradient(105deg, #34d399 0%, #d1fae5 48%, #2dd4bf 100%); background-clip: text; -webkit-background-clip: text; }
+.heroBadge { box-shadow: inset 0 1px 0 rgba(255,255,255,.12), 0 15px 40px rgba(0,0,0,.18); }
+.heroPrimaryAction { background-image: linear-gradient(to right, #047857, #10b981); }
+.heroPrimaryAction:hover { filter: brightness(1.05); }
+.sessionCard { position: relative; overflow: hidden; box-shadow: 0 28px 90px rgba(13,23,37,.17); }
+.sessionCard h2 { text-wrap: balance; }
+.heroFacts { box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 22px 70px rgba(0,0,0,.2); backdrop-filter: blur(16px); }
+
+@media (min-width: 1024px) {
+  .heroContent { grid-template-columns: minmax(0, 1.2fr) minmax(0, .85fr); gap: clamp(2rem, 4vw, 4rem); }
+}
+
+@media (max-width: 767px) {
+  .heroPhoto { object-position: 66% center; }
+  .heroOverlay { background: linear-gradient(90deg, rgba(4,10,18,.94), rgba(5,12,21,.68)), linear-gradient(0deg, rgba(5,11,19,.95) 0%, rgba(5,11,19,.35) 58%, rgba(5,11,19,.35) 100%); }
+}
+
+@keyframes heroDrift {
+  from { transform: scale(1.015); }
+  to { transform: scale(1.055); }
+}
+
 .practiceCard {
   display: flex;
   min-width: 0;
@@ -61,6 +134,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .heroPhoto { animation: none; }
   .practiceCard { transition: none; }
   .practiceCard:hover { transform: none; }
 }
