@@ -150,6 +150,11 @@
 .condition p { margin: 9px 0 0; color: #d9ceeb; font-size: 13px; font-weight: 500; line-height: 1.6; }
 .condition p strong { color: #f1eaff; font-weight: 750; }
 
+.cpfCondition { display: block; }
+.fundingHeader { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px 16px; margin-bottom: 16px; }
+.cpfLogo { display: grid; flex: 0 0 auto; width: 168px; max-width: 100%; padding: 12px; place-items: center; border-radius: 12px; background: #fff; }
+.cpfLogo img { display: block; width: 100%; height: auto; }
+
 .action { grid-area: action; min-width: 0; }
 .actionPrompt { margin: 0 0 11px; color: #f3ecff; font-size: 17px; font-weight: 800; line-height: 1.5; }
 
@@ -229,6 +234,7 @@
   .conditionNumber { font-size: 9px; letter-spacing: .035em; }
   .condition h3 { font-size: 18px; }
   .condition p { font-size: 12px; }
+  .cpfLogo { width: 140px; }
   .cta { padding-left: 16px; gap: 12px; font-size: 14px; }
   .advisorCopy h3 { font-size: 17px; }
 }
