@@ -25,3 +25,21 @@ export function sessionMatchesLocation(
   if (filter === 'paris') return /(^| )paris( |$)/.test(location);
   return location.includes('cote d azur') || location.includes('puget sur argens');
 }
+
+/** Select the earliest dated session from an already filtered list of public upcoming sessions. */
+export function nextSessionForLocation<T extends { location?: string | null; startDate?: string | Date | null }>(
+  sessions: readonly T[],
+  filter: SessionLocationFilterKey,
+): T | undefined {
+  let next: T | undefined;
+  let earliest = Infinity;
+  for (const session of sessions) {
+    if (!session.startDate || !sessionMatchesLocation(session, filter)) continue;
+    const start = new Date(session.startDate).getTime();
+    if (start < earliest) {
+      next = session;
+      earliest = start;
+    }
+  }
+  return next;
+}
