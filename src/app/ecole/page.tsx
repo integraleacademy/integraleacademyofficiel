@@ -77,7 +77,7 @@ const approach = [
 ];
 
 const trainingDomains = [
-  { number: '01', title: 'Sécurité privée', text: 'APS, A3P / APR et direction d’entreprise de sécurité privée.', href: '/formations-securite' },
+  { number: '01', title: 'Sécurité privée', text: 'APS, A3P et direction d’entreprise de sécurité privée.', href: '/formations-securite' },
   { number: '02', title: 'Sécurité incendie', text: 'SSIAP 1 et compétences complémentaires liées à la prévention.', href: '/formations-securite' },
   { number: '03', title: 'Chauffeur VTC', text: 'Préparation complète au métier, à l’examen et au lancement d’activité.', href: '/vtc' },
   { number: '04', title: 'BTS en alternance', text: 'Des diplômes d’État préparés avec une expérience concrète en entreprise.', href: '/bts' },

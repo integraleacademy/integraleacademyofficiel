@@ -14,7 +14,7 @@ const paymentOptions = [
 const formationOptions = [
   { label: 'APS', amount: 1650 },
   { label: 'SSIAP 1', amount: 980 },
-  { label: 'A3P / APR', amount: 4200 },
+  { label: 'A3P', amount: 4200 },
   { label: 'DESP initial', amount: 4300 },
   { label: 'DESP en VAE', amount: 3800 },
   { label: 'Chauffeur VTC', amount: 1500 },

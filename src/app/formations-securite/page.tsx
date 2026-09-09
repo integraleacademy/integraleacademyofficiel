@@ -13,7 +13,7 @@ export const metadata = {
   alternates: { canonical: '/formations-securite' },
   title: 'Formations sécurité',
   description:
-    'Formations sécurité privée Intégrale Academy : APS, tous les parcours SSIAP, SST, A3P / APR et DESP avec lieux, financements et inscriptions.',
+    'Formations sécurité privée Intégrale Academy : APS, tous les parcours SSIAP, SST, A3P et DESP avec lieux, financements et inscriptions.',
 };
 
 export default function Page() {
@@ -36,7 +36,7 @@ export default function Page() {
       <Hero
         badge="Sécurité privée"
         title={<>Formations sécurité : <Highlight>formation certifiante</Highlight> et métier reconnu</>}
-        subtitle="APS, SSIAP 1, SSIAP 2, SSIAP 3, maintien des acquis, SST, A3P / APR et DESP : des parcours clairs, réglementaires et orientés inscription."
+        subtitle="APS, SSIAP 1, SSIAP 2, SSIAP 3, maintien des acquis, SST, A3P et DESP : des parcours clairs, réglementaires et orientés inscription."
         visual={<ArtDirectionVisual world="security" />}
       />
       <ChatGptAgentBanner />
