@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { createStepWheelNavigation, normalizeWheelDelta } from '@/lib/step-wheel-navigation';
 import styles from './DespJourney.module.css';
 
 const steps = [
@@ -93,7 +92,6 @@ function JourneyVisual({ index }: { index: number }) {
 export function DespJourney() {
   const sectionRef = useRef<HTMLElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
-  const wheelRef = useRef<ReturnType<typeof createStepWheelNavigation> | null>(null);
   const [enhanced, setEnhanced] = useState(false);
   const [active, setActive] = useState(0);
 
@@ -126,56 +124,36 @@ export function DespJourney() {
 
   useEffect(() => {
     if (!enhanced) return;
-    const navigation = createStepWheelNavigation(steps.length);
-    wheelRef.current = navigation;
     let frame = 0;
-    const stepAt = (position: number, start: number, end: number) => {
-      const progress = Math.max(0, Math.min(1, (position - start) / Math.max(1, end - start)));
-      return Math.min(steps.length - 1, Math.floor(progress * steps.length));
-    };
     const update = () => {
       frame = 0;
       const bounds = getBounds();
-      if (bounds) setActive(stepAt(window.scrollY, bounds.start, bounds.end));
+      if (!bounds) return;
+      const distance = Math.max(1, bounds.end - bounds.start);
+      const position = window.scrollY - bounds.start;
+      const next = Math.max(0, Math.min(steps.length - 1, Math.floor(position / distance * steps.length)));
+      setActive(previous => {
+        // A small spatial margin avoids flickering near a boundary. Scrolling
+        // itself stays entirely native, with no wheel interception or timers.
+        const stepDistance = distance / steps.length;
+        if (next > previous && position < (previous + 1) * stepDistance + 24) return previous;
+        if (next < previous && position > previous * stepDistance - 24) return previous;
+        return next;
+      });
     };
     const schedule = () => { if (!frame) frame = window.requestAnimationFrame(update); };
-    const onWheel = (event: WheelEvent) => {
-      if (event.defaultPrevented || !event.cancelable || event.ctrlKey || event.metaKey || event.shiftKey || Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
-      const target = event.target instanceof Element ? event.target : null;
-      if (target?.closest('input, textarea, select, [contenteditable]:not([contenteditable="false"]), [role="dialog"], dialog')) return;
-      if (getComputedStyle(document.body).overflowY === 'hidden') return;
-      // Leave independent scroll areas (menus, forms, dialogs) in control.
-      for (let element = target; element && element !== document.body && element !== document.documentElement; element = element.parentElement) {
-        if (element.scrollHeight > element.clientHeight + 1 && /auto|scroll/.test(getComputedStyle(element).overflowY)) return;
-      }
-      const bounds = getBounds();
-      if (!bounds) return;
-      const delta = normalizeWheelDelta(event.deltaY, event.deltaMode, window.innerHeight);
-      const action = navigation.handle({ delta, now: performance.now(), position: window.scrollY, ...bounds, step: stepAt(window.scrollY, bounds.start, bounds.end) });
-      if (!action) return;
-      event.preventDefault();
-      if (action.kind === 'step') scrollToStep(action.index);
-      if (action.kind === 'exit') {
-        const distance = Math.max(80, Math.min(Math.abs(delta), window.innerHeight / 2));
-        window.scrollTo({ top: action.direction > 0 ? bounds.end + distance : bounds.start - distance, behavior: 'instant' });
-      }
-    };
     update();
-    window.addEventListener('wheel', onWheel, { passive: false });
     window.addEventListener('scroll', schedule, { passive: true });
     window.addEventListener('resize', schedule);
     return () => {
       window.cancelAnimationFrame(frame);
-      wheelRef.current = null;
-      window.removeEventListener('wheel', onWheel);
       window.removeEventListener('scroll', schedule);
       window.removeEventListener('resize', schedule);
     };
-  }, [enhanced, getBounds, scrollToStep]);
+  }, [enhanced, getBounds]);
 
   function goTo(index: number) {
     if (!enhanced) return;
-    wheelRef.current?.lock(performance.now());
     scrollToStep(index);
   }
 
