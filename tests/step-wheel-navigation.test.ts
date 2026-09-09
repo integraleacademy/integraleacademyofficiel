@@ -18,14 +18,23 @@ test('une longue inertie ne déclenche aucune étape supplémentaire, même apr�
   for (let now = 50; now <= 2200; now += 50) {
     assert.deepEqual(navigation.handle({ ...inside, position: 1750, step: 1, now, delta: Math.max(1, 100 - now / 20) }), { kind: 'hold' });
   }
-  assert.deepEqual(navigation.handle({ ...inside, position: 1750, step: 1, now: 2500, delta: 120 }), { kind: 'step', index: 2 });
+  assert.deepEqual(navigation.handle({ ...inside, position: 1750, step: 1, now: 3300, delta: 120 }), { kind: 'step', index: 2 });
 });
 
 test('des gestes trop rapprochés ne sont pas mis en attente', () => {
   const navigation = createStepWheelNavigation(4);
   navigation.handle({ ...inside, now: 0, delta: 100 });
   assert.deepEqual(navigation.handle({ ...inside, position: 1750, step: 1, now: 400, delta: 100 }), { kind: 'hold' });
-  assert.deepEqual(navigation.handle({ ...inside, position: 1750, step: 1, now: 1000, delta: 100 }), { kind: 'step', index: 2 });
+  assert.deepEqual(navigation.handle({ ...inside, position: 1750, step: 1, now: 1500, delta: 100 }), { kind: 'step', index: 2 });
+});
+
+test('plusieurs vagues espacées dans un même geste ne font pas sauter une étape', () => {
+  const navigation = createStepWheelNavigation(4);
+  assert.deepEqual(navigation.handle({ ...inside, now: 0, delta: 800 }), { kind: 'step', index: 1 });
+  for (const now of [100, 450, 1100, 1800, 2650, 3450]) {
+    assert.deepEqual(navigation.handle({ ...inside, position: 1750, step: 1, now, delta: 200 }), { kind: 'hold' });
+  }
+  assert.deepEqual(navigation.handle({ ...inside, position: 1750, step: 1, now: 4550, delta: 100 }), { kind: 'step', index: 2 });
 });
 
 test('les petits mouvements se cumulent sans qu’un frôlement change une étape', () => {
