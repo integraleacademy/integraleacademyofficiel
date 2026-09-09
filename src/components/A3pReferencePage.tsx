@@ -192,7 +192,7 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
     }, "/formations-securite/a3p-apr") }} />
 
     <section className={`${styles.hero} px-4 text-white`}>
-      <Image src="/images/campus/campus-accueil.jpg" alt="L’accueil de notre école à Puget-sur-Argens" fill priority sizes="100vw" className={styles.heroPhoto} />
+      <Image src="/images/a3p-hero.jpg" alt="" fill priority sizes="100vw" className={styles.heroPhoto} />
       <div className={styles.heroOverlay} />
       <div className={`page-container ${styles.heroContent}`}>
         <div className="max-w-4xl">
