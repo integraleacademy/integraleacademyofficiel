@@ -22,7 +22,7 @@
   --hero-rgb: 16, 185, 129;
 }
 
-.hero { position: relative; isolation: isolate; display: flex; flex-direction: column; overflow: hidden; padding-bottom: 2rem; background: #08111d; }
+.hero { position: relative; isolation: isolate; display: flex; flex-direction: column; overflow: clip; padding-bottom: 2rem; background: #08111d; }
 .heroPhoto { z-index: -3; object-fit: cover; object-position: center; filter: saturate(.92) contrast(1.04); transform: scale(1.015); animation: heroDrift 16s ease-in-out infinite alternate; }
 .heroOverlay { position: absolute; inset: 0; z-index: -2; background: linear-gradient(90deg, rgba(4,10,18,.98) 0%, rgba(6,14,24,.92) 31%, rgba(7,16,27,.52) 57%, rgba(7,15,25,.12) 82%), linear-gradient(0deg, rgba(6,13,22,.82) 0%, transparent 38%, rgba(5,11,19,.2) 100%); }
 .hero::before { position: absolute; inset: 0; z-index: -1; content: ''; opacity: .2; background-image: linear-gradient(rgba(255,255,255,.055) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.055) 1px, transparent 1px); background-size: 56px 56px; mask-image: linear-gradient(to bottom, black, transparent 88%); }
