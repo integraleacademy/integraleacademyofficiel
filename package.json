@@ -18,7 +18,8 @@
     "react-dom": "19.0.0",
     "@prisma/client": "6",
     "gsap": "^3.13.0",
-    "server-only": "^0.0.1"
+    "server-only": "^0.0.1",
+    "sharp": "^0.34.5"
   },
   "devDependencies": {
     "@types/node": "22.15.30",
