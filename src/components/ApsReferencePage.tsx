@@ -1,3 +1,4 @@
+import { serializeCourseJsonLd } from '@/lib/seo';
 import Image from 'next/image';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
@@ -403,11 +404,11 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
   const visibleSessions = sortSessionsChronologically(sessions.length ? sessions : fallbackSessions);
   const next = visibleSessions[0];
   return <main className={`${styles.page} relative pb-24 lg:pb-0`}>
-    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ '@context': 'https://schema.org', '@graph': [
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeCourseJsonLd({ '@context': 'https://schema.org', '@graph': [
       { '@type': 'Course', name: 'Formation Agent de Prévention et de Sécurité APS', description: 'Formation TFP APS de 175 heures à Puget-sur-Argens : 124 heures en présentiel, dont 63,5 heures de pratique et 60,5 heures de théorie, et 51 heures à distance.', provider: { '@type': 'Organization', name: 'Intégrale Academy', telephone: '04 22 47 07 68' } },
       { '@type': 'FAQPage', mainEntity: faq.map(item => ({ '@type': 'Question', name: item.q, acceptedAnswer: { '@type': 'Answer', text: item.a } })) },
       { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Accueil', item: '/' }, { '@type': 'ListItem', position: 2, name: 'Formations sécurité', item: '/formations-securite' }, { '@type': 'ListItem', position: 3, name: 'APS', item: '/formations-securite/aps' }] },
-    ] }) }} />
+    ] }, "/formations-securite/aps") }} />
 
     <section className={`${styles.hero} relative px-4 text-white`}>
       <Image src="/images/aps/aps-hero-round.jpg" alt="Exercice pratique de ronde de sécurité pendant la formation APS" fill priority sizes="100vw" className={styles.heroPhoto}/>

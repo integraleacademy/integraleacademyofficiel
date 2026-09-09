@@ -1,14 +1,11 @@
+import { createPageMetadata } from '@/lib/seo';
 import FinancingSimulator from '@/components/FinancingSimulator';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { appointmentFormUrl } from '@/components/ui';
 import styles from './financements.module.css';
 
-export const metadata: Metadata = {
-  alternates: { canonical: '/financements' },
-  title: 'Financer sa formation',
-  description: 'CPF, France Travail, alternance, entreprise, OPCO ou financement personnel : découvrez les solutions envisageables et faites-vous accompagner par Intégrale Academy.',
-};
+export const metadata: Metadata = createPageMetadata('/financements');
 
 type IconName = 'compass' | 'document' | 'follow' | 'cpf' | 'briefcase' | 'school' | 'building' | 'wallet' | 'arrow' | 'check';
 

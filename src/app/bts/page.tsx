@@ -1,3 +1,4 @@
+import { createPageMetadata } from '@/lib/seo';
 import { bts } from "@/data/site";
 import { VisualSection, VisualTimeline } from "@/components/visuals";
 import {
@@ -10,12 +11,7 @@ import {
   ArtDirectionVisual,
   Highlight,
 } from "@/components/ui";
-export const metadata = {
-  alternates: { canonical: '/bts' },
-  title: "BTS en alternance",
-  description:
-    "BTS MOS, MCO, NDRC, Commerce International, Professions Immobilières et Comptabilité Gestion chez Intégrale Academy.",
-};
+export const metadata = createPageMetadata('/bts');
 export default function Page() {
   return (
     <>

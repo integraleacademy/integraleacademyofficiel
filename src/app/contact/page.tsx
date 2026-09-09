@@ -1,14 +1,11 @@
+import { createPageMetadata } from '@/lib/seo';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { ContactRequestCard } from '@/components/ContactRequestCard';
 import { informationRequestHref } from '@/lib/contact-request';
 import { contact } from '@/data/site';
 
-export const metadata = {
-  alternates: { canonical: '/contact' },
-  title: 'Contact & admissions',
-  description: 'Échangez avec l’équipe Intégrale Academy pour choisir une formation, trouver une session, étudier votre financement ou construire une solution entreprise.',
-};
+export const metadata = createPageMetadata('/contact');
 
 const appointmentFormUrl = 'https://assistance-alw9.onrender.com/demande-informations-formations';
 const email = 'ecole@integraleacademy.com';

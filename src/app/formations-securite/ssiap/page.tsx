@@ -1,13 +1,9 @@
+import { createPageMetadata, serializeJsonLd } from '@/lib/seo';
 import Link from 'next/link';
 import { PremiumFAQSection } from '@/components/ui';
 import { ssiapOfficialReference } from '@/data/ssiap-catalogue';
 
-export const metadata = {
-  alternates: { canonical: '/formations-securite/ssiap' },
-  title: 'Formations SSIAP – Sécurité incendie | Intégrale Academy',
-  description:
-    'Découvrez toutes les formations SSIAP : SSIAP 1, SSIAP 2, SSIAP 3, recyclages et remises à niveau à Puget-sur-Argens.',
-};
+export const metadata = createPageMetadata('/formations-securite/ssiap');
 
 const courses = [
   {
@@ -96,7 +92,7 @@ export default function SsiapCataloguePage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
+          __html: serializeJsonLd({
             '@context': 'https://schema.org',
             '@type': 'ItemList',
             name: 'Formations SSIAP Intégrale Academy',

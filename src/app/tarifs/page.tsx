@@ -1,3 +1,4 @@
+import { createPageMetadata } from '@/lib/seo';
 import TariffsPageContent, {
   type PricingOffer,
   type PricingOfferCategory,
@@ -5,12 +6,7 @@ import TariffsPageContent, {
 } from '@/components/TariffsPageContent';
 import { allFormations } from '@/data/formations';
 
-export const metadata = {
-  alternates: { canonical: '/tarifs' },
-  title: 'Tarifs des formations professionnelles',
-  description:
-    'Comparez les tarifs, durées et financements des formations Intégrale Academy : APS, SSIAP 1, SST, A3P, DESP, VAE et VTC.',
-};
+export const metadata = createPageMetadata('/tarifs');
 
 type OfferPresentation = {
   shortTitle: string;

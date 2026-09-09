@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button, Highlight } from '@/components/ui';
 import type { PresentationDossier } from '@/data/presentation-dossiers';
 
@@ -30,7 +31,7 @@ function DossierStack({ dossiers, isBts }: { dossiers: readonly PresentationDoss
     </div>
     <div className="absolute inset-x-5 bottom-4 top-16">
       {dossiers.slice(0, 3).map((dossier, index) => <div key={dossier.title} className="absolute left-1/2 top-1/2 aspect-[600/850] w-[52%] max-w-[13.5rem] overflow-hidden rounded-[1rem] border border-white/20 bg-white shadow-[0_24px_60px_rgba(0,0,0,.45)]" style={stackPoses[index]}>
-        <img src={dossier.image} alt={`Couverture ${dossier.title}`} width="600" height="850" loading="eager" decoding="async" className="h-full w-full object-cover" />
+        <Image src={dossier.image} alt={`Couverture ${dossier.title}`} width={600} height={850} sizes="(max-width: 640px) 45vw, 216px" loading="eager" className="h-full w-full object-cover" />
       </div>)}
     </div>
     <div className="absolute bottom-5 left-1/2 z-10 -translate-x-1/2 whitespace-nowrap rounded-full border border-white/15 bg-[#172235]/90 px-4 py-2 text-xs font-black text-white shadow-lg backdrop-blur">Cliquez · consultez · partagez</div>
@@ -40,7 +41,7 @@ function DossierStack({ dossiers, isBts }: { dossiers: readonly PresentationDoss
 function DossierCard({ dossier, isBts }: { dossier: PresentationDossier; isBts: boolean }) {
   return <a id={dossier.id} href={dossier.href} target="_blank" rel="noopener noreferrer" aria-label={`Consulter le dossier de présentation ${dossier.title} sur Canva (nouvel onglet)`} className="group flex h-full scroll-mt-32 flex-col overflow-hidden rounded-[1.75rem] border border-academy-line bg-academy-surface shadow-soft transition duration-300 hover:-translate-y-1.5 hover:border-academy-gold/60 hover:shadow-card focus:outline-none focus:ring-4 focus:ring-academy-gold/30" data-dossier-card>
     <div className="relative mx-4 mt-4 aspect-[600/850] overflow-hidden rounded-[1.25rem] bg-academy-soft">
-      <img src={dossier.image} alt={`Couverture du dossier de présentation ${dossier.title}`} width="600" height="850" loading="lazy" decoding="async" className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.035]" />
+      <Image src={dossier.image} alt={`Couverture du dossier de présentation ${dossier.title}`} width={600} height={850} sizes="(max-width: 640px) 90vw, (max-width: 1280px) 45vw, 360px" loading="lazy" className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.035]" />
       <span className="absolute inset-x-3 bottom-3 flex items-center justify-between gap-3 rounded-full bg-[#172235]/92 px-4 py-3 text-xs font-black text-white shadow-lg backdrop-blur transition group-hover:bg-academy-gold group-hover:text-academy-gold-text">
         Afficher le dossier <ArrowUpRightIcon />
       </span>

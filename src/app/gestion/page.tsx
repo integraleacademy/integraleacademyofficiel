@@ -1,11 +1,7 @@
+import { createPageMetadata } from '@/lib/seo';
 import { Button, Hero } from '@/components/ui';
 
-export const metadata = {
-  title: 'Tests et ressources de formation',
-  description: 'Accès aux tests et ressources utiles aux candidats Intégrale Academy.',
-  alternates: { canonical: '/gestion' },
-  robots: { index: false, follow: false },
-};
+export const metadata = createPageMetadata('/gestion');
 
 const resources = [
   ['Examen blanc ADEF', 'https://extranet.adef-securite.fr/Login'],
