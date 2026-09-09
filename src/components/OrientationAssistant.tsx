@@ -250,11 +250,12 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
   </aside>;
 
   if (variant === 'modalTrigger') {
+    const isA3pTrigger = initialFormationKey === 'a3p';
     return <>
-      <button ref={triggerRef} type="button" aria-haspopup="dialog" aria-expanded={isExpanded} aria-controls={dialogId} onClick={() => setIsExpanded(true)} className="flex w-full items-center gap-3 rounded-[1.35rem] border border-academy-line bg-white p-4 text-left text-academy-ink shadow-soft transition hover:border-blue-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
-        <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-blue-50 text-xl font-black text-blue-700" aria-hidden="true">✦</span>
-        <span className="min-w-0 flex-1"><strong className="block text-sm font-black">Notre assistant va vous aider</strong><small className="mt-1 block text-xs font-semibold text-academy-muted">Les réponses à vos questions sur l’APS.</small></span>
-        <span className="text-lg font-black text-blue-700" aria-hidden="true">↗</span>
+      <button ref={triggerRef} type="button" aria-haspopup="dialog" aria-expanded={isExpanded} aria-controls={dialogId} onClick={() => setIsExpanded(true)} className={`flex w-full items-center gap-3 rounded-[1.35rem] border border-academy-line bg-white p-4 text-left text-academy-ink shadow-soft transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${isA3pTrigger ? 'hover:border-emerald-300 focus-visible:outline-emerald-600' : 'hover:border-blue-300 focus-visible:outline-blue-600'}`}>
+        <span className={`grid h-10 w-10 shrink-0 place-items-center rounded-full text-xl font-black ${isA3pTrigger ? 'bg-emerald-50 text-emerald-700' : 'bg-blue-50 text-blue-700'}`} aria-hidden="true">✦</span>
+        <span className="min-w-0 flex-1"><strong className="block text-sm font-black">Notre assistant va vous aider</strong><small className="mt-1 block text-xs font-semibold text-academy-muted">{isA3pTrigger ? 'Les réponses à vos questions sur l’A3P.' : 'Les réponses à vos questions sur l’APS.'}</small></span>
+        <span className={`text-lg font-black ${isA3pTrigger ? 'text-emerald-700' : 'text-blue-700'}`} aria-hidden="true">↗</span>
       </button>
       {isExpanded && isMounted && createPortal(
         <dialog ref={dialogRef} id={dialogId} aria-label="Notre assistant va vous aider" onCancel={() => resetAssistantState()} onClick={(event) => {

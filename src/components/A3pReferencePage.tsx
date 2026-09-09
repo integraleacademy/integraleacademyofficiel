@@ -72,36 +72,26 @@ function formatDate(value?: string | null) {
   return new Intl.DateTimeFormat('fr-FR', { timeZone: 'Europe/Paris', day: '2-digit', month: 'short', year: 'numeric' }).format(new Date(value));
 }
 
-function seatsLabel(session: any) {
-  return getSessionSeatAvailability(session).label;
-}
-
 function sessionRegistrationHref(session: any) {
   if (!session?.id) return a3pContact('prochaine-session');
   return `/contact?formation=a3p-apr&session=${encodeURIComponent(String(session.id))}`;
 }
 
 function CompactAssistant() {
-  return <details className="group mt-3 overflow-hidden rounded-[1.35rem] border border-academy-line bg-white text-academy-ink shadow-soft">
-    <summary className="flex cursor-pointer list-none items-center gap-3 p-4">
-      <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-emerald-600 font-black text-white">✦</span>
-      <span className="min-w-0 flex-1"><strong className="block text-sm font-black">Une question avant de vous inscrire&nbsp;?</strong><small className="block text-xs font-semibold text-academy-muted">L’assistant vérifie les informations essentielles.</small></span>
-      <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-academy-ink font-black text-white transition group-open:rotate-90">→</span>
-    </summary>
-    <div className="border-t border-academy-line bg-academy-bg p-3 sm:p-4"><OrientationAssistant initialFormationKey="a3p" hideInfoAction /></div>
-  </details>;
+  return <div className="mt-3"><OrientationAssistant initialFormationKey="a3p" hideInfoAction variant="modalTrigger" /></div>;
 }
 
 function HeroSession({ sessions }: { sessions: any[] }) {
   const next = sessions[0];
   const hasSeatCount = next?.seatsLeft !== null && next?.seatsLeft !== undefined && next?.seatsLeft !== '';
   const isFull = next?.status === 'FULL' || (hasSeatCount && Number(next.seatsLeft) === 0);
-  const registrationHref = sessionRegistrationHref(next);
+  const registrationHref = registrationFormUrl;
+  const seatAvailability = getSessionSeatAvailability(next, 12);
 
-  return <aside className="rounded-[2rem] border border-white/65 bg-[#FFFDF8] p-5 text-academy-ink shadow-[0_34px_100px_rgba(0,0,0,.34)] sm:p-6">
-    <div className="flex flex-wrap items-center justify-between gap-2">
-      <span className="rounded-full bg-[#0D1725] px-3 py-1.5 text-[.62rem] font-black uppercase tracking-[.16em] text-emerald-300">Prochaine session</span>
-      <span className={`rounded-full border px-3 py-1.5 text-[.68rem] font-black ${isFull ? 'border-stone-300 bg-stone-100 text-stone-700' : 'border-emerald-200 bg-emerald-50 text-emerald-800'}`}>{next ? seatsLabel(next) : 'Dates à confirmer'}</span>
+  return <aside className={`${styles.sessionCard} rounded-[2rem] border border-white/80 bg-[#FFFDF8] p-5 text-academy-ink sm:p-6 lg:p-7`}>
+    <div className="flex flex-wrap items-center gap-2">
+      <span className="rounded-full bg-emerald-50 px-3 py-1.5 text-[.62rem] font-black uppercase tracking-[.16em] text-emerald-800 ring-1 ring-emerald-200">Prochaine session</span>
+      <span className={`rounded-full border px-3 py-1.5 text-[.68rem] font-black ${seatAvailability.badgeClassName}`}>{next ? seatAvailability.label : 'Dates à confirmer'}</span>
     </div>
     <h2 className="mt-5 text-3xl font-black tracking-[-.04em] sm:text-4xl">{next ? <>{formatDate(next.startDate)} <span className="text-emerald-700">→</span><br />{formatDate(next.endDate)}</> : 'Prochaine rentrée à confirmer'}</h2>
     <p className="mt-2 text-sm font-extrabold text-academy-muted">{next?.examDate ? `Examen final le ${formatDate(next.examDate)}` : 'Contactez-nous pour recevoir les prochaines dates.'}</p>
@@ -113,7 +103,8 @@ function HeroSession({ sessions }: { sessions: any[] }) {
         ['Modalité', a3pConfig.modality],
       ].map(([key, value]) => <div key={key} className="rounded-2xl border border-[#E8DECE] bg-[#F5EFE4] p-3.5"><p className="text-[.6rem] font-black uppercase tracking-[.16em] text-[#837968]">{key}</p><p className="mt-1 text-sm font-black sm:text-base">{value}</p></div>)}
     </div>
-    <CTA href={registrationHref} variant={isFull ? 'light' : 'green'} className="mt-5 w-full">{isFull ? 'Être alerté de la prochaine session' : 'Réserver ma place →'}</CTA>
+    <CTA href={registrationHref} variant={isFull ? 'light' : 'green'} className={`mt-5 w-full ${isFull ? '' : styles.heroPrimaryAction}`}>{isFull ? 'Être alerté de la prochaine session' : 'Réserver ma place →'}</CTA>
+    <p className="mt-3 text-center text-xs font-bold text-academy-muted">Un conseiller vérifie votre dossier avant validation.</p>
     <CompactAssistant />
   </aside>;
 }
@@ -200,25 +191,23 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
       ],
     }, "/formations-securite/a3p-apr") }} />
 
-    <section className="relative isolate overflow-hidden bg-[#0D1725] px-4 pb-8 pt-10 text-white sm:pt-14 lg:pt-16">
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_12%_12%,rgba(5,150,105,.24),transparent_30%),radial-gradient(circle_at_88%_22%,rgba(52,211,153,.17),transparent_28%),linear-gradient(135deg,#080D15_0%,#101C2D_55%,#0E251F_100%)]" />
-      <div className="absolute inset-0 -z-10 opacity-45 [background-image:linear-gradient(rgba(255,255,255,.045)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.045)_1px,transparent_1px)] [background-size:64px_64px]" />
-      <div className="absolute -right-48 -top-48 -z-10 h-[34rem] w-[34rem] rounded-full border border-emerald-400/20 shadow-[0_0_0_70px_rgba(255,255,255,.02),0_0_0_140px_rgba(255,255,255,.015)]" />
-      <div className="page-container">
-        <div className="grid items-start gap-8 lg:grid-cols-[1.05fr_.95fr] lg:gap-12">
-          <div>
-            <p className="text-[.65rem] font-black uppercase tracking-[.18em] text-white/50">Accueil / Formations sécurité / A3P – APR</p>
-            <span className="mt-5 inline-flex items-center gap-2 rounded-full border border-emerald-300/35 bg-white/[.07] px-4 py-2 text-[.65rem] font-black uppercase tracking-[.18em] text-emerald-200"><span className="h-2 w-2 rounded-full bg-emerald-300 shadow-[0_0_0_5px_rgba(110,231,183,.1)]" />TFP A3P · RNCP 38002 · Niveau 4</span>
-            <h1 className="mt-5 max-w-3xl text-4xl font-black tracking-[-.05em] sm:text-5xl lg:text-[3.75rem] lg:leading-[1.02] xl:text-[4.1rem]">Devenez agent de <span className="decoration-emerald-500 decoration-[.18em] underline underline-offset-[-.04em]">protection rapprochée.</span></h1>
-            <p className="mt-6 max-w-2xl text-base font-medium leading-8 text-white/72 sm:text-lg">Préparez, organisez et sécurisez les déplacements de personnes exposées. Une formation réglementée, intensive et résolument tournée vers les réalités du terrain.</p>
-            <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap"><CTA href={a3pContact('dossier-a3p')} variant="green">Recevoir le dossier A3P →</CTA><CTA href={a3pConfig.advisor.phoneHref} variant="outline">Parler à un conseiller</CTA></div>
-            <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-xs font-bold text-white/62"><span className="before:mr-1.5 before:text-emerald-300 before:content-['✓']">Étude gratuite des prérequis</span><span className="before:mr-1.5 before:text-emerald-300 before:content-['✓']">Financements possibles</span><span className="before:mr-1.5 before:text-emerald-300 before:content-['✓']">Hébergement sur place</span></div>
-          </div>
-          <HeroSession sessions={sessions} />
+    <section className={`${styles.hero} px-4 text-white`}>
+      <Image src="/images/campus/campus-accueil.jpg" alt="L’accueil de notre école à Puget-sur-Argens" fill priority sizes="100vw" className={styles.heroPhoto} />
+      <div className={styles.heroOverlay} />
+      <div className={`page-container ${styles.heroContent}`}>
+        <div className="max-w-4xl">
+          <span className={`${styles.heroBadge} inline-flex items-center gap-2 rounded-full border border-emerald-300/45 bg-emerald-950/35 px-4 py-2 text-[.68rem] font-black uppercase tracking-[.2em] text-emerald-100 backdrop-blur-md`}><span className="h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-[0_0_16px_rgba(52,211,153,.95)]" />TFP A3P · RNCP 38002 · Niveau 4</span>
+          <h1 className={`${styles.heroTitle} mt-7 max-w-4xl text-[2.65rem] font-black leading-[.98] tracking-[-.055em] sm:text-[3.75rem] lg:text-[4.75rem] xl:text-[5.15rem]`}>Formation agent de protection rapprochée</h1>
+          <p className={`${styles.heroTagline} mt-5 max-w-3xl text-2xl font-black tracking-[-.035em] text-white sm:text-3xl`}>Apprenez le métier <span className={styles.heroTitleAccent}>sur le terrain.</span></p>
+          <p className="mt-5 max-w-2xl text-lg font-medium leading-8 text-white/78 sm:text-xl">Préparez, organisez et sécurisez les déplacements de personnes exposées. Une formation réglementée, intensive et résolument tournée vers les réalités du terrain.</p>
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap"><CTA href={a3pContact('dossier-a3p')} variant="green" className={styles.heroPrimaryAction}>Recevoir le dossier A3P →</CTA><CTA href={a3pConfig.advisor.phoneHref} variant="outline">Parler à un conseiller</CTA></div>
+          <div className="mt-8 flex flex-wrap gap-2 text-xs font-bold text-white/80">{[a3pConfig.durationShort, 'CNAPS accompagné', 'Financements possibles', 'Hébergement sur place'].map(label => <span key={label} className="rounded-full border border-emerald-200/25 bg-emerald-950/25 px-3 py-2 backdrop-blur">✓ {label}</span>)}</div>
         </div>
-
-        <div className="relative z-10 mt-8 grid grid-cols-2 gap-px overflow-hidden rounded-[1.75rem] border border-white/70 bg-[#DED4C3] text-academy-ink shadow-card md:grid-cols-3 lg:grid-cols-6">
-          {heroFacts.map(([key, value, detail]) => <div key={key} className="min-h-28 bg-[#FFFDF8] p-4"><p className="text-[.58rem] font-black uppercase tracking-[.16em] text-[#837968]">{key}</p><p className="mt-2 text-base font-black">{value}</p><p className="mt-1 text-[.68rem] font-semibold leading-5 text-academy-muted">{detail}</p></div>)}
+        <HeroSession sessions={sessions} />
+      </div>
+      <div className="page-container">
+        <div className={`${styles.heroFacts} relative grid overflow-hidden rounded-[1.6rem] border border-white/15 bg-[#0A1421]/85 text-white backdrop-blur-xl sm:grid-cols-2 lg:grid-cols-6`}>
+          {heroFacts.map(([key, value, detail]) => <div key={key} className="border-b border-white/10 p-4 last:border-b-0 sm:border-r lg:border-b-0"><p className="text-[.58rem] font-black uppercase tracking-[.18em] text-white/42">{key}</p><p className="mt-1 font-black text-white">{value}</p><p className="mt-1 text-[.68rem] font-semibold leading-4 text-white/48">{detail}</p></div>)}
         </div>
       </div>
     </section>
