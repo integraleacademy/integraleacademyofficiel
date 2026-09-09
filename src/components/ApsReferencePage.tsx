@@ -442,7 +442,7 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
       </div></div>
     </section>
 
-    <section className={`${styles.heroSessionSection} relative z-20 px-4 pb-8 pt-4`}><div className="page-container"><HeroSession session={next}/></div></section>
+    <section className={`${styles.heroSessionSection} relative z-20 px-4 pb-8`}><div className="page-container"><HeroSession session={next}/></div></section>
 
     <ApsSectionNavigation registrationHref={apsRegistrationFormUrl} />
 
