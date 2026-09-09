@@ -128,6 +128,7 @@ export function DespJourney() {
     if (!enhanced) return;
     const navigation = createStepWheelNavigation(steps.length);
     wheelRef.current = navigation;
+    const debugWheel = new URLSearchParams(window.location.search).has('desp-scroll-debug');
     let frame = 0;
     const stepAt = (position: number, start: number, end: number) => {
       const progress = Math.max(0, Math.min(1, (position - start) / Math.max(1, end - start)));
@@ -140,6 +141,7 @@ export function DespJourney() {
     };
     const schedule = () => { if (!frame) frame = window.requestAnimationFrame(update); };
     const onWheel = (event: WheelEvent) => {
+      if (debugWheel) console.debug('[desp-wheel-input]', JSON.stringify({ time: Math.round(performance.now()), delta: event.deltaY, mode: event.deltaMode, cancelable: event.cancelable, prevented: event.defaultPrevented, y: window.scrollY }));
       if (event.defaultPrevented || !event.cancelable || event.ctrlKey || event.metaKey || event.shiftKey || Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
       const target = event.target instanceof Element ? event.target : null;
       if (target?.closest('input, textarea, select, [contenteditable]:not([contenteditable="false"]), [role="dialog"], dialog')) return;
@@ -152,6 +154,7 @@ export function DespJourney() {
       if (!bounds) return;
       const delta = normalizeWheelDelta(event.deltaY, event.deltaMode, window.innerHeight);
       const action = navigation.handle({ delta, now: performance.now(), position: window.scrollY, ...bounds, step: stepAt(window.scrollY, bounds.start, bounds.end) });
+      if (debugWheel) console.debug('[desp-wheel-action]', JSON.stringify(action));
       if (!action) return;
       event.preventDefault();
       if (action.kind === 'step') scrollToStep(action.index);
