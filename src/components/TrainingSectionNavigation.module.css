@@ -34,6 +34,13 @@
   --nav-accent-shadow: rgba(234, 88, 12, .2);
 }
 
+.courseNav[data-theme='red'] {
+  --nav-accent: #dc2626;
+  --nav-accent-soft: #fef2f2;
+  --nav-accent-border: #fecaca;
+  --nav-accent-shadow: rgba(220, 38, 38, .2);
+}
+
 .courseNavShell {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;

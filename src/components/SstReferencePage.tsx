@@ -2,12 +2,22 @@ import { serializeCourseJsonLd } from '@/lib/seo';
 import Image from 'next/image';
 import Link from 'next/link';
 import { TrainingHero, TrainingHeroSessionCard } from '@/components/TrainingHero';
+import { TrainingSectionNavigation } from '@/components/TrainingSectionNavigation';
 import type { ReactNode } from 'react';
 import { PremiumFAQSection } from '@/components/ui';
 import { TrainingDatesPricingSection, type TrainingDatesPricingSession } from '@/components/TrainingDatesPricingSection';
 import { TrainingMotionGallery } from '@/components/TrainingMotionGallery';
 
 const contactHref = (subject = 'inscription') => `/contact?formation=sst&objet=${encodeURIComponent(subject)}`;
+
+const navigationItems = [
+  { label: 'Présentation', href: '#role-sst' },
+  { label: 'Programme', href: '#programme-sst' },
+  { label: 'Évaluation', href: '#evaluation-sst' },
+  { label: 'Dates & tarifs', href: '#dates-tarifs' },
+  { label: 'Entreprises', href: '#entreprises-sst' },
+  { label: 'FAQ', href: '#faq-sst' },
+] as const;
 
 const emergencySteps = [
   ['01', 'Protéger', 'Éliminer ou isoler le danger sans s’exposer.'],
@@ -105,7 +115,7 @@ function Section({ id, eyebrow, title, intro, children, tone = 'cream' }: { id?:
 
 export function SstReferencePage({ sessions }: { sessions: TrainingDatesPricingSession[] }) {
   const next = sessions[0];
-  return <main className="relative overflow-hidden pb-24 lg:pb-0">
+  return <main className="relative overflow-x-clip pb-24 lg:pb-0">
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeCourseJsonLd({ '@context': 'https://schema.org', '@graph': [
       { '@type': 'Course', name: 'Formation Sauveteur Secouriste du Travail SST', description: 'Formation initiale SST de 14 heures en présentiel à Puget-sur-Argens, prévention des risques et premiers secours en entreprise.', provider: { '@type': 'Organization', name: 'Intégrale Academy', telephone: '04 22 47 07 68' } },
       { '@type': 'FAQPage', mainEntity: faq.map(item => ({ '@type': 'Question', name: item.q, acceptedAnswer: { '@type': 'Answer', text: item.a } })) },
@@ -134,7 +144,14 @@ export function SstReferencePage({ sessions }: { sessions: TrainingDatesPricingS
       <TrainingHeroSessionCard session={next} theme="green" duration="2 jours · 14 heures" defaultPrice="Sur devis" capacity={10} assistantKey="sst" />
     </TrainingHero>
 
-    <nav aria-label="Sommaire de la formation" className="sticky top-0 z-30 hidden border-b border-academy-line bg-[#FFFDF8]/95 px-4 py-3 backdrop-blur lg:block"><div className="page-container flex items-center justify-between gap-5"><span className="text-xs font-black">FORMATION SST</span><div className="flex items-center gap-5 text-xs font-extrabold text-academy-muted">{[['Présentation', '#role-sst'], ['Programme', '#programme-sst'], ['Évaluation', '#evaluation-sst'], ['Dates & tarifs', '#dates-tarifs'], ['Entreprises', '#entreprises-sst'], ['FAQ', '#faq-sst']].map(([label, href]) => <Link key={href} href={href} className="transition hover:text-academy-ink">{label}</Link>)}</div><CTA href={sessionHref(next)} variant="gold" className="min-h-10 px-4 py-2">Demander un devis →</CTA></div></nav>
+    <TrainingSectionNavigation
+      mark="SST"
+      title="Formation SST"
+      items={navigationItems}
+      registrationHref={sessionHref(next)}
+      registrationLabel="Demander un devis"
+      theme="green"
+    />
 
     <Section id="role-sst" eyebrow="01 — Le rôle du SST" title={<>Bien plus que des gestes de secours.</>} intro={<>Le SST intervient face à un accident et contribue chaque jour à prévenir les risques dans son entreprise.</>}>
       <div className="grid gap-5 lg:grid-cols-[1.35fr_.65fr]"><article className="rounded-[2rem] bg-[#0D1725] p-6 text-white shadow-card lg:p-8"><h3 className="text-2xl font-black">Face à un accident</h3><p className="mt-2 text-white/60">Une méthode claire pour agir sans perdre de temps.</p><div className="mt-7 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">{emergencySteps.map(([number, title, text], index) => <div key={number} className="rounded-2xl border border-white/10 bg-white/6 p-4"><span className={`grid h-9 w-9 place-items-center rounded-full text-xs font-black ${index < 2 ? 'bg-emerald-500 text-white' : 'bg-[#F04C3A] text-white'}`}>{number}</span><h4 className="mt-4 text-lg font-black">{title}</h4><p className="mt-2 text-xs font-semibold leading-5 text-white/55">{text}</p></div>)}</div></article><div className="grid gap-5"><article className="rounded-[2rem] border border-emerald-200 bg-emerald-50/70 p-6"><h3 className="text-2xl font-black text-emerald-900">Prévenir au quotidien</h3><div className="mt-4 space-y-3">{preventionActions.map(item => <p key={item} className="flex items-start gap-3 font-bold text-emerald-950/75"><span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-emerald-600 text-xs text-white">✓</span>{item}</p>)}</div></article><article className="rounded-[2rem] border border-academy-line bg-[#FFFDF8] p-6 shadow-soft"><h3 className="text-2xl font-black">Pour qui ?</h3><div className="mt-4 flex flex-wrap gap-2">{['Salariés', 'Candidats sécurité', 'Entreprises'].map(item => <span key={item} className="rounded-full border border-academy-line bg-white px-3 py-2 text-xs font-black">{item}</span>)}</div><span className="mt-4 inline-flex rounded-full bg-[#F04C3A] px-4 py-2 text-xs font-black text-white">✓ Aucun prérequis</span></article></div></div>

@@ -3,6 +3,7 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { PremiumFAQSection } from '@/components/ui';
 import { TrainingHero, TrainingHeroSessionCard, trainingRegistrationUrl } from '@/components/TrainingHero';
+import { TrainingSectionNavigation } from '@/components/TrainingSectionNavigation';
 import { TrainingDatesPricingSection, type TrainingDatesPricingSession } from '@/components/TrainingDatesPricingSection';
 import {
   ssiapOfficialReference,
@@ -19,6 +20,15 @@ const relatedCourses = [
     href: '/formations-securite/recyclage-remise-a-niveau-ssiap',
   },
 ];
+
+const navigationItems = [
+  { label: 'Missions', href: '#missions' },
+  { label: 'Admission', href: '#admission' },
+  { label: 'Programme', href: '#programme' },
+  { label: 'Validation', href: '#validation' },
+  { label: 'Dates & tarifs', href: '#dates-tarifs' },
+  { label: 'FAQ', href: '#faq-ssiap' },
+] as const;
 
 function contactHref(config: SsiapCourseConfig, subject = 'inscription') {
   return `/contact?formation=${config.slug}&objet=${encodeURIComponent(subject)}`;
@@ -128,7 +138,7 @@ export function SsiapCoursePage({ config, sessions = [] }: { config: SsiapCourse
   };
 
   return (
-    <main className="relative overflow-hidden pb-24 lg:pb-0">
+    <main className={`relative ${heroKey ? 'overflow-x-clip' : 'overflow-hidden'} pb-24 lg:pb-0`}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeCourseJsonLd(courseSchema, `/formations-securite/${config.slug}`) }} />
 
       {heroKey ? <TrainingHero
@@ -210,7 +220,13 @@ export function SsiapCoursePage({ config, sessions = [] }: { config: SsiapCourse
       </section>
       )}
 
-      <nav aria-label="Sommaire de la formation" className="sticky top-0 z-30 hidden border-b border-academy-line bg-[#FFFDF8]/95 px-4 py-3 backdrop-blur lg:block">
+      {heroKey ? <TrainingSectionNavigation
+        mark="SSIAP"
+        title={config.label}
+        items={navigationItems}
+        registrationHref={contactHref(config, 'inscription')}
+        theme="red"
+      /> : <nav aria-label="Sommaire de la formation" className="sticky top-0 z-30 hidden border-b border-academy-line bg-[#FFFDF8]/95 px-4 py-3 backdrop-blur lg:block">
         <div className="page-container flex items-center justify-between gap-5">
           <span className="text-xs font-black">{config.label}</span>
           <div className="flex items-center gap-5 text-xs font-extrabold text-academy-muted">
@@ -225,7 +241,7 @@ export function SsiapCoursePage({ config, sessions = [] }: { config: SsiapCourse
           </div>
           <CTA href={contactHref(config, 'inscription')} variant="red" className="min-h-10 px-4 py-2">Je m’inscris</CTA>
         </div>
-      </nav>
+      </nav>}
 
       <Section id="missions" eyebrow="Le parcours" title="Des compétences directement liées à votre fonction." intro={config.audience}>
         <div className="grid gap-4 lg:grid-cols-3">
