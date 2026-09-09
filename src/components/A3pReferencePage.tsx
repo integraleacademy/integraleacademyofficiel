@@ -1,3 +1,4 @@
+import { serializeCourseJsonLd } from '@/lib/seo';
 import Image from 'next/image';
 import Link from 'next/link';
 import { getSessionSeatAvailability } from '@/lib/session-seat-availability';
@@ -190,14 +191,14 @@ const a3pNavigationItems = [
 
 export function A3pReferencePage({ sessions }: { sessions: any[] }) {
   return <main className="relative overflow-x-clip pb-24 lg:pb-0">
-    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeCourseJsonLd({
       '@context': 'https://schema.org',
       '@graph': [
         { '@type': 'Course', name: 'Formation A3P : devenez agent de protection rapprochée', description: `Formation officielle TFP A3P à Puget-sur-Argens, ${a3pConfig.durationHours}, RNCP niveau 4.`, provider: { '@type': 'Organization', name: 'Intégrale Academy', telephone: a3pConfig.advisor.phone } },
         { '@type': 'FAQPage', mainEntity: a3pFaq.map((item) => ({ '@type': 'Question', name: item.q, acceptedAnswer: { '@type': 'Answer', text: item.a } })) },
         { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Accueil', item: '/' }, { '@type': 'ListItem', position: 2, name: 'Formations sécurité', item: '/formations-securite' }, { '@type': 'ListItem', position: 3, name: 'A3P APR', item: a3pConfig.pageUrl }] },
       ],
-    }) }} />
+    }, "/formations-securite/a3p-apr") }} />
 
     <section className="relative isolate overflow-hidden bg-[#0D1725] px-4 pb-8 pt-10 text-white sm:pt-14 lg:pt-16">
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_12%_12%,rgba(5,150,105,.24),transparent_30%),radial-gradient(circle_at_88%_22%,rgba(52,211,153,.17),transparent_28%),linear-gradient(135deg,#080D15_0%,#101C2D_55%,#0E251F_100%)]" />

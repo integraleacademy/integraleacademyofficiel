@@ -1,3 +1,5 @@
+import { createPageMetadata } from '@/lib/seo';
+import { seoPages } from '@/data/seo-pages';
 import { getSessionSeatAvailability } from '@/lib/session-seat-availability';
 import { notFound } from 'next/navigation';
 import { canonicalSiteHref } from '@/lib/site-urls';
@@ -18,7 +20,12 @@ import { apsFaq } from '@/data/formations';
 import { formations } from '@/data/site';
 import { a3pConfig } from '@/data/a3p';
 export function generateStaticParams(){return formations.filter(f=>f.category==='security' && f.slug.startsWith('/formations-securite/')).map(f=>({slug:f.slug.split('/').pop()!}))}
-export async function generateMetadata({params}:{params:Promise<{slug:string}>}){const {slug}=await params;if(slug==='a3p-apr')return {alternates:{canonical:canonicalSiteHref(`/formations-securite/${slug}`)},title:'Formation A3P – Agent de protection rapprochée | Intégrale Academy',description:'Devenez agent de protection rapprochée avec la formation officielle TFP A3P à Puget-sur-Argens. 328 heures hors examen, titre RNCP niveau 4, financement CPF et hébergement possible.'};if(slug==='ssiap-1')return {alternates:{canonical:canonicalSiteHref(`/formations-securite/${slug}`)},title:'Formation SSIAP 1 à Puget-sur-Argens | Intégrale Academy',description:'Obtenez votre diplôme SSIAP 1 avec Intégrale Academy à Puget-sur-Argens. Formation réglementaire en sécurité incendie, examen officiel, financement CPF et option SST.'};if(slug==='sst')return {alternates:{canonical:canonicalSiteHref(`/formations-securite/${slug}`)},title:'Formation SST à Puget-sur-Argens',description:'Devenez Sauveteur Secouriste du Travail avec Intégrale Academy : 14 heures en présentiel, prévention, gestes de secours et certificat SST valable 24 mois.'};const f=formations.find(x=>x.slug===canonicalSiteHref(`/formations-securite/${slug}`));return {alternates:{canonical:canonicalSiteHref(`/formations-securite/${slug}`)},title:f?.seo.title||f?.title||'Formation sécurité',description:f?.seo.description||f?.short}}
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const path = `/formations-securite/${slug}`;
+  if (!seoPages[path]) notFound();
+  return createPageMetadata(path);
+}
 const assistantKeys: Record<string, 'aps' | 'a3p' | 'desp'> = { aps: 'aps', 'a3p-apr': 'a3p', desp: 'desp' };
 export const dynamic = 'force-dynamic';
 

@@ -1,3 +1,4 @@
+import { serializeCourseJsonLd } from '@/lib/seo';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { BtsCompleteInformation, BtsStudentBenefits } from '@/components/BtsExpandedContent';
@@ -244,7 +245,7 @@ export function BtsNdrcReferencePage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
+          __html: serializeCourseJsonLd({
             '@context': 'https://schema.org',
             '@graph': [
               {
@@ -276,7 +277,7 @@ export function BtsNdrcReferencePage() {
                 ],
               },
             ],
-          }),
+          }, "/bts/ndrc"),
         }}
       />
 

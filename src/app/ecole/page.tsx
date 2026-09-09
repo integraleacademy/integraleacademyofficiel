@@ -1,12 +1,9 @@
+import { createPageMetadata } from '@/lib/seo';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { contact, legalRefs } from '@/data/site';
 
-export const metadata = {
-  alternates: { canonical: '/ecole' },
-  title: 'Notre école | Intégrale Academy',
-  description: 'Découvrez Intégrale Academy : une école fondée en 2018, une équipe engagée, une école de 400 m² et des formations professionnelles encadrées et reconnues.',
-};
+export const metadata = createPageMetadata('/ecole');
 
 const appointmentFormUrl = 'https://assistance-alw9.onrender.com/demande-informations-formations';
 const linkedInUrl = 'https://fr.linkedin.com/in/vaillantclement';

@@ -1,3 +1,4 @@
+import { serializeCourseJsonLd } from '@/lib/seo';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { PremiumFAQSection } from '@/components/ui';
@@ -125,7 +126,7 @@ export function SsiapCoursePage({ config }: { config: SsiapCourseConfig }) {
 
   return (
     <main className="relative overflow-hidden pb-24 lg:pb-0">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(courseSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeCourseJsonLd(courseSchema, `/formations-securite/${config.slug}`) }} />
 
       <section className="relative isolate overflow-hidden bg-[#0D1725] px-4 pb-9 pt-10 text-white sm:pt-14 lg:pt-16">
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_12%_12%,rgba(248,113,113,.25),transparent_31%),radial-gradient(circle_at_88%_20%,rgba(220,38,38,.20),transparent_29%),linear-gradient(135deg,#080D15_0%,#121B2A_55%,#2A0F12_100%)]" />

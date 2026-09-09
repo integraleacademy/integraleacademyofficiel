@@ -1,3 +1,4 @@
+import { serializeCourseJsonLd } from '@/lib/seo';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { BtsSectionNavigation } from '@/components/BtsSectionNavigation';
@@ -185,7 +186,7 @@ function HeroRoadmap() {
 export function BtsCgReferencePage() {
   return (
     <main className="relative overflow-x-clip pb-24 lg:pb-0">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeCourseJsonLd({
         '@context': 'https://schema.org',
         '@graph': [
           { '@type': 'Course', name: 'BTS Comptabilité et Gestion (CG)', description: 'BTS Comptabilité et Gestion en alternance, en présentiel à Puget-sur-Argens ou à distance en visioconférence.', educationalCredentialAwarded: 'BTS - diplôme national de niveau 5 - RNCP 39159', provider: { '@type': 'EducationalOrganization', name: 'Intégrale Academy', telephone: '04 87 83 06 15', email: aurelieEmail } },
@@ -196,7 +197,7 @@ export function BtsCgReferencePage() {
             { '@type': 'ListItem', position: 3, name: 'BTS Comptabilité et Gestion', item: '/bts/comptabilite-gestion' },
           ] },
         ],
-      }) }} />
+      }, "/bts/comptabilite-gestion") }} />
 
       <section className="relative isolate overflow-hidden bg-[#0A1725] px-4 pb-8 pt-10 text-white sm:pt-14 lg:pt-16">
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_12%_76%,rgba(34,184,199,.27),transparent_29%),radial-gradient(circle_at_87%_12%,rgba(244,166,33,.22),transparent_28%),linear-gradient(135deg,#07111E_0%,#0E2035_62%,#111922_100%)]" />

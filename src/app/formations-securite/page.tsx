@@ -1,3 +1,4 @@
+import { createPageMetadata } from '@/lib/seo';
 import { VisualSection } from '@/components/visuals';
 import {
   ArtDirectionVisual,
@@ -9,12 +10,7 @@ import {
 } from '@/components/ui';
 import { formations } from '@/data/site';
 
-export const metadata = {
-  alternates: { canonical: '/formations-securite' },
-  title: 'Formations sécurité',
-  description:
-    'Formations sécurité privée Intégrale Academy : APS, tous les parcours SSIAP, SST, A3P et DESP avec lieux, financements et inscriptions.',
-};
+export const metadata = createPageMetadata('/formations-securite');
 
 export default function Page() {
   const items = formations

@@ -1,3 +1,4 @@
+import { createPageMetadata } from '@/lib/seo';
 import { VaeEligibilityModal } from '@/components/VaeEligibilityModal';
 import { isPublicUpcomingSession } from '@/components/PublicTrainingSessions';
 import { TrainingDatesPricingSection } from '@/components/TrainingDatesPricingSection';
@@ -11,11 +12,7 @@ import { despVaeAdmin, despVaeFaq } from '@/data/despVae';
 
 export const dynamic = 'force-dynamic';
 
-export const metadata = {
-  alternates: { canonical: '/vaedirigeant' },
-  title: 'DESP VAE - Validation acquis dirigeant sécurité privée',
-  description: 'DESP en VAE RNCP 40385 : accompagnement dossier de preuves, dossier de validation et jury pour profils expérimentés en sécurité privée.',
-};
+export const metadata = createPageMetadata('/vaedirigeant');
 
 const registrationFormUrl = 'https://assistance-alw9.onrender.com/demande-informations-formations';
 const navigationItems = [
