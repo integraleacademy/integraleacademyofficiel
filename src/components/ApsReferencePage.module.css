@@ -7,6 +7,7 @@
   position: relative;
   isolation: isolate;
   overflow: hidden;
+  padding-bottom: 4rem;
   background: #08111d;
 }
 
@@ -25,11 +26,11 @@
   z-index: -2;
   background:
     linear-gradient(90deg, rgba(4, 10, 18, .98) 0%, rgba(6, 14, 24, .92) 31%, rgba(7, 16, 27, .52) 57%, rgba(7, 15, 25, .12) 82%),
-    linear-gradient(0deg, #08111d 0%, transparent 38%, rgba(5, 11, 19, .2) 100%);
+    linear-gradient(0deg, rgba(6, 13, 22, .82) 0%, transparent 38%, rgba(5, 11, 19, .2) 100%);
 }
 
 .heroSessionSection {
-  background: linear-gradient(to bottom, #08111d 0 4rem, #f6f1e8 4rem 100%);
+  margin-top: -3rem;
 }
 
 .hero::before {
