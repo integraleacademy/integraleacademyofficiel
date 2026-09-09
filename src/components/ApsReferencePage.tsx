@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { ApsSectionNavigation } from '@/components/ApsSectionNavigation';
+import { ApsFacilitiesSections } from '@/components/ApsFacilitiesSections';
 import { TrainingMotionIllustration } from '@/components/TrainingMotionGallery';
 import { OrientationAssistant } from '@/components/OrientationAssistant';
 import { PremiumFAQSection } from '@/components/ui';
@@ -467,6 +468,8 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
           </div>
         </article>)}
       </div><div className="mt-7 grid gap-4 rounded-[1.7rem] border border-blue-300/25 bg-blue-400/10 p-6 lg:grid-cols-[auto_1fr] lg:items-center"><span className="grid h-14 w-14 place-items-center rounded-2xl bg-blue-300 text-2xl font-black text-blue-950">✓</span><div><p className="text-xl font-black text-blue-200">L’objectif : transformer les connaissances en réflexes professionnels.</p><p className="mt-2 max-w-4xl leading-7 text-white/68">Observation, positionnement, communication, respect du cadre légal, compte rendu et choix d’une réponse adaptée sont analysés après chaque scénario.</p></div></div></Section>
+
+    <ApsFacilitiesSections pcFallback={<ApsPracticalVisual kind="video" />} />
 
     <Section id="programme" eyebrow="04 — Programme" title={<>Les 14 UV du programme officiel, sans raccourci.</>} intro={<>Programme CPNEFP version V3.2 mis à jour le 23 juillet 2026 : 41 heures de socle de base et 134 heures de spécialité APS, soit 175 heures au total.</>}>
       <div className="mb-6 grid gap-3 sm:grid-cols-3">
