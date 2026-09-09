@@ -168,8 +168,6 @@ export default function VtcPage() {
       </div>
     </section>
 
-    <VtcAutonomousEnrollmentBanner />
-
     <section className={styles.accreditations}>
       <div className={styles.container}>
         <div className={styles.accreditationGrid}>
@@ -266,7 +264,9 @@ export default function VtcPage() {
       </div>
     </section>
 
-    <section id="inscription" className={styles.offer}>
+    <VtcAutonomousEnrollmentBanner />
+
+    <section className={styles.offer}>
       <div className={styles.container}>
         <div className={styles.offerCard}>
           <div className={styles.offerCopy}><span>09 — L’offre Intégrale</span><h2>Votre projet VTC,<br/><em>clé en main.</em></h2><p>Une seule formule lisible, sans découvrir au dernier moment qu’il faut encore payer la pratique, le véhicule ou l’examen.</p><ul><li><Icon name="check"/> 105 heures de préparation</li><li><Icon name="check"/> E-learning accessible 24h/24</li><li><Icon name="check"/> Formation pratique encadrée</li><li><Icon name="check"/> Livre officiel inclus</li><li><Icon name="check"/> Frais d’examen inclus</li><li><Icon name="check"/> Véhicule double commande inclus</li></ul></div>
