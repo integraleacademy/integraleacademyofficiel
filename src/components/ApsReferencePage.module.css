@@ -6,8 +6,12 @@
 .hero {
   position: relative;
   isolation: isolate;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
-  padding-bottom: 4rem;
+  min-height: calc(100vh - var(--site-header-height));
+  min-height: calc(100dvh - var(--site-header-height));
+  padding-bottom: 2rem;
   background: #08111d;
 }
 
@@ -30,7 +34,7 @@
 }
 
 .heroSessionSection {
-  margin-top: -3rem;
+  padding-top: 2rem;
 }
 
 .hero::before {
