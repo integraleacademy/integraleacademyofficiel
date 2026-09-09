@@ -1,3 +1,4 @@
+import { createPageMetadata } from '@/lib/seo';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -7,11 +8,7 @@ import { TrainingSectionNavigation } from '@/components/TrainingSectionNavigatio
 import { PremiumFAQSection } from '@/components/ui';
 import styles from './vtc.module.css';
 
-export const metadata: Metadata = {
-  alternates: { canonical: '/vtc' },
-  title: 'Formation Chauffeur VTC tout inclus',
-  description: 'Préparez l’examen VTC avec une formule tout inclus à 1 500 € : théorie en ligne, pratique, véhicule double commande et frais d’examen.',
-};
+export const metadata: Metadata = createPageMetadata('/vtc');
 
 const contactHref = (subject: string) => `/contact?formation=vtc&objet=${encodeURIComponent(subject)}`;
 const registrationFormUrl = 'https://assistance-alw9.onrender.com/demande-informations-formations';

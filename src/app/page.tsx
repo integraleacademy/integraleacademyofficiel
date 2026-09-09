@@ -1,3 +1,4 @@
+import { createPageMetadata } from '@/lib/seo';
 import Link from 'next/link';
 import { OrientationAssistant } from '@/components/OrientationAssistant';
 import { BtsTrainingGrid, type BtsTrainingHighlight } from '@/components/BtsTrainingGrid';
@@ -18,11 +19,7 @@ import styles from './home.module.css';
 
 export const dynamic = 'force-dynamic';
 
-export const metadata = {
-  alternates: { canonical: '/' },
-  title: 'Accueil',
-  description: 'Intégrale Academy forme aux métiers de la sécurité privée, de la sécurité incendie, du VTC et aux BTS en alternance à Puget-sur-Argens, Paris et Aurillac.',
-};
+export const metadata = createPageMetadata('/');
 
 const journeyCards = [
   { number: '01', icon: '◆', title: 'Découvrir les formations', description: 'Sécurité, incendie, direction, VTC et BTS.', href: '#formations-securite', tone: 'dark' },

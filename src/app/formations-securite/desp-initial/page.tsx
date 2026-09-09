@@ -1,3 +1,4 @@
+import { createPageMetadata } from '@/lib/seo';
 import { isPublicUpcomingSession } from '@/components/PublicTrainingSessions';
 import { TrainingDatesPricingSection } from '@/components/TrainingDatesPricingSection';
 import { TrainingSectionNavigation } from '@/components/TrainingSectionNavigation';
@@ -10,11 +11,7 @@ import { despActivities, despEnrollmentSteps, despFinancingCards, despInitialAdm
 
 export const dynamic = 'force-dynamic';
 
-export const metadata = {
-  alternates: { canonical: '/dirigeant' },
-  title: 'Formation DESP initial – Dirigeant de sécurité privée | Intégrale Academy',
-  description: 'Préparez le titre RNCP niveau 5 de dirigeant d’entreprise de sécurité privée. Formation DESP de 245 heures à distance et en présentiel, éligible aux financements selon votre situation.',
-};
+export const metadata = createPageMetadata('/dirigeant');
 
 const contactHref = '/contact?formation=desp-initial';
 const registrationFormUrl = 'https://assistance-alw9.onrender.com/demande-informations-formations';

@@ -1,12 +1,9 @@
+import { createPageMetadata } from '@/lib/seo';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { contact, legalRefs } from '@/data/site';
 
-export const metadata = {
-  alternates: { canonical: '/mentions-legales' },
-  title: 'Mentions légales',
-  description: 'Mentions légales d’Intégrale Academy : éditeur, identification de la société, publication, hébergement, propriété intellectuelle et données personnelles.',
-};
+export const metadata = createPageMetadata('/mentions-legales');
 
 const email = 'ecole@integraleacademy.com';
 const companyRegisterUrl = 'https://annuaire-entreprises.data.gouv.fr/entreprise/840899884';

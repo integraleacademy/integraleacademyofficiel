@@ -1,11 +1,8 @@
+import { createPageMetadata } from '@/lib/seo';
 import { Hero, PremiumFAQSection } from '@/components/ui';
 import { btsFormations } from '@/data/bts';
 
-export const metadata = {
-  title: 'Questions fréquentes sur les BTS',
-  description: 'Alternance, financement et candidature : les réponses aux questions sur les BTS Intégrale Academy.',
-  alternates: { canonical: '/faq' },
-};
+export const metadata = createPageMetadata('/faq');
 
 export default function BtsFaqPage() {
   const questions = [...new Map(btsFormations.flatMap((formation) => formation.faq).map((item) => [item.q, item])).values()];

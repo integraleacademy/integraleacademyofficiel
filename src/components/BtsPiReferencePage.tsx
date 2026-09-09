@@ -1,3 +1,4 @@
+import { serializeCourseJsonLd } from '@/lib/seo';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { BtsCompleteInformation, BtsStudentBenefits } from '@/components/BtsExpandedContent';
@@ -241,7 +242,7 @@ export function BtsPiReferencePage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
+          __html: serializeCourseJsonLd({
             '@context': 'https://schema.org',
             '@graph': [
               {
@@ -273,7 +274,7 @@ export function BtsPiReferencePage() {
                 ],
               },
             ],
-          }),
+          }, "/bts/professions-immobilieres"),
         }}
       />
 
