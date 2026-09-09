@@ -14,7 +14,7 @@ type TrainingSectionNavigationProps = {
   items: readonly TrainingSectionNavigationItem[];
   registrationHref: string;
   registrationLabel?: string;
-  theme?: 'blue' | 'green' | 'violet' | 'orange';
+  theme?: 'blue' | 'green' | 'violet' | 'orange' | 'red';
   externalRegistration?: boolean;
   ariaLabel?: string;
 };

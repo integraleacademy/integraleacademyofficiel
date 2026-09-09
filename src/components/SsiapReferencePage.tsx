@@ -2,6 +2,7 @@ import { serializeCourseJsonLd } from '@/lib/seo';
 import Image from 'next/image';
 import Link from 'next/link';
 import { TrainingHero, TrainingHeroSessionCard } from '@/components/TrainingHero';
+import { TrainingSectionNavigation } from '@/components/TrainingSectionNavigation';
 import type { ReactNode } from 'react';
 import { MissionAnimation } from '@/components/MissionAnimation';
 import { PremiumFAQSection } from '@/components/ui';
@@ -9,6 +10,16 @@ import { TrainingDatesPricingSection } from '@/components/TrainingDatesPricingSe
 import { TrainingMotionGallery } from '@/components/TrainingMotionGallery';
 
 const contactHref = (subject = 'inscription') => `/contact?formation=ssiap-1&objet=${encodeURIComponent(subject)}`;
+
+const navigationItems = [
+  { label: 'Métier', href: '#metier' },
+  { label: 'Admission', href: '#admission' },
+  { label: 'Programme', href: '#programme' },
+  { label: 'Examen', href: '#examen' },
+  { label: 'Dates & tarifs', href: '#dates-tarifs' },
+  { label: 'Débouchés', href: '#debouches' },
+  { label: 'FAQ', href: '#faq-ssiap' },
+] as const;
 
 const fallbackSessions = [
   { id: 'ssiap-1-octobre-2026', title: 'SSIAP 1 — Octobre 2026', startDate: '2026-10-12T00:00:00.000Z', endDate: '2026-10-27T00:00:00.000Z', examDate: '2026-10-28T00:00:00.000Z', status: 'OPEN', seatsTotal: 12, seatsLeft: 8, location: 'Puget-sur-Argens', priceLabel: '980 €' },
@@ -118,7 +129,7 @@ export function SsiapReferencePage({ sessions }: { sessions: any[] }) {
   const next = visibleSessions[0];
   const faqSchema = faq.map(item => ({ '@type': 'Question', name: item.q, acceptedAnswer: { '@type': 'Answer', text: item.a } }));
 
-  return <main className="relative overflow-hidden pb-24 lg:pb-0">
+  return <main className="relative overflow-x-clip pb-24 lg:pb-0">
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeCourseJsonLd({ '@context': 'https://schema.org', '@graph': [
       { '@type': 'Course', name: 'Formation SSIAP 1 – Agent de sécurité incendie', description: 'Formation réglementaire SSIAP 1 de 67 heures à Puget-sur-Argens.', provider: { '@type': 'Organization', name: 'Intégrale Academy', telephone: '04 22 47 07 68' } },
       { '@type': 'FAQPage', mainEntity: faqSchema },
@@ -140,7 +151,13 @@ export function SsiapReferencePage({ sessions }: { sessions: any[] }) {
       <TrainingHeroSessionCard session={next} theme="red" duration="67 heures" defaultPrice="980 €" assistantKey="ssiap-1" />
     </TrainingHero>
 
-    <nav aria-label="Sommaire de la formation" className="sticky top-0 z-30 hidden border-b border-academy-line bg-[#FFFDF8]/95 px-4 py-3 backdrop-blur lg:block"><div className="page-container flex items-center justify-between gap-5"><span className="text-xs font-black">SSIAP 1</span><div className="flex items-center gap-5 text-xs font-extrabold text-academy-muted">{[['Métier', '#metier'], ['Admission', '#admission'], ['Programme', '#programme'], ['Examen', '#examen'], ['Dates & tarifs', '#dates-tarifs'], ['Débouchés', '#debouches'], ['FAQ', '#faq-ssiap']].map(([label, href]) => <Link key={href} href={href} className="transition hover:text-academy-ink">{label}</Link>)}</div><CTA href={sessionHref(next)} variant="red" className="min-h-10 px-4 py-2">Je m’inscris</CTA></div></nav>
+    <TrainingSectionNavigation
+      mark="SSIAP"
+      title="SSIAP 1"
+      items={navigationItems}
+      registrationHref={sessionHref(next)}
+      theme="red"
+    />
 
     <Section id="metier" eyebrow="Le métier" title={<>Un rôle essentiel dans les ERP et les IGH.</>} intro={<>L’agent SSIAP 1 protège les personnes et les bâtiments. Il prévient les risques, contrôle les installations et intervient au sein d’un service de sécurité incendie.</>}>
       <div className="grid gap-4 lg:grid-cols-3">{missions.map(([number, title, text], index) => <article key={number} className={`rounded-[1.8rem] border p-6 shadow-soft ${index === 1 ? 'border-[#26384F] bg-[#0D1725] text-white' : 'border-academy-line bg-[#FFFDF8]'}`}><span className={`text-5xl font-black ${index === 1 ? 'text-red-300' : 'text-red-600'}`}>{number}</span><h3 className="mt-10 text-2xl font-black">{title}</h3><p className={`mt-3 leading-7 ${index === 1 ? 'text-white/65' : 'text-academy-muted'}`}>{text}</p></article>)}</div>
