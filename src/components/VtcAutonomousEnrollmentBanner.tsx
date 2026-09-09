@@ -4,7 +4,7 @@ const enrollmentUrl = 'https://assistance-alw9.onrender.com/inscriptions';
 
 export function VtcAutonomousEnrollmentBanner() {
   return (
-    <section className={styles.section} aria-labelledby="vtc-autonomous-title">
+    <section id="inscription" className={styles.section} aria-labelledby="vtc-autonomous-title">
       <div className={styles.banner}>
         <span className={styles.wordmark} aria-hidden="true">VTC</span>
 
@@ -17,8 +17,10 @@ export function VtcAutonomousEnrollmentBanner() {
             <span>commence ici.</span>
           </h2>
           <p className={styles.description}>
-            Inscrivez-vous en formation <strong>Chauffeur VTC</strong> en totale
-            autonomie, grâce à un parcours en ligne qui vous guide pas à pas.
+            Vous avez plus de 1500 euros sur votre compte CPF ? Votre Identité
+            Numérique la Poste fonctionne ? Vous pouvez vous inscrire en formation{' '}
+            <strong>Chauffeur VTC</strong> en totale autonomie, grâce à notre parcours
+            en ligne qui vous guide pas à pas.
           </p>
         </div>
 
@@ -53,14 +55,26 @@ export function VtcAutonomousEnrollmentBanner() {
         </div>
 
         <div className={styles.action}>
-          <p className={styles.actionPrompt}>Vous avez les deux ? À vous de jouer.</p>
+          <p className={styles.actionPrompt}>À vous de jouer !</p>
           <a className={styles.cta} href={enrollmentUrl}>
             <span>Je m’inscris en formation VTC</span>
             <span className={styles.ctaArrow} aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14m-6-6 6 6-6 6" /></svg>
             </span>
           </a>
-          <p className={styles.reassurance}>Votre inscription en ligne. Notre équipe à vos côtés si besoin.</p>
+        </div>
+
+        <div className={styles.advisor}>
+          <div className={styles.advisorCopy}>
+            <h3>Vous préférez vous inscrire avec un de nos conseillers ?</h3>
+            <p>Contactez-nous : notre équipe vous accompagne dans votre inscription.</p>
+          </div>
+          <a className={styles.advisorPhone} href="tel:+33422470768" aria-label="Appeler un conseiller au 04 22 47 07 68">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M7 3H4a1 1 0 0 0-1 1 17 17 0 0 0 17 17 1 1 0 0 0 1-1v-3l-5-2-2 2a13 13 0 0 1-7-7l2-2-2-5Z" />
+            </svg>
+            <span>04 22 47 07 68</span>
+          </a>
         </div>
       </div>
     </section>
