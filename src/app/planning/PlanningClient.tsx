@@ -720,7 +720,7 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
   const [showAll, setShowAll] = useState(false);
 
   const locations = useMemo(
-    () => Array.from(new Set(sortedSessions.map((session) => session.location).filter(Boolean))) as string[],
+    () => Array.from(new Set(sortedSessions.map((session) => sessionMatchesLocation(session, 'paris') ? 'Paris' : sessionMatchesLocation(session, 'cote-azur') ? 'Côte d’Azur' : session.location).filter(Boolean))) as string[],
     [sortedSessions],
   );
   const formationCount = useMemo(
