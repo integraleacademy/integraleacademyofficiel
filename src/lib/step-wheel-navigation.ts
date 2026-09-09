@@ -15,7 +15,7 @@ type WheelAction =
 
 // High-inertia wheels can deliver another burst well after the first one.
 // Require a real pause before rearming, not just the end of the animation.
-const GESTURE_GAP = 1000;
+const GESTURE_GAP = 1300;
 const TRANSITION_PAUSE = 900;
 const WHEEL_THRESHOLD = 48;
 
