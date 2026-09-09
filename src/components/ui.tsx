@@ -196,7 +196,7 @@ function AppointmentButton(){
 
 function BrandSigle({ placement }: { placement: 'header' | 'footer' }){
   const size = placement === 'header'
-    ? 'h-[44px] w-[46px] sm:h-[50px] sm:w-[53px] xl:h-[64px] xl:w-[67px]'
+    ? 'h-[var(--site-header-logo-height)] w-[46px] sm:w-[53px] xl:w-[67px]'
     : 'h-[130px] w-[137px]';
 
   return <span className={`relative block shrink-0 overflow-hidden ${size}`} aria-hidden="true">
