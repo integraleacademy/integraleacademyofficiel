@@ -2,6 +2,7 @@ import { randomUUID } from 'node:crypto';
 import { NextRequest, NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
 import { requireAdmin } from '@/lib/admin/guard';
+import { isAllowedAdminOrigin } from '@/lib/admin/request-origin';
 import { getPrisma } from '@/lib/db';
 import { APS_PHOTO_MAX_UPLOAD_BYTES, parseApsPhotoCaption, parseApsPhotoSlot } from '@/lib/aps-gallery';
 import { apsPhotoMetadata, serializeApsPhoto } from '@/lib/aps-gallery-data';
@@ -12,14 +13,7 @@ export const runtime = 'nodejs';
 async function guard(request: NextRequest) {
   const denied = await requireAdmin();
   if (denied) return denied;
-  const origin = request.headers.get('origin');
-  if (origin) {
-    try {
-      if (new URL(origin).host !== request.nextUrl.host) return NextResponse.json({ error: 'Origine non autorisée.' }, { status: 403 });
-    } catch {
-      return NextResponse.json({ error: 'Origine non autorisée.' }, { status: 403 });
-    }
-  }
+  if (!isAllowedAdminOrigin(request)) return NextResponse.json({ error: 'Origine non autorisée.' }, { status: 403 });
   return null;
 }
 
