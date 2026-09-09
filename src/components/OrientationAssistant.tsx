@@ -1,17 +1,18 @@
 'use client';
 
 import Link from 'next/link';
+import { getSessionSeatAvailability } from '@/lib/session-seat-availability';
 import FinancingSimulator from './FinancingSimulator';
 import { VaeEligibilityModal } from './VaeEligibilityModal';
 import { usePathname } from 'next/navigation';
 import { useEffect, useId, useMemo, useRef, useState } from 'react';
-import { computedSeats, formatSessionDate } from '@/lib/public-sessions';
+import { formatSessionDate } from '@/lib/public-sessions';
 import { securityFormations } from '@/data/formations';
 import { createPortal } from 'react-dom';
 
 type FormationKey = 'aps' | 'a3p' | 'desp' | 'vtc' | 'bts';
 type Step = 'formations' | 'loading' | 'formation-result' | 2 | 3 | 4;
-type AssistantSession = { id: string; startDate: string; endDate: string; examDate?: string | null; seatsLeft?: number | null; showSeatsLeft?: boolean | null; training?: { slug?: string; name?: string } | null; };
+type AssistantSession = { id: string; startDate: string; endDate: string; examDate?: string | null; seatsLeft?: number | null; seatsTotal?: number | null; status?: string | null; showSeatsLeft?: boolean | null; training?: { slug?: string; name?: string } | null; };
 
 type AssistantFormation = {
   key: FormationKey;
@@ -288,13 +289,6 @@ function FormationAssistantLoading({formation}:{formation:AssistantFormation}){
   </div>;
 }
 
-function seatLabel(session: AssistantSession){
-  const seats = computedSeats(session);
-  if (seats === null || Number.isNaN(seats)) return 'Places limitées';
-  if (seats < 4) return `Attention, il reste ${seats} place${seats > 1 ? 's' : ''}`;
-  return `${seats} places restantes`;
-}
-
 function FormationAssistantResult({formation,sessions,onBack,hideInfoAction=false,isExpanded=false}:{formation:AssistantFormation;sessions:AssistantSession[];onBack:()=>void;hideInfoAction?:boolean;isExpanded?:boolean}){
   const details = formationDetails[formation.key];
   const upcomingSessions = sessions.filter(session => Boolean(session.training?.slug && details.sessionSlugs.includes(session.training.slug))).sort((a,b) => +new Date(a.startDate) - +new Date(b.startDate)).slice(0, 1);
@@ -304,7 +298,7 @@ function FormationAssistantResult({formation,sessions,onBack,hideInfoAction=fals
       <div className="rounded-2xl border border-academy-line bg-white/85 p-3"><p className="text-sm font-black">Informations clés</p><ul className="mt-2 space-y-1 text-xs font-semibold leading-5 text-stone-600 sm:text-sm">{details.keyPoints.map(point => <li key={point} className="flex gap-2"><span className="text-academy-gold" aria-hidden="true">✓</span><span>{point}</span></li>)}</ul></div>
       <div className={`rounded-2xl border border-academy-line bg-white/85 p-3 ${isExpanded ? 'lg:flex lg:flex-col lg:justify-center' : ''}`}><span className="block text-[10px] font-black uppercase tracking-[.15em] text-academy-muted/70">Tarif</span><span className="text-lg font-black text-academy-ink">{details.price}</span></div>
     </div>
-    <div><p className="font-black">Prochaine formation</p>{upcomingSessions.length ? <div className="mt-3 grid gap-3">{upcomingSessions.map(session => <div key={session.id} className="rounded-2xl border border-academy-line bg-white p-3 shadow-sm"><div className="grid gap-3 sm:grid-cols-3"><p><span className="block text-[10px] font-black uppercase tracking-[.15em] text-academy-muted/70">Début</span><span className="font-black">{formatSessionDate(session.startDate)}</span></p><p><span className="block text-[10px] font-black uppercase tracking-[.15em] text-academy-muted/70">Fin</span><span className="font-black">{formatSessionDate(session.endDate)}</span></p><p><span className="block text-[10px] font-black uppercase tracking-[.15em] text-academy-muted/70">Examen</span><span className="font-black">{session.examDate ? formatSessionDate(session.examDate) : 'À confirmer'}</span></p></div><p className={`mt-3 inline-flex rounded-full px-3 py-1 text-xs font-black ${computedSeats(session) !== null && Number(computedSeats(session)) < 4 ? 'bg-rose-100 text-rose-800' : 'bg-academy-gold/15 text-yellow-800'}`}>{seatLabel(session)}</p></div>)}</div> : <p className="mt-3 rounded-2xl border border-dashed border-academy-line bg-white/70 p-4 text-sm font-bold text-academy-muted">La prochaine date est à confirmer avec notre équipe.</p>}
+    <div><p className="font-black">Prochaine formation</p>{upcomingSessions.length ? <div className="mt-3 grid gap-3">{upcomingSessions.map(session => { const seatAvailability = getSessionSeatAvailability(session); return <div key={session.id} className="rounded-2xl border border-academy-line bg-white p-3 shadow-sm"><div className="grid gap-3 sm:grid-cols-3"><p><span className="block text-[10px] font-black uppercase tracking-[.15em] text-academy-muted/70">Début</span><span className="font-black">{formatSessionDate(session.startDate)}</span></p><p><span className="block text-[10px] font-black uppercase tracking-[.15em] text-academy-muted/70">Fin</span><span className="font-black">{formatSessionDate(session.endDate)}</span></p><p><span className="block text-[10px] font-black uppercase tracking-[.15em] text-academy-muted/70">Examen</span><span className="font-black">{session.examDate ? formatSessionDate(session.examDate) : 'À confirmer'}</span></p></div><p className={`mt-3 inline-flex rounded-full px-3 py-1 text-xs font-black ${seatAvailability.badgeClassName}`}>{seatAvailability.label}</p></div>; })}</div> : <p className="mt-3 rounded-2xl border border-dashed border-academy-line bg-white/70 p-4 text-sm font-bold text-academy-muted">La prochaine date est à confirmer avec notre équipe.</p>}
       <p className="mt-2 text-xs font-bold leading-5 text-stone-600">Consultez toutes les dates en <Link href={`/planning?formation=${formation.key}`} className="font-black text-yellow-700 underline decoration-academy-gold/50 underline-offset-4 hover:text-academy-ink">cliquant ici</Link>.</p>
     </div>
     <div className="grid gap-3"><Link href={`/contact?formation=${formation.key}&type=inscription`} className="group relative inline-flex min-h-14 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-r from-academy-gold via-yellow-300 to-academy-gold px-5 py-3 text-center text-sm font-black text-academy-gold-text shadow-gold ring-2 ring-academy-gold/45 transition hover:-translate-y-1"><span className="relative z-10">Je souhaite m’inscrire</span></Link><div className={`grid gap-3 ${hideInfoAction ? '' : 'sm:grid-cols-2'}`}>{!hideInfoAction && <Link href={formation.infoUrl} className="inline-flex min-h-12 items-center justify-center rounded-full bg-academy-ink px-5 py-3 text-center text-sm font-black text-white shadow-soft transition hover:-translate-y-0.5 hover:bg-black">Je souhaite en savoir plus</Link>}<button type="button" onClick={onBack} className="inline-flex min-h-12 items-center justify-center rounded-full border border-academy-line bg-white px-5 py-3 text-sm font-black text-academy-ink transition hover:-translate-y-0.5 hover:border-academy-gold">Retour aux formations</button></div></div>

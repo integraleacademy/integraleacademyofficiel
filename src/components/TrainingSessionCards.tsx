@@ -122,15 +122,6 @@ function isFull(session: TrainingSessionCardItem) {
   return session.status === 'FULL' || (hasSeatCount && Number(session.seatsLeft) === 0);
 }
 
-function seatsLabel(session: TrainingSessionCardItem) {
-  if (isFull(session)) return 'Session complète';
-  if (session.showSeatsLeft === false || session.seatsLeft === null || session.seatsLeft === undefined || session.seatsLeft === '') return 'Places limitées';
-
-  const seats = Number(session.seatsLeft);
-  if (Number.isNaN(seats)) return 'Places limitées';
-  return seats === 1 ? '1 place restante' : `${seats} places restantes`;
-}
-
 function ActionLink({ action, variant, className = '' }: { action: Action; variant: TrainingTheme | 'light'; className?: string }) {
   const classes = `inline-flex min-h-12 items-center justify-center rounded-full px-5 py-3 text-center text-sm font-black transition hover:-translate-y-0.5 focus:outline-none focus:ring-4 ${actionStyles[variant]} ${className}`;
 
@@ -184,7 +175,7 @@ function SessionCard({
   return <article className={`flex h-full flex-col rounded-[1.8rem] border p-5 shadow-soft ${index === 0 ? sessionTheme.featuredCard : 'border-academy-line bg-[#FFFDF8]'}`}>
     <div className="flex flex-wrap items-center justify-between gap-3">
       <span className={`rounded-full border px-3 py-1.5 text-[.64rem] font-black uppercase tracking-[.15em] ${sessionTheme.badge}`}>{index === 0 ? 'Prochaine session' : 'Session ouverte'}</span>
-      <span className={`rounded-full border px-3 py-1.5 text-xs font-black ${seatAvailability?.badgeClassName ?? (full ? 'border-stone-300 bg-stone-100 text-stone-700' : sessionTheme.badge)}`}>{seatAvailability?.label ?? seatsLabel(session)}</span>
+      <span className={`rounded-full border px-3 py-1.5 text-xs font-black ${seatAvailability.badgeClassName}`}>{seatAvailability.label}</span>
     </div>
     {showSessionTitle && sessionTitle ? <h3 className="mt-5 text-xl font-black tracking-tight text-academy-ink">{sessionTitle}</h3> : null}
     <div className={`${showSessionTitle && sessionTitle ? 'mt-3' : 'mt-5'} rounded-[1.35rem] border border-academy-line/70 bg-white/65 p-2 shadow-[inset_0_1px_0_rgba(255,255,255,.8)]`}>

@@ -23,7 +23,7 @@ const heroFacts = [
   ['Certification', 'TFP APS', 'Titre à finalité professionnelle'],
   ['Niveau', 'Niveau 3', 'RNCP 36648'],
   ['Format', '51 h', 'à distance'],
-  ['Campus', '124 h', 'en présentiel à Puget'],
+  ['École', '124 h', 'en présentiel à Puget'],
   ['Secourisme', 'SST inclus', 'dans le parcours'],
   ['Agrément', 'ADEF', '8320032701'],
 ];
@@ -409,10 +409,10 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
       { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Accueil', item: '/' }, { '@type': 'ListItem', position: 2, name: 'Formations sécurité', item: '/formations-securite' }, { '@type': 'ListItem', position: 3, name: 'APS', item: '/formations-securite/aps' }] },
     ] }) }} />
 
-    <section className={`${styles.hero} relative min-h-[720px] px-4 text-white`}>
+    <section className={`${styles.hero} relative px-4 pb-6 text-white`}>
       <Image src="/images/aps/aps-hero-round.jpg" alt="Exercice pratique de ronde de sécurité pendant la formation APS" fill priority sizes="100vw" className={styles.heroPhoto}/>
       <div className={styles.heroOverlay}/>
-      <div className="page-container relative flex min-h-[720px] items-center py-16 sm:py-20 lg:py-24">
+      <div className="page-container relative flex items-center py-10 sm:py-12 lg:py-14">
         <div className="max-w-4xl">
           <span className={`${styles.heroBadge} inline-flex items-center gap-2 rounded-full border border-blue-300/45 bg-blue-950/35 px-4 py-2 text-[.68rem] font-black uppercase tracking-[.2em] text-blue-100 backdrop-blur-md`}>
             <span className="h-2.5 w-2.5 rounded-full bg-blue-400 shadow-[0_0_16px_rgba(96,165,250,.95)]"/>
@@ -437,7 +437,7 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
           </div>
         </div>
       </div>
-      <div className={`${styles.facts} page-container relative -mt-28 grid overflow-hidden rounded-[1.6rem] border border-white/15 bg-[#0A1421]/85 text-white backdrop-blur-xl sm:grid-cols-2 lg:grid-cols-6`}>
+      <div className={`${styles.facts} page-container relative grid overflow-hidden rounded-[1.6rem] border border-white/15 bg-[#0A1421]/85 text-white backdrop-blur-xl sm:grid-cols-2 lg:grid-cols-6`}>
         {heroFacts.map(([key,value,detail]) => <div key={key} className={`${styles.fact} border-b border-white/10 p-4 last:border-b-0 sm:border-r lg:border-b-0`}><p className="text-[.58rem] font-black uppercase tracking-[.18em] text-white/42">{key}</p><p className="mt-1 font-black text-white">{value}</p><p className="mt-1 text-[.68rem] font-semibold leading-4 text-white/48">{detail}</p></div>)}
       </div>
     </section>
@@ -514,7 +514,7 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
         {[['71 %','du parcours en présentiel'],['36 %','du parcours consacré à la pratique'],['29 %','du parcours à distance']].map(([value,label]) => <div key={value} className="rounded-[1.4rem] border border-academy-line bg-white p-5 text-center"><p className="text-3xl font-black text-academy-ink">{value}</p><p className="mt-2 text-sm font-bold leading-6 text-academy-muted">{label}</p></div>)}
       </div>
       <div className="mt-5 rounded-[1.5rem] border border-academy-gold/60 bg-academy-gold/10 p-5"><p className="font-black">Vous n’êtes jamais seul devant votre écran.</p><p className="mt-1 text-sm font-semibold text-academy-muted">Votre progression à distance est suivie et l’équipe pédagogique reste disponible. Les enseignements en présentiel associent théorie, exercices et mises en situation.</p></div>
-      <div className="mt-10"><Eyebrow>Organisation</Eyebrow><h3 className="mt-3 text-3xl font-black">Une session, quatre temps forts.</h3><div className="mt-6 grid gap-3 md:grid-cols-4">{[['Accueil au centre','Présentation du parcours'],['51 h à distance','Notions autorisées en distanciel'],['124 h au campus','Théorie et pratique encadrées'],['Examen en présentiel','Évaluation devant jury']].map(([title,text],index) => <div key={title} className={`rounded-[1.5rem] border p-5 ${index===3 ? 'border-academy-gold bg-academy-gold/10' : 'border-academy-line bg-academy-bg'}`}><span className="text-3xl font-black text-yellow-600">0{index+1}</span><h4 className="mt-6 text-lg font-black">{title}</h4><p className="mt-2 text-sm leading-6 text-academy-muted">{text}</p></div>)}</div></div>
+      <div className="mt-10"><Eyebrow>Organisation</Eyebrow><h3 className="mt-3 text-3xl font-black">Une session, quatre temps forts.</h3><div className="mt-6 grid gap-3 md:grid-cols-4">{[['Accueil au centre','Présentation du parcours'],['51 h à distance','Notions autorisées en distanciel'],['124 h à l’école','Théorie et pratique encadrées'],['Examen en présentiel','Évaluation devant jury']].map(([title,text],index) => <div key={title} className={`rounded-[1.5rem] border p-5 ${index===3 ? 'border-academy-gold bg-academy-gold/10' : 'border-academy-line bg-academy-bg'}`}><span className="text-3xl font-black text-yellow-600">0{index+1}</span><h4 className="mt-6 text-lg font-black">{title}</h4><p className="mt-2 text-sm leading-6 text-academy-muted">{text}</p></div>)}</div></div>
     </Section>
 
     <Section id="examen" eyebrow="06 — Examen" title={<>Un examen qui valide vos réflexes.</>} intro={<>Connaissances, gestes professionnels et capacité à réagir : l’évaluation finale associe des QCU et deux mises en situation individuelles, en présentiel.</>} tone="paper">

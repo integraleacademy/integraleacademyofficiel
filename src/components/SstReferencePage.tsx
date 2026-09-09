@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { getSessionSeatAvailability } from '@/lib/session-seat-availability';
 import type { ReactNode } from 'react';
 import { PremiumFAQSection } from '@/components/ui';
 import { TrainingDatesPricingSection, type TrainingDatesPricingSession } from '@/components/TrainingDatesPricingSection';
@@ -101,12 +102,7 @@ function isFull(session?: TrainingDatesPricingSession | null) {
 }
 
 function seatsLabel(session?: TrainingDatesPricingSession | null) {
-  if (!session) return 'Planning en préparation';
-  if (isFull(session)) return 'Session complète';
-  if (session.showSeatsLeft === false || session.seatsLeft === null || session.seatsLeft === undefined || session.seatsLeft === '') return 'Places limitées';
-  const seats = Number(session.seatsLeft);
-  if (Number.isNaN(seats)) return 'Places limitées';
-  return seats === 1 ? '1 place restante' : `${seats} places restantes`;
+  return session ? getSessionSeatAvailability(session, 10).label : 'Dates à confirmer';
 }
 
 function CTA({ href, children, variant = 'dark', className = '' }: { href: string; children: ReactNode; variant?: 'dark' | 'gold' | 'light' | 'outline' | 'coral'; className?: string }) {

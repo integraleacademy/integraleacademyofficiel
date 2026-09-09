@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { getSessionSeatAvailability } from '@/lib/session-seat-availability';
 import type { ReactNode } from 'react';
 import { OrientationAssistant } from '@/components/OrientationAssistant';
 import { MissionAnimation } from '@/components/MissionAnimation';
@@ -21,7 +22,7 @@ const heroFacts = [
   ['Diplôme', 'SSIAP 1', 'Agent de sécurité incendie'],
   ['Durée', '67 heures', 'Hors examen et déplacements'],
   ['Effectif', '12 maximum', 'Suivi et pratique encadrée'],
-  ['Campus', 'Puget-sur-Argens', 'Formation en présentiel'],
+  ['École', 'Puget-sur-Argens', 'Formation en présentiel'],
   ['Tarif', 'Dès 980 €', 'Option SSIAP 1 + SST'],
   ['Agrément', 'SSIAP n°8323', 'Arrêté préfectoral n°26/099'],
 ];
@@ -91,9 +92,7 @@ function sessionHref(session: any) {
 }
 
 function seatsLabel(session: any) {
-  if (session?.status === 'FULL' || Number(session?.seatsLeft) === 0) return 'Session complète';
-  if (session?.seatsLeft === null || session?.seatsLeft === undefined) return 'Places limitées';
-  return Number(session.seatsLeft) === 1 ? '1 place restante' : `${session.seatsLeft} places restantes`;
+  return session ? getSessionSeatAvailability(session).label : 'Dates à confirmer';
 }
 
 function CTA({ href, children, variant = 'red', className = '' }: { href: string; children: ReactNode; variant?: 'dark' | 'red' | 'light' | 'outline'; className?: string }) {
@@ -135,7 +134,7 @@ function CompactAssistant() {
 }
 
 function HeroSession({ session }: { session: any }) {
-  const full = session?.status === 'FULL' || Number(session?.seatsLeft) === 0;
+  const full = Boolean(session && getSessionSeatAvailability(session).tone === 'full');
   return <aside className="rounded-[2rem] border border-white/65 bg-[#FFFDF8] p-5 text-academy-ink shadow-[0_34px_100px_rgba(0,0,0,.34)] sm:p-6">
     <div className="flex flex-wrap items-center justify-between gap-2"><span className="rounded-full bg-[#0D1725] px-3 py-1.5 text-[.62rem] font-black uppercase tracking-[.16em] text-red-300">Prochaine session</span><span className={`rounded-full border px-3 py-1.5 text-[.68rem] font-black ${full ? 'border-stone-300 bg-stone-100 text-stone-700' : 'border-red-300 bg-red-50 text-red-800'}`}>{seatsLabel(session)}</span></div>
     <h2 className="mt-5 text-3xl font-black tracking-[-.04em] sm:text-4xl">{formatDate(session?.startDate)} <span className="text-red-600">→</span><br />{formatDate(session?.endDate)}</h2>

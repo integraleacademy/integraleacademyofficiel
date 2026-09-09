@@ -66,7 +66,7 @@ const admissionSteps = [
   ['02', 'Mon dossier est étudié', 'L’équipe vérifie mon projet, mon niveau et mes prérequis.'],
   ['03', 'Je suis admis', 'Je reçois les informations pour finaliser mon inscription.'],
   ['04', 'Je cherche mon entreprise', 'Je prépare ma recherche et mon contrat d’apprentissage.'],
-  ['05', 'Je fais ma rentrée', 'Je rejoins ma promotion sur le campus ou en visioconférence.'],
+  ['05', 'Je fais ma rentrée', 'Je rejoins ma promotion à l’école ou en visioconférence.'],
 ] as const;
 
 const faq = [
@@ -175,7 +175,7 @@ function HeroRoadmap() {
         ))}
       </div>
       <div className="mt-3 grid gap-3 sm:grid-cols-2">
-        <div className="rounded-2xl border border-academy-line bg-white p-4"><p className="text-[.6rem] font-black uppercase tracking-[.15em] text-yellow-700">Campus</p><p className="mt-1 font-black">Puget-sur-Argens</p></div>
+        <div className="rounded-2xl border border-academy-line bg-white p-4"><p className="text-[.6rem] font-black uppercase tracking-[.15em] text-yellow-700">École</p><p className="mt-1 font-black">Puget-sur-Argens</p></div>
         <div className="rounded-2xl border border-academy-line bg-white p-4"><p className="text-[.6rem] font-black uppercase tracking-[.15em] text-cyan-700">Ou à distance</p><p className="mt-1 font-black">Visio en direct</p></div>
       </div>
     </aside>
@@ -240,7 +240,7 @@ export function BtsCgReferencePage() {
 
       <Section id="formats" eyebrow="03 — Deux formats, le même BTS" title={<>Choisissez la façon d’étudier qui vous correspond vraiment.</>} intro={<>Le format est un choix d’organisation. Le diplôme, le programme officiel, les cours en direct et l’accompagnement restent les mêmes.</>}>
         <div className="grid gap-5 lg:grid-cols-2">
-          <article className="rounded-[2rem] border border-academy-line bg-[#FFFDF8] p-6 shadow-card sm:p-8"><span className="inline-flex rounded-full bg-emerald-50 px-3 py-2 text-[.62rem] font-black uppercase tracking-[.15em] text-emerald-800 ring-1 ring-emerald-200">● Sur le campus</span><h3 className="mt-6 text-3xl font-black tracking-[-.04em]">En présentiel à Puget-sur-Argens</h3><p className="mt-4 leading-7 text-academy-muted">Un cadre vivant pour apprendre avec votre promotion, échanger directement avec les formateurs et profiter du campus.</p><div className="mt-6 grid gap-3 sm:grid-cols-2">{['Cours en groupe', 'Équipe sur place', 'Vie de promotion', 'Locaux dédiés'].map((item) => <p key={item} className="rounded-2xl bg-academy-bg p-4 text-sm font-black">✓ {item}</p>)}</div></article>
+          <article className="rounded-[2rem] border border-academy-line bg-[#FFFDF8] p-6 shadow-card sm:p-8"><span className="inline-flex rounded-full bg-emerald-50 px-3 py-2 text-[.62rem] font-black uppercase tracking-[.15em] text-emerald-800 ring-1 ring-emerald-200">● À l’école</span><h3 className="mt-6 text-3xl font-black tracking-[-.04em]">En présentiel à Puget-sur-Argens</h3><p className="mt-4 leading-7 text-academy-muted">Un cadre vivant pour apprendre avec votre promotion, échanger directement avec les formateurs et profiter de l’école.</p><div className="mt-6 grid gap-3 sm:grid-cols-2">{['Cours en groupe', 'Équipe sur place', 'Vie de promotion', 'Locaux dédiés'].map((item) => <p key={item} className="rounded-2xl bg-academy-bg p-4 text-sm font-black">✓ {item}</p>)}</div></article>
           <article className="rounded-[2rem] border border-[#284661] bg-[#102B48] p-6 text-white shadow-card sm:p-8"><span className="inline-flex rounded-full bg-cyan-400/15 px-3 py-2 text-[.62rem] font-black uppercase tracking-[.15em] text-cyan-200 ring-1 ring-cyan-300/30">◉ Classe virtuelle</span><h3 className="mt-6 text-3xl font-black tracking-[-.04em]">100 % à distance en visioconférence</h3><p className="mt-4 leading-7 text-white/62">De vrais cours en direct avec vos formateurs et votre promotion, depuis chez vous — pas une simple plateforme laissée en autonomie.</p><div className="mt-6 grid gap-3 sm:grid-cols-2">{['Cours en direct', 'Interactions en visio', 'Suivi régulier', 'Accessible partout en France'].map((item) => <p key={item} className="rounded-2xl bg-white/8 p-4 text-sm font-black">✓ {item}</p>)}</div></article>
         </div>
         <div className="mt-5 flex flex-col items-start justify-between gap-4 rounded-[1.7rem] border border-yellow-300 bg-yellow-50 p-5 sm:flex-row sm:items-center"><div><p className="text-lg font-black text-yellow-950">Même diplôme d’État. Même programme. Même équipe à vos côtés.</p><p className="mt-1 text-sm font-semibold text-yellow-900/65">Le format est validé avec l’équipe admissions selon votre situation.</p></div><span className="rounded-full bg-white px-4 py-2 text-xs font-black text-academy-ink ring-1 ring-yellow-300">BTS CG · RNCP 39159</span></div>

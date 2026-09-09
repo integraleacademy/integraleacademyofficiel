@@ -5,7 +5,7 @@ import { contact, legalRefs } from '@/data/site';
 export const metadata = {
   alternates: { canonical: '/ecole' },
   title: 'Notre école | Intégrale Academy',
-  description: 'Découvrez Intégrale Academy : une école fondée en 2018, une équipe engagée, un campus de 400 m² et des formations professionnelles encadrées et reconnues.',
+  description: 'Découvrez Intégrale Academy : une école fondée en 2018, une équipe engagée, une école de 400 m² et des formations professionnelles encadrées et reconnues.',
 };
 
 const appointmentFormUrl = 'https://assistance-alw9.onrender.com/demande-informations-formations';
@@ -165,7 +165,7 @@ export default function Page() {
                 <Icon name="arrow" className="h-4 w-4" />
               </a>
               <a href="#campus" className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 bg-white/5 px-6 py-4 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-white/10">
-                Visiter notre campus
+                Visiter notre école
                 <Icon name="location" className="h-4 w-4 text-academy-gold" />
               </a>
             </div>
@@ -371,15 +371,15 @@ export default function Page() {
       <section id="campus" className="relative overflow-hidden bg-[#101a29] px-4 py-16 text-white sm:py-20">
         <div className="absolute -right-48 top-12 h-[32rem] w-[32rem] rounded-full bg-academy-gold/[.07]" />
         <div className="page-container relative">
-          <SectionHeading eyebrow="Notre campus" title={<>Un environnement conçu pour <span className="text-academy-gold">apprendre et pratiquer.</span></>} light>
-            À Puget-sur-Argens, le campus principal réunit les espaces nécessaires aux enseignements théoriques, numériques et pratiques, dans un lieu facile d’accès.
+          <SectionHeading eyebrow="Notre école" title={<>Un environnement conçu pour <span className="text-academy-gold">apprendre et pratiquer.</span></>} light>
+            À Puget-sur-Argens, l’école principale réunit les espaces nécessaires aux enseignements théoriques, numériques et pratiques, dans un lieu facile d’accès.
           </SectionHeading>
 
           <div className="mt-10 grid gap-6 lg:grid-cols-[1.05fr_.95fr]">
             <div className="rounded-[2rem] bg-[#f7f1e7] p-5 text-[#171a20] shadow-[0_30px_90px_rgba(0,0,0,.20)] sm:p-7">
               <div className="flex items-center justify-between border-b border-[#ddd1bd] pb-5">
                 <div>
-                  <p className="text-[9px] font-black uppercase tracking-[.15em] text-[#956b0e]">Campus principal</p>
+                  <p className="text-[9px] font-black uppercase tracking-[.15em] text-[#956b0e]">École principale</p>
                   <h3 className="mt-2 text-2xl font-black">Puget-sur-Argens</h3>
                 </div>
                 <span className="grid h-12 w-12 place-items-center rounded-2xl bg-[#101a29] text-academy-gold"><Icon name="building" className="h-6 w-6" /></span>

@@ -106,7 +106,7 @@ test('les cartes APS gardent les dates sans leur libellé et affichent les place
   assert.ok(apsPage.includes('seatCapacity={12}'));
   assert.ok(apsPage.includes('underlineDisclosure={false}'));
   assert.ok(sessionsSection.includes("showOverallPeriodLabel ? <span"));
-  assert.ok(sessionsSection.includes('seatAvailability?.label'));
+  assert.ok(sessionsSection.includes('seatAvailability.label'));
   assert.ok(seatAvailability.includes('computedSeats'));
 });
 

@@ -1,3 +1,5 @@
+import { normalizeSeatCount, resolveSessionSeatCapacity } from '@/lib/session-capacity';
+
 export type PublicSessionLike = {
   id?: string;
   startDate?: string | Date;
@@ -8,6 +10,7 @@ export type PublicSessionLike = {
   remoteEndDate?: string | Date | null;
   status?: string;
   seatsLeft?: number | string | null;
+  seatsTotal?: number | string | null;
   showSeatsLeft?: boolean | null;
   training?: { slug?: string; name?: string; title?: string; isActive?: boolean | null } | null;
 };
@@ -27,15 +30,20 @@ export function isPublicUpcomingSession(session: PublicSessionLike) {
 }
 
 export function computedSeats(session: PublicSessionLike, referenceDate = new Date()): number | null {
+  if (session.status === 'FULL') return 0;
   if (session.showSeatsLeft === false) return null;
-  if (session.seatsLeft !== null && session.seatsLeft !== undefined && session.seatsLeft !== '') return Number(session.seatsLeft);
+  const capacity = resolveSessionSeatCapacity(session);
+  const storedCount = normalizeSeatCount(session.seatsLeft);
+  // Ignore legacy counts above the session capacity and keep the existing date-based rule.
+  if (storedCount !== null && storedCount <= capacity) return storedCount;
   if (!session.startDate) return null;
+  if (Number.isNaN(new Date(session.startDate).getTime())) return null;
   const days = daysUntilParis(session.startDate, referenceDate);
-  if (days <= 15) return 2;
-  if (days <= 30) return 4;
-  if (days <= 45) return 5;
-  if (days <= 60) return 6;
-  return null;
+  if (days <= 15) return Math.min(2, capacity);
+  if (days <= 30) return Math.min(4, capacity);
+  if (days <= 45) return Math.min(5, capacity);
+  if (days <= 60) return Math.min(6, capacity);
+  return capacity;
 }
 
 export function formatSessionDate(value?: string | Date) {

@@ -259,7 +259,7 @@ export const ssiapMaintenanceConfig: SsiapCourseConfig = {
     'Choisissez le parcours adapté à votre niveau, à la date de votre dernier diplôme et à votre activité récente dans un service de sécurité incendie.',
   duration: '14 à 35 heures',
   durationDetail: 'Selon le niveau et le parcours requis',
-  capacity: '15 stagiaires maximum',
+  capacity: '12 stagiaires maximum',
   certification: 'Attestation réglementaire',
   audience:
     'Titulaires d’un diplôme SSIAP 1, SSIAP 2 ou SSIAP 3, d’une équivalence ou d’un ancien diplôme ERP / IGH souhaitant maintenir ou réactiver leur qualification.',
