@@ -409,7 +409,7 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
       { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Accueil', item: '/' }, { '@type': 'ListItem', position: 2, name: 'Formations sécurité', item: '/formations-securite' }, { '@type': 'ListItem', position: 3, name: 'APS', item: '/formations-securite/aps' }] },
     ] }) }} />
 
-    <section className={`${styles.hero} relative px-4 pb-6 text-white`}>
+    <section className={`${styles.hero} relative px-4 text-white`}>
       <Image src="/images/aps/aps-hero-round.jpg" alt="Exercice pratique de ronde de sécurité pendant la formation APS" fill priority sizes="100vw" className={styles.heroPhoto}/>
       <div className={styles.heroOverlay}/>
       <div className="page-container relative flex items-center py-10 sm:py-12 lg:py-14">
@@ -437,12 +437,12 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
           </div>
         </div>
       </div>
-      <div className={`${styles.facts} page-container relative grid overflow-hidden rounded-[1.6rem] border border-white/15 bg-[#0A1421]/85 text-white backdrop-blur-xl sm:grid-cols-2 lg:grid-cols-6`}>
+      <div className="page-container"><div className={`${styles.facts} relative grid overflow-hidden rounded-[1.6rem] border border-white/15 bg-[#0A1421]/85 text-white backdrop-blur-xl sm:grid-cols-2 lg:grid-cols-6`}>
         {heroFacts.map(([key,value,detail]) => <div key={key} className={`${styles.fact} border-b border-white/10 p-4 last:border-b-0 sm:border-r lg:border-b-0`}><p className="text-[.58rem] font-black uppercase tracking-[.18em] text-white/42">{key}</p><p className="mt-1 font-black text-white">{value}</p><p className="mt-1 text-[.68rem] font-semibold leading-4 text-white/48">{detail}</p></div>)}
-      </div>
+      </div></div>
     </section>
 
-    <section className="relative z-20 bg-academy-bg px-4 pb-8 pt-10 sm:pt-12"><div className="page-container"><HeroSession session={next}/></div></section>
+    <section className={`${styles.heroSessionSection} relative z-20 px-4 pb-8 pt-4`}><div className="page-container"><HeroSession session={next}/></div></section>
 
     <ApsSectionNavigation registrationHref={apsRegistrationFormUrl} />
 
