@@ -1,7 +1,7 @@
 import { serializeCourseJsonLd } from '@/lib/seo';
 import Image from 'next/image';
 import Link from 'next/link';
-import { getSessionSeatAvailability } from '@/lib/session-seat-availability';
+import { TrainingHero, TrainingHeroSessionCard } from '@/components/TrainingHero';
 import type { ReactNode } from 'react';
 import { PremiumFAQSection } from '@/components/ui';
 import { TrainingDatesPricingSection, type TrainingDatesPricingSession } from '@/components/TrainingDatesPricingSection';
@@ -79,31 +79,8 @@ const faq = [
   { q: 'Peut-on organiser une formation pour une équipe ?', a: 'Oui, notre équipe étudie votre effectif, votre environnement de travail, les dates souhaitées et les modalités d’organisation avant de vous transmettre un devis.' },
 ];
 
-function formatDate(value?: string | Date | null) {
-  if (!value) return 'À confirmer';
-  const date = value instanceof Date ? value : new Date(value);
-  if (Number.isNaN(date.getTime())) return 'À confirmer';
-  return new Intl.DateTimeFormat('fr-FR', { timeZone: 'Europe/Paris', day: '2-digit', month: 'short', year: 'numeric' }).format(date).replace(/^0/, '');
-}
-
-function formatPrice(value: unknown) {
-  if (typeof value === 'number') return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(value);
-  const text = String(value || 'Sur devis').trim();
-  return /^\d+(?:[.,]\d+)?$/.test(text) ? new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(Number(text.replace(',', '.'))) : text;
-}
-
 function sessionHref(session?: TrainingDatesPricingSession | null) {
   return session?.id ? `/contact?formation=sst&session=${encodeURIComponent(String(session.id))}` : contactHref('prochaines dates');
-}
-
-function isFull(session?: TrainingDatesPricingSession | null) {
-  if (!session) return false;
-  const hasSeatCount = session.seatsLeft !== null && session.seatsLeft !== undefined && session.seatsLeft !== '';
-  return session.status === 'FULL' || (hasSeatCount && Number(session.seatsLeft) === 0);
-}
-
-function seatsLabel(session?: TrainingDatesPricingSession | null) {
-  return session ? getSessionSeatAvailability(session, 10).label : 'Dates à confirmer';
 }
 
 function CTA({ href, children, variant = 'dark', className = '' }: { href: string; children: ReactNode; variant?: 'dark' | 'gold' | 'light' | 'outline' | 'coral'; className?: string }) {
@@ -126,15 +103,6 @@ function Section({ id, eyebrow, title, intro, children, tone = 'cream' }: { id?:
   return <section id={id} className={`${colors} scroll-mt-24 px-4 py-14 sm:py-16 lg:py-20`}><div className="page-container"><div className="mb-8 grid gap-5 lg:grid-cols-[.76fr_1.24fr] lg:items-end lg:gap-16"><div><Eyebrow light={tone === 'dark'}>{eyebrow}</Eyebrow><h2 className="mt-3 max-w-3xl text-3xl font-black tracking-[-.045em] sm:text-4xl lg:text-5xl">{title}</h2></div>{intro && <div className={`max-w-3xl text-base font-medium leading-8 ${tone === 'dark' ? 'text-white/65' : 'text-academy-muted'}`}>{intro}</div>}</div>{children}</div></section>;
 }
 
-function HeroOverview({ session }: { session?: TrainingDatesPricingSession | null }) {
-  const full = isFull(session);
-  return <aside className="rounded-[2rem] border border-white/65 bg-[#FFFDF8] p-5 text-academy-ink shadow-[0_34px_100px_rgba(0,0,0,.34)] sm:p-6">
-    <div className="flex flex-wrap items-center justify-between gap-2"><span className="rounded-full bg-emerald-50 px-3 py-1.5 text-[.62rem] font-black uppercase tracking-[.16em] text-emerald-800 ring-1 ring-emerald-200">Votre formation en un coup d’œil</span><span className={`rounded-full border px-3 py-1.5 text-[.68rem] font-black ${full ? 'border-stone-300 bg-stone-100 text-stone-700' : 'border-emerald-200 bg-emerald-50 text-emerald-800'}`}>{seatsLabel(session)}</span></div>
-    <div className="mt-5 grid gap-2.5 sm:grid-cols-2">{[['Durée', '2 jours · 14 heures'], ['Prérequis', 'Aucun'], ['Certificat', 'SST · valable 24 mois'], ['Effectif', '4 à 10 participants']].map(([key, value]) => <div key={key} className="rounded-2xl border border-[#E8DECE] bg-[#F5EFE4] p-3.5"><p className="text-[.6rem] font-black uppercase tracking-[.16em] text-[#837968]">{key}</p><p className="mt-1 text-sm font-black sm:text-base">{value}</p></div>)}</div>
-    {session ? <div className="mt-4 rounded-2xl bg-[#0D1725] p-4 text-white"><p className="text-[.62rem] font-black uppercase tracking-[.16em] text-emerald-300">Prochaine session</p><div className="mt-2 flex flex-wrap items-end justify-between gap-3"><div><p className="text-xl font-black">{formatDate(session.startDate)} → {formatDate(session.endDate)}</p><p className="mt-1 text-xs font-bold text-white/55">{session.location || 'Puget-sur-Argens'} · {formatPrice(session.priceLabel)}</p></div><CTA href={sessionHref(session)} variant={full ? 'light' : 'gold'}>{full ? 'Être alerté' : 'Choisir cette session →'}</CTA></div></div> : <div className="mt-4 rounded-2xl bg-[#0D1725] p-4 text-white"><p className="text-[.62rem] font-black uppercase tracking-[.16em] text-[#FF7B6E]">Prochaines dates en préparation</p><p className="mt-2 text-sm font-semibold text-white/65">Soyez informé dès l’ouverture des sessions.</p><CTA href={sessionHref()} variant="coral" className="mt-3 w-full">Être alerté →</CTA></div>}
-  </aside>;
-}
-
 export function SstReferencePage({ sessions }: { sessions: TrainingDatesPricingSession[] }) {
   const next = sessions[0];
   return <main className="relative overflow-hidden pb-24 lg:pb-0">
@@ -144,7 +112,27 @@ export function SstReferencePage({ sessions }: { sessions: TrainingDatesPricingS
       { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Accueil', item: '/' }, { '@type': 'ListItem', position: 2, name: 'Formations sécurité', item: '/formations-securite' }, { '@type': 'ListItem', position: 3, name: 'SST', item: '/formations-securite/sst' }] },
     ] }, "/formations-securite/sst") }} />
 
-    <section className="relative isolate overflow-hidden bg-[#0D1725] px-4 pb-8 pt-10 text-white sm:pt-14 lg:pt-16"><div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_12%_75%,rgba(16,185,129,.25),transparent_30%),radial-gradient(circle_at_88%_12%,rgba(240,76,58,.19),transparent_28%),linear-gradient(135deg,#07121C_0%,#0D1D2E_58%,#0A1722_100%)]"/><div className="absolute inset-0 -z-10 opacity-30 [background-image:linear-gradient(rgba(255,255,255,.04)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.04)_1px,transparent_1px)] [background-size:44px_44px]"/><div className="page-container"><div className="grid items-center gap-8 lg:grid-cols-[1.08fr_.92fr] lg:gap-12"><div><span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/45 bg-emerald-400/10 px-4 py-2 text-[.68rem] font-black uppercase tracking-[.2em] text-emerald-300"><span className="h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-[0_0_16px_rgba(52,211,153,.9)]"/>Formation SST · Habilitation INRS</span><h1 className="mt-5 max-w-4xl text-4xl font-black tracking-[-.055em] sm:text-5xl lg:text-6xl xl:text-7xl">Devenez le premier maillon des <span className="text-[#F5C34E]">secours au travail.</span></h1><p className="mt-5 max-w-2xl text-lg font-medium leading-8 text-white/72 sm:text-xl">En 2 jours, apprenez à prévenir les risques, réagir face à un accident et porter les premiers secours.</p><div className="mt-5 inline-flex items-center gap-2 rounded-full border border-emerald-300/30 bg-emerald-400/10 px-4 py-2 text-sm font-black text-emerald-100"><span aria-hidden="true">●</span>100 % en présentiel · Puget-sur-Argens</div><div className="mt-6 flex flex-col gap-3 sm:flex-row"><CTA href={contactHref('programme SST')} variant="gold">Recevoir le programme →</CTA><CTA href="tel:0422470768" variant="outline">Parler à un conseiller</CTA></div></div><HeroOverview session={next}/></div><div className="mt-10 grid overflow-hidden rounded-[1.6rem] border border-white/10 bg-white/7 sm:grid-cols-2 lg:grid-cols-4">{[['Présentiel', 'Pour apprendre et pratiquer'], ['Mises en situation', 'Des scénarios proches du terrain'], ['Prévention + secours', 'Prévenez, protégez, secourez'], ['Certificat national', 'Valable pendant 24 mois']].map(([key, detail], index) => <div key={key} className="border-b border-white/10 p-4 last:border-b-0 sm:border-r lg:border-b-0"><span className={`grid h-9 w-9 place-items-center rounded-xl text-sm font-black ${index === 2 ? 'bg-[#F04C3A]/15 text-[#FF897E]' : 'bg-emerald-400/12 text-emerald-300'}`}>{index === 0 ? '⌖' : index === 1 ? '◎' : index === 2 ? '+' : '✓'}</span><p className="mt-3 font-black text-white">{key}</p><p className="mt-1 text-xs font-semibold leading-5 text-white/48">{detail}</p></div>)}</div></div></section>
+    <TrainingHero
+      theme="green"
+      imageSrc="/images/sst-hero.jpg"
+      badge="Formation SST · Habilitation INRS"
+      title="Formation sauveteur secouriste du travail"
+      tagline="Les bons gestes,"
+      taglineAccent="au bon moment."
+      description={<p>En 2 jours, apprenez à prévenir les risques, réagir face à un accident et porter les premiers secours.</p>}
+      primaryAction={{ href: contactHref('programme SST'), label: 'Recevoir le programme →' }}
+      highlights={['2 jours · 14 heures', 'Aucun prérequis', 'Prévention + secours']}
+      facts={[
+        ['Certificat', 'SST', 'Valable pendant 24 mois'],
+        ['Durée', '14 heures', '2 jours de formation'],
+        ['Format', 'Présentiel', 'Pour apprendre et pratiquer'],
+        ['École', 'Puget-sur-Argens', 'Var · Côte d’Azur'],
+        ['Effectif', '4 à 10', 'Accompagnement personnalisé'],
+        ['Pratique', 'Mises en situation', 'Scénarios proches du terrain'],
+      ]}
+    >
+      <TrainingHeroSessionCard session={next} theme="green" duration="2 jours · 14 heures" defaultPrice="Sur devis" capacity={10} assistantKey="sst" />
+    </TrainingHero>
 
     <nav aria-label="Sommaire de la formation" className="sticky top-0 z-30 hidden border-b border-academy-line bg-[#FFFDF8]/95 px-4 py-3 backdrop-blur lg:block"><div className="page-container flex items-center justify-between gap-5"><span className="text-xs font-black">FORMATION SST</span><div className="flex items-center gap-5 text-xs font-extrabold text-academy-muted">{[['Présentation', '#role-sst'], ['Programme', '#programme-sst'], ['Évaluation', '#evaluation-sst'], ['Dates & tarifs', '#dates-tarifs'], ['Entreprises', '#entreprises-sst'], ['FAQ', '#faq-sst']].map(([label, href]) => <Link key={href} href={href} className="transition hover:text-academy-ink">{label}</Link>)}</div><CTA href={sessionHref(next)} variant="gold" className="min-h-10 px-4 py-2">Demander un devis →</CTA></div></nav>
 

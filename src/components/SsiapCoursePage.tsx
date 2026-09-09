@@ -2,6 +2,8 @@ import { serializeCourseJsonLd } from '@/lib/seo';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { PremiumFAQSection } from '@/components/ui';
+import { TrainingHero, TrainingHeroSessionCard, trainingRegistrationUrl } from '@/components/TrainingHero';
+import { TrainingDatesPricingSection, type TrainingDatesPricingSession } from '@/components/TrainingDatesPricingSection';
 import {
   ssiapOfficialReference,
   type SsiapCourseConfig,
@@ -102,7 +104,8 @@ function Section({
   );
 }
 
-export function SsiapCoursePage({ config }: { config: SsiapCourseConfig }) {
+export function SsiapCoursePage({ config, sessions = [] }: { config: SsiapCourseConfig; sessions?: TrainingDatesPricingSession[] }) {
+  const heroKey = config.slug === 'ssiap-2' ? 'ssiap-2' : config.slug === 'ssiap-3' ? 'ssiap-3' : null;
   const facts = [
     ['Parcours', config.label],
     ['Fonction', config.role],
@@ -128,6 +131,27 @@ export function SsiapCoursePage({ config }: { config: SsiapCourseConfig }) {
     <main className="relative overflow-hidden pb-24 lg:pb-0">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeCourseJsonLd(courseSchema, `/formations-securite/${config.slug}`) }} />
 
+      {heroKey ? <TrainingHero
+        theme="red"
+        imageSrc={`/images/${heroKey}-hero.jpg`}
+        badge={`${config.label} · Formation réglementée`}
+        title={`Formation ${config.role.toLocaleLowerCase('fr-FR')}`}
+        tagline={heroKey === 'ssiap-2' ? 'Encadrez votre équipe' : 'Pilotez la sécurité'}
+        taglineAccent={heroKey === 'ssiap-2' ? 'sur le terrain.' : 'de votre établissement.'}
+        description={<p>{config.intro}</p>}
+        primaryAction={{ href: '#dates-tarifs', label: 'Recevoir les prochaines dates →' }}
+        highlights={[config.duration, '100 % présentiel', config.capacity]}
+        facts={facts}
+      >
+        <TrainingHeroSessionCard
+          session={sessions[0]}
+          theme="red"
+          duration={config.duration}
+          defaultPrice="Sur devis"
+          capacity={heroKey === 'ssiap-3' ? 10 : 12}
+          assistantKey={heroKey}
+        />
+      </TrainingHero> : (
       <section className="relative isolate overflow-hidden bg-[#0D1725] px-4 pb-9 pt-10 text-white sm:pt-14 lg:pt-16">
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_12%_12%,rgba(248,113,113,.25),transparent_31%),radial-gradient(circle_at_88%_20%,rgba(220,38,38,.20),transparent_29%),linear-gradient(135deg,#080D15_0%,#121B2A_55%,#2A0F12_100%)]" />
         <div className="absolute -left-20 top-16 -z-10 h-72 w-72 rounded-full bg-red-500/20 blur-3xl" />
@@ -184,6 +208,7 @@ export function SsiapCoursePage({ config }: { config: SsiapCourseConfig }) {
           </div>
         </div>
       </section>
+      )}
 
       <nav aria-label="Sommaire de la formation" className="sticky top-0 z-30 hidden border-b border-academy-line bg-[#FFFDF8]/95 px-4 py-3 backdrop-blur lg:block">
         <div className="page-container flex items-center justify-between gap-5">
@@ -263,6 +288,16 @@ export function SsiapCoursePage({ config }: { config: SsiapCourseConfig }) {
         </div>
       </Section>
 
+      {heroKey && sessions.length > 0 ? <TrainingDatesPricingSection
+        sessions={sessions}
+        theme="red"
+        seatCapacity={heroKey === 'ssiap-3' ? 10 : 12}
+        defaultPrice="Sur devis"
+        defaultLocation="Puget-sur-Argens"
+        priceDescription={`${config.label} · ${config.duration} · formation en présentiel`}
+        registrationHref={() => trainingRegistrationUrl}
+        priceAction={{ href: contactHref(config, 'devis'), label: 'Demander un devis →' }}
+      /> : (
       <section id="dates-tarifs" className="scroll-mt-24 bg-[#EFE7D9] px-4 py-14 sm:py-16">
         <div className="page-container overflow-hidden rounded-[2.2rem] bg-[#0D1725] p-6 text-white shadow-card sm:p-9 lg:grid lg:grid-cols-[1fr_auto] lg:items-center lg:gap-10">
           <div>
@@ -277,6 +312,7 @@ export function SsiapCoursePage({ config }: { config: SsiapCourseConfig }) {
           </div>
         </div>
       </section>
+      )}
 
       <Section eyebrow="Après la formation" title="Faites reconnaître et évoluer vos compétences." intro="Votre parcours vous prépare aux responsabilités correspondant à votre niveau SSIAP.">
         <div className="grid gap-5 lg:grid-cols-[1.05fr_.95fr]">
