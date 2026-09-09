@@ -1,7 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { createStepWheelNavigation, normalizeWheelDelta } from '@/lib/step-wheel-navigation';
 import styles from './DespJourney.module.css';
 
 const steps = [
@@ -92,8 +93,27 @@ function JourneyVisual({ index }: { index: number }) {
 export function DespJourney() {
   const sectionRef = useRef<HTMLElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
+  const wheelRef = useRef<ReturnType<typeof createStepWheelNavigation> | null>(null);
   const [enhanced, setEnhanced] = useState(false);
   const [active, setActive] = useState(0);
+
+  const getBounds = useCallback(() => {
+    const section = sectionRef.current;
+    const stage = stageRef.current;
+    if (!section || !stage) return null;
+    const rect = section.getBoundingClientRect();
+    const top = parseFloat(getComputedStyle(stage).top) || 0;
+    const start = window.scrollY + rect.top - top;
+    return { start, end: start + rect.height - stage.offsetHeight };
+  }, []);
+
+  const scrollToStep = useCallback((index: number) => {
+    const bounds = getBounds();
+    if (!bounds) return;
+    // Land in the middle of the step, away from rounding-sensitive boundaries.
+    window.scrollTo({ top: bounds.start + (bounds.end - bounds.start) * ((index + 0.5) / steps.length), behavior: 'instant' });
+    setActive(index);
+  }, [getBounds]);
 
   useEffect(() => {
     // Short screens, mobile, reduced motion and no-JS retain the full reading flow.
@@ -106,37 +126,57 @@ export function DespJourney() {
 
   useEffect(() => {
     if (!enhanced) return;
+    const navigation = createStepWheelNavigation(steps.length);
+    wheelRef.current = navigation;
     let frame = 0;
+    const stepAt = (position: number, start: number, end: number) => {
+      const progress = Math.max(0, Math.min(1, (position - start) / Math.max(1, end - start)));
+      return Math.min(steps.length - 1, Math.floor(progress * steps.length));
+    };
     const update = () => {
       frame = 0;
-      const section = sectionRef.current;
-      const stage = stageRef.current;
-      if (!section || !stage) return;
-      const rect = section.getBoundingClientRect();
-      const top = parseFloat(getComputedStyle(stage).top) || 0;
-      const distance = rect.height - stage.offsetHeight;
-      const progress = Math.max(0, Math.min(1, (top - rect.top) / Math.max(1, distance)));
-      setActive(Math.min(steps.length - 1, Math.floor(progress * steps.length)));
+      const bounds = getBounds();
+      if (bounds) setActive(stepAt(window.scrollY, bounds.start, bounds.end));
     };
     const schedule = () => { if (!frame) frame = window.requestAnimationFrame(update); };
+    const onWheel = (event: WheelEvent) => {
+      if (event.defaultPrevented || !event.cancelable || event.ctrlKey || event.metaKey || event.shiftKey || Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
+      const target = event.target instanceof Element ? event.target : null;
+      if (target?.closest('input, textarea, select, [contenteditable]:not([contenteditable="false"]), [role="dialog"], dialog')) return;
+      if (getComputedStyle(document.body).overflowY === 'hidden') return;
+      // Leave independent scroll areas (menus, forms, dialogs) in control.
+      for (let element = target; element && element !== document.body && element !== document.documentElement; element = element.parentElement) {
+        if (element.scrollHeight > element.clientHeight + 1 && /auto|scroll/.test(getComputedStyle(element).overflowY)) return;
+      }
+      const bounds = getBounds();
+      if (!bounds) return;
+      const delta = normalizeWheelDelta(event.deltaY, event.deltaMode, window.innerHeight);
+      const action = navigation.handle({ delta, now: performance.now(), position: window.scrollY, ...bounds, step: stepAt(window.scrollY, bounds.start, bounds.end) });
+      if (!action) return;
+      event.preventDefault();
+      if (action.kind === 'step') scrollToStep(action.index);
+      if (action.kind === 'exit') {
+        const distance = Math.max(80, Math.min(Math.abs(delta), window.innerHeight / 2));
+        window.scrollTo({ top: action.direction > 0 ? bounds.end + distance : bounds.start - distance, behavior: 'instant' });
+      }
+    };
     update();
+    window.addEventListener('wheel', onWheel, { passive: false });
     window.addEventListener('scroll', schedule, { passive: true });
     window.addEventListener('resize', schedule);
     return () => {
       window.cancelAnimationFrame(frame);
+      wheelRef.current = null;
+      window.removeEventListener('wheel', onWheel);
       window.removeEventListener('scroll', schedule);
       window.removeEventListener('resize', schedule);
     };
-  }, [enhanced]);
+  }, [enhanced, getBounds, scrollToStep]);
 
   function goTo(index: number) {
-    const section = sectionRef.current;
-    const stage = stageRef.current;
-    if (!enhanced || !section || !stage) return;
-    const top = parseFloat(getComputedStyle(stage).top) || 0;
-    const distance = section.offsetHeight - stage.offsetHeight;
-    window.scrollTo({ top: window.scrollY + section.getBoundingClientRect().top - top + distance * ((index + 0.1) / steps.length), behavior: 'instant' });
-    setActive(index);
+    if (!enhanced) return;
+    wheelRef.current?.lock(performance.now());
+    scrollToStep(index);
   }
 
   return (
