@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { MissionAnimation } from '@/components/MissionAnimation';
+import { VtcAutonomousEnrollmentBanner } from '@/components/VtcAutonomousEnrollmentBanner';
 import { TrainingIllustratedCards, type TrainingIllustratedCard } from '@/components/TrainingIllustratedCards';
 import { TrainingSectionNavigation } from '@/components/TrainingSectionNavigation';
 import { PremiumFAQSection } from '@/components/ui';
@@ -166,6 +167,8 @@ export default function VtcPage() {
         </div>
       </div>
     </section>
+
+    <VtcAutonomousEnrollmentBanner />
 
     <section className={styles.accreditations}>
       <div className={styles.container}>
