@@ -1,9 +1,8 @@
 import { serializeCourseJsonLd } from '@/lib/seo';
 import Image from 'next/image';
 import Link from 'next/link';
-import { getSessionSeatAvailability } from '@/lib/session-seat-availability';
+import { TrainingHero, TrainingHeroSessionCard } from '@/components/TrainingHero';
 import type { ReactNode } from 'react';
-import { OrientationAssistant } from '@/components/OrientationAssistant';
 import { MissionAnimation } from '@/components/MissionAnimation';
 import { PremiumFAQSection } from '@/components/ui';
 import { TrainingDatesPricingSection } from '@/components/TrainingDatesPricingSection';
@@ -83,17 +82,8 @@ const faq = [
   { q: 'Peut-on évoluer vers le SSIAP 2 ?', a: 'Oui, après avoir acquis l’expérience professionnelle réglementaire requise pour accéder à la formation de chef d’équipe SSIAP 2.' },
 ];
 
-function formatDate(value?: string | null) {
-  if (!value) return 'À confirmer';
-  return new Intl.DateTimeFormat('fr-FR', { timeZone: 'Europe/Paris', day: '2-digit', month: 'short', year: 'numeric' }).format(new Date(value));
-}
-
 function sessionHref(session: any) {
   return session?.id ? `/contact?formation=ssiap-1&session=${encodeURIComponent(String(session.id))}` : contactHref('prochaine session');
-}
-
-function seatsLabel(session: any) {
-  return session ? getSessionSeatAvailability(session).label : 'Dates à confirmer';
 }
 
 function CTA({ href, children, variant = 'red', className = '' }: { href: string; children: ReactNode; variant?: 'dark' | 'red' | 'light' | 'outline'; className?: string }) {
@@ -123,29 +113,6 @@ function Section({ id, eyebrow, title, intro, children, tone = 'cream' }: { id?:
   </section>;
 }
 
-function CompactAssistant() {
-  return <details className="group mt-3 overflow-hidden rounded-[1.35rem] border border-academy-line bg-white text-academy-ink shadow-soft">
-    <summary className="flex cursor-pointer list-none items-center gap-3 p-4">
-      <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-red-600 font-black text-white">✦</span>
-      <span className="min-w-0 flex-1"><strong className="block text-sm font-black">Une question sur les prérequis&nbsp;?</strong><small className="block text-xs font-semibold text-academy-muted">L’assistant vous aide à vérifier votre projet.</small></span>
-      <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-academy-ink font-black text-white transition group-open:rotate-90">→</span>
-    </summary>
-    <div className="border-t border-academy-line bg-academy-bg p-3 sm:p-4"><OrientationAssistant hideInfoAction /></div>
-  </details>;
-}
-
-function HeroSession({ session }: { session: any }) {
-  const full = Boolean(session && getSessionSeatAvailability(session).tone === 'full');
-  return <aside className="rounded-[2rem] border border-white/65 bg-[#FFFDF8] p-5 text-academy-ink shadow-[0_34px_100px_rgba(0,0,0,.34)] sm:p-6">
-    <div className="flex flex-wrap items-center justify-between gap-2"><span className="rounded-full bg-[#0D1725] px-3 py-1.5 text-[.62rem] font-black uppercase tracking-[.16em] text-red-300">Prochaine session</span><span className={`rounded-full border px-3 py-1.5 text-[.68rem] font-black ${full ? 'border-stone-300 bg-stone-100 text-stone-700' : 'border-red-300 bg-red-50 text-red-800'}`}>{seatsLabel(session)}</span></div>
-    <h2 className="mt-5 text-3xl font-black tracking-[-.04em] sm:text-4xl">{formatDate(session?.startDate)} <span className="text-red-600">→</span><br />{formatDate(session?.endDate)}</h2>
-    <p className="mt-2 text-sm font-extrabold text-academy-muted">Examen le {formatDate(session?.examDate)}</p>
-    <div className="mt-5 grid grid-cols-2 gap-2.5">{[['Durée', '67 heures'], ['Tarif', '980 €'], ['Lieu', session?.location || 'Puget-sur-Argens'], ['Effectif', '12 maximum']].map(([key, value]) => <div key={key} className="rounded-2xl border border-[#E8DECE] bg-[#F5EFE4] p-3.5"><p className="text-[.6rem] font-black uppercase tracking-[.16em] text-[#837968]">{key}</p><p className="mt-1 text-sm font-black sm:text-base">{value}</p></div>)}</div>
-    <CTA href={sessionHref(session)} variant={full ? 'light' : 'red'} className="mt-5 w-full">{full ? 'Être alerté de la prochaine session' : 'Réserver ma place →'}</CTA>
-    <CompactAssistant />
-  </aside>;
-}
-
 export function SsiapReferencePage({ sessions }: { sessions: any[] }) {
   const visibleSessions = sessions.length ? sessions : fallbackSessions;
   const next = visibleSessions[0];
@@ -158,23 +125,20 @@ export function SsiapReferencePage({ sessions }: { sessions: any[] }) {
       { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Accueil', item: '/' }, { '@type': 'ListItem', position: 2, name: 'Formations sécurité', item: '/formations-securite' }, { '@type': 'ListItem', position: 3, name: 'SSIAP 1', item: '/formations-securite/ssiap-1' }] },
     ] }, "/formations-securite/ssiap-1") }} />
 
-    <section className="relative isolate overflow-hidden bg-[#0D1725] px-4 pb-8 pt-10 text-white sm:pt-14 lg:pt-16">
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_12%_12%,rgba(248,113,113,.24),transparent_31%),radial-gradient(circle_at_88%_20%,rgba(220,38,38,.22),transparent_29%),linear-gradient(135deg,#080D15_0%,#121B2A_55%,#2A0F12_100%)]" />
-      <div className="absolute -left-20 top-16 -z-10 h-72 w-72 rounded-full bg-red-500/20 blur-3xl" />
-      <div className="page-container">
-        <div className="grid items-center gap-8 lg:grid-cols-[1.08fr_.92fr] lg:gap-12">
-          <div>
-            <span className="inline-flex items-center gap-2 rounded-full border border-red-300/35 bg-red-400/10 px-4 py-2 text-[.68rem] font-black uppercase tracking-[.2em] text-red-200"><span className="h-2.5 w-2.5 rounded-full bg-red-400 shadow-[0_0_16px_rgba(248,113,113,.9)]" />SSIAP 1 · formation réglementée</span>
-            <h1 className="mt-5 max-w-4xl text-4xl font-black tracking-[-.055em] sm:text-5xl lg:text-6xl xl:text-7xl">Devenez agent de <span className="text-red-300">sécurité incendie.</span></h1>
-            <p className="mt-5 max-w-2xl text-lg font-medium leading-8 text-white/72 sm:text-xl">Préparez le diplôme SSIAP 1 et apprenez à prévenir les risques, surveiller les installations et porter assistance dans les ERP et les IGH.</p>
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row"><CTA href={sessionHref(next)} variant="red">Voir les prochaines dates →</CTA><CTA href="tel:0422470768" variant="outline">Parler à un conseiller</CTA></div>
-            <div className="mt-7 flex flex-wrap gap-2 text-xs font-bold text-white/75"><span className="rounded-full border border-white/15 bg-white/8 px-3 py-2">✓ 67 heures minimum</span><span className="rounded-full border border-white/15 bg-white/8 px-3 py-2">✓ 12 stagiaires maximum</span><span className="rounded-full border border-white/15 bg-white/8 px-3 py-2">✓ Option SST</span></div>
-          </div>
-          <HeroSession session={next} />
-        </div>
-        <div className="mt-10 grid overflow-hidden rounded-[1.6rem] border border-white/10 bg-white/7 sm:grid-cols-2 lg:grid-cols-6">{heroFacts.map(([key, value, detail]) => <div key={key} className="border-b border-white/10 p-4 last:border-b-0 sm:border-r lg:border-b-0"><p className="text-[.58rem] font-black uppercase tracking-[.18em] text-white/42">{key}</p><p className="mt-1 font-black text-white">{value}</p><p className="mt-1 text-[.68rem] font-semibold leading-4 text-white/48">{detail}</p></div>)}</div>
-      </div>
-    </section>
+    <TrainingHero
+      theme="red"
+      imageSrc="/images/ssiap-1-hero.jpg"
+      badge="SSIAP 1 · Formation réglementée"
+      title="Formation agent de sécurité incendie"
+      tagline="Apprenez le métier"
+      taglineAccent="sur le terrain."
+      description={<p>Préparez le diplôme SSIAP 1 et apprenez à prévenir les risques, surveiller les installations et porter assistance dans les ERP et les IGH.</p>}
+      primaryAction={{ href: '#dates-tarifs', label: 'Voir les prochaines dates →' }}
+      highlights={['67 heures minimum', '12 stagiaires maximum', 'Option SST']}
+      facts={heroFacts}
+    >
+      <TrainingHeroSessionCard session={next} theme="red" duration="67 heures" defaultPrice="980 €" assistantKey="ssiap-1" />
+    </TrainingHero>
 
     <nav aria-label="Sommaire de la formation" className="sticky top-0 z-30 hidden border-b border-academy-line bg-[#FFFDF8]/95 px-4 py-3 backdrop-blur lg:block"><div className="page-container flex items-center justify-between gap-5"><span className="text-xs font-black">SSIAP 1</span><div className="flex items-center gap-5 text-xs font-extrabold text-academy-muted">{[['Métier', '#metier'], ['Admission', '#admission'], ['Programme', '#programme'], ['Examen', '#examen'], ['Dates & tarifs', '#dates-tarifs'], ['Débouchés', '#debouches'], ['FAQ', '#faq-ssiap']].map(([label, href]) => <Link key={href} href={href} className="transition hover:text-academy-ink">{label}</Link>)}</div><CTA href={sessionHref(next)} variant="red" className="min-h-10 px-4 py-2">Je m’inscris</CTA></div></nav>
 
