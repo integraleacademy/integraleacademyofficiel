@@ -1,5 +1,5 @@
 import { OrientationAssistant } from '@/components/OrientationAssistant';
-import { MissionAnimation } from '@/components/MissionAnimation';
+import { DespJourney } from '@/components/DespJourney';
 import { TrainingDatesPricingSection, type TrainingDatesPricingSession } from '@/components/TrainingDatesPricingSection';
 import { VaeEligibilityModal } from '@/components/VaeEligibilityModal';
 import { Button, ConversionStrip, FAQ, Hero, SectionTitle } from '@/components/ui';
@@ -17,16 +17,6 @@ function OrangeHighlight({ children }: { children: React.ReactNode }) {
       <span className="relative z-10">{children}</span>
       <span className="absolute inset-x-0 bottom-[.04em] h-[.24em] rounded bg-orange-400" aria-hidden="true" />
     </span>
-  );
-}
-
-function MiniStep({ n, title, text }: { n: string; title: string; text: string }) {
-  return (
-    <div className="rounded-2xl border border-orange-200 bg-academy-surface p-4 shadow-soft">
-      <span className="grid h-9 w-9 place-items-center rounded-full bg-orange-500 font-black text-orange-950">{n}</span>
-      <h3 className="mt-4 font-black">{title}</h3>
-      <p className="mt-2 text-sm leading-6 text-academy-muted">{text}</p>
-    </div>
   );
 }
 
@@ -63,7 +53,8 @@ function DespPathCard({
 
   return (
     <article
-      className={`flex h-full flex-col overflow-hidden rounded-[2rem] border p-6 shadow-card transition duration-300 hover:-translate-y-1 hover:shadow-soft sm:p-8 ${
+      id={dark ? 'desp-vae' : 'desp-initial'}
+      className={`flex h-full scroll-mt-[120px] flex-col overflow-hidden rounded-[2rem] border p-6 shadow-card transition duration-300 hover:-translate-y-1 hover:shadow-soft sm:p-8 ${
         dark ? 'border-orange-400/45 bg-[#17100B] text-white' : 'border-orange-200 bg-white text-[#111827]'
       }`}
     >
@@ -105,10 +96,12 @@ function DespPathCard({
       </div>
 
       {secondaryCta ? (
-        <VaeEligibilityModal
-          label={secondaryCta}
-          className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full border border-orange-400/60 bg-white/10 px-6 py-4 text-center text-sm font-black text-orange-100 transition hover:-translate-y-0.5 hover:brightness-105 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-300/45"
-        />
+        <div id="test-eligibilite-vae" className="scroll-mt-[120px]">
+          <VaeEligibilityModal
+            label={secondaryCta}
+            className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full border border-orange-400/60 bg-white/10 px-6 py-4 text-center text-sm font-black text-orange-100 transition hover:-translate-y-0.5 hover:brightness-105 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-300/45"
+          />
+        </div>
       ) : null}
 
       <Button href={href} variant="orange" className={`${secondaryCta ? 'mt-3' : 'mt-8'} w-full`}>
@@ -148,7 +141,7 @@ function DespLocationsNotice() {
 
 export function DespChoiceReferencePage({ sessions }: { sessions: TrainingDatesPricingSession[] }) {
   return (
-    <main className="relative overflow-hidden pb-28 lg:pb-0">
+    <main className="relative overflow-x-clip pb-28 lg:pb-0">
       <Hero
         theme="orange"
         badge="DESP · RNCP n°40385"
@@ -162,6 +155,8 @@ export function DespChoiceReferencePage({ sessions }: { sessions: TrainingDatesP
         }
         visual={<OrientationAssistant initialFormationKey="desp" />}
       />
+
+      <DespJourney />
 
       <section id="choisir-desp" className="scroll-mt-[120px] bg-gradient-to-b from-orange-50 via-white to-orange-50/60 px-4 py-16 sm:py-20">
         <div className="page-container">
@@ -204,7 +199,7 @@ export function DespChoiceReferencePage({ sessions }: { sessions: TrainingDatesP
                 'Accompagnement à la rédaction du livret VAE',
                 'Préparation au passage devant le jury',
                 'Adapté aux profils expérimentés en sécurité, encadrement, gestion ou direction',
-                'Durée indicative VAE : environ 1 mois',
+                'Calendrier personnalisé selon votre expérience et votre dossier',
               ]}
               audience="Expérience justifiée en management, création, gestion d’entreprise."
               audienceTitle="Conditions :"
@@ -212,43 +207,6 @@ export function DespChoiceReferencePage({ sessions }: { sessions: TrainingDatesP
               href="/vaedirigeant"
               secondaryCta="Tester mon éligibilité à la VAE"
             />
-          </div>
-          <MissionAnimation variant="desp" className="mt-8" />
-        </div>
-      </section>
-
-      <section id="desp-initial" className="page-container scroll-mt-[120px] py-10">
-        <div className="rounded-[2rem] border border-orange-200 bg-academy-surface p-6 shadow-soft sm:p-8">
-          <div className="max-w-3xl">
-            <p className="text-xs font-black uppercase tracking-[.22em] text-orange-700">DESP initial</p>
-            <h2 className="mt-3 text-3xl font-black text-academy-ink">Informations DESP en initial</h2>
-            <p className="mt-4 text-lg leading-8 text-academy-muted">La formation initiale DESP permet d’acquérir les compétences attendues en réglementation, gestion, management, organisation et pilotage d’activité.</p>
-          </div>
-          <div className="mt-7 grid gap-4 md:grid-cols-3">
-            <MiniStep n="1" title="Objectif" text="Construire les bases nécessaires pour exercer des responsabilités de dirigeant en sécurité privée." />
-            <MiniStep n="2" title="Durée" text="Un parcours indicatif de 7 semaines et 245 heures pour progresser avec méthode." />
-            <MiniStep n="3" title="Accompagnement" text="Cours, supports, entraînements et évaluations pour sécuriser votre préparation." />
-          </div>
-        </div>
-      </section>
-
-      <section id="desp-vae" className="page-container scroll-mt-[120px] py-10">
-        <div className="grid gap-5 lg:grid-cols-[1fr_.85fr]">
-          <div className="rounded-[2rem] border border-orange-200 bg-academy-elevated p-7 text-academy-ink shadow-card">
-            <p className="text-xs font-black uppercase tracking-[.22em] text-orange-700">Comprendre la VAE</p>
-            <h2 className="mt-3 text-3xl font-black">La VAE, ce n’est pas une formation classique</h2>
-            <p className="mt-5 text-lg leading-8 text-academy-muted">Vous êtes accompagné pour formaliser votre parcours, sélectionner les bonnes preuves et préparer le passage devant le jury.</p>
-            <div className="mt-7 grid gap-3 sm:grid-cols-3">
-              <MiniStep n="1" title="Expérience" text="On vérifie vos missions et responsabilités." />
-              <MiniStep n="2" title="Dossier" text="Vous décrivez vos acquis avec des preuves." />
-              <MiniStep n="3" title="Jury" text="Vous défendez votre parcours pour valider le titre." />
-            </div>
-          </div>
-          <div id="test-eligibilite-vae" className="rounded-[2rem] border border-orange-300 bg-gradient-to-br from-orange-100 via-orange-300 to-orange-100 p-7 text-orange-950 shadow-soft">
-            <p className="text-xs font-black uppercase tracking-[.22em] text-orange-800">Test rapide</p>
-            <h2 className="mt-3 text-3xl font-black">Tester mon éligibilité à la VAE</h2>
-            <p className="mt-4 font-semibold leading-7 text-orange-950/85">Répondez à quelques questions pour savoir si votre profil semble compatible avec une démarche VAE DESP.</p>
-            <div className="mt-7"><VaeEligibilityModal /></div>
           </div>
         </div>
       </section>
