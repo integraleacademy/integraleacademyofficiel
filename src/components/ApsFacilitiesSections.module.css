@@ -7,12 +7,16 @@
 .section h2 span { color: #2563eb; }
 .heading > p:last-child, .schoolCopy > p:not(.eyebrow) { margin-top: 1.4rem; max-width: 58rem; color: #4b5563; line-height: 1.9; }
 .securityLayout, .schoolLayout { display: grid; gap: 2rem; align-items: center; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); }
+.securityLayout { align-items: start; }
 .equipment { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
 .equipment article { padding: 1.5rem; border: 1px solid #d7e3f3; border-radius: 1.35rem; background: #f2f6fc; }
 .number { display: inline-grid; place-items: center; width: 2rem; height: 2rem; border-radius: .65rem; background: #dbeafe; color: #1d4ed8; font-size: .7rem; font-weight: 900; }
 .equipment h3 { margin-top: 1rem; font-size: 1.08rem; font-weight: 900; }
 .equipment p { margin-top: .7rem; color: #4b5563; font-size: .95rem; line-height: 1.8; }
 .trainingNote { margin-top: 1rem; color: #566579; line-height: 1.7; font-size: .88rem; }
+.regulationNote { margin-top: 1.75rem; padding-top: 1.25rem; border-top: 1px solid #d7e3f3; color: #566579; font-size: .8rem; line-height: 1.8; }
+.regulationNote a { color: #1d4ed8; text-decoration: underline; text-underline-offset: .2em; }
+.regulationNote a:focus-visible { outline: 3px solid #60a5fa; outline-offset: 3px; }
 .pcIllustration { overflow: hidden; border: 1px solid #263b56; border-radius: 1.6rem; padding: 1.5rem; background: radial-gradient(ellipse at 70% 0, #183656, transparent 70%), #0d1725; color: #fff; }
 .pcIllustrationTitle { display: flex; align-items: center; gap: .7rem; font-size: .8rem; font-weight: 800; }
 .dot { width: .55rem; height: .55rem; border-radius: 50%; background: #60a5fa; box-shadow: 0 0 18px #60a5fa70; }
