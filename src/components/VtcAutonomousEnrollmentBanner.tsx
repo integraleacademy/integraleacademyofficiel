@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import styles from './VtcAutonomousEnrollmentBanner.module.css';
 
 const enrollmentUrl = 'https://assistance-alw9.onrender.com/inscriptions';
@@ -26,18 +27,15 @@ export function VtcAutonomousEnrollmentBanner() {
 
         <div className={styles.conditions}>
           <p className={styles.conditionsLabel}>Deux points à vérifier avant de démarrer</p>
-          <div className={styles.condition}>
-            <span className={styles.conditionIcon} aria-hidden="true">
-              <svg viewBox="0 0 32 32" fill="none">
-                <path d="M6 10V8a3 3 0 0 1 3-3h14v5M6 10h20v16H9a3 3 0 0 1-3-3V10Z" />
-                <path d="M26 15h-7v7h7M22 18.5h.01" />
-              </svg>
-            </span>
-            <div>
+          <div className={`${styles.condition} ${styles.cpfCondition}`}>
+            <div className={styles.fundingHeader}>
               <span className={styles.conditionNumber}>01 · Votre financement</span>
-              <h3>Plus de <span className={styles.amount}>1 500 €</span> sur votre CPF ?</h3>
-              <p>Disponibles sur votre Compte Personnel de Formation (CPF).</p>
+              <span className={styles.cpfLogo}>
+                <Image src="/images/mon-compte-formation.svg" alt="Mon Compte Formation" width={144} height={72} />
+              </span>
             </div>
+            <h3>Plus de <span className={styles.amount}>1 500 €</span> sur votre CPF ?</h3>
+            <p>Disponibles sur votre Compte Personnel de Formation (CPF).</p>
           </div>
           <div className={styles.condition}>
             <span className={`${styles.conditionIcon} ${styles.identityIcon}`} aria-hidden="true">
