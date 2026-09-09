@@ -32,7 +32,7 @@ export default function Page() {
       <Hero
         badge="Sécurité privée"
         title={<>Formations sécurité : <Highlight>formation certifiante</Highlight> et métier reconnu</>}
-        subtitle="APS, SSIAP 1, SSIAP 2, SSIAP 3, maintien des acquis, SST, A3P / APR et DESP : des parcours clairs, réglementaires et orientés inscription."
+        subtitle="APS, SSIAP 1, SSIAP 2, SSIAP 3, maintien des acquis, SST, A3P et DESP : des parcours clairs, réglementaires et orientés inscription."
         visual={<ArtDirectionVisual world="security" />}
       />
       <ChatGptAgentBanner />

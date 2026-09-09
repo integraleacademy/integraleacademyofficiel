@@ -37,9 +37,9 @@ export const seoPages: Record<string, SeoPage> = {
     label: 'Formation APS', parent: '/formations-securite',
   },
   '/formations-securite/a3p-apr': {
-    title: 'Formation A3P / APR – Protection rapprochée',
+    title: 'Formation A3P – Protection rapprochée',
     description: 'Formez-vous à la protection rapprochée avec le parcours A3P à Puget-sur-Argens : 328 heures hors examen, mises en situation, prérequis et financements.',
-    label: 'Formation A3P / APR', parent: '/formations-securite',
+    label: 'Formation A3P', parent: '/formations-securite',
   },
   '/formations-securite/cpsp': {
     title: 'Formation CPSP – Chef de poste sécurité privée',

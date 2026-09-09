@@ -120,7 +120,7 @@ function DespPathCard({
 
 function DespLocationsNotice() {
   const locations = [
-    ['Paris', 'Centre Paris · 142 rue de Rivoli, 75001 Paris'],
+    ['Paris', 'Centre Paris · 14 Villa Lourcine 75014 Paris'],
     ['Côte d’Azur', 'Puget-sur-Argens · 54 chemin du Carreou, 83480 Puget-sur-Argens'],
     ['Aurillac', 'Village d’entreprises · 14 avenue du Garric, 15000 Aurillac'],
   ];

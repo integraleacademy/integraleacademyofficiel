@@ -26,7 +26,7 @@ const offerPresentation: Record<string, OfferPresentation> = {
     eyebrow: 'Titre professionnel · Niveau 3',
   },
   '/formations-securite/a3p-apr': {
-    shortTitle: 'A3P / APR',
+    shortTitle: 'A3P',
     category: 'security',
     categoryLabel: 'Protection rapprochée',
     tone: 'green',

@@ -9,7 +9,7 @@ export type PresentationDossier = {
 
 export const professionalPresentationDossiers = [
   {
-    title: 'A3P / APR',
+    title: 'A3P',
     category: 'Protection rapprochée',
     description: 'Agent de protection physique des personnes : programme, prérequis, certification et débouchés.',
     image: '/images/dossiers/cover-01.png',

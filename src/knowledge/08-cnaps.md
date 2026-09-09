@@ -11,7 +11,7 @@ Références internes connues : CNAPS FOR-083-2027-02-08-20200755135, TFP APS RN
 
 Formation APS : autorisation préalable du CNAPS ou carte professionnelle en cours de validité demandée.
 
-Formation A3P / APR : autorisation préalable CNAPS ou carte professionnelle adaptée, conditions d’honorabilité et aptitude au métier de protection physique des personnes.
+Formation A3P : autorisation préalable CNAPS ou carte professionnelle adaptée, conditions d’honorabilité et aptitude au métier de protection physique des personnes.
 
 Formation DESP / DSSP : certification liée à l’agrément dirigeant CNAPS.
 

@@ -15,7 +15,7 @@ const whatsapp = '07 44 30 45 27';
 type IconName = 'arrow' | 'building' | 'calendar' | 'chat' | 'check' | 'clock' | 'file' | 'location' | 'mail' | 'people' | 'phone' | 'shield' | 'sparkles' | 'target';
 
 const projectLinks: Array<{ eyebrow: string; title: string; text: string; href: string; icon: IconName }> = [
-  { eyebrow: 'Je cherche', title: 'Une formation', text: 'APS, A3P / APR, SSIAP, direction, VTC ou BTS.', href: '/formations-securite', icon: 'target' },
+  { eyebrow: 'Je cherche', title: 'Une formation', text: 'APS, A3P, SSIAP, direction, VTC ou BTS.', href: '/formations-securite', icon: 'target' },
   { eyebrow: 'Je vérifie', title: 'Les prochaines dates', text: 'Trouvez rapidement la session et le lieu adaptés.', href: '/planning', icon: 'calendar' },
   { eyebrow: 'Je prépare', title: 'Mon financement', text: 'CPF, France Travail, entreprise ou financement personnel.', href: '/financements', icon: 'file' },
   { eyebrow: 'Je représente', title: 'Une entreprise', text: 'Recrutement, alternance, montée en compétences et conseil.', href: '/entreprises', icon: 'building' },

@@ -6,7 +6,11 @@ import { MissionAnimation } from '@/components/MissionAnimation';
 import { TrainingIllustratedCards, type TrainingIllustratedCard } from '@/components/TrainingIllustratedCards';
 import { TrainingSectionNavigation } from '@/components/TrainingSectionNavigation';
 import { PremiumFAQSection } from '@/components/ui';
+import { getUpcomingVtcExamSessions, vtcCourse } from '@/data/vtc';
+import { formatSessionDate } from '@/lib/public-sessions';
 import styles from './vtc.module.css';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = createPageMetadata('/vtc');
 
@@ -105,11 +109,6 @@ const program = [
   },
 ] as const satisfies readonly TrainingIllustratedCard[];
 
-const examDates = [
-  ['11 septembre 2026', '29 septembre 2026', '26 octobre 2026'],
-  ['20 novembre 2026', '8 décembre 2026', '4 janvier 2027'],
-];
-
 const prerequisites = [
   'Être titulaire du permis B et avoir dépassé la période probatoire.',
   'Être reconnu médicalement apte à la conduite professionnelle.',
@@ -129,6 +128,7 @@ const faq = [
 ];
 
 export default function VtcPage() {
+  const examDates = getUpcomingVtcExamSessions();
   return <main className={styles.page}>
     <section className={styles.hero}>
       <div className={styles.heroGlow}/><div className={styles.heroGrid}/>
@@ -155,8 +155,8 @@ export default function VtcPage() {
               <MissionAnimation variant="vtc" compact />
             </div>
             <div className={styles.cockpitStats}>
-              <div><span>Durée</span><strong>105 h</strong><small>Parcours complet</small></div>
-              <div className={styles.price}><span>Tout inclus</span><strong>1 500 €</strong><small>Financement possible</small></div>
+              <div><span>Durée</span><strong>{vtcCourse.durationHours} h</strong><small>Parcours complet</small></div>
+              <div className={styles.price}><span>Tout inclus</span><strong>{vtcCourse.priceLabel}</strong><small>Financement possible</small></div>
               <div><span>Format</span><strong>Hybride</strong><small>En ligne + pratique</small></div>
             </div>
           </div>
@@ -215,7 +215,8 @@ export default function VtcPage() {
         <div className={styles.datesHeading}><div><span>04 — Prochaines échéances</span><h2>Votre calendrier<br/><em>jusqu’à l’examen.</em></h2></div><p>La théorie démarre dès la finalisation de votre inscription. Ces échéances vous permettent ensuite d’organiser votre passage aux épreuves.</p></div>
         <div className={styles.dateTable}>
           <div className={styles.dateHeader}><span>Date limite d’inscription</span><span>Examen théorique</span><span>Examen pratique</span></div>
-          {examDates.map(([limit,theory,practice],index)=><div className={styles.dateRow} key={limit}><span><small>Session {index+1}</small><strong>{limit}</strong></span><span><small>Admissibilité</small><strong>{theory}</strong></span><span><small>Admission</small><strong>{practice}</strong></span></div>)}
+          {examDates.map(({deadline,theory,practical},index)=><div className={styles.dateRow} key={deadline}><span><small>Session {index+1}</small><strong>{formatSessionDate(deadline)}</strong></span><span><small>Admissibilité</small><strong>{formatSessionDate(theory)}</strong></span><span><small>Admission</small><strong>{formatSessionDate(practical)}</strong></span></div>)}
+          {!examDates.length ? <p>Les prochaines dates d’examen seront communiquées prochainement.</p> : null}
         </div>
         <p className={styles.dateNote}>Dates communiquées à titre indicatif et susceptibles d’être ajustées par l’organisateur de l’examen.</p>
       </div>

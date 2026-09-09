@@ -1,11 +1,13 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { formatSessionDate, formatSessionPeriod, hasDetailedDeliveryPeriods } from '@/lib/public-sessions';
 import { getSessionSeatAvailability, resolveSessionSeatCapacity } from '@/lib/session-seat-availability';
 import { sessionLocationFilters, sessionMatchesLocation, type SessionLocationFilterKey } from '@/lib/session-location-filter';
 import { formatTrainingPrice } from '@/lib/training-price';
+import { planningFormationHref } from '@/lib/planning-data';
+import { vtcCourse } from '@/data/vtc';
 
 type Session = any;
 type CategoryKey = 'security' | 'fire' | 'vtc' | 'bts';
@@ -44,7 +46,7 @@ const categorySections: {
     key: 'security',
     title: 'Formations sécurité privée',
     shortTitle: 'Sécurité privée',
-    intro: 'APS, A3P / APR et direction d’entreprise de sécurité privée.',
+    intro: 'APS, A3P et direction d’entreprise de sécurité privée.',
     slugs: ['aps', 'a3p', 'a3p-apr', 'desp', 'desp-dssp', 'desp-initial', 'desp-vae'],
   },
   {
@@ -100,7 +102,7 @@ const formationFilters: {
   },
   {
     key: 'a3p',
-    label: 'A3P / APR',
+    label: 'A3P',
     eyebrow: 'Protection rapprochée',
     description: 'Agent privé de protection de personnes',
     category: 'security',
@@ -191,25 +193,7 @@ const alertOptions: {
     slugs: ['vtc'],
     accent: 'violet',
   },
-  {
-    title: 'BTS en alternance',
-    label: 'Diplôme d’État',
-    description: 'Construire son diplôme en entreprise avec un accompagnement dédié.',
-    category: 'bts',
-    formation: 'bts',
-    slugs: [
-      'bts',
-      'bts-mos',
-      'bts-mco',
-      'bts-ndrc',
-      'bts-ci',
-      'commerce-international',
-      'bts-professions-immobilieres',
-      'bts-pi',
-      'comptabilite-gestion',
-    ],
-    accent: 'gold',
-  },
+
 ];
 
 function Icon({ name, className = 'h-5 w-5' }: { name: IconName; className?: string }) {
@@ -387,13 +371,6 @@ function planningSeatAvailability(session: Session) {
   return getSessionSeatAvailability(session, capacity);
 }
 
-function infoHref(session?: Session) {
-  const params = new URLSearchParams();
-  if (session?.training?.slug) params.set('formation', session.training.slug);
-  if (session?.id) params.set('session', session.id);
-  return '/contact' + (params.toString() ? '?' + params.toString() : '');
-}
-
 function alertHref(formation: string) {
   return '/contact?motif=alerte-planning&formation=' + encodeURIComponent(formation);
 }
@@ -413,15 +390,14 @@ function deliveryPeriodRows(session: Session): { label: string; value: string; i
 function SessionCard({
   session,
   isNext,
-  onRegister,
 }: {
   session: Session;
   isNext: boolean;
-  onRegister: (session: Session) => void;
 }) {
   const date = shortDate(session.startDate);
   const seatAvailability = planningSeatAvailability(session);
   const showDeliveryPeriods = hasDetailedDeliveryPeriods(session);
+  const isVtcExam = session.scheduleKind === 'vtc-exam';
   const themeClass = planningThemeForSession(session);
 
   return (
@@ -429,7 +405,7 @@ function SessionCard({
       <span aria-hidden="true" className="planning-accent-indicator absolute inset-y-0 left-0 w-1" />
       {isNext ? (
         <span className="absolute left-4 top-0 rounded-b-xl bg-[#101a29] px-3 py-1 text-[9px] font-black uppercase tracking-[.14em] text-white sm:left-5">
-          Prochaine session
+          {isVtcExam ? 'Prochaine échéance VTC' : 'Prochaine session'}
         </span>
       ) : null}
 
@@ -451,11 +427,25 @@ function SessionCard({
             <h3 className="text-xl font-black tracking-tight text-academy-ink dark:text-white sm:text-2xl">
               {sessionTitle(session)}
             </h3>
-            <span className={'session-seats-badge rounded-full border px-3 py-1 text-[10px] font-black ' + seatAvailability.badgeClassName}>
+            {!isVtcExam ? <span className={'session-seats-badge rounded-full border px-3 py-1 text-[10px] font-black ' + seatAvailability.badgeClassName}>
               {seatAvailability.label}
-            </span>
+            </span> : null}
           </div>
-          {showDeliveryPeriods ? <div className="mt-4 grid gap-2 sm:grid-cols-2">
+          {isVtcExam ? <div className="mt-4">
+            <p className="text-sm font-semibold leading-6 text-academy-muted">{vtcCourse.startDescription}</p>
+            <dl className="mt-3 grid gap-2 sm:grid-cols-3">
+              {[
+                ['Date limite d’inscription', session.vtcDates.deadline],
+                ['Examen théorique', session.vtcDates.theory],
+                ['Examen pratique', session.vtcDates.practical],
+              ].map(([label, value]) => <div key={label} className="rounded-2xl border border-academy-line/60 bg-academy-bg/55 px-3 py-3 dark:border-white/10 dark:bg-white/5">
+                <dt className="text-[9px] font-black uppercase tracking-[.1em] text-academy-muted">{label}</dt>
+                <dd className="mt-1 text-sm font-black text-academy-ink dark:text-white">{formatSessionDate(value)}</dd>
+              </div>)}
+            </dl>
+            <p className="mt-3 text-xs font-semibold leading-5 text-academy-muted">Hybride : théorie en ligne et pratique en présentiel. Frais d’examen et véhicule double commande inclus.</p>
+            <p className="mt-2 text-xs leading-5 text-academy-muted">{vtcCourse.examNotice}</p>
+          </div> : showDeliveryPeriods ? <div className="mt-4 grid gap-2 sm:grid-cols-2">
             {deliveryPeriodRows(session).map((period, periodIndex) => <div key={period.label || 'dates'} className={`flex items-start gap-3 rounded-[1rem] border px-3.5 py-3 ${periodIndex === 0 ? 'planning-accent-soft sm:col-span-2' : 'border-academy-line/60 bg-academy-bg/55 dark:border-white/10 dark:bg-white/5'}`}>
               <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-xl ${periodIndex === 0 ? 'planning-accent-icon' : 'planning-accent-text border border-academy-line/70 bg-white dark:border-white/10 dark:bg-white/10'}`}>
                 <Icon name={period.icon} className="h-4 w-4" />
@@ -493,19 +483,12 @@ function SessionCard({
         </div>
 
         <div className="flex gap-2 lg:flex-col">
-          <button
-            type="button"
-            onClick={() => onRegister(session)}
+          <Link
+            href={planningFormationHref(session)}
             className="planning-neutral-action inline-flex flex-1 items-center justify-center gap-2 rounded-full px-5 py-3.5 text-sm font-black transition hover:-translate-y-0.5"
           >
-            Voir la session
+            En savoir plus
             <Icon name="arrow" className="h-4 w-4" />
-          </button>
-          <Link
-            href={infoHref(session)}
-            className="inline-flex flex-1 items-center justify-center rounded-full border border-academy-line bg-white px-5 py-3 text-sm font-black text-academy-ink transition hover:border-academy-ink/35 dark:bg-white/10 dark:text-white"
-          >
-            Infos
           </Link>
         </div>
       </div>
@@ -515,10 +498,8 @@ function SessionCard({
 
 function CalendarView({
   sessions,
-  onRegister,
 }: {
   sessions: Session[];
-  onRegister: (session: Session) => void;
 }) {
   const timeline = useMemo(() => {
     const firstSessionDate = new Date(Math.min(...sessions.map((session) => +new Date(session.startDate))));
@@ -608,18 +589,18 @@ function CalendarView({
                       <span key={item.key} aria-hidden="true" className="pointer-events-none absolute inset-y-0 border-l border-[#dfd5c4]" style={{ left: item.left + '%' }} />
                     ))}
 
-                    <button
-                      type="button"
-                      onClick={() => onRegister(session)}
-                      title={hasExam ? 'Examen le ' + formatSessionDate(session.examDate) : 'Voir la session'}
+                    <Link
+                      href={planningFormationHref(session)}
+                      aria-label={'En savoir plus sur ' + sessionTitle(session)}
+                      title={session.scheduleKind === 'vtc-exam' ? 'Inscription avant le ' + formatSessionDate(session.startDate) + ' · Examen théorique le ' + formatSessionDate(session.endDate) + ' · Examen pratique le ' + formatSessionDate(session.examDate) : hasExam ? 'Examen le ' + formatSessionDate(session.examDate) : 'En savoir plus'}
                       className={themeClass + ' planning-calendar-bar group absolute top-1/2 flex h-12 -translate-y-1/2 items-center justify-between gap-3 rounded-full px-4 text-left text-xs font-black transition hover:-translate-y-[54%]'}
                       style={{ left: position.left + '%', width: position.width + '%' }}
                     >
-                      <span className="truncate">{timelineDateLabel(session.startDate)} → {timelineDateLabel(session.endDate)}</span>
+                      <span className="truncate">{session.scheduleKind === 'vtc-exam' ? 'Inscription → examen' : timelineDateLabel(session.startDate) + ' → ' + timelineDateLabel(session.endDate)}</span>
                       <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-[#111923] text-[9px] font-black text-white transition group-hover:scale-110">
                         {hasExam ? 'E' : '›'}
                       </span>
-                    </button>
+                    </Link>
                   </div>
                 </div>
               );
@@ -627,7 +608,7 @@ function CalendarView({
           </div>
 
           <p className="ml-[15rem] mt-1 px-2 pt-4 text-[10px] font-black uppercase tracking-[.08em] text-[#6d685f]">
-            E = examen · cliquez sur un parcours pour voir la session
+            E = examen · cliquez sur un parcours pour en savoir plus sur la formation
           </p>
         </div>
       </div>
@@ -635,175 +616,25 @@ function CalendarView({
   );
 }
 
-function RegistrationModal({
-  session,
-  onClose,
-}: {
-  session: Session | null;
-  onClose: () => void;
-}) {
-  useEffect(() => {
-    if (!session) return;
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') onClose();
-    };
-    document.body.style.overflow = 'hidden';
-    window.addEventListener('keydown', onKeyDown);
-    return () => {
-      document.body.style.overflow = '';
-      window.removeEventListener('keydown', onKeyDown);
-    };
-  }, [session, onClose]);
-
-  if (!session) return null;
-
-  const title = sessionTitle(session);
-  const sessionLabel = formatSessionPeriod(session.startDate, session.endDate);
-  const hiddenSession = title + ' — ' + sessionLabel;
-  const seatAvailability = planningSeatAvailability(session);
-  const date = shortDate(session.startDate);
-  const themeClass = planningThemeForSession(session);
-  const sessionDetails: [string, string][] = [
-    ...(hasDetailedDeliveryPeriods(session) ? deliveryPeriodRows(session).map(({ label, value }) => [label, value] as [string, string]) : [['Période', sessionLabel] as [string, string]]),
-    ['Examen', session.examDate ? formatSessionDate(session.examDate) : 'Selon le calendrier de la session'],
-    ['Lieu', session.location || 'Communiqué prochainement'],
-    ['Durée', displayDuration(session)],
-    ['Tarif', displayPrice(session)],
-  ];
-
-  return (
-    <div className="fixed inset-0 z-[70] grid place-items-center px-3 py-4 sm:px-5" role="dialog" aria-modal="true" aria-labelledby="registration-modal-title">
-      <button type="button" aria-label="Fermer la fenêtre" onClick={onClose} className="absolute inset-0 bg-[#07101e]/75 backdrop-blur-md" />
-
-      <div className={themeClass + ' reveal relative grid max-h-[94vh] w-full max-w-6xl overflow-y-auto rounded-[2rem] border border-white/20 bg-academy-surface shadow-[0_35px_120px_rgba(0,0,0,.42)] lg:grid-cols-[1.35fr_.85fr]'}>
-        <button
-          type="button"
-          onClick={onClose}
-          aria-label="Fermer"
-          className="absolute right-4 top-4 z-10 grid h-10 w-10 place-items-center rounded-full border border-white/15 bg-[#192537] text-xl font-black text-white transition hover:-translate-y-0.5"
-        >
-          ×
-        </button>
-
-        <div className="p-5 sm:p-8 lg:p-10">
-          <p className="planning-accent-text text-[11px] font-black uppercase tracking-[.2em]">Détail de la session</p>
-          <div className="mt-5 flex flex-col gap-5 sm:flex-row sm:items-center">
-            <div className="planning-neutral-action grid h-24 w-24 shrink-0 place-items-center rounded-[1.5rem] text-center">
-              <span>
-                <span className="block text-4xl font-black leading-none">{date.day}</span>
-                <span className="mt-2 block text-[10px] font-black uppercase tracking-[.12em]">{date.month} {new Date(session.startDate).getUTCFullYear()}</span>
-              </span>
-            </div>
-            <div>
-              <h2 id="registration-modal-title" className="text-3xl font-black tracking-tight text-academy-ink dark:text-white sm:text-4xl">{title}</h2>
-              <p className="mt-2 text-base font-semibold text-academy-muted">{session.training?.shortDescription || 'Formation professionnelle certifiante'}</p>
-              <div className="mt-3 flex flex-wrap gap-2">
-                <span className={'rounded-full border px-3 py-1.5 text-[10px] font-black ' + seatAvailability.badgeClassName}>{seatAvailability.label}</span>
-                <span className="planning-accent-soft planning-accent-text inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[10px] font-black">
-                  <Icon name="clock" className="h-3.5 w-3.5" />
-                  {displayDuration(session)} de formation
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-7 grid gap-3 sm:grid-cols-2">
-            {sessionDetails.map(([label, value]) => (
-              <div key={label} className="rounded-2xl border border-academy-line/70 bg-white/70 p-4 dark:border-white/10 dark:bg-white/5">
-                {label ? <p className="text-[9px] font-black uppercase tracking-[.16em] text-academy-muted/70">{label}</p> : null}
-                <p className={`${label ? 'mt-2 ' : ''}text-sm font-black leading-6 text-academy-ink dark:text-white`}>{value}</p>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-8">
-            <h3 className="text-xl font-black text-academy-ink dark:text-white">Ce que vous allez recevoir</h3>
-            <ul className="mt-4 grid gap-3 text-sm font-semibold text-academy-muted">
-              {[
-                'Un échange avec Cassandre pour valider votre projet',
-                'La liste exacte des prérequis et des pièces à fournir',
-                'Une étude des solutions de financement possibles',
-                'La confirmation de votre place après validation du dossier',
-              ].map((item) => (
-                <li key={item} className="flex items-start gap-3">
-                  <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-emerald-500 text-white">
-                    <Icon name="check" className="h-3.5 w-3.5" />
-                  </span>
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="mt-8 rounded-2xl border border-academy-line/70 bg-academy-bg/70 p-4 dark:border-white/10 dark:bg-black/15">
-            <p className="text-[9px] font-black uppercase tracking-[.16em] text-academy-muted/70">Financement</p>
-            <p className="mt-2 text-sm font-semibold leading-6 text-academy-muted">
-              CPF, France Travail, employeur ou paiement personnel : l’équipe vous aide à identifier le dispositif adapté.
-            </p>
-          </div>
-        </div>
-
-        <div className="bg-[#101a29] p-5 text-white sm:p-8 lg:p-10">
-          <p className="text-[11px] font-black uppercase tracking-[.2em] text-academy-gold">Votre inscription</p>
-          <h3 className="mt-3 pr-10 text-2xl font-black tracking-tight sm:text-3xl">Finalisez votre demande</h3>
-          <p className="mt-2 text-sm leading-6 text-white/65">L’équipe vous répond sous 24 h ouvrées.</p>
-
-          <div className="mt-7 grid grid-cols-3 gap-2">
-            {['Projet', 'Coordonnées', 'Confirmation'].map((step, index) => (
-              <div key={step} className="text-center">
-                <span className={'mx-auto grid h-8 w-8 place-items-center rounded-full text-xs font-black ' + (index === 0 ? 'bg-academy-gold text-academy-gold-text' : 'bg-white/10 text-white/55')}>
-                  {index + 1}
-                </span>
-                <span className={'mt-2 block text-[8px] font-black uppercase tracking-[.1em] ' + (index === 0 ? 'text-academy-gold' : 'text-white/45')}>{step}</span>
-              </div>
-            ))}
-          </div>
-
-          <form action="/contact" method="get" className="mt-7 grid gap-3">
-            <input type="hidden" name="motif" value="inscription-session" />
-            <input type="hidden" name="session" value={session.id} />
-            <input type="hidden" name="formation_session" value={hiddenSession} />
-            <label className="grid gap-1.5 text-[9px] font-black uppercase tracking-[.14em] text-white/55">
-              Votre situation
-              <select name="situation" className="rounded-2xl border border-white/15 bg-white/5 px-4 py-3.5 text-sm font-bold normal-case tracking-normal text-white">
-                <option value="">Sélectionner</option>
-                <option>Demandeur d’emploi</option>
-                <option>Salarié</option>
-                <option>Indépendant</option>
-                <option>Étudiant</option>
-              </select>
-            </label>
-            <label className="grid gap-1.5 text-[9px] font-black uppercase tracking-[.14em] text-white/55">
-              Mode de financement envisagé
-              <select name="financement" className="rounded-2xl border border-white/15 bg-white/5 px-4 py-3.5 text-sm font-bold normal-case tracking-normal text-white">
-                <option value="">Je souhaite être conseillé</option>
-                <option>CPF</option>
-                <option>France Travail</option>
-                <option>Employeur / OPCO</option>
-                <option>Financement personnel</option>
-              </select>
-            </label>
-            <div className="grid gap-3 sm:grid-cols-2">
-              <input name="nom" placeholder="Nom" required className="rounded-2xl border border-white/15 bg-white/5 px-4 py-3.5 text-sm font-bold text-white placeholder:text-white/45" />
-              <input name="prenom" placeholder="Prénom" required className="rounded-2xl border border-white/15 bg-white/5 px-4 py-3.5 text-sm font-bold text-white placeholder:text-white/45" />
-              <input name="telephone" placeholder="Téléphone" required className="rounded-2xl border border-white/15 bg-white/5 px-4 py-3.5 text-sm font-bold text-white placeholder:text-white/45" />
-              <input name="email" type="email" placeholder="E-mail" required className="rounded-2xl border border-white/15 bg-white/5 px-4 py-3.5 text-sm font-bold text-white placeholder:text-white/45" />
-            </div>
-            <textarea name="message" rows={3} placeholder="Précisez votre projet ou vos contraintes…" className="resize-none rounded-2xl border border-white/15 bg-white/5 px-4 py-3.5 text-sm font-bold text-white placeholder:text-white/45" />
-            <button type="submit" className="mt-1 inline-flex items-center justify-center gap-2 rounded-full bg-academy-gold px-5 py-4 text-sm font-black text-academy-gold-text shadow-soft transition hover:-translate-y-0.5">
-              Envoyer ma demande
-              <Icon name="arrow" className="h-4 w-4" />
-            </button>
-          </form>
-
-          <div className="mt-4 grid grid-cols-2 gap-2">
-            <Link href={'/contact?motif=rappel&formation=' + encodeURIComponent(session.training?.slug || title) + '&session=' + encodeURIComponent(session.id)} className="rounded-full border border-white/15 bg-white/5 px-4 py-3 text-center text-xs font-black text-white">Être rappelé</Link>
-            <Link href={infoHref(session)} className="rounded-full border border-white/15 bg-white/5 px-4 py-3 text-center text-xs font-black text-white">Poser une question</Link>
-          </div>
+function BtsIntakes() {
+  return <article className="planning-theme-gold mt-6 rounded-[1.6rem] border border-academy-line/70 bg-white p-5 shadow-soft dark:border-white/10 dark:bg-white/5 sm:p-7">
+    <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
+      <div>
+        <h3 className="text-2xl font-black text-academy-ink dark:text-white">BTS en alternance</h3>
+        <div className="mt-4 grid gap-3 sm:grid-cols-2">
+          <p className="rounded-2xl border border-academy-line/60 bg-academy-bg/55 p-4 text-sm font-semibold text-academy-muted dark:border-white/10 dark:bg-white/5">
+            Prochaine rentrée : <strong className="text-academy-ink dark:text-white">septembre 2026</strong>
+          </p>
+          <p className="rounded-2xl border border-academy-line/60 bg-academy-bg/55 p-4 text-sm font-semibold text-academy-muted dark:border-white/10 dark:bg-white/5">
+            Rentrée suivante : <strong className="text-academy-ink dark:text-white">septembre 2027</strong>
+          </p>
         </div>
       </div>
+      <Link href="/bts" className="planning-neutral-action inline-flex items-center justify-center gap-2 rounded-full px-5 py-3.5 text-sm font-black transition hover:-translate-y-0.5">
+        En savoir plus <Icon name="arrow" className="h-4 w-4" />
+      </Link>
     </div>
-  );
+  </article>;
 }
 
 function MissingDates({
@@ -883,12 +714,10 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
     () => [...initialSessions].sort((a, b) => +new Date(a.startDate) - +new Date(b.startDate)),
     [initialSessions],
   );
-  const nextSession = sortedSessions[0] || null;
   const [activeFormation, setActiveFormation] = useState<FormationFilterKey>('all');
   const [locationFilter, setLocationFilter] = useState<SessionLocationFilterKey>('all');
   const [view, setView] = useState<ViewMode>('list');
   const [showAll, setShowAll] = useState(false);
-  const [selectedSession, setSelectedSession] = useState<Session | null>(null);
 
   const locations = useMemo(
     () => Array.from(new Set(sortedSessions.map((session) => session.location).filter(Boolean))) as string[],
@@ -948,7 +777,7 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
               <span className="text-[#b9820a]">Choisissez votre date.</span>
             </h1>
             <p className="mt-6 max-w-2xl text-base font-semibold leading-8 text-[#5f625f] sm:text-lg">
-              APS, A3P / APR, Dirigeant, SSIAP 1, VTC ou BTS : accédez directement au bon parcours, comparez les rentrées et vérifiez les places disponibles.
+              APS, A3P, Dirigeant, SSIAP 1, VTC ou BTS : accédez directement au bon parcours, comparez les rentrées et vérifiez les places disponibles.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <a href="#choisir-formation" className="inline-flex items-center justify-center gap-2 rounded-full bg-[#111b2a] px-6 py-4 text-sm font-black text-white transition hover:-translate-y-0.5">
@@ -971,7 +800,7 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
                 {[
                   ['01', 'Choisissez la formation', 'Accès direct à chaque parcours.'],
                   ['02', 'Comparez les dates', 'Liste détaillée ou frise calendrier.'],
-                  ['03', 'Demandez votre inscription', 'Sans quitter la page.'],
+                  ['03', 'Découvrez la formation', 'Programme, prérequis et inscription.'],
                 ].map(([number, label, description]) => (
                   <div key={number} className="grid grid-cols-[2.7rem_1fr] gap-4 py-4">
                     <span className="grid h-9 w-9 place-items-center rounded-full bg-academy-gold text-[10px] font-black text-academy-gold-text">{number}</span>
@@ -984,7 +813,7 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
               </div>
               <p className="mt-5 flex items-center gap-2 text-xs font-bold text-white/55">
                 <span className="h-2 w-2 rounded-full bg-emerald-400" />
-                Dates et places mises à jour depuis l’administration
+                Retrouvez les prochaines dates de vos formations
               </p>
             </div>
           </div>
@@ -1038,7 +867,7 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
                   <span className="mt-5 block text-xl font-black tracking-tight">{formation.label}</span>
                   <span className="mt-2 block text-xs font-semibold leading-5 text-white/48">{formation.description}</span>
                   <span className="mt-auto flex items-center justify-between border-t border-white/10 pt-4 text-[10px] font-black uppercase tracking-[.08em]">
-                    {count ? count + (count > 1 ? ' sessions' : ' session') : 'Créer une alerte'}
+                    {formation.key === 'bts' ? 'Rentrées 2026 et 2027' : count ? count + (count > 1 ? ' sessions' : ' session') : 'Créer une alerte'}
                     <span className={'grid h-7 w-7 place-items-center rounded-full transition group-hover:translate-x-1 ' + (selected ? 'bg-academy-gold text-academy-gold-text' : 'bg-white/10 text-white')}>
                       <Icon name="arrow" className="h-3.5 w-3.5" />
                     </span>
@@ -1054,14 +883,14 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <p className="text-2xl font-black text-academy-ink dark:text-white">
-              {filteredSessions.length} {filteredSessions.length > 1 ? 'sessions disponibles' : 'session disponible'}
+              {activeFormation === 'bts' ? 'Rentrées BTS' : filteredSessions.length + (filteredSessions.length > 1 ? ' sessions disponibles' : ' session disponible')}
             </p>
             <p className="mt-1 text-sm font-semibold text-academy-muted">
-              {view === 'list' ? 'Triées par prochaine date de rentrée' : 'Affichées dans le calendrier'}
+              {activeFormation === 'bts' ? 'BTS en alternance' : view === 'list' ? 'Triées par prochaine date de rentrée ou échéance d’inscription' : 'Affichées dans le calendrier'}
             </p>
           </div>
 
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+          {activeFormation !== 'bts' ? <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
             <div className="flex w-fit items-center rounded-full border border-academy-line bg-white p-1 dark:bg-white/5" aria-label="Filtrer les sessions par centre">
               <span className="hidden px-3 text-[9px] font-black uppercase tracking-[.12em] text-academy-muted sm:inline">Centre</span>
               {sessionLocationFilters.map((filter) => {
@@ -1087,15 +916,15 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
               <button type="button" aria-pressed={view === 'list'} onClick={() => setView('list')} className={'rounded-full px-4 py-2.5 text-xs font-black transition ' + (view === 'list' ? 'planning-neutral-action' : 'text-academy-muted hover:text-academy-ink')}>Vue liste</button>
               <button type="button" aria-pressed={view === 'calendar'} onClick={() => setView('calendar')} className={'rounded-full px-4 py-2.5 text-xs font-black transition ' + (view === 'calendar' ? 'planning-neutral-action' : 'text-academy-muted hover:text-academy-ink')}>Vue calendrier</button>
             </div>
-          </div>
+          </div> : null}
         </div>
 
-        {filteredSessions.length ? (
+        {activeFormation === 'bts' ? <BtsIntakes /> : filteredSessions.length ? (
           view === 'list' ? (
             <>
               <div className="mt-6 grid gap-4">
                 {visibleSessions.map((session, index) => (
-                  <SessionCard key={session.id} session={session} isNext={index === 0} onRegister={setSelectedSession} />
+                  <SessionCard key={session.id} session={session} isNext={index === 0} />
                 ))}
               </div>
               {filteredSessions.length > visibleSessions.length ? (
@@ -1107,7 +936,7 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
               ) : null}
             </>
           ) : (
-            <div className="mt-8"><CalendarView sessions={filteredSessions} onRegister={setSelectedSession} /></div>
+            <div className="mt-8"><CalendarView sessions={filteredSessions} /></div>
           )
         ) : (
           <div className="mt-6 rounded-[2rem] border border-dashed border-academy-line bg-white/65 p-8 text-center shadow-soft dark:bg-white/5 sm:p-12">
@@ -1120,6 +949,7 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
             </div>
           </div>
         )}
+        {activeFormation === 'all' ? <BtsIntakes /> : null}
       </section>
 
       <MissingDates sessions={sortedSessions} activeFormation={activeFormation} />
@@ -1133,7 +963,7 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
 
         <div className="mt-9 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           {[
-            ['01', 'Découvrir les formations', 'Comparer APS, A3P / APR, SSIAP 1, VTC et BTS.', '/formations-securite'],
+            ['01', 'Découvrir les formations', 'Comparer APS, A3P, SSIAP 1, VTC et BTS.', '/formations-securite'],
             ['02', 'Trouver un financement', 'CPF, France Travail, employeur et autres solutions.', '/financements'],
             ['03', 'Recruter ou former', 'Alternance, POEI et montée en compétences.', '/entreprises'],
             ['04', 'Parler à Cassandre', 'Valider mon projet et mes prochaines étapes.', '/contact?motif=rdv'],
@@ -1195,16 +1025,10 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
         </div>
       </section>
 
-      <RegistrationModal session={selectedSession} onClose={() => setSelectedSession(null)} />
-
       <div className="fixed inset-x-3 bottom-[calc(.75rem+env(safe-area-inset-bottom))] z-40 grid grid-cols-3 gap-2 rounded-[1.5rem] border border-white/70 bg-white/92 p-2 shadow-[0_18px_60px_rgba(17,17,17,.18)] backdrop-blur md:hidden">
         <Link href="tel:0422470768" className="rounded-2xl bg-[#101a29] px-3 py-3 text-center text-xs font-black text-white">Appeler</Link>
         <Link href="/contact?motif=alerte-planning" className="rounded-2xl border border-academy-line bg-white px-3 py-3 text-center text-xs font-black text-academy-ink">Alerte</Link>
-        {nextSession ? (
-          <button type="button" onClick={() => setSelectedSession(nextSession)} className="planning-neutral-action rounded-2xl px-3 py-3 text-center text-xs font-black">S’inscrire</button>
-        ) : (
-          <Link href="/contact" className="rounded-2xl bg-academy-gold px-3 py-3 text-center text-xs font-black text-academy-gold-text">Infos</Link>
-        )}
+        <Link href="https://assistance-alw9.onrender.com/demande-informations-formations" className="planning-neutral-action rounded-2xl px-3 py-3 text-center text-xs font-black">S’inscrire</Link>
       </div>
     </main>
   );
