@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export function ContactRequestCard({ href }: { href: string }) {
   return (
     <div className="rounded-[2rem] border border-academy-line/70 bg-academy-surface p-5 shadow-[0_28px_90px_rgba(54,40,20,.12)] sm:p-8">
@@ -9,6 +11,9 @@ export function ContactRequestCard({ href }: { href: string }) {
       <a href={href} className="mt-6 inline-flex min-h-14 w-full items-center justify-center gap-3 rounded-full bg-academy-gold px-6 py-4 text-center text-sm font-black text-academy-gold-text transition hover:-translate-y-0.5 hover:shadow-soft">
         Compléter ma demande d’informations <span aria-hidden="true">→</span>
       </a>
+      <p className="mt-4 text-xs leading-6 text-academy-muted">
+        Intégrale Academy utilise vos informations pour étudier votre projet et vous recontacter. Le formulaire dédié enregistre les réponses au fil de la saisie, avant validation. Pour connaître les destinataires, la conservation des données et vos droits d’accès ou de suppression, consultez notre <Link href="/politique-confidentialite" className="font-bold text-academy-ink underline underline-offset-4 dark:text-white">politique de confidentialité</Link>.
+      </p>
       <div className="mt-8 border-t border-academy-line/70 pt-6">
         <h3 className="text-base font-black text-academy-ink dark:text-white">Votre projet concerne un BTS ?</h3>
         <p className="mt-2 text-sm font-semibold leading-6 text-academy-muted">Aurélie vous accompagne pour votre candidature et votre recherche d’alternance.</p>
