@@ -174,7 +174,7 @@ export const btsExpandedCourses: Record<BtsExpandedCourseKey, BtsExpandedCourse>
     campusEquipment: {
       title: 'Un environnement d’entraînement pensé pour la sécurité',
       intro:
-        'Le campus de Puget-sur-Argens dispose d’équipements permettant de travailler des situations concrètes de sécurité, de sûreté, d’incendie et de secourisme.',
+        'L’école de Puget-sur-Argens dispose d’équipements permettant de travailler des situations concrètes de sécurité, de sûreté, d’incendie et de secourisme.',
       items: [
         'Salle de pratique avec tapis, sacs de frappe, boucliers et protections',
         'Matériel incendie : RIA, extincteurs, désenfumage, détecteurs et générateurs de fumée ou de flammes',

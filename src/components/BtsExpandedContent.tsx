@@ -96,7 +96,7 @@ export function BtsStudentBenefits({ courseName }: { courseName: string }) {
           {[
             ['Carte étudiante officielle', 'Votre statut étudiant et les avantages associés.'],
             ['Ateliers découverte', 'Sport, théâtre, gestion du stress, masterclass et visites d’entreprises.'],
-            ['3 € par jour sur le campus', 'Crédit boissons et snacks pour les étudiants en présentiel.'],
+            ['3 € par jour à l’école', 'Crédit boissons et snacks pour les étudiants en présentiel.'],
           ].map(([title, text]) => (
             <article key={title} className="rounded-[1.4rem] border border-white/10 bg-white/6 p-5">
               <p className="font-black text-white">✓ {title}</p>
@@ -273,7 +273,7 @@ export function BtsCompleteInformation({ course }: { course: BtsExpandedCourseKe
           <article className="mt-5 overflow-hidden rounded-[2rem] bg-[#102B48] p-6 text-white shadow-card sm:p-8">
             <div className="grid gap-7 lg:grid-cols-[.7fr_1.3fr] lg:items-center">
               <div>
-                <p className="text-[.66rem] font-black uppercase tracking-[.22em] text-sky-300">Équipements du campus</p>
+                <p className="text-[.66rem] font-black uppercase tracking-[.22em] text-sky-300">Équipements de l’école</p>
                 <h3 className="mt-3 text-3xl font-black tracking-[-.04em]">{data.campusEquipment.title}</h3>
                 <p className="mt-4 text-sm leading-7 text-white/62">{data.campusEquipment.intro}</p>
               </div>

@@ -24,7 +24,7 @@ const emptySession = (training?: TrainingRow) => ({
   priceLabel: '',
   location: '',
   status: 'OPEN',
-  seatsTotal: '',
+  seatsTotal: 12,
   seatsLeft: '',
   registrationUrl: '',
   fundingNotes: '',
@@ -194,8 +194,8 @@ export function SessionsClient({ initialRows }: { initialRows: SessionRow[] }) {
       <label className="text-sm font-semibold">Tarif centimes<input type="number" min="0" value={row.priceCents ?? ''} onChange={event => onChange({ priceCents: event.target.value })} className="mt-1 w-full rounded-xl border p-3" disabled={disabled}/></label>
       <label className="text-sm font-semibold">Libellé tarif<input value={row.priceLabel || ''} onChange={event => onChange({ priceLabel: event.target.value })} className="mt-1 w-full rounded-xl border p-3" disabled={disabled}/></label>
       <label className="text-sm font-semibold">Lieu<input value={row.location || ''} onChange={event => onChange({ location: event.target.value })} className="mt-1 w-full rounded-xl border p-3" disabled={disabled}/></label>
-      <label className="text-sm font-semibold">Places totales<input type="number" min="0" value={row.seatsTotal ?? ''} onChange={event => onChange({ seatsTotal: event.target.value })} className="mt-1 w-full rounded-xl border p-3" disabled={disabled}/></label>
-      <label className="text-sm font-semibold">Places restantes<input type="number" min="0" value={row.seatsLeft ?? ''} onChange={event => onChange({ seatsLeft: event.target.value })} className="mt-1 w-full rounded-xl border p-3" disabled={disabled}/></label>
+      <label className="text-sm font-semibold">Places totales (12 maximum)<input type="number" min="1" max="12" step="1" value={row.seatsTotal ?? ''} onChange={event => onChange({ seatsTotal: event.target.value })} className="mt-1 w-full rounded-xl border p-3" disabled={disabled}/></label>
+      <label className="text-sm font-semibold">Places restantes<input type="number" min="0" max="12" step="1" value={row.seatsLeft ?? ''} onChange={event => onChange({ seatsLeft: event.target.value })} className="mt-1 w-full rounded-xl border p-3" disabled={disabled}/></label>
       <label className="text-sm font-semibold">Lien inscription<input value={row.registrationUrl || ''} onChange={event => onChange({ registrationUrl: event.target.value })} className="mt-1 w-full rounded-xl border p-3" disabled={disabled}/></label>
       <label className="text-sm font-semibold md:col-span-2">Notes publiques<textarea value={row.publicNotes || ''} onChange={event => onChange({ publicNotes: event.target.value })} className="mt-1 w-full rounded-xl border p-3" disabled={disabled}/></label>
       <label className="text-sm font-semibold md:col-span-2">Notes internes<textarea value={row.internalNotes || ''} onChange={event => onChange({ internalNotes: event.target.value })} className="mt-1 w-full rounded-xl border p-3" disabled={disabled}/></label>

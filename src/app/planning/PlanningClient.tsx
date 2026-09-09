@@ -378,7 +378,6 @@ function displayDuration(session: Session) {
 
 function maximumSeatCapacity(session: Session) {
   const slug = String(session.training?.slug || '').toLocaleLowerCase('fr');
-  if (slug.startsWith('desp') || slug.startsWith('dssp')) return 20;
   if (slug === 'sst' || slug.startsWith('sst-')) return 10;
   return 12;
 }

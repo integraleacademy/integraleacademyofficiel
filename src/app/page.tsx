@@ -100,7 +100,7 @@ const btsHighlights: BtsTrainingHighlight[] = [
 
 const proofItems = [
   ['Depuis 2018', 'Expérience terrain'],
-  ['400 m²', 'Campus principal'],
+  ['400 m²', 'École principale'],
   ['Qualiopi', 'Certification qualité'],
   ['CNAPS · ADEF', 'Agréments métiers'],
   ['3 centres', 'Selon les sessions'],

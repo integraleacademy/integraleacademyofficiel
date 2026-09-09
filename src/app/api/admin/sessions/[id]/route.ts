@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { requireAdmin } from '@/lib/admin/guard';
 import { getPrisma } from '@/lib/db';
+import { validateSessionSeatCounts } from '@/lib/session-capacity';
 
 export const runtime = 'nodejs';
 
@@ -32,6 +33,10 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
   const { id } = await params;
   console.log('[ADMIN_SESSIONS] update session:', id);
   const data = await request.json();
+  const current = await prisma.trainingSession.findUnique({ where: { id } });
+  if (!current) return NextResponse.json({ error: 'Session introuvable.' }, { status: 404 });
+  const seatError = validateSessionSeatCounts({ ...current, ...data });
+  if (seatError) return NextResponse.json({ error: seatError }, { status: 400 });
   const session = await prisma.trainingSession.update({ where: { id }, data: sessionUpdateData(data), include: { training: true } });
   return NextResponse.json(session);
 }

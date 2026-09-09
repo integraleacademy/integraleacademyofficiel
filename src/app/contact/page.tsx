@@ -253,7 +253,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<Rec
       <section className="bg-[#101a29] px-4 py-16 text-white sm:py-20">
         <div className="page-container">
           <SectionHeading eyebrow="Venir nous rencontrer" title={<>Trois implantations. <span className="text-academy-gold">Une même exigence.</span></>} light>
-            Notre campus principal se situe à Puget-sur-Argens. Paris et Aurillac sont mobilisés selon les parcours et les sessions programmées.
+            Notre école principale se situe à Puget-sur-Argens. Paris et Aurillac sont mobilisés selon les parcours et les sessions programmées.
           </SectionHeading>
 
           <div className="mt-10 grid gap-5 lg:grid-cols-[1.12fr_.88fr]">
@@ -261,7 +261,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<Rec
               <div className="absolute -bottom-28 -right-24 h-80 w-80 rounded-full border border-academy-gold/15 bg-academy-gold/[.055]" />
               <div className="relative flex h-full flex-col">
                 <span className="grid h-12 w-12 place-items-center rounded-2xl bg-academy-gold text-academy-gold-text"><Icon name="location" className="h-6 w-6" /></span>
-                <p className="mt-8 text-[10px] font-black uppercase tracking-[.18em] text-academy-gold">Campus principal · Côte d’Azur</p>
+                <p className="mt-8 text-[10px] font-black uppercase tracking-[.18em] text-academy-gold">École principale · Côte d’Azur</p>
                 <h3 className="mt-3 max-w-xl text-3xl font-black tracking-tight sm:text-4xl">Puget-sur-Argens</h3>
                 <p className="mt-4 max-w-xl text-sm font-semibold leading-7 text-white/62">{contact.locations[0].address}</p>
                 <p className="mt-5 max-w-2xl text-sm font-semibold leading-7 text-white/48">{contact.locations[0].detail}</p>

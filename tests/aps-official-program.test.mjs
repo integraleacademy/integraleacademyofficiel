@@ -71,7 +71,7 @@ test('la nature et la durée de validité de la certification sont correctement 
 
 test('les cartes de session distinguent période et disponibilité', () => {
   assert.ok(dateCards.includes("label: 'Période complète'"));
-  assert.ok(dateCards.includes("if (isFull(session)) return 'Session complète'"));
+  assert.ok(dateCards.includes("getSessionSeatAvailability(session, capacity)"));
   assert.ok(dateCards.includes('remotePeriodFallback'));
   assert.ok(dateCards.includes('inPersonPeriodFallback'));
   assert.match(apsPage, /const hasSeatCount = seats !== null && seats !== undefined && seats !== ''/);

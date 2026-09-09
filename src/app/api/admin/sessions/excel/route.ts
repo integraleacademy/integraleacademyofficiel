@@ -3,6 +3,7 @@ import { requireAdmin } from '@/lib/admin/guard';
 import { getPrisma } from '@/lib/db';
 import { seedAdminData } from '@/lib/admin/seed';
 import { inflateRawSync } from 'zlib';
+import { validateSessionSeatCounts } from '@/lib/session-capacity';
 
 export const runtime = 'nodejs';
 
@@ -87,7 +88,7 @@ function worksheetXml(sheet: ImportSheet) {
   const theme = themeStyle[sheet.theme];
   const columns = [...leadingColumns, ...(sheet.hasDeliveryPeriods ? deliveryPeriodColumns : []), ...trailingColumns];
   const columnWidths = [...leadingColumnWidths, ...(sheet.hasDeliveryPeriods ? deliveryPeriodColumnWidths : []), ...trailingColumnWidths];
-  const help = `Remplir une session par ligne. Les dates de début et de fin sont obligatoires au format DD/MM/YYYY. Les lignes sans ces deux dates sont ignorées.${sheet.hasDeliveryPeriods ? ' Renseigner aussi les périodes présentiel et distanciel applicables à la session.' : ''} Statuts autorisés : OPEN, FULL, COMING_SOON, HIDDEN.`;
+  const help = `Remplir une session par ligne. Les dates de début et de fin sont obligatoires au format DD/MM/YYYY. Les lignes sans ces deux dates sont ignorées.${sheet.hasDeliveryPeriods ? ' Renseigner aussi les périodes présentiel et distanciel applicables à la session.' : ''} Places totales : 12 maximum. Les places restantes doivent être comprises entre 0 et la capacité de la session. Statuts autorisés : OPEN, FULL, COMING_SOON, HIDDEN.`;
   const example = [`Exemple ${sheet.name}`, '', '', ...(sheet.hasDeliveryPeriods ? ['', '', '', ''] : []), '', 'OPEN', sheet.priceCents ?? '', sheet.priceLabel ?? '', sheet.location, '', '', sheet.registrationUrl, sheet.durationLabel ?? '', '', '', '0', 'non'];
   const helpRow = [help, ...Array(columns.length - 1).fill('')];
   return `<Worksheet ss:Name="${escapeXml(sheet.name)}"><Table>${columnWidths.map(width => `<Column ss:Width="${width}"/>`).join('')}${rowXml(helpRow, 'Help', 42)}${rowXml(columns, theme.headerStyle, 34)}${rowXml(example)}</Table><WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel"><FreezePanes/><FrozenNoSplit/><SplitHorizontal>2</SplitHorizontal><TopRowBottomPane>2</TopRowBottomPane><ActivePane>2</ActivePane><TabColorIndex>${theme.tabColorIndex}</TabColorIndex><ProtectObjects>False</ProtectObjects><ProtectScenarios>False</ProtectScenarios></WorksheetOptions></Worksheet>`;
@@ -273,6 +274,10 @@ export async function POST(request: NextRequest) {
   const buffer = Buffer.from(await file.arrayBuffer());
   const parsed = parseWorkbook(buffer);
   if (parsed.length === 0) return NextResponse.json({ error: 'Aucune session importée. Format conseillé : ouvrez le modèle exporté, remplissez les onglets, puis faites Fichier > Enregistrer sous > Classeur Excel (.xlsx) avant import. Les anciens .xls binaires ne sont pas pris en charge. Les dates début/fin doivent être remplies.' }, { status: 400 });
+  for (const item of parsed) {
+    const seatError = validateSessionSeatCounts(item.data);
+    if (seatError) return NextResponse.json({ error: `${item.sheet.name} — ${item.data.title} : ${seatError}` }, { status: 400 });
+  }
   await seedAdminData(prisma);
   const trainings = await prisma.training.findMany({ where: { slug: { in: [...new Set(sheets.map(sheet => sheet.slug))] } } });
   const trainingBySlug = new Map<string, any>(trainings.map((training: any) => [training.slug, training]));

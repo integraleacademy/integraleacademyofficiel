@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { requireAdmin } from '@/lib/admin/guard';
 import { getPrisma } from '@/lib/db';
 import { listSessions } from '@/lib/training-data';
+import { validateSessionSeatCounts } from '@/lib/session-capacity';
 
 export const runtime = 'nodejs';
 
@@ -49,6 +50,8 @@ export async function POST(request: NextRequest) {
   if (!prisma) return NextResponse.json({ error: 'Base de données serveur indisponible.' }, { status: 503 });
   console.log('[ADMIN_SESSIONS] create session');
   const data = await request.json();
+  const seatError = validateSessionSeatCounts(data);
+  if (seatError) return NextResponse.json({ error: seatError }, { status: 400 });
   const session = await prisma.trainingSession.create({ data: sessionData(data), include: { training: true } });
   return NextResponse.json(session);
 }

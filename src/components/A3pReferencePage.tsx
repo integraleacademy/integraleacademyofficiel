@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { getSessionSeatAvailability } from '@/lib/session-seat-availability';
 import { OrientationAssistant } from '@/components/OrientationAssistant';
 import { MissionAnimation } from '@/components/MissionAnimation';
 import { PremiumFAQSection } from '@/components/ui';
@@ -70,13 +71,8 @@ function formatDate(value?: string | null) {
   return new Intl.DateTimeFormat('fr-FR', { timeZone: 'Europe/Paris', day: '2-digit', month: 'short', year: 'numeric' }).format(new Date(value));
 }
 
-function seatsLabel(value: unknown) {
-  if (value === null || value === undefined || value === '') return 'Places limitées';
-  const seats = Number(value);
-  if (Number.isNaN(seats)) return 'Places limitées';
-  if (seats === 0) return 'Session complète';
-  if (seats === 1) return '1 place restante';
-  return `${seats} places restantes`;
+function seatsLabel(session: any) {
+  return getSessionSeatAvailability(session).label;
 }
 
 function sessionRegistrationHref(session: any) {
@@ -104,7 +100,7 @@ function HeroSession({ sessions }: { sessions: any[] }) {
   return <aside className="rounded-[2rem] border border-white/65 bg-[#FFFDF8] p-5 text-academy-ink shadow-[0_34px_100px_rgba(0,0,0,.34)] sm:p-6">
     <div className="flex flex-wrap items-center justify-between gap-2">
       <span className="rounded-full bg-[#0D1725] px-3 py-1.5 text-[.62rem] font-black uppercase tracking-[.16em] text-emerald-300">Prochaine session</span>
-      <span className={`rounded-full border px-3 py-1.5 text-[.68rem] font-black ${isFull ? 'border-stone-300 bg-stone-100 text-stone-700' : 'border-emerald-200 bg-emerald-50 text-emerald-800'}`}>{next ? seatsLabel(next.seatsLeft) : 'Dates à confirmer'}</span>
+      <span className={`rounded-full border px-3 py-1.5 text-[.68rem] font-black ${isFull ? 'border-stone-300 bg-stone-100 text-stone-700' : 'border-emerald-200 bg-emerald-50 text-emerald-800'}`}>{next ? seatsLabel(next) : 'Dates à confirmer'}</span>
     </div>
     <h2 className="mt-5 text-3xl font-black tracking-[-.04em] sm:text-4xl">{next ? <>{formatDate(next.startDate)} <span className="text-emerald-700">→</span><br />{formatDate(next.endDate)}</> : 'Prochaine rentrée à confirmer'}</h2>
     <p className="mt-2 text-sm font-extrabold text-academy-muted">{next?.examDate ? `Examen final le ${formatDate(next.examDate)}` : 'Contactez-nous pour recevoir les prochaines dates.'}</p>
@@ -125,7 +121,7 @@ const heroFacts = [
   ['Certification', 'TFP A3P', 'Titre RNCP niveau 4'],
   ['Cadre', 'Réglementé', `Agrément ADEF ${a3pConfig.adefApproval}`],
   ['Durée', a3pConfig.durationShort, a3pConfig.practiceHours],
-  ['Campus', 'Côte d’Azur', a3pConfig.location],
+  ['École', 'Côte d’Azur', a3pConfig.location],
   ['Format', 'Présentiel', 'Entraînements pratiques'],
   ['Hébergement', 'Sur place', 'Sur réservation'],
 ];
@@ -279,7 +275,7 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
           </div>
         </article>)}
       </div>
-      <div className="mt-7 rounded-[1.7rem] border border-emerald-300/25 bg-emerald-400/10 p-6"><Label light>Campus de Puget-sur-Argens</Label><h3 className="mt-3 text-xl font-black text-emerald-200">Entraînez-vous dans des configurations variées.</h3><p className="mt-2 max-w-4xl text-sm font-medium leading-7 text-white/65">La progression alterne démonstrations, exercices individuels, travail en équipe, scénarios professionnels et débriefings.</p></div>
+      <div className="mt-7 rounded-[1.7rem] border border-emerald-300/25 bg-emerald-400/10 p-6"><Label light>École de Puget-sur-Argens</Label><h3 className="mt-3 text-xl font-black text-emerald-200">Entraînez-vous dans des configurations variées.</h3><p className="mt-2 max-w-4xl text-sm font-medium leading-7 text-white/65">La progression alterne démonstrations, exercices individuels, travail en équipe, scénarios professionnels et débriefings.</p></div>
     </Section>
 
     <Section id="certification" label="06 — Certification" title={<>Un examen qui valide <span className="decoration-emerald-500 decoration-[.16em] underline underline-offset-[-.03em]">vos décisions.</span></>} intro="L’évaluation vérifie les connaissances réglementaires et votre capacité à préparer puis exécuter une mission de protection physique des personnes." tone="paper">
@@ -355,7 +351,7 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
     </Section>
 
     <section id="debouches" className="bg-[#FFFDF8] px-4 py-14 sm:py-18 lg:py-20"><div className="page-container">
-      <div className="grid gap-5 lg:grid-cols-[.85fr_1.15fr]"><div className="rounded-[2rem] border border-emerald-200 bg-[linear-gradient(145deg,#D1FAE5,#F0FDF4)] p-7 shadow-soft"><Label>Hébergement</Label><h2 className="mt-3 text-3xl font-black tracking-[-.045em]">Restez sur place pendant votre formation.</h2><p className="mt-4 text-sm font-semibold leading-7 text-academy-muted">Une solution collective peut être proposée au campus, sous réserve de disponibilité et de réservation préalable.</p><p className="mt-6 text-5xl font-black tracking-[-.05em] text-emerald-800">{a3pConfig.accommodationPriceLabel}</p><p className="mt-2 text-xs font-semibold leading-6 text-academy-muted">{a3pConfig.accommodationNote}</p><CTA href={a3pContact('hebergement-a3p')} className="mt-6">Vérifier les disponibilités →</CTA></div><div className="grid grid-cols-2 gap-3 rounded-[2rem] border border-emerald-100 bg-emerald-50/60 p-5 sm:p-6">{['Dortoir collectif', 'Cuisine équipée', 'Salle de bain & douche', 'Machine à laver', 'Sèche-linge', 'Espaces communs'].map((item) => <span key={item} className="rounded-2xl border border-emerald-100 bg-white p-4 text-xs font-black before:mr-2 before:text-emerald-600 before:content-['✓']">{item}</span>)}</div></div>
+      <div className="grid gap-5 lg:grid-cols-[.85fr_1.15fr]"><div className="rounded-[2rem] border border-emerald-200 bg-[linear-gradient(145deg,#D1FAE5,#F0FDF4)] p-7 shadow-soft"><Label>Hébergement</Label><h2 className="mt-3 text-3xl font-black tracking-[-.045em]">Restez sur place pendant votre formation.</h2><p className="mt-4 text-sm font-semibold leading-7 text-academy-muted">Une solution collective peut être proposée à l’école, sous réserve de disponibilité et de réservation préalable.</p><p className="mt-6 text-5xl font-black tracking-[-.05em] text-emerald-800">{a3pConfig.accommodationPriceLabel}</p><p className="mt-2 text-xs font-semibold leading-6 text-academy-muted">{a3pConfig.accommodationNote}</p><CTA href={a3pContact('hebergement-a3p')} className="mt-6">Vérifier les disponibilités →</CTA></div><div className="grid grid-cols-2 gap-3 rounded-[2rem] border border-emerald-100 bg-emerald-50/60 p-5 sm:p-6">{['Dortoir collectif', 'Cuisine équipée', 'Salle de bain & douche', 'Machine à laver', 'Sèche-linge', 'Espaces communs'].map((item) => <span key={item} className="rounded-2xl border border-emerald-100 bg-white p-4 text-xs font-black before:mr-2 before:text-emerald-600 before:content-['✓']">{item}</span>)}</div></div>
 
       <div className="mt-14 grid gap-5 lg:grid-cols-[1.05fr_.95fr]">
         <div className="rounded-[2rem] bg-[#0D1725] p-7 text-white shadow-card"><Label light>10 — Débouchés</Label><h2 className="mt-3 text-3xl font-black tracking-[-.045em] sm:text-4xl">Après le TFP A3P.</h2><div className="mt-6 flex flex-wrap gap-2">{jobs.map((job) => <span key={job} className="rounded-full border border-white/12 bg-[#182537] px-4 py-2 text-[.68rem] font-black">{job}</span>)}</div><p className="mt-6 text-xs font-medium leading-6 text-white/55">La certification ne garantit pas un emploi. Le recrutement dépend aussi de l’expérience, du réseau, de la mobilité et des compétences complémentaires.</p></div>
@@ -373,7 +369,7 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
         ['Intensité', a3pConfig.durationHours, a3pConfig.practiceHours],
         ['Terrain', 'Environnements variés', 'Exercices et scénarios réalistes'],
         ['Accompagnement', 'Dossier CNAPS expliqué', 'Prérequis vérifiés avant inscription'],
-        ['Campus', 'Hébergement possible', 'Solution collective sur réservation'],
+        ['École', 'Hébergement possible', 'Solution collective sur réservation'],
         ['Pédagogie', 'Formateurs expérimentés', 'Intervenants liés aux compétences enseignées'],
       ].map(([key, title, body]) => <article key={key} className="rounded-[1.6rem] border border-academy-line bg-[#FFFDF8] p-6 shadow-soft"><Label>{key}</Label><h3 className="mt-6 text-lg font-black tracking-[-.03em]">{title}</h3><p className="mt-2 text-xs font-semibold leading-6 text-academy-muted">{body}</p></article>)}</div>
     </Section>

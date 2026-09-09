@@ -66,7 +66,7 @@ const admissionSteps = [
   ['02', 'Mon dossier est étudié', 'L’équipe vérifie mon projet, mon niveau et mes prérequis.'],
   ['03', 'Je suis admis', 'Je reçois les informations pour finaliser mon inscription.'],
   ['04', 'Je cherche mon entreprise', 'Je prépare ma recherche et mon contrat d’apprentissage.'],
-  ['05', 'Je fais ma rentrée', 'Je rejoins ma promotion sur le campus ou en visioconférence.'],
+  ['05', 'Je fais ma rentrée', 'Je rejoins ma promotion à l’école ou en visioconférence.'],
 ];
 
 const faq = [
@@ -392,7 +392,7 @@ export function BtsNdrcReferencePage() {
       >
         <div className="grid gap-5 lg:grid-cols-2">
           <article className="rounded-[2rem] border border-academy-line bg-[#FFFDF8] p-6 shadow-card sm:p-8">
-            <span className="inline-flex rounded-full bg-emerald-50 px-3 py-2 text-[.62rem] font-black uppercase tracking-[.15em] text-emerald-800 ring-1 ring-emerald-200">● Sur le campus</span>
+            <span className="inline-flex rounded-full bg-emerald-50 px-3 py-2 text-[.62rem] font-black uppercase tracking-[.15em] text-emerald-800 ring-1 ring-emerald-200">● À l’école</span>
             <h3 className="mt-6 text-3xl font-black tracking-[-.04em]">En présentiel à Puget-sur-Argens</h3>
             <p className="mt-4 leading-7 text-academy-muted">Un cadre vivant pour s’entraîner aux entretiens de vente, travailler en groupe et échanger directement avec les formateurs.</p>
             <div className="mt-6 grid gap-3 sm:grid-cols-2">

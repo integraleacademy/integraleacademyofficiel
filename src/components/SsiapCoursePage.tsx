@@ -107,7 +107,7 @@ export function SsiapCoursePage({ config }: { config: SsiapCourseConfig }) {
     ['Fonction', config.role],
     ['Durée', config.duration],
     ['Effectif', config.capacity],
-    ['Campus', 'Puget-sur-Argens'],
+    ['École', 'Puget-sur-Argens'],
     ['Validation', config.certification],
   ];
   const otherCourses = relatedCourses.filter((course) => !course.href.endsWith(`/${config.slug}`));

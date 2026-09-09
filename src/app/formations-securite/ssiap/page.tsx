@@ -48,7 +48,7 @@ const courses = [
     label: 'Recyclages & remises à niveau',
     role: 'SSIAP 1, SSIAP 2 et SSIAP 3',
     duration: '14 à 35 heures',
-    capacity: '15 stagiaires maximum',
+    capacity: '12 stagiaires maximum',
     description:
       'Maintenez ou réactivez votre qualification avec le parcours réglementaire adapté à votre niveau et à votre activité.',
     href: '/formations-securite/recyclage-remise-a-niveau-ssiap',
@@ -129,7 +129,7 @@ export default function SsiapCataloguePage() {
               <div className="mt-5 flex flex-col gap-3 sm:flex-row lg:flex-col"><Link href="#parcours" className="inline-flex min-h-12 items-center justify-center rounded-full bg-red-600 px-5 py-3 text-center text-sm font-black text-white transition hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-300/55">Choisir ma formation →</Link><Link href="/contact?formation=ssiap" className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/25 px-5 py-3 text-center text-sm font-black text-white">Parler à un conseiller</Link></div>
             </aside>
           </div>
-          <div className="mt-10 grid gap-px overflow-hidden rounded-[1.6rem] border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-4">{[['3 niveaux', 'Agent · chef d’équipe · chef de service'], ['67 à 216 h', 'Formations initiales'], ['14 à 35 h', 'Maintien des acquis'], ['Puget-sur-Argens', 'Campus Côte d’Azur']].map(([value, label]) => <div key={value} className="bg-[#0D1725]/75 p-5"><p className="text-xl font-black text-red-300">{value}</p><p className="mt-1 text-xs font-semibold text-white/50">{label}</p></div>)}</div>
+          <div className="mt-10 grid gap-px overflow-hidden rounded-[1.6rem] border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-4">{[['3 niveaux', 'Agent · chef d’équipe · chef de service'], ['67 à 216 h', 'Formations initiales'], ['14 à 35 h', 'Maintien des acquis'], ['Puget-sur-Argens', 'École Côte d’Azur']].map(([value, label]) => <div key={value} className="bg-[#0D1725]/75 p-5"><p className="text-xl font-black text-red-300">{value}</p><p className="mt-1 text-xs font-semibold text-white/50">{label}</p></div>)}</div>
         </div>
       </section>
 

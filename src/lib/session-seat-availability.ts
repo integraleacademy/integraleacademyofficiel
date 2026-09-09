@@ -1,4 +1,6 @@
 import { computedSeats } from '@/lib/public-sessions';
+import { resolveSessionSeatCapacity } from '@/lib/session-capacity';
+export { resolveSessionSeatCapacity } from '@/lib/session-capacity';
 
 export type SessionSeatAvailabilityTone = 'available' | 'moderate' | 'low' | 'critical' | 'full';
 
@@ -7,6 +9,8 @@ type SessionSeatAvailabilitySource = {
   seatsTotal?: number | string | null;
   seatsLeft?: number | string | null;
   status?: string | null;
+  showSeatsLeft?: boolean | null;
+  training?: { slug?: string | null } | null;
 };
 
 export type SessionSeatAvailability = {
@@ -24,36 +28,19 @@ const badgeStyles: Record<SessionSeatAvailabilityTone, string> = {
   full: 'border-red-300 bg-red-100 text-red-800',
 };
 
-function normalizeSeatCount(value: SessionSeatAvailabilitySource['seatsLeft']) {
-  if (value === null || value === undefined || value === '') return null;
-
-  const count = Number(value);
-  if (!Number.isFinite(count)) return null;
-  return Math.max(0, Math.floor(count));
-}
-
-export function resolveSessionSeatCapacity(
-  session: SessionSeatAvailabilitySource,
-  maximumCapacity = 12,
-) {
-  const safeMaximum = normalizeSeatCount(maximumCapacity) || 12;
-
-  const storedCapacity = normalizeSeatCount(session.seatsTotal);
-  if (storedCapacity !== null && storedCapacity > 0 && storedCapacity <= safeMaximum) return storedCapacity;
-  return safeMaximum;
-}
-
 export function getSessionSeatAvailability(
   session: SessionSeatAvailabilitySource,
   capacity = 12,
   referenceDate = new Date(),
 ): SessionSeatAvailability {
-  const safeCapacity = Number.isFinite(capacity) && capacity > 0 ? Math.floor(capacity) : 12;
-  const storedCount = normalizeSeatCount(session.seatsLeft);
-  const validOverride = storedCount !== null && storedCount <= safeCapacity ? storedCount : null;
+  const safeCapacity = resolveSessionSeatCapacity(session, capacity);
+  if (session.showSeatsLeft === false && session.status !== 'FULL') {
+    return { count: null, label: 'Places limitées', tone: 'available', badgeClassName: badgeStyles.available };
+  }
   const automaticCount = computedSeats({
     startDate: session.startDate ?? undefined,
-    seatsLeft: validOverride,
+    seatsLeft: session.seatsLeft,
+    seatsTotal: safeCapacity,
     status: session.status ?? undefined,
     showSeatsLeft: true,
   }, referenceDate);

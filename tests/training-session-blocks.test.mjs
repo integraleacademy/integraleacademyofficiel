@@ -28,8 +28,8 @@ test('les capacités administrées sont transmises jusqu’aux cartes publiques'
   assert.ok(cards.includes('seatsTotal?: number | string | null'));
   assert.ok(a3p.includes('seatCapacity={12}'));
   assert.ok(ssiap.includes('seatCapacity={12}'));
-  assert.ok(desp.includes('seatCapacity={20}'));
-  assert.ok(despInitial.includes('seatCapacity={20}'));
+  assert.ok(desp.includes('seatCapacity={12}'));
+  assert.ok(despInitial.includes('seatCapacity={12}'));
   assert.ok(sst.includes('seatCapacity={10}'));
 });
 

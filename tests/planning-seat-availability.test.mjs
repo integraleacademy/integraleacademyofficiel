@@ -15,7 +15,7 @@ test('le planning réutilise le calcul et les couleurs des pages formation', () 
 });
 
 test('le planning plafonne les capacités selon le parcours', () => {
-  assert.match(planning, /slug\.startsWith\('desp'\)[^\n]*return 20/);
+  assert.doesNotMatch(planning, /return (20|25|30)/);
   assert.match(planning, /slug === 'sst'[^\n]*return 10/);
   assert.match(planning, /return 12;/);
 });

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { getSessionSeatAvailability, resolveSessionSeatCapacity } from '@/lib/session-seat-availability';
 
 export type PublicTrainingSession = any;
 
@@ -6,35 +7,9 @@ function parisDateKey(date = new Date()) {
   return new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Paris', year: 'numeric', month: '2-digit', day: '2-digit' }).format(date);
 }
 
-function daysUntilParis(value: string) {
-  const toUtcMidnight = (key: string) => { const [year, month, day] = key.split('-').map(Number); return Date.UTC(year, month - 1, day); };
-  return Math.ceil((toUtcMidnight(parisDateKey(new Date(value))) - toUtcMidnight(parisDateKey())) / 86400000);
-}
-
 function formatDate(value?: string) {
   if (!value) return '';
   return new Intl.DateTimeFormat('fr-FR', { timeZone: 'Europe/Paris', day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(value));
-}
-
-function computedSeats(session: PublicTrainingSession): number | null {
-  if (session.showSeatsLeft === false) return null;
-  if (session.seatsLeft !== null && session.seatsLeft !== undefined && session.seatsLeft !== '') return Number(session.seatsLeft);
-  const days = daysUntilParis(session.startDate);
-  if (days <= 15) return 2;
-  if (days <= 30) return 4;
-  if (days <= 45) return 5;
-  if (days <= 60) return 6;
-  return null;
-}
-
-function seatsBadge(seats: number | null) {
-  if (seats === null || Number.isNaN(seats)) return null;
-  if (seats <= 1) return { label: `${seats} place restante`, className: 'border-rose-300 bg-rose-100 text-rose-800 shadow-[0_0_24px_rgba(244,63,94,.18)]' };
-  if (seats === 2) return { label: 'Plus que 2 places', className: 'border-rose-300 bg-rose-100 text-rose-800 shadow-[0_0_24px_rgba(244,63,94,.18)]' };
-  if (seats === 4) return { label: '4 places restantes', className: 'border-orange-300 bg-orange-100 text-orange-800 shadow-[0_0_22px_rgba(249,115,22,.16)]' };
-  if (seats === 5) return { label: '5 places restantes', className: 'border-amber-300 bg-amber-100 text-amber-800' };
-  if (seats === 6) return { label: '6 places restantes', className: 'border-emerald-300 bg-emerald-100 text-emerald-800 shadow-[0_0_22px_rgba(16,185,129,.14)]' };
-  return { label: `${seats} places restantes`, className: 'border-amber-300 bg-amber-100 text-amber-800' };
 }
 
 function primaryHref(session: PublicTrainingSession) {
@@ -61,14 +36,14 @@ export function PublicTrainingSessions({ sessions, title = 'Prochaines dates', i
   const hiddenCount = Math.max(rows.length - visibleRows.length, 0);
   return <section className="page-container py-10 sm:py-12">
     <div className="mb-6 max-w-3xl"><p className="text-xs font-black uppercase tracking-[.24em] text-academy-gold">Planning admin</p><h2 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl">{title}</h2><p className="mt-3 text-base leading-7 text-academy-muted">{intro}</p></div>
-    {rows.length ? <div className="space-y-3">{rows.map((session, index) => { const badge = seatsBadge(computedSeats(session)); const details = [
+    {rows.length ? <div className="space-y-3">{rows.map((session, index) => { const badge = getSessionSeatAvailability(session); const details = [
       { label: 'Début', value: formatDate(session.startDate) },
       { label: 'Fin', value: formatDate(session.endDate) },
       session.examDate ? { label: 'Examen', value: formatDate(session.examDate) } : null,
       session.location ? { label: 'Lieu', value: session.location } : null,
       session.priceLabel ? { label: 'Tarif', value: session.priceLabel } : null,
       session.publicNotes ? { label: 'Détails', value: session.publicNotes } : null,
-      session.seatsTotal || session.seatsLeft !== null && session.seatsLeft !== undefined ? { label: 'Places', value: `${session.seatsLeft ?? '—'}${session.seatsTotal ? ` / ${session.seatsTotal}` : ''}` } : null,
+      badge.count !== null ? { label: 'Places', value: `${badge.count} / ${resolveSessionSeatCapacity(session)}` } : null,
       session.status ? { label: 'Statut', value: session.status === 'FULL' ? 'Complet' : session.status === 'OPEN' ? 'Ouvert' : session.status } : null,
     ].filter(Boolean) as { label: string; value: string }[];
       const titleLabel = session.training?.name || session.title;
@@ -77,7 +52,7 @@ export function PublicTrainingSessions({ sessions, title = 'Prochaines dates', i
       <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-academy-gold to-yellow-200" />
       <div className="grid gap-3 xl:grid-cols-[minmax(13rem,.85fr)_minmax(0,1.7fr)_minmax(13rem,.75fr)] xl:items-center">
         <div className="min-w-0">
-          <div className="flex flex-wrap items-center gap-1.5">{index === 0 ? <span className="rounded-full bg-academy-ink px-3 py-1 text-[10px] font-black uppercase tracking-[.12em] text-academy-gold">Prochaine session</span> : null}{badge ? <span className={`session-seats-badge rounded-full border px-3 py-1 text-[10px] font-black transition duration-300 hover:-translate-y-0.5 ${badge.className}`}>{badge.label}</span> : null}{session.status === 'FULL' ? <span className="rounded-full bg-stone-200 px-3 py-1 text-[10px] font-black uppercase tracking-[.12em] text-stone-700">Complet</span> : null}</div>
+          <div className="flex flex-wrap items-center gap-1.5">{index === 0 ? <span className="rounded-full bg-academy-ink px-3 py-1 text-[10px] font-black uppercase tracking-[.12em] text-academy-gold">Prochaine session</span> : null}{badge ? <span className={`session-seats-badge rounded-full border px-3 py-1 text-[10px] font-black transition duration-300 hover:-translate-y-0.5 ${badge.badgeClassName}`}>{badge.label}</span> : null}{session.status === 'FULL' ? <span className="rounded-full bg-stone-200 px-3 py-1 text-[10px] font-black uppercase tracking-[.12em] text-stone-700">Complet</span> : null}</div>
           <h3 className="mt-2 truncate text-xl font-black leading-tight tracking-tight text-academy-ink dark:text-white sm:text-2xl">{titleLabel}</h3>
           {categoryLabel ? <p className="mt-0.5 truncate text-sm font-bold text-academy-gold-strong">{categoryLabel}</p> : null}
         </div>

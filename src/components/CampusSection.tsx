@@ -10,31 +10,31 @@ const campusImages: CampusImage[] = [
     id: 'main-room',
     label: 'Salle principale',
     src: '/images/campus/campus-principal.jpg',
-    alt: 'Campus Intégrale Academy - salle principale',
+    alt: 'École Intégrale Academy - salle principale',
   },
   {
     id: 'meeting-room',
     label: 'Salle de réunion',
     src: '/images/campus/campus-salle-reunion.jpg',
-    alt: 'Campus Intégrale Academy - salle de réunion',
+    alt: 'École Intégrale Academy - salle de réunion',
   },
   {
     id: 'practice-area',
     label: 'Zone pratique',
     src: '/images/campus/campus-pratique.jpg',
-    alt: 'Campus Intégrale Academy - espace de pratique',
+    alt: 'École Intégrale Academy - espace de pratique',
   },
   {
     id: 'classroom',
     label: 'Salle de cours',
     src: '/images/campus/campus-salle-cours.jpg',
-    alt: 'Campus Intégrale Academy - salle de cours',
+    alt: 'École Intégrale Academy - salle de cours',
   },
   {
     id: 'reception',
-    label: 'Accueil campus',
+    label: 'Accueil de l’école',
     src: '/images/campus/campus-accueil.jpg',
-    alt: 'Campus Intégrale Academy - espace accueil',
+    alt: 'École Intégrale Academy - espace accueil',
   },
 ];
 
@@ -63,7 +63,7 @@ export function CampusSection() {
     <div className="page-container">
       <div className="grid gap-8 lg:grid-cols-[1.12fr_.88fr] lg:items-end">
         <div className="max-w-3xl">
-          <p className="text-xs font-black uppercase tracking-[.22em] text-academy-gold-strong">NOS CAMPUS</p>
+          <p className="text-xs font-black uppercase tracking-[.22em] text-academy-gold-strong">NOTRE ÉCOLE</p>
           <h2 className="mt-4 max-w-4xl text-4xl font-black leading-[.98] tracking-tight text-academy-ink sm:text-5xl lg:text-6xl">Des locaux pensés pour la pratique</h2>
         </div>
         <p className="max-w-xl text-base font-medium leading-8 text-academy-muted sm:text-lg lg:justify-self-end lg:pb-3">400 m² dédiés aux enseignements pratiques et théoriques, sur trois implantations en France.</p>

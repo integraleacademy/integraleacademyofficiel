@@ -65,7 +65,7 @@ const admissionSteps = [
   ['02', 'Mon dossier est étudié', 'L’équipe vérifie mon projet, mon niveau et mes prérequis.'],
   ['03', 'Je suis admis', 'Je reçois les informations pour finaliser mon inscription.'],
   ['04', 'Je cherche mon entreprise', 'Je prépare ma recherche et mon contrat d’apprentissage.'],
-  ['05', 'Je fais ma rentrée', 'Je rejoins ma promotion sur le campus ou en visioconférence.'],
+  ['05', 'Je fais ma rentrée', 'Je rejoins ma promotion à l’école ou en visioconférence.'],
 ] as const;
 
 const faq = [
@@ -220,7 +220,7 @@ function HeroRoadmap() {
       </div>
       <div className="mt-3 grid gap-3 sm:grid-cols-2">
         <div className="rounded-2xl border border-academy-line bg-white p-4">
-          <p className="text-[.6rem] font-black uppercase tracking-[.15em] text-yellow-700">Campus</p>
+          <p className="text-[.6rem] font-black uppercase tracking-[.15em] text-yellow-700">École</p>
           <p className="mt-1 font-black">Puget-sur-Argens</p>
         </div>
         <div className="rounded-2xl border border-academy-line bg-white p-4">
@@ -386,9 +386,9 @@ export function BtsCiReferencePage() {
       >
         <div className="grid gap-5 lg:grid-cols-2">
           <article className="rounded-[2rem] border border-academy-line bg-[#FFFDF8] p-6 shadow-card sm:p-8">
-            <span className="inline-flex rounded-full bg-emerald-50 px-3 py-2 text-[.62rem] font-black uppercase tracking-[.15em] text-emerald-800 ring-1 ring-emerald-200">● Sur le campus</span>
+            <span className="inline-flex rounded-full bg-emerald-50 px-3 py-2 text-[.62rem] font-black uppercase tracking-[.15em] text-emerald-800 ring-1 ring-emerald-200">● À l’école</span>
             <h3 className="mt-6 text-3xl font-black tracking-[-.04em]">En présentiel à Puget-sur-Argens</h3>
-            <p className="mt-4 leading-7 text-academy-muted">Un cadre vivant pour apprendre avec votre promotion, échanger directement avec les formateurs et profiter du campus.</p>
+            <p className="mt-4 leading-7 text-academy-muted">Un cadre vivant pour apprendre avec votre promotion, échanger directement avec les formateurs et profiter de l’école.</p>
             <div className="mt-6 grid gap-3 sm:grid-cols-2">
               {['Cours en groupe', 'Équipe sur place', 'Vie de promotion', 'Locaux dédiés'].map((item) => <p key={item} className="rounded-2xl bg-academy-bg p-4 text-sm font-black">✓ {item}</p>)}
             </div>
