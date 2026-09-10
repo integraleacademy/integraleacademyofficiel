@@ -51,25 +51,21 @@ export function TrainingJourney({ id, name, eyebrow, title, steps, shortcut, clo
     const bounds = getBounds();
     if (!bounds) return;
     // Explicit navigation follows the same positions as native scrolling.
-    window.scrollTo({ top: bounds.start + (bounds.end - bounds.start) * ((index + 0.35) / steps.length), behavior: 'smooth' });
+    window.scrollTo({
+      top: bounds.start + (bounds.end - bounds.start) * ((index + 0.35) / steps.length),
+      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
+    });
   }, [getBounds, steps.length]);
 
   useEffect(() => {
-    // The layout also checks its actual content height below: zoomed text and
-    // smaller screens must remain readable, rather than being squeezed to fit.
-    const media = window.matchMedia('(min-width: 1024px) and (min-height: 640px) and (prefers-reduced-motion: no-preference)');
+    // Desktop always presents one step at a time. Height and motion preferences
+    // must not silently turn the journey back into four stacked cards.
+    const media = window.matchMedia('(min-width: 1024px)');
     const sync = () => setEnhanced(media.matches);
     sync();
-    // Recheck once webfonts settle: a temporary fallback font must not
-    // permanently leave a laptop in the unpinned layout.
-    let mounted = true;
-    void document.fonts.ready.then(() => { if (mounted) sync(); });
     media.addEventListener('change', sync);
-    window.addEventListener('resize', sync);
     return () => {
-      mounted = false;
       media.removeEventListener('change', sync);
-      window.removeEventListener('resize', sync);
     };
   }, []);
 
@@ -82,35 +78,18 @@ export function TrainingJourney({ id, name, eyebrow, title, steps, shortcut, clo
     const stage = stageRef.current;
     if (!section || !stage) return;
 
-    const fits = () => {
-      const stageBox = stage.getBoundingClientRect();
-      const intro = stage.querySelector<HTMLElement>(`.${styles.intro}`);
-      const introBottom = intro?.getBoundingClientRect().bottom ?? stageBox.top;
-      return [...stage.querySelectorAll<HTMLElement>(`.${styles.visualInner} > *, .${styles.copy}`)].every(element => {
-        const box = element.getBoundingClientRect();
-        // Oversized decorative rings intentionally extend beyond the card.
-        // Measure the reading flow, not their contribution to scrollHeight.
-        const contentFits = [...element.children].every(child => {
-          if (getComputedStyle(child).position === 'absolute') return true;
-          const childBox = child.getBoundingClientRect();
-          return childBox.top >= box.top - 2 && childBox.bottom <= box.bottom + 2
-            && childBox.left >= box.left - 2 && childBox.right <= box.right + 2;
-        });
-        return contentFits
-          && box.top >= stageBox.top - 2 && box.bottom <= stageBox.bottom + 2
-          && (!element.classList.contains(styles.copy) || box.top >= introBottom - 2);
-      });
-    };
-
     const update = () => {
       frame = 0;
       if (measureNeeded) {
         measureNeeded = false;
-        bounds = getBounds();
-        if (!fits()) {
-          setEnhanced(false);
-          return;
+        // The grid reserves the largest card/copy, including hidden steps.
+        // If text needs more room, let the entire stage grow and scroll with
+        // the document instead of clipping content or disabling the journey.
+        const stageHeight = `${Math.ceil(stage.getBoundingClientRect().height)}px`;
+        if (section.style.getPropertyValue('--journey-stage-height') !== stageHeight) {
+          section.style.setProperty('--journey-stage-height', stageHeight);
         }
+        bounds = getBounds();
       }
       if (!bounds) return;
       const distance = Math.max(1, bounds.end - bounds.start);
@@ -141,6 +120,7 @@ export function TrainingJourney({ id, name, eyebrow, title, steps, shortcut, clo
       window.cancelAnimationFrame(frame);
       window.removeEventListener('scroll', schedule);
       window.removeEventListener('resize', measure);
+      section.style.removeProperty('--journey-stage-height');
     };
   }, [enhanced, getBounds, steps.length]);
 
