@@ -112,12 +112,9 @@ export function DespJourney() {
   return <TrainingJourney
     id="parcours-desp"
     name="DESP"
-    navigationOnly
-    visualFormat="landscape"
     eyebrow="DEVENIR DIRIGEANT · DESP"
     title={<>De votre ambition au titre DESP,<br /><span>trouvez votre chemin.</span></>}
     steps={steps.map((step, index) => ({ ...step, visual: (onNext: () => void) => <JourneyVisual index={index} onNext={onNext} /> }))}
-    shortcut={{ href: '#choisir-desp', label: 'Comparer', ariaLabel: 'Aller directement au comparatif des deux parcours' }}
-    closingNote="Intégrale Academy, à vos côtés à chaque étape."
+    continuationHref="#choisir-desp"
   />;
 }

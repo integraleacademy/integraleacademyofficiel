@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { TrainingJourney } from './TrainingJourney';
@@ -44,7 +46,11 @@ function CardAction({ href, children }: { href: string; children: ReactNode }) {
   return <Link href={href} className={styles.cardAction}><span>{children}</span><span className={styles.actionArrow}><Icon /></span></Link>;
 }
 
-function JourneyVisual({ index }: { index: number }) {
+function CardNextAction({ onNext, label }: { onNext: () => void; label: string }) {
+  return <button type="button" onClick={onNext} className={`${styles.cardAction} ${styles.cardNextAction}`} aria-label={`Étape suivante : ${label}`}><span className={styles.actionArrow}><Icon /></span></button>;
+}
+
+function JourneyVisual({ index, onNext }: { index: number; onNext: () => void }) {
   if (index === 0) return <div className={`${styles.card} ${styles.ambitionCard}`}>
     {/* Existing training image; it remains editable in the APS image folder. */}
     {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -53,11 +59,11 @@ function JourneyVisual({ index }: { index: number }) {
     <CardHeader label="Le déclic" />
     <div className={styles.ambitionBody}>
       <p className={styles.eyebrow}>ET SI C’ÉTAIT VOTRE TOUR ?</p>
-      <p className={styles.ambitionTitle}>Un métier<br />de terrain.<br /><span>Un rôle essentiel.</span></p>
+      <p className={styles.ambitionTitle}>Un métier de terrain.<br /><span>Un rôle essentiel.</span></p>
       <p className={styles.subtitle}>Prévenir. Protéger. Rassurer.<br />Votre vigilance peut faire la différence.</p>
     </div>
     <div className={styles.verbs}><span><small>01</small>Observer</span><span><small>02</small>Alerter</span><span><small>03</small>Agir</span></div>
-    <CardAction href="#inscription-financement">Construire mon projet</CardAction>
+    <CardNextAction onNext={onNext} label={steps[1].label} />
   </div>;
 
   if (index === 1) return <div className={`${styles.card} ${styles.trainingCard}`}>
@@ -68,7 +74,7 @@ function JourneyVisual({ index }: { index: number }) {
       <div className={styles.schoolStudy}><div className={styles.studyTop}><span>À L’ÉCOLE</span><Icon kind="school" /></div><p><strong>124</strong><span>heures<small>pour progresser</small></span></p><div className={styles.studyBar} aria-hidden="true"><i /></div></div>
     </div>
     <div className={styles.learningSkills}><p className={styles.eyebrow}>LES FONDAMENTAUX DU MÉTIER</p><div>{['Cadre professionnel', 'Prévention des risques', 'Gestion des conflits', 'Secourisme · SST inclus'].map((label, i) => <span key={label}><small>0{i + 1}</small>{label}</span>)}</div></div>
-    <CardAction href="#hybride">Découvrir mon parcours</CardAction>
+    <CardNextAction onNext={onNext} label={steps[2].label} />
   </div>;
 
   if (index === 2) return <div className={`${styles.card} ${styles.practiceCard}`}>
@@ -81,7 +87,7 @@ function JourneyVisual({ index }: { index: number }) {
     </figure>
     <div className={styles.practiceSkills}><span>Rondes de sécurité</span><span>Contrôle d’accès</span><span>Gestion d’incidents</span></div>
     <p className={styles.practiceNote}>Des exercices expliqués, répétés et débriefés.</p>
-    <CardAction href="#pratique">Passer à la pratique</CardAction>
+    <CardNextAction onNext={onNext} label={steps[3].label} />
   </div>;
 
   return <div className={`${styles.card} ${styles.futureCard}`}>
@@ -105,8 +111,6 @@ export function ApsJourney() {
     theme="blue"
     eyebrow="DEVENIR AGENT DE SÉCURITÉ · APS"
     title={<>De votre projet au métier d’APS,<br /><span>passez à l’action.</span></>}
-    steps={steps.map((step, index) => ({ ...step, visual: <JourneyVisual index={index} /> }))}
-    shortcut={{ href: '#dates-tarifs', label: 'Les dates', ariaLabel: 'Voir directement les dates et le tarif de la formation APS' }}
-    closingNote="Intégrale Academy. Faites le premier pas vers votre futur métier."
+    steps={steps.map((step, index) => ({ ...step, visual: (onNext: () => void) => <JourneyVisual index={index} onNext={onNext} /> }))}
   />;
 }

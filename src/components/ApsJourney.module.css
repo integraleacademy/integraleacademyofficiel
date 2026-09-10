@@ -5,7 +5,8 @@
 .brand > span { color: #2454b0; }
 .cardLabel { max-width: 65%; padding: 7px 11px; border: 1px solid #8b9cb6; border-radius: 30px; color: #435777; font-size: 12px; font-weight: 700; line-height: 1.3; text-align: center; }
 .eyebrow { margin: 0; color: #455d7d; font-size: 12px; font-weight: 800; letter-spacing: .05em; line-height: 1.5; }
-.cardAction { position: relative; z-index: 2; display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 62px; margin-top: auto; padding-top: 16px; border-top: 1px solid #1837612b; color: inherit; font-size: 15px; font-weight: 800; line-height: 1.4; }
+.cardAction { position: relative; z-index: 2; display: flex; align-items: center; justify-content: space-between; gap: 16px; width: 100%; min-height: 62px; margin-top: auto; padding-top: 16px; border-top: 1px solid #1837612b; color: inherit; font-size: 15px; font-weight: 800; line-height: 1.4; text-align: left; }
+.cardNextAction { justify-content: flex-end; }
 .actionArrow { display: grid; place-items: center; flex: 0 0 44px; height: 44px; border-radius: 50%; background: #122947; color: #fff; transition: transform .2s ease, background .2s ease; }
 .actionArrow svg { width: 20px; height: 20px; }
 .cardAction:hover .actionArrow { transform: rotate(-35deg); background: #225ac8; }
@@ -178,4 +179,41 @@
   .futureSteps strong { margin-top: 8px; font-size: 24px; }
   .futureSteps small { margin-top: 6px; }
   .validationNote { margin: 10px 0 12px; }
+}
+
+/* Spread the content across wide rectangles; narrow screens keep portrait cards. */
+@container (min-width: 650px) {
+  .card { aspect-ratio: 3 / 2; min-height: 0; padding: 26px 30px; border-radius: 36px; }
+  .ambitionTitle { font-size: clamp(40px, 6.7cqi, 58px); }
+  .ambitionBody { padding: 20px 0; }
+  .trainingCard { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); grid-template-rows: auto 1fr auto auto; column-gap: 24px; }
+  .trainingCard .cardHeader, .trainingCard .learningSkills, .trainingCard .cardAction { grid-column: 1 / -1; }
+  .durationHeadline { align-self: center; flex-wrap: wrap; gap: 16px; margin: 20px 0; }
+  .durationHeadline > strong { font-size: clamp(80px, 12cqi, 104px); }
+  .studyPlan { align-self: center; gap: 10px; margin: 20px 0; }
+  .studyPlan > div { padding: 16px 12px; }
+  .studyTop { align-items: flex-start; }
+  .studyPlan p { gap: 10px; }
+  .studyPlan p > strong { font-size: 48px; }
+  .learningSkills { margin: 0 0 22px; }
+  .practiceCard { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); grid-template-rows: auto 1fr auto auto auto; column-gap: 24px; }
+  .practiceCard .cardHeader, .practiceCard .practiceNote, .practiceCard .cardAction { grid-column: 1 / -1; }
+  .practiceTitle { grid-column: 1; align-self: end; margin: 20px 0; font-size: clamp(30px, 4.6cqi, 40px); }
+  .practicePhoto { grid-column: 2; grid-row: 2 / 4; align-self: center; height: 250px; margin: 20px 0; }
+  .practicePhoto figcaption { left: 16px; right: 16px; gap: 5px; }
+  .practiceSkills { grid-column: 1; align-self: start; margin: 0; }
+  .practiceNote { margin: 8px 0 16px; }
+  .futureCard { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: auto auto 1fr auto auto; column-gap: 24px; }
+  .futureCard .cardHeader, .futureCard .validationNote, .futureCard .cardAction { grid-column: 1 / -1; }
+  .futureHeading { grid-column: 1; margin: 24px 0 8px; font-size: 25px; }
+  .destination { grid-column: 1; align-self: center; padding: 12px 0; }
+  .destination > strong { font-size: clamp(78px, 11cqi, 96px); }
+  .futureSteps { grid-column: 2; grid-row: 2 / 4; grid-template-columns: 1fr; align-self: center; gap: 10px; margin: 24px 0 12px; }
+  .futureSteps > a { padding: 14px 18px; }
+  .futureSteps strong { margin-top: 6px; font-size: 25px; }
+  .futureSteps small { margin-top: 4px; }
+  .validationNote { margin: 6px 0 14px; }
+}
+@container (min-width: 391px) and (max-width: 649px) {
+  .card { width: min(100%, 420px); min-height: 630px; margin-inline: auto; border-radius: 36px; }
 }

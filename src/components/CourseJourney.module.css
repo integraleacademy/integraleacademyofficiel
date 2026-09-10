@@ -5,7 +5,8 @@
 .brand > span { color: var(--accent-strong); }
 .cardLabel { max-width: 65%; padding: 7px 11px; border: 1px solid #8b929b; border-radius: 30px; color: #48535f; font-size: 12px; font-weight: 700; line-height: 1.35; text-align: center; }
 .eyebrow { margin: 0; color: var(--accent-strong); font-size: 12px; font-weight: 800; line-height: 1.5; letter-spacing: .04em; text-transform: uppercase; }
-.cardAction { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 62px; margin-top: auto; padding-top: 16px; border-top: 1px solid #1837612b; color: inherit; font-size: 15px; font-weight: 800; line-height: 1.4; }
+.cardAction { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 16px; width: 100%; min-height: 62px; margin-top: auto; padding-top: 16px; border-top: 1px solid #1837612b; color: inherit; font-size: 15px; font-weight: 800; line-height: 1.4; text-align: left; }
+.cardNextAction { justify-content: flex-end; }
 .actionArrow { display: grid; place-items: center; flex: 0 0 44px; height: 44px; border-radius: 50%; background: var(--card-ink); color: #fff; transition: transform .2s ease; }
 .actionArrow svg { width: 20px; height: 20px; }
 .cardAction:hover .actionArrow { transform: rotate(-35deg); }
@@ -156,4 +157,41 @@
   .milestones strong { margin-top: 8px; font-size: 24px; }
   .milestones p { margin-top: 6px; }
   .validationNote { margin: 10px 0 12px; }
+}
+
+/* The shared illustrations use the same rectangular layout as the DESP journey. */
+@container (min-width: 650px) {
+  .card { aspect-ratio: 3 / 2; min-height: 0; padding: 26px 30px; border-radius: 36px; }
+  .openingBody { padding: 20px 0; }
+  .openingTitle { font-size: clamp(38px, 6.7cqi, 58px); }
+  .studyCard { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); grid-template-rows: auto 1fr auto auto; column-gap: 24px; }
+  .studyCard .cardHeader, .studyCard .skills, .studyCard .cardAction { grid-column: 1 / -1; }
+  .metricHeadline { display: flex; flex-wrap: wrap; align-self: center; gap: 14px; margin: 20px 0; }
+  .metricHeadline > div { flex-basis: 100%; }
+  .metricValue { font-size: clamp(64px, 10cqi, 88px); }
+  .metricTitle { font-size: clamp(25px, 3.8cqi, 30px); }
+  .studyPanels { align-self: center; gap: 10px; margin: 20px 0; }
+  .studyPanels > div { padding: 16px 12px; }
+  .panelMetric { gap: 6px; }
+  .panelMetric > strong { font-size: clamp(30px, 4.6cqi, 40px); }
+  .skills { margin: 0 0 22px; }
+  .practiceCard { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); grid-template-rows: auto 1fr auto auto; column-gap: 24px; }
+  .practiceCard .cardHeader, .practiceCard .cardAction { grid-column: 1 / -1; }
+  .practiceTitle { grid-column: 1; align-self: end; margin: 20px 0; font-size: clamp(30px, 4.6cqi, 40px); }
+  .practiceSheet { grid-column: 2; grid-row: 2 / 4; align-self: center; margin: 20px 0; padding: 16px; }
+  .practiceNote { grid-column: 1; align-self: start; margin: 0 0 24px; }
+  .outcomeCard { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: auto auto 1fr auto auto; column-gap: 24px; }
+  .outcomeCard .cardHeader, .outcomeCard .validationNote, .outcomeCard .cardAction { grid-column: 1 / -1; }
+  .futureHeading { grid-column: 1; margin: 24px 0 8px; font-size: 25px; }
+  .destination { grid-column: 1; align-self: center; padding: 12px 0; }
+  .destination > strong { font-size: clamp(72px, 10cqi, 88px); }
+  .destination > strong[data-long='true'] { font-size: clamp(45px, 7.7cqi, 64px); }
+  .milestones { grid-column: 2; grid-row: 2 / 4; grid-template-columns: 1fr; align-self: center; gap: 10px; margin: 24px 0 12px; }
+  .milestones > a { padding: 14px 18px; }
+  .milestones strong { margin-top: 6px; font-size: 25px; }
+  .milestones p { margin-top: 4px; }
+  .validationNote { margin: 6px 0 14px; }
+}
+@container (min-width: 391px) and (max-width: 649px) {
+  .card { width: min(100%, 420px); min-height: 630px; margin-inline: auto; border-radius: 36px; }
 }

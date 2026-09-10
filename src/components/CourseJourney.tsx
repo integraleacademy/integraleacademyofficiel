@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import { courseJourneys, type CourseJourneyConfig, type CourseJourneyKey } from '@/data/courseJourneys';
 import { TrainingJourney } from './TrainingJourney';
@@ -15,9 +17,15 @@ function CardAction({ href, label }: { href: string; label: string }) {
   return <Link href={href} className={styles.cardAction}><span>{label}</span><span className={styles.actionArrow}><Arrow /></span></Link>;
 }
 
-function JourneyCard({ config, index }: { config: CourseJourneyConfig; index: number }) {
+function CardNextAction({ onNext, label }: { onNext: () => void; label: string }) {
+  return <button type="button" onClick={onNext} className={`${styles.cardAction} ${styles.cardNextAction}`} aria-label={`Étape suivante : ${label}`}><span className={styles.actionArrow}><Arrow /></span></button>;
+}
+
+function JourneyCard({ config, index, onNext }: { config: CourseJourneyConfig; index: number; onNext: () => void }) {
   const step = config.steps[index];
-  const action = <CardAction href={step.href} label={step.link} />;
+  const action = index < config.steps.length - 1
+    ? <CardNextAction onNext={onNext} label={config.steps[index + 1].label} />
+    : <CardAction href={step.href} label={step.link} />;
   if (index === 0) {
     const card = config.opening;
     return <div className={`${styles.card} ${styles.openingCard}`}>
@@ -87,8 +95,6 @@ export function CourseJourney({ course }: { course: CourseJourneyKey }) {
     theme={config.theme}
     eyebrow={config.eyebrow}
     title={<>{config.heading[0]}<br /><span>{config.heading[1]}</span></>}
-    steps={config.steps.map((step, index) => ({ ...step, visual: <JourneyCard config={config} index={index} /> }))}
-    shortcut={config.shortcut ?? { href: '#dates-tarifs', label: 'Les dates', ariaLabel: `Voir les dates et tarifs : ${config.name}` }}
-    closingNote="Intégrale Academy. Faites le premier pas vers votre futur métier."
+    steps={config.steps.map((step, index) => ({ ...step, visual: (onNext: () => void) => <JourneyCard config={config} index={index} onNext={onNext} /> }))}
   />;
 }

@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
 import styles from './TrainingJourney.module.css';
 
@@ -10,7 +9,7 @@ export type TrainingJourneyStep = {
   description: string;
   link: string;
   href: string;
-  visual: ReactNode | ((onNext: () => void) => ReactNode);
+  visual: (onNext: () => void) => ReactNode;
 };
 
 export type TrainingJourneyTheme = 'orange' | 'blue' | 'green' | 'red' | 'violet' | 'bts';
@@ -21,18 +20,15 @@ type TrainingJourneyProps = {
   eyebrow: string;
   title: ReactNode;
   steps: readonly TrainingJourneyStep[];
-  shortcut: { href: string; label: string; ariaLabel: string };
-  closingNote: string;
+  continuationHref?: string;
   theme?: TrainingJourneyTheme;
-  navigationOnly?: boolean;
-  visualFormat?: 'landscape';
 };
 
 function Arrow({ down = false }: { down?: boolean }) {
   return <svg className={down ? styles.downArrow : undefined} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d={down ? 'M12 4v15m-6-6 6 6 6-6' : 'M4 12h15m-6-6 6 6-6 6'} strokeLinecap="round" strokeLinejoin="round" /></svg>;
 }
 
-export function TrainingJourney({ id, name, eyebrow, title, steps, shortcut, closingNote, theme = 'orange', navigationOnly = false, visualFormat }: TrainingJourneyProps) {
+export function TrainingJourney({ id, name, eyebrow, title, steps, continuationHref, theme = 'orange' }: TrainingJourneyProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef<HTMLSpanElement>(null);
@@ -143,19 +139,18 @@ export function TrainingJourney({ id, name, eyebrow, title, steps, shortcut, clo
       headingRefs.current[index]?.focus({ preventScroll: true });
       return;
     }
-    if (navigationOnly && index !== active) pendingFocusRef.current = index;
+    if (index !== active) pendingFocusRef.current = index;
     scrollToStep(index);
   }
 
   return (
-    <section id={id} ref={sectionRef} className={styles.journey} data-enhanced={enhanced} data-theme={theme} data-navigation-only={navigationOnly || undefined} data-visual-format={visualFormat} aria-labelledby={`${id}-title`}>
+    <><section id={id} ref={sectionRef} className={styles.journey} data-enhanced={enhanced} data-theme={theme} data-navigation-only="true" data-visual-format="landscape" aria-labelledby={`${id}-title`}>
       <div ref={stageRef} className={styles.stage}>
         <header className={styles.intro}>
           <p className={styles.eyebrow}>{eyebrow}</p>
           <h2 id={`${id}-title`}>{title}</h2>
           <nav className={styles.navigation} aria-label={`Étapes du parcours ${name}`}>
             {steps.map((step, index) => <button key={step.label} type="button" aria-label={`Étape ${index + 1} : ${step.label}`} aria-current={index === active ? 'step' : undefined} onClick={() => goTo(index)}><span>0{index + 1}</span></button>)}
-            {!navigationOnly && <a href={shortcut.href} aria-label={shortcut.ariaLabel}>{shortcut.label} <Arrow /></a>}
           </nav>
           <div className={styles.scrollProgress} aria-hidden="true"><span ref={progressRef} /></div>
         </header>
@@ -164,17 +159,16 @@ export function TrainingJourney({ id, name, eyebrow, title, steps, shortcut, clo
             <li key={step.label} className={styles.step} data-current={index === active} inert={enhanced && index !== active ? true : undefined}>
               <div className={styles.copy}>
                 <div className={styles.stepHeading}><span className={styles.stepNumber}>0{index + 1}</span><span>{step.label}</span></div>
-                <h3 ref={element => { headingRefs.current[index] = element; }} tabIndex={navigationOnly ? -1 : undefined}>{step.title}</h3>
+                <h3 ref={element => { headingRefs.current[index] = element; }} tabIndex={-1}>{step.title}</h3>
                 <p className={styles.description}>{step.description}</p>
-                {navigationOnly ? (index < steps.length - 1 ? (
+                {index < steps.length - 1 ? (
                   <button type="button" className={`${styles.link} ${styles.continueButton}`} onClick={() => goTo(index + 1)} aria-label={`Étape suivante : ${steps[index + 1].label}`}>
                     Étape suivante<Arrow />
                   </button>
-                ) : <a href={shortcut.href} className={`${styles.link} ${styles.continueButton}`}>Découvrir la suite<Arrow down /></a>) : <Link href={step.href} className={styles.link}>{step.link}<Arrow /></Link>}
-                {!navigationOnly && (index < steps.length - 1 ? <button type="button" className={styles.next} onClick={() => goTo(index + 1)}><span>0{index + 2}</span><span>{steps[index + 1].label}</span><Arrow /></button> : <span className={styles.lastStep}>{closingNote}</span>)}
+                ) : <a href={continuationHref ?? `#${id}-suite`} className={`${styles.link} ${styles.continueButton}`}>Découvrir la suite<Arrow down /></a>}
               </div>
               <div className={styles.visual} data-scene={index}>
-                <div className={styles.visualInner}>{typeof step.visual === 'function' ? step.visual(() => goTo(Math.min(index + 1, steps.length - 1))) : step.visual}</div>
+                <div className={styles.visualInner}>{step.visual(() => goTo(Math.min(index + 1, steps.length - 1)))}</div>
                 <span className={styles.visualCounter} aria-hidden="true">0{index + 1} / {String(steps.length).padStart(2, '0')}</span>
               </div>
             </li>
@@ -182,5 +176,6 @@ export function TrainingJourney({ id, name, eyebrow, title, steps, shortcut, clo
         </ol>
       </div>
     </section>
+    {!continuationHref && <div id={`${id}-suite`} className={styles.continuationTarget} />}</>
   );
 }

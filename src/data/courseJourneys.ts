@@ -15,7 +15,6 @@ export type CourseJourneyConfig = {
   theme: TrainingJourneyTheme;
   eyebrow: string;
   heading: Pair<string>;
-  shortcut?: { href: string; label: string; ariaLabel: string };
   steps: Four<Copy>;
   opening: { kicker: string; heading: Pair<string>; text: string; verbs: Three<string>; image?: string };
   study: { value: string; unit: string; heading: Pair<string>; panels: Pair<Panel>; skills: Four<string> };
@@ -81,7 +80,6 @@ const professionalJourneys = {
   'desp-vae': {
     id: 'parcours-desp-vae', name: 'DESP VAE', theme: 'orange', eyebrow: 'VALORISER VOTRE EXPÉRIENCE · DESP VAE',
     heading: ['Vous avez l’expérience.', 'Donnez-lui une nouvelle portée.'],
-    shortcut: { href: '#eligibilite', label: 'Mon profil', ariaLabel: 'Étudier mon éligibilité à la VAE DESP' },
     steps: [
       copy('Votre expérience', 'Vos responsabilités peuvent devenir le point de départ.', 'Management, gestion, création ou direction : nous analysons vos expériences au regard du référentiel DESP. Ce premier échange permet de vérifier si la VAE correspond à votre parcours.', '#eligibilite', 'Étudier mon éligibilité'),
       copy('Votre accompagnement', 'Un parcours construit autour de vos acquis.', 'Vous préparez un dossier de faisabilité, puis, après recevabilité, un dossier de validation. L’accompagnement vous aide à analyser vos missions et à organiser vos preuves, selon un calendrier adapté à votre dossier.', '#parcours', 'Découvrir les étapes'),
@@ -246,7 +244,6 @@ function btsJourney(profile: BtsJourneyProfile): CourseJourneyConfig {
   return {
     id: `parcours-bts-${profile.code.toLowerCase()}`, name: `BTS ${profile.code}`, theme: 'bts', eyebrow: `VOTRE AVENIR EN ALTERNANCE · BTS ${profile.code}`,
     heading: [`Votre projet, votre BTS ${profile.code}.`, 'Passez à la prochaine étape.'],
-    shortcut: { href: '#admission', label: 'Candidater', ariaLabel: `Voir les admissions du BTS ${profile.code}` },
     steps: [
       copy('Votre projet', profile.headline.join(' '), profile.pitch, profile.competencyHref, 'Découvrir les compétences'),
       copy('Votre alternance', 'Deux ans pour apprendre et prendre votre place.', `Le rythme du BTS ${profile.code} : ${rhythm.description} Les cours se suivent à Puget-sur-Argens ou en visioconférence, selon les modalités validées avec l’équipe admissions.`, '#alternance', 'Comprendre mon alternance'),
@@ -344,7 +341,6 @@ const btsJourneys = {
 const btsOverviewJourney: CourseJourneyConfig = {
   id: 'parcours-bts', name: 'BTS en alternance', theme: 'blue', eyebrow: 'VOTRE AVENIR · BTS EN ALTERNANCE',
   heading: ['Un BTS qui vous ressemble.', 'Un avenir à construire.'],
-  shortcut: { href: '#formations-bts', label: 'Les BTS', ariaLabel: 'Comparer les six formations BTS' },
   steps: [
     copy('Votre projet', 'Choisissez le domaine qui vous donne envie d’avancer.', 'Sécurité, commerce, relation client, international, immobilier ou comptabilité : découvrez nos six BTS et les compétences qu’ils permettent de développer.', '#formations-bts', 'Découvrir les six BTS'),
     copy('Votre alternance', 'Un diplôme et une expérience qui se construisent ensemble.', `BTS MOS : ${btsRhythms.MOS.description} Pour les BTS MCO, NDRC, CI, PI et CG : ${btsRhythms.MCO.description} Les modalités de présentiel ou de visioconférence sont précisées sur chaque parcours.`, '#alternance-bts', 'Comprendre le rythme'),
