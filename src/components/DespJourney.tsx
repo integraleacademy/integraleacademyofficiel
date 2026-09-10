@@ -58,7 +58,7 @@ function JourneyVisual({ index }: { index: number }) {
         <div className={styles.schoolStudy}><div className={styles.studyTop}><span>EN PRÉSENTIEL</span><Pictogram kind="school" /></div><p><strong>2</strong><span>semaines<small>70 heures</small></span></p><div className={styles.weekMarks} aria-hidden="true"><i /><i /></div></div>
       </div>
       <div className={styles.expertise}>
-        <p className={styles.cardEyebrow}>LES CLÉS POUR PILOTER VOTRE ACTIVITÉ</p>
+        <p className={styles.cardEyebrow}>POUR PILOTER VOTRE ACTIVITÉ</p>
         <div>{['Réglementation', 'Gestion d’entreprise', 'Management', 'Développement commercial'].map((topic, i) => <span key={topic}><small>0{i + 1}</small>{topic}</span>)}</div>
       </div>
       <CardAction href="/dirigeant">Explorer la formation</CardAction>
@@ -70,19 +70,18 @@ function JourneyVisual({ index }: { index: number }) {
       <CardHeader label="Le parcours VAE" />
       <div className={styles.experienceHeading}><p className={styles.cardEyebrow}>VOUS AVEZ DÉJÀ LE VÉCU.</p><p className={styles.cardTitle}>L’expérience,<br /><span>c’est votre force.</span></p></div>
       <div className={styles.proofScene}>
-        <div className={styles.proofBack} aria-hidden="true"><span>VOTRE EXPÉRIENCE</span></div>
+        <div className={styles.proofBack} aria-hidden="true" />
         <div className={styles.proofPaper}>
           <div className={styles.paperHeading}><span>DOSSIER DE VALIDATION</span><span>DESP</span></div>
           <strong>Votre parcours<br />a de la valeur.</strong>
           <p>Vos missions. Vos réalisations.</p>
-          <div className={styles.proofSkills}><span>Management</span><span>Gestion</span><span>Direction</span></div>
         </div>
-        <div className={styles.experienceSeal}><Pictogram kind="rise" /><span>VOS ACQUIS<br />AU PREMIER PLAN</span></div>
+        <div className={styles.experienceSeal} aria-hidden="true"><Pictogram kind="rise" /></div>
       </div>
       <ol className={styles.vaeRoute}>
-        <li><span>01</span><strong>Votre expérience</strong><small>Étudier votre parcours</small></li>
-        <li><span>02</span><strong>Votre dossier</strong><small>Rassembler vos preuves</small></li>
-        <li><span>03</span><strong>Le jury</strong><small>Présenter vos acquis</small></li>
+        <li><span>01</span><strong>Votre expérience</strong></li>
+        <li><span>02</span><strong>Votre dossier</strong></li>
+        <li><span>03</span><strong>Le jury</strong></li>
       </ol>
       <CardAction href="/vaedirigeant">Valoriser mon expérience</CardAction>
     </div>
@@ -107,6 +106,7 @@ function JourneyVisual({ index }: { index: number }) {
 export function DespJourney() {
   const sectionRef = useRef<HTMLElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
+  const progressRef = useRef<HTMLSpanElement>(null);
   const [enhanced, setEnhanced] = useState(false);
   const [active, setActive] = useState(0);
 
@@ -123,47 +123,84 @@ export function DespJourney() {
   const scrollToStep = useCallback((index: number) => {
     const bounds = getBounds();
     if (!bounds) return;
-    // Land in the middle of the step, away from rounding-sensitive boundaries.
-    window.scrollTo({ top: bounds.start + (bounds.end - bounds.start) * ((index + 0.5) / steps.length), behavior: 'instant' });
-    setActive(index);
+    // Explicit navigation follows the same positions as native scrolling.
+    window.scrollTo({ top: bounds.start + (bounds.end - bounds.start) * ((index + 0.35) / steps.length), behavior: 'smooth' });
   }, [getBounds]);
 
   useEffect(() => {
-    // Short screens, mobile, reduced motion and no-JS retain the full reading flow.
+    // The layout also checks its actual content height below: zoomed text and
+    // smaller screens must remain readable, rather than being squeezed to fit.
     const media = window.matchMedia('(min-width: 1024px) and (min-height: 760px) and (prefers-reduced-motion: no-preference)');
     const sync = () => setEnhanced(media.matches);
     sync();
     media.addEventListener('change', sync);
-    return () => media.removeEventListener('change', sync);
+    window.addEventListener('resize', sync);
+    return () => {
+      media.removeEventListener('change', sync);
+      window.removeEventListener('resize', sync);
+    };
   }, []);
 
   useEffect(() => {
     if (!enhanced) return;
     let frame = 0;
+    let bounds = getBounds();
+    let measureNeeded = true;
+    const section = sectionRef.current;
+    const stage = stageRef.current;
+    if (!section || !stage) return;
+
+    const fits = () => {
+      const stageBox = stage.getBoundingClientRect();
+      const intro = stage.querySelector<HTMLElement>(`.${styles.intro}`);
+      const introBottom = intro?.getBoundingClientRect().bottom ?? stageBox.top;
+      return [...stage.querySelectorAll<HTMLElement>(`.${styles.card}, .${styles.copy}`)].every(element => {
+        const box = element.getBoundingClientRect();
+        return element.scrollHeight <= element.clientHeight + 2
+          && box.top >= stageBox.top - 2 && box.bottom <= stageBox.bottom + 2
+          && (!element.classList.contains(styles.copy) || box.top >= introBottom - 2);
+      });
+    };
+
     const update = () => {
       frame = 0;
-      const bounds = getBounds();
+      if (measureNeeded) {
+        measureNeeded = false;
+        bounds = getBounds();
+        if (!fits()) {
+          setEnhanced(false);
+          return;
+        }
+      }
       if (!bounds) return;
       const distance = Math.max(1, bounds.end - bounds.start);
       const position = window.scrollY - bounds.start;
-      const next = Math.max(0, Math.min(steps.length - 1, Math.floor(position / distance * steps.length)));
+      const progress = Math.max(0, Math.min(1, position / distance));
+      if (progressRef.current) progressRef.current.style.transform = `scaleX(${progress})`;
+      const next = Math.min(steps.length - 1, Math.floor(progress * steps.length));
       setActive(previous => {
-        // A small spatial margin avoids flickering near a boundary. Scrolling
-        // itself stays entirely native, with no wheel interception or timers.
+        // A small spatial margin prevents boundary flicker. No wheel handling,
+        // forced scroll position, cooldown or artificial scrolling speed.
         const stepDistance = distance / steps.length;
-        if (next > previous && position < (previous + 1) * stepDistance + 24) return previous;
-        if (next < previous && position > previous * stepDistance - 24) return previous;
+        if (next > previous && position < (previous + 1) * stepDistance + 12) return previous;
+        if (next < previous && position > previous * stepDistance - 12) return previous;
         return next;
       });
     };
     const schedule = () => { if (!frame) frame = window.requestAnimationFrame(update); };
-    update();
+    const measure = () => { measureNeeded = true; schedule(); };
+    const observer = new ResizeObserver(measure);
+    observer.observe(document.body);
+    observer.observe(stage);
+    stage.querySelectorAll<HTMLElement>(`.${styles.card}, .${styles.copy}`).forEach(element => observer.observe(element));
+    schedule();
     window.addEventListener('scroll', schedule, { passive: true });
-    window.addEventListener('resize', schedule);
+    window.addEventListener('resize', measure);
     return () => {
+      observer.disconnect();
       window.cancelAnimationFrame(frame);
       window.removeEventListener('scroll', schedule);
-      window.removeEventListener('resize', schedule);
+      window.removeEventListener('resize', measure);
     };
   }, [enhanced, getBounds]);
 
@@ -179,13 +216,14 @@ export function DespJourney() {
           <p className={styles.eyebrow}>DEVENIR DIRIGEANT · DESP</p>
           <h2 id="desp-journey-title">De votre ambition au titre DESP,<br /><span>trouvez votre chemin.</span></h2>
           <nav className={styles.navigation} aria-label="Étapes du parcours DESP">
-            {steps.map((step, index) => <button key={step.label} type="button" aria-label={`Étape ${index + 1} : ${step.label}`} aria-current={index === active ? 'step' : undefined} onClick={() => goTo(index)}><span>0{index + 1}</span><span className={styles.navLine} /></button>)}
+            {steps.map((step, index) => <button key={step.label} type="button" aria-label={`Étape ${index + 1} : ${step.label}`} aria-current={index === active ? 'step' : undefined} onClick={() => goTo(index)}><span>0{index + 1}</span></button>)}
             <a href="#choisir-desp" aria-label="Aller directement au comparatif des deux parcours">Comparer <Arrow /></a>
           </nav>
+          <div className={styles.scrollProgress} aria-hidden="true"><span ref={progressRef} /></div>
         </header>
         <ol className={styles.steps}>
           {steps.map((step, index) => (
-            <li key={step.label} className={styles.step} data-current={index === active}>
+            <li key={step.label} className={styles.step} data-current={index === active} inert={enhanced && index !== active ? true : undefined}>
               <div className={styles.copy}>
                 <div className={styles.stepHeading}><span className={styles.stepNumber}>0{index + 1}</span><span>{step.label}</span></div>
                 <h3>{step.title}</h3>
