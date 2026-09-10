@@ -74,10 +74,10 @@ export function AnimatedTrainingCTA() {
         </h2>
 
         <Link
-          href="/contact"
+          href="https://assistance-alw9.onrender.com/demande-informations-formations"
           className={`${styles.cta} mt-8 inline-flex items-center justify-center rounded-full bg-white px-7 py-4 text-sm font-black text-[#062233] shadow-[0_20px_60px_rgba(0,0,0,.28)] transition hover:-translate-y-0.5 hover:bg-amber-100 hover:shadow-[0_24px_70px_rgba(0,0,0,.34)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white motion-reduce:transform-none sm:text-base`}
         >
-          Parler à un conseiller <span className={`${styles.arrow} ml-3`} aria-hidden="true">→</span>
+          Démarrer mon projet <span className={`${styles.arrow} ml-3`} aria-hidden="true">→</span>
         </Link>
       </div>
     </section>
