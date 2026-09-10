@@ -1,5 +1,5 @@
 /* Cards grow with their content. Only decorative artwork is clipped. */
-.card { --card-ink: #1b2026; --card-muted: #615d56; position: relative; isolation: isolate; display: flex; flex-direction: column; width: 100%; min-height: var(--journey-card-height, 660px); padding: clamp(22px, 4.4cqi, 32px); overflow: clip; border: 1px solid #ffffffaa; border-radius: 27px; background: #fffdf9; color: var(--card-ink); font-size: 14px; box-shadow: 0 28px 55px -26px #35201145, 0 3px 8px #35201108; }
+.card { --card-ink: #1b2026; --card-muted: #615d56; position: relative; isolation: isolate; display: flex; flex-direction: column; width: 100%; min-height: 630px; padding: clamp(22px, 4.4cqi, 32px); overflow: clip; border: 1px solid #ffffffaa; border-radius: 36px; background: #fffdf9; color: var(--card-ink); font-size: 14px; box-shadow: 0 28px 55px -26px #35201145, 0 3px 8px #35201108; }
 .card > * { flex-shrink: 0; min-width: 0; }
 .cardHeader { position: relative; z-index: 2; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
 .brand { display: flex; flex-direction: column; font-size: 13px; font-weight: 900; letter-spacing: -.025em; line-height: 1.08; }
@@ -104,7 +104,7 @@
 
 /* Small containers reflow the content; essential text never scales below 14px. */
 @container (max-width: 530px) {
-  .card { min-height: var(--journey-card-height, 630px); padding: 24px; }
+  .card { min-height: 630px; padding: 24px; }
   .cardHeader { gap: 10px; }
   .cardLabel { font-size: 12px; }
   .ambitionTitle { font-size: 46px; }
@@ -121,6 +121,7 @@
   .futurePaths > a > span { font-size: 12px; }
   .futurePaths strong { font-size: 25px; }
 }
+
 @container (max-width: 390px) {
   .card { min-height: 0; padding: 22px; border-radius: 22px; }
   .cardHeader { align-items: flex-start; }
@@ -191,4 +192,48 @@
   .futurePaths strong { margin-top: 8px; font-size: 24px; }
   .futurePaths small { margin-top: 6px; }
   .validationNote { margin: 10px 0 12px; }
+}
+
+/* Wide cards use the available width for their content instead of a square poster. */
+@container (min-width: 650px) {
+  .card { aspect-ratio: 3 / 2; min-height: 0; padding: 26px 30px; }
+  .ambitionTitle { font-size: clamp(44px, 7.6cqi, 64px); }
+  .ambitionBody { padding: 20px 0; }
+  .trainingCard { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); grid-template-rows: auto 1fr auto auto; column-gap: 24px; }
+  .trainingCard .cardHeader, .trainingCard .expertise, .trainingCard .cardAction { grid-column: 1 / -1; }
+  .durationHeadline { align-self: center; flex-wrap: wrap; gap: 16px; margin: 20px 0; }
+  .durationHeadline > strong { font-size: clamp(80px, 12cqi, 104px); }
+  .durationHeadline p { font-size: 27px; }
+  .studyPlan { align-self: center; gap: 10px; margin: 20px 0; }
+  .studyPlan > div { padding: 16px 12px; }
+  .studyTop { align-items: flex-start; }
+  .studyPlan p { gap: 10px; }
+  .studyPlan p > strong { font-size: 48px; }
+  .expertise { margin: 0 0 22px; }
+  .experienceCard { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: auto 1fr auto auto; column-gap: 20px; }
+  .experienceCard .cardHeader, .experienceCard .cardAction { grid-column: 1 / -1; }
+  .experienceHeading { align-self: end; margin: 24px 0; }
+  .experienceHeading .cardTitle { font-size: clamp(32px, 4.6cqi, 40px); }
+  .proofScene { grid-column: 2; grid-row: 2 / 4; align-self: center; margin: 0; padding: 28px 0; }
+  .proofPaper { width: calc(100% - 18px); padding: 24px 18px; }
+  .proofBack { left: 8px; width: calc(100% - 20px); }
+  .proofPaper > strong { font-size: 28px; }
+  .paperHeading { gap: 8px; font-size: 11px; }
+  .experienceSeal { right: -8px; width: 62px; height: 62px; }
+  .vaeRoute { align-self: start; margin: 0 0 28px; gap: 10px; }
+  .futureCard { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: auto auto 1fr auto auto; column-gap: 24px; }
+  .futureCard .cardHeader, .validationNote, .futureCard .cardAction { grid-column: 1 / -1; }
+  .futureHeading { grid-column: 1; margin: 24px 0 8px; font-size: 25px; }
+  .despDestination { grid-column: 1; align-self: center; padding: 12px 0; }
+  .despDestination > strong { font-size: clamp(78px, 11cqi, 96px); }
+  .futurePaths { grid-column: 2; grid-row: 2 / 4; grid-template-columns: 1fr; align-self: center; gap: 10px; margin: 24px 0 12px; }
+  .futurePaths > a { padding: 14px 18px; }
+  .futurePaths strong { margin-top: 6px; font-size: 25px; }
+  .futurePaths small { margin-top: 4px; }
+  .validationNote { margin: 6px 0 14px; }
+}
+
+/* Narrow columns and phones keep a clear portrait rectangle and readable text. */
+@container (min-width: 391px) and (max-width: 649px) {
+  .card { width: min(100%, 420px); min-height: 630px; margin-inline: auto; }
 }

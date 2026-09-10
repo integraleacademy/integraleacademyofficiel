@@ -17,6 +17,10 @@
 .link svg, .next svg, .navigation svg { width: 20px; height: 20px; flex-shrink: 0; transition: transform .2s ease; }
 .link:hover svg { transform: translateX(4px); }
 .link:hover { color: var(--accent-hover); }
+.continueButton { justify-content: space-between; gap: 32px; min-height: 52px; margin-top: 24px; padding: 12px 20px; border: 1px solid var(--accent-nav); border-radius: 999px; background: var(--accent-soft); text-align: left; }
+.continueButton:hover { border-color: var(--accent); }
+.journey[data-navigation-only='true'] .step { scroll-margin-top: calc(var(--site-header-height) + 24px); }
+.journey[data-navigation-only='true'] .copy h3:focus-visible { outline: 2px solid var(--accent-focus); outline-offset: 6px; border-radius: 4px; }
 .journey button:focus-visible, .journey a:focus-visible { outline: 3px solid var(--accent-focus); outline-offset: 5px; border-radius: 4px; }
 .next, .lastStep { display: none; }
 .visual { position: relative; display: flex; min-width: 0; align-items: center; justify-content: center; padding: 40px clamp(22px, 2.5vw, 44px); border-radius: 36px 0 0 36px; background: radial-gradient(ellipse at 90% 5%, #fff 0, transparent 60%), #eeeae5; overflow: clip; }
@@ -24,11 +28,14 @@
 .visual[data-scene='2'] { background: radial-gradient(ellipse at 20% 80%, #f4d8c4 0, transparent 70%), #eee9e2; }
 .visual[data-scene='3'] { background: radial-gradient(ellipse at 80% 0%, #ffd7b5 0, transparent 70%), #f0e5d9; }
 .visualInner { width: 100%; max-width: 720px; container-type: inline-size; }
+.journey[data-visual-format='landscape'] .visualInner { max-width: 880px; }
 .visualCounter { position: absolute; bottom: 12px; right: 28px; color: #695e54; font-size: 12px; font-weight: 800; letter-spacing: .12em; }
 
 /* 40vh per step, matching the cadence measured on the reference's 5 steps
    over 200vh. Native page movement controls the view, including its exit. */
 @media (min-width: 1024px) {
+  .journey[data-visual-format='landscape'] .step,
+  .journey[data-visual-format='landscape'][data-enhanced='true'] .stage { grid-template-columns: minmax(0, 40fr) minmax(0, 60fr); }
   .journey[data-enhanced='true'] { --journey-card-height: min(660px, max(0px, calc(100svh - var(--site-header-height) - 48px))); height: calc(var(--journey-stage-height, calc(100svh - var(--site-header-height))) + 160svh); overflow-anchor: none; }
   /* Intrinsic rows keep all reading content in the layout. In a short window,
      the stage can be taller than the viewport and its bottom remains reachable

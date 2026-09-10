@@ -40,7 +40,7 @@ function JourneyVisual({ index }: { index: number }) {
       <CardHeader label="Le déclic" />
       <div className={styles.ambitionBody}>
         <p className={styles.cardEyebrow}>ET SI C’ÉTAIT VOUS ?</p>
-        <p className={styles.ambitionTitle}>Faites place<br />à votre<br /><span>ambition.</span></p>
+        <p className={styles.ambitionTitle}>Faites place<br />à votre <span>ambition.</span></p>
         <p className={styles.ambitionSubtitle}>Votre entreprise de sécurité.<br />Votre vision. Votre prochain chapitre.</p>
       </div>
       <div className={styles.ambitionVerbs}><span><small>01</small>Créer</span><span><small>02</small>Reprendre</span><span><small>03</small>Diriger</span></div>
@@ -108,6 +108,8 @@ export function DespJourney() {
   return <TrainingJourney
     id="parcours-desp"
     name="DESP"
+    navigationOnly
+    visualFormat="landscape"
     eyebrow="DEVENIR DIRIGEANT · DESP"
     title={<>De votre ambition au titre DESP,<br /><span>trouvez votre chemin.</span></>}
     steps={steps.map((step, index) => ({ ...step, visual: <JourneyVisual index={index} /> }))}
