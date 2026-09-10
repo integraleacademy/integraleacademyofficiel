@@ -8,7 +8,7 @@
 .cardEyebrow { margin: 0; font-size: 12px; font-weight: 800; letter-spacing: .07em; line-height: 1.5; color: var(--card-muted); }
 .cardTitle { margin: 9px 0 0; font-size: clamp(32px, 6.8cqi, 48px); font-weight: 850; line-height: 1.07; letter-spacing: -.045em; }
 .cardTitle > span { color: #bf4614; }
-.cardAction { position: relative; z-index: 2; display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 62px; margin-top: auto; padding-top: 16px; border-top: 1px solid #1b20262b; color: inherit; font-size: 15px; font-weight: 800; line-height: 1.4; }
+.cardAction { position: relative; z-index: 2; display: flex; align-items: center; justify-content: space-between; gap: 16px; width: 100%; min-height: 62px; margin-top: auto; padding-top: 16px; border-top: 1px solid #1b20262b; color: inherit; font-size: 15px; font-weight: 800; line-height: 1.4; text-align: left; }
 .actionArrow { display: grid; place-items: center; flex: 0 0 44px; height: 44px; border-radius: 50%; background: var(--card-ink); color: #fff; transition: transform .2s ease, background .2s ease; }
 .cardAction:hover .actionArrow { transform: rotate(-35deg); background: #c74a11; }
 .actionArrow svg { width: 20px; height: 20px; }

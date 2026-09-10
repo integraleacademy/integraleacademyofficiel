@@ -30,7 +30,11 @@ function CardAction({ href, children }: { href: string; children: ReactNode }) {
   return <Link href={href} className={styles.cardAction}><span>{children}</span><span className={styles.actionArrow}><Arrow /></span></Link>;
 }
 
-function JourneyVisual({ index }: { index: number }) {
+function CardNextAction({ onNext, label }: { onNext: () => void; label: string }) {
+  return <button type="button" onClick={onNext} className={styles.cardAction} aria-label={`Étape suivante : ${label}`}><span>Étape suivante</span><span className={styles.actionArrow}><Arrow /></span></button>;
+}
+
+function JourneyVisual({ index, onNext }: { index: number; onNext: () => void }) {
   if (index === 0) return (
     <div className={`${styles.card} ${styles.ambitionCard}`}>
       {/* Existing school photo remains editable at the same path in GitHub. */}
@@ -44,7 +48,7 @@ function JourneyVisual({ index }: { index: number }) {
         <p className={styles.ambitionSubtitle}>Votre entreprise de sécurité.<br />Votre vision. Votre prochain chapitre.</p>
       </div>
       <div className={styles.ambitionVerbs}><span><small>01</small>Créer</span><span><small>02</small>Reprendre</span><span><small>03</small>Diriger</span></div>
-      <CardAction href="/contact?formation=desp">Construire mon projet</CardAction>
+      <CardNextAction onNext={onNext} label={steps[1].label} />
     </div>
   );
 
@@ -62,7 +66,7 @@ function JourneyVisual({ index }: { index: number }) {
         <p className={styles.cardEyebrow}>POUR PILOTER VOTRE ACTIVITÉ</p>
         <div>{['Réglementation', 'Gestion d’entreprise', 'Management', 'Développement commercial'].map((topic, i) => <span key={topic}><small>0{i + 1}</small>{topic}</span>)}</div>
       </div>
-      <CardAction href="/dirigeant">Explorer la formation</CardAction>
+      <CardNextAction onNext={onNext} label={steps[2].label} />
     </div>
   );
 
@@ -84,7 +88,7 @@ function JourneyVisual({ index }: { index: number }) {
         <li><span>02</span><strong>Votre dossier</strong></li>
         <li><span>03</span><strong>Le jury</strong></li>
       </ol>
-      <CardAction href="/vaedirigeant">Valoriser mon expérience</CardAction>
+      <CardNextAction onNext={onNext} label={steps[3].label} />
     </div>
   );
 
@@ -112,7 +116,7 @@ export function DespJourney() {
     visualFormat="landscape"
     eyebrow="DEVENIR DIRIGEANT · DESP"
     title={<>De votre ambition au titre DESP,<br /><span>trouvez votre chemin.</span></>}
-    steps={steps.map((step, index) => ({ ...step, visual: <JourneyVisual index={index} /> }))}
+    steps={steps.map((step, index) => ({ ...step, visual: (onNext: () => void) => <JourneyVisual index={index} onNext={onNext} /> }))}
     shortcut={{ href: '#choisir-desp', label: 'Comparer', ariaLabel: 'Aller directement au comparatif des deux parcours' }}
     closingNote="Intégrale Academy, à vos côtés à chaque étape."
   />;

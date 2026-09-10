@@ -19,6 +19,7 @@
 .link:hover { color: var(--accent-hover); }
 .continueButton { justify-content: space-between; gap: 32px; min-height: 52px; margin-top: 24px; padding: 12px 20px; border: 1px solid var(--accent-nav); border-radius: 999px; background: var(--accent-soft); text-align: left; }
 .continueButton:hover { border-color: var(--accent); }
+.continueButton:hover .downArrow { transform: translateY(4px); }
 .journey[data-navigation-only='true'] .step { scroll-margin-top: calc(var(--site-header-height) + 24px); }
 .journey[data-navigation-only='true'] .copy h3:focus-visible { outline: 2px solid var(--accent-focus); outline-offset: 6px; border-radius: 4px; }
 .journey button:focus-visible, .journey a:focus-visible { outline: 3px solid var(--accent-focus); outline-offset: 5px; border-radius: 4px; }

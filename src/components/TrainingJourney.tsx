@@ -10,7 +10,7 @@ export type TrainingJourneyStep = {
   description: string;
   link: string;
   href: string;
-  visual: ReactNode;
+  visual: ReactNode | ((onNext: () => void) => ReactNode);
 };
 
 export type TrainingJourneyTheme = 'orange' | 'blue' | 'green' | 'red' | 'violet' | 'bts';
@@ -28,8 +28,8 @@ type TrainingJourneyProps = {
   visualFormat?: 'landscape';
 };
 
-function Arrow() {
-  return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6" strokeLinecap="round" strokeLinejoin="round" /></svg>;
+function Arrow({ down = false }: { down?: boolean }) {
+  return <svg className={down ? styles.downArrow : undefined} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d={down ? 'M12 4v15m-6-6 6 6 6-6' : 'M4 12h15m-6-6 6 6-6 6'} strokeLinecap="round" strokeLinejoin="round" /></svg>;
 }
 
 export function TrainingJourney({ id, name, eyebrow, title, steps, shortcut, closingNote, theme = 'orange', navigationOnly = false, visualFormat }: TrainingJourneyProps) {
@@ -166,15 +166,15 @@ export function TrainingJourney({ id, name, eyebrow, title, steps, shortcut, clo
                 <div className={styles.stepHeading}><span className={styles.stepNumber}>0{index + 1}</span><span>{step.label}</span></div>
                 <h3 ref={element => { headingRefs.current[index] = element; }} tabIndex={navigationOnly ? -1 : undefined}>{step.title}</h3>
                 <p className={styles.description}>{step.description}</p>
-                {navigationOnly ? (
-                  <button type="button" className={`${styles.link} ${styles.continueButton}`} onClick={() => goTo((index + 1) % steps.length)} aria-label={index < steps.length - 1 ? `Étape suivante : ${steps[index + 1].label}` : 'Revoir les étapes du parcours'}>
-                    {index < steps.length - 1 ? 'Étape suivante' : 'Revoir les étapes'}<Arrow />
+                {navigationOnly ? (index < steps.length - 1 ? (
+                  <button type="button" className={`${styles.link} ${styles.continueButton}`} onClick={() => goTo(index + 1)} aria-label={`Étape suivante : ${steps[index + 1].label}`}>
+                    Étape suivante<Arrow />
                   </button>
-                ) : <Link href={step.href} className={styles.link}>{step.link}<Arrow /></Link>}
+                ) : <a href={shortcut.href} className={`${styles.link} ${styles.continueButton}`}>Découvrir la suite<Arrow down /></a>) : <Link href={step.href} className={styles.link}>{step.link}<Arrow /></Link>}
                 {!navigationOnly && (index < steps.length - 1 ? <button type="button" className={styles.next} onClick={() => goTo(index + 1)}><span>0{index + 2}</span><span>{steps[index + 1].label}</span><Arrow /></button> : <span className={styles.lastStep}>{closingNote}</span>)}
               </div>
               <div className={styles.visual} data-scene={index}>
-                <div className={styles.visualInner}>{step.visual}</div>
+                <div className={styles.visualInner}>{typeof step.visual === 'function' ? step.visual(() => goTo(Math.min(index + 1, steps.length - 1))) : step.visual}</div>
                 <span className={styles.visualCounter} aria-hidden="true">0{index + 1} / {String(steps.length).padStart(2, '0')}</span>
               </div>
             </li>
