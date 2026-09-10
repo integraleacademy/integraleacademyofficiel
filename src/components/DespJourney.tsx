@@ -31,7 +31,7 @@ function CardAction({ href, children }: { href: string; children: ReactNode }) {
 }
 
 function CardNextAction({ onNext, label }: { onNext: () => void; label: string }) {
-  return <button type="button" onClick={onNext} className={styles.cardAction} aria-label={`Étape suivante : ${label}`}><span>Étape suivante</span><span className={styles.actionArrow}><Arrow /></span></button>;
+  return <button type="button" onClick={onNext} className={`${styles.cardAction} ${styles.cardNextAction}`} aria-label={`Étape suivante : ${label}`}><span className={styles.actionArrow}><Arrow /></span></button>;
 }
 
 function JourneyVisual({ index, onNext }: { index: number; onNext: () => void }) {
