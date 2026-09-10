@@ -156,7 +156,15 @@ export function DespJourney() {
       const introBottom = intro?.getBoundingClientRect().bottom ?? stageBox.top;
       return [...stage.querySelectorAll<HTMLElement>(`.${styles.card}, .${styles.copy}`)].every(element => {
         const box = element.getBoundingClientRect();
-        return element.scrollHeight <= element.clientHeight + 2
+        // Oversized decorative rings intentionally extend beyond the card.
+        // Measure the reading flow, not their contribution to scrollHeight.
+        const contentFits = [...element.children].every(child => {
+          if (getComputedStyle(child).position === 'absolute') return true;
+          const childBox = child.getBoundingClientRect();
+          return childBox.top >= box.top - 2 && childBox.bottom <= box.bottom + 2
+            && childBox.left >= box.left - 2 && childBox.right <= box.right + 2;
+        });
+        return contentFits
           && box.top >= stageBox.top - 2 && box.bottom <= stageBox.bottom + 2
           && (!element.classList.contains(styles.copy) || box.top >= introBottom - 2);
       });
