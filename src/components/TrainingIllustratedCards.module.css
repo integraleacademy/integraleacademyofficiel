@@ -27,6 +27,14 @@
   --card-soft: #ede9fe;
 }
 
+.cards.bts {
+  --card-accent-rgb: var(--bts-400-comma);
+  --card-badge-rgb: var(--bts-700-comma);
+  --card-accent: rgb(var(--bts-300));
+  --card-surface: rgb(var(--bts-50));
+  --card-soft: rgb(var(--bts-100));
+}
+
 .card {
   display: flex;
   min-width: 0;

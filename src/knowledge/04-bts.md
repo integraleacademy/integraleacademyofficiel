@@ -2,7 +2,7 @@
 title: BTS en alternance
 category: formation
 tags: bts, alternance, mco, ndrc, mos, commerce international, immobilier
-updated: 2026-06-19
+updated: 2026-09-10
 ---
 
 Intégrale Academy propose des BTS en alternance selon les parcours disponibles.
@@ -21,6 +21,7 @@ Si une spécialité, une date de rentrée, un rythme ou une condition d’admiss
 
 ## Informations commerciales à utiliser
 
-- BTS en alternance : rythme école + entreprise.
+- BTS MOS : 15 jours à l’école, puis 15 jours en entreprise.
+- BTS MCO, NDRC, CI, PI et CG : 2 jours à l’école et 3 jours en entreprise chaque semaine. Ne pas appliquer ce rythme au BTS MOS.
 - Accompagnement à la recherche d’entreprise.
 - Appels à l’action recommandés : être rappelé, recevoir les infos, candidater.

@@ -1,3 +1,5 @@
+import { btsRhythms } from '@/data/btsRhythms';
+
 export type BtsExamUnit = {
   title: string;
   coefficient: string;
@@ -130,7 +132,7 @@ export const btsExpandedCourses: Record<BtsExpandedCourseKey, BtsExpandedCourse>
       { title: 'Gestion de la relation client', coefficient: '5', format: 'Oral ou CCF' },
       { title: 'Participation à la sécurité globale', coefficient: '6', format: 'Écrit / CCF selon statut' },
     ],
-    rhythm: '15 jours par mois à l’école et 15 jours par mois en entreprise.',
+    rhythm: btsRhythms.MOS.description,
     examLocation: 'Les épreuves finales nécessitant une convocation se déroulent en présentiel, selon les indications de l’académie.',
     admission: [
       'Étude du dossier et validation de la cohérence du projet professionnel.',
@@ -269,7 +271,7 @@ export const btsExpandedCourses: Record<BtsExpandedCourseKey, BtsExpandedCourse>
       { title: 'Gestion opérationnelle', coefficient: '3', format: 'Écrit' },
       { title: 'Management de l’équipe commerciale', coefficient: '3', format: 'Écrit ou CCF' },
     ],
-    rhythm: '2 jours par semaine à l’école et 3 jours par semaine en entreprise.',
+    rhythm: btsRhythms.MCO.description,
     examLocation: 'Les épreuves ponctuelles sont organisées en présentiel dans le centre indiqué sur la convocation académique.',
     admission: [
       'Étude du dossier et validation du projet d’alternance.',
@@ -372,7 +374,7 @@ export const btsExpandedCourses: Record<BtsExpandedCourseKey, BtsExpandedCourse>
       { title: 'Relation client à distance et digitalisation', coefficient: '4', format: 'Écrit et pratique' },
       { title: 'Relation client et animation de réseaux', coefficient: '3', format: 'Oral ou CCF' },
     ],
-    rhythm: '2 jours par semaine à l’école et 3 jours par semaine en entreprise.',
+    rhythm: btsRhythms.NDRC.description,
     examLocation: 'Les épreuves ponctuelles sont organisées en présentiel dans le centre indiqué sur la convocation académique.',
     admission: [
       'Étude du dossier et validation du projet d’alternance.',
@@ -478,7 +480,7 @@ export const btsExpandedCourses: Record<BtsExpandedCourseKey, BtsExpandedCourse>
       { title: 'Mise en œuvre des opérations internationales', coefficient: '5', format: 'Écrit' },
       { title: 'Développement commercial international', coefficient: '4', format: 'Oral ou CCF' },
     ],
-    rhythm: '2 jours par semaine à l’école et 3 jours par semaine en entreprise.',
+    rhythm: btsRhythms.CI.description,
     examLocation: 'Les épreuves ponctuelles sont organisées en présentiel dans le centre indiqué sur la convocation académique.',
     admission: [
       'Étude du dossier et validation du projet d’alternance.',
@@ -597,7 +599,7 @@ export const btsExpandedCourses: Record<BtsExpandedCourseKey, BtsExpandedCourse>
       { title: 'Conseil en gestion du bâti et changement climatique', coefficient: '3', format: 'Écrit ou CCF' },
       { title: 'Construction d’une professionnalité dans l’immobilier', coefficient: '3', format: 'Oral ou CCF' },
     ],
-    rhythm: '2 jours par semaine à l’école et 3 jours par semaine en entreprise.',
+    rhythm: btsRhythms.PI.description,
     examLocation: 'Les épreuves ponctuelles sont organisées en présentiel dans le centre indiqué sur la convocation académique.',
     admission: [
       'Étude du dossier et validation du projet d’alternance.',

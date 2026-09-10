@@ -13,7 +13,7 @@ export type TrainingJourneyStep = {
   visual: ReactNode;
 };
 
-export type TrainingJourneyTheme = 'orange' | 'blue' | 'green' | 'red' | 'violet';
+export type TrainingJourneyTheme = 'orange' | 'blue' | 'green' | 'red' | 'violet' | 'bts';
 
 type TrainingJourneyProps = {
   id: string;

@@ -90,3 +90,21 @@
 .journey:is([data-theme='green'], [data-theme='red'], [data-theme='violet']) .visual[data-scene='0'] { background: radial-gradient(ellipse at 80% 10%, #fff, transparent 65%), #e6e9eb; }
 .journey:is([data-theme='green'], [data-theme='red'], [data-theme='violet']) .visual[data-scene='3'] { background: radial-gradient(ellipse at 85% 10%, var(--journey-light), transparent 70%), var(--accent-soft); }
 .journey:is([data-theme='green'], [data-theme='red'], [data-theme='violet']) .visualCounter { color: var(--accent-strong); }
+
+/* Inherit the individual BTS page identity without changing scroll behavior. */
+.journey[data-theme='bts'] {
+  --accent: rgb(var(--bts-600));
+  --accent-strong: rgb(var(--bts-700));
+  --accent-soft: rgb(var(--bts-50));
+  --accent-hover: rgb(var(--bts-800));
+  --accent-focus: rgb(var(--bts-600));
+  --accent-nav: rgb(var(--bts-100));
+  --accent-current: rgb(var(--bts-800));
+  --journey-light: rgb(var(--bts-200));
+  --journey-solid: rgb(var(--bts-700));
+}
+.journey[data-theme='bts'] .visual { background: radial-gradient(ellipse at 90% 5%, #fff, transparent 65%), rgb(var(--bts-50)); }
+.journey[data-theme='bts'] .visual[data-scene='0'] { background: radial-gradient(ellipse at 80% 10%, #fff, transparent 65%), rgb(var(--bts-100)); }
+.journey[data-theme='bts'] .visual[data-scene='2'] { background: radial-gradient(ellipse at 20% 80%, rgb(var(--bts-100)), transparent 70%), rgb(var(--bts-50)); }
+.journey[data-theme='bts'] .visual[data-scene='3'] { background: radial-gradient(ellipse at 85% 10%, rgb(var(--bts-200)), transparent 70%), rgb(var(--bts-50)); }
+.journey[data-theme='bts'] .visualCounter { color: var(--accent-strong); }

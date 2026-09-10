@@ -1,3 +1,4 @@
+import { btsRhythms } from '@/data/btsRhythms';
 import { CourseJourney } from '@/components/CourseJourney';
 import { createPageMetadata } from '@/lib/seo';
 import { bts } from "@/data/site";
@@ -43,7 +44,8 @@ export default function Page() {
         <section id="alternance-bts" className="page-container scroll-mt-36 py-12">
           <div className="grid gap-5 md:grid-cols-3">
             <FeatureCard title="Rythme">
-              2 jours de cours et 3 jours en entreprise chaque semaine.
+              BTS MOS : {btsRhythms.MOS.description}<br />
+              BTS MCO, NDRC, CI, PI et CG : {btsRhythms.MCO.description}<br />
               Les cours sont proposés en présentiel ou en visioconférence,
               selon les modalités du parcours.
             </FeatureCard>

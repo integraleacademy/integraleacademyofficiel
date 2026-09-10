@@ -87,6 +87,15 @@
   --line: rgba(167, 139, 250, .52);
 }
 
+.gallery.bts, .illustration.bts {
+  --accent: rgb(var(--bts-700, 29 78 216));
+  --accent-2: rgb(var(--bts-400, 96 165 250));
+  --accent-rgb: var(--bts-600-comma, 37, 99, 235);
+  --soft: rgb(var(--bts-100, 219 234 254));
+  --surface: rgb(var(--bts-50, 239 246 255));
+  --line: rgb(var(--bts-400, 96 165 250) / .5);
+}
+
 .intro {
   position: relative;
   display: grid;

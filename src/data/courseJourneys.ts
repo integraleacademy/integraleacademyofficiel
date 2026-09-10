@@ -1,4 +1,5 @@
 import type { TrainingJourneyStep, TrainingJourneyTheme } from '@/components/TrainingJourney';
+import { btsRhythms, type BtsCode } from '@/data/btsRhythms';
 
 type Four<T> = readonly [T, T, T, T];
 type Pair<T> = readonly [T, T];
@@ -228,7 +229,7 @@ const fireAndFirstAidJourneys = {
 } satisfies Record<string, CourseJourneyConfig>;
 
 type BtsJourneyProfile = {
-  code: string;
+  code: BtsCode;
   name: string;
   headline: Pair<string>;
   pitch: string;
@@ -241,22 +242,23 @@ type BtsJourneyProfile = {
 };
 
 function btsJourney(profile: BtsJourneyProfile): CourseJourneyConfig {
+  const rhythm = btsRhythms[profile.code];
   return {
-    id: `parcours-bts-${profile.code.toLowerCase()}`, name: `BTS ${profile.code}`, theme: 'blue', eyebrow: `VOTRE AVENIR EN ALTERNANCE · BTS ${profile.code}`,
+    id: `parcours-bts-${profile.code.toLowerCase()}`, name: `BTS ${profile.code}`, theme: 'bts', eyebrow: `VOTRE AVENIR EN ALTERNANCE · BTS ${profile.code}`,
     heading: [`Votre projet, votre BTS ${profile.code}.`, 'Passez à la prochaine étape.'],
     shortcut: { href: '#admission', label: 'Candidater', ariaLabel: `Voir les admissions du BTS ${profile.code}` },
     steps: [
       copy('Votre projet', profile.headline.join(' '), profile.pitch, profile.competencyHref, 'Découvrir les compétences'),
-      copy('Votre alternance', 'Deux ans pour apprendre et prendre votre place.', `Votre BTS ${profile.code} associe deux jours de cours et trois jours en entreprise. Les cours se suivent à Puget-sur-Argens ou en visioconférence, selon les modalités validées avec l’équipe admissions.`, '#alternance', 'Comprendre mon alternance'),
+      copy('Votre alternance', 'Deux ans pour apprendre et prendre votre place.', `Le rythme du BTS ${profile.code} : ${rhythm.description} Les cours se suivent à Puget-sur-Argens ou en visioconférence, selon les modalités validées avec l’équipe admissions.`, '#alternance', 'Comprendre mon alternance'),
       copy('Votre expérience', 'Ce que vous apprenez prend vie en entreprise.', `Votre alternance vous permet de mettre en pratique les compétences du BTS ${profile.code}. Vous prenez part à des missions concrètes, développez votre posture professionnelle et construisez progressivement votre expérience.`, '#programme', 'Explorer le programme'),
       copy('Votre prochain chapitre', 'Un diplôme. Une expérience. De nouvelles perspectives.', `${profile.outcome} Votre parcours prépare un diplôme national de niveau Bac+2. L’équipe vous accompagne dans votre candidature et les étapes vers l’entreprise d’accueil.`, '#admission', 'Préparer ma candidature'),
     ],
     opening: { kicker: 'VOTRE AVENIR SE CONSTRUIT MAINTENANT.', heading: profile.headline, text: profile.pitch, verbs: profile.verbs },
     study: { value: '2', unit: 'ANS · EN ALTERNANCE', heading: ['J’apprends.', 'Je mets en pratique.'], panels: [
-      { label: 'LES COURS', value: '2', unit: 'jours', detail: 'À l’école ou en visioconférence' },
-      { label: 'L’ENTREPRISE', value: '3', unit: 'jours', detail: 'Des missions professionnelles concrètes' },
+      { label: 'LES COURS', value: String(rhythm.schoolDays), unit: 'jours', detail: 'À l’école ou en visioconférence' },
+      { label: 'L’ENTREPRISE', value: String(rhythm.companyDays), unit: 'jours', detail: 'Des missions professionnelles concrètes' },
     ], skills: profile.skills },
-    practice: { heading: ['Votre formation.', 'La réalité du métier.'], eyebrow: `EN ENTREPRISE · BTS ${profile.code}`, rows: profile.missions, note: 'Un rythme hebdomadaire qui relie les cours à votre expérience.' },
+    practice: { heading: ['Votre formation.', 'La réalité du métier.'], eyebrow: `EN ENTREPRISE · BTS ${profile.code}`, rows: profile.missions, note: rhythm.note },
     outcome: { heading: ['Votre talent.', 'De nouvelles possibilités.'], code: `BTS ${profile.code}`, role: profile.name, milestones: [
       { label: '01 · BAC+2', title: 'Le diplôme.', text: 'Préparer les compétences et les épreuves', href: '#programme' },
       { label: '02 · ALTERNANCE', title: 'L’expérience.', text: 'Apprendre au sein d’une entreprise', href: profile.hasBenefitsSection === false ? '#alternance' : '#avantages-bts' },
@@ -345,14 +347,14 @@ const btsOverviewJourney: CourseJourneyConfig = {
   shortcut: { href: '#formations-bts', label: 'Les BTS', ariaLabel: 'Comparer les six formations BTS' },
   steps: [
     copy('Votre projet', 'Choisissez le domaine qui vous donne envie d’avancer.', 'Sécurité, commerce, relation client, international, immobilier ou comptabilité : découvrez nos six BTS et les compétences qu’ils permettent de développer.', '#formations-bts', 'Découvrir les six BTS'),
-    copy('Votre alternance', 'Un diplôme et une expérience qui se construisent ensemble.', 'Deux jours de cours et trois jours en entreprise : l’alternance relie les apprentissages à la réalité professionnelle. Les modalités de présentiel ou de visioconférence sont précisées sur chaque parcours.', '#alternance-bts', 'Comprendre le rythme'),
+    copy('Votre alternance', 'Un diplôme et une expérience qui se construisent ensemble.', `BTS MOS : ${btsRhythms.MOS.description} Pour les BTS MCO, NDRC, CI, PI et CG : ${btsRhythms.MCO.description} Les modalités de présentiel ou de visioconférence sont précisées sur chaque parcours.`, '#alternance-bts', 'Comprendre le rythme'),
     copy('Votre expérience', 'Apprendre un métier en participant à la vie d’une entreprise.', 'Conseiller un client, préparer une prestation, suivre une opération ou analyser des résultats : les missions dépendent du BTS et de l’entreprise qui vous accueille.', '#formations-bts', 'Trouver mon domaine'),
     copy('Votre prochain chapitre', 'Faites le premier pas vers votre BTS.', 'L’équipe admissions étudie votre dossier et votre projet. Elle vous accompagne dans les étapes de candidature, de recherche d’entreprise et de préparation du contrat d’apprentissage.', 'https://inscriptionsbts.onrender.com/', 'Préparer ma candidature'),
   ],
   opening: { kicker: 'VOTRE TALENT A DE L’AVENIR.', heading: ['Trouvez votre voie.', 'Prenez votre élan.'], text: 'Six BTS, des univers différents et une même ambition : vous aider à construire votre avenir professionnel.', verbs: ['Choisir', 'Apprendre', 'Avancer'] },
   study: { value: '2', unit: 'ANS · EN ALTERNANCE', heading: ['Un pied à l’école.', 'Un pied en entreprise.'], panels: [
-    { label: 'LES COURS', value: '2', unit: 'jours', detail: 'Apprendre avec les formateurs' },
-    { label: 'L’ENTREPRISE', value: '3', unit: 'jours', detail: 'Développer votre expérience' },
+    { label: 'BTS MOS', value: '15 / 15', unit: 'jours', detail: '15 jours à l’école, puis 15 jours en entreprise' },
+    { label: 'LES CINQ AUTRES BTS', value: '2 / 3', unit: 'jours', detail: '2 jours à l’école, 3 jours en entreprise par semaine' },
   ], skills: ['Compétences métier', 'Matières générales', 'Projets professionnels', 'Préparation du diplôme'] },
   practice: { heading: ['Votre curiosité.', 'Votre terrain de jeu.'], eyebrow: 'SIX PARCOURS À DÉCOUVRIR', rows: [
     { title: 'Sécurité et commerce', text: 'BTS MOS · BTS MCO' },

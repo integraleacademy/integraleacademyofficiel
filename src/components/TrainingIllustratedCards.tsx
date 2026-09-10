@@ -12,7 +12,7 @@ export type TrainingIllustratedCard = {
 
 export function TrainingIllustratedCards({ items, theme }: {
   items: readonly TrainingIllustratedCard[];
-  theme: 'blue' | 'orange' | 'violet';
+  theme: 'blue' | 'orange' | 'violet' | 'bts';
 }) {
   return <div className={`${styles.cards} ${styles[theme]}`}>
     {items.map((item, index) => <article key={item.title} className={`${styles.card} ${item.wide ? styles.wide : ''}`}>

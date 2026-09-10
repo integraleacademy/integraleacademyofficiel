@@ -32,7 +32,7 @@ export function BtsSectionNavigation({
       items={items}
       registrationHref={registrationHref}
       registrationLabel="Je candidate"
-      theme="blue"
+      theme="bts"
       externalRegistration
       ariaLabel={`Sommaire du BTS ${code}`}
     />

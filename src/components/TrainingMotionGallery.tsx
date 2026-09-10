@@ -28,7 +28,7 @@ const galleries: Record<TrainingMotionGalleryVariant, {
   eyebrow: string;
   title: string;
   intro: string;
-  theme: 'green' | 'red' | 'rescue' | 'orange' | 'blue' | 'violet';
+  theme: 'green' | 'red' | 'rescue' | 'orange' | 'blue' | 'violet' | 'bts';
   stories: readonly Story[];
 }> = {
   a3p: {
@@ -105,7 +105,7 @@ const galleries: Record<TrainingMotionGalleryVariant, {
     eyebrow: 'BTS MOS en mouvement',
     title: 'Le management de la sécurité, en images.',
     intro: 'Du terrain au pilotage, visualisez les responsabilités qui structurent une prestation de sécurité.',
-    theme: 'blue',
+    theme: 'bts',
     stories: [
       ['mission-map', 'Planifier les missions', 'Animation d’un responsable organisant les moyens et les missions d’une prestation de sécurité'],
       ['site-check', 'Superviser le terrain', 'Animation d’un site dont les accès et les points de contrôle sont supervisés'],
@@ -119,7 +119,7 @@ const galleries: Record<TrainingMotionGalleryVariant, {
     eyebrow: 'BTS MCO en mouvement',
     title: 'Le commerce et le management, en images.',
     intro: 'Du conseil client au pilotage des résultats, découvrez les compétences d’un manager commercial opérationnel.',
-    theme: 'blue',
+    theme: 'bts',
     stories: [
       ['business', 'Piloter l’unité commerciale', 'Animation d’une unité commerciale organisée autour de ses clients et de ses objectifs'],
       ['profile-review', 'Comprendre les clients', 'Animation d’un profil client analysé afin de proposer une réponse personnalisée'],
@@ -133,7 +133,7 @@ const galleries: Record<TrainingMotionGalleryVariant, {
     eyebrow: 'BTS NDRC en mouvement',
     title: 'La relation client à 360°, en images.',
     intro: 'Prospection, négociation et fidélisation : visualisez une relation commerciale devenue pleinement omnicanale.',
-    theme: 'blue',
+    theme: 'bts',
     stories: [
       ['risk-radar', 'Identifier les prospects', 'Animation d’un marché analysé pour repérer de nouvelles opportunités commerciales'],
       ['emergency-call', 'Entrer en relation', 'Animation d’une prise de contact menée par téléphone et outils numériques'],
@@ -147,7 +147,7 @@ const galleries: Record<TrainingMotionGalleryVariant, {
     eyebrow: 'BTS CI en mouvement',
     title: 'Les échanges internationaux, en images.',
     intro: 'Des marchés étrangers à la livraison, visualisez les étapes d’une opération commerciale internationale.',
-    theme: 'blue',
+    theme: 'bts',
     stories: [
       ['risk-radar', 'Étudier les marchés', 'Animation d’opportunités repérées et comparées sur plusieurs marchés internationaux'],
       ['mission-map', 'Organiser les flux', 'Animation d’un itinéraire commercial reliant plusieurs partenaires internationaux'],
@@ -161,7 +161,7 @@ const galleries: Record<TrainingMotionGalleryVariant, {
     eyebrow: 'BTS PI en mouvement',
     title: 'L’immobilier, en images.',
     intro: 'De l’estimation à la gestion, visualisez les missions qui rythment une activité immobilière.',
-    theme: 'blue',
+    theme: 'bts',
     stories: [
       ['site-check', 'Découvrir et estimer un bien', 'Animation d’un bien immobilier observé et analysé avant son estimation'],
       ['profile-review', 'Comprendre le projet client', 'Animation du projet d’un acquéreur, vendeur, bailleur ou locataire analysé'],
@@ -175,7 +175,7 @@ const galleries: Record<TrainingMotionGalleryVariant, {
     eyebrow: 'BTS CG en mouvement',
     title: 'La gestion et la comptabilité, en images.',
     intro: 'De la pièce comptable au tableau de bord, visualisez les opérations qui rendent une entreprise plus fiable.',
-    theme: 'blue',
+    theme: 'bts',
     stories: [
       ['evidence', 'Enregistrer les opérations', 'Animation de pièces comptables classées puis enregistrées avec méthode'],
       ['feasibility', 'Contrôler les écritures', 'Animation d’écritures comptables vérifiées une à une avant validation'],
@@ -416,6 +416,6 @@ export function TrainingMotionGallery({ variant, className = '' }: { variant: Tr
   </section>;
 }
 
-export function TrainingMotionIllustration({ kind, theme = 'blue', description }: { kind: SceneKind; theme?: 'blue' | 'red' | 'green' | 'orange' | 'violet'; description: string }) {
+export function TrainingMotionIllustration({ kind, theme = 'blue', description }: { kind: SceneKind; theme?: 'blue' | 'red' | 'green' | 'orange' | 'violet' | 'bts'; description: string }) {
   return <div className={`${styles.illustration} ${styles[theme]}`} role="img" aria-label={description}><Scene kind={kind} /></div>;
 }

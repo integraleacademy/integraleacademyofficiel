@@ -1,3 +1,5 @@
+import btsStyles from './BtsIdentity.module.css';
+import { btsRhythms } from '@/data/btsRhythms';
 import { CourseJourney } from '@/components/CourseJourney';
 import { serializeCourseJsonLd } from '@/lib/seo';
 import Link from 'next/link';
@@ -116,18 +118,18 @@ function CTA({
   external?: boolean;
 }) {
   const styles = {
-    dark: 'bg-[#0D1725] text-white hover:bg-black',
-    gold: 'bg-academy-gold text-academy-gold-text hover:brightness-105',
+    dark: 'bg-bts-700 text-white hover:bg-bts-800',
+    gold: 'bg-bts-200 text-bts-950 hover:brightness-105',
     light: 'border border-academy-line bg-white text-academy-ink hover:bg-academy-bg',
     outline: 'border border-white/30 bg-white/5 text-white hover:bg-white/12',
-    blue: 'bg-[#4AA8FF] text-[#07121F] hover:bg-[#72BCFF]',
+    blue: 'bg-bts-300 text-[#07121F] hover:bg-bts-200',
   };
   return (
     <Link
       href={href}
       target={external ? '_blank' : undefined}
       rel={external ? 'noopener noreferrer' : undefined}
-      className={`inline-flex min-h-12 items-center justify-center rounded-full px-5 py-3 text-center text-sm font-black transition hover:-translate-y-0.5 focus:outline-none focus:ring-4 focus:ring-academy-gold/25 ${styles[variant]} ${className}`}
+      className={`inline-flex min-h-12 items-center justify-center rounded-full px-5 py-3 text-center text-sm font-black transition hover:-translate-y-0.5 focus:outline-none focus:ring-4 focus:ring-bts-200/25 ${styles[variant]} ${className}`}
     >
       {children}
     </Link>
@@ -136,7 +138,7 @@ function CTA({
 
 function Eyebrow({ children, light = false }: { children: ReactNode; light?: boolean }) {
   return (
-    <p className={`text-[.66rem] font-black uppercase tracking-[.24em] ${light ? 'text-sky-300' : 'text-yellow-700'}`}>
+    <p className={`text-[.66rem] font-black uppercase tracking-[.24em] ${light ? 'text-bts-300' : 'text-bts-700'}`}>
       {children}
     </p>
   );
@@ -194,7 +196,7 @@ function HeroRoadmap() {
   ];
   return (
     <aside className="relative rounded-[2rem] border border-white/60 bg-[#FFFDF8] p-5 text-academy-ink shadow-[0_34px_100px_rgba(0,0,0,.34)] sm:p-6">
-      <span className="absolute -right-2 -top-3 rounded-full bg-[#FF6B55] px-3 py-2 text-[.58rem] font-black uppercase tracking-[.14em] text-white shadow-soft">
+      <span className="absolute -right-2 -top-3 rounded-full bg-bts-700 px-3 py-2 text-[.58rem] font-black uppercase tracking-[.14em] text-white shadow-soft">
         Admissions 2026
       </span>
       <div className="flex items-start justify-between gap-3">
@@ -202,31 +204,31 @@ function HeroRoadmap() {
           <Eyebrow>Votre trajectoire</Eyebrow>
           <h2 className="mt-2 text-2xl font-black">Objectif : BTS MCO</h2>
         </div>
-        <span className="rounded-full bg-emerald-50 px-3 py-1.5 text-[.6rem] font-black uppercase tracking-[.12em] text-emerald-800 ring-1 ring-emerald-200">
+        <span className="rounded-full bg-bts-50 px-3 py-1.5 text-[.6rem] font-black uppercase tracking-[.12em] text-bts-800 ring-1 ring-bts-200">
           Dossier en ligne
         </span>
       </div>
       <div className="mt-5 rounded-[1.5rem] border border-[#E4D9C8] bg-[#F4EFE6] p-4">
         {steps.map(([number, title, detail, status], index) => (
           <div key={number} className={`grid grid-cols-[2.3rem_1fr_auto] items-center gap-3 py-3 ${index ? 'border-t border-[#DED4C5]' : ''}`}>
-            <span className="grid h-9 w-9 place-items-center rounded-xl bg-[#0D1725] text-[.65rem] font-black text-academy-gold">
+            <span className="grid h-9 w-9 place-items-center rounded-xl bg-[#0D1725] text-[.65rem] font-black text-bts-200">
               {number}
             </span>
             <div>
               <p className="text-sm font-black">{title}</p>
               <p className="mt-0.5 text-[.68rem] font-semibold text-academy-muted">{detail}</p>
             </div>
-            <span className="text-[.6rem] font-black text-emerald-700">{status}</span>
+            <span className="text-[.6rem] font-black text-bts-700">{status}</span>
           </div>
         ))}
       </div>
       <div className="mt-3 grid gap-3 sm:grid-cols-2">
         <div className="rounded-2xl border border-academy-line bg-white p-4">
-          <p className="text-[.6rem] font-black uppercase tracking-[.15em] text-yellow-700">École</p>
+          <p className="text-[.6rem] font-black uppercase tracking-[.15em] text-bts-700">École</p>
           <p className="mt-1 font-black">Puget-sur-Argens</p>
         </div>
         <div className="rounded-2xl border border-academy-line bg-white p-4">
-          <p className="text-[.6rem] font-black uppercase tracking-[.15em] text-sky-700">Ou à distance</p>
+          <p className="text-[.6rem] font-black uppercase tracking-[.15em] text-bts-700">Ou à distance</p>
           <p className="mt-1 font-black">Visio en direct</p>
         </div>
       </div>
@@ -236,7 +238,7 @@ function HeroRoadmap() {
 
 export function BtsMcoReferencePage() {
   return (
-    <main className="relative overflow-x-clip pb-24 lg:pb-0">
+    <main data-bts="mco" className={`${btsStyles.page} relative overflow-x-clip pb-24 lg:pb-0`}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -277,17 +279,17 @@ export function BtsMcoReferencePage() {
       />
 
       <section className="relative isolate overflow-hidden bg-[#0A1725] px-4 pb-8 pt-10 text-white sm:pt-14 lg:pt-16">
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_12%_76%,rgba(124,99,255,.25),transparent_29%),radial-gradient(circle_at_87%_12%,rgba(244,166,33,.22),transparent_28%),linear-gradient(135deg,#07111E_0%,#0E2035_62%,#111922_100%)]" />
+        <div className={`absolute inset-0 -z-10 ${btsStyles.heroGlow}`} />
         <div className="absolute inset-0 -z-10 opacity-25 [background-image:linear-gradient(rgba(255,255,255,.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.08)_1px,transparent_1px)] [background-size:48px_48px]" />
         <div className="page-container">
           <div className="grid items-center gap-9 lg:grid-cols-[1.08fr_.92fr] lg:gap-12">
             <div>
-              <span className="inline-flex items-center gap-2 rounded-full border border-sky-300/35 bg-white/8 px-4 py-2 text-[.66rem] font-black uppercase tracking-[.18em] text-sky-100 backdrop-blur">
-                <span className="h-2.5 w-2.5 rounded-full bg-academy-gold shadow-[0_0_16px_rgba(239,184,50,.9)]" />
+              <span className="inline-flex items-center gap-2 rounded-full border border-bts-300/35 bg-white/8 px-4 py-2 text-[.66rem] font-black uppercase tracking-[.18em] text-bts-100 backdrop-blur">
+                <span className="h-2.5 w-2.5 rounded-full bg-bts-200 shadow-[0_0_16px_rgb(var(--bts-300)/.7)]" />
                 Diplôme d’État · Bac+2 · RNCP 38362
               </span>
               <h1 className="mt-5 max-w-4xl text-4xl font-black tracking-[-.06em] sm:text-5xl lg:text-6xl xl:text-7xl">
-                Prenez les commandes <span className="text-[#FFD56A]">du commerce.</span>
+                Prenez les commandes <span className="text-bts-200">du commerce.</span>
               </h1>
               <p className="mt-5 max-w-2xl text-lg font-medium leading-8 text-white/70 sm:text-xl">
                 Avec le BTS MCO, apprenez à vendre, animer une offre, piloter les résultats et manager une équipe — en magasin, dans les services ou le e-commerce.
@@ -298,8 +300,8 @@ export function BtsMcoReferencePage() {
               </div>
               <div className="mt-6 flex flex-wrap gap-2 text-xs font-bold text-white/75">
                 <span className="rounded-full border border-white/15 bg-white/7 px-3 py-2">✓ Sans frais de scolarité pour l’apprenti*</span>
-                <span className="rounded-full border border-sky-300/35 bg-sky-300/10 px-3 py-2 text-sky-100">✓ iPad offert dès la signature</span>
-                <span className="rounded-full border border-academy-gold/40 bg-academy-gold/10 px-3 py-2 text-[#FFD56A]">✓ Londres en 2ᵉ année · 100 % pris en charge</span>
+                <span className="rounded-full border border-bts-300/35 bg-bts-300/10 px-3 py-2 text-bts-100">✓ iPad offert dès la signature</span>
+                <span className="rounded-full border border-bts-200/40 bg-bts-200/10 px-3 py-2 text-bts-200">✓ Londres en 2ᵉ année · 100 % pris en charge</span>
                 <span className="rounded-full border border-white/15 bg-white/7 px-3 py-2">✓ Présentiel ou visioconférence</span>
                 <span className="rounded-full border border-white/15 bg-white/7 px-3 py-2">✓ Accompagnement jusqu’au contrat</span>
               </div>
@@ -309,7 +311,7 @@ export function BtsMcoReferencePage() {
           <div className="mt-10 grid overflow-hidden rounded-[1.6rem] border border-white/10 bg-white/7 sm:grid-cols-2 lg:grid-cols-4">
             {[
               ['Durée', '2 ans en alternance'],
-              ['Alternance', '2 jours école · 3 jours entreprise'],
+              ['Alternance', btsRhythms.MCO.shortLabel],
               ['Diplôme', 'Diplôme d’État · Bac+2'],
               ['Admission', 'Après le bac'],
             ].map(([key, value]) => (
@@ -337,24 +339,24 @@ export function BtsMcoReferencePage() {
       >
         <div className="grid gap-5 lg:grid-cols-2">
           <article className="rounded-[2rem] border border-[#22354C] bg-[#0D1725] p-6 text-white shadow-card sm:p-8">
-            <span className="grid h-14 w-14 place-items-center rounded-2xl bg-sky-400/15 text-2xl text-sky-300">↗</span>
+            <span className="grid h-14 w-14 place-items-center rounded-2xl bg-bts-400/15 text-2xl text-bts-300">↗</span>
             <Eyebrow light>Pour le futur étudiant</Eyebrow>
             <h3 className="mt-4 text-3xl font-black tracking-[-.04em]">Vous aimez convaincre, créer et relever des défis.</h3>
             <p className="mt-4 leading-7 text-white/62">Le BTS MCO transforme votre énergie en compétences : vente, digital, gestion, animation commerciale et management d’équipe.</p>
             <div className="mt-6 grid gap-3">
               {['Des missions commerciales dès la formation', 'Un quotidien vivant, humain et concret', 'Des compétences pour évoluer rapidement'].map((item) => (
-                <p key={item} className="flex items-center gap-3 rounded-2xl bg-white/7 p-4 font-bold"><span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-emerald-500 text-xs">✓</span>{item}</p>
+                <p key={item} className="flex items-center gap-3 rounded-2xl bg-white/7 p-4 font-bold"><span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-bts-500 text-xs">✓</span>{item}</p>
               ))}
             </div>
           </article>
           <article className="rounded-[2rem] border border-academy-line bg-[#FFFDF8] p-6 shadow-card sm:p-8">
-            <span className="grid h-14 w-14 place-items-center rounded-2xl bg-[#FFF0C4] text-2xl text-yellow-700">◎</span>
+            <span className="grid h-14 w-14 place-items-center rounded-2xl bg-bts-100 text-2xl text-bts-700">◎</span>
             <Eyebrow>Pour les parents</Eyebrow>
             <h3 className="mt-4 text-3xl font-black tracking-[-.04em]">Vous cherchez un diplôme solide et un cadre sérieux.</h3>
             <p className="mt-4 leading-7 text-academy-muted">Le parcours associe un diplôme national, deux années d’expérience professionnelle et le suivi d’une équipe identifiée.</p>
             <div className="mt-6 grid gap-3">
               {['Diplôme d’État de niveau 5 — RNCP 38362', 'Sans frais de scolarité pour l’apprenti*', 'Accompagnement de la candidature jusqu’au contrat'].map((item) => (
-                <p key={item} className="flex items-center gap-3 rounded-2xl bg-academy-bg p-4 font-bold"><span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-emerald-500 text-xs text-white">✓</span>{item}</p>
+                <p key={item} className="flex items-center gap-3 rounded-2xl bg-academy-bg p-4 font-bold"><span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-bts-500 text-xs text-white">✓</span>{item}</p>
               ))}
             </div>
             <CTA href={contactHref('Question d’un parent sur le BTS MCO')} variant="light" className="mt-6">Poser une question à Aurélie →</CTA>
@@ -369,10 +371,10 @@ export function BtsMcoReferencePage() {
         intro={<>Le BTS MCO vous apprend à comprendre les clients, développer les ventes, gérer une unité commerciale et animer une équipe.</>}
         tone="paper"
       >
-        <TrainingIllustratedCards items={careerSteps} theme="blue" />
-        <div className="mt-6 grid items-center gap-5 rounded-[1.7rem] border border-blue-200 bg-blue-50 p-6 sm:grid-cols-[1fr_auto]">
-          <div><Eyebrow>Votre montée en compétences</Eyebrow><h3 className="mt-3 text-2xl font-black text-blue-950">Une vision complète du commerce moderne.</h3><p className="mt-3 max-w-3xl text-sm leading-7 text-blue-950/70">Vous progressez de la vente conseil au pilotage des résultats, jusqu’au management d’une équipe commerciale.</p></div>
-          <div className="rounded-2xl border border-blue-200 bg-white/70 px-6 py-4"><p className="text-4xl font-black text-blue-700">4</p><p className="mt-2 max-w-[14rem] text-xs font-black uppercase tracking-[.12em] text-blue-950/70">grands blocs professionnels</p></div>
+        <TrainingIllustratedCards items={careerSteps} theme="bts" />
+        <div className="mt-6 grid items-center gap-5 rounded-[1.7rem] border border-bts-200 bg-bts-50 p-6 sm:grid-cols-[1fr_auto]">
+          <div><Eyebrow>Votre montée en compétences</Eyebrow><h3 className="mt-3 text-2xl font-black text-bts-950">Une vision complète du commerce moderne.</h3><p className="mt-3 max-w-3xl text-sm leading-7 text-bts-950/70">Vous progressez de la vente conseil au pilotage des résultats, jusqu’au management d’une équipe commerciale.</p></div>
+          <div className="rounded-2xl border border-bts-200 bg-white/70 px-6 py-4"><p className="text-4xl font-black text-bts-700">4</p><p className="mt-2 max-w-[14rem] text-xs font-black uppercase tracking-[.12em] text-bts-950/70">grands blocs professionnels</p></div>
         </div>
         <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {['Conseiller de vente', 'Chargé de clientèle', 'Manager adjoint', 'Responsable de rayon'].map((job) => (
@@ -390,15 +392,15 @@ export function BtsMcoReferencePage() {
       >
         <div className="grid gap-5 lg:grid-cols-2">
           <article className="rounded-[2rem] border border-academy-line bg-[#FFFDF8] p-6 shadow-card sm:p-8">
-            <span className="inline-flex rounded-full bg-emerald-50 px-3 py-2 text-[.62rem] font-black uppercase tracking-[.15em] text-emerald-800 ring-1 ring-emerald-200">● À l’école</span>
+            <span className="inline-flex rounded-full bg-bts-50 px-3 py-2 text-[.62rem] font-black uppercase tracking-[.15em] text-bts-800 ring-1 ring-bts-200">● À l’école</span>
             <h3 className="mt-6 text-3xl font-black tracking-[-.04em]">En présentiel à Puget-sur-Argens</h3>
             <p className="mt-4 leading-7 text-academy-muted">Un cadre vivant pour apprendre avec votre promotion, échanger directement avec les formateurs et profiter de l’école.</p>
             <div className="mt-6 grid gap-3 sm:grid-cols-2">
               {['Cours en groupe', 'Équipe sur place', 'Vie de promotion', 'Locaux dédiés'].map((item) => <p key={item} className="rounded-2xl bg-academy-bg p-4 text-sm font-black">✓ {item}</p>)}
             </div>
           </article>
-          <article className="rounded-[2rem] border border-[#284661] bg-[#102B48] p-6 text-white shadow-card sm:p-8">
-            <span className="inline-flex rounded-full bg-sky-400/15 px-3 py-2 text-[.62rem] font-black uppercase tracking-[.15em] text-sky-200 ring-1 ring-sky-300/30">◉ Classe virtuelle</span>
+          <article className="rounded-[2rem] border border-[#284661] bg-bts-950 p-6 text-white shadow-card sm:p-8">
+            <span className="inline-flex rounded-full bg-bts-400/15 px-3 py-2 text-[.62rem] font-black uppercase tracking-[.15em] text-bts-200 ring-1 ring-bts-300/30">◉ Classe virtuelle</span>
             <h3 className="mt-6 text-3xl font-black tracking-[-.04em]">100 % à distance en visioconférence</h3>
             <p className="mt-4 leading-7 text-white/62">De vrais cours en direct avec vos formateurs et votre promotion, depuis chez vous — pas une simple plateforme laissée en autonomie.</p>
             <div className="mt-6 grid gap-3 sm:grid-cols-2">
@@ -406,9 +408,9 @@ export function BtsMcoReferencePage() {
             </div>
           </article>
         </div>
-        <div className="mt-5 flex flex-col items-start justify-between gap-4 rounded-[1.7rem] border border-yellow-300 bg-yellow-50 p-5 sm:flex-row sm:items-center">
-          <div><p className="text-lg font-black text-yellow-950">Même diplôme d’État. Même programme. Même équipe à vos côtés.</p><p className="mt-1 text-sm font-semibold text-yellow-900/65">Le format est validé avec l’équipe admissions selon votre situation.</p></div>
-          <span className="rounded-full bg-white px-4 py-2 text-xs font-black text-academy-ink ring-1 ring-yellow-300">BTS MCO · RNCP 38362</span>
+        <div className="mt-5 flex flex-col items-start justify-between gap-4 rounded-[1.7rem] border border-bts-300 bg-bts-50 p-5 sm:flex-row sm:items-center">
+          <div><p className="text-lg font-black text-bts-950">Même diplôme d’État. Même programme. Même équipe à vos côtés.</p><p className="mt-1 text-sm font-semibold text-bts-900/65">Le format est validé avec l’équipe admissions selon votre situation.</p></div>
+          <span className="rounded-full bg-white px-4 py-2 text-xs font-black text-academy-ink ring-1 ring-bts-300">BTS MCO · RNCP 38362</span>
         </div>
       </Section>
 
@@ -430,19 +432,19 @@ export function BtsMcoReferencePage() {
                 ['03', 'À la sortie', 'Un diplôme et deux années d’expérience sur le CV'],
               ].map(([number, title, detail]) => (
                 <div key={number} className="grid grid-cols-[2.4rem_1fr] items-center gap-3 rounded-2xl bg-white/7 p-3">
-                  <span className="grid h-9 w-9 place-items-center rounded-xl bg-white/10 text-[.62rem] font-black text-academy-gold">{number}</span>
+                  <span className="grid h-9 w-9 place-items-center rounded-xl bg-white/10 text-[.62rem] font-black text-bts-200">{number}</span>
                   <div><p className="font-black">{title}</p><p className="mt-1 text-xs font-semibold text-white/48">{detail}</p></div>
                 </div>
               ))}
             </div>
           </article>
-          <article className="rounded-[2rem] border border-yellow-300 bg-[#F7E5AC] p-6 shadow-card sm:p-8">
+          <article className="rounded-[2rem] border border-bts-300 bg-bts-100 p-6 shadow-card sm:p-8">
             <Eyebrow>Côté budget</Eyebrow>
             <p className="mt-5 text-7xl font-black tracking-[-.08em]">0 €*</p>
             <h3 className="mt-5 text-3xl font-black tracking-[-.04em]">de frais de scolarité pour l’apprenti.</h3>
-            <p className="mt-4 leading-7 text-yellow-950/70">La formation est prise en charge dans le cadre du contrat d’alternance et de l’accord de l’entreprise avec son OPCO.</p>
+            <p className="mt-4 leading-7 text-bts-950/70">La formation est prise en charge dans le cadre du contrat d’alternance et de l’accord de l’entreprise avec son OPCO.</p>
             <CTA href={contactHref('Question sur le financement du BTS MCO')} variant="dark" className="mt-6">Poser ma question à Aurélie →</CTA>
-            <p className="mt-4 text-[.62rem] font-semibold text-yellow-950/55">* Sous réserve de la conclusion et de la prise en charge du contrat.</p>
+            <p className="mt-4 text-[.62rem] font-semibold text-bts-950/55">* Sous réserve de la conclusion et de la prise en charge du contrat.</p>
           </article>
         </div>
         <article className="mt-5 rounded-[2rem] border border-academy-line bg-academy-bg p-6 shadow-soft">
@@ -471,9 +473,9 @@ export function BtsMcoReferencePage() {
           {program.map(([number, title, text], index) => (
             <details key={number} open={index === 0} className="group rounded-[1.5rem] border border-academy-line bg-[#FFFDF8] p-5 shadow-soft">
               <summary className="flex cursor-pointer list-none items-center gap-3">
-                <span className={`grid h-10 w-10 shrink-0 place-items-center rounded-full text-xs font-black ${index >= 3 ? 'bg-[#0D1725] text-academy-gold' : 'bg-academy-bg text-academy-ink'}`}>{number}</span>
+                <span className={`grid h-10 w-10 shrink-0 place-items-center rounded-full text-xs font-black ${index >= 3 ? 'bg-[#0D1725] text-bts-200' : 'bg-academy-bg text-academy-ink'}`}>{number}</span>
                 <strong className="min-w-0 flex-1">{title}</strong>
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-academy-gold font-black transition group-open:rotate-45">+</span>
+                <span className="grid h-8 w-8 place-items-center rounded-full bg-bts-200 font-black transition group-open:rotate-45">+</span>
               </summary>
               <p className="ml-[3.25rem] mt-4 text-sm leading-6 text-academy-muted">{text}</p>
             </details>
@@ -486,7 +488,7 @@ export function BtsMcoReferencePage() {
               ['01', 'Épreuves nationales', 'Selon le référentiel de l’Éducation nationale'],
               ['02', 'Dossiers professionnels', 'Travaux et situations issus du parcours'],
               ['03', 'Expérience en entreprise', 'Compétences développées en alternance'],
-            ].map(([number, title, text]) => <article key={number} className="rounded-2xl border border-white/10 bg-white/7 p-4"><span className="grid h-9 w-9 place-items-center rounded-full bg-academy-gold text-xs font-black text-academy-gold-text">{number}</span><h4 className="mt-5 font-black">{title}</h4><p className="mt-2 text-xs leading-5 text-white/50">{text}</p></article>)}
+            ].map(([number, title, text]) => <article key={number} className="rounded-2xl border border-white/10 bg-white/7 p-4"><span className="grid h-9 w-9 place-items-center rounded-full bg-bts-200 text-xs font-black text-bts-950">{number}</span><h4 className="mt-5 font-black">{title}</h4><p className="mt-2 text-xs leading-5 text-white/50">{text}</p></article>)}
           </div>
         </div>
       </Section>
@@ -494,18 +496,18 @@ export function BtsMcoReferencePage() {
       <BtsCompleteInformation course="mco" />
 
       <section id="admission" className="relative isolate overflow-hidden bg-[#0A1725] px-4 py-14 text-white sm:py-16 lg:py-20">
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_14%_12%,rgba(239,184,50,.25),transparent_27%),linear-gradient(145deg,#07111D,#112641)]" />
+        <div className={`absolute inset-0 -z-10 ${btsStyles.admissionGlow}`} />
         <div className="absolute inset-0 -z-10 opacity-20 [background-image:linear-gradient(rgba(255,255,255,.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.08)_1px,transparent_1px)] [background-size:48px_48px]" />
         <div className="page-container">
           <Eyebrow light>06 — Admissions 2026</Eyebrow>
           <div className="mt-3 flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-end">
-            <div><h2 className="max-w-4xl text-3xl font-black tracking-[-.05em] sm:text-4xl lg:text-5xl">Votre candidature en cinq étapes. <span className="text-[#FFD56A]">Simple, claire, accompagnée.</span></h2><p className="mt-5 max-w-3xl text-base font-medium leading-8 text-white/62">Vous ne savez pas encore comment trouver une entreprise ? C’est normal. Commencez par votre candidature : notre équipe vous guide ensuite.</p></div>
+            <div><h2 className="max-w-4xl text-3xl font-black tracking-[-.05em] sm:text-4xl lg:text-5xl">Votre candidature en cinq étapes. <span className="text-bts-200">Simple, claire, accompagnée.</span></h2><p className="mt-5 max-w-3xl text-base font-medium leading-8 text-white/62">Vous ne savez pas encore comment trouver une entreprise ? C’est normal. Commencez par votre candidature : notre équipe vous guide ensuite.</p></div>
             <CTA href={applicationUrl} variant="gold" external>Je candidate pour 2026 →</CTA>
           </div>
           <div className="mt-9 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
             {admissionSteps.map(([number, title, text]) => (
               <article key={number} className="rounded-[1.6rem] border border-white/10 bg-white/7 p-5">
-                <span className="grid h-11 w-11 place-items-center rounded-full bg-academy-gold text-xs font-black text-academy-gold-text">{number}</span>
+                <span className="grid h-11 w-11 place-items-center rounded-full bg-bts-200 text-xs font-black text-bts-950">{number}</span>
                 <h3 className="mt-7 text-lg font-black">{title}</h3>
                 <p className="mt-3 text-sm leading-6 text-white/50">{text}</p>
               </article>
@@ -519,7 +521,7 @@ export function BtsMcoReferencePage() {
                 {['Conseiller de vente', 'Chargé de clientèle', 'Marchandiseur', 'Manager adjoint', 'Responsable de rayon', 'Poursuite d’études'].map((job) => <span key={job} className="rounded-full border border-academy-line bg-academy-bg px-4 py-2 text-xs font-black">{job}</span>)}
               </div>
             </article>
-            <article className="rounded-[2rem] bg-gradient-to-br from-[#EFB832] to-[#FFD56A] p-6 text-academy-gold-text shadow-gold">
+            <article className="rounded-[2rem] bg-gradient-to-br from-bts-300 to-bts-200 p-6 text-bts-950 shadow-gold">
               <Eyebrow>Votre avenir commence ici</Eyebrow>
               <h3 className="mt-3 text-3xl font-black">Prêt à révéler votre potentiel ?</h3>
               <p className="mt-4 text-sm font-semibold leading-6 opacity-70">Déposez votre candidature et échangez avec Aurélie avant toute décision définitive.</p>
@@ -530,7 +532,7 @@ export function BtsMcoReferencePage() {
       </section>
 
       <div id="faq-mco">
-        <PremiumFAQSection
+        <PremiumFAQSection theme="bts"
           badge="FAQ BTS MCO"
           title="Tout comprendre avant de vous lancer"
           description="Admission, alternance, entreprise, visioconférence, coût ou diplôme : Aurélie répond aux questions du jeune comme à celles de sa famille."
@@ -544,9 +546,9 @@ export function BtsMcoReferencePage() {
 
       <section className="bg-[#FFFDF8] px-4 py-8">
         <div className="page-container grid gap-4 rounded-[2rem] border border-academy-line bg-academy-bg p-5 shadow-soft sm:grid-cols-3">
-          <a href={`mailto:${aurelieEmail}`} className="rounded-2xl bg-white p-4 text-center transition hover:-translate-y-0.5"><p className="text-[.62rem] font-black uppercase tracking-[.15em] text-yellow-700">E-mail BTS</p><p className="mt-2 break-all font-black">{aurelieEmail}</p></a>
-          <a href={aurelieDirectHref} className="rounded-2xl bg-white p-4 text-center transition hover:-translate-y-0.5"><p className="text-[.62rem] font-black uppercase tracking-[.15em] text-yellow-700">Ligne directe</p><p className="mt-2 font-black">04 87 83 06 15</p></a>
-          <a href={aurelieMobileHref} className="rounded-2xl bg-white p-4 text-center transition hover:-translate-y-0.5"><p className="text-[.62rem] font-black uppercase tracking-[.15em] text-yellow-700">Portable</p><p className="mt-2 font-black">07 69 39 04 57</p></a>
+          <a href={`mailto:${aurelieEmail}`} className="rounded-2xl bg-white p-4 text-center transition hover:-translate-y-0.5"><p className="text-[.62rem] font-black uppercase tracking-[.15em] text-bts-700">E-mail BTS</p><p className="mt-2 break-all font-black">{aurelieEmail}</p></a>
+          <a href={aurelieDirectHref} className="rounded-2xl bg-white p-4 text-center transition hover:-translate-y-0.5"><p className="text-[.62rem] font-black uppercase tracking-[.15em] text-bts-700">Ligne directe</p><p className="mt-2 font-black">04 87 83 06 15</p></a>
+          <a href={aurelieMobileHref} className="rounded-2xl bg-white p-4 text-center transition hover:-translate-y-0.5"><p className="text-[.62rem] font-black uppercase tracking-[.15em] text-bts-700">Portable</p><p className="mt-2 font-black">07 69 39 04 57</p></a>
         </div>
       </section>
 

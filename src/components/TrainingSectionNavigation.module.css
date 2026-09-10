@@ -41,6 +41,13 @@
   --nav-accent-shadow: rgba(220, 38, 38, .2);
 }
 
+.courseNav[data-theme='bts'] {
+  --nav-accent: rgb(var(--bts-700));
+  --nav-accent-soft: rgb(var(--bts-50));
+  --nav-accent-border: rgb(var(--bts-200));
+  --nav-accent-shadow: rgb(var(--bts-600) / .2);
+}
+
 .courseNavShell {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
