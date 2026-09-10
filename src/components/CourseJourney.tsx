@@ -34,12 +34,13 @@ function JourneyCard({ config, index, onNext }: { config: CourseJourneyConfig; i
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img className={styles.coverPhoto} src={card.image} alt="" width="1536" height="1024" loading="lazy" decoding="async" />
       </>}
-      <div className={styles.orbit} aria-hidden="true"><Arrow rise /></div>
+      <div className={styles.orbit} aria-hidden="true" />
       <CardHeader label={config.name} />
       <div className={styles.openingBody}>
         <p className={styles.eyebrow}>{card.kicker}</p>
         <p className={styles.openingTitle}>{card.heading[0]}<br /><span>{card.heading[1]}</span></p>
         <p className={styles.subtitle}>{card.text}</p>
+        <span className={styles.openingArrow} aria-hidden="true"><Arrow rise /></span>
       </div>
       <div className={styles.verbs}>{card.verbs.map((verb, i) => <span key={verb}><small>0{i + 1}</small>{verb}</span>)}</div>
       {action}

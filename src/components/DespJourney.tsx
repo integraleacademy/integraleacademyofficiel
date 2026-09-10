@@ -40,12 +40,13 @@ function JourneyVisual({ index, onNext }: { index: number; onNext: () => void })
       {/* Existing school photo remains editable at the same path in GitHub. */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img className={styles.ambitionPhoto} src="/images/desp-initial-hero.jpg" alt="L’accueil de l’école Intégrale Academy" loading="lazy" decoding="async" width="1600" height="1200" />
-      <div className={styles.ambitionOrbit} aria-hidden="true"><Pictogram kind="rise" /></div>
+      <div className={styles.ambitionOrbit} aria-hidden="true" />
       <CardHeader label="Le déclic" />
       <div className={styles.ambitionBody}>
         <p className={styles.cardEyebrow}>ET SI C’ÉTAIT VOUS ?</p>
         <p className={styles.ambitionTitle}>Faites place<br />à votre <span>ambition.</span></p>
         <p className={styles.ambitionSubtitle}>Votre entreprise de sécurité.<br />Votre vision. Votre prochain chapitre.</p>
+        <span className={styles.openingArrow} aria-hidden="true"><Pictogram kind="rise" /></span>
       </div>
       <div className={styles.ambitionVerbs}><span><small>01</small>Créer</span><span><small>02</small>Reprendre</span><span><small>03</small>Diriger</span></div>
       <CardNextAction onNext={onNext} label={steps[1].label} />

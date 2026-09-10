@@ -55,12 +55,13 @@ function JourneyVisual({ index, onNext }: { index: number; onNext: () => void })
     {/* Existing training image; it remains editable in the APS image folder. */}
     {/* eslint-disable-next-line @next/next/no-img-element */}
     <img className={styles.coverPhoto} src="/images/aps/aps-hero-round.jpg" alt="Exercice pratique de ronde de sécurité pendant la formation APS" width="1536" height="1024" loading="lazy" decoding="async" />
-    <div className={styles.coverOrbit} aria-hidden="true"><Icon kind="rise" /></div>
+    <div className={styles.coverOrbit} aria-hidden="true" />
     <CardHeader label="Le déclic" />
     <div className={styles.ambitionBody}>
       <p className={styles.eyebrow}>ET SI C’ÉTAIT VOTRE TOUR ?</p>
       <p className={styles.ambitionTitle}>Un métier de terrain.<br /><span>Un rôle essentiel.</span></p>
       <p className={styles.subtitle}>Prévenir. Protéger. Rassurer.<br />Votre vigilance peut faire la différence.</p>
+      <span className={styles.openingArrow} aria-hidden="true"><Icon kind="rise" /></span>
     </div>
     <div className={styles.verbs}><span><small>01</small>Observer</span><span><small>02</small>Alerter</span><span><small>03</small>Agir</span></div>
     <CardNextAction onNext={onNext} label={steps[1].label} />

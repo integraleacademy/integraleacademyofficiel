@@ -20,9 +20,13 @@
 .ambitionCard::before { position: absolute; z-index: -2; inset: 0; content: ''; background: linear-gradient(90deg, #111820f5 0%, #111820c9 50%, #11182040), linear-gradient(0deg, #111820 0%, #11182018 85%); }
 .ambitionCard .brand > span { color: #ffad72; }
 .ambitionCard .cardLabel { background: #121a2380; border-color: #ffffff60; }
-.ambitionOrbit { position: absolute; z-index: -1; top: 18%; right: -20%; display: grid; place-items: center; width: 65%; aspect-ratio: 1; border: 1px solid #f0ab7859; border-radius: 50%; box-shadow: 0 0 0 32px #f1ad7910, 0 0 0 64px #f1ad7909; color: #ffb075; }
-.ambitionOrbit svg { width: 26%; height: 26%; transform: translateX(-45%); stroke-width: .9; }
-.ambitionBody { display: flex; flex: 1; flex-direction: column; justify-content: center; padding: 26px 0; }
+.ambitionOrbit { position: absolute; z-index: -1; top: 18%; right: -20%; width: 65%; aspect-ratio: 1; border: 1px solid #f0ab7859; border-radius: 50%; box-shadow: 0 0 0 32px #f1ad7910, 0 0 0 64px #f1ad7909; }
+/* Reserve space for the arrow in the content grid, above the footer labels. */
+.ambitionBody { display: grid; flex: 1; grid-template-columns: minmax(0, 1fr) clamp(72px, 16cqi, 144px); column-gap: clamp(12px, 2.5cqi, 24px); align-content: center; padding: 26px 0; }
+.ambitionBody > p { grid-column: 1 / -1; min-width: 0; }
+.ambitionBody > .ambitionSubtitle { grid-column: 1; align-self: start; }
+.openingArrow { grid-column: 2; grid-row: 3; align-self: end; width: clamp(72px, 16cqi, 144px); aspect-ratio: 1; color: #ffb075; pointer-events: none; }
+.openingArrow svg { display: block; width: 100%; height: 100%; stroke-width: .9; }
 .ambitionBody .cardEyebrow { color: #ffd0ad; }
 .ambitionTitle { margin: 18px 0 0; font-size: clamp(42px, 9.7cqi, 74px); font-weight: 850; letter-spacing: -.055em; line-height: 1; }
 .ambitionTitle > span { color: #ffac72; }
