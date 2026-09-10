@@ -1,5 +1,5 @@
-/* Each BTS owns a full palette, inherited by its page and shared components. */
-.page {
+/* A single palette per BTS, shared by its page, home card and comparison card. */
+.page, .identity {
   --shadow-gold: 0 24px 70px rgb(var(--bts-600) / .18);
   --bts-50: 239 246 255;
   --bts-100: 219 234 254;
@@ -17,7 +17,7 @@
   --bts-600-comma: 37, 99, 235;
 }
 
-.page[data-bts='mco'] {
+.page[data-bts='mco'], .identity[data-bts='mco'] {
   --bts-50: 255 247 237;
   --bts-100: 255 237 213;
   --bts-200: 254 215 170;
@@ -34,7 +34,7 @@
   --bts-600-comma: 234, 88, 12;
 }
 
-.page[data-bts='ndrc'] {
+.page[data-bts='ndrc'], .identity[data-bts='ndrc'] {
   --bts-50: 245 243 255;
   --bts-100: 237 233 254;
   --bts-200: 221 214 254;
@@ -51,7 +51,7 @@
   --bts-600-comma: 124, 58, 237;
 }
 
-.page[data-bts='ci'] {
+.page[data-bts='ci'], .identity[data-bts='ci'] {
   --bts-50: 240 253 250;
   --bts-100: 204 251 241;
   --bts-200: 153 246 228;
@@ -68,7 +68,7 @@
   --bts-600-comma: 13, 148, 136;
 }
 
-.page[data-bts='pi'] {
+.page[data-bts='pi'], .identity[data-bts='pi'] {
   --bts-50: 250 248 244;
   --bts-100: 241 235 225;
   --bts-200: 228 214 191;
@@ -85,7 +85,7 @@
   --bts-700-comma: 110, 68, 43;
 }
 
-.page[data-bts='cg'] {
+.page[data-bts='cg'], .identity[data-bts='cg'] {
   --bts-50: 236 253 245;
   --bts-100: 209 250 229;
   --bts-200: 167 243 208;

@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useRef } from 'react';
 import styles from './BtsTrainingGrid.module.css';
+import btsStyles from './BtsIdentity.module.css';
 import { useTrainingCardAnimations } from './useTrainingCardAnimations';
 
 export type BtsVisual = 'mos' | 'mco' | 'ndrc' | 'ci' | 'pi' | 'cg';
@@ -58,7 +59,7 @@ function FactIcon({ type }: { type: 'degree' | 'duration' | 'rhythm' | 'location
 function FeaturedCard({ item }: { item: BtsTrainingHighlight }) {
   return (
     <div data-training-card className={styles.featuredSlot}>
-      <Link href={item.slug} aria-label={'Découvrir le ' + item.shortTitle} className={styles.featuredLink}>
+      <Link href={item.slug} aria-label={'Découvrir le ' + item.shortTitle} data-bts={item.visual} className={`${styles.featuredLink} ${btsStyles.identity}`}>
         <article data-training-tilt className={styles.featuredCard}>
           <span className={styles.featuredOrb} aria-hidden="true" />
           <span className={styles.featuredMonogram} aria-hidden="true">MOS</span>
@@ -102,7 +103,7 @@ function CompactCard({ item, index, wide }: { item: BtsTrainingHighlight; index:
 
   return (
     <div data-training-card className={slotClassName}>
-      <Link href={item.slug} aria-label={'Découvrir le ' + item.shortTitle} className={styles.compactLink}>
+      <Link href={item.slug} aria-label={'Découvrir le ' + item.shortTitle} data-bts={item.visual} className={`${styles.compactLink} ${btsStyles.identity}`}>
         <article data-training-tilt data-tone={item.visual} className={cardClassName}>
           <span className={styles.compactAccent} aria-hidden="true" />
 

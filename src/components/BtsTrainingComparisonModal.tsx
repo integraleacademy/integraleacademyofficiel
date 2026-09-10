@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { useEffect, useId, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { BtsIcon, type BtsTrainingHighlight, type BtsVisual } from './BtsTrainingGrid';
+import { btsRhythms, type BtsCode } from '@/data/btsRhythms';
+import btsStyles from './BtsIdentity.module.css';
 import styles from './SecurityTrainingComparisonModal.module.css';
 
 type BtsComparisonDetails = {
@@ -93,9 +95,10 @@ const btsComparisonDetails: Record<BtsVisual, BtsComparisonDetails> = {
 
 function BtsComparisonCard({ item }: { item: BtsTrainingHighlight }) {
   const details = btsComparisonDetails[item.visual];
+  const rhythm = btsRhythms[item.visual.toUpperCase() as BtsCode];
 
   return (
-    <article className={styles.courseCard} data-kind="bts" data-tone={item.visual} data-featured={item.featured || undefined}>
+    <article className={`${styles.courseCard} ${btsStyles.identity}`} data-kind="bts" data-bts={item.visual} data-tone={item.visual} data-featured={item.featured || undefined}>
       <span className={styles.cardAccent} aria-hidden="true" />
       <header className={styles.cardHeader}>
         <span className={styles.courseIcon}><BtsIcon type={item.visual} /></span>
@@ -113,7 +116,7 @@ function BtsComparisonCard({ item }: { item: BtsTrainingHighlight }) {
 
       <dl className={styles.facts}>
         <div><dt>Durée</dt><dd>{item.duration}</dd></div>
-        <div><dt>Rythme</dt><dd>2 j / 3 j</dd></div>
+        <div><dt>Rythme</dt><dd title={rhythm.description}>{rhythm.schoolDays} j / {rhythm.companyDays} j</dd></div>
         <div><dt>Formats</dt><dd>Puget + visio</dd></div>
       </dl>
 

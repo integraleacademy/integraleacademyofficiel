@@ -216,14 +216,9 @@
 .courseCard[data-tone='sst'] { --tone: #1b9f78; --tone-soft: #e9f8f2; }
 .courseCard[data-tone='a3p'] { --tone: #119a87; --tone-soft: #e7f8f4; }
 .courseCard[data-tone='desp'] { --tone: #dd6e2f; --tone-soft: #fff0e7; }
-.courseCard[data-tone='mos'] { --tone: #c38b18; --tone-soft: #fff4d8; }
-.courseCard[data-tone='mco'] { --tone: #d96b3b; --tone-soft: #fff0e8; }
-.courseCard[data-tone='ndrc'] { --tone: #b04c76; --tone-soft: #faedf3; }
-.courseCard[data-tone='ci'] { --tone: #267fb0; --tone-soft: #eaf5fb; }
-.courseCard[data-tone='pi'] { --tone: #248d72; --tone-soft: #e9f7f2; }
-.courseCard[data-tone='cg'] { --tone: #6c62aa; --tone-soft: #f0eefb; }
-
 .courseCard[data-kind='bts'] {
+  --tone: rgb(var(--bts-600));
+  --tone-soft: rgb(var(--bts-50));
   min-height: 39rem;
 }
 
@@ -252,6 +247,24 @@
   border-color: rgba(195, 139, 24, .36);
   background: linear-gradient(180deg, rgba(255, 250, 235, .98), rgba(255, 255, 255, .94));
   box-shadow: 0 1.5rem 3.5rem rgba(154, 104, 12, .13);
+}
+
+.courseCard[data-kind='bts'][data-featured='true'] {
+  border-color: rgb(var(--bts-600) / .36);
+  background: linear-gradient(180deg, rgb(var(--bts-50)), rgba(255, 255, 255, .94));
+  box-shadow: 0 1.5rem 3.5rem rgb(var(--bts-800) / .13);
+}
+
+.courseCard[data-kind='bts'] .cardAccent {
+  background: linear-gradient(90deg, var(--tone), rgb(var(--bts-300)));
+}
+
+.courseCard[data-kind='bts'] .recommendedBadge i {
+  background: rgb(var(--bts-300));
+}
+
+.courseCard[data-kind='bts'] .courseButton:focus-visible {
+  outline-color: var(--tone);
 }
 
 .courseCard:hover {
@@ -631,6 +644,11 @@
 :global(.dark) .courseCard[data-featured='true'] {
   border-color: rgba(239, 186, 50, .3);
   background: linear-gradient(180deg, rgba(62, 52, 28, .94), rgba(34, 41, 49, .96));
+}
+
+:global(.dark) .courseCard[data-kind='bts'][data-featured='true'] {
+  border-color: rgb(var(--bts-400) / .4);
+  background: linear-gradient(180deg, rgb(var(--bts-950)), rgba(34, 41, 49, .96));
 }
 
 :global(.dark) .facts div,
