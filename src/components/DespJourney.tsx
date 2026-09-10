@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
 import styles from './DespJourney.module.css';
 
 const steps = [
@@ -16,75 +16,90 @@ function Arrow() {
 }
 
 function CardHeader({ label }: { label: string }) {
-  return <div className={styles.cardHeader}><span className={styles.brand}>INTÉGRALE<span> ACADEMY</span></span><span>{label}</span></div>;
+  return <div className={styles.cardHeader}><span className={styles.brand}>INTÉGRALE<span>ACADEMY</span></span><span className={styles.cardLabel}>{label}</span></div>;
+}
+
+function Pictogram({ kind }: { kind: 'screen' | 'school' | 'rise' }) {
+  return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    {kind === 'screen' ? <><rect x="3" y="4" width="18" height="12" rx="2" /><path d="M8 21h8m-4-5v5" /></> : kind === 'school' ? <><path d="m3 9 9-6 9 6M5 10v10h14V10M10 20v-6h4v6M2 21h20" /><path d="M8 10h.01M16 10h.01" /></> : <><path d="M5 19 19 5M5 5h14v14" /></>}
+  </svg>;
+}
+
+function CardAction({ href, children }: { href: string; children: ReactNode }) {
+  return <Link href={href} className={styles.cardAction}><span>{children}</span><span className={styles.actionArrow}><Arrow /></span></Link>;
 }
 
 function JourneyVisual({ index }: { index: number }) {
   if (index === 0) return (
-    <div className={styles.card}>
-      <CardHeader label="Votre avenir commence ici" />
-      <div className={styles.schoolPhoto}>
-        {/* Existing school photo, editable at the same path in GitHub. */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/images/desp-initial-hero.jpg" alt="L’accueil de l’école Intégrale Academy" loading="lazy" decoding="async" width="1600" height="1200" />
-        <span>UNE AMBITION, VOTRE ENTREPRISE.</span>
+    <div className={`${styles.card} ${styles.ambitionCard}`}>
+      {/* Existing school photo remains editable at the same path in GitHub. */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img className={styles.ambitionPhoto} src="/images/desp-initial-hero.jpg" alt="L’accueil de l’école Intégrale Academy" loading="lazy" decoding="async" width="1600" height="1200" />
+      <div className={styles.ambitionOrbit} aria-hidden="true"><Pictogram kind="rise" /></div>
+      <CardHeader label="Le déclic" />
+      <div className={styles.ambitionBody}>
+        <p className={styles.cardEyebrow}>ET SI C’ÉTAIT VOUS ?</p>
+        <p className={styles.ambitionTitle}>Faites place<br />à votre<br /><span>ambition.</span></p>
+        <p className={styles.ambitionSubtitle}>Votre entreprise de sécurité.<br />Votre vision. Votre prochain chapitre.</p>
       </div>
-      <div className={styles.cardBody}>
-        <p className={styles.eyebrow}>Votre projet professionnel</p>
-        <p className={styles.cardTitle}>Et si le prochain dirigeant,<br /><span>c’était vous ?</span></p>
-        <div className={styles.projectTags}><span>Créer</span><span>Reprendre</span><span>Diriger <Arrow /></span></div>
-        <div className={styles.cardNote}><span className={styles.smallDot} /> Un parcours adapté à votre expérience</div>
-      </div>
+      <div className={styles.ambitionVerbs}><span><small>01</small>Créer</span><span><small>02</small>Reprendre</span><span><small>03</small>Diriger</span></div>
+      <CardAction href="/contact?formation=desp">Construire mon projet</CardAction>
     </div>
   );
 
   if (index === 1) return (
-    <div className={styles.card}>
-      <CardHeader label="Le parcours initial" />
-      <div className={styles.cardBody}>
-        <p className={styles.eyebrow}>Apprendre à diriger</p>
-        <div className={styles.duration}><strong>7<span> semaines</span></strong><span className={styles.pill}>245 heures</span></div>
-        <div className={styles.weeks} aria-hidden="true">{Array.from({ length: 7 }, (_, i) => <span key={i} className={i > 4 ? styles.weekSchool : ''}>S{i + 1}</span>)}</div>
-        <div className={styles.delivery}><div><span className={styles.smallDot} /><strong>5 semaines à distance</strong><small>175 heures</small></div><div><span className={styles.smallDot} /><strong>2 semaines en présentiel</strong><small>70 heures</small></div></div>
-        <p className={styles.topicsLabel}>Les compétences au cœur du parcours</p>
-        <div className={styles.topics}>{['Réglementation', 'Gestion d’entreprise', 'Management', 'Développement commercial'].map((topic, i) => <div key={topic}><span>0{i + 1}</span><strong>{topic}</strong></div>)}</div>
-        <div className={styles.cardNote}><span className={styles.smallDot} /> À distance + à l’école, selon la session choisie</div>
+    <div className={`${styles.card} ${styles.trainingCard}`}>
+      <CardHeader label="Formation initiale" />
+      <div className={styles.durationHeadline}>
+        <strong>7</strong><div><span className={styles.cardEyebrow}>SEMAINES · 245 HEURES</span><p>Un nouveau<br /><span>cap à prendre.</span></p></div>
       </div>
+      <div className={styles.studyPlan}>
+        <div className={styles.remoteStudy}><div className={styles.studyTop}><span>À DISTANCE</span><Pictogram kind="screen" /></div><p><strong>5</strong><span>semaines<small>175 heures</small></span></p><div className={styles.weekMarks} aria-hidden="true"><i /><i /><i /><i /><i /></div></div>
+        <div className={styles.schoolStudy}><div className={styles.studyTop}><span>EN PRÉSENTIEL</span><Pictogram kind="school" /></div><p><strong>2</strong><span>semaines<small>70 heures</small></span></p><div className={styles.weekMarks} aria-hidden="true"><i /><i /></div></div>
+      </div>
+      <div className={styles.expertise}>
+        <p className={styles.cardEyebrow}>LES CLÉS POUR PILOTER VOTRE ACTIVITÉ</p>
+        <div>{['Réglementation', 'Gestion d’entreprise', 'Management', 'Développement commercial'].map((topic, i) => <span key={topic}><small>0{i + 1}</small>{topic}</span>)}</div>
+      </div>
+      <CardAction href="/dirigeant">Explorer la formation</CardAction>
     </div>
   );
 
   if (index === 2) return (
-    <div className={styles.card}>
+    <div className={`${styles.card} ${styles.experienceCard}`}>
       <CardHeader label="Le parcours VAE" />
-      <div className={styles.cardBody}>
-        <p className={styles.eyebrow}>Valoriser votre expérience</p>
-        <p className={styles.cardTitle}>Votre parcours.<br /><span>Vos preuves. Votre titre.</span></p>
-        <div className={styles.dossier}>
-          <div className={styles.documentIcon} aria-hidden="true"><svg viewBox="0 0 32 40" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M5 1h14l8 8v30H5V1Z M19 1v9h8 M11 18h10 M11 24h10 M11 30h6" /></svg></div>
-          <div><strong>Dossier de validation</strong><span>Vos missions, vos compétences, vos réalisations</span></div>
+      <div className={styles.experienceHeading}><p className={styles.cardEyebrow}>VOUS AVEZ DÉJÀ LE VÉCU.</p><p className={styles.cardTitle}>L’expérience,<br /><span>c’est votre force.</span></p></div>
+      <div className={styles.proofScene}>
+        <div className={styles.proofBack} aria-hidden="true"><span>VOTRE EXPÉRIENCE</span></div>
+        <div className={styles.proofPaper}>
+          <div className={styles.paperHeading}><span>DOSSIER DE VALIDATION</span><span>DESP</span></div>
+          <strong>Votre parcours<br />a de la valeur.</strong>
+          <p>Vos missions. Vos réalisations.</p>
+          <div className={styles.proofSkills}><span>Management</span><span>Gestion</span><span>Direction</span></div>
         </div>
-        <div className={styles.proofTags}><span>Management</span><span>Gestion</span><span>Direction</span></div>
-        <ol className={styles.vaeSteps}>
-          <li><span>01</span><div><strong>Étude de votre expérience</strong><small>Vérifier l’adéquation avec le titre</small></div></li>
-          <li><span>02</span><div><strong>Constitution de votre dossier</strong><small>Décrire et démontrer vos compétences</small></div></li>
-          <li><span>03</span><div><strong>Présentation devant le jury</strong><small>Faire évaluer vos acquis</small></div></li>
-        </ol>
-        <div className={styles.cardNote}><span className={styles.smallDot} /> Un calendrier défini selon votre dossier</div>
+        <div className={styles.experienceSeal}><Pictogram kind="rise" /><span>VOS ACQUIS<br />AU PREMIER PLAN</span></div>
       </div>
+      <ol className={styles.vaeRoute}>
+        <li><span>01</span><strong>Votre expérience</strong><small>Étudier votre parcours</small></li>
+        <li><span>02</span><strong>Votre dossier</strong><small>Rassembler vos preuves</small></li>
+        <li><span>03</span><strong>Le jury</strong><small>Présenter vos acquis</small></li>
+      </ol>
+      <CardAction href="/vaedirigeant">Valoriser mon expérience</CardAction>
     </div>
   );
 
   return (
-    <div className={`${styles.card} ${styles.choiceCard}`}>
-      <CardHeader label="Le même objectif" />
-      <div className={styles.cardBody}>
-        <p className={styles.eyebrow}>Votre prochain chapitre</p>
-        <p className={styles.cardTitle}>Prenez les commandes<br /><span>de votre avenir.</span></p>
-        <div className={styles.paths}><div><small>FORMATION INITIALE</small><strong>J’apprends.</strong><span>Acquérir les compétences</span></div><div><small>VAE</small><strong>Je valorise.</strong><span>Faire reconnaître mes acquis</span></div></div>
-        <div className={styles.convergence} aria-hidden="true" />
-        <div className={styles.titleGoal}><span className={styles.titleMark}>DESP</span><div><strong>Dirigeant d’entreprise<br />de sécurité privée</strong><span>Un même titre, après validation</span></div></div>
-        <p className={styles.signature}>Faites le premier pas vers votre futur métier.</p>
+    <div className={`${styles.card} ${styles.futureCard}`}>
+      <div className={styles.futureOrbit} aria-hidden="true" />
+      <CardHeader label="Votre prochain chapitre" />
+      <p className={styles.futureHeading}>Deux chemins.<br /><span>Une nouvelle dimension.</span></p>
+      <div className={styles.despDestination}><strong>DESP<span aria-hidden="true">↗</span></strong><p>Dirigeant d’entreprise<br />de sécurité privée.</p></div>
+      <div className={styles.futurePaths}>
+        <Link href="/dirigeant"><span>FORMATION INITIALE<Pictogram kind="rise" /></span><strong>J’apprends.</strong><small>Acquérir les compétences</small></Link>
+        <Link href="/vaedirigeant"><span>VAE<Pictogram kind="rise" /></span><strong>Je valorise.</strong><small>Faire reconnaître mes acquis</small></Link>
       </div>
+      <p className={styles.validationNote}>Un même titre, après validation.</p>
+      <CardAction href="#choisir-desp">Trouver mon parcours</CardAction>
     </div>
   );
 }
@@ -115,7 +130,7 @@ export function DespJourney() {
 
   useEffect(() => {
     // Short screens, mobile, reduced motion and no-JS retain the full reading flow.
-    const media = window.matchMedia('(min-width: 1024px) and (min-height: 700px) and (prefers-reduced-motion: no-preference)');
+    const media = window.matchMedia('(min-width: 1024px) and (min-height: 760px) and (prefers-reduced-motion: no-preference)');
     const sync = () => setEnhanced(media.matches);
     sync();
     media.addEventListener('change', sync);
@@ -178,7 +193,7 @@ export function DespJourney() {
                 <Link href={step.href} className={styles.link}>{step.link}<Arrow /></Link>
                 {index < steps.length - 1 ? <button type="button" className={styles.next} onClick={() => goTo(index + 1)}><span>0{index + 2}</span><span>{steps[index + 1].label}</span><Arrow /></button> : <span className={styles.lastStep}>Intégrale Academy, à vos côtés à chaque étape.</span>}
               </div>
-              <div className={styles.visual}>
+              <div className={styles.visual} data-scene={index}>
                 <div className={styles.visualInner}><JourneyVisual index={index} /></div>
                 <span className={styles.visualCounter} aria-hidden="true">0{index + 1} / 04</span>
               </div>
