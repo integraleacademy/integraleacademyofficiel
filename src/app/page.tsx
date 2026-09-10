@@ -1,6 +1,7 @@
 import { createPageMetadata } from '@/lib/seo';
 import Link from 'next/link';
 import { OrientationAssistant } from '@/components/OrientationAssistant';
+import { AnimatedTrainingCTA } from '@/components/AnimatedTrainingCTA';
 import { BtsTrainingGrid, type BtsTrainingHighlight } from '@/components/BtsTrainingGrid';
 import { BtsTrainingComparisonModal } from '@/components/BtsTrainingComparisonModal';
 import { CampusSection } from '@/components/CampusSection';
@@ -125,6 +126,8 @@ export default async function Home() {
           </div>
         </div>
       </section>
+
+      <AnimatedTrainingCTA />
 
       <VisualSection tone="security">
         <section id="formations-securite" className="scroll-mt-28 page-container py-14 md:py-16">
