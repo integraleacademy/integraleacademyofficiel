@@ -4,6 +4,7 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { ApsSectionNavigation } from '@/components/ApsSectionNavigation';
 import { ApsFacilitiesSections } from '@/components/ApsFacilitiesSections';
+import { ApsJourney } from '@/components/ApsJourney';
 import { TrainingMotionIllustration } from '@/components/TrainingMotionGallery';
 import { OrientationAssistant } from '@/components/OrientationAssistant';
 import { PremiumFAQSection } from '@/components/ui';
@@ -444,6 +445,8 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
         {heroFacts.map(([key,value,detail]) => <div key={key} className={`${styles.fact} border-b border-white/10 p-4 last:border-b-0 sm:border-r lg:border-b-0`}><p className="text-[.58rem] font-black uppercase tracking-[.18em] text-white/42">{key}</p><p className="mt-1 font-black text-white">{value}</p><p className="mt-1 text-[.68rem] font-semibold leading-4 text-white/48">{detail}</p></div>)}
       </div></div>
     </section>
+
+    <ApsJourney />
 
     <ApsSectionNavigation registrationHref={apsRegistrationFormUrl} />
 

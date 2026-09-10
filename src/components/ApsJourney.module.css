@@ -1,0 +1,150 @@
+.card { --ink: #11243f; position: relative; isolation: isolate; display: flex; flex-direction: column; width: 100%; min-height: 660px; padding: clamp(22px, 4.4cqi, 32px); overflow: clip; border: 1px solid #ffffffa8; border-radius: 27px; background: #f9fbff; color: var(--ink); font-size: 14px; box-shadow: 0 28px 55px -26px #16325b45, 0 3px 8px #16325b08; }
+.card > * { flex-shrink: 0; min-width: 0; }
+.cardHeader { position: relative; z-index: 2; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+.brand { display: flex; flex-direction: column; font-size: 13px; font-weight: 900; letter-spacing: -.025em; line-height: 1.08; }
+.brand > span { color: #2454b0; }
+.cardLabel { max-width: 65%; padding: 7px 11px; border: 1px solid #8b9cb6; border-radius: 30px; color: #435777; font-size: 12px; font-weight: 700; line-height: 1.3; text-align: center; }
+.eyebrow { margin: 0; color: #455d7d; font-size: 12px; font-weight: 800; letter-spacing: .05em; line-height: 1.5; }
+.cardAction { position: relative; z-index: 2; display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 62px; margin-top: auto; padding-top: 16px; border-top: 1px solid #1837612b; color: inherit; font-size: 15px; font-weight: 800; line-height: 1.4; }
+.actionArrow { display: grid; place-items: center; flex: 0 0 44px; height: 44px; border-radius: 50%; background: #122947; color: #fff; transition: transform .2s ease, background .2s ease; }
+.actionArrow svg { width: 20px; height: 20px; }
+.cardAction:hover .actionArrow { transform: rotate(-35deg); background: #225ac8; }
+
+/* 01 — An invitation into the profession. */
+.ambitionCard { color: #fff; border-color: #ffffff24; background: #0b1a2b; }
+.coverPhoto { position: absolute; z-index: -3; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 62% center; filter: saturate(.65); }
+.ambitionCard::before { position: absolute; z-index: -2; inset: 0; content: ''; background: linear-gradient(90deg, #091626ee 0%, #0a1a2ec7 48%, #0b1d3345), linear-gradient(0deg, #091626 0%, #0b1d3318 85%); }
+.ambitionCard .brand > span { color: #9acbff; }
+.ambitionCard .cardLabel { color: #e1efff; border-color: #ffffff65; background: #0b1a2b70; }
+.coverOrbit { position: absolute; z-index: -1; top: 24%; right: -27%; display: grid; place-items: center; width: 67%; aspect-ratio: 1; border: 1px solid #95c7ff65; border-radius: 50%; box-shadow: 0 0 0 30px #9bccff10, 0 0 0 60px #9bccff09; color: #98c9ff; }
+.coverOrbit svg { width: 23%; height: 23%; transform: translateX(-50%); stroke-width: 1; }
+.ambitionBody { display: flex; flex: 1; flex-direction: column; justify-content: center; padding: 26px 0; }
+.ambitionBody .eyebrow { color: #cce5ff; }
+.ambitionTitle { margin: 18px 0 0; font-size: clamp(37px, 8.4cqi, 61px); font-weight: 850; letter-spacing: -.055em; line-height: 1.04; }
+.ambitionTitle > span { color: #9bcdff; }
+.subtitle { margin: 24px 0 0; font-size: 16px; line-height: 1.6; color: #e3edfa; }
+.verbs { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 10px; padding: 17px 0; border-top: 1px solid #ffffff40; }
+.verbs > span { display: flex; align-items: baseline; gap: 8px; font-size: 16px; font-weight: 750; }
+.verbs small { font-size: 12px; font-weight: 600; color: #a5d1ff; }
+.ambitionCard .cardAction { border-color: #ffffff40; }
+.ambitionCard .actionArrow { background: #9acbff; color: #102a4c; }
+.ambitionCard .cardAction:hover .actionArrow { background: #d7ebff; }
+
+/* 02 — Training hours stay readable, including on narrow screens. */
+.trainingCard { background: radial-gradient(ellipse at 100% 0%, #e4efff 0, transparent 55%), #fbfdff; }
+.durationHeadline { display: flex; align-items: center; gap: 22px; margin: 22px 0; }
+.durationHeadline > strong { color: #2965dc; font-size: clamp(96px, 18cqi, 130px); font-weight: 850; line-height: .9; letter-spacing: -.07em; }
+.durationHeadline .eyebrow { display: block; color: #2454b0; }
+.durationHeadline p { margin: 9px 0 0; font-size: clamp(26px, 5cqi, 36px); font-weight: 850; letter-spacing: -.04em; line-height: 1.08; }
+.durationHeadline p > span { color: #586f91; }
+.studyPlan { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.studyPlan > div { min-width: 0; padding: 18px; border-radius: 18px; }
+.remoteStudy { background: #e7eef8; }
+.schoolStudy { background: #12263f; color: #fff; }
+.studyTop { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 12px; font-weight: 800; line-height: 1.4; }
+.studyTop svg { width: 21px; height: 21px; flex-shrink: 0; }
+.schoolStudy .studyTop { color: #a5d0ff; }
+.studyPlan p { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin: 15px 0; }
+.studyPlan p > strong { font-size: clamp(45px, 8.6cqi, 61px); font-weight: 850; line-height: .95; letter-spacing: -.055em; }
+.schoolStudy p > strong { color: #9bcdff; }
+.studyPlan p > span { font-size: 15px; font-weight: 750; line-height: 1.35; }
+.studyPlan small { display: block; margin-top: 4px; font-size: 14px; font-weight: 500; color: #526581; }
+.schoolStudy small { color: #d3e2f3; }
+.studyBar { height: 4px; border-radius: 4px; background: #c5d2e5; overflow: hidden; }
+.studyBar i { display: block; width: 29.14%; height: 100%; border-radius: inherit; background: #4079d6; }
+.schoolStudy .studyBar { background: #365270; }
+.schoolStudy .studyBar i { width: 70.86%; background: #a5d0ff; }
+.learningSkills { margin: 24px 0; }
+.learningSkills > div { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 18px; margin-top: 14px; }
+.learningSkills > div > span { display: flex; align-items: baseline; gap: 9px; font-size: 15px; font-weight: 700; line-height: 1.4; }
+.learningSkills small { flex-shrink: 0; color: #2454b0; font-size: 12px; font-weight: 700; }
+
+/* 03 — Actual training content, shown through a large image and clear facts. */
+.practiceCard { background: #f0f6ff; }
+.practiceTitle { margin: 24px 0 20px; font-size: clamp(32px, 6.6cqi, 46px); font-weight: 850; line-height: 1.08; letter-spacing: -.045em; }
+.practiceTitle > span { color: #285dbb; }
+.practicePhoto { position: relative; margin: 0; height: 240px; overflow: hidden; border-radius: 18px; background: #cbd9eb; }
+.practicePhoto img { width: 100%; height: 100%; object-fit: cover; object-position: center 60%; }
+.practicePhoto::after { position: absolute; inset: 25% 0 0; content: ''; background: linear-gradient(transparent, #081728c4); pointer-events: none; }
+.practicePhoto figcaption { position: absolute; z-index: 1; bottom: 18px; left: 20px; right: 20px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 12px; color: #fff; }
+.practicePhoto figcaption strong { font-size: 34px; font-weight: 850; line-height: 1.1; letter-spacing: -.04em; }
+.practicePhoto figcaption span { font-size: 14px; font-weight: 650; line-height: 1.4; }
+.practiceSkills { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 0; }
+.practiceSkills > span { padding: 7px 10px; border: 1px solid #c9d9ef; border-radius: 8px; background: #ffffffaa; font-size: 14px; font-weight: 700; line-height: 1.4; }
+.practiceNote { margin: 13px 0 22px; color: #516783; font-size: 14px; line-height: 1.5; }
+
+/* 04 — The title and the professional card are distinct milestones. */
+.futureCard { color: #fff; background: #2b65d9; border-color: #75aaff; }
+.futureCard .brand > span { color: #d4e8ff; }
+.futureCard .cardLabel { color: #fff; border-color: #d2e6ff99; }
+.futureOrbit { position: absolute; z-index: -1; top: 17%; right: -43%; width: 105%; aspect-ratio: 1; border: 1px solid #badaff88; border-radius: 50%; box-shadow: 0 0 0 32px #bbdfff17, 0 0 0 64px #bbdfff12, 0 0 0 96px #bbdfff0c; }
+.futureHeading { margin: 22px 0 0; font-size: clamp(26px, 4.6cqi, 34px); font-weight: 850; letter-spacing: -.04em; line-height: 1.12; }
+.futureHeading > span { color: #d5e9ff; }
+.destination { display: flex; flex: 1; flex-direction: column; justify-content: center; padding: 26px 0; }
+.destination > strong { display: flex; align-items: flex-start; width: fit-content; font-size: clamp(92px, 18cqi, 132px); font-weight: 900; letter-spacing: -.07em; line-height: .85; }
+.destination > strong > span { margin-left: 16px; font-size: .38em; line-height: 1; letter-spacing: 0; }
+.destination > strong > span svg { display: block; width: 1em; height: 1em; stroke-width: 1.3; }
+.destination > p { margin: 12px 0 0; font-size: 20px; font-weight: 750; line-height: 1.25; letter-spacing: -.025em; }
+.futureSteps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.futureSteps > a { display: flex; flex-direction: column; min-width: 0; padding: 18px; border: 1px solid #18365d; border-radius: 17px; background: #10233f; color: #fff; transition: transform .2s ease, background .2s ease; }
+.futureSteps > a:hover { transform: translateY(-3px); background: #193659; }
+.futureSteps > a > span { display: flex; align-items: center; justify-content: space-between; gap: 8px; color: #badcff; font-size: 12px; font-weight: 800; line-height: 1.4; }
+.futureSteps svg { flex: 0 0 18px; width: 18px; height: 18px; }
+.futureSteps strong { margin-top: 12px; font-size: clamp(23px, 3.9cqi, 29px); font-weight: 800; letter-spacing: -.04em; line-height: 1.1; }
+.futureSteps small { display: block; margin-top: 8px; font-size: 14px; line-height: 1.45; color: #e0edff; }
+.validationNote { margin: 12px 0 16px; color: #e5f0ff; font-size: 14px; line-height: 1.5; }
+.futureCard .cardAction { border-color: #d9ebff66; }
+.futureCard .actionArrow { background: #fff; color: #1d4ca5; }
+.futureCard .cardAction:hover .actionArrow { background: #d8eaff; }
+
+@container (max-width: 530px) {
+  .card { min-height: 630px; padding: 24px; }
+  .cardHeader { gap: 10px; }
+  .ambitionTitle { font-size: 40px; }
+  .verbs > span { font-size: 14px; gap: 6px; }
+  .durationHeadline { gap: 16px; }
+  .durationHeadline p { font-size: 27px; }
+  .durationHeadline .eyebrow { max-width: 180px; }
+  .studyPlan > div { padding: 15px; }
+  .studyPlan p { gap: 8px; }
+  .studyPlan p > strong { font-size: 45px; }
+  .learningSkills > div { gap: 12px; }
+  .learningSkills > div > span { font-size: 14px; }
+  .practiceTitle { font-size: 36px; }
+  .practicePhoto { height: 220px; }
+  .futureSteps > a { padding: 15px; }
+  .futureSteps strong { font-size: 24px; }
+}
+@container (max-width: 390px) {
+  .card { min-height: 0; padding: 22px; border-radius: 22px; }
+  .cardHeader { align-items: flex-start; }
+  .cardLabel { max-width: 58%; }
+  .cardAction { margin-top: 24px; }
+  .ambitionBody { padding: 36px 0; }
+  .ambitionTitle { font-size: clamp(33px, 10cqi, 39px); }
+  .subtitle { font-size: 15px; }
+  .verbs { gap: 8px; margin-bottom: 0; }
+  .verbs > span { flex-direction: column; gap: 4px; }
+  .durationHeadline { align-items: flex-start; gap: 18px; margin: 28px 0; }
+  .durationHeadline > strong { font-size: 86px; }
+  .durationHeadline p { font-size: 25px; }
+  .studyPlan { grid-template-columns: 1fr; }
+  .studyPlan > div { padding: 18px; }
+  .studyPlan p { flex-wrap: nowrap; gap: 16px; margin: 12px 0; }
+  .studyPlan p > strong { font-size: 58px; }
+  .learningSkills { margin-bottom: 0; }
+  .learningSkills > div { grid-template-columns: 1fr; }
+  .learningSkills > div > span { font-size: 15px; }
+  .practiceTitle { font-size: clamp(28px, 8.5cqi, 34px); }
+  .practicePhoto { height: 240px; }
+  .practicePhoto figcaption { gap: 5px; }
+  .practiceNote { margin-bottom: 0; }
+  .futureHeading { font-size: 28px; }
+  .destination { padding: 34px 0; }
+  .destination > strong { font-size: 98px; }
+  .destination > p { font-size: 19px; }
+  .futureSteps { grid-template-columns: 1fr; }
+  .futureSteps > a { padding: 20px; }
+  .futureSteps strong { font-size: 28px; }
+  .validationNote { margin: 17px 0 0; }
+}
