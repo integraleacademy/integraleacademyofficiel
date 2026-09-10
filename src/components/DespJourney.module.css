@@ -1,5 +1,5 @@
 /* Cards grow with their content. Only decorative artwork is clipped. */
-.card { --card-ink: #1b2026; --card-muted: #615d56; position: relative; isolation: isolate; display: flex; flex-direction: column; width: 100%; min-height: 660px; padding: clamp(22px, 4.4cqi, 32px); overflow: clip; border: 1px solid #ffffffaa; border-radius: 27px; background: #fffdf9; color: var(--card-ink); font-size: 14px; box-shadow: 0 28px 55px -26px #35201145, 0 3px 8px #35201108; }
+.card { --card-ink: #1b2026; --card-muted: #615d56; position: relative; isolation: isolate; display: flex; flex-direction: column; width: 100%; min-height: var(--journey-card-height, 660px); padding: clamp(22px, 4.4cqi, 32px); overflow: clip; border: 1px solid #ffffffaa; border-radius: 27px; background: #fffdf9; color: var(--card-ink); font-size: 14px; box-shadow: 0 28px 55px -26px #35201145, 0 3px 8px #35201108; }
 .card > * { flex-shrink: 0; min-width: 0; }
 .cardHeader { position: relative; z-index: 2; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
 .brand { display: flex; flex-direction: column; font-size: 13px; font-weight: 900; letter-spacing: -.025em; line-height: 1.08; }
@@ -104,7 +104,7 @@
 
 /* Small containers reflow the content; essential text never scales below 14px. */
 @container (max-width: 530px) {
-  .card { min-height: 630px; padding: 24px; }
+  .card { min-height: var(--journey-card-height, 630px); padding: 24px; }
   .cardHeader { gap: 10px; }
   .cardLabel { font-size: 12px; }
   .ambitionTitle { font-size: 46px; }
@@ -158,4 +158,37 @@
   .futurePaths > a { padding: 20px; }
   .futurePaths strong { font-size: 28px; }
   .validationNote { margin: 17px 0 0; }
+}
+
+@media (min-width: 1024px) {
+  .card { padding: 20px 24px; }
+  .cardAction { min-height: 48px; padding-top: 10px; }
+  .actionArrow { flex-basis: 38px; height: 38px; }
+  .ambitionBody { padding: 18px 0; }
+  .ambitionTitle { margin-top: 12px; font-size: clamp(36px, 7.4cqi, 50px); }
+  .ambitionSubtitle { margin-top: 16px; }
+  .ambitionVerbs { padding: 12px 0; margin-bottom: 6px; }
+  .durationHeadline { margin: 12px 0; gap: 16px; }
+  .durationHeadline > strong { font-size: 76px; }
+  .durationHeadline p { font-size: 27px; }
+  .studyPlan > div { padding: 12px 16px; }
+  .studyPlan p { margin: 10px 0; }
+  .studyPlan p > strong { font-size: 42px; }
+  .expertise { margin: 12px 0; }
+  .expertise > div { margin-top: 10px; gap: 8px 16px; }
+  .expertise > div > span { font-size: 14px; }
+  .experienceHeading { margin-top: 14px; }
+  .cardTitle { font-size: 32px; }
+  .proofScene { padding: 18px 8px; }
+  .proofPaper { padding: 14px 18px; }
+  .proofPaper > strong { font-size: 27px; }
+  .vaeRoute { margin: 8px 0 16px; }
+  .futureHeading { margin-top: 16px; font-size: 28px; }
+  .despDestination { padding: 12px 0; }
+  .despDestination > strong { font-size: 88px; }
+  .despDestination > p { margin-top: 8px; font-size: 18px; }
+  .futurePaths > a { padding: 12px 14px; }
+  .futurePaths strong { margin-top: 8px; font-size: 24px; }
+  .futurePaths small { margin-top: 6px; }
+  .validationNote { margin: 10px 0 12px; }
 }

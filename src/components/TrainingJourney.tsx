@@ -57,12 +57,17 @@ export function TrainingJourney({ id, name, eyebrow, title, steps, shortcut, clo
   useEffect(() => {
     // The layout also checks its actual content height below: zoomed text and
     // smaller screens must remain readable, rather than being squeezed to fit.
-    const media = window.matchMedia('(min-width: 1024px) and (min-height: 760px) and (prefers-reduced-motion: no-preference)');
+    const media = window.matchMedia('(min-width: 1024px) and (min-height: 640px) and (prefers-reduced-motion: no-preference)');
     const sync = () => setEnhanced(media.matches);
     sync();
+    // Recheck once webfonts settle: a temporary fallback font must not
+    // permanently leave a laptop in the unpinned layout.
+    let mounted = true;
+    void document.fonts.ready.then(() => { if (mounted) sync(); });
     media.addEventListener('change', sync);
     window.addEventListener('resize', sync);
     return () => {
+      mounted = false;
       media.removeEventListener('change', sync);
       window.removeEventListener('resize', sync);
     };

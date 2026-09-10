@@ -1,4 +1,4 @@
-.card { --card-ink: #17212b; position: relative; isolation: isolate; display: flex; flex-direction: column; width: 100%; min-height: 660px; padding: clamp(24px, 4.4cqi, 32px); overflow: clip; border: 1px solid #ffffffb3; border-radius: 27px; background: #fcfdfd; color: var(--card-ink); box-shadow: 0 28px 55px -26px #182b4145, 0 3px 8px #182b4108; }
+.card { --card-ink: #17212b; position: relative; isolation: isolate; display: flex; flex-direction: column; width: 100%; min-height: var(--journey-card-height, 660px); padding: clamp(24px, 4.4cqi, 32px); overflow: clip; border: 1px solid #ffffffb3; border-radius: 27px; background: #fcfdfd; color: var(--card-ink); box-shadow: 0 28px 55px -26px #182b4145, 0 3px 8px #182b4108; }
 .card > * { min-width: 0; flex-shrink: 0; }
 .cardHeader { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
 .brand { display: flex; flex-direction: column; font-size: 13px; font-weight: 900; line-height: 1.08; letter-spacing: -.025em; }
@@ -83,7 +83,7 @@
 .outcomeCard .actionArrow { background: #fff; color: var(--journey-solid, #b94713); }
 
 @container (max-width: 530px) {
-  .card { padding: 24px; min-height: 630px; }
+  .card { padding: 24px; min-height: var(--journey-card-height, 630px); }
   .openingTitle { font-size: 39px; }
   .metricHeadline { gap: 16px; }
   .metricValue { font-size: 76px; }
@@ -118,4 +118,42 @@
   .destination > strong { font-size: clamp(68px, 23cqi, 96px); }
   .destination > strong[data-long='true'] { font-size: clamp(43px, 14.5cqi, 56px); }
   .destination > p { font-size: 19px; }
+}
+
+/* Desktop cards fit the available viewport by reducing artwork and spacing,
+   while descriptions retain their reading size. No transform / zoom scaling. */
+@media (min-width: 1024px) {
+  .card { padding: 20px 24px; }
+  .cardAction { min-height: 48px; padding-top: 10px; }
+  .actionArrow { flex-basis: 38px; height: 38px; }
+  .openingBody { padding: 18px 0; }
+  .openingTitle { margin-top: 12px; font-size: clamp(34px, 7.2cqi, 48px); }
+  .subtitle { margin-top: 16px; }
+  .verbs { padding: 12px 0; margin-bottom: 6px; }
+  .metricHeadline { margin: 12px 0; gap: 16px; }
+  .metricValue { font-size: 76px; }
+  .metricTitle { margin-top: 6px; font-size: clamp(25px, 4.4cqi, 30px); }
+  .studyPanels { gap: 12px; }
+  .studyPanels > div { padding: 12px 16px; }
+  .panelMetric { margin: 10px 0 4px; }
+  .panelMetric > strong { font-size: 36px; }
+  .skills { margin: 12px 0; }
+  .skills > div { margin-top: 10px; gap: 8px 16px; }
+  .skills > div > span { font-size: 14px; line-height: 1.4; }
+  .practiceTitle { margin: 14px 0; font-size: 30px; }
+  .practiceSheet { padding: 12px 16px; }
+  .practiceSheet li { padding: 8px 0; gap: 10px; }
+  .practiceSheet li strong { font-size: 17px; }
+  .practiceSheet li p { margin-top: 4px; font-size: 14px; line-height: 1.45; }
+  .practiceNote { margin: 10px 0 12px; }
+  .futureHeading { margin-top: 16px; font-size: 28px; }
+  .destination { padding: 12px 0; }
+  .destination > strong { font-size: 80px; }
+  .destination > strong[data-long='true'] { font-size: clamp(50px, 9.5cqi, 66px); }
+  .destination > p { margin-top: 8px; font-size: 18px; }
+  .milestones { gap: 12px; }
+  .milestones > a { padding: 12px 14px; }
+  .milestones strong { margin-top: 8px; font-size: 24px; }
+  .milestones p { margin-top: 6px; }
+  .validationNote { margin: 10px 0 12px; }
 }
