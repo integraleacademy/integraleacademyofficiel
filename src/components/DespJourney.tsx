@@ -93,7 +93,7 @@ function JourneyVisual({ index }: { index: number }) {
       <div className={styles.futureOrbit} aria-hidden="true" />
       <CardHeader label="Votre prochain chapitre" />
       <p className={styles.futureHeading}>Deux chemins.<br /><span>Une nouvelle dimension.</span></p>
-      <div className={styles.despDestination}><strong>DESP<span aria-hidden="true">↗</span></strong><p>Dirigeant d’entreprise<br />de sécurité privée.</p></div>
+      <div className={styles.despDestination}><strong>DESP<span aria-hidden="true"><Pictogram kind="rise" /></span></strong><p>Dirigeant d’entreprise<br />de sécurité privée.</p></div>
       <div className={styles.futurePaths}>
         <Link href="/dirigeant"><span>FORMATION INITIALE<Pictogram kind="rise" /></span><strong>J’apprends.</strong><small>Acquérir les compétences</small></Link>
         <Link href="/vaedirigeant"><span>VAE<Pictogram kind="rise" /></span><strong>Je valorise.</strong><small>Faire reconnaître mes acquis</small></Link>
