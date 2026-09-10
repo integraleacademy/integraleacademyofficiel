@@ -1,3 +1,4 @@
+import { CourseJourney } from '@/components/CourseJourney';
 import { createPageMetadata } from '@/lib/seo';
 import { bts } from "@/data/site";
 import { VisualSection, VisualTimeline } from "@/components/visuals";
@@ -23,7 +24,7 @@ export default function Page() {
             distance
           </>
         }
-        subtitle="BTS MOS, MCO, NDRC, Commerce International, Professions Immobilières et Comptabilité Gestion prochainement."
+        subtitle="BTS MOS, MCO, NDRC, Commerce International, Professions Immobilières et Comptabilité et Gestion."
         actions={
           <>
             <Button href="https://inscriptionsbts.onrender.com/">
@@ -36,14 +37,15 @@ export default function Page() {
         }
         visual={<ArtDirectionVisual world="bts" />}
       />
+      <CourseJourney course="bts-overview" />
       <ChatGptAgentBanner />
       <VisualSection tone="bts">
-        <section className="page-container py-12">
+        <section id="alternance-bts" className="page-container scroll-mt-36 py-12">
           <div className="grid gap-5 md:grid-cols-3">
             <FeatureCard title="Rythme">
-              BTS MOS : rythme 15 jours école / 15 jours entreprise. Plusieurs
-              autres BTS sont proposés en présentiel ou à distance selon le
-              parcours.
+              2 jours de cours et 3 jours en entreprise chaque semaine.
+              Les cours sont proposés en présentiel ou en visioconférence,
+              selon les modalités du parcours.
             </FeatureCard>
             <FeatureCard title="Accompagnement admissions">
               Candidature et pré-inscription sur la plateforme BTS dédiée, étude
@@ -60,7 +62,7 @@ export default function Page() {
         </section>
       </VisualSection>
       <VisualSection tone="bts">
-        <section className="page-container py-12">
+        <section id="formations-bts" className="page-container scroll-mt-36 py-12">
           <SectionTitle
             title={
               <>

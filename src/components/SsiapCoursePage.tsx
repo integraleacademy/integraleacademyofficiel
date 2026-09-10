@@ -1,3 +1,4 @@
+import { CourseJourney } from '@/components/CourseJourney';
 import { serializeCourseJsonLd } from '@/lib/seo';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
@@ -219,6 +220,8 @@ export function SsiapCoursePage({ config, sessions = [] }: { config: SsiapCourse
         </div>
       </section>
       )}
+
+      {heroKey && <CourseJourney course={heroKey} />}
 
       {heroKey ? <TrainingSectionNavigation
         mark="SSIAP"

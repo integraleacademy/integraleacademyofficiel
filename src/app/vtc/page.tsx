@@ -1,3 +1,4 @@
+import { CourseJourney } from '@/components/CourseJourney';
 import { createPageMetadata } from '@/lib/seo';
 import type { Metadata } from 'next';
 import Image from 'next/image';
@@ -167,6 +168,8 @@ export default function VtcPage() {
         </div>
       </div>
     </section>
+
+    <CourseJourney course="vtc" />
 
     <section className={styles.accreditations}>
       <div className={styles.container}>

@@ -1,3 +1,4 @@
+import { CourseJourney } from '@/components/CourseJourney';
 import { serializeCourseJsonLd } from '@/lib/seo';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
@@ -219,6 +220,8 @@ export function BtsCgReferencePage() {
           <p className="mt-3 text-[.64rem] font-semibold text-white/40">* Sous réserve de la conclusion et de la prise en charge du contrat d’alternance.</p>
         </div>
       </section>
+
+      <CourseJourney course="bts-cg" />
 
       <BtsSectionNavigation code="CG" competencyHref="#competences" competencyLabel="Compétences" faqHref="#faq-cg" registrationHref={applicationUrl} />
 

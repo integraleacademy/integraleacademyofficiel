@@ -1,3 +1,4 @@
+import { CourseJourney } from '@/components/CourseJourney';
 import { serializeCourseJsonLd } from '@/lib/seo';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
@@ -324,6 +325,8 @@ export function BtsPiReferencePage() {
           <p className="mt-3 text-[.64rem] font-semibold text-white/40">* Sous réserve de la conclusion et de la prise en charge du contrat d’alternance.</p>
         </div>
       </section>
+
+      <CourseJourney course="bts-pi" />
 
       <BtsSectionNavigation code="PI" competencyHref="#competences" competencyLabel="Compétences" faqHref="#faq-pi" registrationHref={applicationUrl} />
 

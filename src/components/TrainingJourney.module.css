@@ -1,4 +1,4 @@
-.journey { --accent: #e6530b; --accent-strong: #bc4109; --accent-soft: #fff1e9; --accent-hover: #963007; --accent-focus: #c74b0c; --accent-nav: #fff0e5; --accent-current: #ae3b0b; --ink: #191b20; --muted: #61636e; background: #fff; color: var(--ink); scroll-margin-top: var(--site-header-height); }
+.journey { --accent: #e6530b; --accent-strong: #bc4109; --accent-soft: #fff1e9; --accent-hover: #963007; --accent-focus: #c74b0c; --accent-nav: #fff0e5; --accent-current: #ae3b0b; --journey-light: #ffc59f; --journey-solid: #b94713; --ink: #191b20; --muted: #61636e; background: #fff; color: var(--ink); scroll-margin-top: var(--site-header-height); }
 .stage { max-width: 1920px; margin: 0 auto; padding-top: 64px; }
 .intro { padding: 0 clamp(24px, 5vw, 88px) 36px; }
 .eyebrow { color: var(--accent-strong); font-size: 12px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
@@ -76,9 +76,17 @@
 @keyframes reveal { from { opacity: .25; } to { opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { .journey *, .journey *::before, .journey *::after { animation: none !important; transition: none !important; } }
 
-.journey[data-theme='blue'] { --accent: #2864e8; --accent-strong: #1d4ed8; --accent-soft: #eaf2ff; --accent-hover: #173c9c; --accent-focus: #2563eb; --accent-nav: #eaf2ff; --accent-current: #1e40af; }
+.journey[data-theme='blue'] { --accent: #2864e8; --accent-strong: #1d4ed8; --accent-soft: #eaf2ff; --accent-hover: #173c9c; --accent-focus: #2563eb; --accent-nav: #eaf2ff; --accent-current: #1e40af; --journey-light: #acd5ff; --journey-solid: #245ac5; }
 .journey[data-theme='blue'] .visual { background: radial-gradient(ellipse at 90% 5%, #fff 0, transparent 60%), #e9eff8; }
 .journey[data-theme='blue'] .visual[data-scene='0'] { background: radial-gradient(ellipse at 80% 10%, #fff 0, transparent 60%), #e0e8f2; }
 .journey[data-theme='blue'] .visual[data-scene='2'] { background: radial-gradient(ellipse at 20% 80%, #d2e9ff 0, transparent 70%), #eaf1f9; }
 .journey[data-theme='blue'] .visual[data-scene='3'] { background: radial-gradient(ellipse at 85% 10%, #cfe5ff 0, transparent 70%), #e3ecf8; }
 .journey[data-theme='blue'] .visualCounter { color: #3e5576; }
+
+.journey[data-theme='green'] { --accent: #08825d; --accent-strong: #066549; --accent-soft: #e6f6ee; --accent-hover: #064e3b; --accent-focus: #047857; --accent-nav: #e6f6ee; --accent-current: #065f46; --journey-light: #a5f0cd; --journey-solid: #087452; }
+.journey[data-theme='red'] { --accent: #da333d; --accent-strong: #b62331; --accent-soft: #fff0f0; --accent-hover: #8f1d28; --accent-focus: #c72b37; --accent-nav: #fff0f0; --accent-current: #a42130; --journey-light: #ffbeb8; --journey-solid: #bb2936; }
+.journey[data-theme='violet'] { --accent: #7c3aed; --accent-strong: #6d28d9; --accent-soft: #f2edff; --accent-hover: #5b21b6; --accent-focus: #7c3aed; --accent-nav: #f2edff; --accent-current: #5b21b6; --journey-light: #d8c4ff; --journey-solid: #7133c8; }
+.journey:is([data-theme='green'], [data-theme='red'], [data-theme='violet']) .visual { background: radial-gradient(ellipse at 90% 5%, #fff, transparent 65%), var(--accent-soft); }
+.journey:is([data-theme='green'], [data-theme='red'], [data-theme='violet']) .visual[data-scene='0'] { background: radial-gradient(ellipse at 80% 10%, #fff, transparent 65%), #e6e9eb; }
+.journey:is([data-theme='green'], [data-theme='red'], [data-theme='violet']) .visual[data-scene='3'] { background: radial-gradient(ellipse at 85% 10%, var(--journey-light), transparent 70%), var(--accent-soft); }
+.journey:is([data-theme='green'], [data-theme='red'], [data-theme='violet']) .visualCounter { color: var(--accent-strong); }

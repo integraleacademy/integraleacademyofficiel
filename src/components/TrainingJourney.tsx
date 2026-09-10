@@ -13,6 +13,8 @@ export type TrainingJourneyStep = {
   visual: ReactNode;
 };
 
+export type TrainingJourneyTheme = 'orange' | 'blue' | 'green' | 'red' | 'violet';
+
 type TrainingJourneyProps = {
   id: string;
   name: string;
@@ -21,7 +23,7 @@ type TrainingJourneyProps = {
   steps: readonly TrainingJourneyStep[];
   shortcut: { href: string; label: string; ariaLabel: string };
   closingNote: string;
-  theme?: 'orange' | 'blue';
+  theme?: TrainingJourneyTheme;
 };
 
 function Arrow() {

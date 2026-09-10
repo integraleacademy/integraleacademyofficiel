@@ -1,3 +1,4 @@
+import { CourseJourney } from '@/components/CourseJourney';
 import { serializeCourseJsonLd } from '@/lib/seo';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -211,6 +212,8 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
         </div>
       </div>
     </section>
+
+    <CourseJourney course="a3p" />
 
     <TrainingSectionNavigation
       mark="A3P"

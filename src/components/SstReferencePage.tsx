@@ -1,3 +1,4 @@
+import { CourseJourney } from '@/components/CourseJourney';
 import { serializeCourseJsonLd } from '@/lib/seo';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -143,6 +144,8 @@ export function SstReferencePage({ sessions }: { sessions: TrainingDatesPricingS
     >
       <TrainingHeroSessionCard session={next} theme="green" duration="2 jours · 14 heures" defaultPrice="Sur devis" capacity={10} assistantKey="sst" />
     </TrainingHero>
+
+    <CourseJourney course="sst" />
 
     <TrainingSectionNavigation
       mark="SST"

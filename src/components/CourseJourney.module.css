@@ -1,0 +1,121 @@
+.card { --card-ink: #17212b; position: relative; isolation: isolate; display: flex; flex-direction: column; width: 100%; min-height: 660px; padding: clamp(24px, 4.4cqi, 32px); overflow: clip; border: 1px solid #ffffffb3; border-radius: 27px; background: #fcfdfd; color: var(--card-ink); box-shadow: 0 28px 55px -26px #182b4145, 0 3px 8px #182b4108; }
+.card > * { min-width: 0; flex-shrink: 0; }
+.cardHeader { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.brand { display: flex; flex-direction: column; font-size: 13px; font-weight: 900; line-height: 1.08; letter-spacing: -.025em; }
+.brand > span { color: var(--accent-strong); }
+.cardLabel { max-width: 65%; padding: 7px 11px; border: 1px solid #8b929b; border-radius: 30px; color: #48535f; font-size: 12px; font-weight: 700; line-height: 1.35; text-align: center; }
+.eyebrow { margin: 0; color: var(--accent-strong); font-size: 12px; font-weight: 800; line-height: 1.5; letter-spacing: .04em; text-transform: uppercase; }
+.cardAction { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 62px; margin-top: auto; padding-top: 16px; border-top: 1px solid #1837612b; color: inherit; font-size: 15px; font-weight: 800; line-height: 1.4; }
+.actionArrow { display: grid; place-items: center; flex: 0 0 44px; height: 44px; border-radius: 50%; background: var(--card-ink); color: #fff; transition: transform .2s ease; }
+.actionArrow svg { width: 20px; height: 20px; }
+.cardAction:hover .actionArrow { transform: rotate(-35deg); }
+
+.openingCard { background: #101f2d; color: #fff; border-color: #ffffff24; }
+.coverPhoto { position: absolute; z-index: -3; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 62% center; filter: saturate(.65); }
+.openingCard::before { position: absolute; z-index: -2; inset: 0; content: ''; background: linear-gradient(90deg, #091626ef, #0a1a2ecc 50%, #0b1d3370), linear-gradient(0deg, #091626, #0b1d3318); }
+.openingCard .brand > span, .openingCard .eyebrow { color: var(--journey-light, #ffc59f); }
+.openingCard .cardLabel { color: #f1f4f8; border-color: #ffffff66; background: #0b1a2b70; }
+.orbit { position: absolute; z-index: -1; top: 24%; right: -32%; display: grid; place-items: center; width: 78%; aspect-ratio: 1; border: 1px solid #ffffff38; border-radius: 50%; box-shadow: 0 0 0 30px #ffffff08, 0 0 0 60px #ffffff05; color: var(--journey-light, #ffc59f); }
+.orbit svg { width: 23%; height: 23%; transform: translateX(-60%); stroke-width: 1; }
+.openingBody { display: flex; flex: 1; flex-direction: column; justify-content: center; padding: 30px 0; }
+.openingTitle { margin: 18px 0 0; font-size: clamp(37px, 8.1cqi, 59px); font-weight: 850; letter-spacing: -.055em; line-height: 1.05; text-wrap: balance; }
+.openingTitle > span { color: var(--journey-light, #ffc59f); }
+.subtitle { max-width: 500px; margin: 24px 0 0; font-size: 16px; line-height: 1.6; color: #e4edf7; }
+.verbs { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding: 18px 0; margin-bottom: 10px; border-top: 1px solid #ffffff40; }
+.verbs > span { display: flex; align-items: baseline; gap: 8px; font-size: 16px; font-weight: 750; }
+.verbs small { color: var(--journey-light, #ffc59f); font-size: 12px; }
+.openingCard .cardAction, .outcomeCard .cardAction { border-color: #ffffff55; }
+.openingCard .actionArrow { color: #102a3c; background: var(--journey-light, #ffc59f); }
+
+.studyCard { background: radial-gradient(ellipse at 100% 0%, var(--accent-soft), transparent 60%), #fdfefe; }
+.metricHeadline { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 22px; margin: 26px 0; }
+.metricValue { color: var(--accent); font-size: clamp(72px, 15cqi, 112px); font-weight: 850; line-height: .9; letter-spacing: -.07em; }
+.metricTitle { margin: 10px 0 0; font-size: clamp(26px, 4.8cqi, 35px); font-weight: 850; line-height: 1.1; letter-spacing: -.04em; }
+.metricTitle > span { color: #66727e; }
+.studyPanels { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.studyPanels > div { min-width: 0; padding: 20px; border-radius: 18px; background: var(--accent-soft); }
+.studyPanels > div[data-dark='true'] { background: #172735; color: #fff; }
+.studyPanels > div[data-dark='true'] .eyebrow { color: var(--journey-light, #ffc59f); }
+.panelMetric { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 10px; margin: 16px 0 8px; }
+.panelMetric > strong { font-size: clamp(30px, 6.5cqi, 47px); font-weight: 850; line-height: 1.05; letter-spacing: -.045em; }
+.panelMetric > span { font-size: 15px; font-weight: 700; line-height: 1.4; }
+.panelDetail { margin: 0; color: #52616e; font-size: 14px; line-height: 1.5; }
+.studyPanels > div[data-dark='true'] .panelDetail { color: #dae3ed; }
+.skills { margin: 24px 0; }
+.skills > div { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 18px; margin-top: 14px; }
+.skills > div > span { display: flex; align-items: baseline; gap: 9px; font-size: 15px; font-weight: 700; line-height: 1.4; }
+.skills small { flex-shrink: 0; color: var(--accent-strong); font-size: 12px; }
+
+.practiceCard { background: var(--accent-soft); }
+.practiceTitle { margin: 20px 0; font-size: clamp(30px, 5.5cqi, 40px); font-weight: 850; line-height: 1.1; letter-spacing: -.045em; }
+.practiceTitle > span { color: var(--accent-strong); }
+.practiceSheet { padding: 16px 22px; border: 1px solid #ffffff; border-radius: 18px; background: #ffffffd9; box-shadow: 0 18px 28px -26px #10273870; }
+.sheetHeader { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-bottom: 8px; }
+.sheetHeader svg { flex: 0 0 22px; width: 22px; height: 22px; color: var(--accent-strong); }
+.practiceSheet ol { padding: 0; margin: 0; list-style: none; }
+.practiceSheet li { display: grid; grid-template-columns: 34px minmax(0, 1fr); align-items: start; gap: 14px; padding: 10px 0; border-top: 1px solid #23384e20; }
+.practiceSheet li:first-child { border-top: 0; }
+.rowNumber { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--accent-soft); color: var(--accent-strong); font-size: 13px; font-weight: 800; }
+.practiceSheet li strong { font-size: 19px; font-weight: 800; line-height: 1.3; letter-spacing: -.02em; }
+.practiceSheet li p { margin: 5px 0 0; font-size: 15px; line-height: 1.5; color: #52616e; }
+.practiceNote { margin: 15px 0 18px; font-size: 14px; line-height: 1.5; color: #52616e; }
+
+.outcomeCard { color: #fff; background: var(--journey-solid, #b94713); border-color: #ffffff40; }
+.outcomeCard .brand > span, .outcomeCard .cardLabel { color: #fff; }
+.outcomeCard .cardLabel { border-color: #ffffff80; }
+.futureOrbit { position: absolute; z-index: -1; top: 17%; right: -43%; width: 105%; aspect-ratio: 1; border: 1px solid #ffffff66; border-radius: 50%; box-shadow: 0 0 0 32px #ffffff12, 0 0 0 64px #ffffff0e, 0 0 0 96px #ffffff09; }
+.futureHeading { margin: 22px 0 0; font-size: clamp(27px, 4.4cqi, 32px); font-weight: 850; line-height: 1.12; letter-spacing: -.04em; }
+.futureHeading > span { color: #ffffffd9; }
+.destination { display: flex; flex: 1; flex-direction: column; justify-content: center; padding: 18px 0; }
+.destination > strong { display: flex; align-items: flex-start; width: fit-content; font-size: clamp(78px, 14.5cqi, 104px); font-weight: 900; letter-spacing: -.065em; line-height: .9; }
+.destination > strong[data-long='true'] { font-size: clamp(56px, 10.5cqi, 76px); }
+.destination > strong > span { flex-shrink: 0; width: .35em; margin-left: .15em; }
+.destination svg { width: 100%; height: auto; stroke-width: 1.3; }
+.destination > p { max-width: 530px; margin: 10px 0 0; font-size: 20px; font-weight: 750; line-height: 1.25; letter-spacing: -.02em; }
+.milestones { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.milestones > a { display: flex; flex-direction: column; min-width: 0; padding: 16px; border: 1px solid #ffffff20; border-radius: 17px; background: #132333; transition: transform .2s ease; }
+.milestones > a:hover { transform: translateY(-3px); }
+.milestones > a > span { display: flex; align-items: center; justify-content: space-between; gap: 8px; color: var(--journey-light, #ffc59f); font-size: 12px; font-weight: 800; line-height: 1.4; }
+.milestones svg { flex: 0 0 18px; width: 18px; height: 18px; }
+.milestones strong { margin-top: 10px; font-size: clamp(23px, 3.7cqi, 27px); font-weight: 800; line-height: 1.1; letter-spacing: -.04em; }
+.milestones p { margin: 9px 0 0; color: #e2ebf5; font-size: 14px; line-height: 1.45; }
+.validationNote { margin: 13px 0 17px; font-size: 14px; line-height: 1.5; color: #f5f8fc; }
+.outcomeCard .actionArrow { background: #fff; color: var(--journey-solid, #b94713); }
+
+@container (max-width: 530px) {
+  .card { padding: 24px; min-height: 630px; }
+  .openingTitle { font-size: 39px; }
+  .metricHeadline { gap: 16px; }
+  .metricValue { font-size: 76px; }
+  .metricTitle { font-size: 27px; }
+  .studyPanels > div, .milestones > a { padding: 16px; }
+  .practiceSheet { padding: 16px; }
+  .practiceTitle { font-size: 34px; }
+  .practiceSheet li strong { font-size: 18px; }
+  .destination > strong[data-long='true'] { font-size: 57px; }
+}
+@container (max-width: 390px) {
+  .card { min-height: 0; padding: 22px; border-radius: 22px; }
+  .cardHeader { align-items: flex-start; gap: 10px; }
+  .cardLabel { max-width: 58%; }
+  .cardAction { margin-top: 24px; }
+  .openingBody { padding: 36px 0; }
+  .openingTitle { font-size: clamp(31px, 10cqi, 39px); }
+  .verbs > span { flex-direction: column; gap: 4px; font-size: 14px; }
+  .metricHeadline { grid-template-columns: 1fr; gap: 18px; }
+  .metricValue { font-size: 86px; }
+  .studyPanels, .skills > div, .milestones { grid-template-columns: 1fr; }
+  .studyPanels > div, .milestones > a { padding: 20px; }
+  .panelMetric > strong { font-size: 42px; }
+  .skills { margin-bottom: 0; }
+  .practiceTitle { font-size: 30px; }
+  .practiceSheet { padding: 16px; }
+  .practiceSheet li { grid-template-columns: 26px minmax(0, 1fr); gap: 10px; }
+  .rowNumber { width: 26px; height: 26px; }
+  .practiceNote, .validationNote { margin-bottom: 0; }
+  .futureHeading { font-size: 28px; }
+  .destination { padding: 34px 0; }
+  .destination > strong { font-size: clamp(68px, 23cqi, 96px); }
+  .destination > strong[data-long='true'] { font-size: clamp(43px, 14.5cqi, 56px); }
+  .destination > p { font-size: 19px; }
+}
