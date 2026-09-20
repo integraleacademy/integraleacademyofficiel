@@ -719,14 +719,6 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
   const [view, setView] = useState<ViewMode>('list');
   const [showAll, setShowAll] = useState(false);
 
-  const locations = useMemo(
-    () => Array.from(new Set(sortedSessions.map((session) => sessionMatchesLocation(session, 'paris') ? 'Paris' : sessionMatchesLocation(session, 'cote-azur') ? 'Côte d’Azur' : session.location).filter(Boolean))) as string[],
-    [sortedSessions],
-  );
-  const formationCount = useMemo(
-    () => new Set(sortedSessions.map((session) => session.training?.slug || sessionTitle(session))).size,
-    [sortedSessions],
-  );
   const formationSessionCounts = useMemo(
     () => Object.fromEntries(formationFilters.map((formation) => [formation.key, sortedSessions.filter((session) => formationMatchesSlug(formation, session.training?.slug)).length])) as Record<Exclude<FormationFilterKey, 'all'>, number>,
     [sortedSessions],
@@ -817,20 +809,6 @@ export function PlanningClient({ initialSessions }: { initialSessions: Session[]
               </p>
             </div>
           </div>
-        </div>
-
-        <div className="page-container mt-10 grid grid-cols-2 gap-4 border-t border-[#d9cfbd] pt-6 lg:grid-cols-4">
-          {[
-            [String(sortedSessions.length), 'sessions ouvertes'],
-            [String(formationCount), 'formations avec dates'],
-            [String(locations.length), locations.length > 1 ? 'centres disponibles' : 'centre disponible'],
-            ['Temps réel', 'places et calendrier'],
-          ].map(([value, label]) => (
-            <div key={label}>
-              <p className="text-xl font-black text-[#141820] sm:text-2xl">{value}</p>
-              <p className="mt-1 text-[9px] font-black uppercase tracking-[.14em] text-[#8f6810]">{label}</p>
-            </div>
-          ))}
         </div>
       </section>
 
