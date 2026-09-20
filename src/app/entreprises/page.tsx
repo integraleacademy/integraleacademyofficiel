@@ -1,21 +1,8 @@
 import { createPageMetadata } from '@/lib/seo';
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import localFont from 'next/font/local';
 import { appointmentFormUrl } from '@/components/ui';
 import styles from './entreprises.module.css';
-
-const displayFont = localFont({ src: '../../../public/fonts/entreprises/PassionOne-Bold.woff2', weight: '700', display: 'swap', variable: '--business-display' });
-
-const bodyFont = localFont({
-  src: [
-    { path: '../../../public/fonts/entreprises/Poppins-Regular.woff2', weight: '400' },
-    { path: '../../../public/fonts/entreprises/Poppins-Medium.woff2', weight: '500' },
-    { path: '../../../public/fonts/entreprises/Poppins-SemiBold.woff2', weight: '600' },
-    { path: '../../../public/fonts/entreprises/Poppins-Bold.woff2', weight: '700' },
-  ],
-  display: 'swap', variable: '--business-body',
-});
 
 export const metadata: Metadata = createPageMetadata('/entreprises');
 
@@ -120,14 +107,14 @@ const faqItems = [
 ];
 
 export default function EntreprisesPage() {
-  return <div className={`${styles.page} ${displayFont.variable} ${bodyFont.variable}`}>
+  return <div className={styles.page}>
     <section className={styles.hero} aria-labelledby="entreprises-title">
       <div className={styles.honeycomb} aria-hidden="true" />
       <div className={styles.container}>
         <div className={styles.heroInner}>
           <div className={styles.heroCopy}>
             <span className={styles.eyebrow}><span /> Solutions entreprises · Sécurité privée</span>
-            <h1 id="entreprises-title">Recruter, former<br />et faire évoluer<br />vos futurs professionnels<br />de la <em>sécurité privée.</em></h1>
+            <h1 id="entreprises-title">Recruter, former et faire évoluer vos futurs professionnels de la <em>sécurité privée.</em></h1>
             <p>Des solutions clés en main pour renforcer vos équipes. Nous trouvons les candidats, nous les formons, nous vous accompagnons.</p>
             <div className={styles.heroActions}>
               <Link href="#solutions" className={styles.primaryButton}>Découvrir les 3 solutions <Icon name="arrow" /></Link>
