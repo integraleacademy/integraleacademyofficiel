@@ -17,6 +17,7 @@ import { createHomeSecurityHighlights } from '@/lib/home-security-trainings';
 import { listSessions } from '@/lib/training-data';
 import { vtcFormation } from '@/data/site';
 import styles from './home.module.css';
+import btsGridStyles from '@/components/BtsTrainingGrid.module.css';
 
 export const dynamic = 'force-dynamic';
 
@@ -165,13 +166,12 @@ export default async function Home() {
 
       <VisualSection tone="bts">
         <section id="bts" className="scroll-mt-28 page-container py-14 md:py-16">
-          <div data-training-heading className={styles.securityTrainingHeading}>
+          <div data-training-heading className={btsGridStyles.sectionHeading}>
             <div>
-              <span className={styles.securityTrainingEyebrow}>BTS en alternance</span>
               <h2>BTS en alternance</h2>
-              <p>Six diplômes d’État pour construire un projet solide, en présentiel à Puget-sur-Argens ou 100 % à distance en visioconférence.</p>
+              <p>6 diplômes d’État · Bac +2 · 2 ans en alternance</p>
             </div>
-            <div className={styles.securityTrainingActions}>
+            <div className={`${styles.securityTrainingActions} ${btsGridStyles.sectionActions}`}>
               <BtsTrainingComparisonModal items={btsHighlights} className={styles.securityTrainingSecondary} />
               <Link href="/planning" className={styles.securityTrainingPrimary}>Voir les rentrées <span aria-hidden="true">→</span></Link>
             </div>
