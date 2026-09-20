@@ -1,12 +1,11 @@
 import { createPageMetadata } from '@/lib/seo';
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { appointmentFormUrl } from '@/components/ui';
 import styles from './entreprises.module.css';
 
 export const metadata: Metadata = createPageMetadata('/entreprises');
 
-type IconName = 'arrow' | 'check' | 'people' | 'target' | 'shield' | 'briefcase' | 'school' | 'fire' | 'calendar' | 'document' | 'drone' | 'camera' | 'phone';
+type IconName = 'arrow' | 'check' | 'people' | 'target' | 'shield' | 'briefcase' | 'school' | 'fire' | 'calendar' | 'document' | 'drone' | 'camera' | 'phone' | 'email';
 
 function Icon({ name, className = '' }: { name: IconName; className?: string }) {
   const common = { className, viewBox: '0 0 24 24', fill: 'none', 'aria-hidden': true } as const;
@@ -23,6 +22,7 @@ function Icon({ name, className = '' }: { name: IconName; className?: string }) 
   if (name === 'drone') return <svg {...common}><path d="M8 12h8M12 9v6M8 12l-3-3M16 12l3-3M8 12l-3 3M16 12l3 3" stroke="currentColor" strokeLinecap="round" strokeWidth="1.8"/><circle cx="4.5" cy="8.5" r="2.2" stroke="currentColor" strokeWidth="1.5"/><circle cx="19.5" cy="8.5" r="2.2" stroke="currentColor" strokeWidth="1.5"/><circle cx="4.5" cy="15.5" r="2.2" stroke="currentColor" strokeWidth="1.5"/><circle cx="19.5" cy="15.5" r="2.2" stroke="currentColor" strokeWidth="1.5"/></svg>;
   if (name === 'camera') return <svg {...common}><path d="M4 7.5h3l1.4-2h7.2l1.4 2h3v11H4v-11Z" stroke="currentColor" strokeLinejoin="round" strokeWidth="1.8"/><circle cx="12" cy="13" r="3.4" stroke="currentColor" strokeWidth="1.8"/></svg>;
   if (name === 'phone') return <svg {...common}><path d="M7.2 4.5 10 8.2 8.4 10c1.2 2.6 3 4.4 5.6 5.6l1.8-1.6 3.7 2.8-1.1 3c-.3.7-1 1.1-1.7 1-7-.8-12.7-6.5-13.5-13.5-.1-.7.3-1.4 1-1.7l3-1.1Z" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.7"/></svg>;
+  if (name === 'email') return <svg {...common}><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" strokeWidth="1.8"/><path d="m4 7 8 6 8-6" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8"/></svg>;
   return <svg {...common}><path d="M5 12h13M13 7l5 5-5 5" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.9"/></svg>;
 }
 
@@ -118,7 +118,7 @@ export default function EntreprisesPage() {
             <p>Des solutions clés en main pour renforcer vos équipes. Nous trouvons les candidats, nous les formons, nous vous accompagnons.</p>
             <div className={styles.heroActions}>
               <Link href="#solutions" className={styles.primaryButton}>Découvrir les 3 solutions <Icon name="arrow" /></Link>
-              <a href={appointmentFormUrl} className={styles.secondaryButton}>Parlons de vos besoins <Icon name="arrow" /></a>
+              <a href="#contact-entreprises" className={styles.secondaryButton}>Parlons de vos besoins <Icon name="arrow" /></a>
             </div>
             <div className={styles.heroTags}><span><Icon name="check" />Sourcing candidats</span><span><Icon name="check" />Gestion administrative</span><span><Icon name="check" />Suivi CNAPS</span></div>
           </div>
@@ -145,7 +145,7 @@ export default function EntreprisesPage() {
         <Link href="#poei"><i className={styles.dotCoral} />POEI</Link>
         <Link href="#bts-mos"><i className={styles.dotGold} />BTS MOS</Link>
         <Link href="#accompagnement">Notre accompagnement</Link>
-        <Link href="#diagnostic">Votre projet <Icon name="arrow" /></Link>
+        <Link href="#contact-entreprises">Votre projet <Icon name="arrow" /></Link>
       </div>
     </nav>
 
@@ -189,7 +189,7 @@ export default function EntreprisesPage() {
         <div className={styles.timelineHeading}><span className={styles.ribbon}>Le calendrier</span><h3>La formation. Le terrain. La montée en compétences.</h3><p>Session de janvier à décembre 2027</p></div>
         <ol className={styles.timeline}>{alternanceTimeline.map((step) => <li key={step.number}><span className={styles.timelineDot}>{step.number}</span><div><small>{step.date}</small><strong>{step.title}</strong><p>{step.detail}</p></div></li>)}</ol>
         <div className={styles.alternanceStats}><div><strong>1 246 h</strong><span>d’immersion · session 1</span></div><div><strong>1 106 h</strong><span>réelles travaillées · session 1</span></div><div><strong>2 rentrées</strong><span>annoncées en 2027</span></div></div>
-        <div className={styles.sessionNote}><Icon name="calendar" /><p><strong>Deux calendriers pour votre recrutement.</strong> Janvier à décembre 2027 ou juin 2027 à juin 2028. Selon la session : 1 099 à 1 106 heures réellement travaillées.</p><a href={appointmentFormUrl}>Étudier mon recrutement <Icon name="arrow" /></a></div>
+        <div className={styles.sessionNote}><Icon name="calendar" /><p><strong>Deux calendriers pour votre recrutement.</strong> Janvier à décembre 2027 ou juin 2027 à juin 2028. Selon la session : 1 099 à 1 106 heures réellement travaillées.</p><a href="#contact-entreprises">Étudier mon recrutement <Icon name="arrow" /></a></div>
       </div>
     </section>
 
@@ -206,7 +206,7 @@ export default function EntreprisesPage() {
           <div className={styles.programContent}><p>Un socle complet pour des agents directement employables, de la posture professionnelle aux techniques de sécurité.</p><div className={styles.programGrid}>{poeiProgram.map((module) => <article key={module.title}><div><Icon name={module.icon} /><strong>{module.hours}</strong></div><h4>{module.title}</h4><p>{module.text}</p></article>)}</div></div>
         </details>
         <div className={styles.sessionsBar}><span><Icon name="calendar" />Les sessions</span><strong>21 sept. – 22 déc. 2026</strong><strong>11 jan. – 12 avr. 2027</strong><strong>21 sept. – 22 déc. 2027</strong></div>
-        <div className={styles.sectionBottom}><p className={styles.disclaimer}>* Financement intégral sous réserve de validation et des règles du financeur. L’employeur s’engage à recruter le candidat pour une durée minimale de 6 mois à l’issue du parcours.</p><a href={appointmentFormUrl} className={styles.deviceButton}>Étudier une POEI <Icon name="arrow" /></a></div>
+        <div className={styles.sectionBottom}><p className={styles.disclaimer}>* Financement intégral sous réserve de validation et des règles du financeur. L’employeur s’engage à recruter le candidat pour une durée minimale de 6 mois à l’issue du parcours.</p><a href="#contact-entreprises" className={styles.deviceButton}>Étudier une POEI <Icon name="arrow" /></a></div>
       </div>
     </section>
 
@@ -227,7 +227,7 @@ export default function EntreprisesPage() {
           <summary><span><Icon name="briefcase" /><span><strong>Comprendre le budget employeur</strong><small>Hypothèses de rémunération et de financement</small></span></span><b aria-hidden="true">+</b></summary>
           <div className={styles.programContent}><div className={styles.costHypotheses}><div><span>Hypothèse basse</span><strong>783,90 € / mois</strong><p>En première année, puis 929,75 € / mois en deuxième année. Estimation totale après l’aide indiquée : 16 063 €.</p></div><div><span>Hypothèse haute</span><strong>966,21 € / mois</strong><p>En première année, puis 1 112,05 € / mois en deuxième année. Estimation totale après l’aide indiquée : 20 439 €.</p></div></div><p className={styles.disclaimer}>Ces estimations intègrent une hypothèse d’aide de 4 500 € en première année. Elles doivent être confirmées lors de l’étude employeur selon la rémunération, les aides en vigueur et les règles applicables.</p></div>
         </details>
-        <div className={styles.sectionBottom}><p className={styles.disclaimer}>Un budget personnalisé est établi avec vous avant la mise en place du contrat.</p><a href={appointmentFormUrl} className={styles.deviceButton}>Recruter un alternant BTS MOS <Icon name="arrow" /></a></div>
+        <div className={styles.sectionBottom}><p className={styles.disclaimer}>Un budget personnalisé est établi avec vous avant la mise en place du contrat.</p><a href="#contact-entreprises" className={styles.deviceButton}>Recruter un alternant BTS MOS <Icon name="arrow" /></a></div>
       </div>
     </section>
 
@@ -246,10 +246,15 @@ export default function EntreprisesPage() {
       <div className={styles.container}>
         <div className={styles.faqLayout}>
           <div><div className={styles.sectionHeading}><span className={styles.sectionEyebrow}>Les réponses à vos questions</span><h2 id="faq-title">Avant de<br /><em>se lancer.</em></h2></div><div className={styles.faqList}>{faqItems.map((item) => <details key={item.question}><summary><span>{item.question}</span><b aria-hidden="true">+</b></summary><div><p>{item.answer}</p></div></details>)}</div></div>
-          <aside className={styles.diagnosticCard}>
+          <aside id="contact-entreprises" className={styles.diagnosticCard} aria-labelledby="contact-name">
             <span className={styles.ribbon}>Parlons de votre projet</span><h3>Vos prochains<br />recrutements<br />commencent ici.</h3><p>Vos missions, vos volumes, votre calendrier : construisons ensemble la solution adaptée à votre entreprise.</p>
-            <div className={styles.contactPerson}><img src="/images/cassandre-memoji.png" alt="" width="80" height="80" loading="lazy" /><div><strong>Cassandre</strong><span>Responsable commerciale</span></div></div>
-            <a href={appointmentFormUrl} className={styles.primaryButton}>Demander une étude <Icon name="arrow" /></a><a href="tel:0422470768" className={styles.phoneLink}><Icon name="phone" />04 22 47 07 68</a><small>Premier échange gratuit et sans engagement</small>
+            <div className={styles.contactPerson}><div className={styles.contactAvatar} aria-hidden="true">AC</div><div><strong id="contact-name">Aurélie CHAUSSEZ</strong><span>Chargée des relations clients</span></div></div>
+            <address className={styles.contactDetails}>
+              <a href="tel:+33487830615"><Icon name="phone" /><span><small>Ligne directe</small><strong>04 87 83 06 15</strong></span></a>
+              <a href="tel:+33769390457"><Icon name="phone" /><span><small>Portable</small><strong>07 69 39 04 57</strong></span></a>
+              <a href="mailto:aurelie@integraleacademy.com"><Icon name="email" /><span><small>E-mail</small><strong>aurelie@integraleacademy.com</strong></span></a>
+            </address>
+            <a href="mailto:aurelie@integraleacademy.com?subject=Projet%20de%20recrutement%20en%20entreprise" className={styles.primaryButton}>Écrire à Aurélie <Icon name="arrow" /></a><small>Premier échange gratuit et sans engagement</small>
           </aside>
         </div>
       </div>

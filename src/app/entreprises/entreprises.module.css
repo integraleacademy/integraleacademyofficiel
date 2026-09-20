@@ -29,7 +29,7 @@
 .page svg { width: 22px; height: 22px; flex-shrink: 0; }
 .page a { text-decoration: none; }
 .page a:focus-visible, .page summary:focus-visible { outline: 3px solid var(--gold); outline-offset: 5px; }
-.page section[id] { scroll-margin-top: calc(var(--site-header-height) + 100px); }
+.page section[id], .diagnosticCard[id] { scroll-margin-top: calc(var(--site-header-height) + 100px); }
 .container { position: relative; width: min(1240px, calc(100% - 112px)); margin: 0 auto; }
 .hero { position: relative; isolation: isolate; overflow: hidden; background: var(--cream); }
 .honeycomb { position: absolute; z-index: -1; inset: 0; background: url('/images/entreprises/alveoles.svg') repeat; background-size: 108px 125px; opacity: .56; mask-image: linear-gradient(115deg, transparent 25%, #000 90%); pointer-events: none; }
@@ -223,11 +223,18 @@
 .diagnosticCard h3 { font-family: inherit; font-weight: 900; letter-spacing: -.04em; font-size: 40px; line-height: 1.08; margin-top: 23px; }
 .diagnosticCard > p { color: var(--muted); font-size: 14px; line-height: 1.8; margin-top: 20px; }
 .contactPerson { display: flex; align-items: center; gap: 14px; padding: 23px 0; }
-.contactPerson img { width: 61px; height: 68px; object-fit: contain; }
+.contactAvatar { display: grid; place-items: center; flex-shrink: 0; width: 61px; height: 61px; border-radius: 50%; background: var(--gold-bright); color: #35311f; font-size: 23px; font-weight: 900; }
+.contactPerson > div:last-child { min-width: 0; }
 .contactPerson strong { display: block; font-size: 16px; }.contactPerson span { display: block; font-size: 12px; color: var(--muted); }
+.contactDetails { display: grid; margin-bottom: 24px; font-style: normal; }
+.contactDetails a { display: flex; align-items: center; gap: 12px; min-height: 66px; padding: 12px 0; border-top: 1px solid var(--line); }
+.contactDetails a:hover strong { color: var(--gold); }
+.contactDetails svg { color: var(--gold); width: 20px; height: 20px; }
+.contactDetails span { min-width: 0; }
+.contactDetails small { display: block; color: var(--muted); font-size: 11px; }
+.contactDetails strong { display: block; font-size: 14px; font-weight: 700; overflow-wrap: anywhere; }
 .diagnosticCard > .primaryButton { width: 100%; justify-content: space-between; }
-.phoneLink { display: flex; align-items: center; justify-content: center; gap: 10px; font-weight: 600; padding: 18px 0 10px; font-size: 16px; }
-.diagnosticCard > small { display: block; text-align: center; color: var(--muted); font-size: 10px; }
+.diagnosticCard > small { display: block; margin-top: 12px; text-align: center; color: var(--muted); font-size: 10px; }
 
 :global(.dark) .page {
   --paper: #24251f; --cream: #303025; --white: #36372e; --ink: #fbf7e9; --muted: #d1cfbe; --line: #505143;
