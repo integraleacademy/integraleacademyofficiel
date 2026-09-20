@@ -115,12 +115,13 @@ function CompactCard({ item }: { item: SecurityTrainingHighlight }) {
             <h3>{item.shortTitle}</h3>
             <p>{item.title}</p>
             {item.visual === 'ssiap' && <p className={styles.compactDescription}>{item.description}</p>}
+            {item.visual === 'desp' && item.pathway && <p className={styles.compactPathway}>Formation initiale ou VAE</p>}
           </div>
 
           <div className={styles.compactFacts}>
             <span><FactIcon type="modality" /> {item.modality}</span>
             <span><FactIcon type="location" /> {item.location}</span>
-            {item.pathway ? <span><FactIcon type="pathway" /> {item.pathway}</span> : null}
+            {item.pathway && item.visual !== 'desp' ? <span><FactIcon type="pathway" /> {item.pathway}</span> : null}
           </div>
 
           <footer className={styles.compactFooter}>
