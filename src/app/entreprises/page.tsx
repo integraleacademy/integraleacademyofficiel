@@ -1,8 +1,21 @@
 import { createPageMetadata } from '@/lib/seo';
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import localFont from 'next/font/local';
 import { appointmentFormUrl } from '@/components/ui';
 import styles from './entreprises.module.css';
+
+const displayFont = localFont({ src: '../../../public/fonts/entreprises/PassionOne-Bold.woff2', weight: '700', display: 'swap', variable: '--business-display' });
+
+const bodyFont = localFont({
+  src: [
+    { path: '../../../public/fonts/entreprises/Poppins-Regular.woff2', weight: '400' },
+    { path: '../../../public/fonts/entreprises/Poppins-Medium.woff2', weight: '500' },
+    { path: '../../../public/fonts/entreprises/Poppins-SemiBold.woff2', weight: '600' },
+    { path: '../../../public/fonts/entreprises/Poppins-Bold.woff2', weight: '700' },
+  ],
+  display: 'swap', variable: '--business-body',
+});
 
 export const metadata: Metadata = createPageMetadata('/entreprises');
 
@@ -42,19 +55,19 @@ const challenges = [
 
 const solutions = [
   {
-    id: 'alternance', tone: 'Gold', label: 'Dispositif 1', icon: 'shield' as const,
+    id: 'alternance', tone: 'Cyan', label: 'Dispositif 01', icon: 'shield' as const,
     title: 'Parcours sécurité en alternance', value: '≈ 4 €/h', valueLabel: 'Coût employeur indicatif, charges et aides incluses',
     points: ['Parcours d’un an', 'APS + A3P + SSIAP 1', 'Environ 1 100 h réelles travaillées', 'OPCO AKTO et aides mobilisables'],
     ideal: 'Agent polyvalent, événementiel, sites sensibles et protection rapprochée.', cta: 'Voir le parcours alternance',
   },
   {
-    id: 'poei', tone: 'Green', label: 'Dispositif 2', icon: 'briefcase' as const,
+    id: 'poei', tone: 'Coral', label: 'Dispositif 02', icon: 'briefcase' as const,
     title: 'POEI sécurité privée', value: '100 %', valueLabel: 'Formation pré-embauche financée, sous réserve d’accord',
     points: ['450 h de formation intensive', 'APS + SSIAP 1 et modules métier', 'Présélection des candidats', 'CDD de 6 mois minimum à l’issue'],
     ideal: 'Recrutement rapide, besoins massifs et agents formés avant la prise de poste.', cta: 'Découvrir la POEI',
   },
   {
-    id: 'bts-mos', tone: 'Sand', label: 'Dispositif 3', icon: 'school' as const,
+    id: 'bts-mos', tone: 'Gold', label: 'Dispositif 03', icon: 'school' as const,
     title: 'BTS Management opérationnel de la sécurité', value: '1 564 h', valueLabel: 'Présence réelle en entreprise sur deux ans',
     points: ['15 jours entreprise / 15 jours école', '100 % entreprise pendant les étés', 'Formation financée par OPCO AKTO', 'Futur chef d’équipe ou superviseur'],
     ideal: 'Encadrement, exploitation, évolution interne et préparation de vos futurs managers.', cta: 'Explorer le BTS MOS',
@@ -100,171 +113,159 @@ const catalog = [
 
 const faqItems = [
   { question: 'Quel dispositif correspond à mon besoin ?', answer: 'L’alternance sécurité répond à un besoin d’agent polyvalent formé sur un an. La POEI est adaptée à une embauche rapide après 450 heures de formation. Le BTS MOS prépare plutôt un futur chef d’équipe, superviseur ou responsable d’exploitation.' },
-  { question: 'Les coûts annoncés sont-ils garantis ?', answer: 'Non. Ils constituent des estimations établies à partir des hypothèses du support entreprise. Le coût final dépend notamment de la rémunération, des aides en vigueur, de l’âge du candidat et des règles de prise en charge applicables au moment du contrat.' },
+  { question: 'Les coûts annoncés sont-ils garantis ?', answer: 'Non. Ils constituent des estimations établies à partir des hypothèses de rémunération et d’aides. Le coût final dépend notamment de la rémunération, des aides en vigueur, de l’âge du candidat et des règles de prise en charge applicables au moment du contrat.' },
   { question: 'Pouvez-vous recruter plusieurs candidats ?', answer: 'Oui. Nous pouvons organiser un sourcing individuel ou collectif, présélectionner les candidats et mettre en place des réunions d’information selon vos volumes et vos contraintes opérationnelles.' },
   { question: 'Qui gère les contrats et les financeurs ?', answer: 'Intégrale Academy vous accompagne pour le montage administratif, les relations avec l’OPCO ou France Travail, les contrats et le suivi des autorisations CNAPS. Chaque prise en charge reste soumise à la décision du financeur concerné.' },
   { question: 'Intervenez-vous hors de la Côte d’Azur ?', answer: 'Nous étudions chaque projet selon le lieu, le nombre de recrutements et les modalités pédagogiques possibles. Un premier échange permet de confirmer rapidement la faisabilité et l’organisation à prévoir.' },
 ];
 
 export default function EntreprisesPage() {
-  return <>
+  return <div className={`${styles.page} ${displayFont.variable} ${bodyFont.variable}`}>
     <section className={styles.hero} aria-labelledby="entreprises-title">
-      <div className={styles.heroGrid} aria-hidden="true" />
-      <span className={styles.heroOrb} aria-hidden="true" />
-      <div className={`page-container ${styles.heroInner}`}>
-        <div className={styles.heroCopy}>
-          <span className={styles.eyebrow}>Espace entreprises</span>
-          <h1 id="entreprises-title">Recrutez, formez et <span>fidélisez</span> vos futurs professionnels de la sécurité.</h1>
-          <p>Alternance sécurité, POEI ou BTS MOS&nbsp;: trois solutions clés en main pour renforcer vos équipes tout en maîtrisant vos coûts.</p>
-          <div className={styles.heroActions}>
-            <Link href="#diagnostic" className={styles.primaryButton}>Étudier mon besoin <Icon name="arrow" /></Link>
-            <Link href="#solutions" className={styles.secondaryButton}>Voir les 3 solutions <Icon name="arrow" /></Link>
+      <div className={styles.honeycomb} aria-hidden="true" />
+      <div className={styles.container}>
+        <div className={styles.heroInner}>
+          <div className={styles.heroCopy}>
+            <span className={styles.eyebrow}><span /> Solutions entreprises · Sécurité privée</span>
+            <h1 id="entreprises-title">Recruter, former<br />et faire évoluer<br />vos futurs professionnels<br />de la <em>sécurité privée.</em></h1>
+            <p>Des solutions clés en main pour renforcer vos équipes. Nous trouvons les candidats, nous les formons, nous vous accompagnons.</p>
+            <div className={styles.heroActions}>
+              <Link href="#solutions" className={styles.primaryButton}>Découvrir les 3 solutions <Icon name="arrow" /></Link>
+              <a href={appointmentFormUrl} className={styles.secondaryButton}>Parlons de vos besoins <Icon name="arrow" /></a>
+            </div>
+            <div className={styles.heroTags}><span><Icon name="check" />Sourcing candidats</span><span><Icon name="check" />Gestion administrative</span><span><Icon name="check" />Suivi CNAPS</span></div>
           </div>
-          <div className={styles.heroTags} aria-label="Services inclus"><span>Sourcing candidats</span><span>Gestion OPCO</span><span>Suivi CNAPS</span></div>
+          <div className={styles.heroVisual}>
+            <span className={styles.visualCircle} aria-hidden="true" />
+            <span className={styles.visualLabel}>Votre recrutement,<br /><b>clés en main.</b></span>
+            <img className={styles.lockImage} src="/images/entreprises/cle-securite.webp" alt="" width="858" height="957" fetchPriority="high" />
+            <div className={styles.visualCard}><span><Icon name="shield" /></span><div><strong>Un seul partenaire.</strong><p>Du premier candidat<br />à la prise de poste.</p></div></div>
+            <span className={styles.visualFootnote}>INTÉGRALE ACADEMY · DEPUIS 2020</span>
+          </div>
         </div>
-
-        <aside className={styles.partnerCard} aria-label="Pourquoi choisir Intégrale Academy">
-          <span className={styles.partnerBadge}>Partenaire RH</span>
-          <h2>Pourquoi choisir Intégrale Academy&nbsp;?</h2>
-          <ul>{heroBenefits.map((benefit) => <li key={benefit}><span><Icon name="check" /></span>{benefit}</li>)}</ul>
-        </aside>
-      </div>
-
-      <div className={`page-container ${styles.heroStats}`}>
-        <div><strong>+1 150</strong><span>stagiaires formés en 5 ans</span></div>
-        <div><strong>3</strong><span>dispositifs employeurs</span></div>
-        <div><strong>12 max.</strong><span>stagiaires par session POEI</span></div>
-        <div><strong>Qualiopi</strong><span>et autorisation CNAPS</span></div>
+        <div className={styles.heroStats}>
+          <div><strong>+1 150</strong><span>stagiaires formés en 5 ans</span></div>
+          <div><strong>3 dispositifs</strong><span>pour vos besoins de recrutement</span></div>
+          <div><strong>12 max.</strong><span>stagiaires par session POEI</span></div>
+          <div><strong>Qualiopi</strong><span>organisme certifié</span></div>
+        </div>
       </div>
     </section>
 
+    <nav className={styles.sectionNav} aria-label="Les solutions entreprises">
+      <div className={styles.container}>
+        <Link href="#alternance"><i className={styles.dotCyan} />Alternance sécurité</Link>
+        <Link href="#poei"><i className={styles.dotCoral} />POEI</Link>
+        <Link href="#bts-mos"><i className={styles.dotGold} />BTS MOS</Link>
+        <Link href="#accompagnement">Notre accompagnement</Link>
+        <Link href="#diagnostic">Votre projet <Icon name="arrow" /></Link>
+      </div>
+    </nav>
+
     <section className={styles.challengesSection} aria-labelledby="challenges-title">
-      <div className="page-container">
-        <div className={styles.sectionHeading}><span className={styles.sectionEyebrow}>Vos enjeux RH</span><h2 id="challenges-title">Des difficultés concrètes. <span>Trois réponses immédiates.</span></h2></div>
-        <div className={styles.challengesGrid}>
-          {challenges.map((challenge) => <article key={challenge.title} className={styles.challengeCard}>
-            <span className={styles.cardNumber}>{challenge.number}</span><span className={styles.challengeIcon}><Icon name={challenge.icon} /></span><h3>{challenge.title}</h3><p>{challenge.text}</p>
-          </article>)}
-        </div>
+      <div className={styles.container}>
+        <div className={styles.sectionHeading}><span className={styles.sectionEyebrow}>Vos enjeux, notre mission</span><h2 id="challenges-title">Des problématiques concrètes.<br /><em>Des solutions immédiates.</em></h2><p>Recrutement difficile, turn-over, manque de profils qualifiés… Construisons ensemble une équipe qui répond aux réalités de votre terrain.</p></div>
+        <div className={styles.challengesGrid}>{challenges.map((challenge) => <article key={challenge.title} className={styles.challengeCard}>
+          <span className={styles.challengeIcon}><Icon name={challenge.icon} /></span><div><h3>{challenge.title}</h3><p>{challenge.text}</p></div>
+        </article>)}</div>
       </div>
     </section>
 
     <section id="solutions" className={styles.solutionsSection} aria-labelledby="solutions-title">
-      <span className={styles.solutionsGlow} aria-hidden="true" />
-      <div className="page-container">
-        <div className={styles.darkHeading}><span className={styles.darkEyebrow}>Les solutions</span><h2 id="solutions-title">Trois dispositifs. Un même objectif&nbsp;: <span>des équipes opérationnelles.</span></h2><p>Choisissez la réponse adaptée à votre urgence, à votre volume de recrutement et au niveau de qualification recherché.</p></div>
-        <div className={styles.solutionsGrid}>
-          {solutions.map((solution) => <article key={solution.id} className={`${styles.solutionCard} ${styles[`solution${solution.tone}`]}`}>
-            <div className={styles.solutionTop}><span className={styles.solutionIcon}><Icon name={solution.icon} /></span><span className={styles.solutionLabel}>{solution.label}</span></div>
-            <h3>{solution.title}</h3><strong className={styles.solutionValue}>{solution.value}</strong><p className={styles.solutionValueLabel}>{solution.valueLabel}</p>
-            <ul>{solution.points.map((point) => <li key={point}><Icon name="check" />{point}</li>)}</ul>
-            <div className={styles.idealBox}><span>Idéal pour</span><p>{solution.ideal}</p></div>
-            <Link href={`#${solution.id}`}>{solution.cta}<Icon name="arrow" /></Link>
-          </article>)}
-        </div>
-        <p className={styles.darkDisclaimer}>Les coûts et prises en charge sont indicatifs et restent à confirmer selon la situation du candidat, les aides en vigueur et la décision du financeur.</p>
+      <div className={styles.container}>
+        <div className={styles.sectionHeading}><span className={styles.sectionEyebrow}>À chaque besoin, sa solution</span><h2 id="solutions-title">Trois façons de faire<br /><em>grandir vos équipes.</em></h2><p>Un agent polyvalent, un recrutement avant embauche ou un futur chef d’équipe : choisissez le dispositif adapté à votre projet.</p></div>
+        <div className={styles.solutionsGrid}>{solutions.map((solution) => <article key={solution.id} className={`${styles.solutionCard} ${styles[`solution${solution.tone}`]}`}>
+          <div className={styles.solutionTop}><span className={styles.solutionLabel}>{solution.label}</span><Icon name={solution.icon} /></div>
+          <h3>{solution.title}</h3>
+          <div className={styles.solutionFigure}><strong>{solution.value}</strong><p>{solution.valueLabel}</p></div>
+          <ul>{solution.points.map((point) => <li key={point}><Icon name="check" />{point}</li>)}</ul>
+          <div className={styles.idealBox}><span>Idéal pour</span><p>{solution.ideal}</p></div>
+          <Link href={`#${solution.id}`}>{solution.cta}<Icon name="arrow" /></Link>
+        </article>)}</div>
+        <p className={styles.disclaimer}>Coûts et prises en charge indicatifs, à confirmer selon la situation du candidat, les aides en vigueur et l’accord du financeur.</p>
       </div>
     </section>
 
-    <section id="alternance" className={styles.alternanceSection} aria-labelledby="alternance-title">
-      <div className="page-container">
+    <section id="alternance" className={`${styles.deviceSection} ${styles.alternanceSection}`} aria-labelledby="alternance-title">
+      <div className={styles.honeycomb} aria-hidden="true" />
+      <div className={styles.container}>
+        <div className={styles.deviceHeading}><span>Dispositif 01 / 03</span><span>Former & fidéliser</span></div>
         <div className={styles.detailHero}>
-          <div className={styles.detailCopy}><span className={styles.sectionEyebrow}>Dispositif 1 · Alternance</span><h2 id="alternance-title">Un agent multi-qualifié, <span>près de 1 100 h réelles</span> au cœur de votre entreprise.</h2><p>Un parcours d’un an pour former un professionnel polyvalent, obtenir trois qualifications clés et renforcer durablement vos équipes.</p></div>
-          <div className={styles.costPanel}><span>Coût employeur indicatif</span><strong>≈ 4 € / heure</strong><p>Charges incluses, après aides, selon les hypothèses du support entreprise.</p></div>
+          <div className={styles.detailCopy}><h2 id="alternance-title"><em>Parcours sécurité</em><br />en alternance.</h2><p>Un an pour former un agent polyvalent et immédiatement opérationnel, en combinant APS, protection rapprochée et sécurité incendie.</p><div className={styles.pillList}><span>1 an</span><span>3 qualifications</span><span>OPCO AKTO</span></div></div>
+          <div className={styles.costPanel}><span>Près de 1 100 h réelles en entreprise</span><strong>≈ 4 €<small>/ heure</small></strong><p>Coût employeur indicatif, charges incluses et après aides.</p><span className={styles.costCaption}>Un chiffrage personnalisé pour votre entreprise.</span></div>
         </div>
-
         <div className={styles.qualificationGrid}>
-          <article><span><Icon name="shield" /></span><div><strong>TFP APS</strong><small>175 h · carte professionnelle</small></div></article>
-          <article><span><Icon name="people" /></span><div><strong>TFP A3P</strong><small>328 h · protection rapprochée</small></div></article>
-          <article><span><Icon name="fire" /></span><div><strong>SSIAP 1</strong><small>Sécurité incendie et examen</small></div></article>
-          <article><span><Icon name="briefcase" /></span><div><strong>≈ 1 100 h réelles</strong><small>Heures effectivement travaillées</small></div></article>
+          <article><span className={styles.apsIcon}><Icon name="shield" /></span><div><strong>Agent de prévention et de sécurité</strong><small>TFP APS · 175 h</small></div></article>
+          <article><span className={styles.a3pIcon}><Icon name="people" /></span><div><strong>Protection physique des personnes</strong><small>TFP A3P · 328 h</small></div></article>
+          <article><span className={styles.fireIcon}><Icon name="fire" /></span><div><strong>Agent de sécurité incendie</strong><small>SSIAP 1 · Formation et examen</small></div></article>
         </div>
-
-        <div className={styles.timelineHeading}><span>Un calendrier progressif</span><h3>La qualification avance au rythme de l’intégration en entreprise.</h3></div>
+        <div className={styles.timelineHeading}><span className={styles.ribbon}>Le calendrier</span><h3>La formation. Le terrain. La montée en compétences.</h3><p>Session de janvier à décembre 2027</p></div>
         <ol className={styles.timeline}>{alternanceTimeline.map((step) => <li key={step.number}><span className={styles.timelineDot}>{step.number}</span><div><small>{step.date}</small><strong>{step.title}</strong><p>{step.detail}</p></div></li>)}</ol>
-        <div className={styles.alternanceStats}><div><strong>1 246 h</strong><span>d’immersion · session 1</span></div><div><strong>1 106 h</strong><span>réelles travaillées · session 1</span></div><div><strong>3</strong><span>qualifications clés</span></div><div><strong>2</strong><span>rentrées annoncées en 2027</span></div></div>
-        <div className={styles.sessionNote}><Icon name="calendar" /><p><strong>Deux calendriers annoncés&nbsp;:</strong> janvier à décembre 2027 et juin 2027 à juin 2028. Selon la session, le volume est de 1 099 à 1 106 heures réellement travaillées.</p></div>
+        <div className={styles.alternanceStats}><div><strong>1 246 h</strong><span>d’immersion · session 1</span></div><div><strong>1 106 h</strong><span>réelles travaillées · session 1</span></div><div><strong>2 rentrées</strong><span>annoncées en 2027</span></div></div>
+        <div className={styles.sessionNote}><Icon name="calendar" /><p><strong>Deux calendriers pour votre recrutement.</strong> Janvier à décembre 2027 ou juin 2027 à juin 2028. Selon la session : 1 099 à 1 106 heures réellement travaillées.</p><a href={appointmentFormUrl}>Étudier mon recrutement <Icon name="arrow" /></a></div>
       </div>
     </section>
 
-    <section id="poei" className={styles.poeiSection} aria-labelledby="poei-title">
-      <span className={styles.poeiOrb} aria-hidden="true" />
-      <div className="page-container">
-        <div className={styles.poeiHero}>
-          <div><span className={styles.greenEyebrow}>Dispositif 2 · POEI</span><h2 id="poei-title">Recrutez d’abord. <span>Formez avant la prise de poste.</span></h2><p>La Préparation Opérationnelle à l’Emploi Individuelle forme des demandeurs d’emploi selon vos besoins, avant une embauche de 6 mois minimum.</p></div>
-          <aside className={styles.employerJourney}><span>Votre parcours employeur</span><ul><li><Icon name="check" />Besoin et profils définis</li><li><Icon name="check" />Candidats présélectionnés</li><li><Icon name="check" />Formation avant embauche</li><li><Icon name="check" />Intégration accompagnée</li></ul></aside>
+    <section id="poei" className={`${styles.deviceSection} ${styles.poeiSection}`} aria-labelledby="poei-title">
+      <div className={styles.container}>
+        <div className={styles.deviceHeading}><span>Dispositif 02 / 03</span><span>Préparer & recruter</span></div>
+        <div className={styles.detailHero}>
+          <div className={styles.detailCopy}><h2 id="poei-title"><em>POEI</em><br />Sécurité privée.</h2><p>Formez vos futurs collaborateurs avant leur prise de poste. La Préparation Opérationnelle à l’Emploi Individuelle prépare des demandeurs d’emploi aux besoins de votre entreprise.</p></div>
+          <aside className={styles.employerJourney}><span className={styles.ribbon}>Votre recrutement, accompagné</span><ul><li><Icon name="check" />Besoin et profils définis ensemble</li><li><Icon name="check" />Candidats sourcés et présélectionnés</li><li><Icon name="check" />Formation adaptée à vos missions</li><li><Icon name="check" />Intégration en entreprise accompagnée</li></ul></aside>
         </div>
-        <div className={styles.poeiMetrics}><div><strong>100 %</strong><span>formation financée*</span></div><div><strong>450 h</strong><span>parcours intensif</span></div><div><strong>6 mois</strong><span>engagement d’embauche</span></div><div><strong>12</strong><span>places maximum</span></div></div>
-
-        <div className={styles.programBlock}>
-          <div className={styles.programHeading}><span>Programme POEI · 450 heures</span><h3>Un socle complet pour des agents directement employables.</h3><p>Les dix séquences ci-dessous représentent exactement les 450 heures annoncées dans le support entreprise.</p></div>
-          <div className={styles.programGrid}>{poeiProgram.map((module) => <article key={module.title}><div><span><Icon name={module.icon} /></span><strong>{module.hours}</strong></div><h4>{module.title}</h4><p>{module.text}</p></article>)}</div>
-          <div className={styles.sessionsBar}><span>Sessions annoncées</span><strong>21 sept. – 22 déc. 2026</strong><strong>11 jan. – 12 avr. 2027</strong><strong>21 sept. – 21 déc. 2027</strong><Link href="#diagnostic">Étudier une POEI <Icon name="arrow" /></Link></div>
-          <p className={styles.poeiDisclaimer}>* Financement intégral sous réserve de validation et des règles du financeur. L’employeur s’engage à recruter le candidat pour une durée minimale de 6 mois à l’issue du parcours.</p>
-        </div>
+        <div className={styles.poeiMetrics}><div><strong>450 h</strong><span>de formation intensive</span></div><div><strong>100 %</strong><span>formation financée*</span></div><div><strong>6 mois</strong><span>d’engagement d’embauche</span></div><div><strong>12 places</strong><span>maximum par session</span></div></div>
+        <details className={styles.programBlock}>
+          <summary><span><Icon name="document" /><span><strong>Le programme complet</strong><small>10 modules · 450 heures de formation</small></span></span><b aria-hidden="true">+</b></summary>
+          <div className={styles.programContent}><p>Un socle complet pour des agents directement employables, de la posture professionnelle aux techniques de sécurité.</p><div className={styles.programGrid}>{poeiProgram.map((module) => <article key={module.title}><div><Icon name={module.icon} /><strong>{module.hours}</strong></div><h4>{module.title}</h4><p>{module.text}</p></article>)}</div></div>
+        </details>
+        <div className={styles.sessionsBar}><span><Icon name="calendar" />Les sessions</span><strong>21 sept. – 22 déc. 2026</strong><strong>11 jan. – 12 avr. 2027</strong><strong>21 sept. – 22 déc. 2027</strong></div>
+        <div className={styles.sectionBottom}><p className={styles.disclaimer}>* Financement intégral sous réserve de validation et des règles du financeur. L’employeur s’engage à recruter le candidat pour une durée minimale de 6 mois à l’issue du parcours.</p><a href={appointmentFormUrl} className={styles.deviceButton}>Étudier une POEI <Icon name="arrow" /></a></div>
       </div>
     </section>
 
-    <section id="bts-mos" className={styles.btsSection} aria-labelledby="bts-title">
-      <div className="page-container">
-        <div className={styles.btsHero}>
-          <div><span className={styles.darkEyebrow}>Dispositif 3 · BTS MOS</span><h2 id="bts-title">Préparez votre prochain <span>chef d’équipe.</span></h2><p>Deux ans pour former un futur encadrant, avec une présence longue et structurée en entreprise.</p></div>
-          <div className={styles.btsCost}><span>Coût horaire moyen estimé</span><strong>10,27 à 13,07 € / h</strong><p>Selon les deux hypothèses de rémunération présentées dans le support.</p></div>
+    <section id="bts-mos" className={`${styles.deviceSection} ${styles.btsSection}`} aria-labelledby="bts-title">
+      <div className={styles.honeycomb} aria-hidden="true" />
+      <div className={styles.container}>
+        <div className={styles.deviceHeading}><span>Dispositif 03 / 03</span><span>Accompagner & faire évoluer</span></div>
+        <div className={styles.detailHero}>
+          <div className={styles.detailCopy}><h2 id="bts-title">Vos futurs chefs d’équipe.<br /><em>Le BTS MOS.</em></h2><p>Deux ans pour former votre prochain encadrant en Management opérationnel de la sécurité, avec une présence longue et structurée dans votre entreprise.</p><div className={styles.pillList}><span>Chef d’équipe</span><span>Superviseur</span><span>Responsable d’exploitation</span></div></div>
+          <div className={styles.costPanel}><span>Coût horaire moyen estimé</span><strong className={styles.btsCostFigure}>10,27 à 13,07 €<small>/ heure</small></strong><p>Selon la rémunération du candidat et les aides mobilisées.</p></div>
         </div>
-        <div className={styles.btsMetrics}><div><strong>1 564 h</strong><span>présence en entreprise sur 2 ans</span></div><div><strong>15 j/mois</strong><span>rythme entreprise / école</span></div><div><strong>100 %</strong><span>entreprise pendant les étés</span></div><div><strong>0 €</strong><span>reste à charge scolarité indiqué</span></div></div>
-
-        <div className={styles.yearsBlock}>
-          <div className={styles.yearsHeading}><span>Un rythme lisible sur deux ans</span><h3>Une présence régulière, renforcée pendant les périodes estivales.</h3></div>
-          <div className={styles.yearsGrid}>
-            <article><span>Année 1</span><strong>Sept. 2026 – mai 2027</strong><p>15 jours en entreprise et 15 jours à l’école chaque mois.</p><p>Juin à août 2027&nbsp;: 100 % en entreprise.</p><b>858 h en entreprise</b></article>
-            <article><span>Année 2</span><strong>Sept. 2027 – août 2028</strong><p>15 jours en entreprise et 15 jours à l’école chaque mois.</p><p>Juillet et août 2028&nbsp;: 100 % en entreprise, après les examens de juin.</p><b>706 h en entreprise</b></article>
-          </div>
+        <div className={styles.btsMetrics}><div><strong>1 564 h</strong><span>en entreprise sur 2 ans</span></div><div><strong>15 j / 15 j</strong><span>entreprise et école</span></div><div><strong>100 %</strong><span>en entreprise pendant les étés</span></div><div><strong>OPCO AKTO</strong><span>financement de la formation</span></div></div>
+        <div className={styles.yearsGrid}>
+          <article><span>Année 01</span><h3>Apprendre le métier.<br />Prendre sa place.</h3><p>Septembre 2026 à mai 2027 : 15 jours en entreprise et 15 jours à l’école chaque mois.</p><p><b>Juin à août 2027 :</b> 100 % en entreprise.</p><strong>858 h <small>en entreprise</small></strong></article>
+          <article><span>Année 02</span><h3>Gagner en autonomie.<br />Préparer l’encadrement.</h3><p>Septembre 2027 à août 2028 : alternance école et entreprise, puis examens en juin.</p><p><b>Juillet et août 2028 :</b> 100 % en entreprise.</p><strong>706 h <small>en entreprise</small></strong></article>
         </div>
-
-        <div className={styles.btsBottomGrid}>
-          <article className={styles.futureProfiles}><span>Ce que vous préparez</span><h3>Votre futur encadrement sécurité</h3><ul><li><Icon name="check" />Futur chef d’équipe</li><li><Icon name="check" />Futur superviseur</li><li><Icon name="check" />Futur responsable d’exploitation</li><li><Icon name="check" />Carte professionnelle CNAPS obtenue</li><li><Icon name="check" />Formation BTS financée par OPCO AKTO</li></ul></article>
-          <article className={styles.comparisonCard}>
-            <div className={styles.comparisonHead}><strong>Alternant BTS MOS</strong><strong>Salarié classique</strong></div>
-            <div><span><Icon name="check" />10 à 13 €/h</span><span>15 à 20 €/h ou plus</span></div>
-            <div><span><Icon name="check" />4 500 € d’aide indiquée en année 1</span><span>Pas d’aide équivalente</span></div>
-            <div><span><Icon name="check" />Formation et carte CNAPS incluses</span><span>Formation à financer séparément</span></div>
-            <div><span><Icon name="check" />Évolution vers l’encadrement</span><span>Évolution non intégrée au recrutement</span></div>
-          </article>
-        </div>
-        <div className={styles.costHypotheses}><div><span>Hypothèse basse</span><strong>783,90 €/mois en 1re année</strong><p>929,75 €/mois en 2e année · 16 063 € au total après l’aide indiquée.</p></div><div><span>Hypothèse haute</span><strong>966,21 €/mois en 1re année</strong><p>1 112,05 €/mois en 2e année · 20 439 € au total après l’aide indiquée.</p></div><p>Estimations du support transmis, à confirmer lors de l’étude employeur selon la rémunération, les aides et les règles applicables.</p></div>
+        <details className={styles.programBlock}>
+          <summary><span><Icon name="briefcase" /><span><strong>Comprendre le budget employeur</strong><small>Hypothèses de rémunération et de financement</small></span></span><b aria-hidden="true">+</b></summary>
+          <div className={styles.programContent}><div className={styles.costHypotheses}><div><span>Hypothèse basse</span><strong>783,90 € / mois</strong><p>En première année, puis 929,75 € / mois en deuxième année. Estimation totale après l’aide indiquée : 16 063 €.</p></div><div><span>Hypothèse haute</span><strong>966,21 € / mois</strong><p>En première année, puis 1 112,05 € / mois en deuxième année. Estimation totale après l’aide indiquée : 20 439 €.</p></div></div><p className={styles.disclaimer}>Ces estimations intègrent une hypothèse d’aide de 4 500 € en première année. Elles doivent être confirmées lors de l’étude employeur selon la rémunération, les aides en vigueur et les règles applicables.</p></div>
+        </details>
+        <div className={styles.sectionBottom}><p className={styles.disclaimer}>Un budget personnalisé est établi avec vous avant la mise en place du contrat.</p><a href={appointmentFormUrl} className={styles.deviceButton}>Recruter un alternant BTS MOS <Icon name="arrow" /></a></div>
       </div>
     </section>
 
-    <section className={styles.supportSection} aria-labelledby="support-title">
-      <div className="page-container">
-        <div className={styles.sectionHeading}><span className={styles.sectionEyebrow}>Notre accompagnement</span><h2 id="support-title">Un seul interlocuteur, <span>de votre besoin à l’intégration.</span></h2><p>Nous simplifions le recrutement, la formation et l’administratif pour que vos équipes restent concentrées sur l’opérationnel.</p></div>
+    <section id="accompagnement" className={styles.supportSection} aria-labelledby="support-title">
+      <div className={styles.container}>
+        <div className={styles.sectionHeading}><span className={styles.sectionEyebrow}>Un accompagnement de A à Z</span><h2 id="support-title">Vous vous concentrez sur le terrain.<br /><em>Nous simplifions le reste.</em></h2><p>Depuis 2020, Intégrale Academy accompagne les entreprises de sécurité privée dans le recrutement, la formation et la montée en compétences de leurs équipes.</p></div>
         <div className={styles.supportGrid}>{supportSteps.map((step) => <article key={step.number}><span>{step.number}</span><div><h3>{step.title}</h3><p>{step.text}</p></div></article>)}</div>
-        <div className={styles.catalogHeading}><span>Catalogue sécurité entreprises</span><h3>Des formations pour recruter, maintenir et développer les compétences.</h3></div>
-        <div className={styles.catalogGrid}>{catalog.map((item) => <article key={item.title}><span><Icon name={item.icon} /></span><h4>{item.title}</h4><p>{item.text}</p></article>)}</div>
-        <div className={styles.proofBar}><span>Qualiopi</span><span>Autorisation CNAPS</span><span>France Travail</span><span>OPCO AKTO</span><span>3 implantations</span></div>
+        <div className={styles.partnerCard}><div><span className={styles.ribbon}>Notre engagement</span><h3>Un partenaire.<br />Toute la filière sécurité.</h3></div><ul>{heroBenefits.map((benefit) => <li key={benefit}><Icon name="check" />{benefit}</li>)}</ul></div>
+        <div className={styles.catalogHeading}><span className={styles.sectionEyebrow}>Au-delà du recrutement</span><h3>Maintenir et développer les compétences.</h3></div>
+        <div className={styles.catalogGrid}>{catalog.map((item) => <article key={item.title}><Icon name={item.icon} /><h4>{item.title}</h4><p>{item.text}</p></article>)}</div>
+        <div className={styles.proofBar}><span><Icon name="check" />Qualiopi</span><span><Icon name="shield" />Autorisation CNAPS</span><span>France Travail</span><span>OPCO AKTO</span><span>Côte d’Azur · Paris · Auvergne</span></div>
       </div>
     </section>
 
     <section id="diagnostic" className={styles.faqSection} aria-labelledby="faq-title">
-      <div className="page-container">
+      <div className={styles.container}>
         <div className={styles.faqLayout}>
-          <div>
-            <div className={styles.sectionHeading}><span className={styles.sectionEyebrow}>Questions fréquentes</span><h2 id="faq-title">Tout ce qu’il faut savoir <span>avant de recruter.</span></h2><p>Les règles varient selon le dispositif et la situation du candidat. Voici les réponses essentielles avant d’avancer.</p></div>
-            <div className={styles.faqList}>{faqItems.map((item, index) => <details key={item.question}><summary><span><i>{String(index + 1).padStart(2, '0')}</i>{item.question}</span><b aria-hidden="true">+</b></summary><div><p>{item.answer}</p></div></details>)}</div>
-          </div>
+          <div><div className={styles.sectionHeading}><span className={styles.sectionEyebrow}>Les réponses à vos questions</span><h2 id="faq-title">Avant de<br /><em>se lancer.</em></h2></div><div className={styles.faqList}>{faqItems.map((item) => <details key={item.question}><summary><span>{item.question}</span><b aria-hidden="true">+</b></summary><div><p>{item.answer}</p></div></details>)}</div></div>
           <aside className={styles.diagnosticCard}>
-            <span className={styles.diagnosticEyebrow}>Votre prochaine étape</span><h3>Un diagnostic employeur en 30 minutes.</h3><p>Expliquez-nous vos volumes, vos missions et votre calendrier. Nous vous orientons vers le dispositif le plus pertinent.</p>
-            <div className={styles.diagnosticActions}><a href={appointmentFormUrl}>Planifier un échange <Icon name="arrow" /></a><Link href="tel:0422470768"><Icon name="phone" />04 22 47 07 68</Link></div>
-            <div className={styles.afterRequest}><span>Après votre demande</span><ol><li><b>01</b><strong>Diagnostic</strong><small>Besoin, volumes et calendrier.</small></li><li><b>02</b><strong>Proposition</strong><small>Dispositif, chiffrage et planning.</small></li><li><b>03</b><strong>Candidats</strong><small>Sourcing et premières rencontres.</small></li></ol></div>
+            <span className={styles.ribbon}>Parlons de votre projet</span><h3>Vos prochains<br />recrutements<br />commencent ici.</h3><p>Vos missions, vos volumes, votre calendrier : construisons ensemble la solution adaptée à votre entreprise.</p>
+            <div className={styles.contactPerson}><img src="/images/cassandre-memoji.png" alt="" width="80" height="80" loading="lazy" /><div><strong>Cassandre</strong><span>Responsable commerciale</span></div></div>
+            <a href={appointmentFormUrl} className={styles.primaryButton}>Demander une étude <Icon name="arrow" /></a><a href="tel:0422470768" className={styles.phoneLink}><Icon name="phone" />04 22 47 07 68</a><small>Premier échange gratuit et sans engagement</small>
           </aside>
-        </div>
-
-        <div className={styles.contactBand}>
-          <div><span>Besoin ponctuel ou massif</span><h3>Parlons de vos prochains <b>recrutements.</b></h3><p>Cassandre et notre équipe construisent avec vous la solution la plus simple à déployer.</p></div>
-          <div className={styles.contactPerson}><span>CM</span><div><small>Cassandre</small><strong>Responsable commerciale</strong><p>Premier échange gratuit et sans engagement</p></div></div>
-          <a href={appointmentFormUrl}>Demander une étude <Icon name="arrow" /></a>
         </div>
       </div>
     </section>
-  </>;
+  </div>;
 }

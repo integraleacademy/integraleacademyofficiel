@@ -78,7 +78,7 @@ export function GlobalContactCTA() {
     });
   }
 
-  if (hiddenPathPrefixes.some((prefix) => pathname?.startsWith(prefix))) {
+  if (pathname === '/entreprises' || hiddenPathPrefixes.some((prefix) => pathname?.startsWith(prefix))) {
     return null;
   }
 
