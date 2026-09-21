@@ -53,6 +53,15 @@ function StudyModeIcon({ type }: { type: 'location' | 'video' }) {
   return <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="5" width="13.5" height="12" rx="2" stroke="currentColor" strokeWidth="1.8"/><path d="m17 9 3.5-2v8L17 13V9ZM8 20h5M10.5 17v3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>;
 }
 
+function TrainingFacts({ item }: { item: BtsTrainingHighlight }) {
+  return (
+    <span className={styles.trainingFacts}>
+      <span>{item.certification} · {item.level}</span>
+      <strong>{item.duration} en {item.rhythm.toLocaleLowerCase('fr')}</strong>
+    </span>
+  );
+}
+
 function FeaturedCard({ item }: { item: BtsTrainingHighlight }) {
   return (
     <div data-training-card className={styles.featuredSlot}>
@@ -70,6 +79,7 @@ function FeaturedCard({ item }: { item: BtsTrainingHighlight }) {
             <span className={styles.category}>{item.category}</span>
             <h3><strong>{item.shortTitle}</strong><span>{item.title}</span></h3>
             <p>{item.description}</p>
+            <TrainingFacts item={item} />
           </div>
 
           <footer className={styles.featuredFooter}>
@@ -102,7 +112,7 @@ function CompactCard({ item, wide }: { item: BtsTrainingHighlight; wide: boolean
           </div>
 
           <footer className={styles.compactFooter}>
-            <span>Découvrir le BTS</span><span aria-hidden="true">→</span>
+            <TrainingFacts item={item} /><span aria-hidden="true">→</span>
           </footer>
         </article>
       </Link>

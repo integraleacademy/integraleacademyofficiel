@@ -273,6 +273,26 @@
   line-height: 1.55;
 }
 
+.trainingFacts {
+  display: grid;
+  min-width: 0;
+  gap: 4px;
+  font-size: max(13px, .82rem);
+  font-weight: 650;
+  line-height: 1.35;
+}
+
+.trainingFacts strong {
+  font-weight: 850;
+}
+
+.featuredContent .trainingFacts {
+  margin-top: 22px;
+  border-top: 1px solid rgba(255, 255, 255, .25);
+  padding-top: 18px;
+  font-size: max(14px, .92rem);
+}
+
 .featuredFooter {
   display: flex;
   min-height: 42px;
@@ -664,6 +684,11 @@
   .popularBadge,
   .compactFooter {
     font-size: 13px;
+  }
+
+  .trainingFacts,
+  .featuredContent .trainingFacts {
+    font-size: 14px;
   }
 
   .featuredFooter,
