@@ -65,6 +65,7 @@ function FeaturedCard({ item }: { item: SecurityTrainingHighlight }) {
       <Link href={item.slug} aria-label={`Découvrir la formation ${item.shortTitle}`} className={styles.featuredLink}>
         <article data-training-tilt data-tone={item.visual} className={styles.featuredCard}>
           <span className={styles.featuredOrb} aria-hidden="true" />
+          <span className={styles.featuredMonogram} aria-hidden="true">{item.shortTitle}</span>
 
           <header className={styles.featuredHeader}>
             <span className={styles.popularBadge}><span aria-hidden="true">✦</span> La plus demandée</span>

@@ -69,6 +69,19 @@
   box-shadow: 0 0 0 3.4rem rgba(255, 255, 255, .055), 0 0 0 6.8rem rgba(255, 255, 255, .035);
 }
 
+.featuredMonogram {
+  position: absolute;
+  right: -10px;
+  bottom: 42px;
+  color: rgba(23, 19, 11, .12);
+  font-size: 100px;
+  font-weight: 950;
+  letter-spacing: -.08em;
+  line-height: .8;
+  pointer-events: none;
+  user-select: none;
+}
+
 .featuredHeader,
 .featuredContent,
 .featuredFacts,
@@ -628,6 +641,10 @@
     min-height: 0;
     border-radius: 1.65rem;
     padding: 1.45rem;
+  }
+
+  .featuredMonogram {
+    display: none;
   }
 
   .popularBadge {
