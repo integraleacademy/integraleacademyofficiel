@@ -1,3 +1,4 @@
+import { AcademyWatermark } from '@/components/AcademyWatermark';
 import { serializeCourseJsonLd } from '@/lib/seo';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -413,6 +414,7 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
     ] }, "/formations-securite/aps") }} />
 
     <section className={`${styles.hero} relative px-4 text-white`}>
+        <AcademyWatermark tone="blue" surface="dark" />
       <Image src="/images/aps/aps-hero-round.jpg" alt="Exercice pratique de ronde de sécurité pendant la formation APS" fill priority sizes="100vw" className={styles.heroPhoto}/>
       <div className={styles.heroOverlay}/>
       <div className={`page-container ${styles.heroContent}`}>

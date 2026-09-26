@@ -21,9 +21,12 @@ export const metadata: Metadata = {
   openGraph: { type: 'website', locale: 'fr_FR', siteName: SITE_NAME, images: [SOCIAL_IMAGE] },
   twitter: { card: 'summary_large_image', images: [{ url: SOCIAL_IMAGE.url, alt: SOCIAL_IMAGE.alt }] },
   icons: {
-    icon: [{ url: '/images/favicon.png', type: 'image/png' }],
-    shortcut: '/images/favicon.png',
-    apple: '/images/favicon.png',
+    icon: [
+      { url: '/images/academy-a-icon-32.png', type: 'image/png', sizes: '32x32' },
+      { url: '/images/academy-a-icon.svg', type: 'image/svg+xml', sizes: 'any' },
+    ],
+    shortcut: '/images/academy-a-icon.svg',
+    apple: [{ url: '/images/academy-a-apple.png', sizes: '180x180', type: 'image/png' }],
   },
 };
 const themeInitScript = `

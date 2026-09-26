@@ -1,3 +1,4 @@
+import { AcademyWatermark } from '@/components/AcademyWatermark';
 import { createPageMetadata, serializeJsonLd } from '@/lib/seo';
 import Link from 'next/link';
 import { PremiumFAQSection } from '@/components/ui';
@@ -107,6 +108,7 @@ export default function SsiapCataloguePage() {
       />
 
       <section className="relative isolate overflow-hidden bg-[#0D1725] px-4 py-14 text-white sm:py-18 lg:py-20">
+        <AcademyWatermark tone="red" surface="dark" />
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_15%_15%,rgba(248,113,113,.26),transparent_31%),radial-gradient(circle_at_88%_25%,rgba(220,38,38,.22),transparent_28%),linear-gradient(135deg,#080D15_0%,#121B2A_55%,#2A0F12_100%)]" />
         <div className="page-container">
           <nav className="mb-7 flex items-center gap-2 text-xs font-bold text-white/55" aria-label="Fil d’Ariane">
