@@ -1,6 +1,7 @@
 import { createPageMetadata } from '@/lib/seo';
 import Link from 'next/link';
 import { OrientationAssistant } from '@/components/OrientationAssistant';
+import { AcademyMonogram } from '@/components/AcademyMonogram';
 import { AnimatedTrainingCTA } from '@/components/AnimatedTrainingCTA';
 import { BtsTrainingGrid, type BtsTrainingHighlight } from '@/components/BtsTrainingGrid';
 import { BtsTrainingComparisonModal } from '@/components/BtsTrainingComparisonModal';
@@ -107,18 +108,23 @@ export default async function Home() {
       <section className={styles.hero}>
         <span className={styles.heroGlow} data-home-ambient aria-hidden="true" />
         <div className={styles.container}>
-          <div className={styles.heroCopy}>
-            <span className={styles.heroBadge} data-home-hero-item><i aria-hidden="true" /> Intégrale Academy · fondée en 2018</span>
-            <h1 data-home-hero-item>Votre futur métier mérite une formation <em>à la hauteur.</em></h1>
-            <p data-home-hero-item>Des parcours concrets, des formateurs issus du terrain et une équipe qui vous accompagne réellement — du choix de la formation jusqu’à votre projet professionnel.</p>
-            <div className={styles.heroActions} data-home-hero-item>
-              <Link href="#formations-securite" className={styles.primaryButton}>Trouver ma formation <span aria-hidden="true">→</span></Link>
-              <Link href="/planning" className={styles.goldButton}>Voir le planning</Link>
+          <div className={styles.heroComposition}>
+            <div className={styles.heroCopy}>
+              <span className={styles.heroBadge} data-home-hero-item><i aria-hidden="true" /> Intégrale Academy · fondée en 2018</span>
+              <h1 data-home-hero-item>Votre futur métier mérite une formation <em>à la hauteur.</em></h1>
+              <p data-home-hero-item>Des parcours concrets, des formateurs issus du terrain et une équipe qui vous accompagne réellement — du choix de la formation jusqu’à votre projet professionnel.</p>
+              <div className={styles.heroActions} data-home-hero-item>
+                <Link href="#formations-securite" className={styles.primaryButton}>Trouver ma formation <span aria-hidden="true">→</span></Link>
+                <Link href="/planning" className={styles.goldButton}>Voir le planning</Link>
+              </div>
+              <div className={styles.heroProofs} data-home-hero-item aria-label="Points forts d’Intégrale Academy">
+                <span>Formations réglementées</span>
+                <span>Financements possibles</span>
+                <span>Côte d’Azur · Paris · Centre France</span>
+              </div>
             </div>
-            <div className={styles.heroProofs} data-home-hero-item aria-label="Points forts d’Intégrale Academy">
-              <span>Formations réglementées</span>
-              <span>Financements possibles</span>
-              <span>Côte d’Azur · Paris · Centre France</span>
+            <div className={styles.heroSignature} aria-hidden="true">
+              <AcademyMonogram />
             </div>
           </div>
 
