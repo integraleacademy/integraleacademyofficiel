@@ -1,0 +1,25 @@
+.mark {
+  display: block;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+}
+
+.footerMark {
+  position: absolute;
+  right: -5rem;
+  bottom: -7rem;
+  width: clamp(20rem, 34vw, 35rem);
+  color: #ffce64;
+  opacity: .08;
+}
+
+@media (max-width: 700px) {
+  .footerMark {
+    right: -5.5rem;
+    bottom: 10rem;
+    width: 23rem;
+    opacity: .06;
+  }
+}

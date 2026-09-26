@@ -4,6 +4,8 @@ import { contact, legalRefs } from '@/data/site';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { MobileHeaderMenu } from '@/components/MobileHeaderMenu';
 import { DesktopTrainingDropdown } from '@/components/DesktopTrainingDropdown';
+import { AcademyMonogram } from '@/components/AcademyMonogram';
+import monogramStyles from '@/components/AcademyMonogram.module.css';
 
 export type UiAccent = 'gold' | 'blue' | 'green' | 'orange' | 'red' | 'violet';
 
@@ -223,6 +225,7 @@ export function Footer(){
   const trustItems=['Qualiopi','CNAPS','France Travail','OPCO AKTO'];
 
   return <footer className="relative mt-20 overflow-hidden border-t border-white/10 bg-[linear-gradient(135deg,#2a394d_0%,#202c3d_100%)] px-4 pb-8 pt-12 text-white">
+    <AcademyMonogram className={monogramStyles.footerMark}/>
     <div className="pointer-events-none absolute inset-0 opacity-70" aria-hidden="true">
       <div className="absolute -left-32 top-0 h-80 w-80 rounded-full bg-academy-gold/15 blur-3xl"/>
       <div className="absolute -right-24 bottom-0 h-80 w-80 rounded-full bg-academy-gold/10 blur-3xl"/>
