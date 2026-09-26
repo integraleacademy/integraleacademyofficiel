@@ -63,6 +63,20 @@
   mask-image: radial-gradient(circle at 50% 50%, black, transparent 86%);
 }
 
+.monogram {
+  position: absolute;
+  left: -4.5rem;
+  bottom: -5rem;
+  width: clamp(20rem, 36vw, 34rem);
+  color: #b78625;
+  opacity: .10;
+}
+
+:global(.dark) .monogram {
+  color: #ffce64;
+  opacity: .09;
+}
+
 .inner::after {
   content: '';
   position: absolute;
@@ -411,6 +425,7 @@
 }
 
 @media (max-width: 640px) {
+  .monogram { left: auto; right: -7rem; top: 2rem; bottom: auto; width: 22rem; opacity: .07; }
   .shell { border-radius: 2rem; }
   .inner { border-radius: 1.8rem; padding: 1.25rem; }
   .contactCard { min-height: auto; padding: 1.15rem; border-radius: 1.65rem; }

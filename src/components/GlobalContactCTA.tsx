@@ -3,6 +3,7 @@
 import { usePathname } from 'next/navigation';
 import { type CSSProperties, type MouseEvent, useEffect, useRef, useState } from 'react';
 import { appointmentFormUrl } from '@/components/ui';
+import { AcademyMonogram } from '@/components/AcademyMonogram';
 import styles from './GlobalContactCTA.module.css';
 
 const hiddenPathPrefixes = ['/admin', '/login', '/connexion', '/espace', '/mon-compte', '/dashboard'];
@@ -87,6 +88,7 @@ export function GlobalContactCTA() {
       <div className="page-container">
         <div ref={shellRef} onMouseMove={updateSpotlight} className={`${styles.shell} ${isVisible ? styles.shellVisible : ''}`}>
           <div className={styles.inner}>
+            <AcademyMonogram className={styles.monogram} />
             <span className={styles.haloPrimary} aria-hidden="true" />
             <span className={styles.haloSecondary} aria-hidden="true" />
 
