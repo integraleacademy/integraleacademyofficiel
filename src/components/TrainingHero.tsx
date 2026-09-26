@@ -1,3 +1,4 @@
+import { AcademyWatermark } from '@/components/AcademyWatermark';
 import Image from 'next/image';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
@@ -30,6 +31,7 @@ export function TrainingHero({
   additionalAction?: ReactNode;
 }) {
   return <section className={`${styles.hero} px-4 text-white`} data-theme={theme}>
+        <AcademyWatermark tone={theme} surface="dark" />
     <Image src={imageSrc} alt="" fill priority sizes="100vw" className={styles.heroPhoto} />
     <div className={styles.heroOverlay} />
     <div className={`page-container ${styles.heroContent}`}>

@@ -1,3 +1,4 @@
+import { AcademyWatermark } from '@/components/AcademyWatermark';
 import { createPageMetadata } from '@/lib/seo';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
@@ -140,6 +141,7 @@ export default function Page() {
   return (
     <main className="overflow-hidden">
       <section className="relative isolate overflow-hidden bg-[#101a29] px-4 py-14 text-white sm:py-20 lg:py-24">
+        <AcademyWatermark surface="dark" placement="right" />
         <div className="absolute inset-0 -z-20 bg-[radial-gradient(circle_at_8%_12%,rgba(234,183,53,.20),transparent_30%),radial-gradient(circle_at_92%_84%,rgba(234,183,53,.10),transparent_26%),linear-gradient(135deg,#101a29_0%,#111d30_58%,#162339_100%)]" />
         <div className="absolute -left-40 top-0 -z-10 h-[30rem] w-[30rem] rounded-full border border-academy-gold/15 bg-academy-gold/[.035]" />
         <div className="absolute -right-48 -top-40 -z-10 h-[34rem] w-[34rem] rounded-full bg-academy-gold/[.07]" />

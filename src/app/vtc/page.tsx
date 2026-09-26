@@ -1,3 +1,4 @@
+import { AcademyWatermark } from '@/components/AcademyWatermark';
 import { CourseJourney } from '@/components/CourseJourney';
 import { createPageMetadata } from '@/lib/seo';
 import type { Metadata } from 'next';
@@ -132,7 +133,8 @@ const faq = [
 export default function VtcPage() {
   const examDates = getUpcomingVtcExamSessions();
   return <main className={styles.page}>
-    <section className={styles.hero}>
+    <section className={`${styles.hero} isolate`}>
+        <AcademyWatermark tone="violet" surface="dark" />
       <div className={styles.heroGlow}/><div className={styles.heroGrid}/>
       <div className={styles.container}>
         <div className={styles.heroLayout}>

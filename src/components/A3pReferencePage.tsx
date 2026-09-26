@@ -1,3 +1,4 @@
+import { AcademyWatermark } from '@/components/AcademyWatermark';
 import { CourseJourney } from '@/components/CourseJourney';
 import { serializeCourseJsonLd } from '@/lib/seo';
 import Image from 'next/image';
@@ -193,6 +194,7 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
     }, "/formations-securite/a3p-apr") }} />
 
     <section className={`${styles.hero} px-4 text-white`}>
+        <AcademyWatermark tone="green" surface="dark" />
       <Image src="/images/a3p-hero.jpg" alt="" fill priority sizes="100vw" className={styles.heroPhoto} />
       <div className={styles.heroOverlay} />
       <div className={`page-container ${styles.heroContent}`}>
