@@ -1,3 +1,6 @@
+import { ManualArtwork } from '@/components/ManualArtwork';
+import { TrainingWelcomePack } from '@/components/TrainingWelcomePack';
+import { btsArtwork, btsPracticeArtwork, btsMissionArtwork } from '@/data/btsIllustrations';
 import { AcademyWatermark } from '@/components/AcademyWatermark';
 import btsStyles from './BtsIdentity.module.css';
 import { btsRhythms } from '@/data/btsRhythms';
@@ -204,7 +207,7 @@ function HeroRoadmap() {
     ['04', 'Fidélisation', 'Relation durable', '↗'],
   ];
   return (
-    <aside className="relative rounded-[2rem] border border-white/60 bg-[#FFFDF8] p-5 text-academy-ink shadow-[0_34px_100px_rgba(0,0,0,.34)] sm:p-6">
+    <aside className={`${btsStyles.roadmap} relative rounded-[2rem] border border-white/60 bg-[#FFFDF8] p-5 text-academy-ink shadow-[0_34px_100px_rgba(0,0,0,.34)] sm:p-6`}>
       <span className="absolute -right-2 -top-3 rounded-full bg-bts-700 px-3 py-2 text-[.58rem] font-black uppercase tracking-[.14em] text-white shadow-soft">
         Admissions 2026
       </span>
@@ -217,7 +220,7 @@ function HeroRoadmap() {
           CRM en direct
         </span>
       </div>
-      <div className="mt-5 rounded-[1.5rem] border border-bts-200 bg-bts-50 p-4">
+      <div className={`${btsStyles.roadmapSteps} mt-5 rounded-[1.5rem] border border-bts-200 bg-bts-50 p-4`}>
         {steps.map(([number, title, detail, status], index) => (
           <div key={number} className={`grid grid-cols-[2.3rem_1fr_auto] items-center gap-3 py-3 ${index ? 'border-t border-bts-200' : ''}`}>
             <span className="grid h-9 w-9 place-items-center rounded-xl bg-[#0D1725] text-[.65rem] font-black text-bts-300">
@@ -314,8 +317,9 @@ export function BtsNdrcReferencePage() {
                 <span className="rounded-full border border-white/15 bg-white/7 px-3 py-2">✓ Vente, digital & réseaux</span>
               </div>
             </div>
-            <HeroRoadmap />
+            <div className={btsStyles.heroArtwork}><ManualArtwork illustration={btsArtwork.ndrc} priority /></div>
           </div>
+          <HeroRoadmap />
           <div className="mt-10 grid overflow-hidden rounded-[1.6rem] border border-white/10 bg-white/7 sm:grid-cols-2 lg:grid-cols-4">
             {[
               ['Durée', '2 ans en alternance'],
@@ -332,6 +336,8 @@ export function BtsNdrcReferencePage() {
           <p className="mt-3 text-[.64rem] font-semibold text-white/40">* Sous réserve de la conclusion et de la prise en charge du contrat d’alternance.</p>
         </div>
       </section>
+
+      <TrainingWelcomePack course="bts-ndrc" />
 
       <CourseJourney course="bts-ndrc" />
 
@@ -379,7 +385,7 @@ export function BtsNdrcReferencePage() {
         intro={<>Face à face, téléphone, visioconférence, e-mail, réseaux sociaux ou e-commerce : vous savez créer une relation fluide, personnalisée et durable.</>}
         tone="paper"
       >
-        <TrainingIllustratedCards items={careerSteps} theme="bts" />
+        <TrainingIllustratedCards items={careerSteps} theme="bts" illustrations={btsPracticeArtwork.ndrc} singleIllustration />
         <div className="mt-6 grid items-center gap-5 rounded-[1.7rem] border border-bts-200 bg-bts-50 p-6 sm:grid-cols-[1fr_auto]">
           <div><Eyebrow>Votre montée en compétences</Eyebrow><h3 className="mt-3 text-2xl font-black text-bts-950">Du premier message à la fidélisation.</h3><p className="mt-3 max-w-3xl text-sm leading-7 text-bts-950/70">Vous apprenez à comprendre un marché, trouver des prospects, conduire un entretien, conclure une vente et entretenir la relation.</p></div>
           <div className="rounded-2xl border border-bts-200 bg-white/70 px-6 py-4"><p className="text-4xl font-black text-bts-700">360°</p><p className="mt-2 max-w-[14rem] text-xs font-black uppercase tracking-[.12em] text-bts-950/70">de relation client omnicanale</p></div>
@@ -389,7 +395,7 @@ export function BtsNdrcReferencePage() {
             <div key={job} className="rounded-2xl border border-academy-line bg-academy-bg p-4 text-center font-black">{job}</div>
           ))}
         </div>
-        <MissionAnimation variant="ndrc" className="mt-8" />
+        <MissionAnimation variant="ndrc" className="mt-8" illustration={btsMissionArtwork.ndrc} />
       </Section>
 
       <Section

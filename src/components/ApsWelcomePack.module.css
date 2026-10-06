@@ -34,6 +34,15 @@
 .section[data-theme='green'] { --pack-accent: #047857; --pack-soft: #f0f9f5; --pack-line: #bfddce; --pack-tint: #e1f2e9; }
 .section[data-theme='red'] { --pack-accent: #b91c1c; --pack-soft: #fff7f5; --pack-line: #efceca; --pack-tint: #fbe5e1; }
 .section[data-theme='orange'] { --pack-accent: #b45309; --pack-soft: #fff9ef; --pack-line: #ecd6b7; --pack-tint: #f9ead3; }
+.section[data-theme='violet'] { --pack-accent: #6d28d9; --pack-soft: #faf7ff; --pack-line: #ddd0f4; --pack-tint: #ede5fa; }
+.section[data-theme='bts'] { --pack-accent: rgb(var(--bts-700)); --pack-soft: rgb(var(--bts-50)); --pack-line: rgb(var(--bts-200)); --pack-tint: rgb(var(--bts-100)); }
+.studyCover { display: flex; height: 100%; flex-direction: column; overflow: hidden; background: #fff; border-left: 5px solid var(--pack-accent); color: #102444; }
+.studyCoverLabel { padding: 12px 9px 4px; font-size: 7px; font-weight: 850; text-transform: uppercase; letter-spacing: .07em; }
+.studyCover > strong { padding: 0 9px 7px; font-size: 27px; font-weight: 950; line-height: .95; letter-spacing: -.045em; }
+.studyCoverArtwork { position: relative; flex: 1; min-height: 0; }
+.studyCoverArtwork img { object-fit: cover; }
+.studyCoverBrand { padding: 7px 9px; font-size: 8px; font-weight: 900; line-height: 1.15; text-align: right; }
+.studyCoverBrand b { color: var(--pack-accent); }
 .section[data-theme] { background: var(--pack-soft); border-color: var(--pack-line); }
 .section[data-theme] .eyebrow, .section[data-theme] .heading h2 span, .section[data-theme] .dayBadge, .section[data-theme] .intro strong { color: var(--pack-accent); }
 .section[data-theme] .dayBadge, .section[data-theme] .item { border-color: var(--pack-line); }

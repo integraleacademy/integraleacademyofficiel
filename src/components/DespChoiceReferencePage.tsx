@@ -2,6 +2,8 @@ import { OrientationAssistant } from '@/components/OrientationAssistant';
 import { DespJourney } from '@/components/DespJourney';
 import { TrainingDatesPricingSection, type TrainingDatesPricingSession } from '@/components/TrainingDatesPricingSection';
 import { VaeEligibilityModal } from '@/components/VaeEligibilityModal';
+import { ManualArtwork } from '@/components/ManualArtwork';
+import { despArtwork } from '@/data/manualIllustrations';
 import { Button, ConversionStrip, FAQ, Hero, SectionTitle } from '@/components/ui';
 import { formationFaq } from '@/data/faq';
 
@@ -58,6 +60,7 @@ function DespPathCard({
         dark ? 'border-orange-400/45 bg-[#17100B] text-white' : 'border-orange-200 bg-white text-[#111827]'
       }`}
     >
+      <div className="mb-7 overflow-hidden rounded-2xl"><ManualArtwork illustration={dark ? despArtwork.direction : despArtwork.pilotage} /></div>
       <div className="flex flex-wrap items-center gap-2">
         <span
           className={`rounded-full px-4 py-2 text-xs font-black uppercase tracking-[.18em] ${
@@ -154,8 +157,10 @@ export function DespChoiceReferencePage({ sessions }: { sessions: TrainingDatesP
             <Button href="/contact" variant="orange">Parler à un conseiller</Button>
           </>
         }
-        visual={<OrientationAssistant initialFormationKey="desp" />}
+        visual={<div className="overflow-hidden rounded-[2rem] border border-orange-200 bg-orange-50 p-2 shadow-card"><ManualArtwork illustration={despArtwork.management} priority /></div>}
       />
+
+      <section className="bg-orange-50/60 px-4 py-10"><div className="page-container max-w-4xl"><OrientationAssistant initialFormationKey="desp" /></div></section>
 
       <DespJourney />
 

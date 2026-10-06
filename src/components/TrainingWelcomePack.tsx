@@ -1,15 +1,19 @@
 import Image from 'next/image';
 import styles from './ApsWelcomePack.module.css';
+import { btsArtwork, type BtsArtworkCode } from '@/data/btsIllustrations';
 
 const manuals = {
   a3p: { theme: 'green', title: 'Le manuel de formation A3P', name: 'un manuel de formation A3P', image: '/images/a3p/manuel/couverture-a3p.webp' },
   'ssiap-1': { theme: 'red', title: 'Le manuel de formation SSIAP 1', name: 'un manuel de formation SSIAP 1', image: '/images/ssiap-1/manuel/couverture-ssiap-1.webp' },
   'desp-initial': { theme: 'orange', title: 'Le manuel du dirigeant', name: 'un manuel de formation du dirigeant', image: '/images/desp/manuel/couverture-dssp.webp' },
   'desp-vae': { theme: 'orange', title: 'Le manuel du dirigeant', name: 'un manuel de formation du dirigeant', image: '/images/desp/manuel/couverture-dssp.webp' },
+  vtc: { theme: 'violet', title: 'Le manuel de formation VTC', name: 'un manuel de formation VTC', image: '/images/vtc/manuel/couverture-vtc.webp' },
+  sst: { theme: 'green', title: 'Le manuel de formation SST', name: 'un manuel de formation SST', image: '/images/sst/manuel/couverture-sst.webp' },
 } as const;
 
-export function TrainingWelcomePack({ course }: { course: keyof typeof manuals }) {
-  const manual = manuals[course];
+export function TrainingWelcomePack({ course }: { course: keyof typeof manuals | `bts-${BtsArtworkCode}` }) {
+  const btsCode = course.startsWith('bts-') ? course.slice(4) as BtsArtworkCode : undefined;
+  const manual = btsCode ? { theme: 'bts', title: `Les supports de cours BTS ${btsCode.toUpperCase()}`, name: `vos supports de cours BTS ${btsCode.toUpperCase()}`, image: btsArtwork[btsCode].src } : manuals[course as keyof typeof manuals];
   const vae = course === 'desp-vae';
   const items = [
     {
@@ -51,7 +55,12 @@ export function TrainingWelcomePack({ course }: { course: keyof typeof manuals }
           <div className={styles.visual} data-item={item.id}>
             <span className={styles.number} aria-hidden="true">0{index + 1}</span>
             <div className={item.id === 'manuel' ? styles.book : styles.object}>
-              <Image src={item.image} alt={item.alt} fill sizes="(max-width: 540px) 80vw, (max-width: 1023px) 40vw, 260px" />
+              {item.id === 'manuel' && btsCode ? <div className={styles.studyCover} role="img" aria-label={`Présentation des supports de cours du BTS ${btsCode.toUpperCase()} Intégrale Academy`}>
+                <span className={styles.studyCoverLabel}>Supports de cours</span>
+                <strong>BTS<br />{btsCode.toUpperCase()}</strong>
+                <div className={styles.studyCoverArtwork}><Image src={item.image} alt="" fill sizes="160px" /></div>
+                <span className={styles.studyCoverBrand}>INTÉGRALE<br /><b>ACADEMY</b></span>
+              </div> : <Image src={item.image} alt={item.alt} fill sizes="(max-width: 540px) 80vw, (max-width: 1023px) 40vw, 260px" />}
             </div>
             <span className={styles.label}>{item.label}</span>
           </div>

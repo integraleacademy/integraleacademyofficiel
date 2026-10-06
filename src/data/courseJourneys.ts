@@ -110,7 +110,7 @@ const professionalJourneys = {
       copy('La mise en pratique', 'Préparez une course de bout en bout.', 'Itinéraire, accueil du passager, conduite et facturation : vous travaillez les situations de l’épreuve pratique. Le véhicule double commande est prévu pour l’examen dans la formule présentée.', '#examen', 'Explorer les épreuves'),
       copy('Votre prochain chapitre', 'De la préparation à vos premières démarches.', 'Vous préparez d’abord les épreuves théoriques puis la mise en situation pratique. Après la réussite, notre équipe vous explique les démarches de carte professionnelle et de lancement d’activité.', '#inscription', 'Préparer mon inscription'),
     ],
-    opening: { kicker: 'UNE NOUVELLE DIRECTION.', heading: ['Prenez le volant.', 'Ouvrez la voie.'], text: 'Apprenez à offrir une expérience de transport sûre, fluide et professionnelle.', verbs: ['Accueillir', 'Conduire', 'Fidéliser'] },
+    opening: { image: '/images/vtc/manuel/pratique.webp', kicker: 'UNE NOUVELLE DIRECTION.', heading: ['Prenez le volant.', 'Ouvrez la voie.'], text: 'Apprenez à offrir une expérience de transport sûre, fluide et professionnelle.', verbs: ['Accueillir', 'Conduire', 'Fidéliser'] },
     study: { value: '105', unit: 'HEURES ESTIMÉES', heading: ['Votre préparation.', 'À votre rythme.'], panels: [
       { label: 'THÉORIE EN LIGNE', value: '24/7', unit: 'accessible', detail: 'Cours, QCM et révisions' },
       { label: 'PRATIQUE ENCADRÉE', value: 'Sur', unit: 'la route', detail: 'Avec un formateur spécialisé VTC' },
@@ -209,7 +209,7 @@ const fireAndFirstAidJourneys = {
       copy('Votre entraînement', 'Observer la situation. Choisir le bon geste.', 'Vous vous entraînez à protéger, examiner, alerter ou faire alerter, puis secourir. Les mises en situation vous aident à appliquer les gestes adaptés dans un contexte professionnel.', '#programme-sst', 'Découvrir les gestes'),
       copy('Votre prochain chapitre', 'Validez vos compétences, puis entretenez-les.', 'Les évaluations réalisées pendant la formation permettent de vérifier vos acquis. Le certificat SST est délivré après réussite ; le maintien et l’actualisation des compétences permettent ensuite de le renouveler.', '#dates-tarifs', 'Voir les prochaines dates'),
     ],
-    opening: { image: '/images/sst-hero.jpg', kicker: 'DES GESTES QUI ONT DU SENS.', heading: ['Soyez prêt à agir.', 'Quand cela compte.'], text: 'Prévention et premiers secours : devenez un relais utile au sein de votre entreprise.', verbs: ['Protéger', 'Alerter', 'Secourir'] },
+    opening: { image: '/images/sst/manuel/prevention.webp', kicker: 'DES GESTES QUI ONT DU SENS.', heading: ['Soyez prêt à agir.', 'Quand cela compte.'], text: 'Prévention et premiers secours : devenez un relais utile au sein de votre entreprise.', verbs: ['Protéger', 'Alerter', 'Secourir'] },
     study: { value: '14', unit: 'HEURES · 2 JOURS', heading: ['Apprendre ensemble.', 'S’entraîner pour agir.'], panels: [
       { label: 'PRÉVENTION', value: 'Les', unit: 'risques', detail: 'Repérer et contribuer à la prévention' },
       { label: 'INTERVENTION', value: 'Les', unit: 'secours', detail: 'Appliquer les gestes adaptés' },
@@ -250,7 +250,7 @@ function btsJourney(profile: BtsJourneyProfile): CourseJourneyConfig {
       copy('Votre expérience', 'Ce que vous apprenez prend vie en entreprise.', `Votre alternance vous permet de mettre en pratique les compétences du BTS ${profile.code}. Vous prenez part à des missions concrètes, développez votre posture professionnelle et construisez progressivement votre expérience.`, '#programme', 'Explorer le programme'),
       copy('Votre prochain chapitre', 'Un diplôme. Une expérience. De nouvelles perspectives.', `${profile.outcome} Votre parcours prépare un diplôme national de niveau Bac+2. L’équipe vous accompagne dans votre candidature et les étapes vers l’entreprise d’accueil.`, '#admission', 'Préparer ma candidature'),
     ],
-    opening: { kicker: 'VOTRE AVENIR SE CONSTRUIT MAINTENANT.', heading: profile.headline, text: profile.pitch, verbs: profile.verbs },
+    opening: { image: `/images/bts/manuel/${profile.code.toLowerCase()}.webp`, kicker: 'VOTRE AVENIR SE CONSTRUIT MAINTENANT.', heading: profile.headline, text: profile.pitch, verbs: profile.verbs },
     study: { value: '2', unit: 'ANS · EN ALTERNANCE', heading: ['J’apprends.', 'Je mets en pratique.'], panels: [
       { label: 'LES COURS', value: String(rhythm.schoolDays), unit: 'jours', detail: 'À l’école ou en visioconférence' },
       { label: 'L’ENTREPRISE', value: String(rhythm.companyDays), unit: 'jours', detail: 'Des missions professionnelles concrètes' },

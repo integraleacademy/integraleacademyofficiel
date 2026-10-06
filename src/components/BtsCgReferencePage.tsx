@@ -1,3 +1,6 @@
+import { ManualArtwork } from '@/components/ManualArtwork';
+import { TrainingWelcomePack } from '@/components/TrainingWelcomePack';
+import { btsArtwork, btsPracticeArtwork, btsMissionArtwork } from '@/data/btsIllustrations';
 import { AcademyWatermark } from '@/components/AcademyWatermark';
 import btsStyles from './BtsIdentity.module.css';
 import { btsRhythms } from '@/data/btsRhythms';
@@ -167,10 +170,10 @@ function HeroRoadmap() {
     ['04', 'Votre premier poste', 'Cabinet, entreprise ou gestion', 'GO'],
   ];
   return (
-    <aside className="relative rounded-[2rem] border border-white/60 bg-[#FFFDF8] p-5 text-academy-ink shadow-[0_34px_100px_rgba(0,0,0,.34)] sm:p-6">
+    <aside className={`${btsStyles.roadmap} relative rounded-[2rem] border border-white/60 bg-[#FFFDF8] p-5 text-academy-ink shadow-[0_34px_100px_rgba(0,0,0,.34)] sm:p-6`}>
       <span className="absolute -right-2 -top-3 rounded-full bg-bts-700 px-3 py-2 text-[.58rem] font-black uppercase tracking-[.14em] text-white shadow-soft">Admissions 2026</span>
       <div className="flex items-start justify-between gap-3"><div><Eyebrow>Votre trajectoire</Eyebrow><h2 className="mt-2 text-2xl font-black">Objectif : BTS CG</h2></div><span className="rounded-full bg-bts-50 px-3 py-1.5 text-[.6rem] font-black uppercase tracking-[.12em] text-bts-800 ring-1 ring-bts-200">Dossier en ligne</span></div>
-      <div className="mt-5 rounded-[1.5rem] border border-[#E4D9C8] bg-[#F4EFE6] p-4">
+      <div className={`${btsStyles.roadmapSteps} mt-5 rounded-[1.5rem] border border-[#E4D9C8] bg-[#F4EFE6] p-4`}>
         {steps.map(([number, title, detail, status], index) => (
           <div key={number} className={`grid grid-cols-[2.3rem_1fr_auto] items-center gap-3 py-3 ${index ? 'border-t border-[#DED4C5]' : ''}`}>
             <span className="grid h-9 w-9 place-items-center rounded-xl bg-[#0D1725] text-[.65rem] font-black text-bts-200">{number}</span>
@@ -216,14 +219,17 @@ export function BtsCgReferencePage() {
               <div className="mt-6 flex flex-col gap-3 sm:flex-row"><CTA href={applicationUrl} variant="gold" external>Je candidate pour 2026 →</CTA><CTA href={aurelieDirectHref} variant="outline">Parler à Aurélie</CTA></div>
               <div className="mt-6 flex flex-wrap gap-2 text-xs font-bold text-white/75"><span className="rounded-full border border-white/15 bg-white/7 px-3 py-2">✓ Sans frais de scolarité pour l’apprenti*</span><span className="rounded-full border border-white/15 bg-white/7 px-3 py-2">✓ Présentiel ou visioconférence</span><span className="rounded-full border border-white/15 bg-white/7 px-3 py-2">✓ Comptabilité, fiscalité et pilotage</span></div>
             </div>
-            <HeroRoadmap />
+            <div className={btsStyles.heroArtwork}><ManualArtwork illustration={btsArtwork.cg} priority /></div>
           </div>
+          <HeroRoadmap />
           <div className="mt-10 grid overflow-hidden rounded-[1.6rem] border border-white/10 bg-white/7 sm:grid-cols-2 lg:grid-cols-4">
             {[['Durée', '2 ans en alternance'], ['Alternance', btsRhythms.CG.shortLabel], ['Diplôme', 'Diplôme d’État · Bac+2'], ['Admission', 'Après le bac']].map(([key, value]) => <div key={key} className="border-b border-white/10 p-4 last:border-b-0 sm:border-r lg:border-b-0"><p className="text-[.58rem] font-black uppercase tracking-[.18em] text-white/42">{key}</p><p className="mt-1 font-black text-white">{value}</p></div>)}
           </div>
           <p className="mt-3 text-[.64rem] font-semibold text-white/40">* Sous réserve de la conclusion et de la prise en charge du contrat d’alternance.</p>
         </div>
       </section>
+
+      <TrainingWelcomePack course="bts-cg" />
 
       <CourseJourney course="bts-cg" />
 
@@ -237,13 +243,13 @@ export function BtsCgReferencePage() {
       </Section>
 
       <Section id="competences" eyebrow="02 — Bien plus que saisir des chiffres" title={<>Vous rendez l’entreprise plus fiable, plus lisible et mieux pilotée.</>} intro={<>Vous apprenez à produire une information juste, respecter les obligations, analyser la performance et aider les dirigeants à prendre de meilleures décisions.</>} tone="paper">
-        <TrainingIllustratedCards items={skillCards} theme="bts" />
+        <TrainingIllustratedCards items={skillCards} theme="bts" illustrations={btsPracticeArtwork.cg} singleIllustration />
         <div className="mt-6 grid items-center gap-5 rounded-[1.7rem] border border-bts-200 bg-bts-50 p-6 sm:grid-cols-[1fr_auto]">
           <div><Eyebrow>Votre montée en compétences</Eyebrow><h3 className="mt-3 text-2xl font-black text-bts-950">De la pièce comptable au tableau de bord.</h3><p className="mt-3 max-w-3xl text-sm leading-7 text-bts-950/70">Vous progressez du traitement quotidien des opérations jusqu’à l’analyse financière, en utilisant les outils numériques du métier.</p></div>
           <div className="rounded-2xl border border-bts-200 bg-white/70 px-6 py-4"><p className="text-4xl font-black text-bts-700">3+1</p><p className="mt-2 max-w-[14rem] text-xs font-black uppercase tracking-[.12em] text-bts-950/70">blocs métier et système d’information</p></div>
         </div>
         <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{['Assistant comptable', 'Collaborateur en cabinet', 'Comptable junior', 'Assistant contrôle de gestion'].map((job) => <div key={job} className="rounded-2xl border border-academy-line bg-academy-bg p-4 text-center font-black">{job}</div>)}</div>
-        <MissionAnimation variant="cg" className="mt-8" />
+        <MissionAnimation variant="cg" className="mt-8" illustration={btsMissionArtwork.cg} />
       </Section>
 
       <Section id="formats" eyebrow="03 — Deux formats, le même BTS" title={<>Choisissez la façon d’étudier qui vous correspond vraiment.</>} intro={<>Le format est un choix d’organisation. Le diplôme, le programme officiel, les cours en direct et l’accompagnement restent les mêmes.</>}>

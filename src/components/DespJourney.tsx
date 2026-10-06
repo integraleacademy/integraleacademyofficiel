@@ -39,7 +39,7 @@ function JourneyVisual({ index, onNext }: { index: number; onNext: () => void })
     <div className={`${styles.card} ${styles.ambitionCard}`}>
       {/* Existing school photo remains editable at the same path in GitHub. */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img className={styles.ambitionPhoto} src="/images/desp-initial-hero.jpg" alt="L’accueil de l’école Intégrale Academy" loading="lazy" decoding="async" width="1600" height="1200" />
+      <img className={styles.ambitionPhoto} src="/images/desp/manuel/organisation.webp" alt="Illustration du manuel du dirigeant : briefing d’équipe et organisation des missions sur plan." loading="lazy" decoding="async" width="1600" height="1200" />
       <div className={styles.ambitionOrbit} aria-hidden="true" />
       <CardHeader label="Le déclic" />
       <div className={styles.ambitionBody}>

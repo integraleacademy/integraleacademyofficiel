@@ -1,3 +1,5 @@
+import { ManualArtwork } from '@/components/ManualArtwork';
+import { ssiapArtwork } from '@/data/manualIllustrations';
 import { AcademyWatermark } from '@/components/AcademyWatermark';
 import { createPageMetadata, serializeJsonLd } from '@/lib/seo';
 import Link from 'next/link';
@@ -5,6 +7,8 @@ import { PremiumFAQSection } from '@/components/ui';
 import { ssiapOfficialReference } from '@/data/ssiap-catalogue';
 
 export const metadata = createPageMetadata('/formations-securite/ssiap');
+
+const courseIllustrations = [ssiapArtwork.ronde, ssiapArtwork.pc, ssiapArtwork.prevention, { src: '/images/ssiap-1/manuel/recyclage.webp', alt: 'Illustration du manuel SSIAP : exercice pratique d’extinction encadré par le formateur.' }];
 
 const courses = [
   {
@@ -114,13 +118,14 @@ export default function SsiapCataloguePage() {
           <nav className="mb-7 flex items-center gap-2 text-xs font-bold text-white/55" aria-label="Fil d’Ariane">
             <Link href="/">Accueil</Link><span>→</span><Link href="/formations-securite">Formations sécurité</Link><span>→</span><span className="text-red-200">SSIAP</span>
           </nav>
-          <div className="grid items-end gap-10 lg:grid-cols-[1.15fr_.85fr]">
+          <div className="grid items-center gap-10 lg:grid-cols-[1.15fr_.85fr]">
             <div>
               <span className="inline-flex items-center gap-2 rounded-full border border-red-300/35 bg-red-400/10 px-4 py-2 text-[.68rem] font-black uppercase tracking-[.2em] text-red-200"><span className="h-2.5 w-2.5 rounded-full bg-red-400 shadow-[0_0_16px_rgba(248,113,113,.9)]" />Sécurité incendie</span>
               <h1 className="mt-5 max-w-5xl text-4xl font-black tracking-[-.055em] sm:text-5xl lg:text-7xl">Toutes nos formations <span className="text-red-300">SSIAP.</span></h1>
               <p className="mt-5 max-w-3xl text-lg font-medium leading-8 text-white/70 sm:text-xl">SSIAP 1, SSIAP 2, SSIAP 3, recyclages et remise à niveau : choisissez le parcours correspondant à votre fonction et à votre expérience.</p>
             </div>
             <aside className="rounded-[2rem] border border-white/10 bg-white/7 p-6 backdrop-blur">
+              <div className="mb-6 overflow-hidden rounded-2xl"><ManualArtwork illustration={ssiapArtwork.secours} priority /></div>
               <p className="text-xs font-black uppercase tracking-[.2em] text-red-300">Centre agréé</p>
               <p className="mt-3 text-3xl font-black">SSIAP n°8323</p>
               <p className="mt-3 leading-7 text-white/60">Formations en présentiel à Puget-sur-Argens, avec vérification des prérequis avant l’inscription.</p>
@@ -134,7 +139,7 @@ export default function SsiapCataloguePage() {
       <section id="parcours" className="scroll-mt-24 bg-academy-bg px-4 py-14 sm:py-16 lg:py-20">
         <div className="page-container">
           <div className="mx-auto max-w-3xl text-center"><p className="text-xs font-black uppercase tracking-[.24em] text-red-700">Nos parcours</p><h2 className="mt-3 text-3xl font-black tracking-[-.045em] sm:text-4xl lg:text-5xl">Une page dédiée à chaque besoin SSIAP.</h2><p className="mt-4 text-lg leading-8 text-academy-muted">Comparez la fonction visée, la durée et les conditions d’accès avant de consulter le programme complet.</p></div>
-          <div className="mt-10 grid gap-5 lg:grid-cols-2">{courses.map((course, index) => <article key={course.href} className={`group flex h-full flex-col rounded-[2rem] border p-6 shadow-soft transition hover:-translate-y-1 hover:shadow-card sm:p-8 ${index === 2 ? 'border-[#26384F] bg-[#0D1725] text-white' : 'border-academy-line bg-[#FFFDF8] text-academy-ink'}`}><div className="flex items-start justify-between gap-5"><span className={`text-6xl font-black ${index === 2 ? 'text-red-300' : 'text-red-500'}`}>{course.number}</span><span className={`rounded-full px-3 py-1.5 text-xs font-black ${index === 2 ? 'bg-white/10 text-red-200' : 'bg-red-50 text-red-800'}`}>{course.duration}</span></div><p className={`mt-8 text-xs font-black uppercase tracking-[.2em] ${index === 2 ? 'text-red-300' : 'text-red-700'}`}>{course.role}</p><h3 className="mt-2 text-3xl font-black tracking-[-.04em] sm:text-4xl">{course.label}</h3><p className={`mt-4 flex-1 leading-7 ${index === 2 ? 'text-white/65' : 'text-academy-muted'}`}>{course.description}</p><div className={`mt-6 border-t pt-5 ${index === 2 ? 'border-white/10' : 'border-academy-line'}`}><p className={`text-xs font-bold ${index === 2 ? 'text-white/50' : 'text-academy-muted'}`}>{course.capacity}</p><Link href={course.href} className="mt-4 inline-flex min-h-12 w-full items-center justify-center rounded-full bg-red-600 px-5 py-3 text-center text-sm font-black text-white transition hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-300/55">{course.cta} <span className="ml-2 transition group-hover:translate-x-1">→</span></Link></div></article>)}</div>
+          <div className="mt-10 grid gap-5 lg:grid-cols-2">{courses.map((course, index) => <article key={course.href} className={`group flex h-full flex-col rounded-[2rem] border p-6 shadow-soft transition hover:-translate-y-1 hover:shadow-card sm:p-8 ${index === 2 ? 'border-[#26384F] bg-[#0D1725] text-white' : 'border-academy-line bg-[#FFFDF8] text-academy-ink'}`}><div className="mb-7 overflow-hidden rounded-2xl"><ManualArtwork illustration={courseIllustrations[index]} /></div><div className="flex items-start justify-between gap-5"><span className={`text-6xl font-black ${index === 2 ? 'text-red-300' : 'text-red-500'}`}>{course.number}</span><span className={`rounded-full px-3 py-1.5 text-xs font-black ${index === 2 ? 'bg-white/10 text-red-200' : 'bg-red-50 text-red-800'}`}>{course.duration}</span></div><p className={`mt-8 text-xs font-black uppercase tracking-[.2em] ${index === 2 ? 'text-red-300' : 'text-red-700'}`}>{course.role}</p><h3 className="mt-2 text-3xl font-black tracking-[-.04em] sm:text-4xl">{course.label}</h3><p className={`mt-4 flex-1 leading-7 ${index === 2 ? 'text-white/65' : 'text-academy-muted'}`}>{course.description}</p><div className={`mt-6 border-t pt-5 ${index === 2 ? 'border-white/10' : 'border-academy-line'}`}><p className={`text-xs font-bold ${index === 2 ? 'text-white/50' : 'text-academy-muted'}`}>{course.capacity}</p><Link href={course.href} className="mt-4 inline-flex min-h-12 w-full items-center justify-center rounded-full bg-red-600 px-5 py-3 text-center text-sm font-black text-white transition hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-300/55">{course.cta} <span className="ml-2 transition group-hover:translate-x-1">→</span></Link></div></article>)}</div>
         </div>
       </section>
 

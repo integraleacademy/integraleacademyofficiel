@@ -4,7 +4,9 @@ import { createPageMetadata } from '@/lib/seo';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { MissionAnimation } from '@/components/MissionAnimation';
+import { ManualArtwork } from '@/components/ManualArtwork';
+import { TrainingWelcomePack } from '@/components/TrainingWelcomePack';
+import { vtcArtwork, vtcPracticeArtwork } from '@/data/manualIllustrations';
 import { VtcAutonomousEnrollmentBanner } from '@/components/VtcAutonomousEnrollmentBanner';
 import { TrainingIllustratedCards, type TrainingIllustratedCard } from '@/components/TrainingIllustratedCards';
 import { TrainingSectionNavigation } from '@/components/TrainingSectionNavigation';
@@ -20,6 +22,7 @@ export const metadata: Metadata = createPageMetadata('/vtc');
 const contactHref = (subject: string) => `/contact?formation=vtc&objet=${encodeURIComponent(subject)}`;
 const registrationFormUrl = 'https://assistance-alw9.onrender.com/demande-informations-formations';
 const navigationItems = [
+  { label: 'Pack Intégrale', href: '#pack-integrale' },
   { label: 'Formule', href: '#formule' },
   { label: 'Formation', href: '#formation' },
   { label: 'Dates & tarifs', href: '#dates-tarifs' },
@@ -156,7 +159,7 @@ export default function VtcPage() {
           <div className={styles.cockpit}>
             <div className={styles.cockpitTop}><span>Votre itinéraire vers le métier</span><span className={styles.live}>● PRÊT À DÉMARRER</span></div>
             <div className={styles.routeMap}>
-              <MissionAnimation variant="vtc" compact />
+              <ManualArtwork illustration={vtcArtwork.accueil} priority />
             </div>
             <div className={styles.cockpitStats}>
               <div><span>Durée</span><strong>{vtcCourse.durationHours} h</strong><small>Parcours complet</small></div>
@@ -170,6 +173,8 @@ export default function VtcPage() {
         </div>
       </div>
     </section>
+
+    <TrainingWelcomePack course="vtc" />
 
     <CourseJourney course="vtc" />
 
@@ -203,6 +208,7 @@ export default function VtcPage() {
       <div className={styles.container}>
         <div className={styles.elearningLayout}>
           <div className={styles.platformMockup}>
+            <ManualArtwork illustration={vtcArtwork.apprentissage} />
             <div className={styles.platformTop}><span>ESPACE DE FORMATION</span><span>Progression en temps réel</span></div>
             <div className={styles.platformBody}>
               <div className={styles.progressRing}><strong>13</strong><span>séquences</span></div>
@@ -248,7 +254,7 @@ export default function VtcPage() {
     <section id="programme" className={styles.program}>
       <div className={styles.container}>
         <div className={styles.sectionHead}><div><span>06 — Les compétences</span><h2>Bien plus que conduire.<br/><em>Devenez professionnel.</em></h2></div><p>Le programme suit les compétences évaluées à l’examen et celles qui feront la différence face à vos futurs clients.</p></div>
-        <TrainingIllustratedCards items={program} theme="violet" />
+        <TrainingIllustratedCards items={program} theme="violet" illustrations={vtcPracticeArtwork} singleIllustration />
       </div>
     </section>
 

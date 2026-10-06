@@ -1,3 +1,5 @@
+import { btsArtworkForPath } from '@/data/btsIllustrations';
+import { despArtwork } from '@/data/manualIllustrations';
 import { btsRhythms } from '@/data/btsRhythms';
 import { CourseJourney } from '@/components/CourseJourney';
 import { createPageMetadata } from '@/lib/seo';
@@ -37,7 +39,7 @@ export default function Page() {
             </Button>
           </>
         }
-        visual={<ArtDirectionVisual world="bts" />}
+        visual={<ArtDirectionVisual world="bts" illustration={despArtwork.direction} />}
       />
       <CourseJourney course="bts-overview" />
       <ChatGptAgentBanner />
@@ -82,6 +84,7 @@ export default function Page() {
                 desc={x.desc}
                 href={x.slug}
                 tags={x.tags}
+                illustration={btsArtworkForPath(x.slug)}
               />
             ))}
           </div>

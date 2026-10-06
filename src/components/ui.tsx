@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { ManualArtwork } from '@/components/ManualArtwork';
+import type { ManualIllustration } from '@/data/manualIllustrations';
 import { contact, legalRefs } from '@/data/site';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { MobileHeaderMenu } from '@/components/MobileHeaderMenu';
@@ -159,7 +161,7 @@ const artDirectionCopy: Record<ArtDirectionWorld, { label: string; title: string
   },
 };
 
-export function ArtDirectionVisual({ world }: { world: ArtDirectionWorld }) {
+export function ArtDirectionVisual({ world, illustration }: { world: ArtDirectionWorld; illustration?: ManualIllustration }) {
   const copy = artDirectionCopy[world];
 
   return <div className="relative isolate overflow-hidden rounded-[2rem] bg-academy-ink p-5 text-white shadow-soft ring-1 ring-academy-line reveal">
@@ -170,6 +172,7 @@ export function ArtDirectionVisual({ world }: { world: ArtDirectionWorld }) {
       <span className="rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-black uppercase tracking-[.18em] text-academy-gold">{copy.label}</span>
       <span className="status-dot" aria-hidden="true" />
     </div>
+    {illustration && <div className="mt-5 overflow-hidden rounded-[1.5rem]"><ManualArtwork illustration={illustration} priority /></div>}
     <div className="mt-6 grid gap-5">
       <div className="rounded-[1.5rem] border border-white/10 bg-white/10 p-5 backdrop-blur">
         <div className="flex gap-3" aria-hidden="true">{copy.glyphs.map(glyph => <span key={glyph} className="premium-icon bg-white/10 text-academy-gold"><span>{glyph}</span></span>)}</div>
@@ -273,7 +276,7 @@ export function Footer(){
   </footer>
 }
 export function Card({children}:{children:React.ReactNode}){return <div className="rounded-3xl bg-academy-surface p-6 shadow-card ring-1 ring-academy-line reveal">{children}</div>}
-export function FormationCard({title,desc,href,tags=[]}:{title:string;desc:string;href:string;tags?:string[]}){return <Card><div className="flex flex-wrap gap-2">{tags.map(t=><Badge key={t} tone="neutral">{t}</Badge>)}</div><h3 className="mt-5 text-xl font-black">{title}</h3><p className="mt-3 text-sm leading-6 text-academy-muted">{desc}</p><div className="mt-6 flex flex-wrap gap-2"><Button href={href}>Découvrir</Button><Button href="/contact" variant="ghost">Demander des informations</Button></div></Card>}
+export function FormationCard({title,desc,href,tags=[],illustration}:{title:string;desc:string;href:string;tags?:string[];illustration?:ManualIllustration}){return <Card>{illustration && <div className="mb-5 overflow-hidden rounded-2xl"><ManualArtwork illustration={illustration} /></div>}<div className="flex flex-wrap gap-2">{tags.map(t=><Badge key={t} tone="neutral">{t}</Badge>)}</div><h3 className="mt-5 text-xl font-black">{title}</h3><p className="mt-3 text-sm leading-6 text-academy-muted">{desc}</p><div className="mt-6 flex flex-wrap gap-2"><Button href={href}>Découvrir</Button><Button href="/contact" variant="ghost">Demander des informations</Button></div></Card>}
 export function FeatureCard({title,children}:{title:string;children:React.ReactNode}){return <Card><h3 className="text-lg font-black">{title}</h3><p className="mt-3 text-sm leading-6 text-academy-muted">{children}</p></Card>}
 export function StatCard({value,label}:{value:string;label:string}){return <div className="rounded-3xl border border-academy-line bg-academy-surface p-6 text-academy-ink shadow-card dark:border-white/10 dark:bg-academy-ink dark:text-white"><div className="text-3xl font-black text-academy-gold-strong dark:text-academy-gold">{value}</div><p className="mt-2 text-sm font-medium text-academy-muted dark:text-stone-200">{label}</p></div>}
 const premiumFaqThemes: Record<UiAccent | 'bts', { shell:string; glow:string; badge:string; contact:string; icon:string; item:string; bar:string; number:string; toggle:string; check:string }> = {

@@ -11,10 +11,11 @@ export type TrainingIllustratedCard = {
   scenes: readonly { kind: SceneKind; description: string }[];
 };
 
-export function TrainingIllustratedCards({ items, theme, illustrations }: {
+export function TrainingIllustratedCards({ items, theme, illustrations, singleIllustration = false }: {
   items: readonly TrainingIllustratedCard[];
   theme: 'blue' | 'orange' | 'violet' | 'bts';
   illustrations?: ManualIllustrationMap;
+  singleIllustration?: boolean;
 }) {
   return <div className={`${styles.cards} ${styles[theme]}`}>
     {items.map((item, index) => <article key={item.title} className={`${styles.card} ${item.wide ? styles.wide : ''}`}>
@@ -24,8 +25,8 @@ export function TrainingIllustratedCards({ items, theme, illustrations }: {
       </div>
       <h3>{item.title}</h3>
       <p>{item.description}</p>
-      <div className={styles.visuals}>
-        {item.scenes.map(scene => <div key={scene.kind} className={styles.visual}>
+      <div className={`${styles.visuals} ${singleIllustration ? styles.singleIllustration : ''}`}>
+        {(singleIllustration ? item.scenes.slice(0, 1) : item.scenes).map(scene => <div key={scene.kind} className={styles.visual}>
           <TrainingMotionIllustration kind={scene.kind} theme={theme} description={scene.description} illustration={illustrations?.[scene.kind]} />
         </div>)}
       </div>

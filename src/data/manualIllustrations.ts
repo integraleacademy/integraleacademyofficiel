@@ -78,3 +78,46 @@ export const despPracticeArtwork: ManualIllustrationMap = {
   jury: despArtwork.direction,
   certificate: despArtwork.client,
 };
+
+export const vtcArtwork = {
+  accueil: artwork('vtc', 'accueil', 'Illustration du manuel VTC : préparation de l’itinéraire auprès du véhicule.'),
+  reglementation: artwork('vtc', 'reglementation', 'Illustration du manuel VTC : un chauffeur vérifie ses documents professionnels.'),
+  gestion: artwork('vtc', 'gestion', 'Illustration du manuel VTC : suivi des comptes et des indicateurs de l’activité.'),
+  conduite: artwork('vtc', 'conduite', 'Illustration du manuel VTC : une chauffeuse attentive au volant de son véhicule.'),
+  communication: artwork('vtc', 'communication', 'Illustration du manuel VTC : un chauffeur échange avec la réception d’un hôtel.'),
+  commercial: artwork('vtc', 'commercial', 'Illustration du manuel VTC : échange sur une proposition commerciale.'),
+  profession: artwork('vtc', 'profession', 'Illustration du manuel VTC : contrôle des documents avant une prise en charge.'),
+  pratique: artwork('vtc', 'pratique', 'Illustration du manuel VTC : accueil d’une famille et de ses bagages.'),
+  apprentissage: artwork('vtc', 'apprentissage', 'Illustration du manuel VTC : travail sur ordinateur et supports de formation.'),
+};
+
+export const vtcPracticeArtwork: ManualIllustrationMap = {
+  compliance: vtcArtwork.reglementation,
+  finance: vtcArtwork.gestion,
+  'secure-vehicle': vtcArtwork.conduite,
+  'profile-review': vtcArtwork.communication,
+  commercial: vtcArtwork.commercial,
+  approval: vtcArtwork.profession,
+  'emergency-call': vtcArtwork.pratique,
+  'mission-map': vtcArtwork.accueil,
+};
+
+export const sstArtwork = {
+  formation: artwork('sst', 'formation', 'Illustration du manuel SST : présentation du défibrillateur et du mannequin de formation.'),
+  prevention: artwork('sst', 'prevention', 'Illustration du manuel SST : repérage des équipements de secours dans l’entreprise.'),
+  examen: artwork('sst', 'examen', 'Illustration du manuel SST : une secouriste prend en charge un salarié assis au sol.'),
+  alerte: artwork('sst', 'alerte', 'Illustration du manuel SST : un salarié donne l’alerte pendant la prise en charge d’une brûlure.'),
+  secours: artwork('sst', 'secours', 'Illustration du manuel SST : préparation de la trousse et du matériel de premiers secours.'),
+  reanimation: artwork('sst', 'reanimation', 'Illustration du manuel SST : entraînement aux compressions thoraciques sur un mannequin.'),
+  defibrillateur: artwork('sst', 'defibrillateur', 'Illustration du manuel SST : exercice de réanimation et de défibrillation encadré par le formateur.'),
+  evaluation: artwork('sst', 'evaluation', 'Illustration du manuel SST : travail sur un support pédagogique avec le formateur.'),
+};
+
+export const sstPracticeArtwork: ManualIllustrationMap = {
+  hazard: sstArtwork.prevention,
+  examine: sstArtwork.examen,
+  'emergency-call': sstArtwork.alerte,
+  'first-aid': sstArtwork.secours,
+  cpr: sstArtwork.reanimation,
+  dae: sstArtwork.defibrillateur,
+};
