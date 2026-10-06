@@ -15,7 +15,7 @@ La formation est réglementée. Avant l’entrée, il faut détenir une autorisa
 
 Examen : QCU contextualisés et épreuves pratiques. Note supérieure ou égale à 12/20 : UV acquise ; de 8 à moins de 12/20 : ajournement et nouvelle session d’examen possible ; sous 8/20 : module à suivre de nouveau. Les épreuves pratiques sont évaluées apte/inapte. Le candidat prépare et exécute au moins une mission complète, constitue un dossier et le soutient devant un jury. Le titre forme un bloc unique, sans capitalisation ni équivalence de blocs.
 
-Tarif de référence : 4 200 €. Formation en présentiel à Puget-sur-Argens. Hébergement collectif possible sur réservation. Financements étudiés selon la situation : CPF si offre éligible, France Travail, employeur/OPCO ou financement personnel.
+Tarif de référence 2027 : 4 250 € TTC. Formation en présentiel à Puget-sur-Argens. Hébergement collectif possible sur réservation : 350 € TTC pour la totalité de la formation (tarif 2027). Financements étudiés selon la situation : CPF si offre éligible, France Travail, employeur/OPCO ou financement personnel.
 
 Débouchés : agent de protection physique des personnes, agent de protection rapprochée, garde du corps, conducteur de sécurité ou agent privé de protection. La réussite au TFP justifie l’aptitude professionnelle ; elle ne remplace pas la demande de carte professionnelle auprès du CNAPS et ne garantit pas un emploi.
 

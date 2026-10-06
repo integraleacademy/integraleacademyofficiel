@@ -19,6 +19,7 @@ function parseEuroLabel(value: unknown) {
 
   const normalized = value
     .trim()
+    .replace(/\bTTC\b/gi, '')
     .replace(/[€\s\u00a0\u202f]/g, '')
     .replace(',', '.');
 
@@ -34,19 +35,20 @@ function parseEuroLabel(value: unknown) {
  */
 export function formatTrainingPrice(source: TrainingPriceSource | null | undefined, fallback: string) {
   const cents = Number(source?.priceCents);
+  const suffix = /\bTTC\b/i.test(String(source?.priceLabel ?? fallback)) ? ' TTC' : '';
   if (Number.isFinite(cents) && cents >= MINIMUM_COHERENT_TRAINING_PRICE_EUROS * 100) {
-    return formatEuros(cents / 100);
+    return formatEuros(cents / 100) + suffix;
   }
 
   const labelledAmount = parseEuroLabel(source?.priceLabel);
   if (labelledAmount !== null && labelledAmount >= MINIMUM_COHERENT_TRAINING_PRICE_EUROS) {
-    return formatEuros(labelledAmount);
+    return formatEuros(labelledAmount) + suffix;
   }
 
   const label = String(source?.priceLabel ?? '').trim();
   if (label && !/\d/.test(label)) return label;
 
   const fallbackAmount = parseEuroLabel(fallback);
-  if (fallbackAmount !== null) return formatEuros(fallbackAmount);
+  if (fallbackAmount !== null) return formatEuros(fallbackAmount) + (/\bTTC\b/i.test(fallback) ? ' TTC' : '');
   return fallback.trim() || 'Sur devis';
 }

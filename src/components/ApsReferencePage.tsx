@@ -154,7 +154,7 @@ const faq = [
   { q: 'Comment se déroule l’examen APS ?', a: 'L’examen associe des QCU contextualisés organisés électroniquement et deux mises en situation professionnelles individuelles, notamment autour de la ronde et du poste de contrôle.' },
   { q: 'La formation permet-elle d’obtenir directement la carte professionnelle ?', a: 'La réussite permet d’obtenir le TFP APS, qui justifie l’aptitude professionnelle. Vous devez ensuite déposer une demande de carte professionnelle auprès du CNAPS.' },
   { q: 'Quelles conditions concernent les ressortissants étrangers ?', a: 'La fiche RNCP indique qu’un ressortissant étranger doit être titulaire d’un titre de séjour depuis au moins cinq ans pour demander l’autorisation préalable. L’équipe vérifie les règles et pièces applicables à chaque situation.' },
-  { q: 'Quel est le prix de la formation ?', a: 'Le tarif affiché est de 1 650 €. Retrouvez le prix dans la carte Tarif et les dates et places disponibles dans les cartes de session.' },
+  { q: 'Quel est le prix de la formation ?', a: 'Le tarif 2027 est de 1 700 € TTC. Retrouvez le prix dans la carte Tarif et les dates et places disponibles dans les cartes de session.' },
   { q: 'Puis-je financer la formation avec mon CPF ?', a: 'Oui, selon votre éligibilité et l’offre active. France Travail, un employeur, un OPCO ou un paiement personnel peuvent également être étudiés.' },
   { q: 'Le SST est-il inclus ?', a: 'Oui. Le parcours comprend la préparation au certificat Sauveteur Secouriste du Travail.' },
   { q: 'Une expérience dans la sécurité est-elle obligatoire ?', a: 'Non. La formation est accessible aux débutants qui remplissent les conditions administratives et linguistiques réglementaires.' },
@@ -177,7 +177,7 @@ function isSessionFull(session: any) {
 
 function priceLabel(value: unknown) {
   if (typeof value === 'number') return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(value);
-  const text = String(value || '1 650 €').trim();
+  const text = String(value || '1 700 € TTC').trim();
   return /^\d+(?:[.,]\d+)?$/.test(text) ? new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(Number(text.replace(',', '.'))) : text;
 }
 
@@ -550,6 +550,7 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
     </Section>
 
     <TrainingDatesPricingSection
+      priceYear={2027}
       id="dates-tarifs"
       eyebrow="07 — Dates & tarifs"
       sessions={visibleSessions}
@@ -562,7 +563,7 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
       underlineDisclosure={false}
       remotePeriodFallback="51 h · calendrier détaillé à confirmer"
       inPersonPeriodFallback="124 h · calendrier détaillé à confirmer"
-      defaultPrice="1 650 €"
+      defaultPrice="1 700 € TTC"
       defaultLocation="Puget-sur-Argens"
       priceDescription="Formation complète · SST inclus · examen final"
       registrationHref={sessionHref}

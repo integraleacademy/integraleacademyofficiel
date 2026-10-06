@@ -32,7 +32,7 @@ Toute session débutant après le 1er juillet 2027 doit être présentée sous r
 - Théorie en présentiel : 60,5 heures
 - Distanciel : 51 heures, soit 29 % du parcours
 - Lieu du présentiel : Puget-sur-Argens
-- Tarif affiché : 1 650 €
+- Tarif 2027 : 1 700 € TTC
 - Financements étudiés : CPF, France Travail, employeur ou OPCO, financement personnel
 - Examen : QCU contextualisés organisés électroniquement et deux mises en situation professionnelles individuelles
 - SST : inclus dans le parcours

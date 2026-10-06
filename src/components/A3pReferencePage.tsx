@@ -326,6 +326,7 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
     </Section>
 
     <TrainingDatesPricingSection
+      priceYear={2027}
       id="dates-tarifs"
       eyebrow="08 — Dates & tarifs"
       sessions={sessions}
@@ -355,7 +356,7 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
 
       <div className="mt-5 rounded-[2rem] border border-academy-line bg-white p-7 shadow-soft"><Label>Rémunération</Label><h2 className="mt-3 text-2xl font-black tracking-[-.04em]">Un niveau variable selon les missions.</h2><p className="mt-4 max-w-4xl text-sm font-semibold leading-7 text-academy-muted">Le type de mission, la durée, le niveau de risque et l’expérience influencent fortement la rémunération.</p><div className="mt-5 flex flex-wrap gap-2">{salaryFactors.map((factor) => <span key={factor} className="rounded-full bg-[#F3EEE5] px-3 py-2 text-[.65rem] font-black">{factor}</span>)}</div></div>
 
-      <div className="mt-5 grid items-center gap-6 rounded-[2rem] bg-emerald-600 p-6 text-white shadow-[0_24px_65px_rgba(5,150,105,.22)] lg:grid-cols-[1.2fr_.55fr_auto]"><div><Label light>Parcours recommandé</Label><h2 className="mt-2 text-2xl font-black tracking-[-.035em]">Double compétence APS + A3P</h2><p className="mt-2 text-xs font-semibold text-white/80">Élargissez les missions accessibles et renforcez votre polyvalence.</p></div><div><p className="text-3xl font-black">{a3pConfig.apsA3pOffer.priceLabel}</p><p className="text-xs font-bold text-white/75">au lieu de {a3pConfig.apsA3pOffer.oldPriceLabel} · {a3pConfig.apsA3pOffer.discountLabel}</p></div><CTA href={a3pConfig.apsA3pOffer.href} variant="dark">Découvrir le parcours →</CTA></div>
+      <div className="mt-5 grid items-center gap-6 rounded-[2rem] bg-emerald-600 p-6 text-white shadow-[0_24px_65px_rgba(5,150,105,.22)] lg:grid-cols-[1.2fr_.55fr_auto]"><div><Label light>Parcours recommandé</Label><h2 className="mt-2 text-2xl font-black tracking-[-.035em]">Double compétence APS + A3P</h2><p className="mt-2 text-xs font-semibold text-white/80">Élargissez les missions accessibles et renforcez votre polyvalence.</p></div><div><p className="text-3xl font-black">{a3pConfig.apsA3pOffer.priceLabel}</p><p className="text-xs font-bold text-white/75">Tarifs individuels 2027 : {a3pConfig.apsA3pOffer.oldPriceLabel} · {a3pConfig.apsA3pOffer.discountLabel}</p></div><CTA href={a3pConfig.apsA3pOffer.href} variant="dark">Découvrir le parcours →</CTA></div>
     </div></section>
 
     <Section label="11 — Intégrale Academy" title="Un cadre sérieux pour un métier exigeant." intro="Des éléments concrets et vérifiables, directement liés au parcours A3P." tone="stone">

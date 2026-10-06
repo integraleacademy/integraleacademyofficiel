@@ -44,7 +44,7 @@ type SheetTheme = 'aps' | 'a3p' | 'desp' | 'neutral';
 type ImportSheet = { name: string; slug: string; location: string; registrationUrl: string; theme: SheetTheme; hasDeliveryPeriods?: boolean; durationLabel?: string; priceLabel?: string; priceCents?: number };
 
 const sheets: ImportSheet[] = [
-  { name: 'APS', slug: 'aps', theme: 'aps', hasDeliveryPeriods: true, location: 'Puget-sur-Argens / Côte d’Azur', registrationUrl: '/formations-securite/aps', durationLabel: '175 heures', priceLabel: '1 650 €', priceCents: 165000 },
+  { name: 'APS', slug: 'aps', theme: 'aps', hasDeliveryPeriods: true, location: 'Puget-sur-Argens / Côte d’Azur', registrationUrl: '/formations-securite/aps', durationLabel: '175 heures', priceLabel: '1 700 € TTC', priceCents: 170000 },
   { name: 'A3P', slug: 'a3p-apr', theme: 'a3p', location: 'Puget-sur-Argens / Côte d’Azur', registrationUrl: '/formations-securite/a3p-apr' },
   { name: 'DESP Côte d’Azur', slug: 'desp-dssp', theme: 'desp', hasDeliveryPeriods: true, location: 'Puget-sur-Argens / Côte d’Azur', registrationUrl: '/despvaeouinitial' },
   { name: 'DESP Paris', slug: 'desp-dssp', theme: 'desp', hasDeliveryPeriods: true, location: 'Paris · 14 Villa Lourcine 75014 Paris', registrationUrl: '/despvaeouinitial' },

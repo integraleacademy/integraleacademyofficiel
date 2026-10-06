@@ -318,12 +318,12 @@ function shortDate(value?: string | Date) {
 }
 
 const fallbackPrices: Record<string, string> = {
-  aps: '1 650 €',
-  a3p: '4 200 €',
-  'a3p-apr': '4 200 €',
-  desp: '4 300 €',
-  'desp-dssp': '4 300 €',
-  'desp-initial': '4 300 €',
+  aps: '1 700 € TTC',
+  a3p: '4 250 € TTC',
+  'a3p-apr': '4 250 € TTC',
+  desp: '4 350 € TTC',
+  'desp-dssp': '4 350 € TTC',
+  'desp-initial': '4 350 € TTC',
   'ssiap-1': '980 €',
   ssiap1: '980 €',
 };

@@ -31,7 +31,7 @@ const comparisonDetails: Record<TrainingVisual, ComparisonDetails> = {
     ],
     certification: 'TFP APS · niveau 3',
     certificationNote: 'Puis demande de carte professionnelle au CNAPS',
-    price: '1 650 €',
+    price: '1 700 € TTC',
     priceNote: 'Formation complète · SST inclus',
     cta: 'Découvrir l’APS',
   },
@@ -76,7 +76,7 @@ const comparisonDetails: Record<TrainingVisual, ComparisonDetails> = {
     ],
     certification: 'TFP A3P',
     certificationNote: 'Agent de protection physique des personnes',
-    price: '4 200 €',
+    price: '4 250 € TTC',
     priceNote: 'Formation complète de 328 heures hors examen',
     cta: 'Découvrir l’A3P',
   },
@@ -91,8 +91,8 @@ const comparisonDetails: Record<TrainingVisual, ComparisonDetails> = {
     ],
     certification: 'Titre DESP',
     certificationNote: 'Puis demande d’agrément dirigeant au CNAPS',
-    price: '3 800 à 4 300 €',
-    priceNote: 'Selon VAE ou parcours initial',
+    price: '3 850 à 4 350 € TTC',
+    priceNote: 'Tarifs 2027 · selon VAE ou parcours initial',
     cta: 'Découvrir le DESP',
   },
 };
@@ -156,7 +156,7 @@ function ComparisonCard({ item }: { item: SecurityTrainingHighlight }) {
       <div className={styles.cardBottom}>
         {item.financing ? <div className={styles.financing}><span aria-hidden="true">●</span>{item.financing}</div> : null}
         <div className={styles.priceBlock}>
-          <small>Tarif</small>
+          <small>{['aps', 'a3p', 'desp'].includes(item.visual) ? 'Tarif 2027' : 'Tarif'}</small>
           <strong>{details.price}</strong>
           <p>{details.priceNote}</p>
         </div>

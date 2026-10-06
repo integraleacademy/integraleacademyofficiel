@@ -12,7 +12,7 @@ export function DespHero({ variant, title, subtitle, stats, sessions }: {
 }) {
   const isVae = variant === 'vae';
   const next = sessions.find(session => session.training?.slug === 'desp-vae');
-  const price = stats.find(([label]) => label === 'Tarif')?.[1] || (isVae ? '3 800 €' : '4 300 €');
+  const price = stats.find(([label]) => label === 'Tarif' || label === 'Tarif 2027')?.[1] || (isVae ? '3 850 € TTC' : '4 350 € TTC');
   return <TrainingHero
     theme="orange"
     imageSrc={`/images/desp-${variant}-hero.jpg`}

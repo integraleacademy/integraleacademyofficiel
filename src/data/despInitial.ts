@@ -2,7 +2,7 @@ export const despInitialAdminData = {
   rncpCode: 'RNCP40385',
   level: 'niveau 5, correspondant à un niveau bac +2',
   duration: { total: '245 heures', remote: '175 heures à distance', inPerson: '70 heures en présentiel' },
-  priceLabel: '4 300 €',
+  priceLabel: '4 350 € TTC',
   cpfEligibleWhenActive: true,
   handicapReferent: { name: 'Référent handicap à confirmer', email: 'handicap@integraleacademy.com', phone: '04 22 47 07 68' },
 };

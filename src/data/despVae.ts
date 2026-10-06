@@ -4,7 +4,7 @@ export const despVaeAdmin = {
   level: 'Niveau 5',
   certifier: 'Scotia Formation',
   deadline: '28 mars 2027',
-  price: '3 800 €',
+  price: '3 850 € TTC',
   duration: 'Durée variable selon votre expérience, votre disponibilité, l’avancement du dossier et la date du jury.',
   durationNote: 'Un calendrier personnalisé est défini après l’étude de faisabilité. La durée ne peut pas être garantie avant l’analyse du dossier.',
   accessibilityReferent: {

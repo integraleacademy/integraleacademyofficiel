@@ -22,7 +22,7 @@ test('les cinq formations ont leurs usages, certifications et tarifs', () => {
     assert.match(component, new RegExp(`\\n  ${key}: \\{`));
   }
 
-  for (const price of ['1 650 €', 'Dès 980 €', 'Sur devis', '4 200 €', '3 800 à 4 300 €']) {
+  for (const price of ['1 700 € TTC', 'Dès 980 €', 'Sur devis', '4 250 € TTC', '3 850 à 4 350 € TTC']) {
     assert.ok(component.includes(price), `tarif manquant : ${price}`);
   }
 

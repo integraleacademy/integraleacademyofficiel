@@ -264,7 +264,7 @@ export function getApsPreview(content: string) {
   const tariffLine = content
     .split('\n')
     .map((line) => line.trim())
-    .find((line) => /tarif|1650|1\s*650|€/.test(line.toLowerCase()));
+    .find((line) => /tarif|€/.test(line.toLowerCase()));
 
   return tariffLine || content.replace(/\s+/g, ' ').trim().slice(0, 160);
 }

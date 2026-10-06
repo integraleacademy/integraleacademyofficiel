@@ -115,7 +115,7 @@ function buildKnownStructuredAnswer(question: string): StructuredChatAnswer | nu
 
   if (training === 'desp') {
     if (intent === 'tarif') return {
-      answerText: 'La formation DESP est à 4 300 € en parcours initial.\n\nLa VAE DESP est à 3 800 €.\n\nLe parcours initial dure environ 7 semaines, soit 245 heures. Des financements peuvent être possibles selon votre situation : CPF, France Travail ou paiement en plusieurs fois.\n\nVous voulez que l’on vérifie rapidement votre financement ?',
+      answerText: 'Pour 2027, la formation DESP est à 4 350 € TTC en parcours initial.\n\nLa VAE DESP est à 3 850 € TTC.\n\nLe parcours initial dure environ 7 semaines, soit 245 heures. Des financements peuvent être possibles selon votre situation : CPF, France Travail ou paiement en plusieurs fois.\n\nVous voulez que l’on vérifie rapidement votre financement ?',
       quickActions: [action('Voir le programme DESP', 'Voir le programme DESP'), action('Vérifier mon financement', 'Vérifier mon financement DESP'), action('Être rappelé', 'Être rappelé pour le DESP'), action('M’inscrire', 'Je veux m’inscrire en DESP')],
       showCallbackForm: false,
       suggestedNextStep: 'Vérifier mon financement',
@@ -299,6 +299,7 @@ Règles strictes :
 - Ne commence jamais par "Pour Formation".
 - Ne copie jamais une phrase brute de la base de données : reformule proprement.
 - Pour un tarif, donne le prix en premier. Pour une durée, donne la durée en premier.
+- Distingue les tarifs de référence 2027 des tarifs des sessions démarrant en 2026. Pour une demande de tarif 2027, ne reprends jamais le prix d’une session 2026.
 - Termine par une question simple ou une action claire.
 ${reliableFacts ? `\n${reliableFacts}\nUtilise cette information uniquement comme repère fiable, puis reformule la réponse finale de manière naturelle et commerciale.` : ''}
 

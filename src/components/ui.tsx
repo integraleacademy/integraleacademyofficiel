@@ -126,7 +126,7 @@ const artDirectionCopy: Record<ArtDirectionWorld, { label: string; title: string
     label: 'Formation APS',
     title: 'Carte professionnelle CNAPS · métier · examen',
     chips: ['TFP APS', 'CNAPS', '175h', 'Sécurité'],
-    stats: [['5', 'semaines'], ['1 650€', 'tarif'], ['CPF', 'possible']],
+    stats: [['5', 'semaines'], ['1 700 € TTC', 'tarif 2027'], ['CPF', 'possible']],
     glyphs: ['🛡', '✓', '◆'],
   },
   bts: {

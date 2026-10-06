@@ -12,11 +12,11 @@ const paymentOptions = [
   { label: '10 fois', installments: 10 },
 ];
 const formationOptions = [
-  { label: 'APS', amount: 1650 },
+  { label: 'APS', amount: 1700 },
   { label: 'SSIAP 1', amount: 980 },
-  { label: 'A3P', amount: 4200 },
-  { label: 'DESP initial', amount: 4300 },
-  { label: 'DESP en VAE', amount: 3800 },
+  { label: 'A3P', amount: 4250 },
+  { label: 'DESP initial', amount: 4350 },
+  { label: 'DESP en VAE', amount: 3850 },
   { label: 'Chauffeur VTC', amount: 1500 },
 ];
 
@@ -124,9 +124,9 @@ export default function FinancingSimulator() {
             <div className="rounded-3xl border border-white/10 bg-white/[.06] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,.06)]">
               <p className="text-sm font-black text-white">Montant total de la formation</p>
               <div className="mt-3 rounded-2xl border border-academy-gold/25 bg-black/25 px-4 py-3">
-                <p className="text-right text-2xl font-black text-academy-gold">{euros(formationAmount)}</p>
+                <p className="text-right text-2xl font-black text-academy-gold">{euros(formationAmount)} TTC</p>
               </div>
-              <p className="mt-2 text-xs font-semibold leading-5 text-stone-400">Montant automatiquement réglé selon la formation choisie, non modifiable dans cette simulation.</p>
+              <p className="mt-2 text-xs font-semibold leading-5 text-stone-400">Tarifs 2027 pour les formations APS, A3P et DESP. Montants exprimés TTC, automatiquement réglés selon la formation choisie.</p>
             </div>
             <AmountControl id="cpf-amount" label="Montant disponible sur votre CPF" value={cappedCpf} max={formationAmount} onChange={setCpfAmount} />
           </div>

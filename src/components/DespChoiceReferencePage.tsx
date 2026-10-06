@@ -214,14 +214,15 @@ export function DespChoiceReferencePage({ sessions }: { sessions: TrainingDatesP
 
       <DespLocationsNotice />
       <TrainingDatesPricingSection
+      priceYear={2027}
         sessions={sessions}
         theme="orange"
         seatCapacity={12}
         showDeliveryPeriods
         showLocationFilter
-        defaultPrice="À partir de 3 800 €"
+        defaultPrice="À partir de 3 850 € TTC"
         defaultLocation="Paris, Puget-sur-Argens ou Aurillac"
-        priceDescription="Parcours initial : 4 300 € · VAE : 3 800 €"
+        priceDescription="Parcours initial : 4 350 € TTC · VAE : 3 850 € TTC"
         benefits={['CPF', 'France Travail', 'Paiement x3 / x4 / x10', 'Initial ou VAE']}
         registrationHref={sessionHref}
         priceAction={{ href: '/contact?formation=desp&objet=financement', label: 'Étudier mon financement →' }}

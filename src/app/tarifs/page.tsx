@@ -20,6 +20,7 @@ type OfferPresentation = {
 const offerPresentation: Record<string, OfferPresentation> = {
   '/formations-securite/aps': {
     shortTitle: 'APS',
+    priceNote: 'Tarif 2027 TTC',
     category: 'security',
     categoryLabel: 'Sécurité privée',
     tone: 'blue',
@@ -27,6 +28,7 @@ const offerPresentation: Record<string, OfferPresentation> = {
   },
   '/formations-securite/a3p-apr': {
     shortTitle: 'A3P',
+    priceNote: 'Tarif 2027 TTC',
     category: 'security',
     categoryLabel: 'Protection rapprochée',
     tone: 'green',
@@ -56,6 +58,7 @@ const offerPresentation: Record<string, OfferPresentation> = {
   },
   '/dirigeant': {
     shortTitle: 'DESP initial',
+    priceNote: 'Tarif 2027 TTC',
     category: 'leadership',
     categoryLabel: 'Direction',
     tone: 'orange',
@@ -63,6 +66,7 @@ const offerPresentation: Record<string, OfferPresentation> = {
   },
   '/vaedirigeant': {
     shortTitle: 'DESP en VAE',
+    priceNote: 'Tarif 2027 TTC',
     category: 'leadership',
     categoryLabel: 'Validation des acquis',
     tone: 'amber',

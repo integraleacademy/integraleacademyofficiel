@@ -31,6 +31,7 @@ type Action = {
 type TrainingDatesPricingSectionProps = {
   sessions: TrainingDatesPricingSession[];
   defaultPrice: string;
+  priceYear?: number;
   defaultLocation?: string;
   priceDescription: string;
   registrationHref: (session: TrainingDatesPricingSession) => string;
@@ -182,6 +183,7 @@ function serializeSession(
 export function TrainingDatesPricingSection({
   sessions,
   defaultPrice,
+  priceYear,
   defaultLocation = 'Puget-sur-Argens',
   priceDescription,
   registrationHref,
@@ -208,7 +210,7 @@ export function TrainingDatesPricingSection({
   const sessionTheme = themeStyles[theme];
   const serializedSessions = sessions.map((session) => serializeSession(session, registrationHref));
   const displayedPrice = formatTrainingPrice(
-    sessions.find((session) => (
+    priceYear ? undefined : sessions.find((session) => (
       session.priceCents !== null && session.priceCents !== undefined
       || session.priceLabel !== null && session.priceLabel !== undefined
     )),
@@ -243,8 +245,8 @@ export function TrainingDatesPricingSection({
 
       <div className="mt-7 grid gap-5 lg:grid-cols-2">
         <article className="rounded-[2rem] border border-academy-line bg-white p-6 shadow-soft">
-          <p className={`text-[.66rem] font-black uppercase tracking-[.24em] ${sessionTheme.eyebrow}`}>Tarif</p>
-          <p className="mt-3 text-5xl font-black">{displayedPrice}</p>
+          <p className={`text-[.66rem] font-black uppercase tracking-[.24em] ${sessionTheme.eyebrow}`}>Tarif{priceYear ? ` ${priceYear}` : ''}</p>
+          <p className="mt-3 text-[clamp(1.8rem,6vw,3rem)] font-black">{displayedPrice}</p>
           <p className="mt-2 font-semibold text-academy-muted">{priceDescription}</p>
           <div className="mt-5 grid grid-cols-2 gap-3">{benefits.map((item) => <div key={item} className="rounded-2xl bg-academy-bg p-4 text-center text-sm font-black">{item}</div>)}</div>
           <ActionLink action={priceAction} variant={theme} className="mt-5 w-full" />

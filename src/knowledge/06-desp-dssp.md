@@ -11,7 +11,7 @@ Durée : initial 7 semaines, soit 245 heures. Parcours VAE : environ 1 mois.
 
 Modalités et lieux : distanciel avec présentiel à Paris, Puget-sur-Argens ou Aurillac selon les sessions. VAE possible en visioconférence.
 
-Tarifs indiqués : 4300 € en parcours initial, 3800 € en VAE.
+Tarifs indiqués : pour 2027, 4 350 € TTC en parcours initial, 3 850 € TTC en VAE.
 
 Certification : DESP, RNCP n°40385, agrément dirigeant CNAPS.
 
@@ -30,8 +30,8 @@ Financement : CPF, France Travail, paiement en plusieurs fois selon dossier.
 ## Informations commerciales à utiliser
 
 - Dirigeant d’une entreprise de sécurité privée.
-- Tarif parcours initial : 4 300 €.
-- Tarif VAE : 3 800 €.
+- Tarif parcours initial : 4 350 € TTC.
+- Tarif VAE : 3 850 € TTC.
 - Durée parcours initial : environ 7 semaines / 245 heures.
 - Durée VAE : environ 1 mois selon dossier.
 - Financements possibles : CPF, France Travail, paiement en plusieurs fois selon dossier.
