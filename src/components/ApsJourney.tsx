@@ -52,9 +52,9 @@ function CardNextAction({ onNext, label }: { onNext: () => void; label: string }
 
 function JourneyVisual({ index, onNext }: { index: number; onNext: () => void }) {
   if (index === 0) return <div className={`${styles.card} ${styles.ambitionCard}`}>
-    {/* Existing training image; it remains editable in the APS image folder. */}
+    {/* Illustration from the APS manual. */}
     {/* eslint-disable-next-line @next/next/no-img-element */}
-    <img className={styles.coverPhoto} src="/images/aps/aps-hero-round.jpg" alt="Exercice pratique de ronde de sécurité pendant la formation APS" width="1536" height="1024" loading="lazy" decoding="async" />
+    <img className={styles.coverPhoto} src="/images/aps/manuel/equipe.webp" alt="Illustration du manuel APS : deux agents préparent leur ronde" width="1536" height="1024" loading="lazy" decoding="async" />
     <div className={styles.coverOrbit} aria-hidden="true" />
     <CardHeader label="Le déclic" />
     <div className={styles.ambitionBody}>
@@ -83,7 +83,7 @@ function JourneyVisual({ index, onNext }: { index: number; onNext: () => void })
     <p className={styles.practiceTitle}>Les bons gestes.<br /><span>Les bons réflexes.</span></p>
     <figure className={styles.practicePhoto}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/images/aps/aps-training-bag-inspection.jpg" alt="Mise en situation pédagogique autour du contrôle des bagages" width="1536" height="1024" loading="lazy" decoding="async" />
+      <img src="/images/aps/manuel/bagages.webp" alt="Mise en situation pédagogique autour du contrôle des bagages" width="1122" height="1402" loading="lazy" decoding="async" />
       <figcaption><strong>63,5 h</strong><span>de pratique dans le parcours</span></figcaption>
     </figure>
     <div className={styles.practiceSkills}><span>Rondes de sécurité</span><span>Contrôle d’accès</span><span>Gestion d’incidents</span></div>

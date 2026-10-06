@@ -1,6 +1,7 @@
 import { TrainingSectionNavigation } from '@/components/TrainingSectionNavigation';
 
 const sectionItems = [
+  { label: 'Pack Intégrale', href: '#pack-integrale' },
   { label: 'Métier', href: '#metier' },
   { label: 'Immersion', href: '#pratique' },
   { label: 'Programme', href: '#programme' },

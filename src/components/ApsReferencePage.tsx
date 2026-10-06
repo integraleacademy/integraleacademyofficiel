@@ -6,7 +6,7 @@ import type { ReactNode } from 'react';
 import { ApsSectionNavigation } from '@/components/ApsSectionNavigation';
 import { ApsFacilitiesSections } from '@/components/ApsFacilitiesSections';
 import { ApsJourney } from '@/components/ApsJourney';
-import { TrainingMotionIllustration } from '@/components/TrainingMotionGallery';
+import { ApsWelcomePack } from '@/components/ApsWelcomePack';
 import { OrientationAssistant } from '@/components/OrientationAssistant';
 import { PremiumFAQSection } from '@/components/ui';
 import { TrainingDatesPricingSection } from '@/components/TrainingDatesPricingSection';
@@ -41,19 +41,22 @@ const missions = [
   ['✚', 'Secours aux personnes', 'Porter assistance dans le cadre des compétences du SST.', false],
 ];
 
-const apsVisualDescriptions = {
-  patrol: 'Animation d’un agent effectuant une ronde autour d’un bâtiment',
-  night: 'Animation d’une lampe balayant un site pendant une surveillance de nuit',
-  access: 'Animation d’un agent vérifiant un badge devant une barrière de contrôle',
-  video: 'Animation d’un écran de vidéoprotection affichant quatre zones surveillées',
-  report: 'Animation d’un compte rendu complété après une observation',
-  alert: 'Animation d’une radio transmettant une alerte depuis le terrain',
-  baggage: 'Illustration animée d’un bagage et d’un contrôle visuel à la loupe',
-  patdown: 'Illustration animée d’un agent et des zones de contrôle d’une palpation encadrée',
+// Artwork extracted from the APS manual, with matching illustrations for supervised practice.
+const apsVisuals = {
+  patrol: ['vigilance', 'Un agent surveille les allées d’un site et observe son environnement'],
+  night: ['ronde', 'Un agent effectue une ronde de surveillance à la tombée de la nuit'],
+  access: ['acces', 'Contrôle d’accès des visiteurs à l’accueil d’un site'],
+  video: ['pc-securite', 'Une agente surveille les écrans au poste central de sécurité'],
+  report: ['transmission', 'Deux professionnels échangent des consignes sur le site'],
+  alert: ['conflit', 'Une agente garde une posture calme face à une situation de conflit'],
+  baggage: ['bagages', 'Un agent réalise une inspection visuelle des bagages à l’entrée d’un site'],
+  patdown: ['palpation', 'Exercice de palpation de sécurité avec un volontaire et un formateur'],
+  extinguisher: ['incendie', 'Un agent repère une anomalie devant une porte de sécurité incendie'],
+  cpr: ['sst', 'Une stagiaire s’exerce sur un mannequin de secourisme sous la supervision d’un formateur'],
 } as const;
 
-type ApsVisualStoryKind = keyof typeof apsVisualDescriptions;
-type ApsPracticalVisualKind = ApsVisualStoryKind | 'extinguisher' | 'cpr';
+type ApsPracticalVisualKind = keyof typeof apsVisuals;
+const missionVisuals = ['video', 'access', 'night', 'extinguisher', 'alert', 'cpr'] as const;
 
 const audiences = ['Reconversion professionnelle', 'Demandeurs d’emploi', 'Salariés en évolution', 'Débutants motivés', 'Futurs titulaires CNAPS', 'Projet APS + SSIAP 1'];
 
@@ -217,180 +220,11 @@ function Section({ id, eyebrow, title, intro, children, tone = 'cream' }: { id?:
   return <section id={id} className={`${styles.section} ${colors} scroll-mt-24 px-4 py-14 sm:py-16 lg:py-24`}><div className="page-container"><div className="mb-8 grid gap-5 lg:grid-cols-[.75fr_1.25fr] lg:items-end lg:gap-16"><div><Eyebrow light={tone === 'dark'}>{eyebrow}</Eyebrow><h2 className={`${styles.sectionHeading} mt-3 max-w-3xl text-3xl font-black tracking-[-.045em] sm:text-4xl lg:text-5xl`}>{title}</h2></div>{intro && <div className={`${styles.sectionIntro} max-w-3xl text-base font-medium leading-8 ${tone === 'dark' ? 'text-white/65' : 'text-academy-muted'}`}>{intro}</div>}</div>{children}</div></section>;
 }
 
-function ApsStoryIllustration({ kind }: { kind: ApsVisualStoryKind }) {
-  const description = apsVisualDescriptions[kind];
-  const visual = (() => {
-    if (kind === 'baggage') return <svg className={styles.storySvg} viewBox="0 0 320 210" aria-hidden="true" focusable="false">
-      <rect x="38" y="166" width="244" height="11" rx="5" fill="#9ec4f4" />
-      <path d="M49 178v19M270 178v19" stroke="#172233" strokeWidth="6" strokeLinecap="round" />
-      <g className={styles.storyBag}>
-        <path d="M94 92V78c0-18 13-29 29-29h33c16 0 29 11 29 29v14" fill="none" stroke="#172233" strokeWidth="7" />
-        <rect x="68" y="87" width="148" height="77" rx="16" fill="#2f70db" />
-        <path d="M79 108h126M91 90v68M191 90v68" stroke="#9ec4f4" strokeWidth="3" />
-        <rect x="108" y="122" width="67" height="27" rx="7" fill="#fff" />
-      </g>
-      <g className={styles.storyBagCheck}>
-        <circle cx="227" cy="77" r="31" fill="#fff" stroke="#172233" strokeWidth="6" />
-        <path d="m249 100 23 23" stroke="#172233" strokeWidth="11" strokeLinecap="round" />
-        <path d="m213 78 10 10 19-23" fill="none" stroke="#2f70db" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" />
-      </g>
-    </svg>;
-
-    if (kind === 'patdown') return <svg className={styles.storySvg} viewBox="0 0 320 210" aria-hidden="true" focusable="false">
-      <circle cx="199" cy="43" r="15" fill="#172233" />
-      <path d="M199 64v72M199 75l-45 20M199 75l44 20M199 136l-24 52M199 136l24 52" fill="none" stroke="#9ec4f4" strokeWidth="14" strokeLinecap="round" />
-      <g className={styles.storyPatdownAgent}>
-        <circle cx="86" cy="61" r="14" fill="#172233" />
-        <path d="M68 91c3-15 9-21 18-21s15 6 18 21l4 49H65z" fill="#2f70db" />
-        <path d="m75 140-5 49M94 140l7 49" stroke="#172233" strokeWidth="9" strokeLinecap="round" />
-        <path d="m100 92 38 19 33-8" fill="none" stroke="#2f70db" strokeWidth="11" strokeLinecap="round" />
-        <path d="m74 90 45 42 51-4" fill="none" stroke="#2f70db" strokeWidth="11" strokeLinecap="round" />
-      </g>
-      <g className={styles.storyPatdownZones} fill="none" stroke="#2f70db" strokeWidth="2.5" strokeDasharray="4 5">
-        <circle cx="199" cy="99" r="18" /><circle cx="187" cy="160" r="13" />
-      </g>
-      <rect x="243" y="26" width="49" height="32" rx="10" fill="#fff" /><path d="m256 42 7 7 14-16" fill="none" stroke="#2f70db" strokeWidth="4" strokeLinecap="round" />
-    </svg>;
-
-    if (kind === 'patrol') return <svg className={styles.storySvg} viewBox="0 0 320 210" aria-hidden="true" focusable="false">
-      <g className={styles.storyBuilding}>
-        <rect x="164" y="39" width="116" height="104" rx="5" fill="#fff" stroke="#8bb8f2" strokeWidth="3" />
-        <rect x="164" y="39" width="116" height="12" rx="5" fill="#2f70db" />
-        <rect x="181" y="68" width="22" height="19" rx="3" fill="#c8dcf8" />
-        <rect x="212" y="68" width="22" height="19" rx="3" fill="#c8dcf8" />
-        <rect x="243" y="68" width="22" height="19" rx="3" fill="#c8dcf8" />
-        <rect x="181" y="96" width="22" height="19" rx="3" fill="#c8dcf8" />
-        <rect x="212" y="96" width="22" height="19" rx="3" fill="#c8dcf8" />
-        <rect x="243" y="96" width="22" height="19" rx="3" fill="#c8dcf8" />
-        <rect x="239" y="119" width="25" height="24" rx="2" fill="#172233" />
-      </g>
-      <g className={styles.storyPatrolAgent}>
-        <circle cx="83" cy="74" r="13" fill="#172233" />
-        <path d="M73 72c5-7 15-7 20 0" fill="none" stroke="#fff" strokeOpacity=".55" strokeLinecap="round" />
-        <path d="M65 101c3-13 9-20 18-20s16 7 19 20l11 24-12 5-9-20-2 38H76l-2-38-8 20-12-5z" fill="#2f70db" />
-        <path d="m73 85 10 14 11-14" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M77 148l-3 31M89 148l4 31" stroke="#172233" strokeWidth="9" strokeLinecap="round" />
-      </g>
-      <path className={styles.storyRoute} d="M34 181H246" fill="none" stroke="#2f70db" strokeWidth="4" strokeLinecap="round" strokeDasharray="8 10" />
-      <g className={styles.storyMapPin}>
-        <path d="M270 154c-12 0-20 8-20 19 0 15 20 32 20 32s20-17 20-32c0-11-8-19-20-19z" fill="#2f70db" />
-        <circle cx="270" cy="173" r="6" fill="#fff" />
-      </g>
-    </svg>;
-
-    if (kind === 'night') return <svg className={styles.storySvg} viewBox="0 0 320 210" aria-hidden="true" focusable="false">
-      <circle cx="160" cy="105" r="88" fill="none" stroke="#9ec4f4" strokeOpacity=".42" strokeWidth="2" />
-      <circle cx="160" cy="105" r="76" fill="none" stroke="#9ec4f4" strokeOpacity=".28" />
-      <g className={styles.storyNightBeam}>
-        <path d="M111 92 247 43v123L111 111z" fill="#2f70db" fillOpacity=".15" />
-        <rect x="43" y="86" width="75" height="30" rx="10" fill="#172233" />
-        <path d="M55 101h35" stroke="#fff" strokeWidth="3" strokeLinecap="round" />
-        <rect x="102" y="78" width="30" height="46" rx="8" fill="#2f70db" />
-      </g>
-      <g className={styles.storyNightBuilding}>
-        <rect x="202" y="72" width="77" height="73" rx="4" fill="#fff" stroke="#9ec4f4" strokeWidth="2" />
-        <rect x="202" y="72" width="77" height="8" rx="4" fill="#2f70db" />
-        <rect x="215" y="91" width="14" height="13" rx="2" fill="#c8dcf8" />
-        <rect x="237" y="91" width="14" height="13" rx="2" fill="#c8dcf8" />
-        <rect x="259" y="91" width="10" height="13" rx="2" fill="#c8dcf8" />
-        <rect x="215" y="113" width="14" height="13" rx="2" fill="#c8dcf8" />
-        <rect x="237" y="113" width="14" height="13" rx="2" fill="#c8dcf8" />
-        <rect x="249" y="126" width="17" height="19" rx="2" fill="#172233" />
-      </g>
-      <path d="M48 174H272" stroke="#9ec4f4" strokeWidth="3" strokeLinecap="round" />
-    </svg>;
-
-    if (kind === 'access') return <svg className={styles.storySvg} viewBox="0 0 320 210" aria-hidden="true" focusable="false">
-      <g className={styles.storyAccessAgent}>
-        <circle cx="65" cy="76" r="12" fill="#172233" />
-        <path d="M56 73c5-6 14-6 18 0" fill="none" stroke="#fff" strokeOpacity=".55" strokeLinecap="round" />
-        <path d="M49 104c3-14 8-20 16-20 9 0 14 6 17 20l9 22-11 5-8-18-2 36H58l-2-36-7 18-11-5z" fill="#2f70db" />
-        <path d="M59 149l-3 27M69 149l3 27" stroke="#172233" strokeWidth="8" strokeLinecap="round" />
-      </g>
-      <g className={styles.storyAccessGate}>
-        <rect x="144" y="48" width="45" height="126" rx="8" fill="#172233" />
-        <rect x="199" y="48" width="45" height="126" rx="8" fill="#172233" />
-        <rect x="153" y="61" width="27" height="37" rx="4" fill="#fff" />
-        <circle className={styles.storyAccessSignal} cx="166.5" cy="78" r="7" fill="#2f70db" />
-        <g className={styles.storyAccessArm}>
-          <rect x="154" y="118" width="98" height="6" rx="3" fill="#2f70db" />
-        </g>
-      </g>
-      <g className={styles.storyAccessBadge}>
-        <rect x="262" y="70" width="39" height="55" rx="7" fill="#fff" />
-        <circle cx="281.5" cy="87" r="7" fill="#2f70db" />
-        <path d="M272 104h19M276 112h11" stroke="#9ec4f4" strokeWidth="2" strokeLinecap="round" />
-      </g>
-    </svg>;
-
-    if (kind === 'video') return <svg className={styles.storySvg} viewBox="0 0 320 210" aria-hidden="true" focusable="false">
-      <g className={styles.storyMonitor}>
-        <rect x="39" y="25" width="242" height="143" rx="12" fill="#172233" />
-        <rect x="47" y="34" width="226" height="124" rx="5" fill="#fff" />
-        {[0, 1, 2, 3].map(index => {
-          const x = index % 2 === 0 ? 55 : 166;
-          const y = index < 2 ? 43 : 101;
-          return <g key={index}>
-            <rect x={x} y={y} width="99" height="49" rx="2" fill="#d8e7fa" />
-            <polyline className={styles.storyVideoTrace} points={`${x + 8},${y + 39} ${x + 28},${y + 13} ${x + 46},${y + 30} ${x + 68},${y + 22} ${x + 91},${y + 40}`} fill="none" stroke="#2f70db" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-          </g>;
-        })}
-        <path d="M160 168v18M139 188h42" stroke="#172233" strokeWidth="7" strokeLinecap="round" />
-      </g>
-      <rect className={styles.storyVideoScan} x="49" y="34" width="34" height="124" fill="#7dd3fc" fillOpacity=".13" />
-    </svg>;
-
-    if (kind === 'report') return <svg className={styles.storySvg} viewBox="0 0 320 210" aria-hidden="true" focusable="false">
-      <g className={styles.storyClipboard}>
-        <rect x="111" y="22" width="151" height="166" rx="12" fill="#fff" stroke="#9ec4f4" strokeWidth="5" />
-        <rect x="156" y="14" width="60" height="20" rx="7" fill="#2f70db" />
-        <path d="M129 57h116" stroke="#9ec4f4" strokeWidth="2" />
-        <text x="129" y="49" fill="#172233" fontSize="13" fontWeight="900">COMPTE RENDU</text>
-        {[0, 1, 2].map(index => <g key={index} className={styles.storyReportRow} style={{ animationDelay: `${index * .35}s` }}>
-          <circle cx="136" cy={83 + index * 34} r="8" fill="#2f70db" />
-          <path d={`m132 ${83 + index * 34} 3 3 5-7`} fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          <path className={styles.storyReportLine} d={`M157 ${80 + index * 34}h76M157 ${89 + index * 34}h48`} stroke="#9ec4f4" strokeWidth="3" strokeLinecap="round" />
-        </g>)}
-      </g>
-      <g className={styles.storyObserverCard}>
-        <rect x="34" y="107" width="112" height="67" rx="11" fill="#2f70db" />
-        <text x="49" y="133" fill="#fff" fontSize="12" fontWeight="900">OBSERVER</text>
-        <path d="M49 148h67M49 158h54" stroke="#fff" strokeWidth="3" strokeLinecap="round" />
-      </g>
-    </svg>;
-
-    return <svg className={styles.storySvg} viewBox="0 0 320 210" aria-hidden="true" focusable="false">
-      <g className={styles.storyAlertWaves} fill="none" stroke="#2f70db" strokeLinecap="round">
-        <path d="M88 74c-16 15-16 47 0 62" strokeWidth="4" />
-        <path d="M69 58c-27 25-27 68 0 94" strokeWidth="3" strokeOpacity=".55" />
-        <path d="M232 74c16 15 16 47 0 62" strokeWidth="4" />
-        <path d="M251 58c27 25 27 68 0 94" strokeWidth="3" strokeOpacity=".55" />
-      </g>
-      <g className={styles.storyRadio}>
-        <path d="M179 39 199 14" stroke="#172233" strokeWidth="7" strokeLinecap="round" />
-        <rect x="115" y="38" width="91" height="145" rx="18" fill="#172233" />
-        <rect x="130" y="57" width="61" height="43" rx="8" fill="#d8e7fa" />
-        <circle cx="160.5" cy="78.5" r="12" fill="#2f70db" />
-        <path d="M153 79h15" stroke="#fff" strokeWidth="3" strokeLinecap="round" />
-        <rect x="134" y="118" width="53" height="8" rx="4" fill="#2f70db" />
-        <rect x="134" y="136" width="35" height="7" rx="3.5" fill="#9ec4f4" />
-        <circle className={styles.storyRadioButton} cx="175" cy="153" r="12" fill="#2f70db" />
-      </g>
-      <g className={styles.storyAlertBadge}>
-        <circle cx="239" cy="46" r="22" fill="#fff" stroke="#9ec4f4" strokeWidth="3" />
-        <path d="M239 34v15" stroke="#2f70db" strokeWidth="5" strokeLinecap="round" />
-        <circle cx="239" cy="57" r="2.8" fill="#2f70db" />
-      </g>
-    </svg>;
-  })();
-
-  return <div className={styles.storyVisual} data-story={kind} role="img" aria-label={description}>{visual}</div>;
-}
-
 function ApsPracticalVisual({ kind }: { kind: ApsPracticalVisualKind }) {
-  if (kind === 'extinguisher') return <TrainingMotionIllustration kind="extinguisher" theme="red" description="Animation d’un extincteur rouge et du contrôle de son indicateur pour la prévention incendie" />;
-  if (kind === 'cpr') return <TrainingMotionIllustration kind="cpr" description="Animation de compressions thoraciques sur une personne allongée pour les gestes de secours SST" />;
-  return <ApsStoryIllustration kind={kind} />;
+  const [file, description] = apsVisuals[kind];
+  return <div className={styles.manualVisual}>
+    <Image src={`/images/aps/manuel/${file}.webp`} alt={description} fill sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 560px" />
+  </div>;
 }
 
 function CompactAssistant() {
@@ -415,7 +249,6 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
 
     <section className={`${styles.hero} relative px-4 text-white`}>
         <AcademyWatermark tone="blue" surface="dark" />
-      <Image src="/images/aps/aps-hero-round.jpg" alt="Exercice pratique de ronde de sécurité pendant la formation APS" fill priority sizes="100vw" className={styles.heroPhoto}/>
       <div className={styles.heroOverlay}/>
       <div className={`page-container ${styles.heroContent}`}>
         <div className="max-w-4xl">
@@ -441,19 +274,27 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
             <span className="rounded-full border border-blue-200/25 bg-blue-950/25 px-3 py-2 backdrop-blur">✓ Financements possibles</span>
           </div>
         </div>
-        <HeroSession session={next} />
+        <div className={styles.heroArtwork}>
+          <Image src="/images/aps/manuel/equipe.webp" alt="Deux agents de sécurité préparent leur ronde, illustration du manuel APS Intégrale Academy" width={1536} height={1024} priority sizes="(max-width: 1023px) 90vw, 50vw" />
+        </div>
       </div>
+      <div className={`page-container ${styles.heroBooking}`}><HeroSession session={next} /></div>
       <div className="page-container"><div className={`${styles.facts} relative grid overflow-hidden rounded-[1.6rem] border border-white/15 bg-[#0A1421]/85 text-white backdrop-blur-xl sm:grid-cols-2 lg:grid-cols-6`}>
         {heroFacts.map(([key,value,detail]) => <div key={key} className={`${styles.fact} border-b border-white/10 p-4 last:border-b-0 sm:border-r lg:border-b-0`}><p className="text-[.58rem] font-black uppercase tracking-[.18em] text-white/42">{key}</p><p className="mt-1 font-black text-white">{value}</p><p className="mt-1 text-[.68rem] font-semibold leading-4 text-white/48">{detail}</p></div>)}
       </div></div>
     </section>
+
+    <ApsWelcomePack />
 
     <ApsJourney />
 
     <ApsSectionNavigation registrationHref={apsRegistrationFormUrl} />
 
     <Section id="metier" eyebrow="01 — Le métier" title={<>Un métier de terrain, de vigilance et de sang-froid.</>} intro={<>L’agent APS prévient les risques, protège les personnes et les biens, applique les consignes et rend compte de chaque événement.</>}>
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-12">{missions.map(([icon,title,text,featured],index) => <article key={String(title)} className={`${styles.liftCard} ${index === 0 || index === 4 ? 'lg:col-span-5' : index === 1 || index === 3 ? 'lg:col-span-3' : 'lg:col-span-4'} rounded-[1.8rem] border p-6 shadow-soft ${featured ? 'border-[#26384F] bg-[#0D1725] text-white' : 'border-academy-line bg-[#FFFDF8]'}`}><span className={styles.cardNumber}>MISSION 0{index+1}</span><span className={`grid h-12 w-12 place-items-center rounded-2xl text-xl font-black ${featured ? 'bg-white/10 text-sky-300' : 'bg-academy-bg text-yellow-700'}`}>{icon}</span><h3 className="mt-7 text-xl font-black">{title}</h3><p className={`mt-3 leading-7 ${featured ? 'text-white/65' : 'text-academy-muted'}`}>{text}</p></article>)}</div>
+      <div className={styles.missionGrid}>{missions.map(([,title,text,featured],index) => <article key={String(title)} className={`${styles.missionCard} ${featured ? styles.missionFeatured : ''}`}>
+        <div className={styles.missionArtwork}><ApsPracticalVisual kind={missionVisuals[index]} /></div>
+        <div className={styles.missionCopy}><span className={styles.missionNumber}>MISSION 0{index+1}</span><h3>{title}</h3><p>{text}</p></div>
+      </article>)}</div>
       <div className={`${styles.liftCard} mt-8 grid gap-5 rounded-[2rem] border border-academy-line bg-white p-6 shadow-soft lg:grid-cols-[.7fr_1.3fr] lg:p-8`}><div><Eyebrow>À qui s’adresse la formation ?</Eyebrow><h3 className="mt-3 text-3xl font-black">Un parcours accessible, un métier réglementé.</h3><p className="mt-4 leading-7 text-academy-muted">Aucune expérience préalable dans la sécurité n’est obligatoire.</p></div><div className="grid gap-3 sm:grid-cols-2">{audiences.map((item,index) => <div key={item} className="flex items-center gap-3 rounded-2xl bg-academy-bg p-4 font-bold"><span className={`grid h-8 w-8 shrink-0 place-items-center rounded-full text-xs font-black ${index === 5 ? 'bg-orange-100 text-orange-700' : 'bg-sky-100 text-sky-700'}`}>✓</span>{item}</div>)}</div></div>
     </Section>
 
@@ -636,9 +477,9 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
         <h3>Deux expertises.<br /><span>Plus de possibilités.</span></h3>
         <p className={styles.dualIntro}>Associez le TFP APS et le SSIAP 1 pour élargir vos missions dans la surveillance humaine et la sécurité incendie.</p>
         <div className={styles.dualPanels}>
-          <div className={styles.dualSecurity}><span className={styles.dualLabel}>TFP APS</span><TrainingMotionIllustration kind="site-check" theme="blue" description="Illustration animée de la surveillance et du contrôle d’un bâtiment" /><h4>Prévenir & surveiller</h4><p>Rondes, contrôle d’accès, protection des personnes et des biens.</p></div>
+          <div className={styles.dualSecurity}><span className={styles.dualLabel}>TFP APS</span><ApsPracticalVisual kind="patrol" /><h4>Prévenir & surveiller</h4><p>Rondes, contrôle d’accès, protection des personnes et des biens.</p></div>
           <span className={styles.dualPlus} aria-hidden="true">+</span>
-          <div className={styles.dualFire}><span className={styles.dualLabel}>SSIAP 1</span><TrainingMotionIllustration kind="extinguisher" theme="red" description="Illustration animée d’un extincteur rouge et de la vérification de son indicateur" /><h4>Alerter & protéger</h4><p>Prévention incendie, évacuation et assistance aux personnes.</p></div>
+          <div className={styles.dualFire}><span className={styles.dualLabel}>SSIAP 1</span><div className={styles.manualVisual}><Image src="/images/aps/manuel/extincteurs.webp" alt="Trois extincteurs présentés dans le manuel APS" fill sizes="(max-width: 640px) 40vw, 260px" /></div><h4>Alerter & protéger</h4><p>Prévention incendie, évacuation et assistance aux personnes.</p></div>
         </div>
         <div className={styles.dualFooter}><span>Surveillance humaine <b>+</b> Sécurité incendie</span><CTA href="/formations-securite/ssiap-1" variant="dark" className="w-full">Découvrir le SSIAP 1 →</CTA><p>Deux qualifications complémentaires, chacune avec ses prérequis et son examen.</p></div>
       </article></div><article className="mt-5 rounded-[2rem] border border-academy-line bg-white p-6"><h3 className="text-2xl font-black">Où travailler ?</h3><p className="mt-2 leading-7 text-academy-muted">Les agents APS interviennent aussi bien dans des lieux ouverts au public que sur des sites professionnels à accès contrôlé.</p><div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{workplaces.map(item => <div key={item} className={`${styles.workplace} rounded-2xl bg-academy-bg p-4 text-center font-black`}>{item}</div>)}</div></article><div className="mt-5 rounded-[1.5rem] border border-academy-line bg-[#FFFDF8] p-5"><p className="font-black">Bon à savoir : horaires et conditions varient selon les postes.</p><p className="mt-2 text-sm leading-6 text-academy-muted">Le secteur propose des emplois de jour ou de nuit, à temps plein ou partiel, sur site fixe ou mobile. Disponibilité, ponctualité, présentation, maîtrise de soi et qualité du compte rendu sont particulièrement recherchées par les employeurs.</p></div></Section>
