@@ -45,9 +45,22 @@
 .sessionLabel { border: 1px solid rgba(var(--hero-rgb), .25); border-radius: 999px; padding: .375rem .75rem; color: var(--hero-strong); background: rgba(var(--hero-rgb), .07); font-size: .62rem; font-weight: 900; letter-spacing: .16em; text-transform: uppercase; }
 .sessionAccent { color: var(--hero-strong); }
 .heroFacts { box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 22px 70px rgba(0,0,0,.2); backdrop-filter: blur(16px); }
+.illustratedHero { background: radial-gradient(ellipse at 90% 5%, rgba(var(--hero-rgb), .18), transparent 60%), #08111d; }
+.illustratedHero .heroOverlay { background: none; }
+.heroArtwork { overflow: hidden; border: 1px solid rgba(var(--hero-rgb), .5); border-radius: 2rem; background: #e8f1f9; box-shadow: 0 25px 75px #0004; transform: rotate(1deg); }
+.heroBooking { margin-bottom: 1.5rem; }
+.sessionOverview, .sessionDetails, .sessionActions { min-width: 0; }
 
 @media (min-width: 1024px) {
   .heroContent { grid-template-columns: minmax(0, 1.2fr) minmax(0, .85fr); gap: clamp(2rem, 4vw, 4rem); }
+  .heroBooking .sessionCard:not([data-layout='cities']) { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr) minmax(0, 1fr); align-items: center; gap: 1.5rem; }
+  .heroBooking .sessionOverview h2 { font-size: 1.9rem; }
+  .heroBooking .sessionDetails, .heroBooking .sessionActions > a { margin-top: 0; }
+  .heroBooking .sessionCard[data-layout='cities'] > div:first-of-type { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 1023px) {
+  .heroArtwork { width: 100%; max-width: 720px; margin-inline: auto; transform: none; }
 }
 
 @media (max-width: 767px) {

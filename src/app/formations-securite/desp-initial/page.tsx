@@ -1,4 +1,6 @@
 import { CourseJourney } from '@/components/CourseJourney';
+import { TrainingWelcomePack } from '@/components/TrainingWelcomePack';
+import { despArtwork } from '@/data/manualIllustrations';
 import { createPageMetadata } from '@/lib/seo';
 import { isPublicUpcomingSession } from '@/components/PublicTrainingSessions';
 import { TrainingDatesPricingSection } from '@/components/TrainingDatesPricingSection';
@@ -18,6 +20,7 @@ export const metadata = createPageMetadata('/dirigeant');
 const contactHref = '/contact?formation=desp-initial';
 const registrationFormUrl = 'https://assistance-alw9.onrender.com/demande-informations-formations';
 const navigationItems = [
+  { label: 'Pack Intégrale', href: '#pack-integrale' },
   { label: 'Métier', href: '#metier' },
   { label: 'Format', href: '#format' },
   { label: 'Programme', href: '#programme' },
@@ -94,6 +97,7 @@ export default async function DespInitialPage(){
   const sessions = await getSessions();
   return <main className="relative overflow-x-clip pb-28 lg:pb-0">
     <DespHero variant="initial" title="Formation dirigeant d’entreprise de sécurité privée" subtitle={<><p>Apprenez étape par étape à créer, reprendre ou diriger une entreprise de sécurité privée avec un parcours DESP structuré, hybride et orienté projet professionnel.</p><p>Intégrale Academy vous accompagne sur la réglementation CNAPS, la gestion, le management, le développement commercial et la préparation aux évaluations du titre RNCP.</p></>} stats={[["Durée","245 h","175 h à distance + 70 h en présentiel"],["Rythme","7 semaines","parcours intensif"],["Tarif 2027",despInitialAdminData.priceLabel,"TTC"],["Lieux","3 sites","Paris, Côte d’Azur ou Aurillac"],["RNCP",despInitialAdminData.rncpCode,"niveau 5"],["Objectif","CNAPS","préparer l’agrément dirigeant"]]} sessions={sessions}/>
+    <TrainingWelcomePack course="desp-initial" />
     <CourseJourney course="desp-initial" />
 
     <TrainingSectionNavigation
@@ -103,7 +107,7 @@ export default async function DespInitialPage(){
       registrationHref={registrationFormUrl}
       theme="orange"
     />
-    <section className="page-container py-10"><MissionAnimation variant="despInitial" className="mb-8" /><div className="grid gap-4 md:grid-cols-3"><FeatureCard title="Durée">7 semaines · 245 heures</FeatureCard><FeatureCard title="Public concerné">Candidats souhaitant acquérir ou consolider les compétences de dirigeant en sécurité privée.</FeatureCard><FeatureCard title="Prérequis">Niveau 4 ou expérience à valider avec l’équipe admissions ; conditions CNAPS et honorabilité à vérifier.</FeatureCard><FeatureCard title="Lieux">Distanciel + présentiel à Paris, Puget-sur-Argens ou Aurillac selon les sessions.</FeatureCard><FeatureCard title="Financement">CPF, France Travail, entreprise ou facilités de paiement selon dossier.</FeatureCard><FeatureCard title="Certification / examen"><strong>Titre RNCP Dirigeant d’entreprise de sécurité privée – niveau 5</strong><br/>Titre : Dirigeant d’entreprise de sécurité privée · Sigle : DESP · Code : {despInitialAdminData.rncpCode} · Certificateur : Scotia Formation · Échéance actuelle : 28 mars 2027 · Durée : {despInitialAdminData.duration.total} · Tarif actuel : {despInitialAdminData.priceLabel}<br/><span className="mt-2 block">Cette certification permet de justifier de l’aptitude professionnelle nécessaire à la demande d’agrément dirigeant auprès du CNAPS. L’agrément reste délivré séparément par le CNAPS après étude du dossier.</span></FeatureCard></div></section>
+    <section className="page-container py-10"><MissionAnimation variant="despInitial" className="mb-8" illustration={despArtwork.pilotage} /><div className="grid gap-4 md:grid-cols-3"><FeatureCard title="Durée">7 semaines · 245 heures</FeatureCard><FeatureCard title="Public concerné">Candidats souhaitant acquérir ou consolider les compétences de dirigeant en sécurité privée.</FeatureCard><FeatureCard title="Prérequis">Niveau 4 ou expérience à valider avec l’équipe admissions ; conditions CNAPS et honorabilité à vérifier.</FeatureCard><FeatureCard title="Lieux">Distanciel + présentiel à Paris, Puget-sur-Argens ou Aurillac selon les sessions.</FeatureCard><FeatureCard title="Financement">CPF, France Travail, entreprise ou facilités de paiement selon dossier.</FeatureCard><FeatureCard title="Certification / examen"><strong>Titre RNCP Dirigeant d’entreprise de sécurité privée – niveau 5</strong><br/>Titre : Dirigeant d’entreprise de sécurité privée · Sigle : DESP · Code : {despInitialAdminData.rncpCode} · Certificateur : Scotia Formation · Échéance actuelle : 28 mars 2027 · Durée : {despInitialAdminData.duration.total} · Tarif actuel : {despInitialAdminData.priceLabel}<br/><span className="mt-2 block">Cette certification permet de justifier de l’aptitude professionnelle nécessaire à la demande d’agrément dirigeant auprès du CNAPS. L’agrément reste délivré séparément par le CNAPS après étude du dossier.</span></FeatureCard></div></section>
     <TrainingDatesPricingSection
       priceYear={2027}
       sessions={sessions}

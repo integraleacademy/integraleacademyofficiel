@@ -1,4 +1,6 @@
 import styles from './MissionAnimation.module.css';
+import { ManualArtwork } from '@/components/ManualArtwork';
+import type { ManualIllustration } from '@/data/manualIllustrations';
 
 type MissionAnimationVariant =
   | 'a3p'
@@ -18,6 +20,7 @@ type MissionAnimationProps = {
   variant: MissionAnimationVariant;
   className?: string;
   compact?: boolean;
+  illustration?: ManualIllustration;
 };
 
 const copy: Record<MissionAnimationVariant, { kicker: string; status: string; title: string; caption: string; label: string }> = {
@@ -497,14 +500,14 @@ const scenes = {
   despVae: <DespVaeScene />,
 };
 
-export function MissionAnimation({ variant, className = '', compact = false }: MissionAnimationProps) {
+export function MissionAnimation({ variant, className = '', compact = false, illustration }: MissionAnimationProps) {
   const content = copy[variant];
 
   return (
     <div
-      className={`${styles.visual} ${styles[variant]} ${compact ? styles.compact : ''} ${className}`}
+      className={`${styles.visual} ${styles[variant]} ${compact ? styles.compact : ''} ${illustration ? styles.manual : ''} ${className}`}
       role="img"
-      aria-label={content.label}
+      aria-label={illustration?.alt || content.label}
       data-mission-animation={variant}
     >
       <div className={styles.grid} aria-hidden="true" />
@@ -512,7 +515,7 @@ export function MissionAnimation({ variant, className = '', compact = false }: M
         <span className={styles.kicker}><i className={styles.statusDot} />{content.kicker}</span>
         <span className={styles.status}>{content.status}</span>
       </div>
-      <div className={styles.stage} aria-hidden="true">{scenes[variant]}</div>
+      <div className={styles.stage} aria-hidden="true">{illustration ? <ManualArtwork illustration={illustration} /> : scenes[variant]}</div>
       <div className={styles.footer} aria-hidden="true">
         <strong>{content.title}</strong>
         <span>{content.caption}</span>

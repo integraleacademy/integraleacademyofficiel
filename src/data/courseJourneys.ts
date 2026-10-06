@@ -38,7 +38,7 @@ const professionalJourneys = {
       copy('L’immersion terrain', 'Préparer. Se coordonner. S’adapter.', 'Reconnaissance de sites, déplacements et scénarios de protection : les exercices vous apprennent à agir en équipe. Briefings et débriefings permettent de comprendre vos choix et de progresser.', '#pedagogie', 'Découvrir les exercices'),
       copy('Votre prochain chapitre', 'Préparez le TFP A3P et la suite de votre parcours.', 'Vous vous préparez aux évaluations écrites, aux mises en situation et à la soutenance. Après la réussite, la demande de carte professionnelle A3P auprès du CNAPS constitue une étape distincte.', '#inscription', 'Préparer mon inscription'),
     ],
-    opening: { image: '/images/a3p-hero.jpg', kicker: 'LA DISCRÉTION. LA PRÉCISION. L’ACTION.', heading: ['Une présence discrète.', 'Un rôle décisif.'], text: 'Apprenez à anticiper les risques et à protéger les personnes, en équipe et sur le terrain.', verbs: ['Anticiper', 'Préparer', 'Protéger'] },
+    opening: { image: '/images/a3p/manuel/protection.webp', kicker: 'LA DISCRÉTION. LA PRÉCISION. L’ACTION.', heading: ['Une présence discrète.', 'Un rôle décisif.'], text: 'Apprenez à anticiper les risques et à protéger les personnes, en équipe et sur le terrain.', verbs: ['Anticiper', 'Préparer', 'Protéger'] },
     study: { value: '328', unit: 'HEURES · HORS EXAMEN', heading: ['Apprendre le métier.', 'Dans toute sa dimension.'], panels: [
       { label: 'LE SOCLE', value: '41', unit: 'heures', detail: 'Les fondamentaux de la sécurité privée' },
       { label: 'LA SPÉCIALITÉ', value: '287', unit: 'heures', detail: 'La protection physique des personnes' },
@@ -62,7 +62,7 @@ const professionalJourneys = {
       copy('Votre projet concret', 'Apprenez en construisant votre future activité.', 'Étude de marché, prévisionnel, offre commerciale et organisation des équipes : les études de cas vous font travailler sur les décisions du dirigeant. Vous préparez aussi les évaluations et les soutenances.', '#programme', 'Explorer le programme'),
       copy('Votre prochain chapitre', 'Préparez le titre. Anticipez les démarches qui suivent.', 'L’obtention du DESP passe par la validation des évaluations. Le titre, l’agrément personnel du dirigeant et l’autorisation d’exercice de l’entreprise sont ensuite trois éléments distincts de votre parcours.', '#inscription', 'Préparer mon inscription'),
     ],
-    opening: { image: '/images/desp-initial-hero.jpg', kicker: 'VOTRE AMBITION PREND FORME.', heading: ['Pensez entreprise.', 'Apprenez à diriger.'], text: 'Une vision, des décisions, une équipe. Préparez-vous à prendre de nouvelles responsabilités.', verbs: ['Créer', 'Reprendre', 'Diriger'] },
+    opening: { image: '/images/desp/manuel/pilotage.webp', kicker: 'VOTRE AMBITION PREND FORME.', heading: ['Pensez entreprise.', 'Apprenez à diriger.'], text: 'Une vision, des décisions, une équipe. Préparez-vous à prendre de nouvelles responsabilités.', verbs: ['Créer', 'Reprendre', 'Diriger'] },
     study: { value: '7', unit: 'SEMAINES · 245 HEURES', heading: ['Un nouveau', 'cap à prendre.'], panels: [
       { label: 'À DISTANCE', value: '5', unit: 'semaines', detail: '175 heures pour construire vos bases' },
       { label: 'EN PRÉSENTIEL', value: '2', unit: 'semaines', detail: '70 heures pour approfondir et pratiquer' },
@@ -86,7 +86,7 @@ const professionalJourneys = {
       copy('Votre dossier', 'Faites parler vos réalisations.', 'À partir de situations professionnelles réelles, vous expliquez vos actions, vos choix et les compétences mobilisées. Les preuves donnent de la consistance à votre dossier et préparent l’échange avec le jury.', '#preuves', 'Voir les preuves utiles'),
       copy('Votre prochain chapitre', 'Présentez vos acquis. Préparez la suite.', 'Le jury étudie votre dossier et échange avec vous. La délivrance du titre dépend de sa décision. Après validation, les démarches d’agrément dirigeant et d’autorisation d’exercice restent distinctes.', '#jury', 'Comprendre le jury'),
     ],
-    opening: { image: '/images/desp-vae-hero.jpg', kicker: 'VOTRE PARCOURS A DE LA VALEUR.', heading: ['Vous l’avez vécu.', 'Faites-le reconnaître.'], text: 'Vos missions, vos décisions et vos réalisations sont au cœur de votre démarche VAE.', verbs: ['Analyser', 'Démontrer', 'Valoriser'] },
+    opening: { image: '/images/desp/manuel/direction.webp', kicker: 'VOTRE PARCOURS A DE LA VALEUR.', heading: ['Vous l’avez vécu.', 'Faites-le reconnaître.'], text: 'Vos missions, vos décisions et vos réalisations sont au cœur de votre démarche VAE.', verbs: ['Analyser', 'Démontrer', 'Valoriser'] },
     study: { value: 'VAE', unit: 'UN PARCOURS INDIVIDUALISÉ', heading: ['Votre expérience.', 'Votre fil conducteur.'], panels: [
       { label: 'LE POINT DE DÉPART', value: 'Vos', unit: 'missions', detail: 'Analyser les activités réellement exercées' },
       { label: 'LE DOSSIER', value: 'Vos', unit: 'preuves', detail: 'Démontrer les compétences mobilisées' },
@@ -137,7 +137,7 @@ const fireAndFirstAidJourneys = {
       copy('Votre entraînement', 'Des gestes répétés, des réflexes construits.', 'Manipulations, rondes avec anomalies et mises en situation complètent les cours. Vous apprenez à observer, transmettre une alerte et participer à l’intervention dans le cadre de vos missions.', '#pedagogie', 'Découvrir la pratique'),
       copy('Votre prochain chapitre', 'Préparez votre diplôme SSIAP 1.', 'La formation vous prépare aux épreuves de l’examen. Une fois diplômé, vous pouvez évoluer dans les services de sécurité incendie et poursuivre votre parcours selon votre expérience et les conditions d’accès.', '#dates-tarifs', 'Voir les prochaines dates'),
     ],
-    opening: { image: '/images/ssiap-1-hero.jpg', kicker: 'PRÉVENIR. VEILLER. INTERVENIR.', heading: ['Votre vigilance.', 'Leur sécurité.'], text: 'Apprenez à prévenir les risques et à agir au sein d’un service de sécurité incendie.', verbs: ['Prévenir', 'Alerter', 'Intervenir'] },
+    opening: { image: '/images/ssiap-1/manuel/prevention.webp', kicker: 'PRÉVENIR. VEILLER. INTERVENIR.', heading: ['Votre vigilance.', 'Leur sécurité.'], text: 'Apprenez à prévenir les risques et à agir au sein d’un service de sécurité incendie.', verbs: ['Prévenir', 'Alerter', 'Intervenir'] },
     study: { value: '67', unit: 'HEURES MINIMUM · HORS EXAMEN', heading: ['Les connaissances.', 'Les bons réflexes.'], panels: [
       { label: 'COMPRENDRE', value: 'Le', unit: 'risque', detail: 'Feu, bâtiments et installations' },
       { label: 'AGIR', value: 'Les', unit: 'gestes', detail: 'Rondes et interventions encadrées' },

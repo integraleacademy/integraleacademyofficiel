@@ -1,5 +1,6 @@
 import { TrainingMotionIllustration, type SceneKind } from '@/components/TrainingMotionGallery';
 import styles from './TrainingIllustratedCards.module.css';
+import type { ManualIllustrationMap } from '@/data/manualIllustrations';
 
 export type TrainingIllustratedCard = {
   number?: string;
@@ -10,9 +11,10 @@ export type TrainingIllustratedCard = {
   scenes: readonly { kind: SceneKind; description: string }[];
 };
 
-export function TrainingIllustratedCards({ items, theme }: {
+export function TrainingIllustratedCards({ items, theme, illustrations }: {
   items: readonly TrainingIllustratedCard[];
   theme: 'blue' | 'orange' | 'violet' | 'bts';
+  illustrations?: ManualIllustrationMap;
 }) {
   return <div className={`${styles.cards} ${styles[theme]}`}>
     {items.map((item, index) => <article key={item.title} className={`${styles.card} ${item.wide ? styles.wide : ''}`}>
@@ -24,7 +26,7 @@ export function TrainingIllustratedCards({ items, theme }: {
       <p>{item.description}</p>
       <div className={styles.visuals}>
         {item.scenes.map(scene => <div key={scene.kind} className={styles.visual}>
-          <TrainingMotionIllustration kind={scene.kind} theme={theme} description={scene.description} />
+          <TrainingMotionIllustration kind={scene.kind} theme={theme} description={scene.description} illustration={illustrations?.[scene.kind]} />
         </div>)}
       </div>
     </article>)}

@@ -23,7 +23,7 @@ export function DespHeroSessions({ sessions, defaultPrice }: {
   sessions: TrainingDatesPricingSession[];
   defaultPrice: string;
 }) {
-  return <aside className={`${styles.sessionCard} rounded-[2rem] border border-white/80 bg-[#FFFDF8] p-5 text-academy-ink sm:p-6 lg:p-7`} data-theme="orange" aria-label="Prochaines sessions DESP par ville">
+  return <aside className={`${styles.sessionCard} rounded-[2rem] border border-white/80 bg-[#FFFDF8] p-5 text-academy-ink sm:p-6 lg:p-7`} data-theme="orange" data-layout="cities" aria-label="Prochaines sessions DESP par ville">
     <h2 className={`${styles.sessionLabel} inline-flex`}>Prochaines sessions</h2>
     <p className="mt-3 text-sm font-bold text-academy-muted">245 heures · Distanciel + présentiel</p>
     <div className="mt-4 grid gap-3">

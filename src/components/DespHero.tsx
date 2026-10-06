@@ -2,6 +2,7 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { TrainingHero, TrainingHeroSessionCard } from '@/components/TrainingHero';
 import { DespHeroSessions } from '@/components/DespHeroSessions';
+import { despArtwork } from '@/data/manualIllustrations';
 
 export function DespHero({ variant, title, subtitle, stats, sessions }: {
   variant: 'initial' | 'vae';
@@ -15,7 +16,8 @@ export function DespHero({ variant, title, subtitle, stats, sessions }: {
   const price = stats.find(([label]) => label === 'Tarif' || label === 'Tarif 2027')?.[1] || (isVae ? '3 850 € TTC' : '4 350 € TTC');
   return <TrainingHero
     theme="orange"
-    imageSrc={`/images/desp-${variant}-hero.jpg`}
+    imageSrc={isVae ? despArtwork.direction.src : despArtwork.pilotage.src}
+    illustrationAlt={isVae ? despArtwork.direction.alt : despArtwork.pilotage.alt}
     badge={`DESP · RNCP n°40385 · Niveau 5 · ${isVae ? 'VAE' : 'Formation initiale'}`}
     title={title}
     tagline={isVae ? 'Faites reconnaître' : 'Créez, reprenez,'}

@@ -31,6 +31,14 @@
 .copy h3 { color: #102444; font-size: 1.1rem; line-height: 1.35; font-weight: 850; letter-spacing: -.02em; }
 .copy p { margin-top: .75rem; color: #5d6b80; font-size: .88rem; line-height: 1.8; }
 .caption { margin-top: 1rem; color: #677c98; font-size: .7rem; text-align: right; }
+.section[data-theme='green'] { --pack-accent: #047857; --pack-soft: #f0f9f5; --pack-line: #bfddce; --pack-tint: #e1f2e9; }
+.section[data-theme='red'] { --pack-accent: #b91c1c; --pack-soft: #fff7f5; --pack-line: #efceca; --pack-tint: #fbe5e1; }
+.section[data-theme='orange'] { --pack-accent: #b45309; --pack-soft: #fff9ef; --pack-line: #ecd6b7; --pack-tint: #f9ead3; }
+.section[data-theme] { background: var(--pack-soft); border-color: var(--pack-line); }
+.section[data-theme] .eyebrow, .section[data-theme] .heading h2 span, .section[data-theme] .dayBadge, .section[data-theme] .intro strong { color: var(--pack-accent); }
+.section[data-theme] .dayBadge, .section[data-theme] .item { border-color: var(--pack-line); }
+.section[data-theme] .dayBadge > span { background: var(--pack-accent); }
+.section[data-theme] .visual[data-item='manuel'] { background: radial-gradient(ellipse at 50% 45%, #fff, var(--pack-tint)); }
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
   .item:hover .object { transform: translateY(-5px); }
   .item:hover .book { transform: perspective(700px) rotateY(-5deg) rotateZ(-2deg) translateY(-5px); }

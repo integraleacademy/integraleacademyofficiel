@@ -11,6 +11,9 @@ import { TrainingSectionNavigation } from '@/components/TrainingSectionNavigatio
 import { TrainingDatesPricingSection } from '@/components/TrainingDatesPricingSection';
 import { TrainingMotionIllustration } from '@/components/TrainingMotionGallery';
 import styles from './A3pReferencePage.module.css';
+import { TrainingWelcomePack } from '@/components/TrainingWelcomePack';
+import { ManualArtwork } from '@/components/ManualArtwork';
+import { a3pArtwork, a3pPracticeArtwork } from '@/data/manualIllustrations';
 import {
   a3pConfig,
   a3pContact,
@@ -91,13 +94,15 @@ function HeroSession({ sessions }: { sessions: any[] }) {
   const seatAvailability = getSessionSeatAvailability(next, 12);
 
   return <aside className={`${styles.sessionCard} rounded-[2rem] border border-white/80 bg-[#FFFDF8] p-5 text-academy-ink sm:p-6 lg:p-7`}>
+    <div className={styles.sessionOverview}>
     <div className="flex flex-wrap items-center gap-2">
       <span className="rounded-full bg-emerald-50 px-3 py-1.5 text-[.62rem] font-black uppercase tracking-[.16em] text-emerald-800 ring-1 ring-emerald-200">Prochaine session</span>
       <span className={`rounded-full border px-3 py-1.5 text-[.68rem] font-black ${seatAvailability.badgeClassName}`}>{next ? seatAvailability.label : 'Dates à confirmer'}</span>
     </div>
     <h2 className="mt-5 text-3xl font-black tracking-[-.04em] sm:text-4xl">{next ? <>{formatDate(next.startDate)} <span className="text-emerald-700">→</span><br />{formatDate(next.endDate)}</> : 'Prochaine rentrée à confirmer'}</h2>
     <p className="mt-2 text-sm font-extrabold text-academy-muted">{next?.examDate ? `Examen final le ${formatDate(next.examDate)}` : 'Contactez-nous pour recevoir les prochaines dates.'}</p>
-    <div className="mt-5 grid grid-cols-2 gap-2.5">
+    </div>
+    <div className={`${styles.sessionDetails} mt-5 grid grid-cols-2 gap-2.5`}>
       {[
         ['Durée', a3pConfig.durationHours],
         ['Tarif', formatTrainingPrice(next, a3pConfig.priceLabel)],
@@ -105,9 +110,11 @@ function HeroSession({ sessions }: { sessions: any[] }) {
         ['Modalité', a3pConfig.modality],
       ].map(([key, value]) => <div key={key} className="rounded-2xl border border-[#E8DECE] bg-[#F5EFE4] p-3.5"><p className="text-[.6rem] font-black uppercase tracking-[.16em] text-[#837968]">{key}</p><p className="mt-1 text-sm font-black sm:text-base">{value}</p></div>)}
     </div>
+    <div className={styles.sessionActions}>
     <CTA href={registrationHref} variant={isFull ? 'light' : 'green'} className={`mt-5 w-full ${isFull ? '' : styles.heroPrimaryAction}`}>{isFull ? 'Être alerté de la prochaine session' : 'Réserver ma place →'}</CTA>
     <p className="mt-3 text-center text-xs font-bold text-academy-muted">Un conseiller vérifie votre dossier avant validation.</p>
     <CompactAssistant />
+    </div>
   </aside>;
 }
 
@@ -172,6 +179,7 @@ const jobs = ['Agent de protection rapprochée', 'Agent de protection physique d
 const salaryFactors = ['Niveau de risque', 'Durée', 'Horaires', 'Mobilité', 'Conduite', 'Langues', 'Expérience', 'Réputation'];
 const registrationFormUrl = 'https://assistance-alw9.onrender.com/demande-informations-formations';
 const a3pNavigationItems = [
+  { label: 'Pack Intégrale', href: '#pack-integrale' },
   { label: 'Métier', href: '#metier' },
   { label: 'Immersion', href: '#pedagogie' },
   { label: 'Programme', href: '#programme' },
@@ -195,7 +203,6 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
 
     <section className={`${styles.hero} px-4 text-white`}>
         <AcademyWatermark tone="green" surface="dark" />
-      <Image src="/images/a3p-hero.jpg" alt="" fill priority sizes="100vw" className={styles.heroPhoto} />
       <div className={styles.heroOverlay} />
       <div className={`page-container ${styles.heroContent}`}>
         <div className="max-w-4xl">
@@ -206,8 +213,9 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap"><CTA href={a3pContact('dossier-a3p')} variant="green" className={styles.heroPrimaryAction}>Recevoir le dossier A3P →</CTA><CTA href={a3pConfig.advisor.phoneHref} variant="outline">Parler à un conseiller</CTA></div>
           <div className="mt-8 flex flex-wrap gap-2 text-xs font-bold text-white/80">{[a3pConfig.durationShort, 'CNAPS accompagné', 'Financements possibles', 'Hébergement sur place'].map(label => <span key={label} className="rounded-full border border-emerald-200/25 bg-emerald-950/25 px-3 py-2 backdrop-blur">✓ {label}</span>)}</div>
         </div>
-        <HeroSession sessions={sessions} />
+        <div className={styles.heroArtwork}><ManualArtwork illustration={a3pArtwork.protection} priority /></div>
       </div>
+      <div className={`page-container ${styles.heroBooking}`}><HeroSession sessions={sessions} /></div>
       <div className="page-container">
         <div className={`${styles.heroFacts} relative grid overflow-hidden rounded-[1.6rem] border border-white/15 bg-[#0A1421]/85 text-white backdrop-blur-xl sm:grid-cols-2 lg:grid-cols-6`}>
           {heroFacts.map(([key, value, detail]) => <div key={key} className="border-b border-white/10 p-4 last:border-b-0 sm:border-r lg:border-b-0"><p className="text-[.58rem] font-black uppercase tracking-[.18em] text-white/42">{key}</p><p className="mt-1 font-black text-white">{value}</p><p className="mt-1 text-[.68rem] font-semibold leading-4 text-white/48">{detail}</p></div>)}
@@ -215,6 +223,7 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
       </div>
     </section>
 
+    <TrainingWelcomePack course="a3p" />
     <CourseJourney course="a3p" />
 
     <TrainingSectionNavigation
@@ -226,8 +235,8 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
     />
 
     <Section id="metier" label="01 — Le métier" title={<>Protéger, anticiper, <span className="decoration-emerald-500 decoration-[.16em] underline underline-offset-[-.03em]">décider.</span></>} intro="L’agent de protection physique des personnes assure la sécurité de dirigeants, personnalités, artistes ou toute personne exposée. Son rôle : préparer la mission, analyser les risques et protéger avec efficacité, proportionnalité et discrétion.">
-      <div className="grid gap-4 md:grid-cols-3">{métierCards.map(([number, title, body]) => <article key={title} className="rounded-[1.75rem] border border-academy-line bg-[#FFFDF8] p-6 shadow-soft"><span className="grid h-10 w-10 place-items-center rounded-full bg-[#0D1725] text-xs font-black text-emerald-300">{number}</span><h3 className="mt-8 text-xl font-black tracking-[-.03em]">{title}</h3><p className="mt-3 text-sm font-semibold leading-7 text-academy-muted">{body}</p></article>)}</div>
-      <MissionAnimation variant="a3p" className="mt-5" />
+      <div className="grid gap-4 md:grid-cols-3">{métierCards.map(([number, title, body], index) => <article key={title} className="rounded-[1.75rem] border border-academy-line bg-[#FFFDF8] p-6 shadow-soft"><div className={styles.cardArtwork}><ManualArtwork illustration={[a3pArtwork.preparation, a3pArtwork.vehicule, a3pArtwork.discretion][index]} /></div><span className="mt-5 grid h-10 w-10 place-items-center rounded-full bg-[#0D1725] text-xs font-black text-emerald-300">{number}</span><h3 className="mt-8 text-xl font-black tracking-[-.03em]">{title}</h3><p className="mt-3 text-sm font-semibold leading-7 text-academy-muted">{body}</p></article>)}</div>
+      <MissionAnimation variant="a3p" className="mt-5" illustration={a3pArtwork.protection} />
       <div className="mt-5 grid items-center gap-6 rounded-[2rem] bg-[#0D1725] p-6 text-white shadow-card lg:grid-cols-[.8fr_1.2fr]">
         <div><Label light>Une mission, cinq temps forts</Label><h3 className="mt-3 text-2xl font-black">De la préparation au débriefing.</h3><p className="mt-2 text-sm text-white/60">Une lecture concrète du métier avant le détail du programme.</p></div>
         <div className="flex items-start justify-between gap-2 overflow-x-auto">{['Briefing', 'Reconnaissance', 'Dispositif', 'Déplacement', 'Débriefing'].map((step, index) => <div key={step} className="flex min-w-[5.5rem] flex-1 items-center gap-2"><div className="text-center"><span className="mx-auto grid h-9 w-9 place-items-center rounded-full border border-emerald-300/35 bg-white/[.07] text-xs font-black text-emerald-300">0{index + 1}</span><p className="mt-2 text-[.65rem] font-black">{step}</p></div>{index < 4 && <span className="mb-5 text-emerald-300">→</span>}</div>)}</div>
@@ -246,7 +255,7 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
 
     <Section label="03 — Compétences" title={<>Ce que vous saurez faire <span className="decoration-emerald-500 decoration-[.16em] underline underline-offset-[-.03em]">sur le terrain.</span></>} intro="Les compétences du bloc unique sont présentées en cinq piliers métier. Le programme officiel détaillé par unité de valeur figure juste après.">
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-[1.15fr_.925fr_.925fr] lg:grid-rows-2">
-        {skillPillars.map((skill) => <article key={skill.title} className={`rounded-[1.75rem] border p-6 ${skill.featured ? 'border-emerald-700 bg-emerald-600 text-white lg:row-span-2 lg:flex lg:min-h-[25rem] lg:flex-col lg:justify-end' : skill.dark ? 'border-[#0D1725] bg-[#0D1725] text-white' : 'border-academy-line bg-[#FFFDF8]'}`}><span className="text-2xl font-black">{skill.icon}</span><h3 className={`mt-8 font-black tracking-[-.035em] ${skill.featured ? 'text-3xl' : 'text-xl'}`}>{skill.title}</h3><p className={`mt-3 text-sm font-semibold leading-7 ${skill.dark ? 'text-white/60' : skill.featured ? 'text-white/80' : 'text-academy-muted'}`}>{skill.text}</p></article>)}
+        {skillPillars.map((skill, index) => <article key={skill.title} className={`rounded-[1.75rem] border p-6 ${skill.featured ? 'border-emerald-700 bg-emerald-600 text-white lg:row-span-2 lg:flex lg:min-h-[25rem] lg:flex-col lg:justify-end' : skill.dark ? 'border-[#0D1725] bg-[#0D1725] text-white' : 'border-academy-line bg-[#FFFDF8]'}`}><div className={styles.skillArtwork}><ManualArtwork illustration={[a3pArtwork.briefing, a3pArtwork.reconnaissance, a3pArtwork.deplacement, a3pArtwork.secours, a3pArtwork.discretion][index]} /></div><h3 className={`mt-8 font-black tracking-[-.035em] ${skill.featured ? 'text-3xl' : 'text-xl'}`}>{skill.title}</h3><p className={`mt-3 text-sm font-semibold leading-7 ${skill.dark ? 'text-white/60' : skill.featured ? 'text-white/80' : 'text-academy-muted'}`}>{skill.text}</p></article>)}
       </div>
     </Section>
 
@@ -266,7 +275,7 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
           <h3>{practice.title}</h3>
           <p>{practice.text}</p>
           <div className={styles.practiceVisual}>
-            <TrainingMotionIllustration kind={practice.scene} theme="green" description={practice.visualDescription} />
+            <TrainingMotionIllustration kind={practice.scene} theme="green" description={practice.visualDescription} illustration={a3pPracticeArtwork[practice.scene]} />
           </div>
         </article>)}
       </div>

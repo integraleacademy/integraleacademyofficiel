@@ -1,5 +1,7 @@
 import type { CSSProperties } from 'react';
 import styles from './TrainingMotionGallery.module.css';
+import { ManualArtwork } from '@/components/ManualArtwork';
+import type { ManualIllustration, ManualIllustrationMap } from '@/data/manualIllustrations';
 
 type TrainingMotionGalleryVariant =
   | 'a3p'
@@ -396,7 +398,7 @@ function Scene({ kind }: { kind: SceneKind }) {
   </svg>;
 }
 
-export function TrainingMotionGallery({ variant, className = '' }: { variant: TrainingMotionGalleryVariant; className?: string }) {
+export function TrainingMotionGallery({ variant, className = '', illustrations }: { variant: TrainingMotionGalleryVariant; className?: string; illustrations?: ManualIllustrationMap }) {
   const gallery = galleries[variant];
 
   return <section className={`${styles.gallery} ${styles[gallery.theme]} ${className}`} aria-labelledby={`${variant}-motion-title`}>
@@ -409,13 +411,14 @@ export function TrainingMotionGallery({ variant, className = '' }: { variant: Tr
     </div>
     <div className={styles.cards}>
       {gallery.stories.map(([kind, title, description]) => <article className={styles.card} data-scene={kind} key={kind}>
-        <div className={styles.visual} role="img" aria-label={description}><Scene kind={kind} /></div>
+        <div className={styles.visual} role="img" aria-label={illustrations?.[kind]?.alt || description}>{illustrations?.[kind] ? <ManualArtwork illustration={illustrations[kind]!} /> : <Scene kind={kind} />}</div>
         <h4>{title}</h4>
       </article>)}
     </div>
   </section>;
 }
 
-export function TrainingMotionIllustration({ kind, theme = 'blue', description }: { kind: SceneKind; theme?: 'blue' | 'red' | 'green' | 'orange' | 'violet' | 'bts'; description: string }) {
+export function TrainingMotionIllustration({ kind, theme = 'blue', description, illustration }: { kind: SceneKind; theme?: 'blue' | 'red' | 'green' | 'orange' | 'violet' | 'bts'; description: string; illustration?: ManualIllustration }) {
+  if (illustration) return <ManualArtwork illustration={illustration} />;
   return <div className={`${styles.illustration} ${styles[theme]}`} role="img" aria-label={description}><Scene kind={kind} /></div>;
 }

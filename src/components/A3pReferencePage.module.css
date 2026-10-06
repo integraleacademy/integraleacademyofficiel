@@ -5,7 +5,7 @@
   flex-direction: column;
   overflow: hidden;
   padding-bottom: 2rem;
-  background: #08111d;
+  background: radial-gradient(ellipse at 90% 5%, #10b98129, transparent 60%), #08111d;
 }
 
 .heroPhoto {
@@ -56,9 +56,21 @@
 .sessionCard { position: relative; overflow: hidden; box-shadow: 0 28px 90px rgba(13,23,37,.17); }
 .sessionCard h2 { text-wrap: balance; }
 .heroFacts { box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 22px 70px rgba(0,0,0,.2); backdrop-filter: blur(16px); }
+.heroArtwork { overflow: hidden; border: 1px solid #6ee7b780; border-radius: 2rem; background: #e8f1f9; box-shadow: 0 25px 75px #0004; transform: rotate(1deg); }
+.heroBooking { margin-bottom: 1.5rem; }
+.sessionOverview, .sessionDetails, .sessionActions { min-width: 0; }
+.cardArtwork { height: 230px; overflow: hidden; border-radius: 1.1rem; }
+.skillArtwork { height: 170px; overflow: hidden; border-radius: 1.1rem; }
 
 @media (min-width: 1024px) {
   .heroContent { grid-template-columns: minmax(0, 1.2fr) minmax(0, .85fr); gap: clamp(2rem, 4vw, 4rem); }
+  .heroBooking .sessionCard { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr) minmax(0, 1fr); align-items: center; gap: 1.5rem; }
+  .heroBooking .sessionOverview h2 { font-size: 1.9rem; }
+  .heroBooking .sessionDetails, .heroBooking .sessionActions > a { margin-top: 0; }
+}
+
+@media (max-width: 1023px) {
+  .heroArtwork { width: 100%; max-width: 720px; margin-inline: auto; transform: none; }
 }
 
 @media (max-width: 767px) {

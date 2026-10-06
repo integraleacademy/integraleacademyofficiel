@@ -7,6 +7,7 @@ import type { TrainingDatesPricingSession } from '@/components/TrainingDatesPric
 import { getSessionSeatAvailability } from '@/lib/session-seat-availability';
 import { formatTrainingPrice } from '@/lib/training-price';
 import styles from './TrainingHero.module.css';
+import { ManualArtwork } from '@/components/ManualArtwork';
 
 type HeroTheme = 'orange' | 'red' | 'green';
 type HeroFacts = ReadonlyArray<ReadonlyArray<string>>;
@@ -15,7 +16,7 @@ export const trainingRegistrationUrl = 'https://assistance-alw9.onrender.com/dem
 
 export function TrainingHero({
   theme, imageSrc, badge, title, tagline, taglineAccent, description,
-  primaryAction, highlights = [], facts, children, additionalAction,
+  primaryAction, highlights = [], facts, children, additionalAction, illustrationAlt,
 }: {
   theme: HeroTheme;
   imageSrc: string;
@@ -29,10 +30,11 @@ export function TrainingHero({
   facts: HeroFacts;
   children: ReactNode;
   additionalAction?: ReactNode;
+  illustrationAlt?: string;
 }) {
-  return <section className={`${styles.hero} px-4 text-white`} data-theme={theme}>
+  return <section className={`${styles.hero} ${illustrationAlt ? styles.illustratedHero : ''} px-4 text-white`} data-theme={theme}>
         <AcademyWatermark tone={theme} surface="dark" />
-    <Image src={imageSrc} alt="" fill priority sizes="100vw" className={styles.heroPhoto} />
+    {!illustrationAlt && <Image src={imageSrc} alt="" fill priority sizes="100vw" className={styles.heroPhoto} />}
     <div className={styles.heroOverlay} />
     <div className={`page-container ${styles.heroContent}`}>
       <div className="max-w-4xl">
@@ -47,8 +49,9 @@ export function TrainingHero({
         {additionalAction}
         {highlights.length > 0 && <div className="mt-7 flex flex-wrap gap-2 text-xs font-bold text-white/80">{highlights.map(label => <span key={label} className={styles.highlight}>✓ {label}</span>)}</div>}
       </div>
-      {children}
+      {illustrationAlt ? <div className={styles.heroArtwork}><ManualArtwork illustration={{ src: imageSrc, alt: illustrationAlt }} priority /></div> : children}
     </div>
+    {illustrationAlt && <div className={`page-container ${styles.heroBooking}`}>{children}</div>}
     <div className={`page-container ${styles.heroFacts} grid grid-cols-2 overflow-hidden rounded-[1.6rem] border border-white/20 bg-white/[.07] lg:grid-cols-6`}>
       {facts.map(([label, value, detail]) => <div key={label} className="min-w-0 border-b border-r border-white/15 p-4 last:border-r-0 lg:border-b-0">
         <p className="text-[.58rem] font-black uppercase tracking-[.18em] text-white/65">{label}</p>
@@ -90,13 +93,15 @@ export function TrainingHeroSessionCard({
   const availability = session ? getSessionSeatAvailability(session, capacity) : null;
   const full = availability?.tone === 'full';
   return <aside className={`${styles.sessionCard} rounded-[2rem] border border-white/80 bg-[#FFFDF8] p-5 text-academy-ink sm:p-6 lg:p-7`} data-theme={theme} aria-label="Dates et inscription">
+    <div className={styles.sessionOverview}>
     <div className="flex flex-wrap items-center gap-2">
       <span className={styles.sessionLabel}>{label}</span>
       <span className={`rounded-full border px-3 py-1.5 text-[.68rem] font-black ${availability?.badgeClassName || 'border-stone-200 bg-stone-100 text-stone-700'}`}>{availability?.label || 'Dates à confirmer'}</span>
     </div>
     <h2 className="mt-5 text-3xl font-black tracking-[-.04em] sm:text-4xl">{session ? <>{formatDate(session.startDate)} <span className={styles.sessionAccent}>→</span><br />{formatDate(session.endDate)}</> : emptyTitle}</h2>
     <p className="mt-2 text-sm font-extrabold text-academy-muted">{session?.examDate ? `${examLabel} ${formatDate(session.examDate)}` : emptyDescription}</p>
-    <div className="mt-5 grid grid-cols-2 gap-2.5">
+    </div>
+    <div className={`${styles.sessionDetails} mt-5 grid grid-cols-2 gap-2.5`}>
       {[
         ['Durée', duration],
         ['Tarif', formatTrainingPrice(session, defaultPrice)],
@@ -104,8 +109,10 @@ export function TrainingHeroSessionCard({
         ['Modalité', modality],
       ].map(([key, value]) => <div key={key} className="min-w-0 rounded-2xl border border-[#E8DECE] bg-[#F5EFE4] p-3.5"><p className="text-[.6rem] font-black uppercase tracking-[.16em] text-[#837968]">{key}</p><p className="mt-1 text-sm font-black sm:text-base">{value}</p></div>)}
     </div>
+    <div className={styles.sessionActions}>
     <Link href={trainingRegistrationUrl} className={`${styles.action} ${full ? styles.waitingAction : styles.primaryAction} mt-5 w-full`}>{full ? 'Être alerté de la prochaine session' : session ? 'Réserver ma place →' : emptyActionLabel}</Link>
     <p className="mt-3 text-center text-xs font-semibold leading-5 text-academy-muted">Un conseiller vérifie votre dossier avant validation.</p>
     <div className="mt-3"><OrientationAssistant initialFormationKey={assistantKey} hideInfoAction variant="modalTrigger" /></div>
+    </div>
   </aside>;
 }
