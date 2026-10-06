@@ -6,6 +6,18 @@ import styles from './entreprises.module.css';
 
 export const metadata: Metadata = createPageMetadata('/entreprises');
 
+const brochureUrl = '/documents/brochure-entreprises-integrale-academy-2026-10.pdf';
+const btsHours = 856 + 706;
+const btsAidAssumption = 4500;
+const euro = (value: number, digits = 2) => value.toLocaleString('fr-FR', { minimumFractionDigits: digits, maximumFractionDigits: digits });
+const btsBudgets = [
+  { name: 'Hypothèse basse', yearOne: 783.90, yearTwo: 929.75 },
+  { name: 'Hypothèse haute', yearOne: 966.21, yearTwo: 1112.05 },
+].map((budget) => {
+  const total = (budget.yearOne + budget.yearTwo) * 12 - btsAidAssumption;
+  return { ...budget, total, hourly: total / btsHours };
+});
+
 type IconName = 'arrow' | 'check' | 'people' | 'target' | 'shield' | 'briefcase' | 'school' | 'fire' | 'calendar' | 'document' | 'drone' | 'camera' | 'phone' | 'email';
 
 function Icon({ name, className = '' }: { name: IconName; className?: string }) {
@@ -49,25 +61,61 @@ const solutions = [
     ideal: 'Agent polyvalent, événementiel, sites sensibles et protection rapprochée.', cta: 'Voir le parcours alternance',
   },
   {
-    id: 'poei', tone: 'Coral', label: 'Dispositif 02', icon: 'briefcase' as const,
+    id: 'poei', tone: 'Green', label: 'Dispositif 02', icon: 'briefcase' as const,
     title: 'POEI sécurité privée', value: '100 %', valueLabel: 'Formation pré-embauche financée, sous réserve d’accord',
-    points: ['450 h de formation intensive', 'APS + SSIAP 1 et modules métier', 'Présélection des candidats', 'CDD de 6 mois minimum à l’issue'],
+    points: ['450 h de formation intensive', 'APS + SSIAP 1 et modules métier', 'Présélection des candidats', 'CDI ou CDD de 6 mois minimum à l’issue'],
     ideal: 'Recrutement rapide, besoins massifs et agents formés avant la prise de poste.', cta: 'Découvrir la POEI',
   },
   {
-    id: 'bts-mos', tone: 'Gold', label: 'Dispositif 03', icon: 'school' as const,
-    title: 'BTS Management opérationnel de la sécurité', value: '1 564 h', valueLabel: 'Présence réelle en entreprise sur deux ans',
-    points: ['15 jours entreprise / 15 jours école', '100 % entreprise pendant les étés', 'Formation financée par OPCO AKTO', 'Futur chef d’équipe ou superviseur'],
+    id: 'bts-mos', tone: 'Mauve', label: 'Dispositif 03', icon: 'school' as const,
+    title: 'BTS Management opérationnel de la sécurité', value: `${euro(btsHours, 0)} h`, valueLabel: 'Présence réelle en entreprise sur deux ans',
+    points: ['15 jours entreprise / 15 jours école', 'Été en entreprise, hors examens', 'Formation financée par OPCO AKTO', 'Futur chef d’équipe ou superviseur'],
     ideal: 'Encadrement, exploitation, évolution interne et préparation de vos futurs managers.', cta: 'Explorer le BTS MOS',
   },
 ] as const;
 
-const alternanceTimeline = [
-  { number: '01', date: 'Jan. – fév.', title: 'Formation APS', detail: '175 h' },
-  { number: '02', date: 'Mars – juin', title: 'Entreprise', detail: '588 h d’immersion' },
-  { number: '03', date: 'Juin – juil.', title: 'Formation A3P', detail: '328 h' },
-  { number: '04', date: 'Juil. – déc.', title: 'Entreprise', detail: '658 h d’immersion' },
-  { number: '05', date: 'Décembre', title: 'SSIAP 1', detail: 'Formation et examen' },
+const alternanceSessions = [
+  {
+    name: 'Session 1', period: 'Janvier → décembre 2027', immersion: 1246, worked: 1106,
+    steps: [
+      { date: 'Janvier à février 2027', title: 'Formation APS', detail: '175 h · préparation à la carte professionnelle CNAPS' },
+      { date: 'Mars à juin 2027', title: 'Immersion en entreprise', detail: '588 h de terrain' },
+      { date: 'Juin à juillet 2027', title: 'Formation A3P', detail: '328 h · protection rapprochée' },
+      { date: 'Juillet à décembre 2027', title: 'Immersion en entreprise', detail: '658 h de terrain' },
+      { date: 'Décembre 2027', title: 'SSIAP 1', detail: 'Formation et examens finaux' },
+    ],
+  },
+  {
+    name: 'Session 2', period: 'Juin 2027 → juin 2028', immersion: 1239, worked: 1099,
+    steps: [
+      { date: 'Juin à juillet 2027', title: 'Formation APS', detail: '175 h · préparation à la carte professionnelle CNAPS' },
+      { date: 'Juillet à octobre 2027', title: 'Immersion en entreprise', detail: '413 h de terrain' },
+      { date: 'Octobre à novembre 2027', title: 'Formation A3P', detail: '328 h · protection rapprochée' },
+      { date: 'Novembre 2027 à mai 2028', title: 'Immersion en entreprise', detail: '826 h de terrain' },
+      { date: 'Mai à juin 2028', title: 'SSIAP 1', detail: 'Formation et examens finaux' },
+    ],
+  },
+];
+
+const expertise = [
+  { count: '360', label: 'agents APS formés' },
+  { count: '300', label: 'agents A3P formés' },
+  { count: '250', label: 'agents SSIAP formés' },
+  { count: '60', label: 'dirigeants DESP depuis 2025' },
+  { count: '250', label: 'chauffeurs VTC formés' },
+];
+
+const siteSkills = [
+  { title: 'Entreprises & bureaux', text: 'Accueillir et orienter les visiteurs, contrôler les accès, effectuer des rondes et signaler les anomalies.', image: '/images/aps/manuel/acces.webp', alt: 'Un agent de sécurité accueille un visiteur et contrôle son accès.' },
+  { title: 'Industrie & logistique', text: 'Contrôler les entrées et les sorties, surveiller les zones sensibles et appliquer les procédures propres au site.', image: '/images/aps/manuel/ronde.webp', alt: 'Un agent effectue une ronde de surveillance sur un site.' },
+  { title: 'Commerces & centres commerciaux', text: 'Assurer une présence préventive, repérer les comportements à risque et gérer les tensions avec discernement.', image: '/images/aps/manuel/conflit.webp', alt: 'Un agent de sécurité gère calmement une situation de tension.' },
+  { title: 'Événements & accueil du public', text: 'Participer au contrôle des accès, orienter les participants et faciliter la circulation du public.', image: '/images/aps/manuel/bagages.webp', alt: 'Un agent procède au contrôle des bagages à l’entrée d’un événement.' },
+];
+
+const contacts = [
+  { initials: 'CM', firstName: 'Cassandre', name: 'Cassandre MENARD', role: 'Responsable commerciale', email: 'cassandre@integraleacademy.com', phone: '04 87 83 06 16', phoneHref: '+33487830616', mobile: '07 43 58 22 64', mobileHref: '+33743582264' },
+  { initials: 'AC', firstName: 'Aurélie', name: 'Aurélie CHAUSSEZ', role: 'Chargée des relations clients', email: 'aurelie@integraleacademy.com', phone: '04 87 83 06 15', phoneHref: '+33487830615', mobile: '07 69 39 04 57', mobileHref: '+33769390457' },
+  { initials: 'CV', firstName: 'Clément', name: 'Clément VAILLANT', role: 'Directeur général', email: 'clement@integraleacademy.com', phone: '04 87 83 06 14', phoneHref: '+33487830614', mobile: '06 65 24 52 71', mobileHref: '+33665245271' },
 ];
 
 const poeiProgram = [
@@ -76,7 +124,7 @@ const poeiProgram = [
   { title: 'Examen TFP APS', hours: '7 h', icon: 'document' as const, text: 'Épreuve de certification du titre à finalité professionnelle.' },
   { title: 'SSIAP 1', hours: '70 h', icon: 'fire' as const, text: 'Sécurité incendie en ERP et IGH, évacuation et premiers secours.' },
   { title: 'Examen SSIAP 1', hours: '7 h', icon: 'document' as const, text: 'Épreuve de certification Agent de sécurité incendie.' },
-  { title: 'Sécurité événementielle', hours: '42 h', icon: 'people' as const, text: 'Gestion de foule, filtrage, événements sportifs et risques spécifiques.' },
+  { title: 'Sécurité événementielle', hours: '42 h', icon: 'people' as const, text: 'Gestion de foule, filtrage, manifestations sportives et prévention du risque terroriste.' },
   { title: 'Surveillance par drone', hours: '21 h', icon: 'drone' as const, text: 'Cadre légal, surveillance périmétrique et levée de doute à distance.' },
   { title: 'Techniques professionnelles', hours: '56 h', icon: 'camera' as const, text: 'Vidéoprotection, télésurveillance, radio et gestion de crise.' },
   { title: 'Préparation à l’emploi', hours: '58 h', icon: 'briefcase' as const, text: 'Coaching, simulations, ateliers métier et rencontres employeurs.' },
@@ -122,20 +170,18 @@ export default function EntreprisesPage() {
               <Link href="#solutions" className={styles.primaryButton}>Découvrir les 3 solutions <Icon name="arrow" /></Link>
               <a href="#contact-entreprises" className={styles.secondaryButton}>Parlons de vos besoins <Icon name="arrow" /></a>
             </div>
+            <a className={styles.brochureLink} href={brochureUrl} target="_blank" rel="noopener noreferrer"><Icon name="document" /> Consulter la brochure entreprises · PDF, 20 pages</a>
             <div className={styles.heroTags}><span><Icon name="check" />Sourcing candidats</span><span><Icon name="check" />Gestion administrative</span><span><Icon name="check" />Suivi CNAPS</span></div>
           </div>
-          <div className={styles.heroVisual}>
-            <span className={styles.visualCircle} aria-hidden="true" />
-            <span className={styles.visualLabel}>Votre recrutement,<br /><b>clés en main.</b></span>
-            <img className={styles.lockImage} src="/images/entreprises/cle-securite.webp" alt="" width="858" height="957" fetchPriority="high" />
-            <div className={styles.visualCard}><span><Icon name="shield" /></span><div><strong>Un seul partenaire.</strong><p>Du premier candidat<br />à la prise de poste.</p></div></div>
-            <span className={styles.visualFootnote}>INTÉGRALE ACADEMY · DEPUIS 2020</span>
-          </div>
+          <figure className={styles.heroArtwork}>
+            <img src="/images/aps/manuel/equipe.webp" alt="Deux agents de sécurité coordonnent leurs missions sur un site logistique." width="1536" height="1024" fetchPriority="high" />
+            <figcaption><strong>Vos équipes de demain.</strong><span>Un seul partenaire, du recrutement à la montée en compétences.</span><div className={styles.artworkTags}><span>Alternance</span><span>POEI</span><span>BTS MOS</span></div></figcaption>
+          </figure>
         </div>
         <div className={styles.heroStats}>
-          <div><strong>+1 150</strong><span>stagiaires formés en 5 ans</span></div>
+          <div><strong>+1 200</strong><span>stagiaires formés en 5 ans</span></div>
           <div><strong>3 dispositifs</strong><span>pour vos besoins de recrutement</span></div>
-          <div><strong>12 max.</strong><span>stagiaires par session POEI</span></div>
+          <div><strong>12 max.</strong><span>stagiaires maximum par session</span></div>
           <div><strong>Qualiopi</strong><span>organisme certifié</span></div>
         </div>
       </div>
@@ -144,9 +190,10 @@ export default function EntreprisesPage() {
     <nav className={styles.sectionNav} aria-label="Les solutions entreprises">
       <div className={styles.container}>
         <Link href="#alternance"><i className={styles.dotCyan} />Alternance sécurité</Link>
-        <Link href="#poei"><i className={styles.dotCoral} />POEI</Link>
-        <Link href="#bts-mos"><i className={styles.dotGold} />BTS MOS</Link>
+        <Link href="#poei"><i className={styles.dotGreen} />POEI</Link>
+        <Link href="#bts-mos"><i className={styles.dotMauve} />BTS MOS</Link>
         <Link href="#accompagnement">Notre accompagnement</Link>
+        <Link href="#brochure-entreprises">La brochure</Link>
         <Link href="#contact-entreprises">Votre projet <Icon name="arrow" /></Link>
       </div>
     </nav>
@@ -157,6 +204,8 @@ export default function EntreprisesPage() {
         <div className={styles.challengesGrid}>{challenges.map((challenge) => <article key={challenge.title} className={styles.challengeCard}>
           <span className={styles.challengeIcon}><Icon name={challenge.icon} /></span><div><h3>{challenge.title}</h3><p>{challenge.text}</p></div>
         </article>)}</div>
+        <div className={styles.expertiseStrip} aria-label="Nos professionnels formés">{expertise.map((item) => <div key={item.label}><strong>{item.count}</strong><span>{item.label}</span></div>)}</div>
+        <p className={styles.schoolLocation}>Notre siège : <strong>54, chemin du Carreou, 83480 Puget-sur-Argens</strong>. Entre Cannes et Saint-Tropez, avec un accès direct par l’autoroute A8.</p>
       </div>
     </section>
 
@@ -180,18 +229,21 @@ export default function EntreprisesPage() {
       <div className={styles.container}>
         <div className={styles.deviceHeading}><span>Dispositif 01 / 03</span><span>Former & fidéliser</span></div>
         <div className={styles.detailHero}>
-          <div className={styles.detailCopy}><h2 id="alternance-title"><em>Parcours sécurité</em><br />en alternance.</h2><p>Un an pour former un agent polyvalent et immédiatement opérationnel, en combinant APS, protection rapprochée et sécurité incendie.</p><div className={styles.pillList}><span>1 an</span><span>3 qualifications</span><span>OPCO AKTO</span></div></div>
-          <div className={styles.costPanel}><span>Près de 1 100 h réelles en entreprise</span><strong>≈ 4 €<small>/ heure</small></strong><p>Coût employeur indicatif, charges incluses et après aides.</p><span className={styles.costCaption}>Un chiffrage personnalisé pour votre entreprise.</span></div>
+          <div className={styles.detailCopy}><h2 id="alternance-title"><em>Parcours sécurité</em><br />en alternance.</h2><p>Un an pour former un agent polyvalent et immédiatement opérationnel, en combinant APS, protection rapprochée et sécurité incendie.</p><div className={styles.pillList}><span>Contrat d’apprentissage · 1 an</span><span>3 qualifications</span><span>OPCO AKTO</span></div></div>
+          <div className={styles.costPanel}><span>Près de 1 100 h réelles en entreprise</span><strong>≈ 4 €<small>/ heure</small></strong><p><b>4 499 € pour une année complète</b>, charges incluses et après aides, selon les hypothèses de la simulation.</p><span className={styles.costCaption}>Selon le profil, la taille de l’entreprise et les aides en vigueur. Estimation personnalisée avant engagement.</span></div>
         </div>
         <div className={styles.qualificationGrid}>
           <article><span className={styles.apsIcon}><Icon name="shield" /></span><div><strong>Agent de prévention et de sécurité</strong><small>TFP APS · 175 h</small></div></article>
           <article><span className={styles.a3pIcon}><Icon name="people" /></span><div><strong>Protection physique des personnes</strong><small>TFP A3P · 328 h</small></div></article>
           <article><span className={styles.fireIcon}><Icon name="fire" /></span><div><strong>Agent de sécurité incendie</strong><small>SSIAP 1 · Formation et examen</small></div></article>
         </div>
-        <div className={styles.timelineHeading}><span className={styles.ribbon}>Le calendrier</span><h3>La formation. Le terrain. La montée en compétences.</h3><p>Session de janvier à décembre 2027</p></div>
-        <ol className={styles.timeline}>{alternanceTimeline.map((step) => <li key={step.number}><span className={styles.timelineDot}>{step.number}</span><div><small>{step.date}</small><strong>{step.title}</strong><p>{step.detail}</p></div></li>)}</ol>
-        <div className={styles.alternanceStats}><div><strong>1 246 h</strong><span>d’immersion · session 1</span></div><div><strong>1 106 h</strong><span>réelles travaillées · session 1</span></div><div><strong>2 rentrées</strong><span>annoncées en 2027</span></div></div>
-        <div className={styles.sessionNote}><Icon name="calendar" /><p><strong>Deux calendriers pour votre recrutement.</strong> Janvier à décembre 2027 ou juin 2027 à juin 2028. Selon la session : 1 099 à 1 106 heures réellement travaillées.</p><a href="#contact-entreprises">Étudier mon recrutement <Icon name="arrow" /></a></div>
+        <div className={styles.timelineHeading}><span className={styles.ribbon}>Deux rentrées pour recruter en 2027</span><h3>La formation. Le terrain.<br />La montée en compétences.</h3><p>Une même architecture pédagogique, avec deux calendriers pour organiser vos recrutements.</p></div>
+        <div className={styles.sessionGrid}>{alternanceSessions.map((session) => <article key={session.name} className={styles.sessionCard}>
+          <header><span>{session.name}</span><h4>{session.period}</h4></header>
+          <ol className={styles.sessionTimeline}>{session.steps.map((step, index) => <li key={step.date}><span className={styles.timelineDot}>{String(index + 1).padStart(2, '0')}</span><div><small>{step.date}</small><strong>{step.title}</strong><p>{step.detail}</p></div></li>)}</ol>
+          <div className={styles.sessionFigures}><div><strong>{euro(session.immersion, 0)} h</strong><span>d’immersion professionnelle</span></div><div><strong>{euro(session.worked, 0)} h</strong><span>réellement travaillées</span></div><div><strong>4 499 €</strong><span>coût annuel employeur estimé</span></div><div><strong>{euro(4499 / session.worked)} €/h</strong><span>coût horaire estimé</span></div></div>
+        </article>)}</div>
+        <div className={styles.sessionNote}><Icon name="shield" /><p><strong>Un parcours adapté à vos missions.</strong> Événementiel, hôtels de luxe, sites sensibles, surveillance humaine, événements sportifs, festivals et protection rapprochée. Les missions sont confiées selon les qualifications obtenues et les autorisations CNAPS délivrées.</p><a href="#contact-entreprises">Étudier mon recrutement <Icon name="arrow" /></a></div>
       </div>
     </section>
 
@@ -203,12 +255,15 @@ export default function EntreprisesPage() {
           <aside className={styles.employerJourney}><span className={styles.ribbon}>Votre recrutement, accompagné</span><ul><li><Icon name="check" />Besoin et profils définis ensemble</li><li><Icon name="check" />Candidats sourcés et présélectionnés</li><li><Icon name="check" />Formation adaptée à vos missions</li><li><Icon name="check" />Intégration en entreprise accompagnée</li></ul></aside>
         </div>
         <div className={styles.poeiMetrics}><div><strong>450 h</strong><span>de formation intensive</span></div><div><strong>100 %</strong><span>formation financée*</span></div><div><strong>6 mois</strong><span>d’engagement d’embauche</span></div><div><strong>12 places</strong><span>maximum par session</span></div></div>
-        <details className={styles.programBlock}>
+        <details className={styles.programBlock} open>
           <summary><span><Icon name="document" /><span><strong>Le programme complet</strong><small>10 modules · 450 heures de formation</small></span></span><b aria-hidden="true">+</b></summary>
           <div className={styles.programContent}><p>Un socle complet pour des agents directement employables, de la posture professionnelle aux techniques de sécurité.</p><div className={styles.programGrid}>{poeiProgram.map((module) => <article key={module.title}><div><Icon name={module.icon} /><strong>{module.hours}</strong></div><h4>{module.title}</h4><p>{module.text}</p></article>)}</div></div>
         </details>
-        <div className={styles.sessionsBar}><span><Icon name="calendar" />Les sessions</span><strong>21 sept. – 22 déc. 2026</strong><strong>11 jan. – 12 avr. 2027</strong><strong>21 sept. – 22 déc. 2027</strong></div>
-        <div className={styles.sectionBottom}><p className={styles.disclaimer}>* Financement intégral sous réserve de validation et des règles du financeur. L’employeur s’engage à recruter le candidat pour une durée minimale de 6 mois à l’issue du parcours.</p><a href="#contact-entreprises" className={styles.deviceButton}>Étudier une POEI <Icon name="arrow" /></a></div>
+        <div className={styles.sessionsBar}><span><Icon name="calendar" />Les sessions</span><strong>11 janvier → 12 avril 2027</strong><strong>21 septembre → 22 décembre 2027</strong></div>
+        <div className={styles.siteSkillsHeading}><span className={styles.ribbon}>Des compétences pour vos sites</span><h3>Des agents préparés<br />à vos réalités de terrain.</h3><p>Chaque environnement a ses contraintes, ses publics et ses priorités. Nous préparons les candidats à appliquer les consignes et à adopter la bonne posture professionnelle.</p></div>
+        <div className={styles.siteSkillsGrid}>{siteSkills.map((site) => <article key={site.title}><img src={site.image} alt={site.alt} width="1122" height="1402" loading="lazy" /><div><h4>{site.title}</h4><p>{site.text}</p></div></article>)}</div>
+        <aside className={styles.fireComplement}><img src="/images/ssiap-1/manuel/prevention.webp" alt="Un agent explique les consignes et le plan de sécurité incendie." width="1200" height="800" loading="lazy" /><div><span>Une compétence complémentaire</span><h4>La sécurité incendie.</h4><p>Le SSIAP 1 prépare à la prévention incendie, à la surveillance des installations de sécurité et à l’assistance aux personnes en ERP et IGH. Les missions confiées respectent les qualifications et les autorisations de chaque agent.</p></div></aside>
+        <div className={styles.sectionBottom}><p className={styles.disclaimer}>* Financement à 100 % sous réserve de validation du dossier et du devis par France Travail. Pour ce parcours, l’entreprise s’engage sur un CDI ou un CDD de 6 mois minimum à l’issue de la formation.</p><a href="#contact-entreprises" className={styles.deviceButton}>Étudier une POEI <Icon name="arrow" /></a></div>
       </div>
     </section>
 
@@ -218,17 +273,24 @@ export default function EntreprisesPage() {
         <div className={styles.deviceHeading}><span>Dispositif 03 / 03</span><span>Accompagner & faire évoluer</span></div>
         <div className={styles.detailHero}>
           <div className={styles.detailCopy}><h2 id="bts-title">Vos futurs chefs d’équipe.<br /><em>Le BTS MOS.</em></h2><p>Deux ans pour former votre prochain encadrant en Management opérationnel de la sécurité, avec une présence longue et structurée dans votre entreprise.</p><div className={styles.pillList}><span>Chef d’équipe</span><span>Superviseur</span><span>Responsable d’exploitation</span></div></div>
-          <div className={styles.costPanel}><span>Coût horaire moyen estimé</span><strong className={styles.btsCostFigure}>10,27 à 13,07 €<small>/ heure</small></strong><p>Selon la rémunération du candidat et les aides mobilisées.</p></div>
+          <div className={styles.costPanel}><span>Coût horaire moyen estimé</span><strong className={styles.btsCostFigure}>{euro(btsBudgets[0].hourly)} à {euro(btsBudgets[1].hourly)} €<small>/ heure</small></strong><p>Selon la rémunération du candidat et les aides mobilisées.</p></div>
         </div>
-        <div className={styles.btsMetrics}><div><strong>1 564 h</strong><span>en entreprise sur 2 ans</span></div><div><strong>15 j / 15 j</strong><span>entreprise et école</span></div><div><strong>100 %</strong><span>en entreprise pendant les étés</span></div><div><strong>OPCO AKTO</strong><span>financement de la formation</span></div></div>
+        <div className={styles.btsMetrics}><div><strong>{euro(btsHours, 0)} h</strong><span>en entreprise sur 2 ans</span></div><div><strong>15 j / 15 j</strong><span>entreprise et école</span></div><div><strong>100 %</strong><span>en entreprise l’été, hors examens</span></div><div><strong>0 €*</strong><span>de frais de scolarité, sous réserve d’accord OPCO</span></div></div>
         <div className={styles.yearsGrid}>
-          <article><span>Année 01</span><h3>Apprendre le métier.<br />Prendre sa place.</h3><p>Septembre 2026 à mai 2027 : 15 jours en entreprise et 15 jours à l’école chaque mois.</p><p><b>Juin à août 2027 :</b> 100 % en entreprise.</p><strong>858 h <small>en entreprise</small></strong></article>
-          <article><span>Année 02</span><h3>Gagner en autonomie.<br />Préparer l’encadrement.</h3><p>Septembre 2027 à août 2028 : alternance école et entreprise, puis examens en juin.</p><p><b>Juillet et août 2028 :</b> 100 % en entreprise.</p><strong>706 h <small>en entreprise</small></strong></article>
+          <article><span>Année 01</span><h3>Apprendre le métier.<br />Prendre sa place.</h3><p>Septembre 2026 à mai 2027 : 15 jours en entreprise et 15 jours à l’école chaque mois.</p><p><b>Juin à août 2027 :</b> 100 % en entreprise.</p><strong>856 h <small>en entreprise</small></strong></article>
+          <article><span>Année 02</span><h3>Gagner en autonomie.<br />Préparer l’encadrement.</h3><p>Septembre 2027 à mai 2028 : 15 jours en entreprise et 15 jours à l’école chaque mois. Juin 2028 : examens du BTS.</p><p><b>Juillet et août 2028 :</b> 100 % en entreprise.</p><strong>706 h <small>en entreprise</small></strong></article>
         </div>
         <details className={styles.programBlock}>
           <summary><span><Icon name="briefcase" /><span><strong>Comprendre le budget employeur</strong><small>Hypothèses de rémunération et de financement</small></span></span><b aria-hidden="true">+</b></summary>
-          <div className={styles.programContent}><div className={styles.costHypotheses}><div><span>Hypothèse basse</span><strong>783,90 € / mois</strong><p>En première année, puis 929,75 € / mois en deuxième année. Estimation totale après l’aide indiquée : 16 063 €.</p></div><div><span>Hypothèse haute</span><strong>966,21 € / mois</strong><p>En première année, puis 1 112,05 € / mois en deuxième année. Estimation totale après l’aide indiquée : 20 439 €.</p></div></div><p className={styles.disclaimer}>Ces estimations intègrent une hypothèse d’aide de 4 500 € en première année. Elles doivent être confirmées lors de l’étude employeur selon la rémunération, les aides en vigueur et les règles applicables.</p></div>
+          <div className={styles.programContent}>
+            <div className={styles.costHypotheses}>{btsBudgets.map((budget) => <div key={budget.name}><span>{budget.name}</span><strong>{euro(budget.yearOne)} € / mois</strong><p>En première année, puis <b>{euro(budget.yearTwo)} € / mois</b> en deuxième année.</p><p>Coût total estimé sur 2 ans, après aide : <b>{euro(budget.total)} €</b>.</p><strong>{euro(budget.hourly)} €/h</strong></div>)}</div>
+            <p className={styles.disclaimer}>Simulation sur 24 mois et {euro(btsHours, 0)} h en entreprise (856 h + 706 h), avec une hypothèse d’aide de 4 500 € en première année. Les montants dépendent du profil de l’apprenti, de la rémunération et des aides applicables à la date du contrat. * Prise en charge des frais de scolarité sous réserve de l’accord de l’OPCO.</p>
+          </div>
         </details>
+        <div className={styles.btsAdvantages}><div><Icon name="people" /><h3>Préparer vos futurs encadrants</h3><p>Encadrement des agents, transmission des consignes, plannings, qualité des prestations et relation client : votre alternant progresse au rythme de votre entreprise.</p></div><div><Icon name="shield" /><h3>Accompagner les démarches CNAPS</h3><p>Nous suivons les démarches nécessaires à l’obtention de la carte professionnelle. Les missions de sécurité sont confiées après délivrance des autorisations requises.</p></div><div><Icon name="document" /><h3>Simplifier le recrutement</h3><p>Contrat d’apprentissage, dossier OPCO et suivi de l’alternant : notre équipe coordonne les étapes avec vous.</p></div></div>
+        <div className={styles.comparisonTable} tabIndex={0} role="region" aria-label="Comparaison BTS MOS et recrutement classique">
+          <table><caption>Recruter aujourd’hui. Préparer votre encadrement de demain.</caption><thead><tr><th scope="col">Votre besoin</th><th scope="col">Alternant BTS MOS</th><th scope="col">Salarié classique</th></tr></thead><tbody><tr><th scope="row">Budget horaire</th><td>Environ 10 à 13 €/h selon simulation</td><td>15 à 20 €/h ou plus, repère indicatif de la brochure</td></tr><tr><th scope="row">Formation</th><td>BTS sur 2 ans, financement OPCO sous réserve d’accord</td><td>Formation et financements à étudier séparément</td></tr><tr><th scope="row">Évolution</th><td>Parcours vers les fonctions de chef d’équipe, superviseur et exploitation</td><td>Selon l’expérience, les compétences et le parcours du salarié</td></tr><tr><th scope="row">Accompagnement</th><td>Sourcing, démarches et suivi avec Intégrale Academy</td><td>Organisation du recrutement par l’employeur</td></tr></tbody></table>
+        </div>
         <div className={styles.sectionBottom}><p className={styles.disclaimer}>Un budget personnalisé est établi avec vous avant la mise en place du contrat.</p><a href="#contact-entreprises" className={styles.deviceButton}>Recruter un alternant BTS MOS <Icon name="arrow" /></a></div>
       </div>
     </section>
@@ -248,17 +310,29 @@ export default function EntreprisesPage() {
       <div className={styles.container}>
         <div className={styles.faqLayout}>
           <div><div className={styles.sectionHeading}><span className={styles.sectionEyebrow}>Les réponses à vos questions</span><h2 id="faq-title">Avant de<br /><em>se lancer.</em></h2></div><div className={styles.faqList}>{faqItems.map((item) => <details key={item.question}><summary><span>{item.question}</span><b aria-hidden="true">+</b></summary><div><p>{item.answer}</p></div></details>)}</div></div>
-          <aside id="contact-entreprises" className={styles.diagnosticCard} aria-labelledby="contact-name">
-            <span className={styles.ribbon}>Parlons de votre projet</span><h3>Vos prochains<br />recrutements<br />commencent ici.</h3><p>Vos missions, vos volumes, votre calendrier : construisons ensemble la solution adaptée à votre entreprise.</p>
-            <div className={styles.contactPerson}><div className={styles.contactAvatar} aria-hidden="true">AC</div><div><strong id="contact-name">Aurélie CHAUSSEZ</strong><span>Chargée des relations clients</span></div></div>
-            <address className={styles.contactDetails}>
-              <a href="tel:+33487830615"><Icon name="phone" /><span><small>Ligne directe</small><strong>04 87 83 06 15</strong></span></a>
-              <a href="tel:+33769390457"><Icon name="phone" /><span><small>Portable</small><strong>07 69 39 04 57</strong></span></a>
-              <a href="mailto:aurelie@integraleacademy.com"><Icon name="email" /><span><small>E-mail</small><strong>aurelie@integraleacademy.com</strong></span></a>
-            </address>
-            <a href="mailto:aurelie@integraleacademy.com?subject=Projet%20de%20recrutement%20en%20entreprise" className={styles.primaryButton}>Écrire à Aurélie <Icon name="arrow" /></a><small>Premier échange gratuit et sans engagement</small>
+          <aside id="brochure-entreprises" className={`${styles.diagnosticCard} ${styles.brochureCard}`} aria-labelledby="brochure-title">
+            <span className={styles.ribbon}>Le dossier entreprises</span><h3 id="brochure-title">Toutes nos solutions,<br />à portée de main.</h3>
+            <a href={brochureUrl} target="_blank" rel="noopener noreferrer" className={styles.brochureCover}><img src="/images/entreprises/brochure-entreprises-2026-10.webp" alt="Couverture de la brochure entreprises Intégrale Academy : recruter, former et faire évoluer vos futurs professionnels de la sécurité privée." width="1050" height="799" loading="lazy" /></a>
+            <p>Les trois dispositifs, les programmes, les calendriers et les simulations pour préparer votre prochain recrutement.</p>
+            <a href={brochureUrl} download="Brochure-Entreprises-Integrale-Academy.pdf" className={styles.primaryButton}>Télécharger la brochure <Icon name="document" /></a><small>PDF · 20 pages · dernière version</small>
           </aside>
         </div>
+      </div>
+    </section>
+
+    <section id="contact-entreprises" className={styles.contactsSection} aria-labelledby="contacts-title">
+      <div className={styles.container}>
+        <div className={styles.sectionHeading}><span className={styles.sectionEyebrow}>Parlons de votre projet</span><h2 id="contacts-title">Vos prochains recrutements<br /><em>commencent ici.</em></h2><p>Besoins ponctuels ou massifs, événementiel, sites sensibles, sécurité incendie ou protection rapprochée : construisons ensemble la solution adaptée à votre entreprise.</p></div>
+        <div className={styles.contactsGrid}>{contacts.map((contact) => <article key={contact.email} className={styles.contactCard}>
+          <div className={styles.contactPerson}><div className={styles.contactAvatar} aria-hidden="true">{contact.initials}</div><div><h3>{contact.name}</h3><span>{contact.role}</span></div></div>
+          <address className={styles.contactDetails}>
+            <a href={`tel:${contact.phoneHref}`}><Icon name="phone" /><span><small>Ligne directe</small><strong>{contact.phone}</strong></span></a>
+            <a href={`tel:${contact.mobileHref}`}><Icon name="phone" /><span><small>Portable</small><strong>{contact.mobile}</strong></span></a>
+            <a href={`mailto:${contact.email}`}><Icon name="email" /><span><small>E-mail</small><strong>{contact.email}</strong></span></a>
+          </address>
+          <a href={`mailto:${contact.email}?subject=Projet%20de%20recrutement%20en%20entreprise`} className={styles.primaryButton}>Écrire à {contact.firstName} <Icon name="arrow" /></a>
+        </article>)}</div>
+        <div className={styles.contactFooter}><span>Premier échange gratuit et sans engagement</span><a href="tel:+33422470768">Accueil : 04 22 47 07 68</a><a href="mailto:ecole@integraleacademy.com">ecole@integraleacademy.com</a></div>
       </div>
     </section>
   </div>;
