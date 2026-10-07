@@ -515,7 +515,7 @@ export function MissionAnimation({ variant, className = '', compact = false, ill
         <span className={styles.kicker}><i className={styles.statusDot} />{content.kicker}</span>
         <span className={styles.status}>{content.status}</span>
       </div>
-      <div className={styles.stage} aria-hidden="true">{illustration ? <ManualArtwork illustration={illustration} /> : scenes[variant]}</div>
+      <div className={styles.stage} aria-hidden="true">{illustration ? <ManualArtwork illustration={illustration} sizes="(max-width: 1023px) 92vw, 960px" /> : scenes[variant]}</div>
       <div className={styles.footer} aria-hidden="true">
         <strong>{content.title}</strong>
         <span>{content.caption}</span>
