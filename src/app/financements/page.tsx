@@ -48,7 +48,7 @@ export default function FinancementsPage() {
         <div className={styles.heroLayout}>
           <div className={styles.heroCopy}>
             <span className={styles.eyebrow}><span aria-hidden="true" /> Votre projet commence ici</span>
-            <h1 id="financements-title">Trouvez comment <span><em>financer</em> votre formation.</span></h1>
+            <h1 id="financements-title">Trouvez comment <em>financer votre formation.</em></h1>
             <p>À chaque parcours, ses possibilités. Identifiez les vôtres et avancez avec un conseiller à vos côtés.</p>
             <div className={styles.heroActions}>
               <Link href="#simulateur" className={styles.primaryButton}>Estimer mon reste à charge <Icon name="arrow" /></Link>
@@ -108,7 +108,7 @@ export default function FinancementsPage() {
     <section id="accompagnement" className={styles.supportSection} aria-labelledby="support-title">
       <div className={styles.container}>
         <div className={styles.sectionIntro}>
-          <div><span className={styles.eyebrow}>03 / À vos côtés</span><h2 id="support-title">Un projet à vous.<br />Des démarches <em>ensemble.</em></h2></div>
+          <div><span className={styles.eyebrow}>03 / À vos côtés</span><h2 id="support-title">Un projet à vous.<br /><em>Des démarches ensemble.</em></h2></div>
           <p>Pas besoin de maîtriser tous les dispositifs. Notre équipe vous aide à y voir clair, du premier échange à votre demande.</p>
         </div>
         <ol className={styles.steps}>
@@ -121,7 +121,7 @@ export default function FinancementsPage() {
 
     <section className={styles.faqSection} aria-labelledby="faq-title">
       <div className={`${styles.container} ${styles.faqLayout}`}>
-        <div className={styles.faqIntro}><span className={styles.eyebrow}>Les réponses utiles</span><h2 id="faq-title">Encore une <br />question ?</h2><p>Quelques repères avant de vous lancer.</p><Link href="#contact-financement" className={styles.textLink}>Parlons-en ensemble <Icon name="arrow" /></Link></div>
+        <div className={styles.faqIntro}><span className={styles.eyebrow}>Les réponses utiles</span><h2 id="faq-title">Encore une <br /><em>question ?</em></h2><p>Quelques repères avant de vous lancer.</p><Link href="#contact-financement" className={styles.textLink}>Parlons-en ensemble <Icon name="arrow" /></Link></div>
         <div className={styles.faqList}>
           {faqItems.map((item) => <details key={item.question}>
             <summary>{item.question}<span aria-hidden="true">+</span></summary>

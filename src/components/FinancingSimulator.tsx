@@ -113,7 +113,7 @@ function EditorialSimulator({
       <header className={styles.header}>
         <div>
           <p className={styles.eyebrow}>02 / Votre estimation</p>
-          <h2 id={`${id}-title`}>Estimez votre reste à charge.</h2>
+          <h2 id={`${id}-title`}>Estimez votre <em>reste à charge.</em></h2>
         </div>
         <p className={styles.introduction}>Votre formation, votre solde CPF. <br />Quelques chiffres pour y voir plus clair.</p>
       </header>
