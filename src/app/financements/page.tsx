@@ -48,7 +48,7 @@ export default function FinancementsPage() {
         <div className={styles.heroLayout}>
           <div className={styles.heroCopy}>
             <span className={styles.eyebrow}><span aria-hidden="true" /> Votre projet commence ici</span>
-            <h1 id="financements-title">Trouvez comment <span>financer votre formation.</span></h1>
+            <h1 id="financements-title">Trouvez comment <span><em>financer</em> votre formation.</span></h1>
             <p>À chaque parcours, ses possibilités. Identifiez les vôtres et avancez avec un conseiller à vos côtés.</p>
             <div className={styles.heroActions}>
               <Link href="#simulateur" className={styles.primaryButton}>Estimer mon reste à charge <Icon name="arrow" /></Link>
@@ -69,7 +69,7 @@ export default function FinancementsPage() {
     <section id="solutions" className={styles.solutionsSection} aria-labelledby="solutions-title">
       <div className={styles.container}>
         <div className={styles.sectionIntro}>
-          <div><span className={styles.eyebrow}>01 / Les possibilités</span><h2 id="solutions-title">Plusieurs chemins.<br />Un même projet.</h2></div>
+          <div><span className={styles.eyebrow}>01 / Les possibilités</span><h2 id="solutions-title">Plusieurs chemins.<br /><em>Un même projet.</em></h2></div>
           <p>Découvrez les principaux dispositifs. Nous vérifions ensuite avec vous ceux qui correspondent à votre situation.</p>
         </div>
         <div className={styles.fundingGrid}>
@@ -108,7 +108,7 @@ export default function FinancementsPage() {
     <section id="accompagnement" className={styles.supportSection} aria-labelledby="support-title">
       <div className={styles.container}>
         <div className={styles.sectionIntro}>
-          <div><span className={styles.eyebrow}>03 / À vos côtés</span><h2 id="support-title">Un projet à vous.<br />Des démarches ensemble.</h2></div>
+          <div><span className={styles.eyebrow}>03 / À vos côtés</span><h2 id="support-title">Un projet à vous.<br />Des démarches <em>ensemble.</em></h2></div>
           <p>Pas besoin de maîtriser tous les dispositifs. Notre équipe vous aide à y voir clair, du premier échange à votre demande.</p>
         </div>
         <ol className={styles.steps}>
@@ -134,7 +134,7 @@ export default function FinancementsPage() {
     <section id="contact-financement" className={styles.contactSection} aria-labelledby="contact-title">
       <div className={styles.container}>
         <div className={styles.contactPanel}>
-          <div><span className={styles.eyebrow}>Le prochain pas, ensemble</span><h2 id="contact-title">Votre projet mérite<br />une conversation.</h2><p>Expliquez-nous votre situation. Cassandre vous accompagne pour faire le point sur les possibilités de financement.</p></div>
+          <div><span className={styles.eyebrow}>Le prochain pas, ensemble</span><h2 id="contact-title">Votre projet mérite<br /><em>une conversation.</em></h2><p>Expliquez-nous votre situation. Cassandre vous accompagne pour faire le point sur les possibilités de financement.</p></div>
           <div className={styles.contactDetails}>
             <div className={styles.contactPerson}><span className={styles.contactInitial} aria-hidden="true">C.</span><div><strong>Cassandre</strong><span>Votre interlocutrice chez Intégrale Academy</span></div></div>
             <Link href={appointmentFormUrl} className={styles.primaryButton}>Parler de mon financement <Icon name="arrow" /></Link>
