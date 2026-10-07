@@ -59,8 +59,7 @@
 .heroArtwork { overflow: hidden; border: 1px solid #6ee7b780; border-radius: 2rem; background: #e8f1f9; box-shadow: 0 25px 75px #0004; transform: rotate(1deg); }
 .heroBooking { margin-bottom: 1.5rem; }
 .sessionOverview, .sessionDetails, .sessionActions { min-width: 0; }
-.cardArtwork { height: 230px; overflow: hidden; border-radius: 1.1rem; }
-.skillArtwork { height: 170px; overflow: hidden; border-radius: 1.1rem; }
+.cardArtwork, .skillArtwork { aspect-ratio: 4 / 3; overflow: hidden; border-radius: 1.1rem; }
 
 @media (min-width: 1024px) {
   .heroContent { grid-template-columns: minmax(0, 1.2fr) minmax(0, .85fr); gap: clamp(2rem, 4vw, 4rem); }
@@ -131,12 +130,11 @@
 }
 
 .practiceVisual {
-  height: 210px;
+  aspect-ratio: 4 / 3;
   margin-top: auto;
   overflow: hidden;
   border: 1px solid rgba(110, 231, 183, .6);
   border-radius: 1.2rem;
-  padding: .35rem;
   background: linear-gradient(145deg, #f0fdf7, #d1fae5);
 }
 
