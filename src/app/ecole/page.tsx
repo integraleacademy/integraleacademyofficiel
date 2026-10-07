@@ -49,7 +49,7 @@ export default function Page() {
       </div>
       <nav className={`${styles.container} ${styles.chapterNav}`} aria-label="Découvrir notre école">
         <span>FAISONS CONNAISSANCE</span>
-        <a href="#equipe"><span>01</span> L’équipe</a><a href="#campus"><span>02</span> Le lieu</a><a href="#pedagogie"><span>03</span> La pédagogie</a><a href="#agrements"><span>04</span> Nos engagements</a>
+        <a href="#clement-vaillant"><span>01</span> Le fondateur</a><a href="#equipe"><span>02</span> L’équipe</a><a href="#campus"><span>03</span> Le lieu</a><a href="#pedagogie"><span>04</span> La pédagogie</a><a href="#agrements"><span>05</span> Nos engagements</a>
       </nav>
     </section>
 
@@ -59,29 +59,50 @@ export default function Page() {
       </div>
     </section>
 
+    <section id="clement-vaillant" className={`${styles.section} ${styles.founderSection}`} aria-labelledby="founder-title">
+      <div className={`${styles.container} ${styles.founderGrid}`}>
+        <div className={styles.founderCopy}>
+          <p className={styles.eyebrow}>01 / Le fondateur</p>
+          <h2 id="founder-title">Clément Vaillant</h2>
+          <p className={styles.founderRole}>Fondateur & directeur général</p>
+          <p className={styles.founderLead}>Le terrain comme point de départ. <em>L’humain comme fil conducteur.</em></p>
+          <p>Entrepreneur engagé dans la formation professionnelle, Clément Vaillant a construit son parcours au croisement de la sécurité privée, de la gestion d’équipes, de la communication et de la formation. Son expérience, acquise dans des environnements exigeants et réglementés, l’a conduit des fonctions opérationnelles à la coordination puis à la direction de projets et d’équipes.</p>
+          <p>Titulaire d’un Master 2 en communication et stratégies d’image, il associe culture du terrain, pilotage d’entreprise et amélioration continue des parcours proposés par Intégrale Academy. Sa conviction : faire grandir l’école en conservant l’exigence, la proximité et un cadre clair pour chaque apprenant.</p>
+          <div className={styles.founderValues}><span>Culture du terrain</span><span>Accompagnement de proximité</span></div>
+          <a href="https://fr.linkedin.com/in/vaillantclement" target="_blank" rel="noopener noreferrer" className={styles.textLink}>Découvrir son parcours sur LinkedIn <Arrow diagonal /></a>
+        </div>
+        <figure className={styles.packPhoto}>
+          <Image src="/images/welcome-pack/carnet-bienvenue.webp" alt="La page de bienvenue du carnet Intégrale Academy, signée Clément Vaillant" width={1092} height={1531} sizes="(max-width: 390px) calc(100vw - 32px), (max-width: 800px) 330px, 360px" />
+          <figcaption>Le mot de bienvenue de Clément Vaillant · Carnet Intégrale Academy</figcaption>
+        </figure>
+      </div>
+    </section>
+
     <section id="equipe" className={styles.section} aria-labelledby="team-title">
       <div className={styles.container}>
         <div className={styles.sectionHeading}>
-          <div><p className={styles.eyebrow}>01 / Les personnes derrière l’école</p><h2 id="team-title">On avance mieux<br /><em>bien entouré.</em></h2></div>
+          <div><p className={styles.eyebrow}>02 / Les personnes derrière l’école</p><h2 id="team-title">On avance mieux<br /><em>bien entouré.</em></h2></div>
           <p>Avant, pendant et après la formation, des interlocuteurs identifiés vous accompagnent. Voici les personnes à qui vous pouvez vous adresser.</p>
         </div>
-        <div className={styles.teamGrid}>
-          {team.map((person, index) => <article className={styles.person} key={person.name}>
-            <p className={styles.personTop}><span>0{index + 1}</span>{person.specialty}</p><h3>{person.name}</h3><p className={styles.role}>{person.role}</p><p className={styles.mission}>{person.mission}</p>
-          </article>)}
+        <div className={styles.teamLayout}>
+          <figure className={styles.teamIllustration}>
+            <Image src="/images/formation-scenes-manuel/aps-arrivee.webp" alt="Illustration de l’accueil et de l’accompagnement d’apprenants à leur arrivée en formation APS" width={1536} height={1024} sizes="(max-width: 800px) 100vw, 42vw" />
+            <figcaption>Un accompagnement dès votre arrivée.</figcaption>
+          </figure>
+          <div className={styles.teamGrid}>
+            {team.map((person, index) => <article className={styles.person} key={person.name}>
+              <p className={styles.personTop}><span>0{index + 1}</span>{person.specialty}</p><h3>{person.name}</h3><p className={styles.role}>{person.role}</p><p className={styles.mission}>{person.mission}</p>
+            </article>)}
+          </div>
         </div>
         <div className={styles.teamBottom}><p>À leurs côtés, des formateurs, évaluateurs et professionnels du terrain interviennent selon les parcours.</p><a href={appointmentFormUrl} className={styles.textLink}>Échanger avec l’équipe <Arrow diagonal /></a></div>
-        <article className={styles.founder}>
-          <div><p className={styles.eyebrow}>Une école, une conviction</p><h3>Le terrain comme point de départ.<br /><em>L’humain comme fil conducteur.</em></h3></div>
-          <div><p>Fondateur et directeur général, <strong>Clément Vaillant</strong> réunit une expérience en sécurité privée, management, communication et formation. Sa conviction : un cadre exigeant et un accompagnement de proximité vont de pair.</p><a href="https://fr.linkedin.com/in/vaillantclement" target="_blank" rel="noopener noreferrer" className={styles.textLink}>Découvrir son parcours <Arrow diagonal /></a></div>
-        </article>
       </div>
     </section>
 
     <section id="campus" className={`${styles.section} ${styles.campusSection}`} aria-labelledby="campus-title">
       <div className={styles.container}>
         <div className={styles.sectionHeading}>
-          <div><p className={styles.eyebrow}>02 / Un lieu pour votre prochain chapitre</p><h2 id="campus-title">Ancrés sur<br /><em>la Côte d’Azur.</em></h2></div>
+          <div><p className={styles.eyebrow}>03 / Un lieu pour votre prochain chapitre</p><h2 id="campus-title">Ancrés sur<br /><em>la Côte d’Azur.</em></h2></div>
           <p>Notre école principale, à Puget-sur-Argens, réunit les espaces pour apprendre, s’entraîner et échanger. Un cadre accessible, pensé pour le quotidien des apprenants.</p>
         </div>
         <div className={styles.campusLayout}>
@@ -105,12 +126,12 @@ export default function Page() {
 
     <section id="pedagogie" className={styles.section} aria-labelledby="approach-title">
       <div className={`${styles.container} ${styles.approachGrid}`}>
-        <figure className={styles.packPhoto}>
-          <Image src="/images/welcome-pack/carnet-bienvenue.webp" alt="La page de bienvenue du carnet Intégrale Academy, signée Clément Vaillant" width={1092} height={1531} sizes="(max-width: 480px) calc(100vw - 40px), 440px" />
-          <figcaption>Le carnet de bienvenue · Pack Intégrale APS</figcaption>
+        <figure className={styles.approachIllustration}>
+          <Image src="/images/formation-scenes-manuel/sst-pedagogie.webp" alt="Illustration d’un atelier de premiers secours encadré par des formateurs" width={1536} height={1024} sizes="(max-width: 800px) 100vw, 45vw" />
+          <figcaption>Apprendre, s’entraîner, puis gagner en assurance.</figcaption>
         </figure>
         <div className={styles.approachCopy}>
-          <p className={styles.eyebrow}>03 / Notre manière de former</p><h2 id="approach-title">Du concret.<br />De l’exigence.<br /><em>Et de l’attention.</em></h2>
+          <p className={styles.eyebrow}>04 / Notre manière de former</p><h2 id="approach-title">Du concret.<br />De l’exigence.<br /><em>Et de l’attention.</em></h2>
           <div className={styles.approachPoints}>
             <div><span>01</span><div><h3>Apprendre auprès de professionnels</h3><p>Des intervenants issus du terrain et des situations reliées aux métiers que vous préparez.</p></div></div>
             <div><span>02</span><div><h3>Pratiquer dans un cadre structuré</h3><p>Des programmes, des mises en situation et des évaluations adaptés aux exigences de chaque formation.</p></div></div>
@@ -119,7 +140,20 @@ export default function Page() {
           <Link href="/formations-securite/aps" className={styles.textLink}>Découvrir la formation APS <Arrow diagonal /></Link>
         </div>
       </div>
-      <div className={`${styles.container} ${styles.domains}`}><p className={styles.eyebrow}>Plusieurs voies. La même exigence.</p><div>{[['Sécurité privée', '/formations-securite'], ['Sécurité incendie', '/formations-securite/ssiap'], ['Chauffeur VTC', '/vtc'], ['BTS en alternance', '/bts']].map(([label, href]) => <Link key={label} href={href}>{label}<Arrow diagonal /></Link>)}</div></div>
+      <div className={`${styles.container} ${styles.domains}`}>
+        <p className={styles.eyebrow}>Plusieurs voies. La même exigence.</p>
+        <div className={styles.domainGrid}>
+          {[
+            ['Sécurité privée', '/formations-securite', 'aps-atelier-radio.webp', 'Illustration d’un atelier de communication radio en formation à la sécurité privée'],
+            ['Sécurité incendie', '/formations-securite/ssiap', 'ssiap-1-galerie-ssi.webp', 'Illustration d’un exercice sur un système de sécurité incendie en formation SSIAP'],
+            ['Chauffeur VTC', '/vtc', 'vtc-parcours.webp', 'Illustration du parcours de formation au métier de chauffeur VTC'],
+            ['BTS en alternance', '/bts', 'bts-ndrc-parcours.webp', 'Illustration du parcours d’apprenants en BTS Négociation et Digitalisation de la Relation Client'],
+          ].map(([label, href, image, alt]) => <Link key={label} href={href} className={styles.domainCard}>
+            <Image src={`/images/formation-scenes-manuel/${image}`} alt={alt} width={1536} height={1024} sizes="(max-width: 480px) 100vw, (max-width: 800px) 50vw, 25vw" />
+            <span className={styles.domainCardBody}><span>{label}</span><Arrow diagonal /></span>
+          </Link>)}
+        </div>
+      </div>
     </section>
 
     <section id="histoire" className={`${styles.section} ${styles.storySection}`} aria-labelledby="story-title">
@@ -144,7 +178,7 @@ export default function Page() {
 
     <section id="agrements" className={styles.certifications} aria-labelledby="certifications-title">
       <div className={styles.container}>
-        <div className={styles.certificationIntro}><p className={styles.eyebrow}>04 / Nos engagements</p><h2 id="certifications-title">Un cadre sérieux. Des références accessibles.</h2></div>
+        <div className={styles.certificationIntro}><p className={styles.eyebrow}>05 / Nos engagements</p><h2 id="certifications-title">Un cadre sérieux. Des références accessibles.</h2></div>
         <div className={styles.certificationStrip}><span>Qualiopi<small>Certification qualité</small></span><span>CNAPS<small>Autorisation de formation</small></span><span>CFA · UAI<small>Formation en alternance</small></span></div>
         <details id="references" className={styles.references}><summary>Consulter les certifications et références administratives<span className={styles.plus} aria-hidden="true">+</span></summary><dl>{certifications.map(([title, detail]) => <div key={title}><dt>{title}</dt><dd>{detail}</dd></div>)}</dl></details>
       </div>

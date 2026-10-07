@@ -56,7 +56,7 @@
 .studyCoverLabel { padding: 12px 9px 4px; font-size: 7px; font-weight: 850; text-transform: uppercase; letter-spacing: .07em; }
 .studyCover > strong { padding: 0 9px 7px; font-size: 27px; font-weight: 950; line-height: .95; letter-spacing: -.045em; }
 .studyCoverArtwork { position: relative; flex: 1; min-height: 0; }
-.studyCoverArtwork img { object-fit: cover; }
+.studyCoverArtwork img { object-fit: contain; object-position: center; }
 .studyCoverBrand { padding: 7px 9px; font-size: 8px; font-weight: 900; line-height: 1.15; text-align: right; }
 .studyCoverBrand b { color: var(--pack-accent); }
 .dialog { position: fixed; inset: 0; margin: auto; width: min(1200px, calc(100% - 32px)); max-width: none; max-height: calc(100dvh - 32px); padding: 0; border: 1px solid #e0d6c3; border-radius: 16px; background: #f7f3eb; color: #22251f; box-shadow: 0 20px 90px #0007; }
