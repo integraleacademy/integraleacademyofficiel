@@ -1,3 +1,4 @@
+import viewportStyles from './TrainingHeroViewport.module.css';
 import { originalArtwork } from '@/data/originalArtwork';
 import { AcademyWatermark } from '@/components/AcademyWatermark';
 import { CourseJourney } from '@/components/CourseJourney';
@@ -95,7 +96,7 @@ function HeroSession({ sessions }: { sessions: any[] }) {
   const seatAvailability = getSessionSeatAvailability(next, 12);
 
   return <aside className={`${styles.sessionCard} rounded-[2rem] border border-white/80 bg-[#FFFDF8] p-5 text-academy-ink sm:p-6 lg:p-7`}>
-    <div className={styles.sessionOverview}>
+    <div data-session-overview className={styles.sessionOverview}>
     <div className="flex flex-wrap items-center gap-2">
       <span className="rounded-full bg-emerald-50 px-3 py-1.5 text-[.62rem] font-black uppercase tracking-[.16em] text-emerald-800 ring-1 ring-emerald-200">Prochaine session</span>
       <span className={`rounded-full border px-3 py-1.5 text-[.68rem] font-black ${seatAvailability.badgeClassName}`}>{next ? seatAvailability.label : 'Dates à confirmer'}</span>
@@ -103,7 +104,7 @@ function HeroSession({ sessions }: { sessions: any[] }) {
     <h2 className="mt-5 text-3xl font-black tracking-[-.04em] sm:text-4xl">{next ? <>{formatDate(next.startDate)} <span className="text-emerald-700">→</span><br />{formatDate(next.endDate)}</> : 'Prochaine rentrée à confirmer'}</h2>
     <p className="mt-2 text-sm font-extrabold text-academy-muted">{next?.examDate ? `Examen final le ${formatDate(next.examDate)}` : 'Contactez-nous pour recevoir les prochaines dates.'}</p>
     </div>
-    <div className={`${styles.sessionDetails} mt-5 grid grid-cols-2 gap-2.5`}>
+    <div data-session-details className={`${styles.sessionDetails} mt-5 grid grid-cols-2 gap-2.5`}>
       {[
         ['Durée', a3pConfig.durationHours],
         ['Tarif', formatTrainingPrice(next, a3pConfig.priceLabel)],
@@ -111,7 +112,7 @@ function HeroSession({ sessions }: { sessions: any[] }) {
         ['Modalité', a3pConfig.modality],
       ].map(([key, value]) => <div key={key} className="rounded-2xl border border-[#E8DECE] bg-[#F5EFE4] p-3.5"><p className="text-[.6rem] font-black uppercase tracking-[.16em] text-[#837968]">{key}</p><p className="mt-1 text-sm font-black sm:text-base">{value}</p></div>)}
     </div>
-    <div className={styles.sessionActions}>
+    <div data-session-actions className={styles.sessionActions}>
     <CTA href={registrationHref} variant={isFull ? 'light' : 'green'} className={`mt-5 w-full ${isFull ? '' : styles.heroPrimaryAction}`}>{isFull ? 'Être alerté de la prochaine session' : 'Réserver ma place →'}</CTA>
     <p className="mt-3 text-center text-xs font-bold text-academy-muted">Un conseiller vérifie votre dossier avant validation.</p>
     <CompactAssistant />
@@ -202,11 +203,11 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
       ],
     }, "/formations-securite/a3p-apr") }} />
 
-    <section className={`${styles.hero} px-4 text-white`}>
+    <section className={`${styles.hero} ${viewportStyles.hero} px-4 text-white`}>
         <AcademyWatermark tone="green" surface="dark" />
       <div className={styles.heroOverlay} />
-      <div className={`page-container ${styles.heroContent}`}>
-        <div className="max-w-4xl">
+      <div data-hero-content className={`page-container ${styles.heroContent}`}>
+        <div data-hero-copy className="max-w-4xl">
           <span className={`${styles.heroBadge} inline-flex items-center gap-2 rounded-full border border-emerald-300/45 bg-emerald-950/35 px-4 py-2 text-[.68rem] font-black uppercase tracking-[.2em] text-emerald-100 backdrop-blur-md`}><span className="h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-[0_0_16px_rgba(52,211,153,.95)]" />TFP A3P · RNCP 38002 · Niveau 4</span>
           <h1 className={`${styles.heroTitle} mt-7 max-w-4xl text-[2.65rem] font-black leading-[.98] tracking-[-.055em] sm:text-[3.75rem] lg:text-[4.75rem] xl:text-[5.15rem]`}>Formation agent de protection rapprochée</h1>
           <p className={`${styles.heroTagline} mt-5 max-w-3xl text-2xl font-black tracking-[-.035em] text-white sm:text-3xl`}>Apprenez le métier <span className={styles.heroTitleAccent}>sur le terrain.</span></p>
@@ -214,11 +215,11 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap"><CTA href={a3pContact('dossier-a3p')} variant="green" className={styles.heroPrimaryAction}>Recevoir le dossier A3P →</CTA><CTA href={a3pConfig.advisor.phoneHref} variant="outline">Parler à un conseiller</CTA></div>
           <div className="mt-8 flex flex-wrap gap-2 text-xs font-bold text-white/80">{[a3pConfig.durationShort, 'CNAPS accompagné', 'Financements possibles', 'Hébergement sur place'].map(label => <span key={label} className="rounded-full border border-emerald-200/25 bg-emerald-950/25 px-3 py-2 backdrop-blur">✓ {label}</span>)}</div>
         </div>
-        <div className={styles.heroArtwork}><ManualArtwork illustration={a3pArtwork.protection} priority /></div>
+        <div data-hero-artwork className={styles.heroArtwork}><ManualArtwork illustration={a3pArtwork.protection} priority /></div>
       </div>
-      <div className={`page-container ${styles.heroBooking}`}><HeroSession sessions={sessions} /></div>
+      <div data-hero-booking className={`page-container ${styles.heroBooking}`}><HeroSession sessions={sessions} /></div>
       <div className="page-container">
-        <div className={`${styles.heroFacts} relative grid overflow-hidden rounded-[1.6rem] border border-white/15 bg-[#0A1421]/85 text-white backdrop-blur-xl sm:grid-cols-2 lg:grid-cols-6`}>
+        <div data-hero-facts className={`${styles.heroFacts} relative grid overflow-hidden rounded-[1.6rem] border border-white/15 bg-[#0A1421]/85 text-white backdrop-blur-xl sm:grid-cols-2 lg:grid-cols-6`}>
           {heroFacts.map(([key, value, detail]) => <div key={key} className="border-b border-white/10 p-4 last:border-b-0 sm:border-r lg:border-b-0"><p className="text-[.58rem] font-black uppercase tracking-[.18em] text-white/42">{key}</p><p className="mt-1 font-black text-white">{value}</p><p className="mt-1 text-[.68rem] font-semibold leading-4 text-white/48">{detail}</p></div>)}
         </div>
       </div>

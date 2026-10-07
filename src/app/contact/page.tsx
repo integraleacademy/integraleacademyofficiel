@@ -1,3 +1,4 @@
+import compactHeroStyles from '@/components/CompactHero.module.css';
 import { createPageMetadata } from '@/lib/seo';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
@@ -75,12 +76,12 @@ export default async function Page({ searchParams }: { searchParams: Promise<Rec
   const requestHref = informationRequestHref(await searchParams);
   return (
     <div className="overflow-hidden">
-      <section className="relative isolate overflow-hidden bg-[#101a29] px-4 py-14 text-white sm:py-20 lg:py-24">
+      <section className={`${compactHeroStyles.hero} relative isolate overflow-hidden bg-[#101a29] px-4 py-14 text-white sm:py-20 lg:py-24`}>
         <div className="absolute inset-0 -z-20 bg-[radial-gradient(circle_at_8%_10%,rgba(234,183,53,.20),transparent_30%),radial-gradient(circle_at_92%_82%,rgba(234,183,53,.11),transparent_28%),linear-gradient(135deg,#101a29_0%,#111d30_58%,#162339_100%)]" />
         <div className="absolute -left-44 top-0 -z-10 h-[32rem] w-[32rem] rounded-full border border-academy-gold/15 bg-academy-gold/[.035]" />
         <div className="absolute -right-52 -top-44 -z-10 h-[38rem] w-[38rem] rounded-full bg-academy-gold/[.065]" />
 
-        <div className="page-container grid gap-10 lg:grid-cols-[1.06fr_.94fr] lg:items-center">
+        <div className={`${compactHeroStyles.layout} page-container grid gap-10 lg:grid-cols-[1.06fr_.94fr] lg:items-center`}>
           <div className="reveal">
             <span className="inline-flex items-center gap-2 rounded-full border border-academy-gold/35 bg-academy-gold/10 px-4 py-2 text-[10px] font-black uppercase tracking-[.2em] text-academy-gold">
               <Icon name="chat" className="h-4 w-4" />
@@ -152,7 +153,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<Rec
           </div>
         </div>
 
-        <div className="page-container mt-12 grid grid-cols-2 gap-5 border-t border-white/10 pt-7 lg:grid-cols-4">
+        <div className={`${compactHeroStyles.facts} page-container mt-12 grid grid-cols-2 gap-5 border-t border-white/10 pt-7 lg:grid-cols-4`}>
           {[
             ['Depuis 2018', 'une expérience construite dans la durée'],
             ['3 implantations', 'Côte d’Azur, Paris et Centre France'],

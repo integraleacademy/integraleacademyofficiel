@@ -113,3 +113,17 @@
     opacity: .13;
   }
 }
+
+
+/* Keep the opening content readable on shorter desktop windows. */
+@media (min-width: 1024px) and (max-height: 900px) {
+  .hero { padding: clamp(20px, 4vh, 36px) 0 24px; }
+  .hero h1 { font-size: clamp(38px, 6.3vh, 50px); margin-top: 16px; }
+  .heroCopy > p { margin-top: 18px; line-height: 1.5; }
+  .heroActions { margin-top: 20px; }
+  .heroProofs { margin-top: 16px; }
+  .assistantDock { margin-top: 24px; }
+  .assistantDock > aside { padding: 18px; }
+  .assistantDock [data-home-formation-options] { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .assistantDock [data-home-formation-options] > button:last-child { grid-column: auto; }
+}

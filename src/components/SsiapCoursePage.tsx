@@ -1,3 +1,4 @@
+import compactHeroStyles from '@/components/CompactHero.module.css';
 import { AcademyWatermark } from '@/components/AcademyWatermark';
 import { CourseJourney } from '@/components/CourseJourney';
 import { IntegraleWelcomePack } from '@/components/IntegraleWelcomePack';
@@ -173,7 +174,7 @@ export function SsiapCoursePage({ config, sessions = [] }: { config: SsiapCourse
           assistantKey={heroKey}
         />
       </TrainingHero> : (
-      <section className="relative isolate overflow-hidden bg-[#0D1725] px-4 pb-9 pt-10 text-white sm:pt-14 lg:pt-16">
+      <section className={`${compactHeroStyles.hero} relative isolate overflow-hidden bg-[#0D1725] px-4 pb-9 pt-10 text-white sm:pt-14 lg:pt-16`}>
         <AcademyWatermark tone="red" surface="dark" />
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_12%_12%,rgba(248,113,113,.25),transparent_31%),radial-gradient(circle_at_88%_20%,rgba(220,38,38,.20),transparent_29%),linear-gradient(135deg,#080D15_0%,#121B2A_55%,#2A0F12_100%)]" />
         <div className="absolute -left-20 top-16 -z-10 h-72 w-72 rounded-full bg-red-500/20 blur-3xl" />
@@ -184,7 +185,7 @@ export function SsiapCoursePage({ config, sessions = [] }: { config: SsiapCourse
             <span className="text-red-200">{config.label}</span>
           </nav>
 
-          <div className="grid items-center gap-8 lg:grid-cols-[1.08fr_.92fr] lg:gap-12">
+          <div className={`${compactHeroStyles.layout} grid items-center gap-8 lg:grid-cols-[1.08fr_.92fr] lg:gap-12`}>
             <div>
               <span className="inline-flex items-center gap-2 rounded-full border border-red-300/35 bg-red-400/10 px-4 py-2 text-[.68rem] font-black uppercase tracking-[.2em] text-red-200">
                 <span className="h-2.5 w-2.5 rounded-full bg-red-400 shadow-[0_0_16px_rgba(248,113,113,.9)]" />
@@ -220,7 +221,7 @@ export function SsiapCoursePage({ config, sessions = [] }: { config: SsiapCourse
             </aside>
           </div>
 
-          <div className="mt-10 grid overflow-hidden rounded-[1.6rem] border border-white/10 bg-white/7 sm:grid-cols-2 lg:grid-cols-6">
+          <div className={`${compactHeroStyles.courseFacts} mt-10 grid overflow-hidden rounded-[1.6rem] border border-white/10 bg-white/7 sm:grid-cols-2 lg:grid-cols-6`}>
             {facts.map(([key, value]) => (
               <div key={key} className="border-b border-white/10 p-4 last:border-b-0 sm:border-r lg:border-b-0">
                 <p className="text-[.58rem] font-black uppercase tracking-[.18em] text-white/42">{key}</p>

@@ -282,12 +282,12 @@ export function BtsMcoReferencePage() {
         }}
       />
 
-      <section className="relative isolate overflow-hidden bg-[#0A1725] px-4 pb-8 pt-10 text-white sm:pt-14 lg:pt-16">
+      <section className={`${btsStyles.hero} relative isolate overflow-hidden bg-[#0A1725] px-4 pb-8 pt-10 text-white sm:pt-14 lg:pt-16`}>
         <AcademyWatermark tone="bts" surface="dark" />
         <div className={`absolute inset-0 -z-10 ${btsStyles.heroGlow}`} />
         <div className="absolute inset-0 -z-10 opacity-25 [background-image:linear-gradient(rgba(255,255,255,.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.08)_1px,transparent_1px)] [background-size:48px_48px]" />
         <div className="page-container">
-          <div className="grid items-center gap-9 lg:grid-cols-[1.08fr_.92fr] lg:gap-12">
+          <div className={`${btsStyles.heroLayout} grid items-center gap-9 lg:grid-cols-[1.08fr_.92fr] lg:gap-12`}>
             <div>
               <span className="inline-flex items-center gap-2 rounded-full border border-bts-300/35 bg-white/8 px-4 py-2 text-[.66rem] font-black uppercase tracking-[.18em] text-bts-100 backdrop-blur">
                 <span className="h-2.5 w-2.5 rounded-full bg-bts-200 shadow-[0_0_16px_rgb(var(--bts-300)/.7)]" />
@@ -314,7 +314,7 @@ export function BtsMcoReferencePage() {
             <div className={btsStyles.heroArtwork}><ManualArtwork illustration={btsHeroArtwork.mco} priority /></div>
           </div>
           <HeroRoadmap />
-          <div className="mt-10 grid overflow-hidden rounded-[1.6rem] border border-white/10 bg-white/7 sm:grid-cols-2 lg:grid-cols-4">
+          <div className={`${btsStyles.heroFacts} mt-10 grid overflow-hidden rounded-[1.6rem] border border-white/10 bg-white/7 sm:grid-cols-2 lg:grid-cols-4`}>
             {[
               ['Durée', '2 ans en alternance'],
               ['Alternance', btsRhythms.MCO.shortLabel],

@@ -184,7 +184,7 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
         <p className="mt-4 inline-flex items-center gap-2 text-xs font-bold text-white/60"><span className="status-dot" aria-hidden="true" /> Disponible maintenant</p>
       </div>
       <div>
-        <div className="grid grid-cols-2 gap-2.5 xl:grid-cols-5">
+        <div className="grid grid-cols-2 gap-2.5 xl:grid-cols-5" data-home-formation-options>
           {formations.map((formation,index) => <button key={formation.key} type="button" onClick={() => chooseFormation(formation.key)} className="group flex min-h-24 flex-col rounded-[1.25rem] border border-white/10 bg-white/[.055] p-3 text-left transition last:col-span-2 hover:-translate-y-1 hover:border-academy-gold/50 hover:bg-white/[.09] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-academy-gold sm:min-h-28 sm:p-4 xl:last:col-span-1">
             <span className="text-[10px] font-black text-academy-gold">{String(index + 1).padStart(2,'0')}</span>
             <span className="mt-auto text-sm font-black leading-5 text-white">{formation.homeTitle}</span>

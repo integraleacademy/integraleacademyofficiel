@@ -197,3 +197,17 @@
   .primaryButton, .profileChoices button, .faqList summary > span { transition: none; }
   .primaryButton:hover { transform: none; }
 }
+
+
+/* Keep the opening content readable on shorter desktop windows. */
+@media (min-width: 1024px) and (max-height: 900px) {
+  .hero { padding-top: clamp(24px, 4vh, 36px); }
+  .heroLayout { padding-bottom: 24px; gap: 3rem; }
+  .heroCopy h1 { font-size: clamp(3rem, 6.8vh, 4.3rem); }
+  .heroCopy > p:not(.heroNote) { margin-top: 1.3rem; }
+  .heroActions { margin-top: 1.5rem; }
+  .profilePanel { padding: 18px; }
+  .profileChoices { margin-top: 16px; }
+  .profileChoices button { min-height: 58px; padding-block: 9px; }
+  .proofBar { padding-block: 16px; }
+}

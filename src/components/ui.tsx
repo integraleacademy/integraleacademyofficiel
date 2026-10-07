@@ -8,6 +8,7 @@ import { MobileHeaderMenu } from '@/components/MobileHeaderMenu';
 import { DesktopTrainingDropdown } from '@/components/DesktopTrainingDropdown';
 import { AcademyWatermark } from '@/components/AcademyWatermark';
 import { AcademyMonogram } from '@/components/AcademyMonogram';
+import compactHeroStyles from '@/components/CompactHero.module.css';
 import monogramStyles from '@/components/AcademyMonogram.module.css';
 
 export type UiAccent = 'gold' | 'blue' | 'green' | 'orange' | 'red' | 'violet';
@@ -164,16 +165,16 @@ const artDirectionCopy: Record<ArtDirectionWorld, { label: string; title: string
 export function ArtDirectionVisual({ world, illustration }: { world: ArtDirectionWorld; illustration?: ManualIllustration }) {
   const copy = artDirectionCopy[world];
 
-  return <div className="relative isolate overflow-hidden rounded-[2rem] bg-academy-ink p-5 text-white shadow-soft ring-1 ring-academy-line reveal">
+  return <div className={`${compactHeroStyles.artVisual} relative isolate overflow-hidden rounded-[2rem] bg-academy-ink p-5 text-white shadow-soft ring-1 ring-academy-line reveal`}>
     <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,rgba(244,196,90,.35),transparent_34%),linear-gradient(135deg,rgba(17,17,17,.98),rgba(39,54,78,.88)_58%,rgba(17,17,17,.98))]" aria-hidden="true" />
     <div className="absolute -right-16 -top-20 h-56 w-56 rounded-full bg-academy-gold/25 blur-3xl" aria-hidden="true" />
     <div className="absolute -bottom-20 -left-16 h-56 w-56 rounded-full bg-white/10 blur-3xl" aria-hidden="true" />
-    <div className="flex items-center justify-between gap-4 border-b border-white/10 pb-5">
+    <div className={`${compactHeroStyles.artVisualHeader} flex items-center justify-between gap-4 border-b border-white/10 pb-5`}>
       <span className="rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-black uppercase tracking-[.18em] text-academy-gold">{copy.label}</span>
       <span className="status-dot" aria-hidden="true" />
     </div>
-    {illustration && <div className="mt-5 overflow-hidden rounded-[1.5rem]"><ManualArtwork illustration={illustration} priority /></div>}
-    <div className="mt-6 grid gap-5">
+    {illustration && <div className={`${compactHeroStyles.artIllustration} mt-5 overflow-hidden rounded-[1.5rem]`}><ManualArtwork illustration={illustration} priority /></div>}
+    <div className={`${compactHeroStyles.artVisualDetails} mt-6 grid gap-5`}>
       <div className="rounded-[1.5rem] border border-white/10 bg-white/10 p-5 backdrop-blur">
         <div className="flex gap-3" aria-hidden="true">{copy.glyphs.map(glyph => <span key={glyph} className="premium-icon bg-white/10 text-academy-gold"><span>{glyph}</span></span>)}</div>
         <h3 className="mt-5 text-2xl font-black leading-tight md:text-3xl">{copy.title}</h3>
@@ -193,7 +194,7 @@ export function Hero({badge,title,subtitle,actions,visual,theme='gold',monogram=
     red: 'training-glow-red',
     violet: 'training-glow-violet',
   };
-  return <section className={`relative isolate grid-soft overflow-hidden px-4 py-16 md:py-24 ${glows[theme]}`}>{monogram && <AcademyWatermark tone={theme} placement="right" />}<div className="page-container grid gap-10 lg:grid-cols-[1.15fr_.85fr] lg:items-center"><div className="reveal">{badge&&<Badge tone={theme}>{badge}</Badge>}<h1 className="mt-5 text-4xl font-black tracking-tight md:text-6xl">{title}</h1><p className="mt-6 max-w-2xl text-lg leading-8 text-stone-600">{subtitle}</p>{actions&&<div className="mt-8 flex flex-wrap gap-3">{actions}</div>}</div>{visual ?? <div className="relative rounded-[2rem] bg-white/90 p-6 shadow-soft ring-1 ring-academy-line backdrop-blur reveal"><div className="rounded-[1.5rem] bg-academy-bg p-6"><p className="text-sm font-bold text-stone-500">Centres & modalités</p><div className="mt-5 grid gap-3">{contact.locations.map(l=><div key={l.name} className="rounded-2xl bg-white p-4"><b>{l.name}</b><p className="text-sm text-stone-600">{l.address}</p></div>)}</div></div></div>}</div></section>;
+  return <section className={`${compactHeroStyles.hero} relative isolate grid-soft overflow-hidden px-4 py-16 md:py-24 ${glows[theme]}`}>{monogram && <AcademyWatermark tone={theme} placement="right" />}<div className={`${compactHeroStyles.layout} page-container grid gap-10 lg:grid-cols-[1.15fr_.85fr] lg:items-center`}><div className="reveal">{badge&&<Badge tone={theme}>{badge}</Badge>}<h1 className="mt-5 text-4xl font-black tracking-tight md:text-6xl">{title}</h1><p className="mt-6 max-w-2xl text-lg leading-8 text-stone-600">{subtitle}</p>{actions&&<div className="mt-8 flex flex-wrap gap-3">{actions}</div>}</div>{visual ?? <div className="relative rounded-[2rem] bg-white/90 p-6 shadow-soft ring-1 ring-academy-line backdrop-blur reveal"><div className="rounded-[1.5rem] bg-academy-bg p-6"><p className="text-sm font-bold text-stone-500">Centres & modalités</p><div className="mt-5 grid gap-3">{contact.locations.map(l=><div key={l.name} className="rounded-2xl bg-white p-4"><b>{l.name}</b><p className="text-sm text-stone-600">{l.address}</p></div>)}</div></div></div>}</div></section>;
 }
 export const appointmentFormUrl = 'https://assistance-alw9.onrender.com/demande-informations-formations';
 

@@ -179,3 +179,17 @@
   .certificationStrip { gap: 25px 12px; } .certificationStrip > span { font-size: 19px; } .certificationStrip a { font-size: 10px; gap: 12px; } .references summary { font-size: 11px; } .visitActions .button { max-width: none; }
 }
 @media (prefers-reduced-motion: reduce) { .page *, .page *::before { transition: none !important; } }
+
+
+/* Keep the opening content readable on shorter desktop windows. */
+@media (min-width: 1024px) and (max-height: 900px) {
+  .hero { padding-top: clamp(20px, 4vh, 36px); }
+  .heroCopy { padding-block: 0; }
+  .hero h1 { margin-top: 16px; font-size: clamp(40px, 6.5vh, 56px); }
+  .hero h1 em { margin-top: 6px; }
+  .hero .intro { margin-top: 18px; line-height: 1.65; }
+  .heroActions { gap: 16px; margin-top: 18px; }
+  .hero .heroTrust { margin-top: 18px; }
+  .heroPhoto { height: auto; aspect-ratio: 1.2; }
+  .chapterNav { min-height: 64px; }
+}

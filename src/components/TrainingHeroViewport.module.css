@@ -1,0 +1,131 @@
+/* Share the viewport budget between the introduction, booking and key facts.
+   Natural height is retained for small screens, zoom and longer session data. */
+@media (min-width: 1024px) {
+  .hero.hero {
+    padding-bottom: clamp(12px, 2svh, 24px);
+  }
+
+  .hero [data-hero-content] {
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, .8fr);
+    gap: clamp(24px, 3vw, 48px);
+    padding-block: clamp(16px, 3svh, 36px);
+  }
+
+  .hero [data-hero-copy] > * + * {
+    margin-top: clamp(10px, 1.7svh, 20px);
+  }
+
+  .hero [data-hero-copy] h1 {
+    font-size: clamp(2.7rem, 5.6svh, 4.4rem);
+    line-height: 1.02;
+  }
+
+  .hero [data-hero-copy] h1 + p {
+    font-size: clamp(1.55rem, 2.8svh, 2.2rem);
+    line-height: 1.2;
+  }
+
+  .hero [data-hero-copy] h1 + p + * {
+    font-size: clamp(1.1rem, 2svh, 1.4rem);
+    line-height: 1.5;
+  }
+
+  .hero [data-hero-artwork] {
+    width: min(100%, 56svh);
+    justify-self: end;
+  }
+
+  .hero [data-hero-booking] {
+    margin-bottom: clamp(10px, 1.6svh, 20px);
+  }
+
+  .hero [data-hero-booking] > aside {
+    padding: clamp(14px, 2svh, 24px);
+    border-radius: 1.6rem;
+  }
+
+  .hero [data-hero-booking] [data-session-grid] {
+    gap: 1rem;
+  }
+
+  .hero [data-hero-booking] [data-session-overview] h2 {
+    margin-top: .7rem;
+    font-size: 1.65rem;
+    line-height: 1.15;
+  }
+
+  .hero [data-session-details] > div {
+    padding: .65rem .85rem;
+  }
+
+  .hero [data-session-actions] > p,
+  .hero [data-session-actions] > div {
+    margin-top: .6rem;
+  }
+
+  .hero [data-hero-facts] > div {
+    padding: .65rem .85rem;
+  }
+}
+
+@media (min-width: 1024px) and (max-height: 700px) {
+  .hero [data-hero-content] { padding-block: 16px; }
+  .hero [data-hero-copy] > * + * { margin-top: 8px; }
+  .hero [data-hero-copy] h1 { font-size: 2.7rem; }
+  .hero [data-hero-copy] h1 + p + * { line-height: 1.4; }
+  .hero [data-hero-facts] > div { padding-block: .5rem; }
+}
+
+@media (min-width: 1024px) {
+  .hero[data-hero-density='compact'] [data-hero-content] {
+    grid-template-columns: minmax(0, 1.6fr) minmax(0, .65fr);
+  }
+  .hero[data-hero-density='compact'] [data-hero-copy] > div {
+    max-width: none;
+  }
+  .hero[data-hero-density='compact'] [data-hero-copy] h1 + p + div > * + * {
+    margin-top: .6rem;
+  }
+  .hero [data-hero-booking] > [data-layout='cities'] {
+    display: grid;
+    grid-template-columns: minmax(0, .75fr) minmax(0, 2fr);
+    align-items: center;
+    gap: 1rem;
+  }
+  .hero [data-city-sessions] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: 0;
+  }
+  .hero [data-city-sessions] > section { padding: .85rem; }
+  .hero [data-city-sessions] > section > * + * { margin-top: .5rem; }
+  .hero [data-city-sessions] > section > p:first-of-type { font-size: 1.5rem; }
+  .hero [data-city-summary] > div > button { padding: .65rem; }
+}
+
+.hero [data-hero-aside='facts'] [data-hero-facts] {
+  width: 100%;
+  padding-inline: 0;
+  margin-top: 1rem;
+}
+
+@media (min-width: 1024px) {
+  .hero [data-hero-aside='facts'] [data-hero-artwork] {
+    max-width: 38svh;
+    margin-inline: auto;
+  }
+  .hero [data-hero-aside='facts'] [data-hero-facts] {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .hero [data-hero-aside='facts'] [data-hero-facts] > div {
+    padding: .5rem;
+  }
+  .hero[data-hero-density='compact'] [data-hero-content]:has([data-hero-aside='facts']) {
+    padding-block: 16px;
+  }
+}
+
+.hero > [data-hero-booking]:last-child { margin-bottom: 0; }
+
+@media (min-width: 1024px) and (max-height: 700px) {
+  .hero [data-hero-aside='facts'] [data-hero-artwork] { max-width: 33svh; }
+}
