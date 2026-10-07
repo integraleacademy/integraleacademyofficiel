@@ -79,7 +79,7 @@ export function GlobalContactCTA() {
     });
   }
 
-  if (pathname === '/entreprises' || hiddenPathPrefixes.some((prefix) => pathname?.startsWith(prefix))) {
+  if (pathname === '/ecole' || pathname === '/entreprises' || hiddenPathPrefixes.some((prefix) => pathname?.startsWith(prefix))) {
     return null;
   }
 
