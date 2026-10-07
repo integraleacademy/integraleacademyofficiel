@@ -30,6 +30,7 @@ function SparkleIcon() {
 
 export function GlobalContactCTA() {
   const pathname = usePathname();
+  const isFinancingPage = pathname?.replace(/\/+$/, '') === '/financements';
   const isBts = pathname?.startsWith('/bts') || pathname === '/dossiersbts';
   const contactName = isBts ? 'Aurélie' : 'Cassandre';
   const contactFullName = isBts ? 'Aurélie CHAUSSEZ' : 'Cassandre';
@@ -79,7 +80,7 @@ export function GlobalContactCTA() {
     });
   }
 
-  if (pathname === '/entreprises' || hiddenPathPrefixes.some((prefix) => pathname?.startsWith(prefix))) {
+  if (pathname === '/entreprises' || isFinancingPage || hiddenPathPrefixes.some((prefix) => pathname?.startsWith(prefix))) {
     return null;
   }
 

@@ -8,12 +8,13 @@ const STORAGE_KEY = 'integrale-academy-project-popup-dismissed';
 
 export function ProjectTrainingPopup() {
   const pathname = usePathname();
+  const isFinancingPage = pathname?.replace(/\/+$/, '') === '/financements';
   const isBts = pathname?.startsWith('/bts');
   const contactName = isBts ? 'Aurélie' : 'Cassandre';
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    if (pathname === '/' || pathname === '/entreprises') {
+    if (pathname === '/' || pathname === '/entreprises' || isFinancingPage) {
       return;
     }
 
@@ -23,14 +24,14 @@ export function ProjectTrainingPopup() {
 
     const timer = window.setTimeout(() => setIsOpen(true), 700);
     return () => window.clearTimeout(timer);
-  }, [pathname]);
+  }, [pathname, isFinancingPage]);
 
   function closePopup() {
     window.sessionStorage.setItem(STORAGE_KEY, 'true');
     setIsOpen(false);
   }
 
-  if (pathname === '/' || pathname === '/entreprises' || !isOpen) {
+  if (pathname === '/' || pathname === '/entreprises' || isFinancingPage || !isOpen) {
     return null;
   }
 
