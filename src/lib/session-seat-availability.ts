@@ -47,7 +47,7 @@ export function getSessionSeatAvailability(
   const count = Math.min(automaticCount ?? safeCapacity, safeCapacity);
 
   if (session.status === 'FULL' || count === 0) {
-    return { count: 0, label: 'Session complète', tone: 'full', badgeClassName: badgeStyles.full };
+    return { count: 0, label: 'COMPLET', tone: 'full', badgeClassName: badgeStyles.full };
   }
 
   const occupancyRatio = count / safeCapacity;
