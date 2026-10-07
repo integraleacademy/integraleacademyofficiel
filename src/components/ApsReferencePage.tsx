@@ -12,6 +12,8 @@ import { IntegraleWelcomePack } from '@/components/IntegraleWelcomePack';
 import { OrientationAssistant } from '@/components/OrientationAssistant';
 import { PremiumFAQSection } from '@/components/ui';
 import { TrainingDatesPricingSection } from '@/components/TrainingDatesPricingSection';
+import { TrainingMissionCards } from '@/components/TrainingMissionCards';
+import { TrainingEditorialSection as Section } from '@/components/TrainingEditorialSection';
 import { getSessionSeatAvailability } from '@/lib/session-seat-availability';
 import styles from './ApsReferencePage.module.css';
 
@@ -59,7 +61,6 @@ const apsVisuals = {
 
 type ApsPracticalVisualKind = keyof typeof apsVisuals;
 const apsMissionArtwork = ['aps-mission-surveillance', 'aps-mission-acces', 'aps-mission-ronde', 'aps-mission-prevention', 'aps-mission-incident', 'aps-mission-secours'].map(key => originalArtwork[key as keyof typeof originalArtwork]);
-const missionVisuals = ['video', 'access', 'night', 'extinguisher', 'alert', 'cpr'] as const;
 
 const audiences = ['Reconversion professionnelle', 'Demandeurs d’emploi', 'Salariés en évolution', 'Débutants motivés', 'Futurs titulaires CNAPS', 'Projet APS + SSIAP 1'];
 
@@ -218,11 +219,6 @@ function Eyebrow({ children, light = false }: { children: ReactNode; light?: boo
   return <p className={`text-[.66rem] font-black uppercase tracking-[.24em] ${light ? 'text-blue-300' : 'text-blue-700'}`}>{children}</p>;
 }
 
-function Section({ id, eyebrow, title, intro, children, tone = 'cream' }: { id?: string; eyebrow: string; title: ReactNode; intro?: ReactNode; children: ReactNode; tone?: 'cream' | 'paper' | 'stone' | 'dark' }) {
-  const colors = tone === 'dark' ? 'bg-[#0D1725] text-white' : tone === 'paper' ? 'bg-[#FFFDF8] text-academy-ink' : tone === 'stone' ? 'bg-[#EFE7D9] text-academy-ink' : 'bg-academy-bg text-academy-ink';
-  return <section id={id} className={`${styles.section} ${colors} scroll-mt-24 px-4 py-14 sm:py-16 lg:py-24`}><div className="page-container"><div className="mb-8 grid gap-5 lg:grid-cols-[.75fr_1.25fr] lg:items-end lg:gap-16"><div><Eyebrow light={tone === 'dark'}>{eyebrow}</Eyebrow><h2 className={`${styles.sectionHeading} mt-3 max-w-3xl text-3xl font-black tracking-[-.045em] sm:text-4xl lg:text-5xl`}>{title}</h2></div>{intro && <div className={`${styles.sectionIntro} max-w-3xl text-base font-medium leading-8 ${tone === 'dark' ? 'text-white/65' : 'text-academy-muted'}`}>{intro}</div>}</div>{children}</div></section>;
-}
-
 function ApsPracticalVisual({ kind, illustration }: { kind: ApsPracticalVisualKind; illustration?: { src: string; alt: string } }) {
   const [file, description] = apsVisuals[kind];
   return <div className={styles.manualVisual}>
@@ -294,10 +290,7 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
     <ApsSectionNavigation registrationHref={apsRegistrationFormUrl} />
 
     <Section id="metier" eyebrow="01 — Le métier" title={<>Un métier de terrain, de vigilance et de sang-froid.</>} intro={<>L’agent APS prévient les risques, protège les personnes et les biens, applique les consignes et rend compte de chaque événement.</>}>
-      <div className={styles.missionGrid}>{missions.map(([,title,text,featured],index) => <article key={String(title)} className={`${styles.missionCard} ${featured ? styles.missionFeatured : ''}`}>
-        <div className={styles.missionArtwork}><ApsPracticalVisual kind={missionVisuals[index]} illustration={apsMissionArtwork[index]} /></div>
-        <div className={styles.missionCopy}><span className={styles.missionNumber}>MISSION 0{index+1}</span><h3>{title}</h3><p>{text}</p></div>
-      </article>)}</div>
+      <TrainingMissionCards items={missions.map(([, title, text, featured], index) => ({ title: String(title), description: String(text), featured: Boolean(featured), illustration: apsMissionArtwork[index] }))} />
       <div className={`${styles.liftCard} mt-8 grid gap-5 rounded-[2rem] border border-academy-line bg-white p-6 shadow-soft lg:grid-cols-[.7fr_1.3fr] lg:p-8`}><div><Eyebrow>À qui s’adresse la formation ?</Eyebrow><h3 className="mt-3 text-3xl font-black">Un parcours accessible, un métier réglementé.</h3><p className="mt-4 leading-7 text-academy-muted">Aucune expérience préalable dans la sécurité n’est obligatoire.</p></div><div className="grid gap-3 sm:grid-cols-2">{audiences.map((item,index) => <div key={item} className="flex items-center gap-3 rounded-2xl bg-academy-bg p-4 font-bold"><span className={`grid h-8 w-8 shrink-0 place-items-center rounded-full text-xs font-black ${index === 5 ? 'bg-orange-100 text-orange-700' : 'bg-sky-100 text-sky-700'}`}>✓</span>{item}</div>)}</div></div>
     </Section>
 
