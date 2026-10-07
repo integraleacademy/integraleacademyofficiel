@@ -1,6 +1,6 @@
 import { ManualArtwork } from '@/components/ManualArtwork';
 import { TrainingWelcomePack } from '@/components/TrainingWelcomePack';
-import { btsArtwork, btsPracticeArtwork, btsMissionArtwork } from '@/data/btsIllustrations';
+import { btsHeroArtwork, btsPracticeArtwork, btsMissionArtwork } from '@/data/btsIllustrations';
 import { AcademyWatermark } from '@/components/AcademyWatermark';
 import btsStyles from './BtsIdentity.module.css';
 import { btsRhythms } from '@/data/btsRhythms';
@@ -317,7 +317,7 @@ export function BtsNdrcReferencePage() {
                 <span className="rounded-full border border-white/15 bg-white/7 px-3 py-2">✓ Vente, digital & réseaux</span>
               </div>
             </div>
-            <div className={btsStyles.heroArtwork}><ManualArtwork illustration={btsArtwork.ndrc} priority /></div>
+            <div className={btsStyles.heroArtwork}><ManualArtwork illustration={btsHeroArtwork.ndrc} priority /></div>
           </div>
           <HeroRoadmap />
           <div className="mt-10 grid overflow-hidden rounded-[1.6rem] border border-white/10 bg-white/7 sm:grid-cols-2 lg:grid-cols-4">

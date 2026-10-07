@@ -1,4 +1,5 @@
 import { despArtwork, type ManualIllustration, type ManualIllustrationMap } from './manualIllustrations';
+import { originalArtwork } from './originalArtwork';
 
 export type BtsArtworkCode = 'mos' | 'mco' | 'ndrc' | 'ci' | 'pi' | 'cg';
 
@@ -11,20 +12,29 @@ export const btsArtwork: Record<BtsArtworkCode, ManualIllustration> = {
   cg: { src: '/images/bts/manuel/cg.webp', alt: 'Illustration du BTS Comptabilité et Gestion : deux professionnels analysent des factures et des données comptables.' },
 };
 
+export const btsHeroArtwork: Record<BtsArtworkCode, ManualIllustration> = {
+  mos: originalArtwork['bts-mos-accueil'],
+  mco: originalArtwork['bts-mco-accueil'],
+  ndrc: originalArtwork['bts-ndrc-accueil'],
+  ci: originalArtwork['bts-ci-accueil'],
+  pi: originalArtwork['bts-pi-accueil'],
+  cg: originalArtwork['bts-cg-accueil'],
+};
+
 export const btsPracticeArtwork: Record<BtsArtworkCode, ManualIllustrationMap> = {
   mos: { 'mission-map': despArtwork.organisation, compliance: despArtwork.conformite, 'site-check': despArtwork.supervision, 'fire-panel': btsArtwork.mos, team: despArtwork.management, briefing: despArtwork.direction },
-  mco: { 'profile-review': despArtwork.client, commercial: btsArtwork.mco, business: btsArtwork.mco, evidence: despArtwork.finances, finance: despArtwork.finances, team: despArtwork.direction },
-  ndrc: { 'risk-radar': despArtwork.projet, 'emergency-call': btsArtwork.ndrc, commercial: btsArtwork.ndrc, briefing: despArtwork.direction, 'profile-review': despArtwork.client, competencies: despArtwork.pilotage },
-  ci: { 'mission-map': btsArtwork.ci, 'secure-vehicle': btsArtwork.ci, compliance: despArtwork.conformite, 'risk-radar': despArtwork.projet, finance: despArtwork.finances, briefing: despArtwork.direction },
-  pi: { 'profile-review': btsArtwork.pi, commercial: btsArtwork.pi, evidence: despArtwork.conformite, 'mission-map': despArtwork.projet, team: despArtwork.direction, 'site-check': despArtwork.projet },
-  cg: { evidence: despArtwork.projet, feasibility: despArtwork.projet, compliance: despArtwork.conformite, finance: btsArtwork.cg, 'risk-radar': despArtwork.finances, approval: despArtwork.pilotage },
+  mco: { 'profile-review': despArtwork.client, commercial: originalArtwork['bts-mco-ventes'], business: btsArtwork.mco, evidence: despArtwork.finances, finance: despArtwork.finances, team: despArtwork.direction },
+  ndrc: { 'risk-radar': despArtwork.projet, 'emergency-call': btsArtwork.ndrc, commercial: originalArtwork['bts-ndrc-negociation'], briefing: despArtwork.direction, 'profile-review': despArtwork.client, competencies: despArtwork.pilotage },
+  ci: { 'mission-map': originalArtwork['bts-ci-prospection'], 'secure-vehicle': originalArtwork['bts-ci-logistique'], compliance: despArtwork.conformite, 'risk-radar': despArtwork.projet, finance: despArtwork.finances, briefing: despArtwork.direction },
+  pi: { 'profile-review': originalArtwork['bts-pi-client'], commercial: btsArtwork.pi, evidence: despArtwork.conformite, 'mission-map': despArtwork.projet, team: despArtwork.direction, 'site-check': despArtwork.projet },
+  cg: { evidence: despArtwork.projet, feasibility: despArtwork.projet, compliance: despArtwork.conformite, finance: originalArtwork['bts-cg-budget'], 'risk-radar': despArtwork.finances, approval: despArtwork.pilotage },
 };
 
 export const btsMissionArtwork: Record<BtsArtworkCode, ManualIllustration> = {
-  mos: btsArtwork.mos,
+  mos: originalArtwork['bts-mos-mission'],
   mco: despArtwork.pilotage,
-  ndrc: despArtwork.client,
-  ci: btsArtwork.ci,
+  ndrc: originalArtwork['bts-ndrc-mission'],
+  ci: originalArtwork['bts-ci-mission'],
   pi: despArtwork.client,
   cg: despArtwork.finances,
 };

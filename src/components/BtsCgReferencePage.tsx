@@ -1,6 +1,6 @@
 import { ManualArtwork } from '@/components/ManualArtwork';
 import { TrainingWelcomePack } from '@/components/TrainingWelcomePack';
-import { btsArtwork, btsPracticeArtwork, btsMissionArtwork } from '@/data/btsIllustrations';
+import { btsHeroArtwork, btsPracticeArtwork, btsMissionArtwork } from '@/data/btsIllustrations';
 import { AcademyWatermark } from '@/components/AcademyWatermark';
 import btsStyles from './BtsIdentity.module.css';
 import { btsRhythms } from '@/data/btsRhythms';
@@ -219,7 +219,7 @@ export function BtsCgReferencePage() {
               <div className="mt-6 flex flex-col gap-3 sm:flex-row"><CTA href={applicationUrl} variant="gold" external>Je candidate pour 2026 →</CTA><CTA href={aurelieDirectHref} variant="outline">Parler à Aurélie</CTA></div>
               <div className="mt-6 flex flex-wrap gap-2 text-xs font-bold text-white/75"><span className="rounded-full border border-white/15 bg-white/7 px-3 py-2">✓ Sans frais de scolarité pour l’apprenti*</span><span className="rounded-full border border-white/15 bg-white/7 px-3 py-2">✓ Présentiel ou visioconférence</span><span className="rounded-full border border-white/15 bg-white/7 px-3 py-2">✓ Comptabilité, fiscalité et pilotage</span></div>
             </div>
-            <div className={btsStyles.heroArtwork}><ManualArtwork illustration={btsArtwork.cg} priority /></div>
+            <div className={btsStyles.heroArtwork}><ManualArtwork illustration={btsHeroArtwork.cg} priority /></div>
           </div>
           <HeroRoadmap />
           <div className="mt-10 grid overflow-hidden rounded-[1.6rem] border border-white/10 bg-white/7 sm:grid-cols-2 lg:grid-cols-4">

@@ -1,3 +1,4 @@
+import { originalArtwork } from '@/data/originalArtwork';
 import { AcademyWatermark } from '@/components/AcademyWatermark';
 import { serializeCourseJsonLd } from '@/lib/seo';
 import Image from 'next/image';
@@ -56,6 +57,7 @@ const apsVisuals = {
 } as const;
 
 type ApsPracticalVisualKind = keyof typeof apsVisuals;
+const apsMissionArtwork = ['aps-mission-surveillance', 'aps-mission-acces', 'aps-mission-ronde', 'aps-mission-prevention', 'aps-mission-incident', 'aps-mission-secours'].map(key => originalArtwork[key as keyof typeof originalArtwork]);
 const missionVisuals = ['video', 'access', 'night', 'extinguisher', 'alert', 'cpr'] as const;
 
 const audiences = ['Reconversion professionnelle', 'Demandeurs d’emploi', 'Salariés en évolution', 'Débutants motivés', 'Futurs titulaires CNAPS', 'Projet APS + SSIAP 1'];
@@ -220,10 +222,10 @@ function Section({ id, eyebrow, title, intro, children, tone = 'cream' }: { id?:
   return <section id={id} className={`${styles.section} ${colors} scroll-mt-24 px-4 py-14 sm:py-16 lg:py-24`}><div className="page-container"><div className="mb-8 grid gap-5 lg:grid-cols-[.75fr_1.25fr] lg:items-end lg:gap-16"><div><Eyebrow light={tone === 'dark'}>{eyebrow}</Eyebrow><h2 className={`${styles.sectionHeading} mt-3 max-w-3xl text-3xl font-black tracking-[-.045em] sm:text-4xl lg:text-5xl`}>{title}</h2></div>{intro && <div className={`${styles.sectionIntro} max-w-3xl text-base font-medium leading-8 ${tone === 'dark' ? 'text-white/65' : 'text-academy-muted'}`}>{intro}</div>}</div>{children}</div></section>;
 }
 
-function ApsPracticalVisual({ kind }: { kind: ApsPracticalVisualKind }) {
+function ApsPracticalVisual({ kind, illustration }: { kind: ApsPracticalVisualKind; illustration?: { src: string; alt: string } }) {
   const [file, description] = apsVisuals[kind];
   return <div className={styles.manualVisual}>
-    <Image src={`/images/aps/manuel/${file}.webp`} alt={description} fill sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 560px" />
+    <Image src={illustration?.src ?? `/images/aps/manuel/${file}.webp`} alt={illustration?.alt ?? description} fill sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 560px" />
   </div>;
 }
 
@@ -292,7 +294,7 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
 
     <Section id="metier" eyebrow="01 — Le métier" title={<>Un métier de terrain, de vigilance et de sang-froid.</>} intro={<>L’agent APS prévient les risques, protège les personnes et les biens, applique les consignes et rend compte de chaque événement.</>}>
       <div className={styles.missionGrid}>{missions.map(([,title,text,featured],index) => <article key={String(title)} className={`${styles.missionCard} ${featured ? styles.missionFeatured : ''}`}>
-        <div className={styles.missionArtwork}><ApsPracticalVisual kind={missionVisuals[index]} /></div>
+        <div className={styles.missionArtwork}><ApsPracticalVisual kind={missionVisuals[index]} illustration={apsMissionArtwork[index]} /></div>
         <div className={styles.missionCopy}><span className={styles.missionNumber}>MISSION 0{index+1}</span><h3>{title}</h3><p>{text}</p></div>
       </article>)}</div>
       <div className={`${styles.liftCard} mt-8 grid gap-5 rounded-[2rem] border border-academy-line bg-white p-6 shadow-soft lg:grid-cols-[.7fr_1.3fr] lg:p-8`}><div><Eyebrow>À qui s’adresse la formation ?</Eyebrow><h3 className="mt-3 text-3xl font-black">Un parcours accessible, un métier réglementé.</h3><p className="mt-4 leading-7 text-academy-muted">Aucune expérience préalable dans la sécurité n’est obligatoire.</p></div><div className="grid gap-3 sm:grid-cols-2">{audiences.map((item,index) => <div key={item} className="flex items-center gap-3 rounded-2xl bg-academy-bg p-4 font-bold"><span className={`grid h-8 w-8 shrink-0 place-items-center rounded-full text-xs font-black ${index === 5 ? 'bg-orange-100 text-orange-700' : 'bg-sky-100 text-sky-700'}`}>✓</span>{item}</div>)}</div></div>
@@ -314,7 +316,7 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
         </article>)}
       </div><div className="mt-7 grid gap-4 rounded-[1.7rem] border border-blue-300/25 bg-blue-400/10 p-6 lg:grid-cols-[auto_1fr] lg:items-center"><span className="grid h-14 w-14 place-items-center rounded-2xl bg-blue-300 text-2xl font-black text-blue-950">✓</span><div><p className="text-xl font-black text-blue-200">L’objectif : transformer les connaissances en réflexes professionnels.</p><p className="mt-2 max-w-4xl leading-7 text-white/68">Observation, positionnement, communication, respect du cadre légal, compte rendu et choix d’une réponse adaptée sont analysés après chaque scénario.</p></div></div></Section>
 
-    <ApsFacilitiesSections pcFallback={<ApsPracticalVisual kind="video" />} />
+    <ApsFacilitiesSections pcFallback={<ApsPracticalVisual kind="video" illustration={originalArtwork['aps-pc-pedagogique']} />} />
 
     <Section id="programme" eyebrow="04 — Programme" title={<>Les 14 UV du programme officiel, sans raccourci.</>} intro={<>Programme CPNEFP version V3.2 mis à jour le 23 juillet 2026 : 41 heures de socle de base et 134 heures de spécialité APS, soit 175 heures au total.</>}>
       <div className="mb-6 grid gap-3 sm:grid-cols-3">
@@ -477,7 +479,7 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
         <h3>Deux expertises.<br /><span>Plus de possibilités.</span></h3>
         <p className={styles.dualIntro}>Associez le TFP APS et le SSIAP 1 pour élargir vos missions dans la surveillance humaine et la sécurité incendie.</p>
         <div className={styles.dualPanels}>
-          <div className={styles.dualSecurity}><span className={styles.dualLabel}>TFP APS</span><ApsPracticalVisual kind="patrol" /><h4>Prévenir & surveiller</h4><p>Rondes, contrôle d’accès, protection des personnes et des biens.</p></div>
+          <div className={styles.dualSecurity}><span className={styles.dualLabel}>TFP APS</span><ApsPracticalVisual kind="patrol" illustration={originalArtwork['aps-metier-site']} /><h4>Prévenir & surveiller</h4><p>Rondes, contrôle d’accès, protection des personnes et des biens.</p></div>
           <span className={styles.dualPlus} aria-hidden="true">+</span>
           <div className={styles.dualFire}><span className={styles.dualLabel}>SSIAP 1</span><div className={styles.manualVisual}><Image src="/images/aps/manuel/extincteurs.webp" alt="Trois extincteurs présentés dans le manuel APS" fill sizes="(max-width: 640px) 40vw, 260px" /></div><h4>Alerter & protéger</h4><p>Prévention incendie, évacuation et assistance aux personnes.</p></div>
         </div>

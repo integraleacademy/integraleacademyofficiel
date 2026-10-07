@@ -41,9 +41,9 @@ const copy: Record<MissionAnimationVariant, { kicker: string; status: string; ti
   ssiap: {
     kicker: 'Scénario incendie',
     status: 'Alerte transmise',
-    title: 'Détection & levée de doute',
+    title: 'La sécurité incendie en action',
     caption: 'Prévenir · alerter · évacuer',
-    label: 'Simulation animée d’une détection incendie reliée au poste de sécurité',
+    label: 'Illustration d’un exercice d’évacuation encadré',
   },
   vtc: {
     kicker: 'Course simulée',

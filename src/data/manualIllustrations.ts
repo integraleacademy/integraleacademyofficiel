@@ -1,4 +1,5 @@
 import type { SceneKind } from '@/components/TrainingMotionGallery';
+import { originalArtwork } from './originalArtwork';
 
 export type ManualIllustration = { src: string; alt: string };
 export type ManualIllustrationMap = Partial<Record<SceneKind, ManualIllustration>>;
@@ -21,7 +22,7 @@ export const a3pArtwork = {
 
 export const a3pPracticeArtwork: ManualIllustrationMap = {
   'mission-map': a3pArtwork.preparation,
-  'risk-radar': a3pArtwork.briefing,
+  'risk-radar': originalArtwork['a3p-galerie-risques'],
   'site-check': a3pArtwork.reconnaissance,
   'close-protection': a3pArtwork.deplacement,
   'secure-vehicle': a3pArtwork.vehicule,
@@ -42,12 +43,12 @@ export const ssiapArtwork = {
 };
 
 export const ssiapPracticeArtwork: ManualIllustrationMap = {
-  'fire-round': ssiapArtwork.ronde,
+  'fire-round': originalArtwork['ssiap-1-galerie-ronde'],
   extinguisher: ssiapArtwork.verification,
-  'fire-panel': ssiapArtwork.pc,
+  'fire-panel': originalArtwork['ssiap-1-galerie-ssi'],
   'fire-alert': ssiapArtwork.alerte,
   evacuation: ssiapArtwork.evacuation,
-  'rescue-arrival': ssiapArtwork.secours,
+  'rescue-arrival': originalArtwork['ssiap-1-galerie-secours'],
 };
 
 export const ssiapLeadershipArtwork = {
@@ -77,10 +78,10 @@ export const despPracticeArtwork: ManualIllustrationMap = {
   business: despArtwork.projet,
   finance: despArtwork.finances,
   compliance: despArtwork.conformite,
-  approval: despArtwork.conformite,
+  approval: originalArtwork['desp-initial-agrement'],
   team: despArtwork.management,
   commercial: despArtwork.client,
-  evidence: despArtwork.projet,
+  evidence: originalArtwork['desp-initial-appel-offres'],
   'site-check': despArtwork.supervision,
   briefing: despArtwork.organisation,
   'profile-review': despArtwork.direction,
