@@ -1,6 +1,6 @@
 .page {
   --paper: rgb(var(--background));
-  --card: rgb(var(--surface-elevated));
+  --card: rgb(var(--surface));
   --ink: rgb(var(--text-main));
   --muted: rgb(var(--text-muted));
   --line: rgb(var(--border));
@@ -9,32 +9,32 @@
   background: var(--paper);
   color: var(--ink);
   font-family: inherit;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 500;
-  line-height: 1.6;
+  line-height: 1.75;
 }
-.container { width: min(1120px, calc(100% - 96px)); margin-inline: auto; }
+.container { width: min(1240px, calc(100% - 160px)); margin-inline: auto; }
 .page section[id] { scroll-margin-top: 104px; }
-.page :is(h1, h2) em { font-family: inherit; font-style: italic; font-weight: inherit; }
+.page :is(h1, h2) em { font-family: Georgia, 'Times New Roman', serif; font-style: italic; font-weight: 400; color: var(--gold-ink); }
 .page a, .page button, .page summary { -webkit-tap-highlight-color: transparent; }
 .page :is(a,button,summary):focus-visible { outline: 3px solid var(--gold-ink); outline-offset: 5px; }
 .page svg { width: 20px; height: 20px; flex-shrink: 0; }
-.eyebrow { display: inline-flex; align-items: center; gap: 10px; color: var(--gold-ink); font-size: 11px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
-.eyebrow > span { width: 22px; height: 1px; background: currentColor; }
-.hero { padding-top: 64px; background: radial-gradient(ellipse at 15% 10%, rgb(var(--accent) / .09), transparent 60%); }
-.heroLayout { display: grid; grid-template-columns: minmax(0,1.2fr) minmax(0,.9fr); gap: 68px; align-items: center; padding-bottom: 54px; }
-.heroCopy h1 { margin-top: 24px; max-width: 620px; font-size: clamp(42px,4.7vw,65px); font-weight: 900; line-height: 1.06; letter-spacing: -.055em; text-wrap: balance; }
-.heroCopy h1 span { color: var(--gold-ink); }
-.heroCopy h1 em { margin-inline-end: .08em; }
-.heroCopy > p:not(.heroNote) { margin-top: 26px; max-width: 450px; color: var(--muted); font-size: 17px; line-height: 1.75; }
-.heroActions { display: flex; flex-wrap: wrap; align-items: center; gap: 20px; margin-top: 30px; }
-.primaryButton { display: inline-flex; align-items: center; justify-content: center; gap: 18px; min-height: 50px; padding: 14px 22px; border-radius: 999px; background: var(--gold); color: rgb(var(--accent-text)); box-shadow: var(--shadow-gold); font-size: 14px; font-weight: 800; text-align: center; transition: background-color .18s, transform .18s; }
+.eyebrow { display: inline-flex; align-items: center; gap: 10px; color: var(--gold-ink); font-size: 11px; font-weight: 800; line-height: 1.6; letter-spacing: .14em; text-transform: uppercase; }
+.heroCopy > .eyebrow { padding: 7px 12px; border: 1px solid var(--line); border-radius: 999px; background: rgb(var(--surface)); font-size: 10px; }
+.eyebrow > span { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); }
+.hero { padding-top: 48px; background: radial-gradient(ellipse at 15% 10%, rgb(var(--accent) / .09), transparent 60%); }
+.heroLayout { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 52px; align-items: center; padding-bottom: 54px; }
+.heroCopy h1 { margin-top: 24px; max-width: 620px; font-size: clamp(43px,4.6vw,68px); font-weight: 900; line-height: 1.06; letter-spacing: -.055em; }
+.heroCopy h1 em { display: inline-block; margin-top: 12px; letter-spacing: -.04em; }
+.heroCopy > p:not(.heroNote) { margin-top: 25px; max-width: 440px; color: var(--muted); font-size: 15px; line-height: 1.75; }
+.heroActions { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 24px; margin-top: 26px; }
+.primaryButton { display: inline-flex; align-items: center; justify-content: center; gap: 18px; min-height: 50px; padding: 14px 24px; border-radius: 9999px; background: var(--gold); color: rgb(var(--accent-text)); font-size: 13px; font-weight: 800; line-height: 1.4; text-align: center; transition: background-color .18s, transform .18s; }
 .primaryButton:hover { filter: brightness(1.06); transform: translateY(-2px); }
-.textLink { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; font-size: 13px; font-weight: 700; }
+.textLink { display: inline-flex; align-items: center; gap: 12px; min-height: 44px; font-size: 13px; font-weight: 800; line-height: 1.5; }
 .textLink:hover { color: var(--gold-ink); }
 .heroCopy .heroNote { display: flex; align-items: center; gap: 8px; margin-top: 18px; color: var(--muted); font-size: 12px; }
 .heroNote svg { width: 15px; height: 15px; color: var(--gold-ink); }
-.profilePanel { padding: 28px; border: 1px solid var(--line); border-radius: 24px; background: var(--card); box-shadow: var(--shadow-soft); }
+.profilePanel { padding: 28px; border: 1px solid var(--line); border-radius: 30px; background: var(--card); box-shadow: 0 18px 50px rgb(8 22 38 / .12); }
 .profileHeader { display: flex; justify-content: space-between; align-items: center; }
 .profileHeader > span:last-child { color: var(--gold-ink); font-size: 22px; }
 .profilePanel h2 { margin-top: 11px; font-size: 25px; font-weight: 900; letter-spacing: -.035em; line-height: 1.2; }
@@ -61,10 +61,10 @@
 .stars { color: var(--gold-ink); letter-spacing: 1px; }
 .solutionsSection { padding: 74px 0 64px; border-top: 1px solid var(--line); }
 .sectionIntro { display: grid; grid-template-columns: 1.1fr 1fr; gap: 80px; align-items: end; margin-bottom: 32px; }
-.sectionIntro h2, .faqIntro h2, .contactPanel h2 { margin-top: 16px; font-size: clamp(32px,3.3vw,44px); line-height: 1.1; letter-spacing: -.045em; font-weight: 900; }
-.sectionIntro > p { max-width: 395px; color: var(--muted); font-size: 15px; line-height: 1.75; }
+.sectionIntro h2, .faqIntro h2, .contactPanel h2 { margin-top: 16px; font-size: clamp(34px,3.6vw,49px); line-height: 1.13; letter-spacing: -.045em; font-weight: 900; }
+.sectionIntro > p { max-width: 410px; color: var(--muted); font-size: 15px; line-height: 1.8; }
 .fundingGrid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 16px; }
-.fundingCard { display: flex; flex-direction: column; padding: 24px 22px 18px; border: 1px solid var(--line); border-radius: 20px; background: var(--card); }
+.fundingCard { display: flex; flex-direction: column; padding: 24px 22px 18px; border: 1px solid var(--line); border-radius: 22px; background: var(--card); }
 .fundingHeading { display: flex; flex-direction: column; align-items: flex-start; gap: 17px; }
 .fundingHeading > span:last-child { color: var(--muted); font-size: 10px; font-weight: 650; line-height: 1.5; }
 .fundingBrand, .fundingBrandIcon { display: flex; align-items: center; width: 100%; height: 86px; padding: 10px 16px; border-radius: 8px; background: #fff; }
@@ -73,7 +73,7 @@
 .fundingBrand img[src$="/akto.svg"] { max-width: 150px; margin-inline: auto; }
 .fundingBrandIcon { justify-content: center; background: var(--paper); color: var(--gold-ink); }
 .fundingBrandIcon svg { width: 38px; height: 38px; }
-.identityCard { display: grid; grid-template-columns: 240px minmax(0, 1fr); align-items: center; gap: 32px; margin-top: 28px; padding: 28px; border: 1px solid var(--line); border-radius: 20px; background: var(--card); }
+.identityCard { display: grid; grid-template-columns: 240px minmax(0, 1fr); align-items: center; gap: 32px; margin-top: 28px; padding: 28px; border: 1px solid var(--line); border-radius: 22px; background: var(--card); }
 .identityLogo { display: flex; align-items: center; justify-content: center; padding: 18px; border-radius: 8px; background: #fff; }
 .identityLogo img { display: block; width: 100%; height: auto; }
 .identityCard h3 { margin-top: 8px; font-size: 22px; font-weight: 800; letter-spacing: -.035em; line-height: 1.25; }
@@ -81,8 +81,8 @@
 .identityLinks { display: flex; flex-wrap: wrap; gap: 4px 24px; margin-top: 8px; }
 .identityLinks a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font-size: 12px; font-weight: 700; text-decoration: underline; text-underline-offset: 4px; }
 .identityLinks a:hover { color: var(--gold-ink); }
-.fundingCard h3 { margin-top: 9px; font-size: 22px; font-weight: 800; line-height: 1.15; letter-spacing: -.035em; }
-.fundingCard > p { margin: 14px 0 20px; color: var(--muted); font-size: 13px; line-height: 1.75; }
+.fundingCard h3 { margin-top: 9px; font-size: 20px; font-weight: 800; line-height: 1.2; letter-spacing: -.035em; }
+.fundingCard > p { margin: 14px 0 20px; color: var(--muted); font-size: 13px; line-height: 1.7; }
 .fundingCard > a { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: auto; padding-top: 16px; padding-bottom: 4px; border-top: 1px solid var(--line); font-size: 12px; font-weight: 800; }
 .fundingCard > a:hover { color: var(--gold-ink); }
 .fundingCard > a svg { width: 16px; height: 16px; }
@@ -110,35 +110,37 @@
 .faqList details[open] summary > span { transform: rotate(45deg); }
 .faqList details p { padding: 0 28px 22px 0; color: var(--muted); font-size: 13px; line-height: 1.8; }
 .contactSection { padding: 16px 0 40px; }
-.contactPanel { display: grid; grid-template-columns: 1.1fr .9fr; align-items: center; gap: 80px; padding: 48px; border-radius: 24px; background: rgb(var(--surface-soft)); color: var(--ink); }
-.contactPanel .eyebrow { color: var(--gold-ink); }
-.contactPanel h2 { font-size: clamp(30px,3.1vw,41px); }
-.contactPanel > div > p { margin-top: 20px; max-width: 410px; color: var(--muted); font-size: 14px; line-height: 1.8; }
+.contactPanel { display: grid; grid-template-columns: 1.1fr .9fr; align-items: center; gap: 80px; padding: 48px; border-radius: 24px; background: #081626; color: #fffaf0; }
+.contactPanel .eyebrow, .contactPanel h2 em { color: #e7bd65; }
+.contactPanel h2 { font-size: clamp(38px,4.8vw,62px); }
+.contactPanel > div > p { margin-top: 20px; max-width: 410px; color: #c5ced5; font-size: 15px; line-height: 1.75; }
 .contactDetails { display: flex; flex-direction: column; align-items: stretch; }
 .contactPerson { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; }
-.contactInitial { display: grid; place-items: center; width: 48px; height: 48px; flex-shrink: 0; border: 1px solid var(--line); border-radius: 50%; color: var(--gold-ink); font-family: inherit; font-size: 25px; font-weight: 800; }
+.contactInitial { display: grid; place-items: center; width: 48px; height: 48px; flex-shrink: 0; border: 1px solid #40505f; border-radius: 50%; color: #e7bd65; font-family: inherit; font-size: 25px; font-weight: 800; }
 .contactPerson strong { display: block; font-size: 18px; font-weight: 800; }
-.contactPerson div > span { display: block; margin-top: 2px; color: var(--muted); font-size: 11px; }
+.contactPerson div > span { display: block; margin-top: 2px; color: #c5ced5; font-size: 11px; }
 .phone { align-self: center; padding: 16px 8px 0; font-size: 19px; font-weight: 700; letter-spacing: .02em; }
 .contactPanel .contactDetails > p { margin-top: 8px; font-size: 11px; text-align: center; }
 .moreLinks { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 14px 28px; padding-top: 30px; font-size: 12px; }
 .moreLinks > span { color: var(--muted); }
 .moreLinks a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font-weight: 650; }
 .moreLinks svg { width: 16px; height: 16px; }
+@media (min-width: 1600px) { .heroCopy h1 { font-size: 74px; } }
 @media (max-width: 1100px) {
+  .container { width: calc(100% - 64px); }
   .heroLayout { gap: 36px; grid-template-columns: 1fr 1fr; }
-  .heroCopy h1 { font-size: 52px; }
   .fundingGrid { grid-template-columns: repeat(2,minmax(0,1fr)); }
   .fundingHeading { gap: 14px; }
   .contactPanel { gap: 38px; padding: 36px; }
 }
-@media (max-width: 760px) {
+@media (max-width: 800px) {
   .container { width: calc(100% - 40px); }
   .page section[id] { scroll-margin-top: 82px; }
-  .hero { padding-top: 36px; }
+  .hero { padding-top: 32px; }
   .heroLayout { grid-template-columns: 1fr; gap: 32px; padding-bottom: 28px; }
-  .heroCopy h1 { max-width: 540px; margin-top: 18px; font-size: clamp(37px,9.8vw,52px); line-height: 1.08; }
-  .heroCopy > p:not(.heroNote) { margin-top: 18px; font-size: 15px; line-height: 1.7; }
+  .heroCopy h1 { max-width: 540px; margin-top: 18px; font-size: clamp(43px,8vw,63px); line-height: 1.06; }
+  .heroCopy h1 em { margin-top: 8px; }
+  .heroCopy > p:not(.heroNote) { margin-top: 20px; font-size: 15px; line-height: 1.75; }
   .heroActions { margin-top: 24px; gap: 7px; align-items: stretch; flex-direction: column; }
   .heroActions .textLink { justify-content: center; }
   .heroCopy .heroNote { justify-content: center; margin-top: 7px; font-size: 10px; }
@@ -152,7 +154,7 @@
   .proofBar > span svg { width: 14px; height: 14px; }
   .solutionsSection, .supportSection, .faqSection { padding: 46px 0; }
   .sectionIntro { grid-template-columns: 1fr; gap: 17px; margin-bottom: 25px; }
-  .sectionIntro h2, .faqIntro h2 { font-size: 34px; margin-top: 13px; }
+  .sectionIntro h2, .faqIntro h2 { font-size: 38px; margin-top: 13px; }
   .sectionIntro > p { font-size: 14px; }
   .fundingGrid { gap: 12px; }
   .fundingCard { padding: 22px; }
@@ -175,9 +177,9 @@
   .faqList summary { font-size: 13px; padding: 20px 0; }
   .contactSection { padding-top: 0; }
   .contactPanel { grid-template-columns: 1fr; gap: 28px; padding: 28px 24px; }
-  .contactPanel h2 { font-size: 33px; }
+  .contactPanel h2 { font-size: 43px; }
   .contactPanel > div > p { margin-top: 16px; font-size: 13px; }
-  .contactDetails { padding-top: 25px; border-top: 1px solid var(--line); }
+  .contactDetails { padding-top: 25px; border-top: 1px solid #40505f; }
   .contactPerson { margin-bottom: 20px; }
   .moreLinks { column-gap: 20px; row-gap: 0; padding-top: 22px; }
   .moreLinks > span { width: 100%; text-align: center; }
@@ -187,6 +189,12 @@
   .fundingCard > p { margin-block: 10px 16px; }
   .fundingCard h3 { margin-top: 14px; font-size: 24px; }
 }
+@media (max-width: 480px) {
+  .container { width: calc(100% - 32px); }
+  .heroCopy h1 { font-size: 43px; }
+  .sectionIntro h2, .faqIntro h2 { font-size: 35px; }
+  .contactPanel h2 { font-size: 39px; }
+}
 @media (prefers-reduced-motion: reduce) {
   .primaryButton, .profileChoices button, .faqList summary > span { transition: none; }
   .primaryButton:hover { transform: none; }
@@ -195,11 +203,12 @@
 
 /* Keep the opening content readable on shorter desktop windows. */
 @media (min-width: 1024px) and (max-height: 900px) {
-  .hero { padding-top: clamp(24px, 4vh, 36px); }
+  .hero { padding-top: clamp(20px, 4vh, 36px); }
   .heroLayout { padding-bottom: 24px; gap: 3rem; }
-  .heroCopy h1 { font-size: clamp(3rem, 6.8vh, 4.3rem); }
-  .heroCopy > p:not(.heroNote) { margin-top: 1.3rem; }
-  .heroActions { margin-top: 1.5rem; }
+  .heroCopy h1 { margin-top: 16px; font-size: clamp(40px, 6.5vh, 56px); }
+  .heroCopy h1 em { margin-top: 6px; }
+  .heroCopy > p:not(.heroNote) { margin-top: 18px; line-height: 1.65; }
+  .heroActions { gap: 16px; margin-top: 18px; }
   .profilePanel { padding: 18px; }
   .profileChoices { margin-top: 16px; }
   .profileChoices button { min-height: 58px; padding-block: 9px; }
