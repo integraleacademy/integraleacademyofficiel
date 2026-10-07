@@ -1,7 +1,47 @@
 import Image from 'next/image';
 import styles from './IntegraleWelcomePack.module.css';
 
-export function IntegraleWelcomePack({ manualTitle = 'Le manuel de formation' }: { manualTitle?: string }) {
+const manuals = {
+  aps: {
+    src: '/images/welcome-pack/pack-aps-panoramique-sans-ecocup.webp',
+    title: 'Le manuel APS',
+    alt: 'Le Pack Intégrale présenté avec le manuel APS, le carnet noir et doré et le stylo. Le manuel et le carnet sont présentés fermés et ouverts.',
+  },
+  sst: {
+    src: '/images/welcome-pack/pack-sst-panoramique-sans-ecocup.webp',
+    title: 'Le manuel SST',
+    alt: 'Le Pack Intégrale présenté avec le manuel SST, le carnet noir et doré et le stylo. Le manuel et le carnet sont présentés fermés et ouverts.',
+  },
+  a3p: {
+    src: '/images/welcome-pack/pack-a3p-panoramique-sans-ecocup.webp',
+    title: 'Le manuel A3P',
+    alt: 'Le Pack Intégrale présenté avec le manuel A3P, le carnet noir et doré et le stylo. Le manuel et le carnet sont présentés fermés et ouverts.',
+  },
+  'desp-initial': {
+    src: '/images/welcome-pack/pack-desp-initial-panoramique-sans-ecocup.webp',
+    title: 'Le manuel du dirigeant',
+    alt: 'Le Pack Intégrale présenté avec le manuel du dirigeant d’une société de sécurité privée, le carnet noir et doré et le stylo. Le manuel et le carnet sont présentés fermés et ouverts.',
+  },
+  'ssiap-1': {
+    src: '/images/welcome-pack/pack-ssiap-1-panoramique-sans-ecocup.webp',
+    title: 'Le manuel SSIAP 1',
+    alt: 'Le Pack Intégrale présenté avec le manuel SSIAP 1, le carnet noir et doré et le stylo. Le manuel et le carnet sont présentés fermés et ouverts.',
+  },
+  'ssiap-2': {
+    src: '/images/welcome-pack/pack-ssiap-2-panoramique-sans-ecocup.webp',
+    title: 'Le manuel SSIAP 2',
+    alt: 'Le Pack Intégrale présenté avec le manuel SSIAP 2, le carnet noir et doré et le stylo. Le manuel et le carnet sont présentés fermés et ouverts.',
+  },
+  'ssiap-3': {
+    src: '/images/welcome-pack/pack-ssiap-3-panoramique-sans-ecocup.webp',
+    title: 'Le manuel SSIAP 3',
+    alt: 'Le Pack Intégrale présenté avec le manuel SSIAP 3, le carnet noir et doré et le stylo. Le manuel et le carnet sont présentés fermés et ouverts.',
+  },
+} as const;
+
+export function IntegraleWelcomePack({ course }: { course: keyof typeof manuals }) {
+  const manual = manuals[course];
+
   return <section id="pack-integrale" className={styles.banner} aria-labelledby="pack-integrale-title">
     <div className={styles.shell}>
       <div className={styles.heading}>
@@ -16,8 +56,8 @@ export function IntegraleWelcomePack({ manualTitle = 'Le manuel de formation' }:
         <div className={styles.overview}>
           <div className={styles.visual}>
             <Image
-              src="/images/welcome-pack/pack-aps-panoramique-sans-ecocup.webp"
-              alt="Le Pack Intégrale présenté avec le manuel APS, le carnet noir et doré et le stylo. Le manuel et le carnet sont présentés fermés et ouverts."
+              src={manual.src}
+              alt={manual.alt}
               width={2172}
               height={724}
               sizes="(max-width: 900px) calc(100vw - 40px), calc(75vw - 66px)"
@@ -27,7 +67,7 @@ export function IntegraleWelcomePack({ manualTitle = 'Le manuel de formation' }:
           <ul className={styles.contents} role="list" aria-label="Vos supports de formation">
             <li>
               <span className={styles.detailLabel}>Apprendre &amp; réviser</span>
-              <h3>{manualTitle}</h3>
+              <h3>{manual.title}</h3>
               <p>Votre support illustré pour suivre les cours et retrouver les points essentiels.</p>
             </li>
             <li>

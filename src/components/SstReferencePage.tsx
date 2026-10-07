@@ -151,7 +151,7 @@ export function SstReferencePage({ sessions }: { sessions: TrainingDatesPricingS
       <TrainingHeroSessionCard session={next} theme="green" duration="2 jours · 14 heures" defaultPrice="Sur devis" capacity={10} assistantKey="sst" />
     </TrainingHero>
 
-    <IntegraleWelcomePack />
+    <IntegraleWelcomePack course="sst" />
 
     <CourseJourney course="sst" />
 

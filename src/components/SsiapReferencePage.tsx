@@ -158,7 +158,7 @@ export function SsiapReferencePage({ sessions }: { sessions: any[] }) {
       <TrainingHeroSessionCard session={next} theme="red" duration="67 heures" defaultPrice="980 €" assistantKey="ssiap-1" />
     </TrainingHero>
 
-    <IntegraleWelcomePack />
+    <IntegraleWelcomePack course="ssiap-1" />
     <CourseJourney course="ssiap-1" />
 
     <TrainingSectionNavigation

@@ -224,7 +224,7 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
       </div>
     </section>
 
-    <IntegraleWelcomePack />
+    <IntegraleWelcomePack course="a3p" />
     <CourseJourney course="a3p" />
 
     <TrainingSectionNavigation

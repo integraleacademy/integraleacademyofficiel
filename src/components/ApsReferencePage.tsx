@@ -286,7 +286,7 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
       </div></div>
     </section>
 
-    <IntegraleWelcomePack manualTitle="Le manuel APS" />
+    <IntegraleWelcomePack course="aps" />
 
     <ApsJourney />
 

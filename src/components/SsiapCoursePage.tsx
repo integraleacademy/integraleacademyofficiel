@@ -232,7 +232,7 @@ export function SsiapCoursePage({ config, sessions = [] }: { config: SsiapCourse
       </section>
       )}
 
-      {heroKey && <IntegraleWelcomePack />}
+      {heroKey && <IntegraleWelcomePack course={heroKey} />}
       {heroKey && <CourseJourney course={heroKey} />}
 
       {heroKey ? <TrainingSectionNavigation
