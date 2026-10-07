@@ -253,9 +253,19 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
       <div className="grid gap-3 sm:grid-cols-2">{a3pPrerequisites.map((item, index) => <details key={item.title} className="group rounded-2xl border border-white/10 bg-[#182537] p-4"><summary className="flex cursor-pointer list-none gap-3"><span className="font-black text-emerald-300">{index === a3pPrerequisites.length - 1 ? '→' : '✓'}</span><span className="flex-1 text-sm font-black">{item.title}</span><span className="text-white/45 transition group-open:rotate-45">+</span></summary><div className="mt-3 border-t border-white/10 pt-3 text-xs font-medium leading-6 text-white/60">{item.body?.map((paragraph) => <p key={paragraph} className="mb-2 last:mb-0">{paragraph}</p>)}{item.note && <p className="mt-3 font-black text-amber-200">{item.note}</p>}</div></details>)}</div>
     </div></div></section>
 
-    <Section label="03 — Compétences" title={<>Ce que vous saurez faire <span className="decoration-emerald-500 decoration-[.16em] underline underline-offset-[-.03em]">sur le terrain.</span></>} intro="Les compétences du bloc unique sont présentées en cinq piliers métier. Le programme officiel détaillé par unité de valeur figure juste après.">
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-[1.15fr_.925fr_.925fr] lg:grid-rows-2">
-        {skillPillars.map((skill, index) => <article key={skill.title} className={`rounded-[1.75rem] border p-6 ${skill.featured ? 'border-emerald-700 bg-emerald-600 text-white lg:row-span-2 lg:flex lg:min-h-[25rem] lg:flex-col lg:justify-end' : skill.dark ? 'border-[#0D1725] bg-[#0D1725] text-white' : 'border-academy-line bg-[#FFFDF8]'}`}><div className={styles.skillArtwork}><ManualArtwork illustration={[a3pArtwork.briefing, a3pArtwork.reconnaissance, a3pArtwork.deplacement, a3pArtwork.secours, a3pArtwork.discretion][index]} /></div><h3 className={`mt-8 font-black tracking-[-.035em] ${skill.featured ? 'text-3xl' : 'text-xl'}`}>{skill.title}</h3><p className={`mt-3 text-sm font-semibold leading-7 ${skill.dark ? 'text-white/60' : skill.featured ? 'text-white/80' : 'text-academy-muted'}`}>{skill.text}</p></article>)}
+    <Section id="competences" label="03 — Compétences" title={<>Ce que vous saurez faire <span className="decoration-emerald-500 decoration-[.16em] underline underline-offset-[-.03em]">sur le terrain.</span></>} intro="Les compétences du bloc unique sont présentées en cinq piliers métier. Le programme officiel détaillé par unité de valeur figure juste après.">
+      <div className={styles.skillsGrid}>
+        {skillPillars.map((skill, index) => (
+          <article key={skill.title} className={`${styles.skillCard} ${skill.featured ? styles.featuredSkill : skill.dark ? styles.darkSkill : ''}`}>
+            <div className={styles.skillArtwork}>
+              <ManualArtwork illustration={[a3pArtwork.briefing, a3pArtwork.reconnaissance, a3pArtwork.deplacement, a3pArtwork.secours, a3pArtwork.discretion][index]} sizes="(max-width: 639px) 92vw, (max-width: 1023px) 46vw, 360px" />
+            </div>
+            <div className={styles.skillCopy}>
+              <h3>{skill.title}</h3>
+              <p>{skill.text}</p>
+            </div>
+          </article>
+        ))}
       </div>
     </Section>
 
