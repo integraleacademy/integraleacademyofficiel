@@ -8,7 +8,6 @@ export function ApsWelcomePack() {
         <div>
           <p className={styles.eyebrow}>Les essentiels de votre formation</p>
           <h2 id="pack-integrale-title">Votre <span>Pack Intégrale.</span></h2>
-          <p className={styles.description}>Un manuel pour apprendre, un carnet et un stylo pour retenir, un écocup pour les pauses. Dès votre arrivée, les bons outils vous attendent.</p>
         </div>
         <p className={styles.dayBadge}><span aria-hidden="true">✓</span> Remis le 1er jour de formation</p>
       </div>
@@ -21,7 +20,7 @@ export function ApsWelcomePack() {
               alt="Le manuel APS, le carnet noir et doré et le stylo du Pack Intégrale. Le manuel et le carnet sont présentés fermés et ouverts."
               width={2172}
               height={724}
-              sizes="(max-width: 900px) calc(100vw - 40px), (max-width: 1384px) 62vw, 860px"
+              sizes="(max-width: 900px) calc(100vw - 40px), (max-width: 1384px) 72vw, 972px"
               quality={90}
             />
           </div>
@@ -51,12 +50,12 @@ export function ApsWelcomePack() {
               alt="Les deux faces de l’écocup transparent et doré Intégrale Academy : le logo de l’école et le grand A noir."
               width={1536}
               height={1024}
-              sizes="(max-width: 600px) calc(100vw - 40px), (max-width: 900px) 45vw, (max-width: 1384px) 32vw, 440px"
+              sizes="(max-width: 600px) 160px, (max-width: 900px) 35vw, (max-width: 1384px) 24vw, 324px"
             />
           </div>
           <div className={styles.cupCopy}>
             <span className={styles.detailLabel}>Votre compagnon de pause</span>
-            <h3>L’écocup<br />{' '}Intégrale Academy.</h3>
+            <h3>L’écocup Intégrale</h3>
             <p>Un gobelet réutilisable aux couleurs de l’école, pour vous accompagner à chaque pause.</p>
             <span className={styles.cupNote}>Un écocup, présenté de face et de dos.</span>
           </div>
