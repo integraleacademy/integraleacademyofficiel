@@ -25,6 +25,15 @@ export function GlobalMobileCTA() {
     return null;
   }
 
+  if (pathname.replace(/\/+$/, '') === '/financements') {
+    return <>
+      <div aria-hidden="true" className="h-[calc(68px+env(safe-area-inset-bottom))] md:hidden" />
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-academy-line bg-academy-surface/95 px-4 pb-[calc(.5rem+env(safe-area-inset-bottom))] pt-2 backdrop-blur md:hidden">
+        <Link href="#contact-financement" className="mx-auto flex min-h-[44px] max-w-md items-center justify-center rounded-full bg-academy-gold px-5 py-3 text-center text-[14px] font-bold leading-tight text-academy-gold-text transition hover:brightness-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-academy-ink">Parler de mon financement</Link>
+      </div>
+    </>;
+  }
+
   return <>
     <div aria-hidden="true" className="h-[calc(4.75rem+env(safe-area-inset-bottom))] md:hidden" />
     <div className="fixed inset-x-0 bottom-0 z-40 border-t border-academy-line bg-academy-surface/95 px-3 pb-[calc(.75rem+env(safe-area-inset-bottom))] pt-3 shadow-soft backdrop-blur md:hidden">

@@ -1,7 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useId, useMemo, useState } from 'react';
+import styles from './FinancingSimulator.module.css';
 
 const paymentOptions = [
   { label: 'Paiement comptant', installments: 1 },
@@ -84,7 +85,124 @@ function SummaryRow({ label, value, highlight = false }: { label: string; value:
   </div>;
 }
 
-export default function FinancingSimulator() {
+function EditorialSimulator({
+  formation,
+  formationAmount,
+  cpfAmount,
+  installments,
+  remaining,
+  monthlyAmount,
+  onFormationChange,
+  onCpfChange,
+  onInstallmentsChange,
+}: {
+  formation: string;
+  formationAmount: number;
+  cpfAmount: number;
+  installments: number;
+  remaining: number;
+  monthlyAmount: number;
+  onFormationChange: (formation: string) => void;
+  onCpfChange: (amount: number) => void;
+  onInstallmentsChange: (installments: number) => void;
+}) {
+  const id = useId();
+
+  return <section id="simulateur" className={styles.simulator} aria-labelledby={`${id}-title`}>
+    <div className={styles.container}>
+      <header className={styles.header}>
+        <div>
+          <p className={styles.eyebrow}>02 / Votre estimation</p>
+          <h2 id={`${id}-title`}>Estimez votre reste à charge.</h2>
+        </div>
+        <p className={styles.introduction}>Votre formation, votre solde CPF. <br />Quelques chiffres pour y voir plus clair.</p>
+      </header>
+
+      <div className={styles.layout}>
+        <div className={styles.form}>
+          <div className={styles.field}>
+            <label htmlFor={`${id}-formation`}>Votre formation</label>
+            <select id={`${id}-formation`} value={formation} onChange={(event) => onFormationChange(event.target.value)} aria-describedby={`${id}-prices`}>
+              {formationOptions.map((option) => <option key={option.label}>{option.label}</option>)}
+            </select>
+          </div>
+
+          <div className={styles.cpfField}>
+            <div className={styles.amountHeading}>
+              <label htmlFor={`${id}-cpf`}>Montant CPF à mobiliser</label>
+              <div className={styles.amountInput}>
+                <input
+                  id={`${id}-cpf`}
+                  type="number"
+                  inputMode="numeric"
+                  min={0}
+                  max={formationAmount}
+                  value={cpfAmount}
+                  onChange={(event) => onCpfChange(clampAmount(Number(event.target.value), formationAmount))}
+                  aria-describedby={`${id}-cpf-help`}
+                />
+                <span aria-hidden="true">€</span>
+              </div>
+            </div>
+            <input
+              className={styles.range}
+              type="range"
+              min={0}
+              max={formationAmount}
+              value={cpfAmount}
+              onChange={(event) => onCpfChange(clampAmount(Number(event.target.value), formationAmount))}
+              aria-label="Ajuster le montant CPF en euros"
+              aria-valuetext={euros(cpfAmount)}
+            />
+            <div className={styles.rangeLimits} aria-hidden="true"><span>0 €</span><span>{euros(formationAmount)}</span></div>
+            <p id={`${id}-cpf-help`} className={styles.helper}>Indiquez le montant que vous souhaitez mobiliser, dans la limite du coût de la formation.</p>
+          </div>
+
+          <p id={`${id}-prices`} className={styles.priceNote}>Montants TTC. Tarifs 2027 pour les formations APS, A3P et DESP.</p>
+          <div className={styles.actions}>
+            <Link href="/contact" className={styles.primaryAction}>Étudier mon financement <span aria-hidden="true">↗</span></Link>
+            <Link href="tel:0422470768" className={styles.phoneAction}>Appeler un conseiller <span aria-hidden="true">↗</span></Link>
+          </div>
+        </div>
+
+        <div className={styles.result}>
+          <p className={styles.resultLabel} id={`${id}-result-label`}>Reste à charge estimé</p>
+          <output className={styles.remaining} aria-labelledby={`${id}-result-label`} aria-live="polite" aria-atomic="true">{euros(remaining)}</output>
+          <p className={styles.resultCaption}>Après déduction du montant CPF renseigné</p>
+
+          <dl className={styles.breakdown}>
+            <div><dt>Formation {formation}</dt><dd>{euros(formationAmount)}</dd></div>
+            <div><dt>Montant CPF mobilisé</dt><dd>− {euros(cpfAmount)}</dd></div>
+          </dl>
+
+          <fieldset className={styles.payment}>
+            <legend>Envisager un paiement en plusieurs fois</legend>
+            <div className={styles.paymentOptions}>
+              {paymentOptions.map((option) => <button
+                key={option.installments}
+                type="button"
+                onClick={() => onInstallmentsChange(option.installments)}
+                aria-label={option.label}
+                aria-pressed={installments === option.installments}
+              >{option.installments === 1 ? 'Comptant' : `${option.installments}×`}</button>)}
+            </div>
+          </fieldset>
+          <p className={styles.paymentSummary} aria-live="polite" aria-atomic="true">
+            {remaining === 0
+              ? 'Solde théorique nul, sous réserve de validation du dossier.'
+              : installments > 1
+                ? <>Environ <strong>{euros(monthlyAmount)} / mois</strong> sur {installments} mensualités.</>
+                : 'Un paiement unique, sans échelonnement.'}
+          </p>
+        </div>
+      </div>
+
+      <p className={styles.disclaimer}>Simulation indicative et simplifiée, sous réserve d’éligibilité, de validation des financeurs et du dossier administratif. Participation réglementaire éventuelle et autres aides non incluses. Échelonnement à confirmer avec un conseiller.</p>
+    </div>
+  </section>;
+}
+
+export default function FinancingSimulator({ variant = 'default' }: { variant?: 'default' | 'editorial' }) {
   const [formation, setFormation] = useState('APS');
   const [cpfAmount, setCpfAmount] = useState(0);
   const [installments, setInstallments] = useState(1);
@@ -100,6 +218,20 @@ export default function FinancingSimulator() {
   useEffect(() => {
     setCpfAmount((current) => clampAmount(current, formationAmount));
   }, [formationAmount]);
+
+  if (variant === 'editorial') {
+    return <EditorialSimulator
+      formation={formation}
+      formationAmount={formationAmount}
+      cpfAmount={cappedCpf}
+      installments={installments}
+      remaining={remaining}
+      monthlyAmount={monthlyAmount}
+      onFormationChange={setFormation}
+      onCpfChange={setCpfAmount}
+      onInstallmentsChange={setInstallments}
+    />;
+  }
 
   return <section id="simulateur" className="scroll-mt-24 bg-[#08111f] px-4 py-14 text-white md:py-24">
     <div className="page-container overflow-hidden rounded-[2rem] border border-white/10 bg-[radial-gradient(circle_at_8%_10%,rgba(244,196,90,.17),transparent_28%),linear-gradient(135deg,#101b2e,#070d18_58%,#111b2c)] p-5 shadow-[0_34px_120px_rgba(0,0,0,.38)] md:p-9">

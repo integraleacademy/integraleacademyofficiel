@@ -3,6 +3,7 @@ import FinancingSimulator from '@/components/FinancingSimulator';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { appointmentFormUrl } from '@/components/ui';
+import FundingProfileChooser from './FundingProfileChooser';
 import styles from './financements.module.css';
 
 export const metadata: Metadata = createPageMetadata('/financements');
@@ -24,50 +25,11 @@ function Icon({ name, className = '' }: { name: IconName; className?: string }) 
   return <svg {...common}><path d="M5 12h13M13 7l5 5-5 5" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.9"/></svg>;
 }
 
-const supportCards: { index: string; icon: IconName; title: string; text: string }[] = [
-  { index: '01', icon: 'compass', title: 'Un diagnostic personnalisé', text: 'Votre statut, votre projet et la formation visée nous permettent d’identifier les pistes de financement réellement adaptées.' },
-  { index: '02', icon: 'document', title: 'Un dossier bien préparé', text: 'Nous vous aidons à réunir les informations utiles, à demander un devis et à comprendre les étapes de votre démarche.' },
-  { index: '03', icon: 'follow', title: 'Un suivi humain', text: 'Vous gardez un interlocuteur pour avancer sereinement, suivre votre demande et envisager une autre solution si nécessaire.' },
-];
-
-const fundingOptions: { icon: IconName; eyebrow: string; title: string; description: string; points: string[]; href: string; cta: string; featured?: boolean }[] = [
-  {
-    icon: 'cpf',
-    eyebrow: 'Actifs & demandeurs d’emploi',
-    title: 'Compte Personnel de Formation',
-    description: 'Mobilisez les droits disponibles sur votre compte lorsque la certification choisie est éligible.',
-    points: ['Vérification de la formation visée', 'Lecture du reste à charge éventuel', 'Aide pour préparer votre inscription'],
-    href: '/financements/cpf',
-    cta: 'Découvrir le financement CPF',
-    featured: true,
-  },
-  {
-    icon: 'briefcase',
-    eyebrow: 'Demandeurs d’emploi',
-    title: 'France Travail',
-    description: 'Votre projet peut faire l’objet d’une demande de prise en charge, selon votre situation et la validation de votre conseiller.',
-    points: ['Projet professionnel argumenté', 'Devis et programme de formation', 'Décision étudiée au cas par cas'],
-    href: '/financements/france-travail',
-    cta: 'Préparer mon dossier France Travail',
-  },
-  {
-    icon: 'school',
-    eyebrow: 'Étudiants & reconversions',
-    title: 'Alternance',
-    description: 'Préparez un BTS tout en acquérant une expérience professionnelle dans le cadre d’un contrat en entreprise.',
-    points: ['Formation prise en charge selon le contrat', 'Rémunération selon les règles applicables', 'Accompagnement candidat et entreprise'],
-    href: '/financements/alternance',
-    cta: 'Explorer l’alternance',
-  },
-  {
-    icon: 'building',
-    eyebrow: 'Salariés & employeurs',
-    title: 'Entreprise & OPCO',
-    description: 'Une entreprise peut financer le développement des compétences d’un salarié ou mobiliser son opérateur de compétences.',
-    points: ['Besoin de formation clarifié', 'Programme et devis à transmettre', 'Prise en charge selon branche et budget'],
-    href: '/entreprises',
-    cta: 'Étudier un financement entreprise',
-  },
+const fundingOptions: { icon: IconName; audience: string; title: string; description: string; href: string; cta: string; logo?: { src: string; alt: string } }[] = [
+  { icon: 'cpf', logo: { src: '/images/mon-compte-formation.svg', alt: 'Mon Compte Formation (CPF)' }, audience: 'Vos droits à la formation', title: 'Le CPF', description: 'Utilisez vos droits disponibles pour une formation éligible. Nous vous aidons à vérifier les possibilités et le reste à charge.', href: '/financements/cpf', cta: 'Comprendre le CPF' },
+  { icon: 'briefcase', logo: { src: '/images/financements/france-travail.svg', alt: 'France Travail' }, audience: 'Demandeurs d’emploi', title: 'France Travail', description: 'Présentez votre projet à votre conseiller. Le programme et le devis permettent d’étudier une éventuelle prise en charge.', href: '/financements/france-travail', cta: 'Préparer ma demande' },
+  { icon: 'school', audience: 'Un BTS, une expérience en entreprise', title: 'L’alternance', description: 'Associez formation et emploi, avec une prise en charge liée à votre contrat et une rémunération selon les règles applicables.', href: '/financements/alternance', cta: 'Découvrir l’alternance' },
+  { icon: 'building', logo: { src: '/images/financements/akto.svg', alt: 'AKTO, opérateur de compétences' }, audience: 'Salariés & employeurs', title: 'Entreprise & OPCO', description: 'Construisez votre projet avec votre employeur. AKTO ou votre OPCO peut étudier une prise en charge selon votre branche et les critères applicables.', href: '/entreprises', cta: 'Étudier cette solution' },
 ];
 
 const faqItems = [
@@ -79,138 +41,109 @@ const faqItems = [
   { question: 'Que se passe-t-il si mon financement est refusé ?', answer: 'Un refus ne signifie pas forcément l’abandon du projet. Nous pouvons étudier avec vous une autre voie de financement, une prochaine session ou un paiement personnel échelonné, sous réserve des conditions applicables.' },
 ];
 
-const nextSteps = [
-  { number: '01', title: 'Choisir ma formation', text: 'Comparez les parcours et trouvez celui qui correspond à votre objectif professionnel.', href: '/#formations-securite', cta: 'Voir les formations' },
-  { number: '02', title: 'Consulter les prochaines dates', text: 'Repérez une session compatible avec votre calendrier et le délai de votre financement.', href: '/planning', cta: 'Voir le planning' },
-  { number: '03', title: 'Parler à un conseiller', text: 'Faites le point sur votre situation avant d’engager la moindre démarche.', href: appointmentFormUrl, cta: 'Réserver un échange' },
-];
-
 export default function FinancementsPage() {
-  return <>
+  return <div className={styles.page}>
     <section className={styles.hero} aria-labelledby="financements-title">
-      <div className={styles.heroGrid} aria-hidden="true" />
-      <div className={`page-container ${styles.heroInner}`}>
-        <div className={styles.heroCopy}>
-          <span className={styles.eyebrow}>Financer sa formation</span>
-          <h1 id="financements-title">Votre projet mérite une <span>solution adaptée.</span></h1>
-          <p>CPF, France Travail, alternance, entreprise ou financement personnel&nbsp;: nous vous aidons à comprendre vos options et à préparer la bonne démarche.</p>
-          <div className={styles.heroActions}>
-            <Link href="#solutions" className={styles.primaryButton}>Trouver mon financement <Icon name="arrow" /></Link>
-            <Link href="#accompagnement" className={styles.secondaryButton}>Découvrir notre accompagnement</Link>
+      <div className={styles.container}>
+        <div className={styles.heroLayout}>
+          <div className={styles.heroCopy}>
+            <span className={styles.eyebrow}><span aria-hidden="true" /> Votre projet commence ici</span>
+            <h1 id="financements-title">Trouvez comment <span>financer votre formation.</span></h1>
+            <p>À chaque parcours, ses possibilités. Identifiez les vôtres et avancez avec un conseiller à vos côtés.</p>
+            <div className={styles.heroActions}>
+              <Link href="#simulateur" className={styles.primaryButton}>Estimer mon reste à charge <Icon name="arrow" /></Link>
+              <Link href="#solutions" className={styles.textLink}>Voir les financements <span aria-hidden="true">↓</span></Link>
+            </div>
+            <p className={styles.heroNote}><Icon name="check" /> Premier échange gratuit et sans engagement</p>
           </div>
-          <div className={styles.heroNote}><span><Icon name="check" /></span>Premier échange gratuit et sans engagement</div>
+          <FundingProfileChooser />
         </div>
-
-        <div className={styles.heroVisual} aria-label="Les trois étapes de votre parcours de financement">
-          <span className={styles.orbOne} aria-hidden="true" />
-          <span className={styles.orbTwo} aria-hidden="true" />
-          <div className={styles.journeyCard}>
-            <div className={styles.journeyHeader}>
-              <div><span>Votre parcours</span><strong>Un financement plus lisible</strong></div>
-              <span className={styles.status}><i />Accompagné</span>
-            </div>
-            <div className={styles.journeySteps}>
-              <div className={styles.journeyStep}><span className={styles.journeyNumber}>1</span><div><strong>Votre projet</strong><small>Formation, situation, objectif</small></div><span className={styles.done}><Icon name="check" /></span></div>
-              <div className={styles.journeyStep}><span className={styles.journeyNumber}>2</span><div><strong>La bonne piste</strong><small>Dispositif et reste à charge</small></div><span className={styles.activeDot} /></div>
-              <div className={styles.journeyStep}><span className={styles.journeyNumber}>3</span><div><strong>Votre dossier</strong><small>Pièces, devis et prochaines étapes</small></div><span className={styles.pending}>À venir</span></div>
-            </div>
-            <div className={styles.journeyFooter}>
-              <div className={styles.avatarStack}><span>IA</span><span>✓</span></div>
-              <p><strong>Un conseiller à vos côtés</strong><small>pour ne pas avancer seul dans vos démarches</small></p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className={`page-container ${styles.heroProof}`}>
-        <span><Icon name="check" />Solutions selon votre statut</span>
-        <span><Icon name="check" />Démarches expliquées simplement</span>
-        <span><Icon name="check" />Décision finale du financeur</span>
-      </div>
-    </section>
-
-    <section id="accompagnement" className={styles.supportSection} aria-labelledby="support-title">
-      <div className="page-container">
-        <div className={styles.sectionIntro}>
-          <div><span className={styles.sectionEyebrow}>Notre accompagnement</span><h2 id="support-title">Vous n’avez pas à devenir expert du financement.</h2></div>
-          <p>Notre rôle est de rendre chaque étape plus claire, de vous orienter vers les bons interlocuteurs et de vous aider à présenter un projet solide.</p>
-        </div>
-        <div className={styles.supportGrid}>
-          {supportCards.map((card) => <article className={styles.supportCard} key={card.title}>
-            <div className={styles.cardTop}><span className={styles.iconBox}><Icon name={card.icon} /></span><span className={styles.cardIndex}>{card.index}</span></div>
-            <h3>{card.title}</h3><p>{card.text}</p>
-          </article>)}
+        <div className={styles.proofBar}>
+          <a href="/#avis-google" className={styles.rating}><span className={styles.stars} aria-hidden="true">★★★★★</span><strong>4,8/5</strong><span>Avis Google</span><Icon name="arrow" /></a>
+          <span><Icon name="follow" /> Un interlocuteur dédié</span>
+          <span><Icon name="document" /> Des démarches expliquées</span>
         </div>
       </div>
     </section>
 
     <section id="solutions" className={styles.solutionsSection} aria-labelledby="solutions-title">
-      <span className={styles.solutionsGlow} aria-hidden="true" />
-      <div className="page-container">
-        <div className={styles.solutionsIntro}>
-          <div><span className={styles.darkEyebrow}>Les dispositifs</span><h2 id="solutions-title">Une solution pour chaque situation.</h2></div>
-          <p>Comparez les principales possibilités, puis laissez-nous vérifier avec vous celle qui correspond à votre parcours.</p>
+      <div className={styles.container}>
+        <div className={styles.sectionIntro}>
+          <div><span className={styles.eyebrow}>01 / Les possibilités</span><h2 id="solutions-title">Plusieurs chemins.<br />Un même projet.</h2></div>
+          <p>Découvrez les principaux dispositifs. Nous vérifions ensuite avec vous ceux qui correspondent à votre situation.</p>
         </div>
-
         <div className={styles.fundingGrid}>
-          {fundingOptions.map((option) => <article className={`${styles.fundingCard} ${option.featured ? styles.featuredCard : ''}`} key={option.title}>
-            {option.featured && <span className={styles.popularBadge}>Le plus demandé</span>}
-            <div className={styles.fundingHeading}><span className={styles.fundingIcon}><Icon name={option.icon} /></span><span>{option.eyebrow}</span></div>
+          {fundingOptions.map((option) => <article className={styles.fundingCard} key={option.title}>
+            <div className={styles.fundingHeading}>
+              {option.logo ? <div className={styles.fundingBrand}><img src={option.logo.src} alt={option.logo.alt} width="180" height="66" loading="lazy" /></div> : <div className={styles.fundingBrandIcon}><Icon name={option.icon} /></div>}
+              <span>{option.audience}</span>
+            </div>
             <h3>{option.title}</h3><p>{option.description}</p>
-            <ul>{option.points.map((point) => <li key={point}><Icon name="check" />{point}</li>)}</ul>
             <Link href={option.href}>{option.cta}<Icon name="arrow" /></Link>
           </article>)}
         </div>
-
-        <article className={styles.personalCard}>
-          <div className={styles.personalIcon}><Icon name="wallet" /></div>
-          <div><span>Une alternative souple</span><h3>Financement personnel</h3><p>Si aucun dispositif ne couvre votre projet, un paiement personnel peut être envisagé. Des facilités de règlement peuvent être proposées selon la formation et les conditions applicables.</p></div>
-          <Link href="/contact">Étudier cette possibilité <Icon name="arrow" /></Link>
-        </article>
-        <p className={styles.disclaimer}>Les prises en charge et montants indiqués sont soumis aux règles, critères et décisions propres à chaque organisme financeur.</p>
+        <div className={styles.personalRow}>
+          <Icon name="wallet" />
+          <div><h3>Vous financez vous-même votre formation ?</h3><p>Des facilités de règlement peuvent être étudiées selon la formation et les conditions applicables.</p></div>
+          <Link href="#simulateur">Estimer mon budget <Icon name="arrow" /></Link>
+        </div>
+        <p className={styles.finePrint}>Toute prise en charge reste soumise aux critères et à la décision de l’organisme financeur.</p>
+        <aside className={styles.identityCard} aria-labelledby="identity-title">
+          <div className={styles.identityLogo}><img src="/images/financements/identite-numerique-la-poste.svg" alt="L’Identité Numérique La Poste" width="240" height="67" loading="lazy" /></div>
+          <div>
+            <span className={styles.eyebrow}>Pour vos démarches CPF</span>
+            <h3 id="identity-title">Préparez votre connexion sécurisée.</h3>
+            <p>L’Identité Numérique La Poste vous permet de vous identifier avec FranceConnect+. France Identité est également proposée. Vérifiez les conditions et les étapes sur les services officiels.</p>
+            <div className={styles.identityLinks}>
+              <a href="https://lidentitenumerique.laposte.fr/" target="_blank" rel="noopener noreferrer">Découvrir l’Identité Numérique <span aria-hidden="true">↗</span><span className="sr-only"> (nouvel onglet)</span></a>
+              <a href="https://www.moncompteformation.gouv.fr/espace-public/qui-peut-utiliser-franceconnect" target="_blank" rel="noopener noreferrer">Comprendre FranceConnect+ <span aria-hidden="true">↗</span><span className="sr-only"> (nouvel onglet)</span></a>
+            </div>
+          </div>
+        </aside>
       </div>
     </section>
 
-    <FinancingSimulator />
+    <FinancingSimulator variant="editorial" />
 
-    <section className={styles.stepsSection} aria-labelledby="steps-title">
-      <div className="page-container">
-        <div className={styles.centeredIntro}><span className={styles.sectionEyebrow}>Comment ça marche ?</span><h2 id="steps-title">De votre idée à votre dossier, en 3 étapes.</h2><p>Un parcours simple pour savoir où vous allez et ce qu’il reste à faire.</p></div>
-        <div className={styles.stepsGrid}>
-          <article><span>01</span><div className={styles.stepIcon}><Icon name="compass" /></div><h3>Parlez-nous de votre projet</h3><p>Formation souhaitée, situation actuelle, objectifs et calendrier&nbsp;: nous commençons par l’essentiel.</p></article>
-          <article><span>02</span><div className={styles.stepIcon}><Icon name="cpf" /></div><h3>Identifions les bonnes pistes</h3><p>Nous comparons avec vous les dispositifs envisageables et le reste à charge potentiel.</p></article>
-          <article><span>03</span><div className={styles.stepIcon}><Icon name="document" /></div><h3>Préparez la demande</h3><p>Programme, devis et justificatifs&nbsp;: vous savez quoi transmettre et à quel interlocuteur.</p></article>
+    <section id="accompagnement" className={styles.supportSection} aria-labelledby="support-title">
+      <div className={styles.container}>
+        <div className={styles.sectionIntro}>
+          <div><span className={styles.eyebrow}>03 / À vos côtés</span><h2 id="support-title">Un projet à vous.<br />Des démarches ensemble.</h2></div>
+          <p>Pas besoin de maîtriser tous les dispositifs. Notre équipe vous aide à y voir clair, du premier échange à votre demande.</p>
         </div>
-        <div className={styles.stepsCta}>
-          <div><span>Prêt à faire le point ?</span><strong>Expliquez-nous votre projet en quelques minutes.</strong></div>
-          <Link href={appointmentFormUrl}>Réserver un rendez-vous <Icon name="arrow" /></Link>
-        </div>
+        <ol className={styles.steps}>
+          <li><span>01</span><h3>On fait le point.</h3><p>Votre situation, la formation souhaitée et votre calendrier : nous partons de votre projet.</p></li>
+          <li><span>02</span><h3>On explore les solutions.</h3><p>Nous identifions les dispositifs envisageables et le reste à charge potentiel.</p></li>
+          <li><span>03</span><h3>On prépare votre dossier.</h3><p>Devis, programme, justificatifs : vous savez quoi transmettre et à quel interlocuteur.</p></li>
+        </ol>
       </div>
     </section>
 
     <section className={styles.faqSection} aria-labelledby="faq-title">
-      <div className="page-container">
-        <div className={styles.faqLayout}>
-          <div className={styles.faqIntro}><span className={styles.sectionEyebrow}>Questions fréquentes</span><h2 id="faq-title">Vos questions, nos réponses.</h2><p>Les règles varient selon votre situation. Voici les réponses aux questions que nos conseillers reçoivent le plus souvent.</p><Link href="/contact">Poser une autre question <Icon name="arrow" /></Link></div>
-          <div className={styles.faqList}>
-            {faqItems.map((item, index) => <details key={item.question}>
-              <summary><span><i>{String(index + 1).padStart(2, '0')}</i>{item.question}</span><b aria-hidden="true">+</b></summary>
-              <div><p>{item.answer}</p></div>
-            </details>)}
-          </div>
+      <div className={`${styles.container} ${styles.faqLayout}`}>
+        <div className={styles.faqIntro}><span className={styles.eyebrow}>Les réponses utiles</span><h2 id="faq-title">Encore une <br />question ?</h2><p>Quelques repères avant de vous lancer.</p><Link href="#contact-financement" className={styles.textLink}>Parlons-en ensemble <Icon name="arrow" /></Link></div>
+        <div className={styles.faqList}>
+          {faqItems.map((item) => <details key={item.question}>
+            <summary>{item.question}<span aria-hidden="true">+</span></summary>
+            <p>{item.answer}</p>
+          </details>)}
         </div>
       </div>
     </section>
 
-    <section className={styles.nextSection} aria-labelledby="next-title">
-      <div className="page-container">
-        <div className={styles.centeredIntro}><span className={styles.sectionEyebrow}>Et maintenant ?</span><h2 id="next-title">Faites avancer votre projet.</h2></div>
-        <div className={styles.nextGrid}>
-          {nextSteps.map((step) => <Link href={step.href} className={styles.nextCard} key={step.title}>
-            <span>{step.number}</span><h3>{step.title}</h3><p>{step.text}</p><strong>{step.cta}<Icon name="arrow" /></strong>
-          </Link>)}
+    <section id="contact-financement" className={styles.contactSection} aria-labelledby="contact-title">
+      <div className={styles.container}>
+        <div className={styles.contactPanel}>
+          <div><span className={styles.eyebrow}>Le prochain pas, ensemble</span><h2 id="contact-title">Votre projet mérite<br />une conversation.</h2><p>Expliquez-nous votre situation. Cassandre vous accompagne pour faire le point sur les possibilités de financement.</p></div>
+          <div className={styles.contactDetails}>
+            <div className={styles.contactPerson}><span className={styles.contactInitial} aria-hidden="true">C.</span><div><strong>Cassandre</strong><span>Votre interlocutrice chez Intégrale Academy</span></div></div>
+            <Link href={appointmentFormUrl} className={styles.primaryButton}>Parler de mon financement <Icon name="arrow" /></Link>
+            <a href="tel:+33422470768" className={styles.phone}>04 22 47 07 68</a>
+            <p>Échange gratuit et sans engagement</p>
+          </div>
         </div>
+        <div className={styles.moreLinks}><span>Votre projet se précise ?</span><Link href="/#formations-securite">Voir les formations <Icon name="arrow" /></Link><Link href="/planning">Consulter les dates <Icon name="arrow" /></Link></div>
       </div>
     </section>
-  </>;
+  </div>;
 }

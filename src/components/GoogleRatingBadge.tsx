@@ -14,7 +14,9 @@ function GoogleIcon(){
 export function GoogleRatingBadge(){
   const pathname = usePathname();
 
-  if (pathname === '/ecole') return null;
+  if (pathname === '/ecole' || pathname?.replace(/\/+$/, '') === '/financements') {
+    return null;
+  }
 
   return <a
     href="/#avis-google"
