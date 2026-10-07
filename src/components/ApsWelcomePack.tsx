@@ -20,7 +20,7 @@ export function ApsWelcomePack() {
               alt="Le manuel APS, le carnet noir et doré et le stylo du Pack Intégrale. Le manuel et le carnet sont présentés fermés et ouverts."
               width={2172}
               height={724}
-              sizes="(max-width: 900px) calc(100vw - 40px), (max-width: 1384px) 72vw, 972px"
+              sizes="(max-width: 900px) calc(100vw - 40px), calc(75vw - 66px)"
               quality={90}
             />
           </div>
@@ -50,7 +50,7 @@ export function ApsWelcomePack() {
               alt="Les deux faces de l’écocup transparent et doré Intégrale Academy : le logo de l’école et le grand A noir."
               width={1536}
               height={1024}
-              sizes="(max-width: 600px) 160px, (max-width: 900px) 35vw, (max-width: 1384px) 24vw, 324px"
+              sizes="(max-width: 600px) calc(37.5vw - 21px), (max-width: 900px) calc(37.5vw - 24px), calc(25vw - 22px)"
             />
           </div>
           <div className={styles.cupCopy}>
