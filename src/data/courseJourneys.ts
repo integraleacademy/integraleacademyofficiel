@@ -1,5 +1,6 @@
 import type { TrainingJourneyStep, TrainingJourneyTheme } from '@/components/TrainingJourney';
 import { btsRhythms, type BtsCode } from '@/data/btsRhythms';
+import { ssiapLeadershipArtwork } from '@/data/manualIllustrations';
 
 type Four<T> = readonly [T, T, T, T];
 type Pair<T> = readonly [T, T];
@@ -161,7 +162,7 @@ const fireAndFirstAidJourneys = {
       copy('Votre entraînement', 'Savoir décider et faire agir ensemble.', 'Vous préparez des séquences pédagogiques, travaillez la coordination des agents et la gestion d’incidents au PC sécurité. Les exercices vous aident à relier consignes, décisions et communication.', '#validation', 'Voir les mises en situation'),
       copy('Votre prochain chapitre', 'Préparez le diplôme de chef d’équipe.', 'Les épreuves écrite, orale et pratique évaluent les compétences attendues du chef d’équipe SSIAP 2. Notre équipe vérifie vos prérequis et vous accompagne dans l’organisation de votre entrée en formation.', '#dates-tarifs', 'Recevoir les prochaines dates'),
     ],
-    opening: { image: '/images/ssiap-2-hero.jpg', kicker: 'LE TERRAIN. L’ÉQUIPE. LA DÉCISION.', heading: ['Faites équipe.', 'Prenez le relais.'], text: 'Donnez une nouvelle dimension à votre expérience de la sécurité incendie.', verbs: ['Encadrer', 'Coordonner', 'Transmettre'] },
+    opening: { image: ssiapLeadershipArtwork['ssiap-2'].src, kicker: 'LE TERRAIN. L’ÉQUIPE. LA DÉCISION.', heading: ['Faites équipe.', 'Prenez le relais.'], text: 'Donnez une nouvelle dimension à votre expérience de la sécurité incendie.', verbs: ['Encadrer', 'Coordonner', 'Transmettre'] },
     study: { value: '70', unit: 'HEURES · HORS EXAMEN', heading: ['Votre expérience.', 'Un nouveau niveau.'], panels: [
       { label: 'ENCADRER', value: 'Une', unit: 'équipe', detail: 'Organiser et accompagner les agents' },
       { label: 'COORDONNER', value: 'Le', unit: 'PC sécurité', detail: 'Piloter les actions en situation de crise' },
@@ -185,7 +186,7 @@ const fireAndFirstAidJourneys = {
       copy('Vos études de cas', 'Analyser, argumenter, conseiller.', 'Lecture de plans, notice technique, analyse des risques et préparation des commissions : vous travaillez les situations du chef de service et préparez les attendus des épreuves.', '#validation', 'Découvrir les évaluations'),
       copy('Votre prochain chapitre', 'Préparez le diplôme SSIAP 3 et vos futures responsabilités.', 'Le parcours vous prépare aux épreuves écrites et à l’entretien devant le jury. Vous développez les compétences pour organiser le service et conseiller le chef d’établissement.', '#dates-tarifs', 'Recevoir les prochaines dates'),
     ],
-    opening: { image: '/images/ssiap-3-hero.jpg', kicker: 'L’EXPERTISE QUI ORIENTE LES DÉCISIONS.', heading: ['Prenez de la hauteur.', 'Pilotez la sécurité.'], text: 'Reliez réglementation, risques et management pour diriger un service de sécurité incendie.', verbs: ['Analyser', 'Conseiller', 'Piloter'] },
+    opening: { image: ssiapLeadershipArtwork['ssiap-3'].src, kicker: 'L’EXPERTISE QUI ORIENTE LES DÉCISIONS.', heading: ['Prenez de la hauteur.', 'Pilotez la sécurité.'], text: 'Reliez réglementation, risques et management pour diriger un service de sécurité incendie.', verbs: ['Analyser', 'Conseiller', 'Piloter'] },
     study: { value: '216', unit: 'HEURES · HORS EXAMEN', heading: ['Une vision globale.', 'Des choix éclairés.'], panels: [
       { label: 'L’EXPERTISE', value: 'Le', unit: 'cadre', detail: 'Bâtiments, risques et réglementation' },
       { label: 'LE PILOTAGE', value: 'Les', unit: 'moyens', detail: 'Équipe, maintenance et budget' },

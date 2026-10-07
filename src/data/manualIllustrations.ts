@@ -50,6 +50,17 @@ export const ssiapPracticeArtwork: ManualIllustrationMap = {
   'rescue-arrival': ssiapArtwork.secours,
 };
 
+export const ssiapLeadershipArtwork = {
+  'ssiap-2': {
+    src: '/images/ssiap-2/chef-equipe.webp',
+    alt: 'Illustration SSIAP 2 : un chef d’équipe de sécurité incendie transmet les consignes à trois agents SSIAP 1 au poste de sécurité.',
+  },
+  'ssiap-3': {
+    src: '/images/ssiap-3/chef-service.webp',
+    alt: 'Illustration SSIAP 3 : un chef de service pilote la sécurité incendie de l’ensemble du bâtiment avec les chefs d’équipe SSIAP 2 et la direction de l’établissement.',
+  },
+} satisfies Record<'ssiap-2' | 'ssiap-3', ManualIllustration>;
+
 export const despArtwork = {
   direction: artwork('desp', 'direction', 'Illustration du manuel du dirigeant : travail en équipe sur les dossiers de l’entreprise.'),
   projet: artwork('desp', 'projet', 'Illustration du manuel du dirigeant : étude d’un projet d’entreprise et de ses documents.'),

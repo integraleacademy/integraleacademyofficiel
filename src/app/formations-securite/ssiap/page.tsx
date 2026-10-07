@@ -1,5 +1,5 @@
 import { ManualArtwork } from '@/components/ManualArtwork';
-import { ssiapArtwork } from '@/data/manualIllustrations';
+import { ssiapArtwork, ssiapLeadershipArtwork } from '@/data/manualIllustrations';
 import { AcademyWatermark } from '@/components/AcademyWatermark';
 import { createPageMetadata, serializeJsonLd } from '@/lib/seo';
 import Link from 'next/link';
@@ -8,7 +8,7 @@ import { ssiapOfficialReference } from '@/data/ssiap-catalogue';
 
 export const metadata = createPageMetadata('/formations-securite/ssiap');
 
-const courseIllustrations = [ssiapArtwork.ronde, ssiapArtwork.pc, ssiapArtwork.prevention, { src: '/images/ssiap-1/manuel/recyclage.webp', alt: 'Illustration du manuel SSIAP : exercice pratique d’extinction encadré par le formateur.' }];
+const courseIllustrations = [ssiapArtwork.ronde, ssiapLeadershipArtwork['ssiap-2'], ssiapLeadershipArtwork['ssiap-3'], { src: '/images/ssiap-1/manuel/recyclage.webp', alt: 'Illustration du manuel SSIAP : exercice pratique d’extinction encadré par le formateur.' }];
 
 const courses = [
   {

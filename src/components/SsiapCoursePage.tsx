@@ -7,6 +7,7 @@ import { PremiumFAQSection } from '@/components/ui';
 import { TrainingHero, TrainingHeroSessionCard, trainingRegistrationUrl } from '@/components/TrainingHero';
 import { TrainingSectionNavigation } from '@/components/TrainingSectionNavigation';
 import { TrainingDatesPricingSection, type TrainingDatesPricingSession } from '@/components/TrainingDatesPricingSection';
+import { ssiapLeadershipArtwork } from '@/data/manualIllustrations';
 import {
   ssiapOfficialReference,
   type SsiapCourseConfig,
@@ -145,7 +146,8 @@ export function SsiapCoursePage({ config, sessions = [] }: { config: SsiapCourse
 
       {heroKey ? <TrainingHero
         theme="red"
-        imageSrc={`/images/${heroKey}-hero.jpg`}
+        imageSrc={ssiapLeadershipArtwork[heroKey].src}
+        illustrationAlt={ssiapLeadershipArtwork[heroKey].alt}
         badge={`${config.label} · Formation réglementée`}
         title={`Formation ${config.role.toLocaleLowerCase('fr-FR')}`}
         tagline={heroKey === 'ssiap-2' ? 'Encadrez votre équipe' : 'Pilotez la sécurité'}
