@@ -24,9 +24,13 @@ export function DespHeroSessions({ sessions, defaultPrice }: {
   defaultPrice: string;
 }) {
   return <aside className={`${styles.sessionCard} rounded-[2rem] border border-white/80 bg-[#FFFDF8] p-5 text-academy-ink sm:p-6 lg:p-7`} data-theme="orange" data-layout="cities" aria-label="Prochaines sessions DESP par ville">
+    <div data-city-summary>
     <h2 className={`${styles.sessionLabel} inline-flex`}>Prochaines sessions</h2>
     <p className="mt-3 text-sm font-bold text-academy-muted">245 heures · Distanciel + présentiel</p>
-    <div className="mt-4 grid gap-3">
+    <p className="mt-3 text-xs font-semibold leading-5 text-academy-muted">Un conseiller vérifie votre dossier avant validation.</p>
+    <div className="mt-3"><OrientationAssistant initialFormationKey="desp" hideInfoAction variant="modalTrigger" /></div>
+    </div>
+    <div data-city-sessions className="mt-4 grid gap-3">
       {locations.map(({ key, label, fallback }) => {
         const session = nextSessionForLocation(sessions, key);
         const availability = session ? getSessionSeatAvailability(session, 12) : null;
@@ -49,7 +53,5 @@ export function DespHeroSessions({ sessions, defaultPrice }: {
         </section>;
       })}
     </div>
-    <p className="mt-3 text-center text-xs font-semibold leading-5 text-academy-muted">Un conseiller vérifie votre dossier avant validation.</p>
-    <div className="mt-3"><OrientationAssistant initialFormationKey="desp" hideInfoAction variant="modalTrigger" /></div>
   </aside>;
 }

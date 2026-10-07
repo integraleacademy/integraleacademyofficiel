@@ -1,0 +1,25 @@
+/* Natural content height remains available at every zoom level. */
+@media (min-width: 1024px) and (max-height: 1000px) {
+  .hero { padding-block: clamp(24px, 4vh, 36px); }
+  .hero h1 { font-size: clamp(3rem, 6.5vh, 4rem); }
+  .hero .layout > div:first-child > h1 { margin-top: 1rem; }
+  .hero .layout > div:first-child > p { margin-top: 1.3rem; }
+  .hero .layout > div:first-child > div { margin-top: 1.5rem; }
+  .layout > * { min-width: 0; }
+  .hero .layout > div:first-child > div { flex-wrap: wrap; }
+  .hero nav { margin-bottom: 1.5rem; }
+  .catalogueArtwork { width: min(100%, 48vh); margin-inline: auto; margin-bottom: 1rem; }
+  .catalogueAside { padding: 1.25rem; }
+  .courseFacts { margin-top: 1.5rem; }
+  .courseFacts > div { padding-block: 1rem; }
+  .artVisual { padding: 1.25rem; }
+  .artVisualHeader { padding-bottom: .8rem; }
+  .artIllustration { width: min(100%, 34vh); margin: 1rem auto 0; }
+  .artVisualDetails { margin-top: 1rem; gap: .8rem; }
+  .artVisualDetails > div { padding: 1rem; }
+  .artVisualDetails h3 { margin-top: .8rem; font-size: 1.65rem; }
+  .artVisualDetails h3 + div { margin-top: .8rem; }
+  .artVisualDetails > div:last-child { padding: 0; }
+  .artVisualDetails > div:last-child > div { padding: .8rem; }
+  .facts { margin-top: 1.5rem; padding-top: 1rem; }
+}

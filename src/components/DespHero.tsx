@@ -15,6 +15,8 @@ export function DespHero({ variant, title, subtitle, stats, sessions }: {
   const next = sessions.find(session => session.training?.slug === 'desp-vae');
   const price = stats.find(([label]) => label === 'Tarif' || label === 'Tarif 2027')?.[1] || (isVae ? '3 850 € TTC' : '4 350 € TTC');
   return <TrainingHero
+    compact
+    factsWithArtwork
     theme="orange"
     imageSrc={isVae ? despArtwork.direction.src : despArtwork.pilotage.src}
     illustrationAlt={isVae ? despArtwork.direction.alt : despArtwork.pilotage.alt}
@@ -24,7 +26,7 @@ export function DespHero({ variant, title, subtitle, stats, sessions }: {
     taglineAccent={isVae ? 'votre expérience.' : 'dirigez votre entreprise.'}
     description={subtitle}
     primaryAction={{ href: `/contact?formation=desp-${variant}`, label: 'Recevoir le dossier →' }}
-    additionalAction={<Link href="/despvaeouinitial" className="mt-4 inline-block text-sm font-bold text-orange-200 underline decoration-orange-300/50 underline-offset-4">Comparer initial et VAE →</Link>}
+    additionalAction={<Link href="/despvaeouinitial" className="self-center text-sm font-bold text-orange-200 underline decoration-orange-300/50 underline-offset-4">Comparer initial et VAE →</Link>}
     highlights={isVae ? ['Accompagnement individualisé', 'À distance', 'Préparation du jury'] : ['7 semaines · 245 h', 'Distanciel + présentiel', 'Suivi personnalisé']}
     facts={stats.map(([label, value, detail]) => [label, value, ...(detail ? [detail] : [])])}
   >

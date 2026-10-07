@@ -1,3 +1,4 @@
+import viewportStyles from './TrainingHeroViewport.module.css';
 import { originalArtwork } from '@/data/originalArtwork';
 import { AcademyWatermark } from '@/components/AcademyWatermark';
 import { serializeCourseJsonLd } from '@/lib/seo';
@@ -236,7 +237,7 @@ function CompactAssistant() {
 function HeroSession({ session }: { session: any }) {
   const full = isSessionFull(session);
   const seatAvailability = getSessionSeatAvailability(session, 12);
-  return <aside className={`${styles.sessionCard} rounded-[2rem] border border-white/80 bg-[#FFFDF8] p-5 text-academy-ink sm:p-6 lg:p-7`}><div className="grid gap-5"><div><div className="flex flex-wrap items-center gap-2"><span className="rounded-full bg-blue-50 px-3 py-1.5 text-[.62rem] font-black uppercase tracking-[.16em] text-blue-800 ring-1 ring-blue-200">Prochaine session</span><span className={`rounded-full border px-3 py-1.5 text-[.68rem] font-black ${seatAvailability.badgeClassName}`}>{seatAvailability.label}</span></div><h2 className={`${styles.sessionDate} mt-4 text-3xl font-black tracking-[-.04em] sm:text-4xl`}>{formatDate(session?.startDate, true)} <span className="text-yellow-600">→</span><br />{formatDate(session?.endDate, true)}</h2><p className="mt-2 text-sm font-extrabold text-academy-muted">Examen final le {formatDate(session?.examDate, true)}</p></div><div className="grid grid-cols-2 gap-2.5">{[['Durée', '175 heures'], ['Tarif', priceLabel(session?.priceLabel)], ['Lieu', session?.location || 'Puget-sur-Argens'], ['Format', 'Hydrique (Distanciel + Présentiel)']].map(([key, value]) => <div key={key} className={`${styles.metric} rounded-2xl border border-[#E8DECE] bg-[#F5EFE4] p-3.5`}><p className="text-[.6rem] font-black uppercase tracking-[.16em] text-[#837968]">{key}</p><p className="mt-1 text-sm font-black sm:text-base">{value}</p></div>)}</div><div><CTA href={sessionHref()} variant={full ? 'light' : 'blue'} className="w-full">{full ? 'Être alerté de la prochaine session' : 'Réserver ma place →'}</CTA><p className="mt-3 text-center text-xs font-bold text-academy-muted">Un conseiller vérifie votre dossier avant validation.</p><CompactAssistant /></div></div></aside>;
+  return <aside className={`${styles.sessionCard} rounded-[2rem] border border-white/80 bg-[#FFFDF8] p-5 text-academy-ink sm:p-6 lg:p-7`}><div data-session-grid className="grid gap-5"><div data-session-overview><div className="flex flex-wrap items-center gap-2"><span className="rounded-full bg-blue-50 px-3 py-1.5 text-[.62rem] font-black uppercase tracking-[.16em] text-blue-800 ring-1 ring-blue-200">Prochaine session</span><span className={`rounded-full border px-3 py-1.5 text-[.68rem] font-black ${seatAvailability.badgeClassName}`}>{seatAvailability.label}</span></div><h2 className={`${styles.sessionDate} mt-4 text-3xl font-black tracking-[-.04em] sm:text-4xl`}>{formatDate(session?.startDate, true)} <span className="text-yellow-600">→</span><br />{formatDate(session?.endDate, true)}</h2><p className="mt-2 text-sm font-extrabold text-academy-muted">Examen final le {formatDate(session?.examDate, true)}</p></div><div data-session-details className="grid grid-cols-2 gap-2.5">{[['Durée', '175 heures'], ['Tarif', priceLabel(session?.priceLabel)], ['Lieu', session?.location || 'Puget-sur-Argens'], ['Format', 'Hydrique (Distanciel + Présentiel)']].map(([key, value]) => <div key={key} className={`${styles.metric} rounded-2xl border border-[#E8DECE] bg-[#F5EFE4] p-3.5`}><p className="text-[.6rem] font-black uppercase tracking-[.16em] text-[#837968]">{key}</p><p className="mt-1 text-sm font-black sm:text-base">{value}</p></div>)}</div><div data-session-actions><CTA href={sessionHref()} variant={full ? 'light' : 'blue'} className="w-full">{full ? 'Être alerté de la prochaine session' : 'Réserver ma place →'}</CTA><p className="mt-3 text-center text-xs font-bold text-academy-muted">Un conseiller vérifie votre dossier avant validation.</p><CompactAssistant /></div></div></aside>;
 }
 
 export function ApsReferencePage({ sessions }: { sessions: any[] }) {
@@ -249,11 +250,11 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
       { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Accueil', item: '/' }, { '@type': 'ListItem', position: 2, name: 'Formations sécurité', item: '/formations-securite' }, { '@type': 'ListItem', position: 3, name: 'APS', item: '/formations-securite/aps' }] },
     ] }, "/formations-securite/aps") }} />
 
-    <section className={`${styles.hero} relative px-4 text-white`}>
+    <section className={`${styles.hero} ${viewportStyles.hero} relative px-4 text-white`}>
         <AcademyWatermark tone="blue" surface="dark" />
       <div className={styles.heroOverlay}/>
-      <div className={`page-container ${styles.heroContent}`}>
-        <div className="max-w-4xl">
+      <div data-hero-content className={`page-container ${styles.heroContent}`}>
+        <div data-hero-copy className="max-w-4xl">
           <span className={`${styles.heroBadge} inline-flex items-center gap-2 rounded-full border border-blue-300/45 bg-blue-950/35 px-4 py-2 text-[.68rem] font-black uppercase tracking-[.2em] text-blue-100 backdrop-blur-md`}>
             <span className="h-2.5 w-2.5 rounded-full bg-blue-400 shadow-[0_0_16px_rgba(96,165,250,.95)]"/>
             TFP APS · RNCP 36648 · niveau 3
@@ -276,12 +277,12 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
             <span className="rounded-full border border-blue-200/25 bg-blue-950/25 px-3 py-2 backdrop-blur">✓ Financements possibles</span>
           </div>
         </div>
-        <div className={styles.heroArtwork}>
+        <div data-hero-artwork className={styles.heroArtwork}>
           <Image src="/images/aps/manuel/equipe.webp" alt="Deux agents de sécurité préparent leur ronde, illustration du manuel APS Intégrale Academy" width={1536} height={1024} priority sizes="(max-width: 1023px) 90vw, 50vw" />
         </div>
       </div>
-      <div className={`page-container ${styles.heroBooking}`}><HeroSession session={next} /></div>
-      <div className="page-container"><div className={`${styles.facts} relative grid overflow-hidden rounded-[1.6rem] border border-white/15 bg-[#0A1421]/85 text-white backdrop-blur-xl sm:grid-cols-2 lg:grid-cols-6`}>
+      <div data-hero-booking className={`page-container ${styles.heroBooking}`}><HeroSession session={next} /></div>
+      <div className="page-container"><div data-hero-facts className={`${styles.facts} relative grid overflow-hidden rounded-[1.6rem] border border-white/15 bg-[#0A1421]/85 text-white backdrop-blur-xl sm:grid-cols-2 lg:grid-cols-6`}>
         {heroFacts.map(([key,value,detail]) => <div key={key} className={`${styles.fact} border-b border-white/10 p-4 last:border-b-0 sm:border-r lg:border-b-0`}><p className="text-[.58rem] font-black uppercase tracking-[.18em] text-white/42">{key}</p><p className="mt-1 font-black text-white">{value}</p><p className="mt-1 text-[.68rem] font-semibold leading-4 text-white/48">{detail}</p></div>)}
       </div></div>
     </section>

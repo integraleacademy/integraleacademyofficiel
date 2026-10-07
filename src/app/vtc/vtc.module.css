@@ -17,3 +17,18 @@
 
 .routeMap { height: auto; aspect-ratio: 3 / 2; }
 .routeMap::before { display: none; }
+
+
+/* Keep the opening content readable on shorter desktop windows. */
+@media (min-width: 1024px) and (max-height: 900px) {
+  .hero { padding-top: clamp(24px, 4vh, 36px); }
+  .hero h1 { font-size: clamp(42px, 7vh, 62px); margin-top: 16px; }
+  .heroCopy > p { margin-top: 18px; line-height: 1.6; }
+  .heroActions { margin-top: 20px; }
+  .heroProofs { margin-top: 18px; }
+  .heroLayout { grid-template-columns: 1fr 1fr; gap: 40px; }
+  .cockpit { width: min(100%, 66vh); margin-inline: auto; }
+  .cockpitTop { padding: 14px 18px; }
+  .cockpitStats > div { padding: 12px 15px; }
+  .heroBottom { margin-top: 28px; padding-block: 16px; }
+}

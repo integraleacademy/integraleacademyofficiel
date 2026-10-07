@@ -206,12 +206,12 @@ export function BtsCgReferencePage() {
         ],
       }, "/bts/comptabilite-gestion") }} />
 
-      <section className="relative isolate overflow-hidden bg-[#0A1725] px-4 pb-8 pt-10 text-white sm:pt-14 lg:pt-16">
+      <section className={`${btsStyles.hero} relative isolate overflow-hidden bg-[#0A1725] px-4 pb-8 pt-10 text-white sm:pt-14 lg:pt-16`}>
         <AcademyWatermark tone="bts" surface="dark" />
         <div className={`absolute inset-0 -z-10 ${btsStyles.heroGlow}`} />
         <div className="absolute inset-0 -z-10 opacity-25 [background-image:linear-gradient(rgba(255,255,255,.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.08)_1px,transparent_1px)] [background-size:48px_48px]" />
         <div className="page-container">
-          <div className="grid items-center gap-9 lg:grid-cols-[1.08fr_.92fr] lg:gap-12">
+          <div className={`${btsStyles.heroLayout} grid items-center gap-9 lg:grid-cols-[1.08fr_.92fr] lg:gap-12`}>
             <div>
               <span className="inline-flex items-center gap-2 rounded-full border border-bts-300/35 bg-white/8 px-4 py-2 text-[.66rem] font-black uppercase tracking-[.18em] text-bts-100 backdrop-blur"><span className="h-2.5 w-2.5 rounded-full bg-bts-200 shadow-[0_0_16px_rgb(var(--bts-300)/.7)]" />Diplôme d’État · Bac+2 · Niveau 5 · RNCP 39159</span>
               <h1 className="mt-5 max-w-4xl text-4xl font-black tracking-[-.06em] sm:text-5xl lg:text-6xl xl:text-7xl">Transformez les chiffres en <span className="text-bts-200">décisions.</span></h1>
@@ -222,7 +222,7 @@ export function BtsCgReferencePage() {
             <div className={btsStyles.heroArtwork}><ManualArtwork illustration={btsHeroArtwork.cg} priority /></div>
           </div>
           <HeroRoadmap />
-          <div className="mt-10 grid overflow-hidden rounded-[1.6rem] border border-white/10 bg-white/7 sm:grid-cols-2 lg:grid-cols-4">
+          <div className={`${btsStyles.heroFacts} mt-10 grid overflow-hidden rounded-[1.6rem] border border-white/10 bg-white/7 sm:grid-cols-2 lg:grid-cols-4`}>
             {[['Durée', '2 ans en alternance'], ['Alternance', btsRhythms.CG.shortLabel], ['Diplôme', 'Diplôme d’État · Bac+2'], ['Admission', 'Après le bac']].map(([key, value]) => <div key={key} className="border-b border-white/10 p-4 last:border-b-0 sm:border-r lg:border-b-0"><p className="text-[.58rem] font-black uppercase tracking-[.18em] text-white/42">{key}</p><p className="mt-1 font-black text-white">{value}</p></div>)}
           </div>
           <p className="mt-3 text-[.64rem] font-semibold text-white/40">* Sous réserve de la conclusion et de la prise en charge du contrat d’alternance.</p>

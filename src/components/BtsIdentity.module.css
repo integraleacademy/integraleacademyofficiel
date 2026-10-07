@@ -119,3 +119,37 @@
   .roadmapSteps > div + div { border-left: 1px solid #ded4c5; }
   .roadmapSteps > div > span:last-child { grid-column: 2; }
 }
+
+
+/* Keep the opening content readable on shorter desktop windows. */
+@media (min-width: 1024px) and (max-height: 1000px) {
+  .hero { padding-top: clamp(20px, 3.5vh, 30px); padding-bottom: 1.25rem; }
+  .heroLayout { grid-template-columns: minmax(0, 1.28fr) minmax(0, .72fr); gap: 2.5rem; }
+  .heroLayout h1 { margin-top: 1rem; font-size: clamp(3rem, 6.4vh, 4rem); line-height: 1.02; }
+  .heroLayout > div:first-child > p { max-width: none; margin-top: 1rem; line-height: 1.5; }
+  .heroLayout > div:first-child > div { margin-top: 1rem; }
+  .heroLayout > div:first-child > div:last-child > span { padding-block: .4rem; }
+  .heroArtwork { width: min(100%, 58vh); margin-inline: auto; }
+  .roadmap { display: grid; grid-template-columns: minmax(0, .75fr) minmax(0, 2.7fr) minmax(0, .75fr); align-items: center; gap: 1rem; margin-top: 1.5rem; padding: 1rem; }
+  .roadmap > div:first-of-type { flex-wrap: wrap; gap: .5rem; }
+  .roadmap h2 { font-size: 1.5rem; }
+  .roadmapSteps { margin-top: 0; padding: .5rem; gap: .3rem; }
+  .roadmapSteps > div { grid-template-columns: minmax(0, 1fr); gap: .4rem; padding: .5rem; }
+  .roadmapSteps > div > span:first-child { width: 1.8rem; height: 1.8rem; }
+  .roadmapSteps > div > span:last-child { grid-column: auto; }
+  .roadmap > div:last-child { grid-template-columns: minmax(0, 1fr); gap: .5rem; margin-top: 0; }
+  .roadmap > div:last-child > div { padding: .5rem; }
+  .page[data-bts='ndrc'] .roadmap > div:last-child > div { display: flex; align-items: center; gap: .5rem; }
+  .page[data-bts='ndrc'] .roadmap > div:last-child p { margin-top: 0; }
+  .heroFacts { margin-top: 1rem; }
+  .heroFacts > div { padding-block: .7rem; }
+}
+
+@media (min-width: 1024px) and (max-height: 700px) {
+  .hero { padding-block: 1rem; }
+  .heroLayout h1,
+  .heroLayout > div:first-child > p,
+  .heroLayout > div:first-child > div { margin-top: .8rem; }
+  .roadmap { margin-top: 1rem; }
+  .heroFacts { margin-top: .65rem; }
+}

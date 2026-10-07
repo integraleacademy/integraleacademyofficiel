@@ -1,3 +1,4 @@
+import compactHeroStyles from '@/components/CompactHero.module.css';
 import { ManualArtwork } from '@/components/ManualArtwork';
 import { ssiapArtwork, ssiapLeadershipArtwork } from '@/data/manualIllustrations';
 import { AcademyWatermark } from '@/components/AcademyWatermark';
@@ -111,28 +112,28 @@ export default function SsiapCataloguePage() {
         }}
       />
 
-      <section className="relative isolate overflow-hidden bg-[#0D1725] px-4 py-14 text-white sm:py-18 lg:py-20">
+      <section className={`${compactHeroStyles.hero} relative isolate overflow-hidden bg-[#0D1725] px-4 py-14 text-white sm:py-18 lg:py-20`}>
         <AcademyWatermark tone="red" surface="dark" />
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_15%_15%,rgba(248,113,113,.26),transparent_31%),radial-gradient(circle_at_88%_25%,rgba(220,38,38,.22),transparent_28%),linear-gradient(135deg,#080D15_0%,#121B2A_55%,#2A0F12_100%)]" />
         <div className="page-container">
           <nav className="mb-7 flex items-center gap-2 text-xs font-bold text-white/55" aria-label="Fil d’Ariane">
             <Link href="/">Accueil</Link><span>→</span><Link href="/formations-securite">Formations sécurité</Link><span>→</span><span className="text-red-200">SSIAP</span>
           </nav>
-          <div className="grid items-center gap-10 lg:grid-cols-[1.15fr_.85fr]">
+          <div className={`${compactHeroStyles.layout} grid items-center gap-10 lg:grid-cols-[1.15fr_.85fr]`}>
             <div>
               <span className="inline-flex items-center gap-2 rounded-full border border-red-300/35 bg-red-400/10 px-4 py-2 text-[.68rem] font-black uppercase tracking-[.2em] text-red-200"><span className="h-2.5 w-2.5 rounded-full bg-red-400 shadow-[0_0_16px_rgba(248,113,113,.9)]" />Sécurité incendie</span>
               <h1 className="mt-5 max-w-5xl text-4xl font-black tracking-[-.055em] sm:text-5xl lg:text-7xl">Toutes nos formations <span className="text-red-300">SSIAP.</span></h1>
               <p className="mt-5 max-w-3xl text-lg font-medium leading-8 text-white/70 sm:text-xl">SSIAP 1, SSIAP 2, SSIAP 3, recyclages et remise à niveau : choisissez le parcours correspondant à votre fonction et à votre expérience.</p>
+              <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap"><Link href="#parcours" className="inline-flex min-h-12 items-center justify-center rounded-full bg-red-600 px-5 py-3 text-center text-sm font-black text-white transition hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-300/55">Choisir ma formation →</Link><Link href="/contact?formation=ssiap" className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/25 px-5 py-3 text-center text-sm font-black text-white">Parler à un conseiller</Link></div>
             </div>
-            <aside className="rounded-[2rem] border border-white/10 bg-white/7 p-6 backdrop-blur">
-              <div className="mb-6 overflow-hidden rounded-2xl"><ManualArtwork illustration={ssiapArtwork.secours} priority /></div>
+            <aside className={`${compactHeroStyles.catalogueAside} rounded-[2rem] border border-white/10 bg-white/7 p-6 backdrop-blur`}>
+              <div className={`${compactHeroStyles.catalogueArtwork} mb-6 overflow-hidden rounded-2xl`}><ManualArtwork illustration={ssiapArtwork.secours} priority /></div>
               <p className="text-xs font-black uppercase tracking-[.2em] text-red-300">Centre agréé</p>
               <p className="mt-3 text-3xl font-black">SSIAP n°8323</p>
               <p className="mt-3 leading-7 text-white/60">Formations en présentiel à Puget-sur-Argens, avec vérification des prérequis avant l’inscription.</p>
-              <div className="mt-5 flex flex-col gap-3 sm:flex-row lg:flex-col"><Link href="#parcours" className="inline-flex min-h-12 items-center justify-center rounded-full bg-red-600 px-5 py-3 text-center text-sm font-black text-white transition hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-300/55">Choisir ma formation →</Link><Link href="/contact?formation=ssiap" className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/25 px-5 py-3 text-center text-sm font-black text-white">Parler à un conseiller</Link></div>
             </aside>
           </div>
-          <div className="mt-10 grid gap-px overflow-hidden rounded-[1.6rem] border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-4">{[['3 niveaux', 'Agent · chef d’équipe · chef de service'], ['67 à 216 h', 'Formations initiales'], ['14 à 35 h', 'Maintien des acquis'], ['Puget-sur-Argens', 'École Côte d’Azur']].map(([value, label]) => <div key={value} className="bg-[#0D1725]/75 p-5"><p className="text-xl font-black text-red-300">{value}</p><p className="mt-1 text-xs font-semibold text-white/50">{label}</p></div>)}</div>
+          <div className={`${compactHeroStyles.courseFacts} mt-10 grid gap-px overflow-hidden rounded-[1.6rem] border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-4`}>{[['3 niveaux', 'Agent · chef d’équipe · chef de service'], ['67 à 216 h', 'Formations initiales'], ['14 à 35 h', 'Maintien des acquis'], ['Puget-sur-Argens', 'École Côte d’Azur']].map(([value, label]) => <div key={value} className="bg-[#0D1725]/75 p-5"><p className="text-xl font-black text-red-300">{value}</p><p className="mt-1 text-xs font-semibold text-white/50">{label}</p></div>)}</div>
         </div>
       </section>
 
