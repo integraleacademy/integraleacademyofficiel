@@ -14,7 +14,7 @@ export function ProjectTrainingPopup() {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    if (pathname === '/' || pathname === '/entreprises' || isFinancingPage) {
+    if (pathname === '/' || pathname === '/ecole' || pathname === '/entreprises' || isFinancingPage) {
       return;
     }
 
@@ -31,7 +31,7 @@ export function ProjectTrainingPopup() {
     setIsOpen(false);
   }
 
-  if (pathname === '/' || pathname === '/entreprises' || isFinancingPage || !isOpen) {
+  if (pathname === '/' || pathname === '/ecole' || pathname === '/entreprises' || isFinancingPage || !isOpen) {
     return null;
   }
 

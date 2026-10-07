@@ -73,7 +73,20 @@
 .fundingCard { display: flex; flex-direction: column; padding: 24px 22px 18px; border: 1px solid var(--line); border-radius: 12px; background: var(--card); }
 .fundingHeading { display: flex; flex-direction: column; align-items: flex-start; gap: 17px; }
 .fundingHeading > span:last-child { color: var(--muted); font-size: 10px; font-weight: 650; line-height: 1.5; }
-.iconBox { display: grid; width: 38px; height: 38px; place-items: center; border: 1px solid var(--line); border-radius: 9px; color: var(--gold-ink); }
+.fundingBrand, .fundingBrandIcon { display: flex; align-items: center; width: 100%; height: 86px; padding: 10px 16px; border-radius: 8px; background: #fff; }
+.fundingBrand img { display: block; width: 100%; max-width: 180px; height: 66px; object-fit: contain; }
+.fundingBrand img[src$="/france-travail.svg"] { height: 92px; }
+.fundingBrand img[src$="/akto.svg"] { max-width: 150px; margin-inline: auto; }
+.fundingBrandIcon { justify-content: center; background: var(--paper); color: var(--gold-ink); }
+.fundingBrandIcon svg { width: 38px; height: 38px; }
+.identityCard { display: grid; grid-template-columns: 240px minmax(0, 1fr); align-items: center; gap: 32px; margin-top: 28px; padding: 28px; border: 1px solid var(--line); border-radius: 12px; background: var(--card); }
+.identityLogo { display: flex; align-items: center; justify-content: center; padding: 18px; border-radius: 8px; background: #fff; }
+.identityLogo img { display: block; width: 100%; height: auto; }
+.identityCard h3 { margin-top: 8px; font-size: 22px; font-weight: 750; letter-spacing: -.035em; line-height: 1.25; }
+.identityCard p { margin-top: 9px; color: var(--muted); font-size: 13px; line-height: 1.75; }
+.identityLinks { display: flex; flex-wrap: wrap; gap: 4px 24px; margin-top: 8px; }
+.identityLinks a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font-size: 12px; font-weight: 700; text-decoration: underline; text-underline-offset: 4px; }
+.identityLinks a:hover { color: var(--gold-ink); }
 .fundingCard h3 { margin-top: 9px; font-size: 22px; font-weight: 750; line-height: 1.15; letter-spacing: -.035em; }
 .fundingCard > p { margin: 14px 0 20px; color: var(--muted); font-size: 13px; line-height: 1.75; }
 .fundingCard > a { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: auto; padding-top: 16px; padding-bottom: 4px; border-top: 1px solid var(--line); font-size: 12px; font-weight: 750; }
@@ -122,7 +135,7 @@
   .heroLayout { gap: 36px; grid-template-columns: 1fr 1fr; }
   .heroCopy h1 { font-size: 52px; }
   .fundingGrid { grid-template-columns: repeat(2,minmax(0,1fr)); }
-  .fundingHeading { flex-direction: row; align-items: center; gap: 14px; }
+  .fundingHeading { gap: 14px; }
   .contactPanel { gap: 38px; padding: 36px; }
 }
 @media (max-width: 760px) {
@@ -149,6 +162,10 @@
   .sectionIntro > p { font-size: 14px; }
   .fundingGrid { gap: 12px; }
   .fundingCard { padding: 22px; }
+  .fundingBrand, .fundingBrandIcon { width: 192px; max-width: 100%; }
+  .identityCard { grid-template-columns: 1fr; gap: 22px; padding: 24px; }
+  .identityLogo { width: 240px; max-width: 100%; }
+  .identityCard h3 { font-size: 22px; }
   .personalRow { grid-template-columns: 22px 1fr; gap: 12px; }
   .personalRow a { grid-column: 2; }
   .personalRow p { font-size: 12px; }

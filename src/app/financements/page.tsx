@@ -25,11 +25,11 @@ function Icon({ name, className = '' }: { name: IconName; className?: string }) 
   return <svg {...common}><path d="M5 12h13M13 7l5 5-5 5" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.9"/></svg>;
 }
 
-const fundingOptions: { icon: IconName; audience: string; title: string; description: string; href: string; cta: string }[] = [
-  { icon: 'cpf', audience: 'Vos droits à la formation', title: 'Le CPF', description: 'Utilisez vos droits disponibles pour une formation éligible. Nous vous aidons à vérifier les possibilités et le reste à charge.', href: '/financements/cpf', cta: 'Comprendre le CPF' },
-  { icon: 'briefcase', audience: 'Demandeurs d’emploi', title: 'France Travail', description: 'Présentez votre projet à votre conseiller. Le programme et le devis permettent d’étudier une éventuelle prise en charge.', href: '/financements/france-travail', cta: 'Préparer ma demande' },
+const fundingOptions: { icon: IconName; audience: string; title: string; description: string; href: string; cta: string; logo?: { src: string; alt: string } }[] = [
+  { icon: 'cpf', logo: { src: '/images/mon-compte-formation.svg', alt: 'Mon Compte Formation (CPF)' }, audience: 'Vos droits à la formation', title: 'Le CPF', description: 'Utilisez vos droits disponibles pour une formation éligible. Nous vous aidons à vérifier les possibilités et le reste à charge.', href: '/financements/cpf', cta: 'Comprendre le CPF' },
+  { icon: 'briefcase', logo: { src: '/images/financements/france-travail.svg', alt: 'France Travail' }, audience: 'Demandeurs d’emploi', title: 'France Travail', description: 'Présentez votre projet à votre conseiller. Le programme et le devis permettent d’étudier une éventuelle prise en charge.', href: '/financements/france-travail', cta: 'Préparer ma demande' },
   { icon: 'school', audience: 'Un BTS, une expérience en entreprise', title: 'L’alternance', description: 'Associez formation et emploi, avec une prise en charge liée à votre contrat et une rémunération selon les règles applicables.', href: '/financements/alternance', cta: 'Découvrir l’alternance' },
-  { icon: 'building', audience: 'Salariés & employeurs', title: 'Entreprise & OPCO', description: 'Construisez votre projet avec votre employeur. Le financement dépend de la branche, des critères et du budget disponible.', href: '/entreprises', cta: 'Étudier cette solution' },
+  { icon: 'building', logo: { src: '/images/financements/akto.svg', alt: 'AKTO, opérateur de compétences' }, audience: 'Salariés & employeurs', title: 'Entreprise & OPCO', description: 'Construisez votre projet avec votre employeur. AKTO ou votre OPCO peut étudier une prise en charge selon votre branche et les critères applicables.', href: '/entreprises', cta: 'Étudier cette solution' },
 ];
 
 const faqItems = [
@@ -74,7 +74,10 @@ export default function FinancementsPage() {
         </div>
         <div className={styles.fundingGrid}>
           {fundingOptions.map((option) => <article className={styles.fundingCard} key={option.title}>
-            <div className={styles.fundingHeading}><span className={styles.iconBox}><Icon name={option.icon} /></span><span>{option.audience}</span></div>
+            <div className={styles.fundingHeading}>
+              {option.logo ? <div className={styles.fundingBrand}><img src={option.logo.src} alt={option.logo.alt} width="180" height="66" loading="lazy" /></div> : <div className={styles.fundingBrandIcon}><Icon name={option.icon} /></div>}
+              <span>{option.audience}</span>
+            </div>
             <h3>{option.title}</h3><p>{option.description}</p>
             <Link href={option.href}>{option.cta}<Icon name="arrow" /></Link>
           </article>)}
@@ -85,6 +88,18 @@ export default function FinancementsPage() {
           <Link href="#simulateur">Estimer mon budget <Icon name="arrow" /></Link>
         </div>
         <p className={styles.finePrint}>Toute prise en charge reste soumise aux critères et à la décision de l’organisme financeur.</p>
+        <aside className={styles.identityCard} aria-labelledby="identity-title">
+          <div className={styles.identityLogo}><img src="/images/financements/identite-numerique-la-poste.svg" alt="L’Identité Numérique La Poste" width="240" height="67" loading="lazy" /></div>
+          <div>
+            <span className={styles.eyebrow}>Pour vos démarches CPF</span>
+            <h3 id="identity-title">Préparez votre connexion sécurisée.</h3>
+            <p>L’Identité Numérique La Poste vous permet de vous identifier avec FranceConnect+. France Identité est également proposée. Vérifiez les conditions et les étapes sur les services officiels.</p>
+            <div className={styles.identityLinks}>
+              <a href="https://lidentitenumerique.laposte.fr/" target="_blank" rel="noopener noreferrer">Découvrir l’Identité Numérique <span aria-hidden="true">↗</span><span className="sr-only"> (nouvel onglet)</span></a>
+              <a href="https://www.moncompteformation.gouv.fr/espace-public/qui-peut-utiliser-franceconnect" target="_blank" rel="noopener noreferrer">Comprendre FranceConnect+ <span aria-hidden="true">↗</span><span className="sr-only"> (nouvel onglet)</span></a>
+            </div>
+          </div>
+        </aside>
       </div>
     </section>
 

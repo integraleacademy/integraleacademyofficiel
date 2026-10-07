@@ -80,7 +80,7 @@ export function GlobalContactCTA() {
     });
   }
 
-  if (pathname === '/entreprises' || isFinancingPage || hiddenPathPrefixes.some((prefix) => pathname?.startsWith(prefix))) {
+  if (pathname === '/ecole' || pathname === '/entreprises' || isFinancingPage || hiddenPathPrefixes.some((prefix) => pathname?.startsWith(prefix))) {
     return null;
   }
 

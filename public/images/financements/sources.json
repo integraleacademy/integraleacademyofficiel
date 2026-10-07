@@ -1,0 +1,25 @@
+{
+  "description": "Logos used to identify the referenced financing and identity services; not a partnership or approval badge. Original colours and proportions preserved.",
+  "assets": [
+    {
+      "file": "../mon-compte-formation.svg",
+      "source": "Existing site asset, also used by VtcAutonomousEnrollmentBanner",
+      "service": "https://www.moncompteformation.gouv.fr/"
+    },
+    {
+      "file": "france-travail.svg",
+      "source": "https://logo.francetravail.org/fichier/8/download",
+      "service": "https://www.francetravail.fr/"
+    },
+    {
+      "file": "akto.svg",
+      "source": "https://www.akto.fr/",
+      "note": "Unmodified SVG from official website header."
+    },
+    {
+      "file": "identite-numerique-la-poste.svg",
+      "source": "https://www.franceconnect.gouv.fr/images/fi/fi-laposte.svg",
+      "service": "https://lidentitenumerique.laposte.fr/"
+    }
+  ]
+}
