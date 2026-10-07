@@ -79,7 +79,6 @@
 .cupVisual { display: grid; align-items: center; aspect-ratio: 1; background: #f2eade; }
 .cupVisual img { display: block; width: 100%; height: auto; object-fit: contain; }
 .cupCopy { margin-top: 16px; padding-top: 24px; border-top: 1px solid #dcd2c1; }
-.cupNote { display: block; margin-top: 14px; color: #776c59; font-size: 11px; line-height: 1.5; }
 
 @media (max-width: 1100px) {
   .heading { align-items: flex-start; flex-direction: column; gap: 18px; }

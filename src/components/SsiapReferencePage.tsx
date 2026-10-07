@@ -9,7 +9,7 @@ import { MissionAnimation } from '@/components/MissionAnimation';
 import { PremiumFAQSection } from '@/components/ui';
 import { TrainingDatesPricingSection } from '@/components/TrainingDatesPricingSection';
 import { TrainingMotionGallery } from '@/components/TrainingMotionGallery';
-import { TrainingWelcomePack } from '@/components/TrainingWelcomePack';
+import { IntegraleWelcomePack } from '@/components/IntegraleWelcomePack';
 import { ManualArtwork } from '@/components/ManualArtwork';
 import { ssiapArtwork, ssiapPracticeArtwork } from '@/data/manualIllustrations';
 import { originalArtwork } from '@/data/originalArtwork';
@@ -158,7 +158,7 @@ export function SsiapReferencePage({ sessions }: { sessions: any[] }) {
       <TrainingHeroSessionCard session={next} theme="red" duration="67 heures" defaultPrice="980 €" assistantKey="ssiap-1" />
     </TrainingHero>
 
-    <TrainingWelcomePack course="ssiap-1" />
+    <IntegraleWelcomePack />
     <CourseJourney course="ssiap-1" />
 
     <TrainingSectionNavigation

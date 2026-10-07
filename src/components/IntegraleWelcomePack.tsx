@@ -1,7 +1,7 @@
 import Image from 'next/image';
-import styles from './ApsPackBanner.module.css';
+import styles from './IntegraleWelcomePack.module.css';
 
-export function ApsWelcomePack() {
+export function IntegraleWelcomePack({ manualTitle = 'Le manuel de formation' }: { manualTitle?: string }) {
   return <section id="pack-integrale" className={styles.banner} aria-labelledby="pack-integrale-title">
     <div className={styles.shell}>
       <div className={styles.heading}>
@@ -17,7 +17,7 @@ export function ApsWelcomePack() {
           <div className={styles.visual}>
             <Image
               src="/images/welcome-pack/pack-aps-panoramique-sans-ecocup.webp"
-              alt="Le manuel APS, le carnet noir et doré et le stylo du Pack Intégrale. Le manuel et le carnet sont présentés fermés et ouverts."
+              alt="Le Pack Intégrale présenté avec le manuel APS, le carnet noir et doré et le stylo. Le manuel et le carnet sont présentés fermés et ouverts."
               width={2172}
               height={724}
               sizes="(max-width: 900px) calc(100vw - 40px), calc(75vw - 66px)"
@@ -27,7 +27,7 @@ export function ApsWelcomePack() {
           <ul className={styles.contents} role="list" aria-label="Vos supports de formation">
             <li>
               <span className={styles.detailLabel}>Apprendre &amp; réviser</span>
-              <h3>Le manuel APS</h3>
+              <h3>{manualTitle}</h3>
               <p>Votre support illustré pour suivre les cours et retrouver les points essentiels.</p>
             </li>
             <li>
@@ -57,7 +57,6 @@ export function ApsWelcomePack() {
             <span className={styles.detailLabel}>Votre compagnon de pause</span>
             <h3>L’écocup Intégrale</h3>
             <p>Un gobelet réutilisable aux couleurs de l’école, pour vous accompagner à chaque pause.</p>
-            <span className={styles.cupNote}>Un écocup, présenté de face et de dos.</span>
           </div>
         </article>
       </div>

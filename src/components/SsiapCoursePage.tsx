@@ -1,5 +1,6 @@
 import { AcademyWatermark } from '@/components/AcademyWatermark';
 import { CourseJourney } from '@/components/CourseJourney';
+import { IntegraleWelcomePack } from '@/components/IntegraleWelcomePack';
 import { serializeCourseJsonLd } from '@/lib/seo';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
@@ -28,6 +29,7 @@ const relatedCourses = [
 ];
 
 const navigationItems = [
+  { label: 'Pack Intégrale', href: '#pack-integrale' },
   { label: 'Missions', href: '#missions' },
   { label: 'Admission', href: '#admission' },
   { label: 'Programme', href: '#programme' },
@@ -230,6 +232,7 @@ export function SsiapCoursePage({ config, sessions = [] }: { config: SsiapCourse
       </section>
       )}
 
+      {heroKey && <IntegraleWelcomePack />}
       {heroKey && <CourseJourney course={heroKey} />}
 
       {heroKey ? <TrainingSectionNavigation

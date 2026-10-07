@@ -7,7 +7,7 @@ import type { ReactNode } from 'react';
 import { ApsSectionNavigation } from '@/components/ApsSectionNavigation';
 import { ApsFacilitiesSections } from '@/components/ApsFacilitiesSections';
 import { ApsJourney } from '@/components/ApsJourney';
-import { ApsWelcomePack } from '@/components/ApsWelcomePack';
+import { IntegraleWelcomePack } from '@/components/IntegraleWelcomePack';
 import { OrientationAssistant } from '@/components/OrientationAssistant';
 import { PremiumFAQSection } from '@/components/ui';
 import { TrainingDatesPricingSection } from '@/components/TrainingDatesPricingSection';
@@ -286,7 +286,7 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
       </div></div>
     </section>
 
-    <ApsWelcomePack />
+    <IntegraleWelcomePack manualTitle="Le manuel APS" />
 
     <ApsJourney />
 

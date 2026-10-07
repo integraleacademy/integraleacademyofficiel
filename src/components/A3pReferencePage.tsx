@@ -12,7 +12,7 @@ import { TrainingSectionNavigation } from '@/components/TrainingSectionNavigatio
 import { TrainingDatesPricingSection } from '@/components/TrainingDatesPricingSection';
 import { TrainingMotionIllustration } from '@/components/TrainingMotionGallery';
 import styles from './A3pReferencePage.module.css';
-import { TrainingWelcomePack } from '@/components/TrainingWelcomePack';
+import { IntegraleWelcomePack } from '@/components/IntegraleWelcomePack';
 import { ManualArtwork } from '@/components/ManualArtwork';
 import { a3pArtwork, a3pPracticeArtwork } from '@/data/manualIllustrations';
 import {
@@ -224,7 +224,7 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
       </div>
     </section>
 
-    <TrainingWelcomePack course="a3p" />
+    <IntegraleWelcomePack />
     <CourseJourney course="a3p" />
 
     <TrainingSectionNavigation

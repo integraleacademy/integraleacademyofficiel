@@ -1,6 +1,6 @@
 import { originalArtwork } from '@/data/originalArtwork';
 import { ManualArtwork } from '@/components/ManualArtwork';
-import { TrainingWelcomePack } from '@/components/TrainingWelcomePack';
+import { IntegraleWelcomePack } from '@/components/IntegraleWelcomePack';
 import { sstArtwork, sstPracticeArtwork } from '@/data/manualIllustrations';
 import { CourseJourney } from '@/components/CourseJourney';
 import { serializeCourseJsonLd } from '@/lib/seo';
@@ -151,7 +151,7 @@ export function SstReferencePage({ sessions }: { sessions: TrainingDatesPricingS
       <TrainingHeroSessionCard session={next} theme="green" duration="2 jours · 14 heures" defaultPrice="Sur devis" capacity={10} assistantKey="sst" />
     </TrainingHero>
 
-    <TrainingWelcomePack course="sst" />
+    <IntegraleWelcomePack />
 
     <CourseJourney course="sst" />
 
