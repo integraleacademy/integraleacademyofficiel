@@ -8,6 +8,9 @@ import { TrainingHero, TrainingHeroSessionCard, trainingRegistrationUrl } from '
 import { TrainingSectionNavigation } from '@/components/TrainingSectionNavigation';
 import { TrainingDatesPricingSection, type TrainingDatesPricingSession } from '@/components/TrainingDatesPricingSection';
 import { ssiapLeadershipArtwork } from '@/data/manualIllustrations';
+import { ManualArtwork } from '@/components/ManualArtwork';
+import { SsiapLeadershipGallery } from '@/components/SsiapLeadershipGallery';
+import { ssiapCourseVisuals } from '@/data/ssiapCourseVisuals';
 import {
   ssiapOfficialReference,
   type SsiapCourseConfig,
@@ -28,6 +31,7 @@ const navigationItems = [
   { label: 'Missions', href: '#missions' },
   { label: 'Admission', href: '#admission' },
   { label: 'Programme', href: '#programme' },
+  { label: 'Pédagogie', href: '#pedagogie' },
   { label: 'Validation', href: '#validation' },
   { label: 'Dates & tarifs', href: '#dates-tarifs' },
   { label: 'FAQ', href: '#faq-ssiap' },
@@ -119,6 +123,7 @@ function Section({
 
 export function SsiapCoursePage({ config, sessions = [] }: { config: SsiapCourseConfig; sessions?: TrainingDatesPricingSession[] }) {
   const heroKey = config.slug === 'ssiap-2' ? 'ssiap-2' : config.slug === 'ssiap-3' ? 'ssiap-3' : null;
+  const visuals = heroKey ? ssiapCourseVisuals[heroKey] : null;
   const facts = [
     ['Parcours', config.label],
     ['Fonction', config.role],
@@ -254,12 +259,14 @@ export function SsiapCoursePage({ config, sessions = [] }: { config: SsiapCourse
         <div className="grid gap-4 lg:grid-cols-3">
           {config.missions.map((mission, index) => (
             <article key={mission.title} className={`rounded-[1.8rem] border p-6 shadow-soft ${index === 1 ? 'border-[#26384F] bg-[#0D1725] text-white' : 'border-academy-line bg-[#FFFDF8]'}`}>
+              {visuals && <div className="mb-5 aspect-[3/2] overflow-hidden rounded-2xl"><ManualArtwork illustration={visuals.missions[index]} /></div>}
               <span className={`text-5xl font-black ${index === 1 ? 'text-red-300' : 'text-red-600'}`}>0{index + 1}</span>
-              <h3 className="mt-9 text-2xl font-black">{mission.title}</h3>
+              <h3 className={`${visuals ? 'mt-5' : 'mt-9'} text-2xl font-black`}>{mission.title}</h3>
               <p className={`mt-3 leading-7 ${index === 1 ? 'text-white/65' : 'text-academy-muted'}`}>{mission.text}</p>
             </article>
           ))}
         </div>
+        {heroKey && <SsiapLeadershipGallery level={heroKey} />}
       </Section>
 
       <Section id="admission" eyebrow="Admission" title="Les conditions d’accès, vérifiées avant l’inscription." intro="Chaque justificatif est contrôlé pour vous orienter vers le bon parcours et sécuriser votre entrée en formation." tone="paper">
@@ -292,6 +299,20 @@ export function SsiapCoursePage({ config, sessions = [] }: { config: SsiapCourse
             </details>
           ))}
         </div>
+        {visuals && <div id="pedagogie" className="mt-10 scroll-mt-24 overflow-hidden rounded-[2rem] border border-red-200 bg-[#FFFDF8] shadow-soft">
+          <div className="grid items-center lg:grid-cols-[1fr_1.1fr]">
+            <figure className="min-w-0 p-5 sm:p-7">
+              <div className="aspect-[3/2] overflow-hidden rounded-[1.4rem]"><ManualArtwork illustration={visuals.pedagogy.illustration} /></div>
+              <figcaption className="mt-4 text-sm font-bold leading-6 text-academy-muted">{heroKey === 'ssiap-2' ? 'Transmettre les consignes, expliquer et accompagner les agents.' : 'Étudier un bâtiment pour préparer les décisions de sécurité.'}</figcaption>
+            </figure>
+            <div className="p-6 sm:p-8 lg:pl-2">
+              <Eyebrow>Pédagogie & mises en situation</Eyebrow>
+              <h3 className="mt-3 text-3xl font-black tracking-[-.04em]">{visuals.pedagogy.title}</h3>
+              <p className="mt-4 leading-7 text-academy-muted">{visuals.pedagogy.text}</p>
+              <div className="mt-6 grid gap-3 sm:grid-cols-2">{visuals.pedagogy.activities.map((activity, index) => <div key={activity} className="rounded-2xl border border-red-100 bg-red-50/70 p-4"><span className="text-xs font-black text-red-700">0{index + 1}</span><p className="mt-2 text-sm font-bold leading-6">{activity}</p></div>)}</div>
+            </div>
+          </div>
+        </div>}
         <div className="mt-8 rounded-[1.7rem] border border-academy-line bg-[#EFE7D9] p-5">
           <p className="font-black">Référentiel officiel</p>
           <p className="mt-2 text-sm font-semibold leading-6 text-academy-muted">Programme présenté conformément à l’arrêté du 2 mai 2005 modifié relatif aux services de sécurité incendie des ERP et des IGH.</p>
@@ -300,6 +321,10 @@ export function SsiapCoursePage({ config, sessions = [] }: { config: SsiapCourse
       </Section>
 
       <Section id="validation" eyebrow="Validation" title="Des attendus clairs, travaillés pendant le parcours." intro="La formation alterne apports réglementaires, exercices, cas concrets et préparation aux modalités de validation." tone="dark">
+        {visuals && <div className="mb-7 grid items-center gap-7 overflow-hidden rounded-[1.8rem] border border-white/15 bg-white/5 p-5 sm:p-7 lg:grid-cols-[.95fr_1.05fr]">
+          <div className="aspect-[3/2] overflow-hidden rounded-2xl"><ManualArtwork illustration={visuals.assessment.illustration} /></div>
+          <div><Eyebrow light>Se préparer aux épreuves</Eyebrow><h3 className="mt-3 text-3xl font-black tracking-[-.035em]">{visuals.assessment.title}</h3><p className="mt-4 leading-8 text-white/75">{visuals.assessment.text}</p></div>
+        </div>}
         <div className="grid gap-4 lg:grid-cols-3">
           {config.assessment.map((step, index) => (
             <article key={step.title} className={`rounded-[1.8rem] border p-6 ${index === 1 ? 'border-red-300/35 bg-red-400/10' : 'border-white/10 bg-white/6'}`}>
