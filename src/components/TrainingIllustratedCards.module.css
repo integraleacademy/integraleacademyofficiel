@@ -5,6 +5,7 @@
   --card-surface: #fffaf4;
   --card-soft: #ffedd5;
   display: grid;
+  align-items: start;
   grid-template-columns: minmax(0, 1fr);
   gap: 1.25rem;
 }
@@ -100,9 +101,10 @@
 
 .visuals {
   display: grid;
+  align-items: start;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
   gap: .65rem;
-  margin-top: auto;
+  margin-top: 0;
 }
 
 .visual {
@@ -124,9 +126,17 @@
 .singleIllustration { grid-template-columns: minmax(0, 1fr); }
 .singleIllustration .visual { height: auto; aspect-ratio: 3 / 2; padding: 0; }
 
+/* The frame follows the original image, including portrait manual artwork. */
+.visual.naturalVisual { height: auto; aspect-ratio: auto; }
+.naturalVisual > div { height: auto; }
+
 @media (min-width: 768px) {
   .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .wide { grid-column: 1 / -1; }
+}
+
+@media (min-width: 1200px) {
+  .threeColumns { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
 @media (prefers-reduced-motion: reduce) {

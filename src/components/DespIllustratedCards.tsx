@@ -12,5 +12,5 @@ export function DespIllustratedCards({ items, variant = 'initial' }: { items: re
     evidence: originalArtwork['desp-vae-preuves'],
     jury: originalArtwork['desp-vae-jury'],
   } : despPracticeArtwork;
-  return <TrainingIllustratedCards items={items} theme="orange" illustrations={illustrations} />;
+  return <TrainingIllustratedCards items={items} theme="orange" illustrations={illustrations} threeColumns />;
 }
