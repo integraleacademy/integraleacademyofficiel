@@ -270,8 +270,8 @@ export default async function Page({ searchParams }: { searchParams: Promise<Rec
             </article>
 
             <div className="grid gap-5">
-              {contact.locations.slice(1).map((location, index) => {
-                const query = index === 0 ? '142%20rue%20de%20Rivoli%2075001%20Paris' : '14%20avenue%20du%20Garric%2015000%20Aurillac';
+              {contact.locations.slice(1).map((location) => {
+                const query = encodeURIComponent(location.address);
                 return (
                   <article key={location.name} className="flex flex-col rounded-[2rem] border border-white/10 bg-white/[.055] p-6 sm:p-7">
                     <div className="flex items-start justify-between gap-4">
