@@ -146,7 +146,6 @@ export function DespChoiceReferencePage({ sessions }: { sessions: TrainingDatesP
   return (
     <main className="relative overflow-x-clip pb-28 lg:pb-0">
       <Hero
-        monogram
         theme="orange"
         badge="DESP · RNCP n°40385"
         title={<>Dirigeant d’entreprise de sécurité privée : <OrangeHighlight>formation reconnue</OrangeHighlight> ou VAE ?</>}

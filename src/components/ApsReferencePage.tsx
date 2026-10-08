@@ -1,6 +1,5 @@
 import viewportStyles from './TrainingHeroViewport.module.css';
 import { originalArtwork } from '@/data/originalArtwork';
-import { AcademyWatermark } from '@/components/AcademyWatermark';
 import { serializeCourseJsonLd } from '@/lib/seo';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -247,7 +246,6 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
     ] }, "/formations-securite/aps") }} />
 
     <section className={`${styles.hero} ${viewportStyles.hero} relative px-4 text-white`}>
-        <AcademyWatermark tone="blue" surface="dark" />
       <div className={styles.heroOverlay}/>
       <div data-hero-content className={`page-container ${styles.heroContent}`}>
         <div data-hero-copy className="max-w-4xl">

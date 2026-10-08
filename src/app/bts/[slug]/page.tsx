@@ -1,4 +1,3 @@
-import { AcademyWatermark } from '@/components/AcademyWatermark';
 import { createPageMetadata } from '@/lib/seo';
 import { seoPages } from '@/data/seo-pages';
 import { notFound } from "next/navigation";
@@ -269,7 +268,6 @@ export default async function Page({
   return (
     <main className="relative overflow-hidden pb-28 lg:pb-0">
       <section className="relative isolate bg-[#0B0F17] px-4 py-12 text-white sm:py-16 lg:py-14 xl:py-16">
-        <AcademyWatermark tone="gold" surface="dark" />
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_18%_18%,rgba(216,166,64,.34),transparent_32%),radial-gradient(circle_at_85%_20%,rgba(59,130,246,.18),transparent_28%),linear-gradient(135deg,#080B10_0%,#121827_55%,#111827_100%)]" />
         <div className="absolute -left-20 top-20 -z-10 h-72 w-72 rounded-full bg-academy-gold/25 blur-3xl" />
         <div className="absolute -right-24 bottom-0 -z-10 h-80 w-80 rounded-full bg-blue-500/15 blur-3xl" />

@@ -6,10 +6,7 @@ import { contact, legalRefs } from '@/data/site';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { MobileHeaderMenu } from '@/components/MobileHeaderMenu';
 import { DesktopTrainingDropdown } from '@/components/DesktopTrainingDropdown';
-import { AcademyWatermark } from '@/components/AcademyWatermark';
-import { AcademyMonogram } from '@/components/AcademyMonogram';
 import compactHeroStyles from '@/components/CompactHero.module.css';
-import monogramStyles from '@/components/AcademyMonogram.module.css';
 
 export type UiAccent = 'gold' | 'blue' | 'green' | 'orange' | 'red' | 'violet';
 
@@ -185,7 +182,7 @@ export function ArtDirectionVisual({ world, illustration }: { world: ArtDirectio
   </div>;
 }
 
-export function Hero({badge,title,subtitle,actions,visual,theme='gold',monogram=false}:{badge?:string;title:React.ReactNode;subtitle:string;actions?:React.ReactNode;visual?:React.ReactNode;theme?:UiAccent;monogram?:boolean}){
+export function Hero({badge,title,subtitle,actions,visual,theme='gold'}:{badge?:string;title:React.ReactNode;subtitle:string;actions?:React.ReactNode;visual?:React.ReactNode;theme?:UiAccent}){
   const glows: Record<UiAccent, string> = {
     gold: 'gold-glow',
     blue: 'training-glow-blue',
@@ -194,7 +191,7 @@ export function Hero({badge,title,subtitle,actions,visual,theme='gold',monogram=
     red: 'training-glow-red',
     violet: 'training-glow-violet',
   };
-  return <section className={`${compactHeroStyles.hero} relative isolate grid-soft overflow-hidden px-4 py-16 md:py-24 ${glows[theme]}`}>{monogram && <AcademyWatermark tone={theme} placement="right" />}<div className={`${compactHeroStyles.layout} page-container grid gap-10 lg:grid-cols-[1.15fr_.85fr] lg:items-center`}><div className="reveal">{badge&&<Badge tone={theme}>{badge}</Badge>}<h1 className="mt-5 text-4xl font-black tracking-tight md:text-6xl">{title}</h1><p className="mt-6 max-w-2xl text-lg leading-8 text-stone-600">{subtitle}</p>{actions&&<div className="mt-8 flex flex-wrap gap-3">{actions}</div>}</div>{visual ?? <div className="relative rounded-[2rem] bg-white/90 p-6 shadow-soft ring-1 ring-academy-line backdrop-blur reveal"><div className="rounded-[1.5rem] bg-academy-bg p-6"><p className="text-sm font-bold text-stone-500">Centres & modalités</p><div className="mt-5 grid gap-3">{contact.locations.map(l=><div key={l.name} className="rounded-2xl bg-white p-4"><b>{l.name}</b><p className="text-sm text-stone-600">{l.address}</p></div>)}</div></div></div>}</div></section>;
+  return <section className={`${compactHeroStyles.hero} relative isolate grid-soft overflow-hidden px-4 py-16 md:py-24 ${glows[theme]}`}><div className={`${compactHeroStyles.layout} page-container grid gap-10 lg:grid-cols-[1.15fr_.85fr] lg:items-center`}><div className="reveal">{badge&&<Badge tone={theme}>{badge}</Badge>}<h1 className="mt-5 text-4xl font-black tracking-tight md:text-6xl">{title}</h1><p className="mt-6 max-w-2xl text-lg leading-8 text-stone-600">{subtitle}</p>{actions&&<div className="mt-8 flex flex-wrap gap-3">{actions}</div>}</div>{visual ?? <div className="relative rounded-[2rem] bg-white/90 p-6 shadow-soft ring-1 ring-academy-line backdrop-blur reveal"><div className="rounded-[1.5rem] bg-academy-bg p-6"><p className="text-sm font-bold text-stone-500">Centres & modalités</p><div className="mt-5 grid gap-3">{contact.locations.map(l=><div key={l.name} className="rounded-2xl bg-white p-4"><b>{l.name}</b><p className="text-sm text-stone-600">{l.address}</p></div>)}</div></div></div>}</div></section>;
 }
 export const appointmentFormUrl = 'https://assistance-alw9.onrender.com/demande-informations-formations';
 
@@ -230,7 +227,6 @@ export function Footer(){
   const trustItems=['Qualiopi','CNAPS','France Travail','OPCO AKTO'];
 
   return <footer className="relative mt-20 overflow-hidden border-t border-white/10 bg-[linear-gradient(135deg,#2a394d_0%,#202c3d_100%)] px-4 pb-8 pt-12 text-white">
-    <AcademyMonogram className={monogramStyles.footerMark}/>
     <div className="pointer-events-none absolute inset-0 opacity-70" aria-hidden="true">
       <div className="absolute -left-32 top-0 h-80 w-80 rounded-full bg-academy-gold/15 blur-3xl"/>
       <div className="absolute -right-24 bottom-0 h-80 w-80 rounded-full bg-academy-gold/10 blur-3xl"/>

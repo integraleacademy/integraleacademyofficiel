@@ -20,7 +20,6 @@ export default function Page() {
   return (
     <>
       <Hero
-        monogram
         badge="Alternance"
         title={
           <>

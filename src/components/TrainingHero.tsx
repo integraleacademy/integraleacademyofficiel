@@ -1,5 +1,4 @@
 import viewportStyles from './TrainingHeroViewport.module.css';
-import { AcademyWatermark } from '@/components/AcademyWatermark';
 import Image from 'next/image';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
@@ -45,7 +44,6 @@ export function TrainingHero({
     </div>
   );
   return <section className={`${styles.hero} ${viewportStyles.hero} ${illustrationAlt ? styles.illustratedHero : ''} px-4 text-white`} data-theme={theme} data-hero-density={compact ? 'compact' : undefined}>
-        <AcademyWatermark tone={theme} surface="dark" />
     {!illustrationAlt && <Image src={imageSrc} alt="" fill priority sizes="100vw" className={styles.heroPhoto} />}
     <div className={styles.heroOverlay} />
     <div data-hero-content className={`page-container ${styles.heroContent}`}>

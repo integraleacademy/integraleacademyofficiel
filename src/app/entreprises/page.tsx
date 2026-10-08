@@ -1,4 +1,3 @@
-import { AcademyWatermark } from '@/components/AcademyWatermark';
 import { createPageMetadata } from '@/lib/seo';
 import type { Metadata } from 'next';
 import Link from 'next/link';
@@ -158,7 +157,6 @@ const faqItems = [
 export default function EntreprisesPage() {
   return <div className={styles.page}>
     <section className={styles.hero} aria-labelledby="entreprises-title">
-        <AcademyWatermark placement="right" />
       <div className={styles.honeycomb} aria-hidden="true" />
       <div className={styles.container}>
         <div className={styles.heroInner}>

@@ -1,7 +1,6 @@
 import { createPageMetadata } from '@/lib/seo';
 import Link from 'next/link';
 import { OrientationAssistant } from '@/components/OrientationAssistant';
-import { AcademyMonogram } from '@/components/AcademyMonogram';
 import { AnimatedTrainingCTA } from '@/components/AnimatedTrainingCTA';
 import { BtsTrainingGrid, type BtsTrainingHighlight } from '@/components/BtsTrainingGrid';
 import { BtsTrainingComparisonModal } from '@/components/BtsTrainingComparisonModal';
@@ -122,9 +121,6 @@ export default async function Home() {
                 <span>Financements possibles</span>
                 <span>Côte d’Azur · Paris · Centre France</span>
               </div>
-            </div>
-            <div className={styles.heroSignature} aria-hidden="true">
-              <AcademyMonogram />
             </div>
           </div>
 

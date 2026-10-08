@@ -1,7 +1,6 @@
 import { ManualArtwork } from '@/components/ManualArtwork';
 import { TrainingWelcomePack } from '@/components/TrainingWelcomePack';
 import { btsHeroArtwork, btsPracticeArtwork, btsMissionArtwork } from '@/data/btsIllustrations';
-import { AcademyWatermark } from '@/components/AcademyWatermark';
 import btsStyles from './BtsIdentity.module.css';
 import { btsRhythms } from '@/data/btsRhythms';
 import { CourseJourney } from '@/components/CourseJourney';
@@ -283,7 +282,6 @@ export function BtsMosReferencePage() {
       />
 
       <section className={`${btsStyles.hero} relative isolate overflow-hidden bg-[#0A1725] px-4 pb-8 pt-10 text-white sm:pt-14 lg:pt-16`}>
-        <AcademyWatermark tone="bts" surface="dark" />
         <div className={`absolute inset-0 -z-10 ${btsStyles.heroGlow}`} />
         <div className="absolute inset-0 -z-10 opacity-25 [background-image:linear-gradient(rgba(255,255,255,.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.08)_1px,transparent_1px)] [background-size:48px_48px]" />
         <div className="page-container">
