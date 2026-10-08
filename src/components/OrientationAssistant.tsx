@@ -177,7 +177,7 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
 
   const homeDockPanel = <aside className="relative overflow-hidden rounded-[1.8rem] border border-white/10 bg-[#081626] p-5 text-white shadow-[0_32px_90px_rgba(8,22,38,.22)] sm:p-6 lg:p-7" aria-label="Assistant d’orientation formation">
     <div className="pointer-events-none absolute -right-20 -top-24 h-64 w-64 rounded-full border border-academy-gold/15 shadow-[0_0_0_52px_rgba(242,187,49,.025),0_0_0_104px_rgba(242,187,49,.018)]" aria-hidden="true" />
-    <div className="relative grid gap-6 lg:grid-cols-[220px_minmax(0,1fr)] lg:items-start">
+    <div className="relative grid gap-6 lg:grid-cols-[220px_minmax(0,1fr)] lg:items-start" data-home-dock-layout>
       <div>
         <p className="text-[10px] font-black uppercase tracking-[.2em] text-academy-gold">Assistant d’orientation</p>
         <h2 className="mt-3 text-3xl font-black leading-[.95] tracking-[-.045em] sm:text-4xl">Quelle formation vous intéresse&nbsp;?</h2>
