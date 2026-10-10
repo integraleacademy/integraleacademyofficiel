@@ -11,7 +11,7 @@ import { DespIllustratedCards, type DespIllustratedCard } from '@/components/Des
 import { Button, ConversionStrip, FeatureCard, PremiumFAQSection } from '@/components/ui';
 import { DespHero } from '@/components/DespHero';
 import { MissionAnimation } from '@/components/MissionAnimation';
-import { listSessions } from '@/lib/training-data';
+import { listPublicSessions as listSessions } from '@/lib/training-data';
 import { formationFaq } from '@/data/faq';
 import { despVaeAdmin, despVaeFaq } from '@/data/despVae';
 

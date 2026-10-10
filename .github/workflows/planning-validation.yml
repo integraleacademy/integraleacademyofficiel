@@ -1,0 +1,27 @@
+name: Planning validation
+on:
+  pull_request:
+    paths:
+      - 'src/app/planning/**'
+      - 'src/app/api/planning/**'
+      - 'src/app/api/sessions/**'
+      - 'src/lib/planning-*.ts'
+      - 'src/lib/public-session-data.ts'
+      - 'tests/planning-improvements.test.ts'
+      - '.github/workflows/planning-validation.yml'
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx prisma generate
+      - run: npx tsx --test tests/planning-improvements.test.ts tests/session-seat-availability.test.ts tests/session-location-filter.test.ts
+      - run: npm run build

@@ -2,6 +2,7 @@ import 'server-only';
 import { getSessionSeatAvailability, resolveSessionSeatCapacity } from '@/lib/session-seat-availability';
 import { getPrisma } from '@/lib/db';
 import { canonicalSiteHref } from '@/lib/site-urls';
+import { toPublicSession } from '@/lib/public-session-data';
 
 export const sessionStatuses = ['OPEN','FULL','COMING_SOON','HIDDEN'] as const;
 export type SessionStatus = typeof sessionStatuses[number];
@@ -54,6 +55,7 @@ export async function listSessions() {
   }));
 }
 export async function listLeads(){const p=await getPrisma(); return p? p.chatLead.findMany({orderBy:{createdAt:'desc'}}) : [];}
+export async function listPublicSessions() { return (await listSessions()).map(toPublicSession); }
 export async function dashboardStats(){const [t,s,l]=await Promise.all([listTrainings(),listSessions(),listLeads()]); return {activeTrainings:t.filter((x:any)=>x.isActive).length,openSessions:s.filter((x:any)=>x.status==='OPEN').length,leadCount:l.length,lastLead:l[0]||null};}
 export async function getRelevantDynamicTrainingData(question:string){
   const slugs=detectTrainingSlugs(question);
@@ -69,3 +71,4 @@ export async function getRelevantDynamicTrainingData(question:string){
   }).join('\n\n---\n\n');
   return {trainings,sessions,context,selectedDynamicTrainings:trainings.map((t:any)=>t.slug),selectedSessions:sessions.map((s:any)=>s.id)};
 }
+

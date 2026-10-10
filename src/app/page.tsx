@@ -14,7 +14,7 @@ import { PremiumFAQSection } from '@/components/ui';
 import { VisualSection } from '@/components/visuals';
 import { globalFaq } from '@/data/faq';
 import { createHomeSecurityHighlights } from '@/lib/home-security-trainings';
-import { listSessions } from '@/lib/training-data';
+import { listPublicSessions as listSessions } from '@/lib/training-data';
 import { vtcFormation } from '@/data/site';
 import styles from './home.module.css';
 import heroStyles from './HomeHero.module.css';

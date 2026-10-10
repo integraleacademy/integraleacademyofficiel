@@ -1,5 +1,5 @@
 import { getUpcomingVtcExamSessions, vtcCourse } from '@/data/vtc';
-import { formatSessionDate } from '@/lib/public-sessions';
+import { formatSessionDate, isPublicUpcomingSession } from '@/lib/public-sessions';
 import { canonicalSiteHref } from '@/lib/site-urls';
 
 export function isBtsTraining(slug = '') {
@@ -19,7 +19,18 @@ export function planningFormationHref(session: { training?: { slug?: string; pag
   return slug ? canonicalSiteHref('/formations-securite/' + slug) : '/formations-securite';
 }
 
-export function getVtcPlanningSessions(referenceDate = new Date()) {
+export function getVtcPlanningSessions(referenceDate = new Date(), managedSessions: any[] = []) {
+  // VTC admin fields: start = registration deadline, end = theory, exam = practical.
+  // An existing hidden/expired row must not revive a legacy hard-coded session.
+  if (managedSessions.length) return managedSessions
+    .filter((session) => isPublicUpcomingSession(session))
+    .map((session) => ({
+      ...session,
+      scheduleKind: 'vtc-exam',
+      showSeatsLeft: false,
+      durationLabel: session.durationLabel || vtcCourse.durationHours + ' heures',
+      vtcDates: { deadline: session.startDate, theory: session.endDate, practical: session.examDate },
+    }));
   return getUpcomingVtcExamSessions(referenceDate).map((dates) => ({
     id: 'vtc-exam-' + dates.theory,
     title: 'Chauffeur VTC — examen théorique du ' + formatSessionDate(dates.theory),
@@ -37,3 +48,4 @@ export function getVtcPlanningSessions(referenceDate = new Date()) {
     training: { slug: 'vtc', name: 'Chauffeur VTC', pageUrl: '/vtc', isActive: true },
   }));
 }
+

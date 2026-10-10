@@ -1,9 +1,10 @@
-export type SessionLocationFilterKey = 'all' | 'paris' | 'cote-azur';
+export type SessionLocationFilterKey = 'all' | 'paris' | 'cote-azur' | 'auvergne';
 
 export const sessionLocationFilters: { key: SessionLocationFilterKey; label: string }[] = [
   { key: 'all', label: 'Tous' },
   { key: 'paris', label: 'Paris' },
   { key: 'cote-azur', label: 'Côte d’Azur' },
+  { key: 'auvergne', label: 'Aurillac / Auvergne' },
 ];
 
 function normalizedLocation(value?: string | null) {
@@ -23,6 +24,7 @@ export function sessionMatchesLocation(
 
   const location = normalizedLocation(session.location);
   if (filter === 'paris') return /(^| )paris( |$)/.test(location);
+  if (filter === 'auvergne') return location.includes('aurillac') || location.includes('auvergne');
   return location.includes('cote d azur') || location.includes('puget sur argens');
 }
 
@@ -43,3 +45,4 @@ export function nextSessionForLocation<T extends { location?: string | null; sta
   }
   return next;
 }
+
