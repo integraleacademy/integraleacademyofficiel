@@ -36,6 +36,7 @@
 .heroBooking { margin-bottom: 1.5rem; }
 .manualVisual { position: relative; width: 100%; height: 100%; min-height: 240px; overflow: hidden; background: #dcecff; }
 .manualVisual img { object-fit: contain; object-position: center; }
+.manualVisual.naturalVisual { height: auto; min-height: 0; }
 .missionGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.2rem; }
 .missionCard { overflow: hidden; min-width: 0; border: 1px solid #d6e0ed; border-radius: 1.5rem; background: #fffdf8; color: #132a48; box-shadow: 0 12px 35px -25px #162c5d66; }
 .missionArtwork { position: relative; aspect-ratio: 3 / 2; overflow: hidden; background: #dcecff; }
@@ -701,6 +702,7 @@
 
 .practicalVisuals {
   display: grid;
+  align-items: start;
   grid-template-columns: minmax(0, 1fr);
   gap: .75rem;
   margin-top: auto;
@@ -711,7 +713,7 @@
 
 .practicalVisual {
   min-width: 0;
-  height: 340px;
+  height: auto;
   overflow: hidden;
   border: 1px solid rgba(147,197,253,.5);
   border-radius: 1.2rem;
@@ -721,6 +723,7 @@
 .practicalVisual .manualVisual { min-height: 0; }
 .practicalVisuals[data-visual-count="2"] .manualVisual img { object-fit: contain; object-position: center; }
 .dualPanels .manualVisual { height: 170px; min-height: 0; margin-block: 1rem; border-radius: .9rem; }
+.dualPanels .manualVisual.naturalVisual { height: auto; }
 .dualFire .manualVisual img { object-fit: contain; background: #fff; }
 
 .practicalVisual[data-visual="extinguisher"] {

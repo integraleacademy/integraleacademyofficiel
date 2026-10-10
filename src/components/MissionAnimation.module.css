@@ -46,10 +46,10 @@
 
 .compact .stage { inset: 0; }
 
-.manual { min-height: 0; padding: 1.2rem; }
+.visual.manual { min-height: 0; height: auto; padding: 1.2rem; }
 .manual .topbar, .manual .footer { position: relative; inset: auto; }
 .manual .topbar { margin-bottom: 1rem; flex-wrap: wrap; }
-.manual .stage { position: relative; inset: auto; height: clamp(230px, 42vw, 460px); overflow: hidden; border-radius: 1.1rem; }
+.manual .stage { position: relative; inset: auto; height: auto; overflow: hidden; border-radius: 1.1rem; }
 .manual .footer { margin-top: 1rem; gap: .75rem; flex-wrap: wrap; }
 .manual .grid { display: none; }
 

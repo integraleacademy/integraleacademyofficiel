@@ -59,11 +59,11 @@
 .heroArtwork { overflow: hidden; border: 1px solid #6ee7b780; border-radius: 2rem; background: #e8f1f9; box-shadow: 0 25px 75px #0004; transform: rotate(1deg); }
 .heroBooking { margin-bottom: 1.5rem; }
 .sessionOverview, .sessionDetails, .sessionActions { min-width: 0; }
-.cardArtwork { aspect-ratio: 4 / 3; overflow: hidden; border-radius: 1.1rem; }
+.cardArtwork { overflow: hidden; border-radius: 1.1rem; }
 
 .skillsGrid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; }
 .skillCard { min-width: 0; overflow: hidden; border: 1px solid rgb(var(--border)); border-radius: 1.5rem; background: #fffdf8; color: #17150f; }
-.skillArtwork { aspect-ratio: 4 / 3; overflow: hidden; }
+.skillArtwork { align-self: start; overflow: hidden; }
 .skillCopy { min-width: 0; padding: 1.25rem; }
 .skillCopy h3 { font-size: 1.125rem; font-weight: 900; line-height: 1.3; letter-spacing: -.035em; text-wrap: balance; }
 .skillCopy p { margin-top: .65rem; color: #5e5749; font-size: .875rem; font-weight: 600; line-height: 1.75; }
@@ -76,7 +76,6 @@
 @media (min-width: 640px) {
   .skillsGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .featuredSkill { display: grid; grid-template-columns: minmax(220px, 26%) minmax(0, 1fr); align-items: center; }
-  .featuredSkill .skillArtwork { height: 100%; }
   .featuredSkill .skillCopy { padding: clamp(1.25rem, 3vw, 2.5rem); }
 }
 
@@ -165,6 +164,9 @@
   width: 100%;
   height: 100%;
 }
+
+.practiceVisual.naturalVisual { aspect-ratio: auto; }
+.practiceVisual.naturalVisual > div { height: auto; }
 
 @media (prefers-reduced-motion: reduce) {
   .heroPhoto { animation: none; }

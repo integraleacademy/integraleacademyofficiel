@@ -235,7 +235,7 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
     />
 
     <Section id="metier" label="01 — Le métier" title={<>Protéger, anticiper, <span className="decoration-emerald-500 decoration-[.16em] underline underline-offset-[-.03em]">décider.</span></>} intro="L’agent de protection physique des personnes assure la sécurité de dirigeants, personnalités, artistes ou toute personne exposée. Son rôle : préparer la mission, analyser les risques et protéger avec efficacité, proportionnalité et discrétion.">
-      <div className="grid gap-4 md:grid-cols-3">{métierCards.map(([number, title, body], index) => <article key={title} className="rounded-[1.75rem] border border-academy-line bg-[#FFFDF8] p-6 shadow-soft"><div className={styles.cardArtwork}><ManualArtwork illustration={[originalArtwork['a3p-mission-preparation'], originalArtwork['a3p-mission-trajets'], a3pArtwork.discretion][index]} /></div><span className="mt-5 grid h-10 w-10 place-items-center rounded-full bg-[#0D1725] text-xs font-black text-emerald-300">{number}</span><h3 className="mt-8 text-xl font-black tracking-[-.03em]">{title}</h3><p className="mt-3 text-sm font-semibold leading-7 text-academy-muted">{body}</p></article>)}</div>
+      <div className="grid gap-4 md:grid-cols-3">{métierCards.map(([number, title, body], index) => <article key={title} className="rounded-[1.75rem] border border-academy-line bg-[#FFFDF8] p-6 shadow-soft"><div className={styles.cardArtwork}><ManualArtwork illustration={[originalArtwork['a3p-mission-preparation'], originalArtwork['a3p-mission-trajets'], a3pArtwork.discretion][index]} natural /></div><span className="mt-5 grid h-10 w-10 place-items-center rounded-full bg-[#0D1725] text-xs font-black text-emerald-300">{number}</span><h3 className="mt-8 text-xl font-black tracking-[-.03em]">{title}</h3><p className="mt-3 text-sm font-semibold leading-7 text-academy-muted">{body}</p></article>)}</div>
       <MissionAnimation variant="a3p" className="mt-5" illustration={originalArtwork['a3p-mission-ensemble']} />
       <div className="mt-5 grid items-center gap-6 rounded-[2rem] bg-[#0D1725] p-6 text-white shadow-card lg:grid-cols-[.8fr_1.2fr]">
         <div><Label light>Une mission, cinq temps forts</Label><h3 className="mt-3 text-2xl font-black">De la préparation au débriefing.</h3><p className="mt-2 text-sm text-white/60">Une lecture concrète du métier avant le détail du programme.</p></div>
@@ -258,7 +258,7 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
         {skillPillars.map((skill, index) => (
           <article key={skill.title} className={`${styles.skillCard} ${skill.featured ? styles.featuredSkill : skill.dark ? styles.darkSkill : ''}`}>
             <div className={styles.skillArtwork}>
-              <ManualArtwork illustration={[originalArtwork['a3p-mission-relation'], originalArtwork['a3p-competence-preparer'], originalArtwork['a3p-competence-proteger'], originalArtwork['a3p-competence-secours'], originalArtwork['a3p-competence-cadre']][index]} sizes="(max-width: 639px) 92vw, (max-width: 1023px) 46vw, 360px" />
+              <ManualArtwork illustration={[originalArtwork['a3p-mission-relation'], originalArtwork['a3p-competence-preparer'], originalArtwork['a3p-competence-proteger'], originalArtwork['a3p-competence-secours'], originalArtwork['a3p-competence-cadre']][index]} natural sizes="(max-width: 639px) 92vw, (max-width: 1023px) 46vw, 360px" />
             </div>
             <div className={styles.skillCopy}>
               <h3>{skill.title}</h3>
@@ -284,8 +284,8 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
           <span className={styles.practiceNumber}>0{index + 1}</span>
           <h3>{practice.title}</h3>
           <p>{practice.text}</p>
-          <div className={styles.practiceVisual}>
-            <TrainingMotionIllustration kind={practice.scene} theme="green" description={practice.visualDescription} illustration={a3pPracticeArtwork[practice.scene]} />
+          <div className={`${styles.practiceVisual} ${a3pPracticeArtwork[practice.scene] ? styles.naturalVisual : ''}`}>
+            <TrainingMotionIllustration kind={practice.scene} theme="green" description={practice.visualDescription} illustration={a3pPracticeArtwork[practice.scene]} natural />
           </div>
         </article>)}
       </div>

@@ -410,15 +410,15 @@ export function TrainingMotionGallery({ variant, className = '', illustrations }
       <p>{gallery.intro}</p>
     </div>
     <div className={styles.cards}>
-      {gallery.stories.map(([kind, title, description]) => <article className={styles.card} data-scene={kind} key={kind}>
-        <div className={styles.visual} role="img" aria-label={illustrations?.[kind]?.alt || description}>{illustrations?.[kind] ? <ManualArtwork illustration={illustrations[kind]!} /> : <Scene kind={kind} />}</div>
+      {gallery.stories.map(([kind, title, description]) => <article className={`${styles.card} ${illustrations?.[kind] ? styles.naturalCard : ''}`} data-scene={kind} key={kind}>
+        <div className={`${styles.visual} ${illustrations?.[kind] ? styles.naturalVisual : ''}`} role="img" aria-label={illustrations?.[kind]?.alt || description}>{illustrations?.[kind] ? <ManualArtwork illustration={illustrations[kind]!} natural /> : <Scene kind={kind} />}</div>
         <h4>{title}</h4>
       </article>)}
     </div>
   </section>;
 }
 
-export function TrainingMotionIllustration({ kind, theme = 'blue', description, illustration }: { kind: SceneKind; theme?: 'blue' | 'red' | 'green' | 'orange' | 'violet' | 'bts'; description: string; illustration?: ManualIllustration }) {
-  if (illustration) return <ManualArtwork illustration={illustration} />;
+export function TrainingMotionIllustration({ kind, theme = 'blue', description, illustration, natural = false }: { kind: SceneKind; theme?: 'blue' | 'red' | 'green' | 'orange' | 'violet' | 'bts'; description: string; illustration?: ManualIllustration; natural?: boolean }) {
+  if (illustration) return <ManualArtwork illustration={illustration} natural={natural} />;
   return <div className={`${styles.illustration} ${styles[theme]}`} role="img" aria-label={description}><Scene kind={kind} /></div>;
 }

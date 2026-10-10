@@ -185,6 +185,16 @@
     var(--soft);
 }
 
+.naturalCard {
+  min-height: 0;
+  align-self: start;
+}
+
+.naturalVisual {
+  min-height: 0;
+  flex: none;
+}
+
 .scene {
   display: block;
   width: 100%;

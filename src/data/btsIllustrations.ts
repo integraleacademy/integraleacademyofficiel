@@ -35,8 +35,8 @@ export const btsMissionArtwork: Record<BtsArtworkCode, ManualIllustration> = {
   mco: despArtwork.pilotage,
   ndrc: originalArtwork['bts-ndrc-mission'],
   ci: originalArtwork['bts-ci-mission'],
-  pi: despArtwork.client,
-  cg: despArtwork.finances,
+  pi: btsArtwork.pi,
+  cg: btsArtwork.cg,
 };
 
 export function btsArtworkForPath(path: string): ManualIllustration | undefined {
