@@ -1,7 +1,7 @@
 import { createPageMetadata } from '@/lib/seo';
 import { DespChoiceReferencePage } from '@/components/DespChoiceReferencePage';
 import { isPublicUpcomingSession } from '@/lib/public-sessions';
-import { listSessions } from '@/lib/training-data';
+import { listPublicSessions as listSessions } from '@/lib/training-data';
 
 export const dynamic = 'force-dynamic';
 

@@ -1,0 +1,41 @@
+/** Explicit public boundary: never serialize database rows directly to a browser. */
+export function toPublicSession(session: any) {
+  return {
+    id: session.id,
+    title: session.title,
+    startDate: session.startDate,
+    endDate: session.endDate,
+    examDate: session.examDate,
+    remoteStartDate: session.remoteStartDate,
+    remoteEndDate: session.remoteEndDate,
+    inPersonStartDate: session.inPersonStartDate,
+    inPersonEndDate: session.inPersonEndDate,
+    priceCents: session.priceCents,
+    priceLabel: session.priceLabel,
+    durationLabel: session.durationLabel,
+    location: session.location,
+    status: session.status,
+    seatsTotal: session.seatsTotal,
+    seatsLeft: session.seatsLeft,
+    showSeatsLeft: session.showSeatsLeft,
+    publicNotes: session.publicNotes,
+    fundingNotes: session.fundingNotes,
+    registrationUrl: session.registrationUrl,
+    isHighlighted: session.isHighlighted,
+    scheduleKind: session.scheduleKind,
+    vtcDates: session.vtcDates ? {
+      deadline: session.vtcDates.deadline,
+      theory: session.vtcDates.theory,
+      practical: session.vtcDates.practical,
+    } : undefined,
+    training: session.training ? {
+      slug: session.training.slug,
+      name: session.training.name,
+      title: session.training.title,
+      category: session.training.category,
+      description: session.training.description,
+      pageUrl: session.training.pageUrl,
+      isActive: session.training.isActive,
+    } : null,
+  };
+}

@@ -14,7 +14,7 @@ function GoogleIcon(){
 export function GoogleRatingBadge(){
   const pathname = usePathname();
 
-  if (pathname === '/ecole' || pathname?.replace(/\/+$/, '') === '/financements') {
+  if (pathname === '/ecole' || ['/financements', '/planning'].includes(pathname?.replace(/\/+$/, '') || '')) {
     return null;
   }
 
@@ -31,3 +31,4 @@ export function GoogleRatingBadge(){
     </span>
   </a>;
 }
+

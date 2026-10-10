@@ -12,7 +12,7 @@ import { DespChoiceReferencePage } from '@/components/DespChoiceReferencePage';
 import { PublicTrainingSessions } from '@/components/PublicTrainingSessions';
 import { TrainingDatesPricingSection, type TrainingDatesPricingSession } from '@/components/TrainingDatesPricingSection';
 import { isPublicUpcomingSession } from '@/lib/public-sessions';
-import { listSessions } from '@/lib/training-data';
+import { listPublicSessions as listSessions } from '@/lib/training-data';
 import { VaeEligibilityModal } from '@/components/VaeEligibilityModal';
 import { Button, ConversionStrip, FAQ, FeatureCard, Hero, Highlight, PremiumFAQSection, SectionTitle } from '@/components/ui';
 import { formationFaq } from '@/data/faq';

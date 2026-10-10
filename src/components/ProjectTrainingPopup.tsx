@@ -8,7 +8,7 @@ const STORAGE_KEY = 'integrale-academy-project-popup-dismissed';
 
 export function ProjectTrainingPopup() {
   const pathname = usePathname();
-  const isFinancingPage = pathname?.replace(/\/+$/, '') === '/financements';
+  const isFinancingPage = ['/financements', '/planning'].includes(pathname?.replace(/\/+$/, '') || '');
   const isBts = pathname?.startsWith('/bts');
   const contactName = isBts ? 'Aurélie' : 'Cassandre';
   const [isOpen, setIsOpen] = useState(false);
@@ -111,3 +111,4 @@ export function ProjectTrainingPopup() {
     </div>
   );
 }
+

@@ -1,7 +1,7 @@
 import { createPageMetadata } from '@/lib/seo';
 import { SsiapCoursePage } from '@/components/SsiapCoursePage';
 import { isPublicUpcomingSession } from '@/components/PublicTrainingSessions';
-import { listSessions } from '@/lib/training-data';
+import { listPublicSessions as listSessions } from '@/lib/training-data';
 import { ssiap3Config } from '@/data/ssiap-catalogue';
 
 export const dynamic = 'force-dynamic';
