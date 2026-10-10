@@ -8,13 +8,10 @@ import { sessionLocationFilters, sessionMatchesLocation, type SessionLocationFil
 import { formatTrainingPrice } from '@/lib/training-price';
 import { planningFormationHref } from '@/lib/planning-data';
 import { vtcCourse } from '@/data/vtc';
-import { planningMonths, sessionMatchesMonth } from '@/lib/planning-filters';
-import { planningRegistrationAction } from '@/lib/planning-registration';
-import { PlanningRegistration } from './PlanningRegistration';
 
 type Session = any;
 type CategoryKey = 'security' | 'fire' | 'vtc' | 'bts';
-type FormationFilterKey = 'all' | 'aps' | 'a3p' | 'director' | 'ssiap' | 'vtc' | 'bts' | 'other';
+type FormationFilterKey = 'all' | 'aps' | 'a3p' | 'director' | 'ssiap' | 'vtc' | 'bts';
 type ViewMode = 'list' | 'calendar';
 type PlanningAccent = 'blue' | 'green' | 'orange' | 'red' | 'violet' | 'gold';
 
@@ -123,9 +120,9 @@ const formationFilters: {
   },
   {
     key: 'ssiap',
-    label: 'SSIAP',
+    label: 'SSIAP 1',
     eyebrow: 'Sécurité incendie',
-    description: 'SSIAP 1, 2, 3 et maintien des compétences',
+    description: 'Agent de sécurité incendie',
     category: 'fire',
     slugs: ['ssiap-1', 'ssiap1', 'ssiap-2', 'ssiap2', 'ssiap-3', 'ssiap3', 'recyclage-remise-a-niveau-ssiap'],
     accent: 'red',
@@ -143,7 +140,7 @@ const formationFilters: {
     key: 'bts',
     label: 'BTS',
     eyebrow: 'Alternance',
-    description: 'MOS, MCO, NDRC, CI, PI et CG',
+    description: 'MOS, MCO, NDRC, CI et PI',
     category: 'bts',
     slugs: [
       'bts',
@@ -393,37 +390,34 @@ function deliveryPeriodRows(session: Session): { label: string; value: string; i
 function SessionCard({
   session,
   isNext,
-  onSelect,
 }: {
   session: Session;
   isNext: boolean;
-  onSelect: (session: Session) => void;
 }) {
   const date = shortDate(session.startDate);
   const seatAvailability = planningSeatAvailability(session);
   const showDeliveryPeriods = hasDetailedDeliveryPeriods(session);
   const isVtcExam = session.scheduleKind === 'vtc-exam';
   const themeClass = planningThemeForSession(session);
-  const action = planningRegistrationAction(session);
 
   return (
     <article className={themeClass + ' group relative overflow-hidden rounded-[1.6rem] border bg-white p-4 shadow-[0_18px_55px_rgba(54,40,20,.08)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_70px_rgba(54,40,20,.14)] dark:bg-white/5 sm:p-5 ' + (isNext ? 'planning-accent-border' : 'border-academy-line/70 dark:border-white/10')}>
       <span aria-hidden="true" className="planning-accent-indicator absolute inset-y-0 left-0 w-1" />
       {isNext ? (
-        <span className="absolute left-4 top-0 rounded-b-xl bg-[#101a29] px-3 py-1 text-xs font-black uppercase tracking-[.14em] text-white sm:left-5">
+        <span className="absolute left-4 top-0 rounded-b-xl bg-[#101a29] px-3 py-1 text-[9px] font-black uppercase tracking-[.14em] text-white sm:left-5">
           {isVtcExam ? 'Prochaine échéance VTC' : 'Prochaine session'}
         </span>
       ) : null}
 
-      <div className="grid gap-4 pt-2 lg:grid-cols-[5.5rem_minmax(0,1fr)_13rem] lg:items-start">
+      <div className="grid gap-4 pt-2 lg:grid-cols-[5.5rem_minmax(0,1.3fr)_minmax(17rem,.8fr)_auto] lg:items-center">
         <div className="flex items-center gap-3 lg:block">
           <div className="planning-neutral-action grid h-[4.6rem] w-[4.6rem] shrink-0 place-items-center rounded-2xl text-center">
             <span>
               <span className="block text-2xl font-black leading-none">{date.day}</span>
-              <span className="mt-1 block text-xs font-black uppercase tracking-[.12em] text-white/58">{date.month}</span>
+              <span className="mt-1 block text-[10px] font-black uppercase tracking-[.12em] text-white/58">{date.month}</span>
             </span>
           </div>
-          <p className="text-xs font-black uppercase tracking-[.14em] text-academy-muted lg:mt-2 lg:text-center">
+          <p className="text-[10px] font-black uppercase tracking-[.14em] text-academy-muted lg:mt-2 lg:text-center">
             {new Date(session.startDate).getUTCFullYear()}
           </p>
         </div>
@@ -433,7 +427,7 @@ function SessionCard({
             <h3 className="text-xl font-black tracking-tight text-academy-ink dark:text-white sm:text-2xl">
               {sessionTitle(session)}
             </h3>
-            {session.status === 'COMING_SOON' ? <span className="rounded-full border border-amber-300 bg-amber-50 px-3 py-1 text-sm font-bold text-amber-900">Ouverture prochaine</span> : session.status === 'FULL' || !isVtcExam ? <span className={'session-seats-badge rounded-full border px-3 py-1 text-xs font-black ' + seatAvailability.badgeClassName}>
+            {!isVtcExam ? <span className={'session-seats-badge rounded-full border px-3 py-1 text-[10px] font-black ' + seatAvailability.badgeClassName}>
               {seatAvailability.label}
             </span> : null}
           </div>
@@ -445,8 +439,8 @@ function SessionCard({
                 ['Examen théorique', session.vtcDates.theory],
                 ['Examen pratique', session.vtcDates.practical],
               ].map(([label, value]) => <div key={label} className="rounded-2xl border border-academy-line/60 bg-academy-bg/55 px-3 py-3 dark:border-white/10 dark:bg-white/5">
-                <dt className="text-xs font-black uppercase tracking-[.1em] text-academy-muted">{label}</dt>
-                <dd className="mt-1 text-sm font-black text-academy-ink dark:text-white">{value ? formatSessionDate(value) : 'À confirmer'}</dd>
+                <dt className="text-[9px] font-black uppercase tracking-[.1em] text-academy-muted">{label}</dt>
+                <dd className="mt-1 text-sm font-black text-academy-ink dark:text-white">{formatSessionDate(value)}</dd>
               </div>)}
             </dl>
             <p className="mt-3 text-xs font-semibold leading-5 text-academy-muted">Hybride : théorie en ligne et pratique en présentiel. Frais d’examen et véhicule double commande inclus.</p>
@@ -457,7 +451,7 @@ function SessionCard({
                 <Icon name={period.icon} className="h-4 w-4" />
               </span>
               <span className="min-w-0">
-                {period.label ? <span className="block text-xs font-black uppercase tracking-[.14em] text-academy-muted/70">{period.label}</span> : null}
+                {period.label ? <span className="block text-[9px] font-black uppercase tracking-[.14em] text-academy-muted/70">{period.label}</span> : null}
                 <span className={`${period.label ? 'mt-1 ' : ''}block text-[13px] font-black leading-5 text-academy-ink dark:text-white sm:text-sm`}>{period.value}</span>
               </span>
             </div>)}
@@ -474,13 +468,13 @@ function SessionCard({
           ) : null}
         </div>
 
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-2">
           <div className="rounded-2xl border border-academy-line/60 bg-academy-bg/65 px-3 py-2.5 dark:border-white/10 dark:bg-black/15">
-            <span className="block text-xs font-black uppercase tracking-[.14em] text-academy-muted/70">Tarif</span>
+            <span className="block text-[9px] font-black uppercase tracking-[.14em] text-academy-muted/70">Tarif</span>
             <span className="mt-1 block text-base font-black text-academy-ink dark:text-white">{displayPrice(session)}</span>
           </div>
           <div className="rounded-2xl border border-academy-line/60 bg-academy-bg/65 px-3 py-2.5 dark:border-white/10 dark:bg-black/15">
-            <span className="block text-xs font-black uppercase tracking-[.14em] text-academy-muted/70">Durée</span>
+            <span className="block text-[9px] font-black uppercase tracking-[.14em] text-academy-muted/70">Durée</span>
             <span className="mt-1 flex items-center gap-1.5 text-base font-black text-academy-ink dark:text-white">
               <Icon name="clock" className="planning-accent-text h-4 w-4" />
               {displayDuration(session)}
@@ -488,63 +482,157 @@ function SessionCard({
           </div>
         </div>
 
-        <div className="flex flex-col gap-2 sm:flex-row sm:items-center lg:col-start-2 lg:col-span-2">
-          <button type="button" onClick={() => onSelect(session)} className="planning-neutral-action inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-bold">
-            {action.label}<Icon name="arrow" className="h-4 w-4" />
-          </button>
-          <Link href={planningFormationHref(session)} className="py-2 text-center text-sm font-semibold underline underline-offset-4">Programme et prérequis</Link>
+        <div className="flex gap-2 lg:flex-col">
+          <Link
+            href={planningFormationHref(session)}
+            className="planning-neutral-action inline-flex flex-1 items-center justify-center gap-2 rounded-full px-5 py-3.5 text-sm font-black transition hover:-translate-y-0.5"
+          >
+            En savoir plus
+            <Icon name="arrow" className="h-4 w-4" />
+          </Link>
         </div>
       </div>
     </article>
   );
 }
 
-function CalendarView({ sessions, onSelect, monthFilter }: { sessions: Session[]; onSelect: (session: Session) => void; monthFilter: string }) {
-  const months = monthFilter === 'all' ? planningMonths(sessions) : [monthFilter];
-  const [selectedMonth, setSelectedMonth] = useState('');
-  const month = months.includes(selectedMonth) ? selectedMonth : months[0];
-  if (!month) return null;
-  const index = months.indexOf(month);
-  const label = new Intl.DateTimeFormat('fr-FR', { month: 'long', year: 'numeric', timeZone: 'UTC' }).format(new Date(month + '-01T12:00:00Z'));
-  const visible = sessions.filter((session) => sessionMatchesMonth(session, month));
-  return <div className="mt-5 overflow-hidden rounded-3xl border border-academy-line bg-academy-surface shadow-soft">
-    <div className="flex items-center justify-between gap-3 bg-[#101a29] p-4 text-white sm:p-6">
-      <button type="button" disabled={index === 0} onClick={() => setSelectedMonth(months[index - 1])} aria-label="Mois précédent" className="h-11 w-11 rounded-full border border-white/30 text-xl disabled:opacity-30">‹</button>
-      <h3 className="text-center text-xl font-black capitalize sm:text-2xl">{label}</h3>
-      <button type="button" disabled={index === months.length - 1} onClick={() => setSelectedMonth(months[index + 1])} aria-label="Mois suivant" className="h-11 w-11 rounded-full border border-white/30 text-xl disabled:opacity-30">›</button>
-    </div>
-    <p className="border-b border-academy-line px-5 py-3 text-sm text-academy-muted">Sessions qui se déroulent sur ce mois. Les périodes de formation et les examens sont indiqués séparément.</p>
-    <div className="divide-y divide-academy-line">
-      {visible.map((session) => {
-        const vtc = session.scheduleKind === 'vtc-exam';
-        const rows = vtc ? [
-          ['Inscription avant le', formatSessionDate(session.startDate)],
-          ['Examen théorique', formatSessionDate(session.endDate)],
-          ['Examen pratique', session.examDate ? formatSessionDate(session.examDate) : 'À confirmer'],
-        ] : [
-          ['Formation', formatSessionPeriod(session.startDate, session.endDate)],
-          ...(session.remoteStartDate && session.remoteEndDate ? [['À distance', formatSessionPeriod(session.remoteStartDate, session.remoteEndDate)]] : []),
-          ...(session.inPersonStartDate && session.inPersonEndDate ? [['En présentiel', formatSessionPeriod(session.inPersonStartDate, session.inPersonEndDate)]] : []),
-          ...(session.examDate ? [['Examen', formatSessionDate(session.examDate)]] : []),
-        ];
-        return <article key={session.id} className={planningThemeForSession(session) + ' p-5 sm:p-6'}>
-          <div className="flex flex-wrap items-start justify-between gap-3">
-            <div><h4 className="text-lg font-black">{timelineTitle(session)}</h4><p className="mt-1 text-sm text-academy-muted">{session.location}</p></div>
-            <span className="planning-accent-soft rounded-full border px-3 py-1 text-sm font-bold">{session.status === 'COMING_SOON' ? 'Ouverture prochaine' : session.status === 'FULL' ? 'Complet' : vtc ? 'Échéances VTC' : planningSeatAvailability(session).label}</span>
+function CalendarView({
+  sessions,
+}: {
+  sessions: Session[];
+}) {
+  const timeline = useMemo(() => {
+    const firstSessionDate = new Date(Math.min(...sessions.map((session) => +new Date(session.startDate))));
+    const finalSessionDate = new Date(Math.max(...sessions.map((session) => +new Date(session.examDate || session.endDate || session.startDate))));
+    const start = new Date(Date.UTC(firstSessionDate.getUTCFullYear(), firstSessionDate.getUTCMonth(), 1));
+    const end = new Date(Date.UTC(finalSessionDate.getUTCFullYear(), finalSessionDate.getUTCMonth() + 1, 1));
+    const total = Math.max(+end - +start, 1);
+    const months: { key: string; label: string; left: number; width: number }[] = [];
+
+    for (let cursor = new Date(start); cursor < end; cursor = new Date(Date.UTC(cursor.getUTCFullYear(), cursor.getUTCMonth() + 1, 1))) {
+      const next = new Date(Date.UTC(cursor.getUTCFullYear(), cursor.getUTCMonth() + 1, 1));
+      months.push({
+        key: monthKey(cursor),
+        label: timelineMonthLabel(cursor),
+        left: ((+cursor - +start) / total) * 100,
+        width: ((+next - +cursor) / total) * 100,
+      });
+    }
+
+    return { start, end, total, months };
+  }, [sessions]);
+
+  function sessionPosition(session: Session) {
+    const start = Math.max(+new Date(session.startDate), +timeline.start);
+    const finish = Math.min(+new Date(session.examDate || session.endDate || session.startDate), +timeline.end);
+    const rawLeft = ((start - +timeline.start) / timeline.total) * 100;
+    const rawWidth = ((Math.max(finish, start) - start) / timeline.total) * 100;
+    const width = Math.min(100, Math.max(10, rawWidth));
+    return { left: Math.min(rawLeft, 100 - width), width };
+  }
+
+  return (
+    <div className="relative overflow-hidden rounded-[2.4rem] bg-[#101a29] px-4 py-8 text-white shadow-[0_30px_90px_rgba(16,26,41,.24)] sm:px-7 sm:py-10 lg:px-10 lg:py-12">
+      <div className="absolute -right-40 -top-48 h-[32rem] w-[32rem] rounded-full bg-academy-gold/[.08]" />
+
+      <div className="relative flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+        <div>
+          <span className="inline-flex rounded-full border border-academy-gold/45 bg-academy-gold/10 px-4 py-2 text-[10px] font-black uppercase tracking-[.16em] text-academy-gold">
+            Vue calendrier
+          </span>
+          <h3 className="mt-5 max-w-4xl text-3xl font-black tracking-tight sm:text-4xl lg:text-5xl">
+            Visualisez les parcours dans le temps.
+          </h3>
+          <p className="mt-4 max-w-3xl text-sm font-semibold leading-6 text-white/62 sm:text-base">
+            Comparez les sessions, anticipez les examens et identifiez rapidement la meilleure rentrée.
+          </p>
+        </div>
+
+      </div>
+
+      <p className="relative mt-5 text-[10px] font-black uppercase tracking-[.14em] text-white/45 sm:hidden">
+        Faites glisser le calendrier horizontalement
+      </p>
+
+      <div className="relative mt-7 overflow-x-auto rounded-[1.7rem] bg-[#f8f4ec] text-[#171712] shadow-[inset_0_0_0_1px_rgba(255,255,255,.2)]">
+        <div className="min-w-[68rem] p-5 sm:p-7">
+          <div className="grid grid-cols-[15rem_minmax(48rem,1fr)] border-b border-[#d9cfbd]">
+            <div className="px-2 pb-5 text-[11px] font-black uppercase tracking-[.12em] text-[#6d685f]">Formation</div>
+            <div className="relative min-h-10">
+              {timeline.months.map((item) => (
+                <div key={item.key} className="absolute inset-y-0 border-l border-[#dfd5c4] px-3 text-center text-[11px] font-black uppercase tracking-[.08em] text-[#6d685f]" style={{ left: item.left + '%', width: item.width + '%' }}>
+                  {item.label}
+                </div>
+              ))}
+            </div>
           </div>
-          <dl className="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">{rows.map(([title, value]) => <div key={title} className="rounded-xl border border-academy-line p-3"><dt className="text-xs font-bold text-academy-muted">{title}</dt><dd className="mt-1 text-sm font-semibold">{value}</dd></div>)}</dl>
-          <div className="mt-4 flex flex-wrap items-center gap-4"><button type="button" onClick={() => onSelect(session)} className="planning-neutral-action min-h-11 rounded-full px-5 py-3 text-sm font-bold">{planningRegistrationAction(session).label}</button><Link href={planningFormationHref(session)} className="text-sm font-semibold underline underline-offset-4">Programme et prérequis</Link></div>
-        </article>;
-      })}
+
+          <div>
+            {sessions.map((session) => {
+              const position = sessionPosition(session);
+              const formation = formationFilterForSession(session);
+              const hasExam = Boolean(session.examDate);
+              const themeClass = planningThemeForSession(session);
+
+              return (
+                <div key={session.id} className="grid min-h-24 grid-cols-[15rem_minmax(48rem,1fr)] border-b border-[#e6dece] last:border-b-0">
+                  <div className={themeClass + ' flex flex-col justify-center px-2 py-4'}>
+                    <div className="flex items-center gap-2">
+                      <span aria-hidden="true" className="planning-accent-indicator h-2 w-2 shrink-0 rounded-full" />
+                      <p className="text-lg font-black tracking-tight">{timelineTitle(session)}</p>
+                    </div>
+                    <p className="mt-1 text-[11px] font-semibold text-[#6d685f]">{formation?.eyebrow || session.training?.shortDescription || 'Formation professionnelle'}</p>
+                  </div>
+
+                  <div className="relative min-h-24 overflow-hidden">
+                    {timeline.months.map((item) => (
+                      <span key={item.key} aria-hidden="true" className="pointer-events-none absolute inset-y-0 border-l border-[#dfd5c4]" style={{ left: item.left + '%' }} />
+                    ))}
+
+                    <Link
+                      href={planningFormationHref(session)}
+                      aria-label={'En savoir plus sur ' + sessionTitle(session)}
+                      title={session.scheduleKind === 'vtc-exam' ? 'Inscription avant le ' + formatSessionDate(session.startDate) + ' · Examen théorique le ' + formatSessionDate(session.endDate) + ' · Examen pratique le ' + formatSessionDate(session.examDate) : hasExam ? 'Examen le ' + formatSessionDate(session.examDate) : 'En savoir plus'}
+                      className={themeClass + ' planning-calendar-bar group absolute top-1/2 flex h-12 -translate-y-1/2 items-center justify-between gap-3 rounded-full px-4 text-left text-xs font-black transition hover:-translate-y-[54%]'}
+                      style={{ left: position.left + '%', width: position.width + '%' }}
+                    >
+                      <span className="truncate">{session.scheduleKind === 'vtc-exam' ? 'Inscription → examen' : timelineDateLabel(session.startDate) + ' → ' + timelineDateLabel(session.endDate)}</span>
+                      <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-[#111923] text-[9px] font-black text-white transition group-hover:scale-110">
+                        {hasExam ? 'E' : '›'}
+                      </span>
+                    </Link>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          <p className="ml-[15rem] mt-1 px-2 pt-4 text-[10px] font-black uppercase tracking-[.08em] text-[#6d685f]">
+            E = examen · cliquez sur un parcours pour en savoir plus sur la formation
+          </p>
+        </div>
+      </div>
     </div>
-  </div>;
+  );
 }
 
 function BtsIntakes({ year }: { year: number }) {
-  return <article className="mt-5 rounded-2xl border border-academy-line bg-academy-surface p-5 sm:p-6">
-    <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
-      <div><h3 className="text-xl font-black">BTS en alternance</h3><p className="mt-2 font-semibold">Prochaine rentrée annuelle : septembre {year}</p><p className="mt-1 text-sm text-academy-muted">Les dates détaillées par BTS seront précisées par l’équipe.</p></div>
-      <Link href="/bts" className="planning-neutral-action rounded-full px-5 py-3 text-center text-sm font-bold">Découvrir les BTS</Link>
+  return <article className="planning-theme-gold mt-6 rounded-[1.6rem] border border-academy-line/70 bg-white p-5 shadow-soft dark:border-white/10 dark:bg-white/5 sm:p-7">
+    <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
+      <div>
+        <h3 className="text-2xl font-black text-academy-ink dark:text-white">BTS en alternance</h3>
+        <div className="mt-4 grid gap-3 sm:grid-cols-2">
+          <p className="rounded-2xl border border-academy-line/60 bg-academy-bg/55 p-4 text-sm font-semibold text-academy-muted dark:border-white/10 dark:bg-white/5">
+            Prochaine rentrée : <strong className="text-academy-ink dark:text-white">septembre {year}</strong>
+          </p>
+          <p className="rounded-2xl border border-academy-line/60 bg-academy-bg/55 p-4 text-sm font-semibold text-academy-muted dark:border-white/10 dark:bg-white/5">
+            Rentrée suivante : <strong className="text-academy-ink dark:text-white">septembre {year + 1}</strong>
+          </p>
+        </div>
+      </div>
+      <Link href="/bts" className="planning-neutral-action inline-flex items-center justify-center gap-2 rounded-full px-5 py-3.5 text-sm font-black transition hover:-translate-y-0.5">
+        En savoir plus <Icon name="arrow" className="h-4 w-4" />
+      </Link>
     </div>
   </article>;
 }
@@ -568,7 +656,7 @@ function MissingDates({
     <section className="border-y border-academy-line/70 bg-academy-soft/55 py-16 sm:py-20">
       <div className="page-container">
         <div className="max-w-4xl">
-          <p className="text-xs font-black uppercase tracking-[.22em] text-academy-gold-strong">Alertes personnalisées</p>
+          <p className="text-[11px] font-black uppercase tracking-[.22em] text-academy-gold-strong">Alertes personnalisées</p>
           <h2 className="mt-4 text-3xl font-black tracking-tight text-academy-ink dark:text-white sm:text-5xl">
             Pas encore de date ? Gardez une longueur d’avance.
           </h2>
@@ -585,10 +673,10 @@ function MissingDates({
               className={planningThemeClass(option.accent) + ' planning-accent-card group rounded-[1.5rem] border bg-academy-surface p-5 shadow-[0_16px_45px_rgba(54,40,20,.06)] transition hover:-translate-y-1'}
             >
               <div className="flex items-center justify-between">
-                <span className="planning-accent-icon grid h-9 w-9 place-items-center rounded-full text-xs font-black">
+                <span className="planning-accent-icon grid h-9 w-9 place-items-center rounded-full text-[10px] font-black">
                   0{index + 1}
                 </span>
-                <span className="planning-accent-text text-xs font-black uppercase tracking-[.14em]">{option.label}</span>
+                <span className="planning-accent-text text-[9px] font-black uppercase tracking-[.14em]">{option.label}</span>
               </div>
               <h3 className="mt-6 text-xl font-black text-academy-ink dark:text-white">{option.title}</h3>
               <p className="mt-3 min-h-[3.5rem] text-sm font-semibold leading-6 text-academy-muted">{option.description}</p>
@@ -606,7 +694,7 @@ function MissingDates({
           <div className="absolute -right-20 -top-24 h-64 w-64 rounded-full bg-academy-gold/15" />
           <div className="relative grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
             <div>
-              <p className="text-xs font-black uppercase tracking-[.2em] text-academy-gold">Mon alerte planning</p>
+              <p className="text-[10px] font-black uppercase tracking-[.2em] text-academy-gold">Mon alerte planning</p>
               <h3 className="mt-3 text-2xl font-black tracking-tight sm:text-3xl">Recevez uniquement les dates qui vous intéressent.</h3>
               <p className="mt-3 max-w-2xl text-sm font-semibold leading-6 text-white/65">Formation, centre et période souhaitée : l’équipe vous recontacte dès qu’une session adaptée est ouverte.</p>
             </div>
@@ -622,93 +710,304 @@ function MissingDates({
 }
 
 export function PlanningClient({ initialSessions, btsIntakeYear }: { initialSessions: Session[]; btsIntakeYear: number }) {
-  const sortedSessions = useMemo(() => [...initialSessions].sort((a, b) => +new Date(a.startDate) - +new Date(b.startDate)), [initialSessions]);
+  const sortedSessions = useMemo(
+    () => [...initialSessions].sort((a, b) => +new Date(a.startDate) - +new Date(b.startDate)),
+    [initialSessions],
+  );
   const [activeFormation, setActiveFormation] = useState<FormationFilterKey>('all');
   const [locationFilter, setLocationFilter] = useState<SessionLocationFilterKey>('all');
-  const [monthFilter, setMonthFilter] = useState('all');
-  const [onlyOpen, setOnlyOpen] = useState(false);
   const [view, setView] = useState<ViewMode>('list');
   const [showAll, setShowAll] = useState(false);
-  const [selectedSession, setSelectedSession] = useState<Session | null>(null);
-  const selectedFormation = formationFilters.find((formation) => formation.key === activeFormation);
-  const activePlanningTheme = planningThemeClass(selectedFormation?.accent || 'gold');
-  const baseSessions = sortedSessions.filter((session) => {
-    if (activeFormation === 'other' && formationFilterForSession(session)) return false;
-    if (selectedFormation && !formationMatchesSlug(selectedFormation, session.training?.slug)) return false;
-    return sessionMatchesLocation(session, locationFilter);
-  });
-  const monthOptions = planningMonths(baseSessions);
-  const filteredSessions = baseSessions.filter((session) => sessionMatchesMonth(session, monthFilter) && (!onlyOpen || planningRegistrationAction(session).kind === 'registration'));
+
+  const formationSessionCounts = useMemo(
+    () => Object.fromEntries(formationFilters.map((formation) => [formation.key, sortedSessions.filter((session) => formationMatchesSlug(formation, session.training?.slug)).length])) as Record<Exclude<FormationFilterKey, 'all'>, number>,
+    [sortedSessions],
+  );
+  const selectedFormationDetails = activeFormation === 'all' ? null : formationFilters.find((formation) => formation.key === activeFormation) || null;
+  const activePlanningTheme = planningThemeClass(selectedFormationDetails?.accent || 'gold');
+
+  const filteredSessions = useMemo(() => {
+    const selectedFormation = activeFormation === 'all' ? null : formationFilters.find((formation) => formation.key === activeFormation);
+    return sortedSessions.filter((session) => {
+      if (selectedFormation && !formationMatchesSlug(selectedFormation, session.training?.slug)) return false;
+      return sessionMatchesLocation(session, locationFilter);
+    });
+  }, [activeFormation, locationFilter, sortedSessions]);
+
   const visibleSessions = showAll ? filteredSessions : filteredSessions.slice(0, 6);
-  const openCount = filteredSessions.filter((session) => planningRegistrationAction(session).kind === 'registration').length;
-  const hasBts = sortedSessions.some((session) => formationMatchesSlug(formationFilters.find((formation) => formation.key === 'bts')!, session.training?.slug));
-  const showBtsIntake = !hasBts && (activeFormation === 'all' || activeFormation === 'bts') && locationFilter === 'all' && monthFilter === 'all' && !onlyOpen;
-  const nextOpenId = filteredSessions.find((session) => planningRegistrationAction(session).kind === 'registration')?.id;
-  function resetFilters() { setActiveFormation('all'); setLocationFilter('all'); setMonthFilter('all'); setOnlyOpen(false); setShowAll(false); }
-  function changeFormation(value: FormationFilterKey) { setActiveFormation(value); setMonthFilter('all'); setShowAll(false); }
 
-  return <div className={'pb-24 ' + activePlanningTheme}>
-    <section className="border-b border-academy-line bg-academy-surface">
-      <div className="page-container py-7 sm:py-10">
-        <p className="text-xs font-bold uppercase tracking-widest text-academy-gold-strong">Planning des formations</p>
-        <h1 className="mt-2 text-3xl font-black tracking-tight sm:text-5xl">Choisissez votre prochaine session.</h1>
-        <p className="mt-3 max-w-3xl text-base leading-7 text-academy-muted">Retrouvez les dates, les lieux et les tarifs, puis sélectionnez la session qui vous convient.</p>
-      </div>
-    </section>
+  function scrollToSessions() {
+    window.requestAnimationFrame(() => document.getElementById('sessions')?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+  }
 
-    <section id="sessions" className="page-container scroll-mt-24 py-6 sm:py-8" aria-label="Recherche de sessions">
-      <div className="rounded-2xl border border-academy-line bg-academy-surface p-4 sm:p-5">
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          <label className="text-sm font-bold">Formation<select value={activeFormation} onChange={(event) => changeFormation(event.target.value as FormationFilterKey)} className="mt-1.5 min-h-12 w-full rounded-xl border border-academy-line bg-academy-surface px-3 text-sm font-semibold">
-            <option value="all">Toutes les formations</option>{formationFilters.map((formation) => <option key={formation.key} value={formation.key}>{formation.label} — {formation.description}</option>)}
-            {sortedSessions.some((session) => !formationFilterForSession(session)) ? <option value="other">Autres formations</option> : null}
-          </select></label>
-          <label className="text-sm font-bold">Centre<select value={locationFilter} onChange={(event) => { setLocationFilter(event.target.value as SessionLocationFilterKey); setMonthFilter('all'); setShowAll(false); }} className="mt-1.5 min-h-12 w-full rounded-xl border border-academy-line bg-academy-surface px-3 text-sm font-semibold">{sessionLocationFilters.map((filter) => <option key={filter.key} value={filter.key}>{filter.key === 'all' ? 'Tous les centres' : filter.label}</option>)}</select></label>
-          <label className="text-sm font-bold">Mois<select value={monthFilter} onChange={(event) => { setMonthFilter(event.target.value); setShowAll(false); }} className="mt-1.5 min-h-12 w-full rounded-xl border border-academy-line bg-academy-surface px-3 text-sm font-semibold"><option value="all">Toutes les périodes</option>{monthOptions.map((month) => <option key={month} value={month}>{new Intl.DateTimeFormat('fr-FR', { month: 'long', year: 'numeric', timeZone: 'UTC' }).format(new Date(month + '-01T12:00:00Z'))}</option>)}</select></label>
+  function chooseFormation(formation: FormationFilterKey) {
+    setActiveFormation(formation);
+    setShowAll(false);
+    setView('list');
+    scrollToSessions();
+  }
+
+  function showCalendar() {
+    setView('calendar');
+    scrollToSessions();
+  }
+
+  return (
+    <main className="overflow-hidden pb-24">
+      <section className="relative isolate overflow-hidden border-b border-academy-line/70 bg-[#f7f1e7] px-4 py-14 text-[#141820] sm:py-16 lg:py-20">
+        <div className="absolute -right-40 -top-48 -z-10 h-[34rem] w-[34rem] rounded-full bg-academy-gold/20" />
+        <div className="absolute -bottom-48 left-[38%] -z-10 h-[28rem] w-[28rem] rounded-full border border-academy-gold/20" />
+
+        <div className="page-container grid gap-9 lg:grid-cols-[1.2fr_.8fr] lg:items-center">
+          <div className="reveal">
+            <span className="inline-flex items-center gap-2 rounded-full border border-[#d9b548] bg-white/60 px-4 py-2 text-[10px] font-black uppercase tracking-[.2em] text-[#8f6810]">
+              <Icon name="calendar" className="h-4 w-4" />
+              Planning des formations
+            </span>
+            <h1 className="mt-6 max-w-5xl text-4xl font-black tracking-[-.045em] sm:text-5xl lg:text-[4.35rem] lg:leading-[1.02]">
+              Trouvez votre formation.<br />
+              <span className="text-[#b9820a]">Choisissez votre date.</span>
+            </h1>
+            <p className="mt-6 max-w-2xl text-base font-semibold leading-8 text-[#5f625f] sm:text-lg">
+              APS, A3P, Dirigeant, SSIAP 1, VTC ou BTS : accédez directement au bon parcours, comparez les rentrées et vérifiez les places disponibles.
+            </p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <a href="#choisir-formation" className="inline-flex items-center justify-center gap-2 rounded-full bg-[#111b2a] px-6 py-4 text-sm font-black text-white transition hover:-translate-y-0.5">
+                Choisir ma formation
+                <Icon name="arrow" className="h-4 w-4 text-academy-gold" />
+              </a>
+              <button type="button" onClick={showCalendar} className="inline-flex items-center justify-center gap-2 rounded-full border border-[#cfc3ae] bg-white/70 px-6 py-4 text-sm font-black text-[#141820] transition hover:-translate-y-0.5 hover:border-academy-gold">
+                Voir le calendrier
+                <Icon name="calendar" className="h-4 w-4 text-[#b9820a]" />
+              </button>
+            </div>
+          </div>
+
+          <div className="reveal relative overflow-hidden rounded-[2rem] bg-[#111b2a] p-6 text-white shadow-[0_30px_90px_rgba(17,27,42,.18)] sm:p-8">
+            <div className="absolute -right-24 -top-28 h-64 w-64 rounded-full bg-academy-gold/12" />
+            <div className="relative">
+              <p className="text-[10px] font-black uppercase tracking-[.2em] text-academy-gold">Votre planning, simplement</p>
+              <h2 className="mt-4 text-2xl font-black tracking-tight sm:text-3xl">Du projet à l’inscription en trois étapes.</h2>
+              <div className="mt-7 divide-y divide-white/10 border-y border-white/10">
+                {[
+                  ['01', 'Choisissez la formation', 'Accès direct à chaque parcours.'],
+                  ['02', 'Comparez les dates', 'Liste détaillée ou frise calendrier.'],
+                  ['03', 'Découvrez la formation', 'Programme, prérequis et inscription.'],
+                ].map(([number, label, description]) => (
+                  <div key={number} className="grid grid-cols-[2.7rem_1fr] gap-4 py-4">
+                    <span className="grid h-9 w-9 place-items-center rounded-full bg-academy-gold text-[10px] font-black text-academy-gold-text">{number}</span>
+                    <span>
+                      <span className="block text-sm font-black">{label}</span>
+                      <span className="mt-1 block text-xs font-semibold text-white/50">{description}</span>
+                    </span>
+                  </div>
+                ))}
+              </div>
+              <p className="mt-5 flex items-center gap-2 text-xs font-bold text-white/55">
+                <span className="h-2 w-2 rounded-full bg-emerald-400" />
+                Retrouvez les prochaines dates de vos formations
+              </p>
+            </div>
+          </div>
         </div>
-        <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
-          <label className="flex min-h-11 cursor-pointer items-center gap-2 text-sm font-semibold"><input type="checkbox" checked={onlyOpen} onChange={(event) => { setOnlyOpen(event.target.checked); setShowAll(false); }} className="h-5 w-5 accent-[#101a29]" />Uniquement les sessions ouvertes</label>
-          {activeFormation !== 'all' || locationFilter !== 'all' || monthFilter !== 'all' || onlyOpen ? <button type="button" onClick={resetFilters} className="min-h-11 px-2 text-sm font-semibold underline underline-offset-4">Réinitialiser</button> : null}
+      </section>
+
+      <section id="choisir-formation" className="relative overflow-hidden bg-[#101a29] py-14 text-white sm:py-16">
+        <div className="absolute -left-40 -top-40 h-80 w-80 rounded-full bg-academy-gold/[.07]" />
+        <div className="page-container relative">
+          <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+              <p className="text-[10px] font-black uppercase tracking-[.2em] text-academy-gold">Accès direct</p>
+              <h2 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl">Quelle formation recherchez-vous ?</h2>
+              <p className="mt-3 max-w-3xl text-sm font-semibold leading-6 text-white/58 sm:text-base">Cliquez sur votre parcours pour afficher immédiatement les dates correspondantes.</p>
+            </div>
+            <button type="button" onClick={() => chooseFormation('all')} className={'w-fit rounded-full px-5 py-3 text-xs font-black transition ' + (activeFormation === 'all' ? 'bg-academy-gold text-academy-gold-text' : 'border border-white/15 bg-white/5 text-white hover:bg-white/10')}>
+              Toutes les formations
+            </button>
+          </div>
+
+          <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+            {formationFilters.map((formation, index) => {
+              const count = formationSessionCounts[formation.key];
+              const selected = activeFormation === formation.key;
+              return (
+                <button
+                  key={formation.key}
+                  type="button"
+                  aria-pressed={selected}
+                  onClick={() => chooseFormation(formation.key)}
+                  className={planningThemeClass(formation.accent) + ' planning-formation-card group flex min-h-[13.5rem] flex-col rounded-[1.45rem] border p-5 text-left transition duration-300 hover:-translate-y-1 ' + (selected ? 'planning-formation-card-selected' : '')}
+                >
+                  <span className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[.14em] text-white/55">
+                    <span aria-hidden="true" className="planning-accent-indicator h-2 w-2 shrink-0 rounded-full" />
+                    0{index + 1} · {formation.eyebrow}
+                  </span>
+                  <span className="mt-5 block text-xl font-black tracking-tight">{formation.label}</span>
+                  <span className="mt-2 block text-xs font-semibold leading-5 text-white/48">{formation.description}</span>
+                  <span className="mt-auto flex items-center justify-between border-t border-white/10 pt-4 text-[10px] font-black uppercase tracking-[.08em]">
+                    {formation.key === 'bts' ? `Rentrées ${btsIntakeYear} et ${btsIntakeYear + 1}` : count ? count + (count > 1 ? ' sessions' : ' session') : 'Créer une alerte'}
+                    <span className={'grid h-7 w-7 place-items-center rounded-full transition group-hover:translate-x-1 ' + (selected ? 'bg-academy-gold text-academy-gold-text' : 'bg-white/10 text-white')}>
+                      <Icon name="arrow" className="h-3.5 w-3.5" />
+                    </span>
+                  </span>
+                </button>
+              );
+            })}
+          </div>
         </div>
-      </div>
+      </section>
 
-      <div className="my-5 flex flex-wrap items-center justify-between gap-3">
-        <div role="status" aria-live="polite"><h2 className="text-xl font-black">{filteredSessions.length} {filteredSessions.length === 1 ? 'session programmée' : 'sessions programmées'}</h2><p className="mt-1 text-sm text-academy-muted">{openCount} {openCount === 1 ? 'session ouverte aux demandes d’inscription' : 'sessions ouvertes aux demandes d’inscription'}</p></div>
-        {filteredSessions.length > 0 ? <div className="flex rounded-full border border-academy-line bg-academy-surface p-1" aria-label="Affichage du planning">
-          <button type="button" aria-pressed={view === 'list'} onClick={() => setView('list')} className={'min-h-11 rounded-full px-4 text-sm font-bold ' + (view === 'list' ? 'planning-neutral-action' : '')}>Liste</button>
-          <button type="button" aria-pressed={view === 'calendar'} onClick={() => setView('calendar')} className={'min-h-11 rounded-full px-4 text-sm font-bold ' + (view === 'calendar' ? 'planning-neutral-action' : '')}>Calendrier</button>
-        </div> : null}
-      </div>
+      <section id="sessions" className={activePlanningTheme + ' page-container py-14 sm:py-20'}>
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <p className="text-2xl font-black text-academy-ink dark:text-white">
+              {activeFormation === 'bts' ? 'Rentrées BTS' : filteredSessions.length + (filteredSessions.length > 1 ? ' sessions disponibles' : ' session disponible')}
+            </p>
+            <p className="mt-1 text-sm font-semibold text-academy-muted">
+              {activeFormation === 'bts' ? 'BTS en alternance' : view === 'list' ? 'Triées par prochaine date de rentrée ou échéance d’inscription' : 'Affichées dans le calendrier'}
+            </p>
+          </div>
 
-      {filteredSessions.length ? view === 'list' ? <>
-        <div className="grid gap-4">{visibleSessions.map((session) => <SessionCard key={session.id} session={session} isNext={session.id === nextOpenId} onSelect={setSelectedSession} />)}</div>
-        {filteredSessions.length > visibleSessions.length ? <div className="mt-6 text-center"><button type="button" onClick={() => setShowAll(true)} className="min-h-12 rounded-full border border-academy-line px-6 py-3 text-sm font-bold">Voir les {filteredSessions.length - visibleSessions.length} autres sessions</button></div> : null}
-      </> : <CalendarView key={activeFormation + locationFilter + monthFilter + onlyOpen} sessions={filteredSessions} onSelect={setSelectedSession} monthFilter={monthFilter} /> : !showBtsIntake ? <div className="rounded-2xl border border-dashed border-academy-line bg-academy-surface p-7 text-center">
-        <h3 className="text-xl font-black">Aucune session pour ces critères.</h3>
-        <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-academy-muted">Essayez un autre mois ou un autre centre, ou contactez notre équipe pour connaître les prochaines dates.</p>
-        <div className="mt-5 flex flex-wrap justify-center gap-3"><button type="button" onClick={resetFilters} className="planning-neutral-action rounded-full px-5 py-3 text-sm font-bold">Voir toutes les sessions</button><Link href="/contact?motif=alerte-planning" className="rounded-full border border-academy-line px-5 py-3 text-sm font-bold">Créer une alerte</Link></div>
-      </div> : null}
-      {showBtsIntake ? <BtsIntakes year={btsIntakeYear} /> : null}
-    </section>
+          {activeFormation !== 'bts' ? <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+            <div className="flex w-fit items-center rounded-full border border-academy-line bg-white p-1 dark:bg-white/5" aria-label="Filtrer les sessions par centre">
+              <span className="hidden px-3 text-[9px] font-black uppercase tracking-[.12em] text-academy-muted sm:inline">Centre</span>
+              {sessionLocationFilters.map((filter) => {
+                const selected = locationFilter === filter.key;
+                return (
+                  <button
+                    key={filter.key}
+                    type="button"
+                    aria-pressed={selected}
+                    onClick={() => {
+                      setLocationFilter(filter.key);
+                      setShowAll(false);
+                    }}
+                    className={'rounded-full px-3.5 py-2.5 text-xs font-black transition sm:px-4 ' + (selected ? 'planning-neutral-action' : 'text-academy-muted hover:text-academy-ink')}
+                  >
+                    {filter.label}
+                  </button>
+                );
+              })}
+            </div>
 
-    <MissingDates sessions={sortedSessions} activeFormation={activeFormation} />
-    <section className="page-container py-6 sm:py-10">
-      <div className="grid gap-6 rounded-2xl border border-academy-line bg-academy-surface p-5 sm:p-7 lg:grid-cols-[1.5fr_1fr]">
-        <div><h2 className="text-xl font-black">Avant de choisir votre session</h2><div className="mt-4 space-y-3">
+            <div className="flex w-fit rounded-full border border-academy-line bg-white p-1 dark:bg-white/5">
+              <button type="button" aria-pressed={view === 'list'} onClick={() => setView('list')} className={'rounded-full px-4 py-2.5 text-xs font-black transition ' + (view === 'list' ? 'planning-neutral-action' : 'text-academy-muted hover:text-academy-ink')}>Vue liste</button>
+              <button type="button" aria-pressed={view === 'calendar'} onClick={() => setView('calendar')} className={'rounded-full px-4 py-2.5 text-xs font-black transition ' + (view === 'calendar' ? 'planning-neutral-action' : 'text-academy-muted hover:text-academy-ink')}>Vue calendrier</button>
+            </div>
+          </div> : null}
+        </div>
+
+        {activeFormation === 'bts' ? <BtsIntakes year={btsIntakeYear} /> : filteredSessions.length ? (
+          view === 'list' ? (
+            <>
+              <div className="mt-6 grid gap-4">
+                {visibleSessions.map((session, index) => (
+                  <SessionCard key={session.id} session={session} isNext={index === 0} />
+                ))}
+              </div>
+              {filteredSessions.length > visibleSessions.length ? (
+                <div className="mt-7 text-center">
+                  <button type="button" onClick={() => setShowAll(true)} className="planning-accent-hover rounded-full border border-academy-line bg-white px-6 py-3.5 text-sm font-black text-academy-ink shadow-soft transition hover:-translate-y-0.5 dark:bg-white/5 dark:text-white">
+                    Voir toutes les dates ({filteredSessions.length})
+                  </button>
+                </div>
+              ) : null}
+            </>
+          ) : (
+            <div className="mt-8"><CalendarView sessions={filteredSessions} /></div>
+          )
+        ) : (
+          <div className="mt-6 rounded-[2rem] border border-dashed border-academy-line bg-white/65 p-8 text-center shadow-soft dark:bg-white/5 sm:p-12">
+            <Icon name="search" className="planning-accent-text mx-auto h-10 w-10" />
+            <h3 className="mt-4 text-2xl font-black text-academy-ink dark:text-white">Aucune session ouverte pour cette sélection.</h3>
+            <p className="mx-auto mt-3 max-w-xl text-sm font-semibold leading-6 text-academy-muted">Choisissez un autre centre, consultez toutes les sessions ou créez une alerte pour être prévenu de la prochaine date disponible.</p>
+            <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
+              <button type="button" onClick={() => { setLocationFilter('all'); chooseFormation('all'); }} className="rounded-full bg-[#101a29] px-5 py-3 text-sm font-black text-white">Voir toutes les sessions</button>
+              <Link href="/contact?motif=alerte-planning" className="planning-neutral-action rounded-full px-5 py-3 text-sm font-black">Créer une alerte</Link>
+            </div>
+          </div>
+        )}
+        {activeFormation === 'all' ? <BtsIntakes year={btsIntakeYear} /> : null}
+      </section>
+
+      <MissingDates sessions={sortedSessions} activeFormation={activeFormation} />
+
+      <section className="page-container py-16 sm:py-20">
+        <div className="max-w-4xl">
+          <p className="text-[11px] font-black uppercase tracking-[.22em] text-academy-gold-strong">Préparez votre inscription</p>
+          <h2 className="mt-4 text-3xl font-black tracking-tight text-academy-ink dark:text-white sm:text-5xl">Toutes les réponses avant de choisir votre session.</h2>
+          <p className="mt-4 max-w-3xl text-base font-semibold leading-7 text-academy-muted">Découvrez les formations, vérifiez votre financement et échangez avec l’équipe avant de réserver votre place.</p>
+        </div>
+
+        <div className="mt-9 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           {[
-            ['Comment savoir s’il reste des places ?', 'Le nombre affiché sur chaque session est synchronisé avec les informations publiées par l’équipe.'],
-            ['Puis-je demander un financement avant de m’inscrire ?', 'Oui. Nous pouvons étudier votre situation avant la validation définitive de votre inscription.'],
-            ['Que faire si aucune date ne me convient ?', 'Créez une alerte planning : l’équipe vous préviendra dès qu’une nouvelle session sera ouverte.'],
-          ].map(([question, answer]) => <details key={question} className="rounded-xl border border-academy-line p-4"><summary className="cursor-pointer text-sm font-bold">{question}</summary><p className="mt-3 text-sm leading-6 text-academy-muted">{answer}</p></details>)}
-        </div></div>
-        <div className="rounded-2xl bg-[#101a29] p-5 text-white"><p className="text-xs font-bold uppercase tracking-widest text-academy-gold">Besoin d’un conseil ?</p><h3 className="mt-3 text-xl font-black">Parlons de votre projet.</h3><p className="mt-3 text-sm leading-6 text-white/80">Notre équipe vous aide à choisir votre session et à préparer votre financement.</p><a href="tel:0422470768" className="mt-5 inline-flex rounded-full bg-academy-gold px-5 py-3 text-sm font-bold text-academy-gold-text">04 22 47 07 68</a><Link href="/financements" className="mt-4 block text-sm underline underline-offset-4">Découvrir les financements</Link></div>
-      </div>
-    </section>
-    <div className="fixed inset-x-3 bottom-[calc(.75rem+env(safe-area-inset-bottom))] z-40 grid grid-cols-2 gap-2 rounded-2xl border border-academy-line bg-academy-surface p-2 shadow-lg md:hidden">
-      <a href="tel:0422470768" className="min-h-11 rounded-full border border-academy-line px-3 py-3 text-center text-sm font-bold">Appeler</a>
-      <a href="#sessions" className="planning-neutral-action min-h-11 rounded-full px-3 py-3 text-center text-sm font-bold">Choisir une session</a>
-    </div>
-    {selectedSession ? <PlanningRegistration key={selectedSession.id} session={selectedSession} onClose={() => setSelectedSession(null)} /> : null}
-  </div>;
-}
+            ['01', 'Découvrir les formations', 'Comparer APS, A3P, SSIAP 1, VTC et BTS.', '/formations-securite'],
+            ['02', 'Trouver un financement', 'CPF, France Travail, employeur et autres solutions.', '/financements'],
+            ['03', 'Recruter ou former', 'Alternance, POEI et montée en compétences.', '/entreprises'],
+            ['04', 'Parler à Cassandre', 'Valider mon projet et mes prochaines étapes.', '/contact?motif=rdv'],
+          ].map(([number, label, description, href]) => (
+            <Link key={number} href={href} className="group flex min-h-[15rem] flex-col rounded-[1.5rem] border border-academy-line/70 bg-academy-surface p-5 shadow-[0_16px_45px_rgba(54,40,20,.06)] transition hover:-translate-y-1 hover:border-academy-gold">
+              <span className="text-2xl font-black text-academy-gold">{number}</span>
+              <h3 className="mt-6 text-lg font-black text-academy-ink dark:text-white">{label}</h3>
+              <p className="mt-3 text-sm font-semibold leading-6 text-academy-muted">{description}</p>
+              <span className="mt-auto flex items-center justify-between border-t border-academy-line/60 pt-4 text-xs font-black text-academy-ink dark:text-white">
+                En savoir plus
+                <Icon name="arrow" className="h-4 w-4 text-academy-gold-strong transition group-hover:translate-x-1" />
+              </span>
+            </Link>
+          ))}
+        </div>
 
+        <div className="mt-10 grid gap-6 lg:grid-cols-[1.1fr_.9fr]">
+          <div>
+            <p className="text-[10px] font-black uppercase tracking-[.18em] text-academy-gold-strong">Questions fréquentes</p>
+            <h3 className="mt-3 text-2xl font-black text-academy-ink dark:text-white sm:text-3xl">Avant de réserver une place</h3>
+            <div className="mt-5 grid gap-3">
+              {[
+                ['Comment savoir s’il reste des places ?', 'Le nombre affiché sur chaque session est synchronisé avec les informations publiées par l’équipe.'],
+                ['Puis-je demander un financement avant de m’inscrire ?', 'Oui. Nous pouvons étudier votre situation avant la validation définitive de votre inscription.'],
+                ['Que faire si aucune date ne me convient ?', 'Créez une alerte planning : l’équipe vous préviendra dès qu’une nouvelle session sera ouverte.'],
+              ].map(([question, answer]) => (
+                <details key={question} className="group rounded-2xl border border-academy-line/70 bg-academy-surface p-4">
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-sm font-black text-academy-ink dark:text-white">
+                    {question}
+                    <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-academy-gold text-academy-gold-text transition group-open:rotate-45">+</span>
+                  </summary>
+                  <p className="mt-3 border-t border-academy-line/60 pt-3 text-sm font-semibold leading-6 text-academy-muted">{answer}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+
+          <div className="relative overflow-hidden rounded-[2rem] bg-[#101a29] p-6 text-white shadow-[0_25px_80px_rgba(16,26,41,.20)] sm:p-8">
+            <div className="absolute -bottom-24 -right-16 h-64 w-64 rounded-full bg-academy-gold/15" />
+            <div className="relative">
+              <p className="text-[10px] font-black uppercase tracking-[.2em] text-academy-gold">Besoin d’un conseil ?</p>
+              <h3 className="mt-4 text-2xl font-black tracking-tight sm:text-3xl">Parlons de votre prochaine rentrée.</h3>
+              <p className="mt-4 text-sm font-semibold leading-6 text-white/65">Cassandre vous aide à choisir la formation, la session et le financement adaptés à votre projet.</p>
+              <div className="mt-7 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex items-center gap-3">
+                  <span className="grid h-12 w-12 place-items-center rounded-full bg-academy-gold text-sm font-black text-academy-gold-text">CM</span>
+                  <span>
+                    <span className="block text-xs font-black uppercase tracking-[.12em]">Cassandre</span>
+                    <span className="mt-1 block text-xs font-semibold text-white/50">Responsable commerciale</span>
+                  </span>
+                </div>
+                <Link href="/contact?motif=rdv" className="inline-flex items-center justify-center gap-2 rounded-full bg-academy-gold px-5 py-3.5 text-sm font-black text-academy-gold-text transition hover:-translate-y-0.5">
+                  Réserver un échange
+                  <Icon name="arrow" className="h-4 w-4" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="fixed inset-x-3 bottom-[calc(.75rem+env(safe-area-inset-bottom))] z-40 grid grid-cols-3 gap-2 rounded-[1.5rem] border border-white/70 bg-white/92 p-2 shadow-[0_18px_60px_rgba(17,17,17,.18)] backdrop-blur md:hidden">
+        <Link href="tel:0422470768" className="rounded-2xl bg-[#101a29] px-3 py-3 text-center text-xs font-black text-white">Appeler</Link>
+        <Link href="/contact?motif=alerte-planning" className="rounded-2xl border border-academy-line bg-white px-3 py-3 text-center text-xs font-black text-academy-ink">Alerte</Link>
+        <Link href="https://assistance-alw9.onrender.com/demande-informations-formations" className="planning-neutral-action rounded-2xl px-3 py-3 text-center text-xs font-black">S’inscrire</Link>
+      </div>
+    </main>
+  );
+}
