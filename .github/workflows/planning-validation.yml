@@ -1,7 +1,5 @@
 name: Planning validation
 on:
-  push:
-    branches: ['codex/planning-improvements-*']
   pull_request:
     paths:
       - 'src/app/planning/**'

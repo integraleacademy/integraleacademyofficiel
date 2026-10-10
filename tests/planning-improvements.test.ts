@@ -4,6 +4,13 @@ import { toPublicSession } from '../src/lib/public-session-data';
 import { planningMonths, sessionMatchesMonth, nextBtsIntakeYear } from '../src/lib/planning-filters';
 import { planningRegistrationAction, validatePlanningRequest } from '../src/lib/planning-registration';
 import { getVtcPlanningSessions } from '../src/lib/planning-data';
+import { sessionMatchesLocation } from '../src/lib/session-location-filter';
+
+test('the Auvergne centre can be selected independently of the other centres', () => {
+  assert.equal(sessionMatchesLocation({ location: 'Aurillac · 14 avenue du Garric' }, 'auvergne'), true);
+  assert.equal(sessionMatchesLocation({ location: 'Terres d’Auvergne' }, 'auvergne'), true);
+  assert.equal(sessionMatchesLocation({ location: 'Puget-sur-Argens' }, 'auvergne'), false);
+});
 
 test('public sessions expose only approved fields, including nested training and VTC dates', () => {
   const session = toPublicSession({ id: 's1', title: 'APS', internalNotes: 'PRIVATE_SESSION', privateFutureField: 'PRIVATE_FUTURE', createdAt: 'private', training: { slug: 'aps', name: 'APS', isActive: true, internalNotes: 'PRIVATE_TRAINING' }, vtcDates: { deadline: '2026-11-20', theory: '2026-12-08', internalNotes: 'PRIVATE_VTC' } });
