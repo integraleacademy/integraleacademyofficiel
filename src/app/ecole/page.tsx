@@ -91,6 +91,7 @@ export default function Page() {
           </figure>
           <div className={styles.teamGrid}>
             {team.map((person, index) => <article className={styles.person} key={person.name}>
+              <div className={styles.personAvatar} aria-hidden="true">{index === 0 ? <img src="/images/cassandre-memoji.png" width="76" height="76" alt="" loading="lazy" /> : <span>{person.name.split(' ').map(part => part[0]).slice(0, 2).join('')}</span>}</div>
               <p className={styles.personTop}><span>0{index + 1}</span>{person.specialty}</p><h3>{person.name}</h3><p className={styles.role}>{person.role}</p><p className={styles.mission}>{person.mission}</p>
             </article>)}
           </div>

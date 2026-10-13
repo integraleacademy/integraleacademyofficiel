@@ -158,16 +158,14 @@
 .wrapper .wideCard {
   display: grid;
   min-height: 10.2rem;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  grid-template-areas: 'icon content action' 'icon facts action';
+  grid-template-columns: 110px minmax(0, 1fr) auto;
+  grid-template-areas: 'image content action' 'image facts action';
   align-items: center;
   gap: .2rem 1rem;
 }
 
 .wideCard .compactHeader {
-  grid-area: icon;
-  flex-direction: column;
-  gap: .6rem;
+  display: none;
 }
 
 .wideCard .compactContent {
@@ -266,6 +264,7 @@
   }
 
   .wideCard .compactHeader {
+    display: flex;
     flex-direction: row;
   }
 

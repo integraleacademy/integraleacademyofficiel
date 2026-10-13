@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useRef } from 'react';
 import styles from './SecurityTrainingGrid.module.css';
 import { useTrainingCardAnimations } from './useTrainingCardAnimations';
+import { TrainingIllustration } from './TrainingIllustration';
 
 export type TrainingVisual = 'aps' | 'ssiap' | 'sst' | 'a3p' | 'desp';
 
@@ -72,6 +73,7 @@ function FeaturedCard({ item }: { item: SecurityTrainingHighlight }) {
             <span className={styles.featuredIcon}><TrainingIcon type={item.visual} /></span>
           </header>
 
+          <TrainingIllustration type={item.visual} featured />
           <div className={styles.featuredContent}>
             <span className={styles.category}>{labels[item.visual]}</span>
             <h3><strong>{item.shortTitle}</strong><span>{item.title}</span></h3>
@@ -111,6 +113,7 @@ function CompactCard({ item }: { item: SecurityTrainingHighlight }) {
             <span className={styles.durationBadge}>{item.duration}</span>
           </header>
 
+          <TrainingIllustration type={item.visual} />
           <div className={styles.compactContent}>
             <span className={styles.compactCategory}>{labels[item.visual]}</span>
             <h3>{item.shortTitle}</h3>

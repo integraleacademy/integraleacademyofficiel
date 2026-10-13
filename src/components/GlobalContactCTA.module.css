@@ -455,3 +455,8 @@
   }
   .highlight::after { transform: scaleX(1); }
 }
+.supportPills{display:flex;flex-wrap:wrap;gap:8px;margin-top:25px}
+.supportPills span{padding:9px 12px;border-radius:99px;background:rgb(var(--accent)/.1);border:1px solid rgb(var(--accent)/.17);font-size:10px;font-weight:650;color:rgb(var(--text-main))}
+.teamLink{display:inline-flex;align-items:center;gap:14px;margin-top:22px;font-size:11px;font-weight:700;color:rgb(var(--text-muted));line-height:1.7}
+.teamLink span{color:rgb(var(--accent-strong));font-size:19px}
+.teamLink:hover{text-decoration:underline;text-underline-offset:4px}

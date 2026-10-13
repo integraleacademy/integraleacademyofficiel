@@ -1,27 +1,26 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import styles from './GoogleReviewsSection.module.css';
 import { GOOGLE_REVIEWS_URL, REVIEW_CATEGORIES, type PublicGoogleReview } from '@/lib/google-reviews';
 
 function ReviewHeader({ review, featured }: { review: PublicGoogleReview; featured: boolean }) {
-  return <div className="flex flex-wrap items-start justify-between gap-4">
+  return <div className={styles.header}>
     <div className="flex min-w-0 items-center gap-3">
-      <div aria-hidden="true" className={`${featured ? 'h-12 w-12 rounded-[1.15rem]' : 'h-10 w-10 rounded-2xl text-sm'} grid shrink-0 place-items-center bg-academy-ink font-black text-white shadow-[0_14px_35px_rgba(15,23,42,.12)]`}>{review.author.trim().charAt(0).toUpperCase() || 'A'}</div>
+      <div aria-hidden="true" className={styles.avatar}>{review.author.trim().charAt(0).toUpperCase() || 'A'}</div>
       <div className="min-w-0">
-        <h3 className="break-words font-black text-academy-ink">{review.author}</h3>
-        <div className="mt-1 flex items-center gap-2"><span className="text-sm text-academy-gold-strong" aria-label="5 étoiles sur 5">★★★★★</span><span aria-hidden="true" className="text-xs font-bold text-academy-muted">5/5</span></div>
+        <h3 className={styles.author}>{review.author}</h3>
+        <div className="mt-1 flex items-center gap-2"><span className={styles.stars} aria-label="5 étoiles sur 5">★★★★★</span><span aria-hidden="true" className={styles.score}>5/5</span></div>
       </div>
     </div>
-    {review.categories.length > 0 && <div className="flex flex-wrap gap-1.5">{review.categories.map(category => <span key={category} className="rounded-full bg-academy-ink/[.055] px-2.5 py-1 text-[0.68rem] font-bold text-academy-muted ring-1 ring-academy-ink/[.06] dark:bg-white/[.06] dark:ring-white/10">{category}</span>)}</div>}
+    {review.categories.length > 0 && <div className="flex flex-wrap gap-1.5">{review.categories.map(category => <span key={category} className={styles.category}>{category}</span>)}</div>}
   </div>;
 }
 
 function ReviewText({ text, featured }: { text: string; featured: boolean }) {
   const limit = featured ? 188 : 152;
-  const className = featured
-    ? 'mt-8 max-w-2xl whitespace-pre-line text-xl font-black leading-9 tracking-tight text-academy-ink md:text-2xl md:leading-10'
-    : 'mt-5 whitespace-pre-line text-[0.95rem] leading-7 text-academy-muted';
-  if (!text) return <p className="mt-5 text-sm italic text-academy-muted">Avis 5 étoiles sans commentaire.</p>;
+  const className = `${styles.quote} ${featured ? styles.largeQuote : ''}`;
+  if (!text) return <p className={styles.quote}><em>Avis 5 étoiles sans commentaire.</em></p>;
   if (text.length <= limit) return <blockquote className={className}>« {text} »</blockquote>;
 
   const cut = text.lastIndexOf(' ', limit);
@@ -39,12 +38,12 @@ function ReviewText({ text, featured }: { text: string; featured: boolean }) {
 }
 
 function ReviewCard({ review, featured = false }: { review: PublicGoogleReview; featured?: boolean }) {
-  return <article className={`relative flex h-full min-w-0 flex-col overflow-hidden bg-white ring-1 ring-academy-ink/[.06] dark:bg-academy-elevated dark:ring-white/10 ${featured ? 'rounded-[2.25rem] p-7 shadow-[0_28px_80px_rgba(15,23,42,.10)] md:p-9' : 'rounded-[1.65rem] p-5 shadow-[0_18px_55px_rgba(15,23,42,.07)]'}`}>
-    {featured && <div className="pointer-events-none absolute right-8 top-8 text-6xl font-black leading-none text-academy-gold/[.12]" aria-hidden="true">“</div>}
+  return <article className={`${styles.card} ${featured ? styles.featured : ''}`}>
+    <div className={styles.source}><span aria-hidden="true">G</span> Avis Google {featured && <i aria-hidden="true">“</i>}</div>
     <ReviewHeader review={review} featured={featured} />
     <div className="flex-1"><ReviewText text={review.excerpt} featured={featured} /></div>
-    {featured && <p className="mt-6 text-xs font-bold uppercase tracking-[.18em] text-academy-muted">Avis Google sélectionné</p>}
-    <div className="mt-6 flex flex-wrap items-center justify-between gap-3 text-xs text-academy-muted">{review.reviewedAt && <time dateTime={review.reviewedAt}>{new Date(review.reviewedAt).toLocaleDateString('fr-FR', { month: 'long', year: 'numeric', timeZone: 'UTC' })}</time>}<a className="font-bold underline underline-offset-4 hover:text-academy-ink" href={review.sourceUrl} target="_blank" rel="noopener noreferrer">Voir sur Google ↗</a></div>
+    {featured && <p className={styles.selected}>Avis Google sélectionné</p>}
+    <div className={styles.footer}>{review.reviewedAt && <time dateTime={review.reviewedAt}>{new Date(review.reviewedAt).toLocaleDateString('fr-FR', { month: 'long', year: 'numeric', timeZone: 'UTC' })}</time>}<a className={styles.sourceLink} href={review.sourceUrl} target="_blank" rel="noopener noreferrer">Voir sur Google ↗</a></div>
   </article>;
 }
 

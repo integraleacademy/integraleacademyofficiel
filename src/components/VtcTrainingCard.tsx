@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useRef } from 'react';
 import styles from './VtcTrainingCard.module.css';
 import { useTrainingCardAnimations } from './useTrainingCardAnimations';
+import { TrainingIllustration } from './TrainingIllustration';
 
 type VtcTrainingCardProps = {
   title: string;
@@ -103,6 +104,7 @@ export function VtcTrainingCard({ title, description, duration, price, href }: V
                 </span>
               </header>
 
+              <TrainingIllustration type="vtc" featured />
               <div className={styles.featuredContent}>
                 <span className={styles.featuredEyebrow}>Parcours tout inclus</span>
                 <h3>{title}</h3>

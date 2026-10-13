@@ -5,6 +5,7 @@ import { useRef } from 'react';
 import styles from './BtsTrainingGrid.module.css';
 import cardStyles from './SecurityTrainingGrid.module.css';
 import { useTrainingCardAnimations } from './useTrainingCardAnimations';
+import { TrainingIllustration } from './TrainingIllustration';
 
 export type BtsVisual = 'mos' | 'mco' | 'ndrc' | 'ci' | 'pi' | 'cg';
 
@@ -70,6 +71,7 @@ function FeaturedCard({ item }: { item: BtsTrainingHighlight }) {
             <span className={cardStyles.popularBadge}><span aria-hidden="true">✦</span> {item.certification}</span>
             <span className={cardStyles.featuredIcon}><BtsIcon type={item.visual} /></span>
           </header>
+          <TrainingIllustration type={item.visual} featured />
           <div className={cardStyles.featuredContent}>
             <span className={cardStyles.category}>{item.category}</span>
             <h3><strong>{item.shortTitle}</strong><span>{item.title}</span></h3>
@@ -107,6 +109,7 @@ function CompactCard({ item, wide }: { item: BtsTrainingHighlight; wide: boolean
             <span className={cardStyles.compactIcon}><BtsIcon type={item.visual} /></span>
             <span className={cardStyles.durationBadge}>{item.duration}</span>
           </header>
+          <TrainingIllustration type={item.visual} wide={wide} />
           <div className={`${cardStyles.compactContent} ${styles.compactContent}`}>
             <span className={cardStyles.compactCategory}>{item.category}</span>
             <h3>{item.shortTitle}</h3>

@@ -266,3 +266,6 @@
   .heroPhoto { height: auto; aspect-ratio: 1.2; }
   .chapterNav { min-height: 64px; }
 }
+.personAvatar{width:76px;height:76px;display:grid;place-items:center;border-radius:24px;background:linear-gradient(135deg,#f7e8c6,#ebbc4b);border:1px solid #ac802633;margin-bottom:24px;box-shadow:0 12px 24px #1524380d}
+.personAvatar img{width:76px;height:76px;object-fit:contain;transform:translateY(-3px)}
+.personAvatar>span{font-size:24px;font-weight:800;letter-spacing:-.04em;color:#253a50}

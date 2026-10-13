@@ -1,7 +1,7 @@
 import { createPageMetadata } from '@/lib/seo';
 import Link from 'next/link';
 import { OrientationAssistant } from '@/components/OrientationAssistant';
-import { AnimatedTrainingCTA } from '@/components/AnimatedTrainingCTA';
+import { AcademyFilm, AcademyJourney, AcademyLearningStudio } from '@/components/AcademyExperience';
 import { BtsTrainingGrid, type BtsTrainingHighlight } from '@/components/BtsTrainingGrid';
 import { BtsTrainingComparisonModal } from '@/components/BtsTrainingComparisonModal';
 import { CampusSection } from '@/components/CampusSection';
@@ -133,14 +133,14 @@ export default async function Home() {
         </div>
       </section>
 
-      <AnimatedTrainingCTA />
+      <AcademyFilm />
 
       <VisualSection tone="security">
         <section id="formations-securite" className="scroll-mt-28 page-container py-14 md:py-16">
           <div data-security-training-heading data-training-heading className={styles.securityTrainingHeading}>
             <div>
               <span className={styles.securityTrainingEyebrow}>Formations en sécurité privée</span>
-              <h2>Formations professionnelles Métiers de la sécurité privée</h2>
+              <h2>Les métiers de la <span>sécurité.</span></h2>
               <p>Comparez les durées, les modalités, les lieux et les prochaines sessions en un seul regard.</p>
             </div>
             <div className={styles.securityTrainingActions}>
@@ -185,6 +185,9 @@ export default async function Home() {
           <BtsTrainingGrid items={btsHighlights} />
         </section>
       </VisualSection>
+
+      <AcademyJourney />
+      <AcademyLearningStudio />
 
       <section className={styles.proofBar} data-home-proof aria-label="Chiffres et reconnaissances">
         <div className={styles.container}><div className={styles.proofGrid}>{proofItems.map(([value, label]) => <div key={value} data-home-proof-item><strong>{value}</strong><span>{label}</span></div>)}</div></div>
