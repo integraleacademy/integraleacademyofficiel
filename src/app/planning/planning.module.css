@@ -120,9 +120,9 @@
 .calendarLegend { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin: 25px 0 15px; color: #d2d8df; font-size: 10px; }
 .calendarLegend > span { display: inline-flex; align-items: center; gap: 6px; }
 .calendarLegend i { display: inline-block; width: 17px; height: 9px; border-radius: 3px; }
-.calendarLegend .remoteKey { background: repeating-linear-gradient(135deg, #cbd5e1 0 2px, #64748b 2px 4px); }
-.calendarLegend .inPersonKey { background: #e6ba5b; }
-.calendarLegend .courseKey { background: #b0b7c2; }
+.calendarLegend .remoteKey, .remotePhase { background: repeating-linear-gradient(135deg, #cbd5e1 0 2px, #64748b 2px 4px); }
+.calendarLegend .inPersonKey, .inPersonPhase { background: #e6ba5b; }
+.calendarLegend .courseKey, .courseBar { background: #b0b7c2; }
 .calendarLegend .examKey { display: inline-grid; place-items: center; width: 17px; height: 17px; border-radius: 50%; background: #fffaf0; color: #172233; font-size: 9px; font-weight: 800; font-style: normal; }
 .calendarSheet { overflow: hidden; border: 1px solid #e4dccd; border-radius: 20px; background: #faf6ed; color: #182435; }
 .calendarHeader { display: grid; grid-template-columns: 230px minmax(0, 1fr); padding: 0 36px 0 20px; border-bottom: 1px solid #e2dacb; background: #f0eadd; }
@@ -139,10 +139,8 @@
 .calendarLabel small { padding-left: 13px; font-size: 10px; line-height: 1.5; color: #736d61; }
 .calendarTrack { display: block; position: relative; min-height: 80px; }
 .monthLine { position: absolute; top: 0; bottom: 0; border-left: 1px solid #e4dccd; }
-.courseBar { position: absolute; top: calc(50% - 13px); height: 26px; min-width: 2px; border: 1px solid rgb(var(--planning-accent) / .35); border-radius: 7px; background: rgb(var(--planning-accent) / .18); }
+.courseBar { position: absolute; top: calc(50% - 13px); height: 26px; min-width: 2px; border: 1px solid #8d96a4; border-radius: 7px; }
 .phase { position: absolute; top: calc(50% - 9px); height: 18px; border-radius: 4px; }
-.remotePhase { background: repeating-linear-gradient(135deg, rgb(var(--planning-accent) / .55) 0 2px, rgb(var(--planning-accent) / .16) 2px 5px); }
-.inPersonPhase { background: rgb(var(--planning-accent) / .82); }
 .examMarker { position: absolute; display: grid; place-items: center; top: calc(50% - 13px); width: 26px; height: 26px; transform: translateX(-50%); border: 2px solid #faf6ed; border-radius: 50%; background: #182435; color: white; font-size: 9px; font-weight: 800; }
 .calendarRowArrow { position: absolute; right: 12px; top: calc(50% - 9px); color: #857149; font-size: 17px; }
 .calendarRowArrow svg { width: 17px; height: 17px; }
