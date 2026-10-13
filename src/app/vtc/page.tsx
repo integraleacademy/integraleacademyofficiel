@@ -286,7 +286,7 @@ export default function VtcPage() {
           <article><span>CPF</span><h3>Mobilisez vos droits</h3><p>Financement possible selon votre éligibilité et les règles applicables à votre dossier.</p></article>
           <article><span>FRANCE TRAVAIL</span><h3>Présentez votre projet</h3><p>Nous préparons avec vous les éléments utiles à transmettre à votre conseiller.</p></article>
           <article><span>PAIEMENT PERSONNEL</span><h3>Échelonnez votre règlement</h3><p>Des solutions en 3, 4 ou 10 fois peuvent être étudiées selon votre situation.</p></article>
-          <article className={styles.identityCard}><span>À PRÉPARER</span><h3>Identité Numérique La Poste</h3><p>Elle peut être nécessaire pour valider certaines démarches de financement en ligne.</p><Link href="/tarifs#solutions">Comprendre les financements <Icon name="arrow"/></Link></article>
+          <article className={styles.identityCard}><span>À PRÉPARER</span><h3>Identité Numérique La Poste</h3><p>Elle peut être nécessaire pour valider certaines démarches de financement en ligne.</p><Link href="/financements">Comprendre les financements <Icon name="arrow"/></Link></article>
         </div>
       </div>
     </section>

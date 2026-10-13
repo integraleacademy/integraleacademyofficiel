@@ -18,7 +18,7 @@ function Icon({ name }: { name: HelpIcon }) {
 
 const resources: { icon: HelpIcon; label: string; description: string; href: string }[] = [
   { icon: 'book', label: 'Découvrir les formations', description: 'Comparer APS, A3P, SSIAP 1, VTC et BTS.', href: '/formations-securite' },
-  { icon: 'wallet', label: 'Trouver un financement', description: 'CPF, France Travail, employeur et autres solutions.', href: '/tarifs#solutions' },
+  { icon: 'wallet', label: 'Trouver un financement', description: 'CPF, France Travail, employeur et autres solutions.', href: '/financements' },
   { icon: 'company', label: 'Recruter ou former', description: 'Alternance, POEI et montée en compétences.', href: '/entreprises' },
   { icon: 'message', label: 'Parler à Cassandre', description: 'Valider mon projet et mes prochaines étapes.', href: '/contact?motif=rdv' },
 ];

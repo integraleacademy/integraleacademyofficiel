@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { useEffect, useId, useMemo, useState } from 'react';
 import styles from './FinancingSimulator.module.css';
-import { financingFormationOptions as formationOptions } from '@/data/financing-options';
 
 const paymentOptions = [
   { label: 'Paiement comptant', installments: 1 },
@@ -12,6 +11,14 @@ const paymentOptions = [
   { label: '4 fois', installments: 4 },
   { label: '6 fois', installments: 6 },
   { label: '10 fois', installments: 10 },
+];
+const formationOptions = [
+  { label: 'APS', amount: 1700 },
+  { label: 'SSIAP 1', amount: 980 },
+  { label: 'A3P', amount: 4250 },
+  { label: 'DESP initial', amount: 4350 },
+  { label: 'DESP en VAE', amount: 3850 },
+  { label: 'Chauffeur VTC', amount: 1500 },
 ];
 
 function clampAmount(value: number, max: number) {
@@ -105,7 +112,7 @@ function EditorialSimulator({
     <div className={styles.container}>
       <header className={styles.header}>
         <div>
-          <p className={styles.eyebrow}>03 / Votre estimation</p>
+          <p className={styles.eyebrow}>02 / Votre estimation</p>
           <h2 id={`${id}-title`}>Estimez votre <em>reste à charge.</em></h2>
         </div>
         <p className={styles.introduction}>Votre formation, votre solde CPF. <br />Quelques chiffres pour y voir plus clair.</p>
@@ -195,23 +202,13 @@ function EditorialSimulator({
   </section>;
 }
 
-export default function FinancingSimulator({
-  variant = 'default',
-  selectedFormation,
-  onFormationChange,
-}: {
-  variant?: 'default' | 'editorial';
-  selectedFormation?: string;
-  onFormationChange?: (formation: string) => void;
-}) {
-  const [localFormation, setLocalFormation] = useState('APS');
-  const formation = selectedFormation ?? localFormation;
-  const setFormation = onFormationChange ?? setLocalFormation;
+export default function FinancingSimulator({ variant = 'default' }: { variant?: 'default' | 'editorial' }) {
+  const [formation, setFormation] = useState('APS');
   const [cpfAmount, setCpfAmount] = useState(0);
   const [installments, setInstallments] = useState(1);
 
-  const selectedOffer = formationOptions.find((option) => option.label === formation) ?? formationOptions[0];
-  const formationAmount = selectedOffer.amount;
+  const selectedFormation = formationOptions.find((option) => option.label === formation) ?? formationOptions[0];
+  const formationAmount = selectedFormation.amount;
 
   const cappedCpf = Math.min(cpfAmount, formationAmount);
 

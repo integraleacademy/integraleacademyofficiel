@@ -19,4 +19,4 @@ Centre Paris : Atelier Modulable, 53 rue des Vinaigriers, 75010 PARIS, mobilisé
 
 Centre Aurillac / Centre France : Village d’entreprises - 14 avenue du Garric, 15000 Aurillac, mobilisé selon les sessions DESP.
 
-Liens utiles internes : /formations-securite, /bts, /vtc, /tarifs, /planning, /contact.
+Liens utiles internes : /formations-securite, /bts, /vtc, /financements, /planning, /contact.

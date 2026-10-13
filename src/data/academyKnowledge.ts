@@ -57,7 +57,7 @@ export const academyKnowledge = {
     { label: 'Formations sécurité', href: '/formations-securite' },
     { label: 'BTS', href: '/bts' },
     { label: 'VTC', href: '/vtc' },
-    { label: 'Tarifs et financements', href: '/tarifs' },
+    { label: 'Financements', href: '/financements' },
     { label: 'Planning', href: '/planning' },
     { label: 'Contact', href: '/contact' },
   ],

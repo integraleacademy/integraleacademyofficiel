@@ -15,7 +15,7 @@ const emailHref = `mailto:${email}?subject=Contact%20site%20internet`;
 const projectLinks = [
   { title: 'Les formations', text: 'Sécurité, incendie, VTC et BTS.', href: '/ecole#pedagogie' },
   { title: 'Les prochaines dates', text: 'Sessions, lieux et disponibilités.', href: '/planning' },
-  { title: 'Les financements', text: 'Les solutions selon votre situation.', href: '/tarifs#solutions' },
+  { title: 'Les financements', text: 'Les solutions selon votre situation.', href: '/financements' },
   { title: 'Les entreprises', text: 'Recrutement, alternance et formation.', href: '/entreprises' },
 ];
 

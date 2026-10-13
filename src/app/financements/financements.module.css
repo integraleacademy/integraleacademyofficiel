@@ -64,10 +64,6 @@
 .sectionIntro h2, .faqIntro h2, .contactPanel h2 { margin-top: 16px; font-size: clamp(34px,3.6vw,49px); line-height: 1.13; letter-spacing: -.045em; font-weight: 900; }
 .sectionIntro > p { max-width: 410px; color: var(--muted); font-size: 15px; line-height: 1.8; }
 .fundingGrid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 16px; }
-.fundingProfileLayout { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); align-items: center; gap: 48px; margin: 36px 0 48px; scroll-margin-top: 104px; }
-.fundingProfileLayout > div:first-child h3 { font-size: 27px; line-height: 1.2; font-weight: 800; letter-spacing: -.035em; }
-.fundingProfileLayout > div:first-child p { max-width: 400px; margin: 16px 0; color: var(--muted); font-size: 15px; }
-@media (max-width: 800px) { .fundingProfileLayout { grid-template-columns: minmax(0,1fr); gap: 24px; } }
 .fundingCard { display: flex; flex-direction: column; padding: 24px 22px 18px; border: 1px solid var(--line); border-radius: 22px; background: var(--card); }
 .fundingHeading { display: flex; flex-direction: column; align-items: flex-start; gap: 17px; }
 .fundingHeading > span:last-child { color: var(--muted); font-size: 10px; font-weight: 650; line-height: 1.5; }

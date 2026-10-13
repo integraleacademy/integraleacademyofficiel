@@ -1,5 +1,4 @@
 [
-  { "source": "/financements", "destination": "/tarifs" },
   { "source": "/formations-securite/desp-initial", "destination": "/dirigeant" },
   { "source": "/formations-securite/desp", "destination": "/despvaeouinitial" },
   { "source": "/formations-securite/desp-vae", "destination": "/vaedirigeant" },
