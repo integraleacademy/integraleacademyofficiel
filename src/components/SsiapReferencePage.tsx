@@ -17,7 +17,6 @@ import { originalArtwork } from '@/data/originalArtwork';
 const contactHref = (subject = 'inscription') => `/contact?formation=ssiap-1&objet=${encodeURIComponent(subject)}`;
 
 const navigationItems = [
-  { label: 'Pack Intégrale', href: '#pack-integrale' },
   { label: 'Métier', href: '#metier' },
   { label: 'Admission', href: '#admission' },
   { label: 'Programme', href: '#programme' },
@@ -158,9 +157,6 @@ export function SsiapReferencePage({ sessions }: { sessions: any[] }) {
       <TrainingHeroSessionCard session={next} theme="red" duration="67 heures" defaultPrice="980 €" assistantKey="ssiap-1" />
     </TrainingHero>
 
-    <IntegraleWelcomePack course="ssiap-1" />
-    <CourseJourney course="ssiap-1" />
-
     <TrainingSectionNavigation
       mark="SSIAP"
       title="SSIAP 1"
@@ -168,6 +164,9 @@ export function SsiapReferencePage({ sessions }: { sessions: any[] }) {
       registrationHref={sessionHref(next)}
       theme="red"
     />
+
+    <IntegraleWelcomePack course="ssiap-1" />
+    <CourseJourney course="ssiap-1" />
 
     <Section id="metier" eyebrow="Le métier" title={<>Un rôle essentiel dans les ERP et les IGH.</>} intro={<>L’agent SSIAP 1 protège les personnes et les bâtiments. Il prévient les risques, contrôle les installations et intervient au sein d’un service de sécurité incendie.</>}>
       <div className="grid gap-4 lg:grid-cols-3">{missions.map(([number, title, text], index) => <article key={number} className={`rounded-[1.8rem] border p-6 shadow-soft ${index === 1 ? 'border-[#26384F] bg-[#0D1725] text-white' : 'border-academy-line bg-[#FFFDF8]'}`}><div className="mb-5 overflow-hidden rounded-2xl"><ManualArtwork illustration={[ssiapArtwork.ronde, ssiapArtwork.pc, ssiapArtwork.secours][index]} natural /></div><span className={`text-5xl font-black ${index === 1 ? 'text-red-300' : 'text-red-600'}`}>{number}</span><h3 className="mt-10 text-2xl font-black">{title}</h3><p className={`mt-3 leading-7 ${index === 1 ? 'text-white/65' : 'text-academy-muted'}`}>{text}</p></article>)}</div>

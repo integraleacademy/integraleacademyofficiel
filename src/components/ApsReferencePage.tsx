@@ -283,11 +283,11 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
       </div></div>
     </section>
 
+    <ApsSectionNavigation registrationHref={apsRegistrationFormUrl} />
+
     <IntegraleWelcomePack course="aps" />
 
     <ApsJourney />
-
-    <ApsSectionNavigation registrationHref={apsRegistrationFormUrl} />
 
     <Section id="metier" eyebrow="01 — Le métier" title={<>Un métier de terrain, de vigilance et de sang-froid.</>} intro={<>L’agent APS prévient les risques, protège les personnes et les biens, applique les consignes et rend compte de chaque événement.</>}>
       <TrainingMissionCards items={missions.map(([, title, text, featured], index) => ({ title: String(title), description: String(text), featured: Boolean(featured), illustration: apsMissionArtwork[index] }))} />

@@ -227,11 +227,11 @@ export function BtsCgReferencePage() {
         </div>
       </section>
 
+      <BtsSectionNavigation code="CG" competencyHref="#competences" competencyLabel="Compétences" faqHref="#faq-cg" registrationHref={applicationUrl} />
+
       <TrainingWelcomePack course="bts-cg" />
 
       <CourseJourney course="bts-cg" />
-
-      <BtsSectionNavigation code="CG" competencyHref="#competences" competencyLabel="Compétences" faqHref="#faq-cg" registrationHref={applicationUrl} />
 
       <Section id="pour-qui" eyebrow="01 — Un choix qui rassure et qui ouvre des portes" title={<>Un métier utile pour vous. Un diplôme solide pour vos parents.</>} intro={<>Un BTS pour celles et ceux qui aiment comprendre, organiser, vérifier et rendre les choses plus claires — avec des compétences recherchées dans tous les secteurs.</>}>
         <div className="grid gap-5 lg:grid-cols-2">
