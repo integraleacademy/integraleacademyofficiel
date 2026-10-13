@@ -43,7 +43,7 @@ function ReviewCard({ review, featured = false }: { review: PublicGoogleReview; 
     <ReviewHeader review={review} featured={featured} />
     <div className="flex-1"><ReviewText text={review.excerpt} featured={featured} /></div>
     {featured && <p className={styles.selected}>Avis Google sélectionné</p>}
-    <div className={styles.footer}>{review.reviewedAt && <time dateTime={review.reviewedAt}>{new Date(review.reviewedAt).toLocaleDateString('fr-FR', { month: 'long', year: 'numeric', timeZone: 'UTC' })}</time>}<a className={styles.sourceLink} href={review.sourceUrl} target="_blank" rel="noopener noreferrer">Voir sur Google ↗</a></div>
+    <div className={styles.footer}>{review.reviewedAt && <time dateTime={review.reviewedAt}>{new Date(review.reviewedAt).toLocaleDateString('fr-FR', { month: 'long', year: 'numeric', timeZone: 'UTC' })}</time>}<a className={styles.sourceLink} href={review.sourceUrl} target="_blank" rel="noopener noreferrer">Voir sur Google ↗︎</a></div>
   </article>;
 }
 
@@ -77,7 +77,7 @@ export function GoogleReviewsSection({ reviews }: { reviews: PublicGoogleReview[
       </summary>
       <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{moreReviews.map(review => <ReviewCard key={review.id} review={review} />)}</div>
     </details>}
-    <div className="mx-auto mt-8 max-w-2xl text-center"><p className="text-xs leading-6 text-academy-muted">Sélection d’avis notés 5 étoiles. Extraits abrégés et orthographe corrigée, sans modification du sens.</p><a href={GOOGLE_REVIEWS_URL} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex rounded-full border border-academy-line px-5 py-3 text-sm font-bold text-academy-ink">Consulter tous les avis sur Google ↗</a></div>
+    <div className="mx-auto mt-8 max-w-2xl text-center"><p className="text-xs leading-6 text-academy-muted">Sélection d’avis notés 5 étoiles. Extraits abrégés et orthographe corrigée, sans modification du sens.</p><a href={GOOGLE_REVIEWS_URL} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex rounded-full border border-academy-line px-5 py-3 text-sm font-bold text-academy-ink">Consulter tous les avis sur Google ↗︎</a></div>
     </div>
   </section>;
 }

@@ -17,5 +17,5 @@ const pictures: Record<string, string> = {
 
 export function TrainingIllustration({ type, featured = false, wide = false }: { type: string; featured?: boolean; wide?: boolean }) {
   if (!pictures[type]) return null;
-  return <div className={`${styles.visual} ${featured ? styles.featured : ''} ${wide ? styles.wide : ''}`} aria-hidden="true"><img src={`/images/${pictures[type]}`} alt="" width="720" height="480" loading="lazy" decoding="async" /><span>Le métier en images <i>↗</i></span></div>;
+  return <div className={`${styles.visual} ${featured ? styles.featured : ''} ${wide ? styles.wide : ''}`} aria-hidden="true"><img src={`/images/${pictures[type]}`} alt="" width="720" height="480" loading="lazy" decoding="async" /><span>Le métier en images <i>↗︎</i></span></div>;
 }

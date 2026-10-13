@@ -4,15 +4,14 @@ import Link from 'next/link';
 import { useEffect, useId, useRef, useState } from 'react';
 import styles from './AcademyExperience.module.css';
 
-const filmUrl = '/videos/contact-integrale-academy-v1.mp4';
-const posterUrl = '/videos/contact-integrale-academy-poster.webp';
+const filmUrl = '/videos/contact-integrale-academy-v2.mp4';
+const posterUrl = '/videos/contact-integrale-academy-v2-poster.webp';
 const appointmentUrl = 'https://assistance-alw9.onrender.com/demande-informations-formations';
 
 export function AcademyFilm({ compact = false }: { compact?: boolean }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const pausedByUser = useRef(false);
   const [playing, setPlaying] = useState(false);
-  const [muted, setMuted] = useState(true);
   const [progress, setProgress] = useState(0);
   const [failed, setFailed] = useState(false);
   const titleId = useId();
@@ -40,29 +39,21 @@ export function AcademyFilm({ compact = false }: { compact?: boolean }) {
     if (video.paused) { pausedByUser.current = false; void video.play().catch(() => setFailed(true)); }
     else { pausedByUser.current = true; video.pause(); }
   };
-  const toggleSound = () => {
-    const video = videoRef.current;
-    if (!video) return;
-    video.muted = !video.muted;
-    video.volume = .55;
-    setMuted(video.muted);
-    if (video.paused) { pausedByUser.current = false; void video.play().catch(() => {}); }
-  };
 
   return <section className={`${styles.filmSection} ${compact ? styles.filmCompact : ''}`} aria-labelledby={titleId}>
     <div className={styles.container}>
-      <div className={styles.filmHeading}><div><p className={styles.eyebrow}>Bienvenue chez Intégrale Academy</p><h2 id={titleId}>Votre avenir <em>prend forme.</em></h2></div><span className={styles.filmDuration}>Le premier pas <span>36 secondes</span></span></div>
+      <div className={styles.filmHeading}><div><p className={styles.eyebrow}>Bienvenue chez Intégrale Academy</p><h2 id={titleId}>Votre avenir <em>prend forme.</em></h2></div><span className={styles.filmDuration}>Le film de l’école <span>30 secondes</span></span></div>
       <div className={styles.cinema}>
         <video ref={videoRef} src={filmUrl} poster={posterUrl} muted loop playsInline preload="none" aria-label="Présentation animée d’Intégrale Academy" aria-describedby={`${titleId}-transcript`} onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} onError={() => setFailed(true)} onTimeUpdate={() => { const v = videoRef.current; if (v && Number.isFinite(v.duration) && v.duration > 0) setProgress(v.currentTime / v.duration * 100); }} />
-        {!playing && !failed && <button type="button" className={styles.bigPlay} onClick={togglePlayback} aria-label="Lire le film de présentation"><span aria-hidden="true">▶</span></button>}
-        {failed && <div className={styles.filmFallback}><p>Découvrez notre école et nos formations.</p><Link href="/ecole">Visiter l’école <span aria-hidden="true">↗</span></Link></div>}
+        {!playing && !failed && <button type="button" className={styles.bigPlay} onClick={togglePlayback} aria-label="Lire le film de présentation"><span aria-hidden="true">▶︎</span></button>}
+        {failed && <div className={styles.filmFallback}><p>Découvrez notre école et nos formations.</p><Link href="/ecole">Visiter l’école <span aria-hidden="true">↗︎</span></Link></div>}
         <div className={styles.filmControls}>
-          <button type="button" onClick={togglePlayback} aria-label={playing ? 'Mettre le film en pause' : 'Lire le film'} disabled={failed}>{playing ? 'Ⅱ' : '▶'}</button>
-          <input type="range" min="0" max="100" step=".1" value={progress} aria-label="Avancement du film" aria-valuetext={`${Math.round(progress * .36)} secondes sur 36`} onChange={e => { const v = videoRef.current; if (v && Number.isFinite(v.duration)) { v.currentTime = Number(e.target.value) / 100 * v.duration; setProgress(Number(e.target.value)); } }} />
-          <button type="button" onClick={toggleSound} aria-pressed={!muted} disabled={failed}>{muted ? 'Activer le son' : 'Couper le son'} <span aria-hidden="true">{muted ? '♪' : '♫'}</span></button>
+          <button type="button" onClick={togglePlayback} aria-label={playing ? 'Mettre le film en pause' : 'Lire le film'} disabled={failed}>{playing ? 'Ⅱ' : '▶︎'}</button>
+          <input type="range" min="0" max="100" step=".1" value={progress} aria-label="Avancement du film" aria-valuetext={`${Math.round(progress * .3)} secondes sur 30`} onChange={e => { const v = videoRef.current; if (v && Number.isFinite(v.duration)) { v.currentTime = Number(e.target.value) / 100 * v.duration; setProgress(Number(e.target.value)); } }} />
+          <span className={styles.filmTime} aria-hidden="true">0:{String(Math.floor(progress * .3)).padStart(2, '0')} / 0:30</span>
         </div>
       </div>
-      <div className={styles.filmFoot}><span>Sécurité privée <i /> VTC <i /> BTS en alternance</span><details><summary>Lire la présentation</summary><p id={`${titleId}-transcript`}>Votre projet. Parlons-en. Quelle formation choisir ? Comment la financer ? Par où commencer ? Ne restez pas avec vos questions : notre équipe vous accompagne. Un échange permet de préciser votre projet, de trouver la formation adaptée et d’explorer les possibilités de financement selon votre situation. Sécurité privée, protection rapprochée, sécurité incendie, VTC ou BTS en alternance : construisons votre parcours. Des personnes à votre écoute dès le premier échange. Faites le premier pas : contactez Intégrale Academy au 04 22 47 07 68. Premier échange gratuit et sans engagement.</p></details></div>
+      <div className={styles.filmFoot}><span>Sécurité privée <i /> VTC <i /> BTS en alternance</span><details><summary>Lire la présentation</summary><p id={`${titleId}-transcript`}>Intégrale Academy. Votre prochain métier. Et si on en parlait ? Quelle formation ? Quel financement ? Quel parcours ? Tout commence par un échange. Une question. Une équipe à votre écoute. « J’ai un projet de formation. » « Construisons-le ensemble. » Votre projet : vos envies donnent la direction. Reconversion, évolution, premier emploi. Votre formation : un parcours qui vous correspond. APS, A3P, SSIAP, DESP, VTC, BTS. Votre financement : des solutions selon votre situation. Étudier les possibilités, préparer votre dossier. Écouter, orienter, accompagner. Une équipe à vos côtés pour donner forme à votre avenir. Bienvenue chez vous, à Puget-sur-Argens. On en parle ? 04 22 47 07 68. Un premier échange gratuit et sans engagement.</p></details></div>
     </div>
   </section>;
 }
@@ -99,8 +90,8 @@ export function AcademyJourney() {
       <div className={styles.sectionHeading} data-home-journey-heading><p className={styles.eyebrow}>Du premier échange au premier cours</p><h2 id="journey-title">Un projet. <em>Et on avance.</em></h2><p>Vous savez toujours quelle est la prochaine étape.</p></div>
       <div className={styles.journeyGrid}>
         <div className={styles.journeySteps}>
-          {steps.map((step, index) => <button type="button" key={step.title} className={`${styles.step} ${active === index ? styles.activeStep : ''}`} aria-pressed={active === index} aria-controls={panelId} onClick={() => { setActive(index); setAutomatic(false); }}><span className={styles.stepIndex}>0{index + 1}<span aria-hidden="true">↗</span></span><span><strong>{step.title}</strong><span>{step.text}</span></span></button>)}
-          <div className={styles.journeyActions}><a href={appointmentUrl} className={styles.darkButton}>Parlons de votre projet <span aria-hidden="true">↗</span></a>{!reduced && <button className={styles.motionButton} type="button" onClick={() => setAutomatic(value => !value)} aria-pressed={automatic}>{automatic ? 'Ⅱ Pause' : '▶ Animer'}</button>}</div>
+          {steps.map((step, index) => <button type="button" key={step.title} className={`${styles.step} ${active === index ? styles.activeStep : ''}`} aria-pressed={active === index} aria-controls={panelId} onClick={() => { setActive(index); setAutomatic(false); }}><span className={styles.stepIndex}>0{index + 1}<span aria-hidden="true">↗︎</span></span><span><strong>{step.title}</strong><span>{step.text}</span></span></button>)}
+          <div className={styles.journeyActions}><a href={appointmentUrl} className={styles.darkButton}>Parlons de votre projet <span aria-hidden="true">↗︎</span></a>{!reduced && <button className={styles.motionButton} type="button" onClick={() => setAutomatic(value => !value)} aria-pressed={automatic}>{automatic ? 'Ⅱ Pause' : '▶︎ Animer'}</button>}</div>
         </div>
         <div className={styles.phoneStage}>
           <div className={styles.phoneHalo} aria-hidden="true" />
@@ -109,7 +100,7 @@ export function AcademyJourney() {
             <div className={styles.phoneBrand}><img src="/images/sigle.png" width="30" height="30" alt="" /><strong>INTÉGRALE<br /><span>ACADEMY</span></strong><small>Votre parcours</small></div>
             <div key={active} className={styles.phoneContent}>
               <p className={styles.phoneEyebrow}>ÉTAPE 0{active + 1} / 03</p><h3>{steps[active].label}</h3>
-              {active === 0 && <><img className={styles.phoneArt} src="/images/formation-scenes-manuel/aps-arrivee.webp" alt="Illustration de l’accueil d’un apprenant" width="420" height="280" loading="lazy" /><div className={styles.choice}>Sécurité privée <span>↗</span></div><div className={styles.choice}>Chauffeur VTC <span>↗</span></div><div className={styles.choice}>BTS en alternance <span>↗</span></div></>}
+              {active === 0 && <><img className={styles.phoneArt} src="/images/formation-scenes-manuel/aps-arrivee.webp" alt="Illustration de l’accueil d’un apprenant" width="420" height="280" loading="lazy" /><div className={styles.choice}>Sécurité privée <span>↗︎</span></div><div className={styles.choice}>Chauffeur VTC <span>↗︎</span></div><div className={styles.choice}>BTS en alternance <span>↗︎</span></div></>}
               {active === 1 && <><div className={styles.phoneAdviser}><img src="/images/cassandre-memoji.png" width="100" height="100" alt="Memoji de Cassandre" loading="lazy" /><strong>On regarde votre projet<br />ensemble.</strong></div><div className={styles.checklist}>{['Votre formation', 'Vos prérequis', 'Votre financement', 'Vos dates'].map((item, i) => <div key={item} style={{ animationDelay: `${i * 100}ms` }}><span aria-hidden="true">✓</span>{item}</div>)}</div><p className={styles.phoneNote}>Des conseils adaptés à votre situation.</p></>}
               {active === 2 && <><img className={styles.phoneArt} src="/images/formation-scenes-manuel/aps-atelier-radio.webp" alt="Illustration d’un exercice pratique de communication radio" width="420" height="280" loading="lazy" /><div className={styles.lesson}><span>VOTRE FORMATION</span><strong>Du savoir<br />au savoir-faire.</strong><div><i /><i /><i /></div><small>Comprendre · S’exercer · Progresser</small></div></>}
             </div>
@@ -137,7 +128,7 @@ export function AcademyLearningStudio() {
           {active === 1 && <div className={styles.laptop}><div className={styles.laptopBar}><i /><i /><i /><span>Votre espace d’apprentissage</span></div><div className={styles.laptopBody}><div className={styles.lessonSidebar}><strong>Mon parcours</strong><span>✓ Comprendre</span><span>02 S’entraîner</span><span>03 Réviser</span></div><div className={styles.lessonMain}><span>APPRENDRE À SON RYTHME</span><h3>Prévenir les risques.</h3><img src="/images/aps/manuel/acces.webp" alt="Illustration pédagogique du contrôle d’accès" width="380" height="220" loading="lazy" /><div className={styles.lessonChips}><span>Cours illustrés</span><span>Exercices</span><span>Révisions</span></div></div></div></div>}
           {active === 2 && <div className={styles.practiceVisual}><img src="/images/formation-scenes-manuel/aps-atelier-radio.webp" alt="Illustration d’un formateur encadrant un exercice de communication radio" width="720" height="480" loading="lazy" /><span>Les gestes s’apprennent aussi sur le terrain.</span></div>}
         </div>
-        <div className={styles.learningCopy}><span className={styles.smallNumber}>0{active + 1} / L’EXPÉRIENCE INTÉGRALE</span><h3>{['Le cours prend vie.', 'Votre formation vous suit.', 'La théorie devient un réflexe.'][active]}</h3><p>{['Des explications claires, des illustrations métier et des repères visuels pour comprendre et retrouver l’essentiel.', 'Selon votre parcours, retrouvez vos cours, vos exercices et vos révisions dans votre espace en ligne, en complément de la formation.', 'Vous vous entraînez avec des professionnels issus du terrain, dans des situations concrètes liées au métier que vous préparez.'][active]}</p><Link href="/ecole#pedagogie" className={styles.textLink}>Découvrir notre pédagogie <span aria-hidden="true">↗</span></Link><small>Supports et modalités selon la formation choisie.</small></div>
+        <div className={styles.learningCopy}><span className={styles.smallNumber}>0{active + 1} / L’EXPÉRIENCE INTÉGRALE</span><h3>{['Le cours prend vie.', 'Votre formation vous suit.', 'La théorie devient un réflexe.'][active]}</h3><p>{['Des explications claires, des illustrations métier et des repères visuels pour comprendre et retrouver l’essentiel.', 'Selon votre parcours, retrouvez vos cours, vos exercices et vos révisions dans votre espace en ligne, en complément de la formation.', 'Vous vous entraînez avec des professionnels issus du terrain, dans des situations concrètes liées au métier que vous préparez.'][active]}</p><Link href="/ecole#pedagogie" className={styles.textLink}>Découvrir notre pédagogie <span aria-hidden="true">↗︎</span></Link><small>Supports et modalités selon la formation choisie.</small></div>
       </div>
     </div>
   </section>;

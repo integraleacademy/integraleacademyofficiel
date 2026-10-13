@@ -106,7 +106,7 @@ export function GlobalContactCTA() {
                     : 'Notre équipe vous accompagne pour choisir la formation adaptée à votre projet et vous aider à concrétiser votre avenir professionnel.'}
                 </p>
                 <div className={styles.supportPills}><span>Choisir son parcours</span><span>Préparer son dossier</span><span>Étudier son financement</span></div>
-                <a href="/ecole#equipe" className={styles.teamLink}>Rencontrer les personnes qui vous accompagnent <span aria-hidden="true">↗</span></a>
+                <a href="/ecole#equipe" className={styles.teamLink}>Rencontrer les personnes qui vous accompagnent <span aria-hidden="true">↗︎</span></a>
               </div>
 
               <div className={`${styles.contactCard} ${styles.revealItem}`} style={{ '--delay': '380ms' } as CSSProperties}>
