@@ -635,7 +635,7 @@ export function PlanningClient({ initialSessions, btsIntakeYear }: { initialSess
 
   const visibleSessions = showAll ? filteredSessions : filteredSessions.slice(0, 6);
   const selectedSession = filteredSessions.find(session => session.id === selectedSessionId) || null;
-  const previewFormations = formationFilters.map(formation => ({ ...formation, session: sortedSessions.find(session => formationMatchesSlug(formation, session.training?.slug)) }));
+  const previewFormations = formationFilters.map(formation => ({ ...formation, sessions: sortedSessions.filter(session => formationMatchesSlug(formation, session.training?.slug)) }));
   const resultKey = `${activeFormation}-${locationFilter}-${view}`;
 
   function selectSession(session: Session) {
@@ -707,7 +707,7 @@ export function PlanningClient({ initialSessions, btsIntakeYear }: { initialSess
             </div>
           </div>
 
-          <PlanningPreview key={activeFormation} formations={previewFormations} initialFormation={activeFormation} btsIntakeYear={btsIntakeYear} onChoose={key => chooseFormation(key as FormationFilterKey)} />
+          <PlanningPreview key={activeFormation} formations={previewFormations} initialFormation={activeFormation} btsIntakeYear={btsIntakeYear} onChoose={key => chooseFormation(key as FormationFilterKey)} onSelectSession={id => { const session = sortedSessions.find(item => item.id === id); if (session) selectSession(session); }} />
         </div>
       </section>
 

@@ -47,15 +47,30 @@
 .previewChoices i { position: absolute; bottom: 7px; right: 7px; color: #806124; }
 .preview svg { width: 17px; height: 17px; flex-shrink: 0; }
 .previewChoices i svg { width: 12px; height: 12px; }
-.miniMonthHeading { display: flex; justify-content: space-between; align-items: center; gap: 12px; font-size: 16px; font-weight: 800; text-transform: capitalize; }
+.miniOverview { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 10px; color: #736344; }
+.miniMonthHeading { display: grid; grid-template-columns: 34px minmax(0, 1fr) 34px; align-items: center; gap: 7px; font-size: 16px; font-weight: 800; text-transform: capitalize; text-align: center; }
+.miniMonthHeading button { display: grid; place-items: center; width: 34px; height: 34px; border: 1px solid #d9cdb7; border-radius: 50%; }
+.miniMonthHeading button:hover:enabled { background: #ede3cc; border-color: #bf9238; }
+.miniMonthHeading button:disabled { opacity: .3; cursor: default; }
 .miniBadge { padding: 5px 9px; border-radius: 999px; background: #ede3cc; color: #76531c; font-size: 10px; text-transform: uppercase; }
+.miniHint { margin-top: 8px; color: #736344; font-size: 10px; line-height: 1.5; }
 .miniMonth { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 3px; margin-top: 12px; text-align: center; }
 .miniMonth small { font-size: 10px; color: #8d877b; padding: 2px 0 5px; }
-.miniMonth > span { display: grid; place-items: center; min-height: 23px; border-radius: 7px; font-size: 11px; font-weight: 600; }
+.miniMonth > span, .miniMonth > button { position: relative; display: grid; place-items: center; min-height: 29px; border-radius: 7px; font-size: 11px; font-weight: 600; }
+.miniMonth > span { color: #8d877b; }
+.miniMonth > button { margin: 2px; }
+.miniAvailableDay { background: #f0dfba; color: #624510; }
+.miniAvailableDay:hover { background: #e6ba5b; }
+.miniMonth button > i { position: absolute; bottom: 3px; width: 3px; height: 3px; background: currentColor; border-radius: 50%; }
 .miniMonth .miniSelectedDay { background: #182435; color: #fff; box-shadow: 0 0 0 3px #e6ba5b; animation: daySelect .6s ease-out; }
-.miniDateAction { display: flex; width: 100%; align-items: center; justify-content: space-between; gap: 10px; margin-top: 15px; padding: 10px 13px; border: 1px solid #ddcba3; border-radius: 12px; background: #f3e9d4; text-align: left; }
-.miniDateAction small { display: block; font-size: 10px; color: #736344; }
+.miniMonthCount { margin-top: 10px; color: #736344; font-size: 10px; line-height: 1.5; }
+.miniDateChoices { display: grid; gap: 8px; max-height: 230px; overflow-y: auto; margin: 10px -5px -5px; padding: 5px; scrollbar-width: thin; }
+.miniDateAction { display: flex; width: 100%; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 13px; border: 1px solid #ddcba3; border-radius: 12px; background: #f3e9d4; text-align: left; }
+.miniDateAction:hover { border-color: #b08c43; background: #ecdfc4; }
+.miniDateAction small { display: block; margin-top: 3px; font-size: 10px; line-height: 1.45; color: #736344; }
 .miniDateAction strong { display: block; margin-top: 3px; font-size: 13px; }
+.miniEmptyMonth { margin-top: 12px; padding: 12px; border: 1px dashed #ddcba3; border-radius: 12px; color: #736344; font-size: 11px; line-height: 1.6; }
+.miniEmptyMonth button { display: flex; align-items: center; gap: 8px; margin-top: 8px; color: #172233; font-weight: 800; }
 .previewSummaryImage { position: relative; height: 103px; overflow: hidden; border-radius: 12px; }
 .previewSummaryImage img { object-fit: cover; object-position: center 40%; }
 .previewSummaryImage > span { position: absolute; bottom: 8px; left: 8px; padding: 5px 8px; border-radius: 999px; background: #fffaf0ee; font-size: 9px; font-weight: 800; }
