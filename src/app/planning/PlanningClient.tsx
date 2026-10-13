@@ -9,6 +9,7 @@ import { formatTrainingPrice } from '@/lib/training-price';
 import { planningFormationHref } from '@/lib/planning-data';
 import { vtcCourse } from '@/data/vtc';
 import styles from './planning.module.css';
+import { PlanningHelp } from './PlanningHelp';
 
 type Session = any;
 type CategoryKey = 'security' | 'fire' | 'vtc' | 'bts';
@@ -933,76 +934,7 @@ export function PlanningClient({ initialSessions, btsIntakeYear }: { initialSess
 
       <MissingDates sessions={sortedSessions} activeFormation={activeFormation} />
 
-      <section className="page-container py-16 sm:py-20">
-        <div className="max-w-4xl">
-          <p className="text-[11px] font-black uppercase tracking-[.22em] text-academy-gold-strong">Préparez votre inscription</p>
-          <h2 className="mt-4 text-3xl font-black tracking-tight text-academy-ink dark:text-white sm:text-5xl">Toutes les réponses avant de choisir votre session.</h2>
-          <p className="mt-4 max-w-3xl text-base font-semibold leading-7 text-academy-muted">Découvrez les formations, vérifiez votre financement et échangez avec l’équipe avant de réserver votre place.</p>
-        </div>
-
-        <div className="mt-9 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-          {[
-            ['01', 'Découvrir les formations', 'Comparer APS, A3P, SSIAP 1, VTC et BTS.', '/formations-securite'],
-            ['02', 'Trouver un financement', 'CPF, France Travail, employeur et autres solutions.', '/tarifs#solutions'],
-            ['03', 'Recruter ou former', 'Alternance, POEI et montée en compétences.', '/entreprises'],
-            ['04', 'Parler à Cassandre', 'Valider mon projet et mes prochaines étapes.', '/contact?motif=rdv'],
-          ].map(([number, label, description, href]) => (
-            <Link key={number} href={href} className="group flex min-h-[15rem] flex-col rounded-[1.5rem] border border-academy-line/70 bg-academy-surface p-5 shadow-[0_16px_45px_rgba(54,40,20,.06)] transition hover:-translate-y-1 hover:border-academy-gold">
-              <span className="text-2xl font-black text-academy-gold">{number}</span>
-              <h3 className="mt-6 text-lg font-black text-academy-ink dark:text-white">{label}</h3>
-              <p className="mt-3 text-sm font-semibold leading-6 text-academy-muted">{description}</p>
-              <span className="mt-auto flex items-center justify-between border-t border-academy-line/60 pt-4 text-xs font-black text-academy-ink dark:text-white">
-                En savoir plus
-                <Icon name="arrow" className="h-4 w-4 text-academy-gold-strong transition group-hover:translate-x-1" />
-              </span>
-            </Link>
-          ))}
-        </div>
-
-        <div className="mt-10 grid gap-6 lg:grid-cols-[1.1fr_.9fr]">
-          <div>
-            <p className="text-[10px] font-black uppercase tracking-[.18em] text-academy-gold-strong">Questions fréquentes</p>
-            <h3 className="mt-3 text-2xl font-black text-academy-ink dark:text-white sm:text-3xl">Avant de réserver une place</h3>
-            <div className="mt-5 grid gap-3">
-              {[
-                ['Comment savoir s’il reste des places ?', 'Le nombre affiché sur chaque session est synchronisé avec les informations publiées par l’équipe.'],
-                ['Puis-je demander un financement avant de m’inscrire ?', 'Oui. Nous pouvons étudier votre situation avant la validation définitive de votre inscription.'],
-                ['Que faire si aucune date ne me convient ?', 'Créez une alerte planning : l’équipe vous préviendra dès qu’une nouvelle session sera ouverte.'],
-              ].map(([question, answer]) => (
-                <details key={question} className="group rounded-2xl border border-academy-line/70 bg-academy-surface p-4">
-                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-sm font-black text-academy-ink dark:text-white">
-                    {question}
-                    <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-academy-gold text-academy-gold-text transition group-open:rotate-45">+</span>
-                  </summary>
-                  <p className="mt-3 border-t border-academy-line/60 pt-3 text-sm font-semibold leading-6 text-academy-muted">{answer}</p>
-                </details>
-              ))}
-            </div>
-          </div>
-
-          <div className="relative overflow-hidden rounded-[2rem] bg-[#101a29] p-6 text-white shadow-[0_25px_80px_rgba(16,26,41,.20)] sm:p-8">
-            <div className="absolute -bottom-24 -right-16 h-64 w-64 rounded-full bg-academy-gold/15" />
-            <div className="relative">
-              <p className="text-[10px] font-black uppercase tracking-[.2em] text-academy-gold">Besoin d’un conseil ?</p>
-              <h3 className="mt-4 text-2xl font-black tracking-tight sm:text-3xl">Parlons de votre prochaine rentrée.</h3>
-              <p className="mt-4 text-sm font-semibold leading-6 text-white/65">Cassandre vous aide à choisir la formation, la session et le financement adaptés à votre projet.</p>
-              <div className="mt-7 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                <div className="flex items-center gap-3">
-                  <span className="grid h-12 w-12 place-items-center rounded-full bg-academy-gold text-sm font-black text-academy-gold-text">CM</span>
-                  <span>
-                    <span className="block text-xs font-black uppercase tracking-[.12em]">Cassandre</span>
-                    <span className="mt-1 block text-xs font-semibold text-white/50">Responsable commerciale</span>
-                  </span>
-                </div>
-                <Link href="/contact?motif=rdv" className="inline-flex items-center justify-center gap-2 rounded-full bg-academy-gold px-5 py-3.5 text-sm font-black text-academy-gold-text transition hover:-translate-y-0.5">
-                  Réserver un échange
-                  <Icon name="arrow" className="h-4 w-4" />
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <PlanningHelp />
 
       <div className="fixed inset-x-3 bottom-[calc(.75rem+env(safe-area-inset-bottom))] z-40 grid grid-cols-3 gap-2 rounded-[1.5rem] border border-white/70 bg-white/92 p-2 shadow-[0_18px_60px_rgba(17,17,17,.18)] backdrop-blur md:hidden">
         <Link href="tel:0422470768" className="rounded-2xl bg-[#101a29] px-3 py-3 text-center text-xs font-black text-white">Appeler</Link>
