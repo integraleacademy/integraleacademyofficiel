@@ -139,11 +139,6 @@ export const seoPages: Record<string, SeoPage> = {
     description: 'Consultez les prochaines dates de formation Intégrale Academy. Filtrez par parcours et lieu pour préparer votre inscription et anticiper votre financement.',
     label: 'Planning des formations', type: 'CollectionPage',
   },
-  '/tarifs': {
-    title: 'Tarifs des formations sécurité et VTC',
-    description: 'Comparez les tarifs, durées et prestations des formations APS, A3P, DESP, VAE, SSIAP, SST et VTC. Retrouvez les solutions de financement selon votre situation.',
-    label: 'Tarifs des formations', type: 'CollectionPage',
-  },
   '/financements': {
     title: 'Financer sa formation – CPF, alternance et aides',
     description: 'Étudiez les solutions pour financer votre formation : CPF, France Travail, alternance, employeur ou financement personnel. Intégrale Academy vous accompagne.',
