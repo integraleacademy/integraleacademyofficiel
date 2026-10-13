@@ -169,7 +169,7 @@ export default async function Home() {
         </section>
       </VisualSection>
 
-      <VisualSection tone="bts">
+      <div className={btsGridStyles.section}>
         <section id="bts" className="scroll-mt-28 page-container py-14 md:py-16">
           <div data-training-heading className={btsGridStyles.sectionHeading}>
             <div>
@@ -183,7 +183,7 @@ export default async function Home() {
           </div>
           <BtsTrainingGrid items={btsHighlights} />
         </section>
-      </VisualSection>
+      </div>
 
       <section className={styles.proofBar} data-home-proof aria-label="Chiffres et reconnaissances">
         <div className={styles.container}><div className={styles.proofGrid}>{proofItems.map(([value, label]) => <div key={value} data-home-proof-item><strong>{value}</strong><span>{label}</span></div>)}</div></div>

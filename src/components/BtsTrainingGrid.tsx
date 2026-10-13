@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { useRef } from 'react';
 import styles from './BtsTrainingGrid.module.css';
-import btsStyles from './BtsIdentity.module.css';
 import { useTrainingCardAnimations } from './useTrainingCardAnimations';
 
 export type BtsVisual = 'mos' | 'mco' | 'ndrc' | 'ci' | 'pi' | 'cg';
@@ -53,66 +52,22 @@ function StudyModeIcon({ type }: { type: 'location' | 'video' }) {
   return <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="5" width="13.5" height="12" rx="2" stroke="currentColor" strokeWidth="1.8"/><path d="m17 9 3.5-2v8L17 13V9ZM8 20h5M10.5 17v3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>;
 }
 
-function TrainingFacts({ item }: { item: BtsTrainingHighlight }) {
+function TrainingCard({ item }: { item: BtsTrainingHighlight }) {
   return (
-    <span className={styles.trainingFacts}>
-      <span>{item.certification} · {item.level}</span>
-      <strong>{item.duration} en {item.rhythm.toLocaleLowerCase('fr')}</strong>
-    </span>
-  );
-}
-
-function FeaturedCard({ item }: { item: BtsTrainingHighlight }) {
-  return (
-    <div data-training-card className={styles.featuredSlot}>
-      <Link href={item.slug} aria-label={'Découvrir le ' + item.shortTitle} data-bts={item.visual} className={`${styles.featuredLink} ${btsStyles.identity}`}>
-        <article data-training-tilt className={styles.featuredCard}>
-          <span className={styles.featuredOrb} aria-hidden="true" />
-          <span className={styles.featuredMonogram} aria-hidden="true">MOS</span>
-
-          <header className={styles.featuredHeader}>
-            <span className={styles.popularBadge}><span aria-hidden="true">✦</span> Le plus demandé</span>
-            <span className={styles.featuredIcon}><BtsIcon type={item.visual} /></span>
-          </header>
-
-          <div className={styles.featuredContent}>
+    <div data-training-card className={styles.cardSlot}>
+      <Link href={item.slug} aria-label={'Découvrir le ' + item.shortTitle} className={styles.cardLink}>
+        <article className={styles.card} data-featured={item.featured || undefined}>
+          <header className={styles.cardHeader}>
+            <span className={styles.cardIcon}><BtsIcon type={item.visual} /></span>
             <span className={styles.category}>{item.category}</span>
-            <h3><strong>{item.shortTitle}</strong><span>{item.title}</span></h3>
-            <p>{item.description}</p>
-            <TrainingFacts item={item} />
-          </div>
-
-          <footer className={styles.featuredFooter}>
-            <span>Découvrir le {item.shortTitle}</span><span aria-hidden="true">→</span>
-          </footer>
-        </article>
-      </Link>
-    </div>
-  );
-}
-
-function CompactCard({ item, wide }: { item: BtsTrainingHighlight; wide: boolean }) {
-  const slotClassName = [styles.compactSlot, wide ? styles.wideSlot : ''].filter(Boolean).join(' ');
-  const cardClassName = [styles.compactCard, wide ? styles.wideCard : ''].filter(Boolean).join(' ');
-
-  return (
-    <div data-training-card className={slotClassName}>
-      <Link href={item.slug} aria-label={'Découvrir le ' + item.shortTitle} data-bts={item.visual} className={`${styles.compactLink} ${btsStyles.identity}`}>
-        <article data-training-tilt data-tone={item.visual} className={cardClassName}>
-          <span className={styles.compactAccent} aria-hidden="true" />
-
-          <header className={styles.compactHeader}>
-            <span className={styles.compactIcon}><BtsIcon type={item.visual} /></span>
-            <span className={styles.categoryBadge}>{item.category}</span>
           </header>
-
-          <div className={styles.compactContent}>
+          <div className={styles.cardContent}>
             <h3>{item.shortTitle}</h3>
-            <p>{item.title}</p>
+            <p className={styles.courseTitle}>{item.title}</p>
+            <p className={styles.description}>{item.description}</p>
           </div>
-
-          <footer className={styles.compactFooter}>
-            <TrainingFacts item={item} /><span aria-hidden="true">→</span>
+          <footer className={styles.cardFooter}>
+            <span>Découvrir ce BTS</span><span aria-hidden="true">→</span>
           </footer>
         </article>
       </Link>
@@ -125,7 +80,7 @@ export function BtsTrainingGrid({ items }: { items: BtsTrainingHighlight[] }) {
   useTrainingCardAnimations(gridRef);
 
   const featured = items.find((item) => item.featured) ?? items[0];
-  const compactItems = items.filter((item) => item !== featured);
+  const orderedItems = featured ? [featured, ...items.filter((item) => item !== featured)] : [];
 
   if (!featured) return null;
 
@@ -136,20 +91,15 @@ export function BtsTrainingGrid({ items }: { items: BtsTrainingHighlight[] }) {
           <StudyModeIcon type="location" />
           <div><span>En présentiel</span><strong>{featured.onsiteLocation}</strong></div>
         </div>
-        <span className={styles.modeOr}>OU</span>
+        <span className={styles.modeOr}>ou</span>
         <div className={styles.studyMode}>
           <StudyModeIcon type="video" />
           <div><span>À distance</span><strong>{featured.distanceMode}</strong></div>
         </div>
       </div>
 
-      <div className={styles.bentoGrid}>
-        <FeaturedCard item={featured} />
-        <div className={styles.compactGrid}>
-          {compactItems.map((item, index) => (
-            <CompactCard key={item.slug} item={item} wide={index === compactItems.length - 1 && compactItems.length % 2 === 1} />
-          ))}
-        </div>
+      <div className={styles.trainingGrid}>
+        {orderedItems.map((item) => <TrainingCard key={item.slug} item={item} />)}
       </div>
 
       <div className={styles.orientationStrip}>
