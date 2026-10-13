@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import styles from './ContactFilm.module.css';
 
-const filmSrc = '/videos/contact-integrale-academy-v2.mp4';
+const filmSrc = '/videos/contact-integrale-academy-v3.mp4';
 
 export function ContactFilm() {
   const frame = useRef<HTMLDivElement>(null);
@@ -86,7 +86,7 @@ export function ContactFilm() {
           <video
             ref={video}
             className={styles.video}
-            poster="/videos/contact-integrale-academy-v2-poster.webp"
+            poster="/videos/contact-integrale-academy-v3-poster.webp"
             width="1920"
             height="1080"
             muted
@@ -94,7 +94,7 @@ export function ContactFilm() {
             playsInline
             preload="none"
             controls={watching && !ended}
-            aria-label="Intégrale Academy : votre projet prend forme"
+            aria-label="Intégrale Academy : des métiers concrets, un projet qui vous ressemble"
             aria-describedby="contact-film-transcript"
             onPlay={() => setPlaying(true)}
             onPause={() => setPlaying(false)}
@@ -105,7 +105,7 @@ export function ContactFilm() {
             <button type="button" className={styles.watch} onClick={watch}>
               <span className={styles.playIcon} aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="m9 5 11 7-11 7V5Z" /></svg></span>
               <span>{ended ? 'Revoir le film' : 'Voir le film'}</span>
-              <span className={styles.duration}>30 s</span>
+              <span className={styles.duration}>32 s</span>
             </button>
             {!ended && playing && <button type="button" className={styles.pause} onClick={togglePreview} aria-label="Mettre l’aperçu vidéo en pause"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h3v14H7zm7 0h3v14h-3z" /></svg></button>}
             {!ended && !playing && <button type="button" className={styles.pause} onClick={togglePreview} aria-label="Lire l’aperçu vidéo"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m8 5 11 7-11 7V5Z" /></svg></button>}
@@ -113,12 +113,12 @@ export function ContactFilm() {
           {failed && <div className={styles.error} role="status"><p>La vidéo n’est pas disponible pour le moment.</p><a href="#demande">Parlons de votre projet →</a></div>}
         </div>
         <div className={styles.caption}>
-          <p>Votre projet commence par une conversation.</p>
+          <p>Des métiers concrets. Un projet qui vous ressemble.</p>
           <a href="#demande">Échangeons ensemble <span aria-hidden="true">↗</span></a>
         </div>
         <details className={styles.transcript}>
           <summary>Lire le texte de la vidéo</summary>
-          <p id="contact-film-transcript">Intégrale Academy. Votre prochain métier. Et si on en parlait ? Quelle formation ? Quel financement ? Quel parcours ? Tout commence par un échange. Une question. Une équipe à votre écoute. « J’ai un projet de formation. » « Construisons-le ensemble. » Votre projet : vos envies donnent la direction. Reconversion, évolution, premier emploi. Votre formation : un parcours qui vous correspond. APS, A3P, SSIAP, DESP, VTC, BTS. Votre financement : des solutions selon votre situation. Étudier les possibilités, préparer votre dossier. Écouter, orienter, accompagner. Une équipe à vos côtés pour donner forme à votre avenir. Bienvenue chez vous, à Puget-sur-Argens. On en parle ? 04 22 47 07 68. Un premier échange gratuit et sans engagement.</p>
+          <p id="contact-film-transcript">Votre avenir. Parlons-en. Des métiers concrets. Un projet qui vous ressemble. APS — Sécurité privée. Observer, prévenir, protéger. A3P — Protection rapprochée. Anticiper, accompagner, sécuriser. SSIAP — Sécurité incendie. Prévenir, intervenir, assister. DESP — Diriger en sécurité privée. Organiser, piloter, entreprendre. VTC — Transport de personnes. Accueillir, conduire, accompagner. BTS — Apprendre en alternance. Se former, pratiquer, évoluer. Votre projet. Notre accompagnement. Choisir votre formation. Étudier votre financement. Préparer votre admission. Un premier échange pour avancer. On en parle ? Intégrale Academy. 04 22 47 07 68. Gratuit et sans engagement.</p>
         </details>
       </div>
     </section>
