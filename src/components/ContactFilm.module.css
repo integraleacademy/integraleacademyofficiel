@@ -1,15 +1,16 @@
 .section { padding: 16px 0 58px; }
 .container { width: min(1240px, calc(100% - 160px)); margin-inline: auto; }
-.frame { position: relative; isolation: isolate; overflow: hidden; aspect-ratio: 16 / 9; border: 1px solid #263646; border-radius: 30px; background: #081626; box-shadow: 0 20px 55px rgb(8 22 38 / .16); }
+.frame { position: relative; isolation: isolate; overflow: hidden; aspect-ratio: 16 / 9; border: 1px solid rgb(8 22 38 / .1); border-radius: 28px; background: #081626; box-shadow: 0 18px 48px rgb(8 22 38 / .1); }
 .video { display: block; width: 100%; height: 100%; object-fit: contain; }
-.duration { position: absolute; top: 22px; right: 24px; padding: 8px 12px; border: 1px solid rgb(255 255 255 / .18); border-radius: 999px; background: rgb(8 22 38 / .82); color: #fffaf0; font-size: 9px; font-weight: 700; letter-spacing: .12em; pointer-events: none; }
-.watch { position: absolute; left: 50%; bottom: 11%; display: flex; align-items: center; gap: 14px; min-height: 66px; padding: 8px 27px 8px 8px; transform: translateX(-50%); border: 1px solid rgb(255 255 255 / .25); border-radius: 999px; background: rgb(8 22 38 / .92); box-shadow: 0 8px 28px rgb(0 0 0 / .2); color: #fff; font-size: clamp(13px, 1.4vw, 17px); font-weight: 700; white-space: nowrap; cursor: pointer; transition: background .2s, box-shadow .2s; }
-.watch:hover { background: #122c43; box-shadow: 0 12px 35px rgb(0 0 0 / .3); }
-.soundIcon { display: grid; flex: 0 0 50px; height: 50px; place-items: center; border-radius: 50%; background: #e6b03a; color: #081626; }
-.soundIcon svg { width: 23px; height: 23px; }
-.pause { position: absolute; right: 18px; bottom: 18px; display: grid; width: 42px; height: 42px; place-items: center; border: 1px solid rgb(255 255 255 / .3); border-radius: 50%; color: #fff; background: rgb(8 22 38 / .85); cursor: pointer; }
-.pause svg { width: 20px; height: 20px; }
-.watch:focus-visible, .pause:focus-visible { outline: 3px solid #fff; outline-offset: 5px; }
+.watch { position: absolute; left: 24px; bottom: 24px; display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 6px 16px 6px 6px; border: 1px solid rgb(255 255 255 / .22); border-radius: 999px; background: rgb(8 22 38 / .88); backdrop-filter: blur(12px); color: #fff; font-family: inherit; font-size: 13px; font-weight: 600; white-space: nowrap; cursor: pointer; transition: background .2s, border-color .2s; }
+.watch:hover { background: #152b40; border-color: rgb(255 255 255 / .45); }
+.playIcon { display: grid; flex: 0 0 34px; height: 34px; place-items: center; border-radius: 50%; background: #fffaf0; color: #081626; }
+.playIcon svg { width: 19px; height: 19px; }
+.duration { margin-left: 4px; padding-left: 13px; border-left: 1px solid rgb(255 255 255 / .25); color: rgb(255 255 255 / .65); font-size: 11px; font-weight: 400; letter-spacing: .02em; }
+.pause { position: absolute; right: 24px; bottom: 24px; display: grid; width: 44px; height: 44px; place-items: center; border: 1px solid rgb(255 255 255 / .22); border-radius: 50%; color: #fff; background: rgb(8 22 38 / .88); backdrop-filter: blur(12px); cursor: pointer; transition: background .2s, border-color .2s; }
+.pause:hover { background: #152b40; border-color: rgb(255 255 255 / .45); }
+.pause svg { width: 17px; height: 17px; }
+.watch:focus-visible, .pause:focus-visible { outline: 3px solid #fff; outline-offset: 4px; }
 .caption { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-top: 22px; }
 .caption p { color: rgb(var(--text-muted)); font-size: 13px; }
 .caption a { display: inline-flex; align-items: center; gap: 14px; color: rgb(var(--text-main)); font-size: 13px; font-weight: 800; }
@@ -24,21 +25,19 @@
   .section { padding-block: 10px 36px; }
   .container { width: calc(100% - 40px); }
   .frame { border-radius: 20px; }
-  .watch { min-height: 48px; gap: 9px; padding: 6px 18px 6px 6px; }
-  .soundIcon { flex-basis: 36px; height: 36px; }
-  .soundIcon svg { width: 19px; height: 19px; }
-  .duration { top: 12px; right: 12px; padding: 5px 9px; font-size: 8px; }
-  .pause { right: 10px; bottom: 10px; width: 34px; height: 34px; }
+  .watch { left: 16px; bottom: 16px; min-height: 44px; padding: 5px 13px 5px 5px; gap: 8px; font-size: 12px; }
+  .playIcon { flex-basis: 32px; height: 32px; }
+  .pause { right: 16px; bottom: 16px; }
 }
 @media (max-width: 480px) {
   .container { width: calc(100% - 28px); }
   .frame { border-radius: 16px; }
-  .watch { bottom: 8%; min-height: 40px; padding: 5px 12px 5px 5px; font-size: 11px; gap: 7px; }
-  .soundIcon { flex-basis: 30px; height: 30px; }
-  .soundIcon svg { width: 16px; height: 16px; }
-  .duration { top: 9px; right: 9px; font-size: 6px; padding: 4px 7px; }
-  .pause { width: 30px; height: 30px; }
+  .watch { left: 10px; bottom: 10px; min-height: 44px; padding-right: 12px; font-size: 11px; gap: 7px; }
+  .playIcon { flex-basis: 30px; height: 30px; }
+  .playIcon svg { width: 17px; height: 17px; }
+  .duration { margin-left: 2px; padding-left: 9px; font-size: 10px; }
+  .pause { right: 10px; bottom: 10px; }
   .caption { align-items: flex-start; flex-direction: column; gap: 6px; padding-top: 16px; }
   .caption p, .caption a { font-size: 12px; }
 }
-@media (prefers-reduced-motion: reduce) { .watch { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .watch, .pause { transition: none; } }

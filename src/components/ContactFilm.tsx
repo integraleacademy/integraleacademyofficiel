@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import styles from './ContactFilm.module.css';
 
-const filmSrc = '/videos/contact-integrale-academy-v1.mp4';
+const filmSrc = '/videos/contact-integrale-academy-v2.mp4';
 
 export function ContactFilm() {
   const frame = useRef<HTMLDivElement>(null);
@@ -62,7 +62,7 @@ export function ContactFilm() {
     setFailed(false);
     if (!media.getAttribute('src')) media.src = filmSrc;
     media.loop = false;
-    media.muted = false;
+    media.muted = true;
     media.controls = true;
     media.currentTime = 0;
     try { await media.play(); }
@@ -86,15 +86,15 @@ export function ContactFilm() {
           <video
             ref={video}
             className={styles.video}
-            poster="/videos/contact-integrale-academy-poster.webp"
-            width="1600"
-            height="900"
+            poster="/videos/contact-integrale-academy-v2-poster.webp"
+            width="1920"
+            height="1080"
             muted
-            loop
+            loop={!watching}
             playsInline
             preload="none"
-            controls={watching}
-            aria-label="Intégrale Academy : votre projet commence ici"
+            controls={watching && !ended}
+            aria-label="Intégrale Academy : votre projet prend forme"
             aria-describedby="contact-film-transcript"
             onPlay={() => setPlaying(true)}
             onPause={() => setPlaying(false)}
@@ -102,13 +102,13 @@ export function ContactFilm() {
             onError={() => setFailed(true)}
           />
           {(!watching || ended) && !failed && <>
-            <span className={styles.duration}>LE PREMIER PAS · 36 SEC</span>
             <button type="button" className={styles.watch} onClick={watch}>
-              <span className={styles.soundIcon} aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="m11 5-6 4H2v6h3l6 4V5Zm4 3a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14" /></svg></span>
-              <span>{ended ? 'Revoir la vidéo' : 'Regarder avec le son'}</span>
+              <span className={styles.playIcon} aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="m9 5 11 7-11 7V5Z" /></svg></span>
+              <span>{ended ? 'Revoir le film' : 'Voir le film'}</span>
+              <span className={styles.duration}>30 s</span>
             </button>
             {!ended && playing && <button type="button" className={styles.pause} onClick={togglePreview} aria-label="Mettre l’aperçu vidéo en pause"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h3v14H7zm7 0h3v14h-3z" /></svg></button>}
-            {!ended && !playing && <button type="button" className={styles.pause} onClick={togglePreview} aria-label="Lire l’aperçu sans son"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m8 5 11 7-11 7V5Z" /></svg></button>}
+            {!ended && !playing && <button type="button" className={styles.pause} onClick={togglePreview} aria-label="Lire l’aperçu vidéo"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m8 5 11 7-11 7V5Z" /></svg></button>}
           </>}
           {failed && <div className={styles.error} role="status"><p>La vidéo n’est pas disponible pour le moment.</p><a href="#demande">Parlons de votre projet →</a></div>}
         </div>
@@ -118,7 +118,7 @@ export function ContactFilm() {
         </div>
         <details className={styles.transcript}>
           <summary>Lire le texte de la vidéo</summary>
-          <p id="contact-film-transcript">Votre projet. Parlons-en. Quelle formation choisir ? Comment la financer ? Par où commencer ? Ne restez pas avec vos questions : notre équipe vous accompagne. Un échange permet de préciser votre projet, de trouver la formation adaptée et d’explorer les possibilités de financement selon votre situation. Sécurité privée, protection rapprochée, sécurité incendie, VTC ou BTS en alternance : construisons votre parcours. Des personnes à votre écoute dès le premier échange. Faites le premier pas : contactez Intégrale Academy au 04 22 47 07 68. Premier échange gratuit et sans engagement.</p>
+          <p id="contact-film-transcript">Intégrale Academy. Votre prochain métier. Et si on en parlait ? Quelle formation ? Quel financement ? Quel parcours ? Tout commence par un échange. Une question. Une équipe à votre écoute. « J’ai un projet de formation. » « Construisons-le ensemble. » Votre projet : vos envies donnent la direction. Reconversion, évolution, premier emploi. Votre formation : un parcours qui vous correspond. APS, A3P, SSIAP, DESP, VTC, BTS. Votre financement : des solutions selon votre situation. Étudier les possibilités, préparer votre dossier. Écouter, orienter, accompagner. Une équipe à vos côtés pour donner forme à votre avenir. Bienvenue chez vous, à Puget-sur-Argens. On en parle ? 04 22 47 07 68. Un premier échange gratuit et sans engagement.</p>
         </details>
       </div>
     </section>
