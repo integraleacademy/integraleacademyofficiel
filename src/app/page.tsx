@@ -169,21 +169,22 @@ export default async function Home() {
         </section>
       </VisualSection>
 
-      <div className={btsGridStyles.section}>
+      <VisualSection tone="bts" className={btsGridStyles.section}>
         <section id="bts" className="scroll-mt-28 page-container py-14 md:py-16">
-          <div data-training-heading className={btsGridStyles.sectionHeading}>
+          <div data-training-heading className={styles.securityTrainingHeading}>
             <div>
+              <span className={styles.securityTrainingEyebrow}>Enseignement supérieur</span>
               <h2>BTS en alternance</h2>
               <p>6 diplômes d’État · Bac +2 · 2 ans en alternance</p>
             </div>
-            <div className={`${styles.securityTrainingActions} ${btsGridStyles.sectionActions}`}>
+            <div className={styles.securityTrainingActions}>
               <BtsTrainingComparisonModal items={btsHighlights} className={styles.securityTrainingSecondary} />
               <Link href="/planning" className={styles.securityTrainingPrimary}>Voir les rentrées <span aria-hidden="true">→</span></Link>
             </div>
           </div>
           <BtsTrainingGrid items={btsHighlights} />
         </section>
-      </div>
+      </VisualSection>
 
       <section className={styles.proofBar} data-home-proof aria-label="Chiffres et reconnaissances">
         <div className={styles.container}><div className={styles.proofGrid}>{proofItems.map(([value, label]) => <div key={value} data-home-proof-item><strong>{value}</strong><span>{label}</span></div>)}</div></div>
