@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { parseNewReview, parseReviewEdit, matchesReviewCategory, REVIEW_CATEGORIES } from '../src/lib/google-reviews';
 import seed from '../src/data/google-reviews-seed.json';
+import completeImport from '../src/data/google-reviews-import-20261013.json';
 
 const sample = { author: 'Stagiaire test', rating: 5, sourceUrl: 'https://www.google.com/maps?cid=14373460169956988061', reviewedAt: '2026-10-01', originalText: 'Un avis original.', excerpt: 'Un avis original.', categories: ['APS', 'A3P'], published: true, featured: false };
 
@@ -43,4 +44,25 @@ test('le catalogue initial conserve des sources, des notes vérifiées et des ca
   }
   assert.equal(seed.complete, false, 'Une sélection partielle ne doit pas être présentée comme un import complet.');
   assert.ok(seed.reviews.some(r => r.categories.includes('DESP')));
+});
+
+test('le complément couvre les 115 identifiants Google sans dupliquer les avis historiques', () => {
+  assert.equal(completeImport.completeAtCollection, true);
+  assert.equal(completeImport.reconciliations.length, seed.reviews.length);
+  const historicalIds = new Set(seed.reviews.map(r => r.id));
+  const sources = new Set<string>();
+  for (const match of completeImport.reconciliations) {
+    assert.ok(historicalIds.has(match.id));
+    assert.ok(!sources.has(match.sourceId)); sources.add(match.sourceId);
+  }
+  for (const review of completeImport.reviews) {
+    assert.ok(!historicalIds.has(review.id));
+    assert.ok(!sources.has(review.sourceId)); sources.add(review.sourceId);
+    assert.equal(parseNewReview(review).rating, 5);
+    assert.equal(Boolean(review.originalText), Boolean(review.excerpt));
+    assert.ok(review.provenance && review.sourceDateLabel);
+  }
+  assert.equal(sources.size, completeImport.googleFiveStarReviews);
+  assert.equal(sources.size, 115);
+  assert.equal(completeImport.reviews.filter(r => !r.originalText).length, 16);
 });
