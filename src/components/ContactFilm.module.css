@@ -1,4 +1,7 @@
-.section { padding: 30px 0 58px; color: rgb(var(--text-main)); }
+.section { padding: 30px 0 58px; color: rgb(var(--text-main)); font-family: inherit; font-size: 15px; font-weight: 500; line-height: 1.75; }
+.section * { box-sizing: border-box; }
+.section h2, .section p, .section figure { margin: 0; }
+.section a { text-decoration: none; }
 .container { width: min(1240px, calc(100% - 160px)); margin-inline: auto; }
 .stage { display: grid; }
 .scene { grid-area: 1 / 1; display: grid; grid-template-columns: minmax(0, .88fr) minmax(0, 1.12fr); gap: 52px; align-items: center; min-height: 455px; visibility: hidden; pointer-events: none; }
@@ -7,7 +10,7 @@
 .section .eyebrow { display: flex; align-items: center; gap: 10px; margin-bottom: 24px; color: rgb(var(--accent-strong)); font-size: 10px; font-weight: 800; letter-spacing: .13em; line-height: 1.6; }
 .eyebrow > span { width: 22px; height: 2px; flex-shrink: 0; background: rgb(var(--accent)); }
 .section .title { font-size: clamp(40px, 4.4vw, 65px); line-height: 1.07; font-weight: 900; letter-spacing: -.05em; text-wrap: balance; }
-.section .title em { display: block; margin-top: 10px; color: rgb(var(--accent-strong)); font-family: Georgia, 'Times New Roman', serif; font-weight: 400; letter-spacing: -.045em; }
+.section .title em { display: block; margin-top: 10px; color: rgb(var(--accent-strong)); font-family: Georgia, 'Times New Roman', serif; font-style: italic; font-weight: 400; letter-spacing: -.045em; }
 .section .description { max-width: 350px; margin-top: 26px; font-size: 15px; line-height: 1.8; color: rgb(var(--text-muted)); }
 .artwork { min-width: 0; overflow: hidden; border-radius: 24px; background: rgb(var(--surface)); }
 .artwork img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: contain; }

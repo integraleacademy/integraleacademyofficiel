@@ -1,7 +1,8 @@
 import { createPageMetadata } from '@/lib/seo';
 import Link from 'next/link';
 import { OrientationAssistant } from '@/components/OrientationAssistant';
-import { AcademyFilm, AcademyJourney, AcademyLearningStudio } from '@/components/AcademyExperience';
+import { ContactFilm } from '@/components/ContactFilm';
+import { AcademyJourney, AcademyLearningStudio } from '@/components/AcademyExperience';
 import { BtsTrainingGrid, type BtsTrainingHighlight } from '@/components/BtsTrainingGrid';
 import { BtsTrainingComparisonModal } from '@/components/BtsTrainingComparisonModal';
 import { CampusSection } from '@/components/CampusSection';
@@ -133,7 +134,7 @@ export default async function Home() {
         </div>
       </section>
 
-      <AcademyFilm />
+      <ContactFilm />
 
       <VisualSection tone="security">
         <section id="formations-securite" className="scroll-mt-28 page-container py-14 md:py-16">

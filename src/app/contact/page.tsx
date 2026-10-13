@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { createPageMetadata } from '@/lib/seo';
 import { informationRequestHref } from '@/lib/contact-request';
 import { contact } from '@/data/site';
-import { ContactFilm } from '@/components/ContactFilm';
 import { ContactExperience, type ContactInterest } from '@/components/ContactExperience';
 import { ContactMotion } from '@/components/ContactMotion';
 import school from '../ecole/ecole.module.css';
@@ -73,8 +72,6 @@ export default async function Page({ searchParams }: { searchParams: Promise<Rec
           <a href="#reperes"><span>04</span> Liens utiles</a>
         </nav>
       </section>
-
-      <ContactFilm />
 
       <section id="coordonnees" className={styles.channels} aria-label="Nos coordonnées">
         <div className={`${school.container} ${styles.channelGrid}`}>
