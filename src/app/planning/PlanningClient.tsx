@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import { formatSessionDate, formatSessionPeriod, hasDetailedDeliveryPeriods } from '@/lib/public-sessions';
@@ -9,7 +8,6 @@ import { sessionLocationFilters, sessionMatchesLocation, type SessionLocationFil
 import { formatTrainingPrice } from '@/lib/training-price';
 import { planningFormationHref } from '@/lib/planning-data';
 import { vtcCourse } from '@/data/vtc';
-import school from '../ecole/ecole.module.css';
 import styles from './planning.module.css';
 
 type Session = any;
@@ -390,53 +388,110 @@ function deliveryPeriodRows(session: Session): { label: string; value: string; i
   ];
 }
 
-function SessionCard({ session, isNext }: { session: Session; isNext: boolean }) {
+function SessionCard({
+  session,
+  isNext,
+}: {
+  session: Session;
+  isNext: boolean;
+}) {
   const date = shortDate(session.startDate);
   const seatAvailability = planningSeatAvailability(session);
   const showDeliveryPeriods = hasDetailedDeliveryPeriods(session);
   const isVtcExam = session.scheduleKind === 'vtc-exam';
+  const themeClass = planningThemeForSession(session);
 
   return (
-    <article className={`${planningThemeForSession(session)} ${styles.sessionCard} ${isNext ? styles.nextSession : ''}`}>
-      {isNext && <span className={styles.nextLabel}>{isVtcExam ? 'Prochaine échéance VTC' : 'Prochaine session'}</span>}
-      <div className={styles.sessionGrid}>
-        <div className={styles.dateColumn}>
-          <div className={styles.dateTile}><strong>{date.day}</strong><span>{date.month}</span></div>
-          <span className={styles.dateYear}>{new Date(session.startDate).getUTCFullYear()}</span>
-        </div>
-        <div className={styles.sessionCopy}>
-          <div className={styles.sessionTitle}>
-            <h3>{sessionTitle(session)}</h3>
-            {!isVtcExam && <span className={`session-seats-badge ${styles.seatBadge} ${seatAvailability.badgeClassName}`}>{seatAvailability.label}</span>}
+    <article className={themeClass + ' group relative overflow-hidden rounded-[1.6rem] border bg-white p-4 shadow-[0_18px_55px_rgba(54,40,20,.08)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_70px_rgba(54,40,20,.14)] dark:bg-white/5 sm:p-5 ' + (isNext ? 'planning-accent-border' : 'border-academy-line/70 dark:border-white/10')}>
+      <span aria-hidden="true" className="planning-accent-indicator absolute inset-y-0 left-0 w-1" />
+      {isNext ? (
+        <span className="absolute left-4 top-0 rounded-b-xl bg-[#101a29] px-3 py-1 text-[9px] font-black uppercase tracking-[.14em] text-white sm:left-5">
+          {isVtcExam ? 'Prochaine échéance VTC' : 'Prochaine session'}
+        </span>
+      ) : null}
+
+      <div className="grid gap-4 pt-2 lg:grid-cols-[5.5rem_minmax(0,1.3fr)_minmax(17rem,.8fr)_auto] lg:items-center">
+        <div className="flex items-center gap-3 lg:block">
+          <div className="planning-neutral-action grid h-[4.6rem] w-[4.6rem] shrink-0 place-items-center rounded-2xl text-center">
+            <span>
+              <span className="block text-2xl font-black leading-none">{date.day}</span>
+              <span className="mt-1 block text-[10px] font-black uppercase tracking-[.12em] text-white/58">{date.month}</span>
+            </span>
           </div>
-          {isVtcExam ? <div className={styles.deliveryDetails}>
-            <p>{vtcCourse.startDescription}</p>
-            <dl className={styles.vtcDates}>
+          <p className="text-[10px] font-black uppercase tracking-[.14em] text-academy-muted lg:mt-2 lg:text-center">
+            {new Date(session.startDate).getUTCFullYear()}
+          </p>
+        </div>
+
+        <div className="min-w-0">
+          <div className="flex flex-wrap items-center gap-2">
+            <h3 className="text-xl font-black tracking-tight text-academy-ink dark:text-white sm:text-2xl">
+              {sessionTitle(session)}
+            </h3>
+            {!isVtcExam ? <span className={'session-seats-badge rounded-full border px-3 py-1 text-[10px] font-black ' + seatAvailability.badgeClassName}>
+              {seatAvailability.label}
+            </span> : null}
+          </div>
+          {isVtcExam ? <div className="mt-4">
+            <p className="text-sm font-semibold leading-6 text-academy-muted">{vtcCourse.startDescription}</p>
+            <dl className="mt-3 grid gap-2 sm:grid-cols-3">
               {[
                 ['Date limite d’inscription', session.vtcDates.deadline],
                 ['Examen théorique', session.vtcDates.theory],
                 ['Examen pratique', session.vtcDates.practical],
-              ].map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{formatSessionDate(value)}</dd></div>)}
+              ].map(([label, value]) => <div key={label} className="rounded-2xl border border-academy-line/60 bg-academy-bg/55 px-3 py-3 dark:border-white/10 dark:bg-white/5">
+                <dt className="text-[9px] font-black uppercase tracking-[.1em] text-academy-muted">{label}</dt>
+                <dd className="mt-1 text-sm font-black text-academy-ink dark:text-white">{formatSessionDate(value)}</dd>
+              </div>)}
             </dl>
-            <p>Hybride : théorie en ligne et pratique en présentiel. Frais d’examen et véhicule double commande inclus.</p>
-            <p className={styles.examNotice}>{vtcCourse.examNotice}</p>
-          </div> : showDeliveryPeriods ? <div className={styles.periodGrid}>
-            {deliveryPeriodRows(session).map((period, index) => <div key={period.label || 'dates'} className={index === 0 ? styles.fullPeriod : styles.period}>
-              <Icon name={period.icon} />
-              <span>{period.label && <small>{period.label}</small>}<strong>{period.value}</strong></span>
+            <p className="mt-3 text-xs font-semibold leading-5 text-academy-muted">Hybride : théorie en ligne et pratique en présentiel. Frais d’examen et véhicule double commande inclus.</p>
+            <p className="mt-2 text-xs leading-5 text-academy-muted">{vtcCourse.examNotice}</p>
+          </div> : showDeliveryPeriods ? <div className="mt-4 grid gap-2 sm:grid-cols-2">
+            {deliveryPeriodRows(session).map((period, periodIndex) => <div key={period.label || 'dates'} className={`flex items-start gap-3 rounded-[1rem] border px-3.5 py-3 ${periodIndex === 0 ? 'planning-accent-soft sm:col-span-2' : 'border-academy-line/60 bg-academy-bg/55 dark:border-white/10 dark:bg-white/5'}`}>
+              <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-xl ${periodIndex === 0 ? 'planning-accent-icon' : 'planning-accent-text border border-academy-line/70 bg-white dark:border-white/10 dark:bg-white/10'}`}>
+                <Icon name={period.icon} className="h-4 w-4" />
+              </span>
+              <span className="min-w-0">
+                {period.label ? <span className="block text-[9px] font-black uppercase tracking-[.14em] text-academy-muted/70">{period.label}</span> : null}
+                <span className={`${period.label ? 'mt-1 ' : ''}block text-[13px] font-black leading-5 text-academy-ink dark:text-white sm:text-sm`}>{period.value}</span>
+              </span>
             </div>)}
-          </div> : <p className={styles.sessionPeriod}>
+          </div> : <p className="mt-2 text-sm font-semibold leading-6 text-academy-muted">
             {formatSessionPeriod(session.startDate, session.endDate)}
             {session.examDate ? ' · Examen le ' + formatSessionDate(session.examDate) : ''}
           </p>}
-          {showDeliveryPeriods && session.examDate && <p className={styles.sessionPeriod}>Examen le {formatSessionDate(session.examDate)}</p>}
-          {session.location && <p className={styles.sessionLocation}><Icon name="location" /><span>{session.location}</span></p>}
+          {showDeliveryPeriods && session.examDate ? <p className="mt-2 text-sm font-semibold leading-6 text-academy-muted">Examen le {formatSessionDate(session.examDate)}</p> : null}
+          {session.location ? (
+            <p className="mt-2 flex items-center gap-2 text-sm font-black text-academy-muted">
+              <Icon name="location" className="planning-accent-text h-4 w-4 shrink-0" />
+              <span>{session.location}</span>
+            </p>
+          ) : null}
         </div>
-        <dl className={styles.sessionFacts}>
-          <div><dt>Tarif</dt><dd>{displayPrice(session)}</dd></div>
-          <div><dt>Durée</dt><dd><Icon name="clock" />{displayDuration(session)}</dd></div>
-        </dl>
-        <Link href={planningFormationHref(session)} className={`${school.button} ${styles.sessionAction}`}>En savoir plus <Icon name="arrow" /></Link>
+
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-2">
+          <div className="rounded-2xl border border-academy-line/60 bg-academy-bg/65 px-3 py-2.5 dark:border-white/10 dark:bg-black/15">
+            <span className="block text-[9px] font-black uppercase tracking-[.14em] text-academy-muted/70">Tarif</span>
+            <span className="mt-1 block text-base font-black text-academy-ink dark:text-white">{displayPrice(session)}</span>
+          </div>
+          <div className="rounded-2xl border border-academy-line/60 bg-academy-bg/65 px-3 py-2.5 dark:border-white/10 dark:bg-black/15">
+            <span className="block text-[9px] font-black uppercase tracking-[.14em] text-academy-muted/70">Durée</span>
+            <span className="mt-1 flex items-center gap-1.5 text-base font-black text-academy-ink dark:text-white">
+              <Icon name="clock" className="planning-accent-text h-4 w-4" />
+              {displayDuration(session)}
+            </span>
+          </div>
+        </div>
+
+        <div className="flex gap-2 lg:flex-col">
+          <Link
+            href={planningFormationHref(session)}
+            className="planning-neutral-action inline-flex flex-1 items-center justify-center gap-2 rounded-full px-5 py-3.5 text-sm font-black transition hover:-translate-y-0.5"
+          >
+            En savoir plus
+            <Icon name="arrow" className="h-4 w-4" />
+          </Link>
+        </div>
       </div>
     </article>
   );
@@ -478,42 +533,84 @@ function CalendarView({
   }
 
   return (
-    <div className={styles.calendarPanel}>
-      <p className={school.eyebrow}>Vue calendrier</p>
-      <h3>Visualisez les parcours <em>dans le temps.</em></h3>
-      <p className={styles.calendarIntro}>Comparez les sessions, anticipez les examens et identifiez rapidement la meilleure rentrée.</p>
-      <p className={styles.calendarHint}>Faites glisser le calendrier horizontalement</p>
-      <div className={styles.calendarScroll} role="region" aria-label="Calendrier des sessions, défilement horizontal" tabIndex={0}>
-        <div className={styles.timeline}>
-          <div className={styles.timelineHeader}>
-            <span>Formation</span>
-            <div className={styles.timelineMonths}>{timeline.months.map(item => <div key={item.key} style={{ left: item.left + '%', width: item.width + '%' }}>{item.label}</div>)}</div>
+    <div className="relative overflow-hidden rounded-[2.4rem] bg-[#101a29] px-4 py-8 text-white shadow-[0_30px_90px_rgba(16,26,41,.24)] sm:px-7 sm:py-10 lg:px-10 lg:py-12">
+      <div className="absolute -right-40 -top-48 h-[32rem] w-[32rem] rounded-full bg-academy-gold/[.08]" />
+
+      <div className="relative flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+        <div>
+          <span className="inline-flex rounded-full border border-academy-gold/45 bg-academy-gold/10 px-4 py-2 text-[10px] font-black uppercase tracking-[.16em] text-academy-gold">
+            Vue calendrier
+          </span>
+          <h3 className="mt-5 max-w-4xl text-3xl font-black tracking-tight sm:text-4xl lg:text-5xl">
+            Visualisez les parcours dans le temps.
+          </h3>
+          <p className="mt-4 max-w-3xl text-sm font-semibold leading-6 text-white/62 sm:text-base">
+            Comparez les sessions, anticipez les examens et identifiez rapidement la meilleure rentrée.
+          </p>
+        </div>
+
+      </div>
+
+      <p className="relative mt-5 text-[10px] font-black uppercase tracking-[.14em] text-white/45 sm:hidden">
+        Faites glisser le calendrier horizontalement
+      </p>
+
+      <div className="relative mt-7 overflow-x-auto rounded-[1.7rem] bg-[#f8f4ec] text-[#171712] shadow-[inset_0_0_0_1px_rgba(255,255,255,.2)]">
+        <div className="min-w-[68rem] p-5 sm:p-7">
+          <div className="grid grid-cols-[15rem_minmax(48rem,1fr)] border-b border-[#d9cfbd]">
+            <div className="px-2 pb-5 text-[11px] font-black uppercase tracking-[.12em] text-[#6d685f]">Formation</div>
+            <div className="relative min-h-10">
+              {timeline.months.map((item) => (
+                <div key={item.key} className="absolute inset-y-0 border-l border-[#dfd5c4] px-3 text-center text-[11px] font-black uppercase tracking-[.08em] text-[#6d685f]" style={{ left: item.left + '%', width: item.width + '%' }}>
+                  {item.label}
+                </div>
+              ))}
+            </div>
           </div>
-          {sessions.map(session => {
-            const position = sessionPosition(session);
-            const formation = formationFilterForSession(session);
-            const hasExam = Boolean(session.examDate);
-            return <div key={session.id} className={styles.timelineRow}>
-              <div className={`${planningThemeForSession(session)} ${styles.timelineLabel}`}>
-                <p><span aria-hidden="true" className="planning-accent-indicator" />{timelineTitle(session)}</p>
-                <span>{formation?.eyebrow || session.training?.shortDescription || 'Formation professionnelle'}</span>
-              </div>
-              <div className={styles.timelineTrack}>
-                {timeline.months.map(item => <span key={item.key} aria-hidden="true" className={styles.timelineGridline} style={{ left: item.left + '%' }} />)}
-                <Link
-                  href={planningFormationHref(session)}
-                  aria-label={'En savoir plus sur ' + sessionTitle(session)}
-                  title={session.scheduleKind === 'vtc-exam' ? 'Inscription avant le ' + formatSessionDate(session.startDate) + ' · Examen théorique le ' + formatSessionDate(session.endDate) + ' · Examen pratique le ' + formatSessionDate(session.examDate) : hasExam ? 'Examen le ' + formatSessionDate(session.examDate) : 'En savoir plus'}
-                  className={`${planningThemeForSession(session)} planning-calendar-bar ${styles.timelineBar}`}
-                  style={{ left: position.left + '%', width: position.width + '%' }}
-                >
-                  <span>{session.scheduleKind === 'vtc-exam' ? 'Inscription → examen' : timelineDateLabel(session.startDate) + ' → ' + timelineDateLabel(session.endDate)}</span>
-                  <span>{hasExam ? 'E' : '›'}</span>
-                </Link>
-              </div>
-            </div>;
-          })}
-          <p className={styles.timelineLegend}>E = examen · cliquez sur un parcours pour en savoir plus sur la formation</p>
+
+          <div>
+            {sessions.map((session) => {
+              const position = sessionPosition(session);
+              const formation = formationFilterForSession(session);
+              const hasExam = Boolean(session.examDate);
+              const themeClass = planningThemeForSession(session);
+
+              return (
+                <div key={session.id} className="grid min-h-24 grid-cols-[15rem_minmax(48rem,1fr)] border-b border-[#e6dece] last:border-b-0">
+                  <div className={themeClass + ' flex flex-col justify-center px-2 py-4'}>
+                    <div className="flex items-center gap-2">
+                      <span aria-hidden="true" className="planning-accent-indicator h-2 w-2 shrink-0 rounded-full" />
+                      <p className="text-lg font-black tracking-tight">{timelineTitle(session)}</p>
+                    </div>
+                    <p className="mt-1 text-[11px] font-semibold text-[#6d685f]">{formation?.eyebrow || session.training?.shortDescription || 'Formation professionnelle'}</p>
+                  </div>
+
+                  <div className="relative min-h-24 overflow-hidden">
+                    {timeline.months.map((item) => (
+                      <span key={item.key} aria-hidden="true" className="pointer-events-none absolute inset-y-0 border-l border-[#dfd5c4]" style={{ left: item.left + '%' }} />
+                    ))}
+
+                    <Link
+                      href={planningFormationHref(session)}
+                      aria-label={'En savoir plus sur ' + sessionTitle(session)}
+                      title={session.scheduleKind === 'vtc-exam' ? 'Inscription avant le ' + formatSessionDate(session.startDate) + ' · Examen théorique le ' + formatSessionDate(session.endDate) + ' · Examen pratique le ' + formatSessionDate(session.examDate) : hasExam ? 'Examen le ' + formatSessionDate(session.examDate) : 'En savoir plus'}
+                      className={themeClass + ' planning-calendar-bar group absolute top-1/2 flex h-12 -translate-y-1/2 items-center justify-between gap-3 rounded-full px-4 text-left text-xs font-black transition hover:-translate-y-[54%]'}
+                      style={{ left: position.left + '%', width: position.width + '%' }}
+                    >
+                      <span className="truncate">{session.scheduleKind === 'vtc-exam' ? 'Inscription → examen' : timelineDateLabel(session.startDate) + ' → ' + timelineDateLabel(session.endDate)}</span>
+                      <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-[#111923] text-[9px] font-black text-white transition group-hover:scale-110">
+                        {hasExam ? 'E' : '›'}
+                      </span>
+                    </Link>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          <p className="ml-[15rem] mt-1 px-2 pt-4 text-[10px] font-black uppercase tracking-[.08em] text-[#6d685f]">
+            E = examen · cliquez sur un parcours pour en savoir plus sur la formation
+          </p>
         </div>
       </div>
     </div>
@@ -521,43 +618,96 @@ function CalendarView({
 }
 
 function BtsIntakes({ year }: { year: number }) {
-  return <article className={styles.btsCard}>
-    <div><p className={school.eyebrow}>Alternance</p><h3>BTS en alternance</h3>
-      <div className={styles.intakeDates}>
-        <p>Prochaine rentrée <strong>Septembre {year}</strong></p>
-        <p>Rentrée suivante <strong>Septembre {year + 1}</strong></p>
+  return <article className="planning-theme-gold mt-6 rounded-[1.6rem] border border-academy-line/70 bg-white p-5 shadow-soft dark:border-white/10 dark:bg-white/5 sm:p-7">
+    <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
+      <div>
+        <h3 className="text-2xl font-black text-academy-ink dark:text-white">BTS en alternance</h3>
+        <div className="mt-4 grid gap-3 sm:grid-cols-2">
+          <p className="rounded-2xl border border-academy-line/60 bg-academy-bg/55 p-4 text-sm font-semibold text-academy-muted dark:border-white/10 dark:bg-white/5">
+            Prochaine rentrée : <strong className="text-academy-ink dark:text-white">septembre {year}</strong>
+          </p>
+          <p className="rounded-2xl border border-academy-line/60 bg-academy-bg/55 p-4 text-sm font-semibold text-academy-muted dark:border-white/10 dark:bg-white/5">
+            Rentrée suivante : <strong className="text-academy-ink dark:text-white">septembre {year + 1}</strong>
+          </p>
+        </div>
       </div>
+      <Link href="/bts" className="planning-neutral-action inline-flex items-center justify-center gap-2 rounded-full px-5 py-3.5 text-sm font-black transition hover:-translate-y-0.5">
+        En savoir plus <Icon name="arrow" className="h-4 w-4" />
+      </Link>
     </div>
-    <Link href="/bts" className={school.button}>En savoir plus <Icon name="arrow" /></Link>
   </article>;
 }
 
-function MissingDates({ sessions, activeFormation }: { sessions: Session[]; activeFormation: FormationFilterKey }) {
-  const selectedFormation = activeFormation === 'all' ? null : formationFilters.find(formation => formation.key === activeFormation);
-  const missing = alertOptions.filter(option => {
-    if (selectedFormation && !option.slugs.some(slug => selectedFormation.slugs.includes(slug))) return false;
-    return !sessions.some(session => option.slugs.includes(session.training?.slug));
+function MissingDates({
+  sessions,
+  activeFormation,
+}: {
+  sessions: Session[];
+  activeFormation: FormationFilterKey;
+}) {
+  const selectedFormation = activeFormation === 'all' ? null : formationFilters.find((formation) => formation.key === activeFormation);
+  const missing = alertOptions.filter((option) => {
+    if (selectedFormation && !option.slugs.some((slug) => selectedFormation.slugs.includes(slug))) return false;
+    return !sessions.some((session) => option.slugs.includes(session.training?.slug));
   });
+
   if (!missing.length) return null;
 
-  return <section className={`${school.section} ${styles.alertSection}`} aria-labelledby="alerts-title">
-    <div className={school.container}>
-      <div className={school.sectionHeading}>
-        <div><p className={school.eyebrow}>Alertes personnalisées</p><h2 id="alerts-title">Pas encore de date ?<br /><em>Gardez une longueur d’avance.</em></h2></div>
-        <p>Les formations sans session ouverte restent accessibles : créez une alerte et soyez prévenu dès la publication d’une nouvelle rentrée.</p>
+  return (
+    <section className="border-y border-academy-line/70 bg-academy-soft/55 py-16 sm:py-20">
+      <div className="page-container">
+        <div className="max-w-4xl">
+          <p className="text-[11px] font-black uppercase tracking-[.22em] text-academy-gold-strong">Alertes personnalisées</p>
+          <h2 className="mt-4 text-3xl font-black tracking-tight text-academy-ink dark:text-white sm:text-5xl">
+            Pas encore de date ? Gardez une longueur d’avance.
+          </h2>
+          <p className="mt-4 max-w-3xl text-base font-semibold leading-7 text-academy-muted sm:text-lg">
+            Les formations sans session ouverte restent accessibles : créez une alerte et soyez prévenu dès la publication d’une nouvelle rentrée.
+          </p>
+        </div>
+
+        <div className="mt-9 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          {missing.map((option, index) => (
+            <Link
+              key={option.title}
+              href={alertHref(option.formation)}
+              className={planningThemeClass(option.accent) + ' planning-accent-card group rounded-[1.5rem] border bg-academy-surface p-5 shadow-[0_16px_45px_rgba(54,40,20,.06)] transition hover:-translate-y-1'}
+            >
+              <div className="flex items-center justify-between">
+                <span className="planning-accent-icon grid h-9 w-9 place-items-center rounded-full text-[10px] font-black">
+                  0{index + 1}
+                </span>
+                <span className="planning-accent-text text-[9px] font-black uppercase tracking-[.14em]">{option.label}</span>
+              </div>
+              <h3 className="mt-6 text-xl font-black text-academy-ink dark:text-white">{option.title}</h3>
+              <p className="mt-3 min-h-[3.5rem] text-sm font-semibold leading-6 text-academy-muted">{option.description}</p>
+              <span className="mt-6 flex items-center justify-between border-t border-academy-line/60 pt-4 text-xs font-black text-academy-ink dark:text-white">
+                Être prévenu à l’ouverture
+                <span className="planning-neutral-action grid h-8 w-8 place-items-center rounded-full transition group-hover:translate-x-1">
+                  <Icon name="arrow" className="h-4 w-4" />
+                </span>
+              </span>
+            </Link>
+          ))}
+        </div>
+
+        <div className="relative mt-8 overflow-hidden rounded-[2rem] bg-[#101a29] p-6 text-white shadow-[0_25px_80px_rgba(16,26,41,.22)] sm:p-8">
+          <div className="absolute -right-20 -top-24 h-64 w-64 rounded-full bg-academy-gold/15" />
+          <div className="relative grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
+            <div>
+              <p className="text-[10px] font-black uppercase tracking-[.2em] text-academy-gold">Mon alerte planning</p>
+              <h3 className="mt-3 text-2xl font-black tracking-tight sm:text-3xl">Recevez uniquement les dates qui vous intéressent.</h3>
+              <p className="mt-3 max-w-2xl text-sm font-semibold leading-6 text-white/65">Formation, centre et période souhaitée : l’équipe vous recontacte dès qu’une session adaptée est ouverte.</p>
+            </div>
+            <Link href="/contact?motif=alerte-planning" className="inline-flex items-center justify-center gap-2 rounded-full bg-academy-gold px-6 py-4 text-sm font-black text-academy-gold-text transition hover:-translate-y-0.5">
+              Créer mon alerte
+              <Icon name="arrow" className="h-4 w-4" />
+            </Link>
+          </div>
+        </div>
       </div>
-      <div className={styles.alertGrid}>
-        {missing.map((option, index) => <Link key={option.title} href={alertHref(option.formation)} className={`${planningThemeClass(option.accent)} ${styles.resourceCard}`}>
-          <span className={school.eyebrow}>0{index + 1} / {option.label}</span><h3>{option.title}</h3><p>{option.description}</p>
-          <span className={styles.resourceAction}>Être prévenu à l’ouverture <Icon name="arrow" /></span>
-        </Link>)}
-      </div>
-      <div className={styles.alertBanner}>
-        <div><p className={school.eyebrow}>Mon alerte planning</p><h3>Recevez uniquement les dates qui vous intéressent.</h3><p>Formation, centre et période souhaitée : l’équipe vous recontacte dès qu’une session adaptée est ouverte.</p></div>
-        <Link href="/contact?motif=alerte-planning" className={school.button}>Créer mon alerte <Icon name="arrow" /></Link>
-      </div>
-    </div>
-  </section>;
+    </section>
+  );
 }
 
 export function PlanningClient({ initialSessions, btsIntakeYear }: { initialSessions: Session[]; btsIntakeYear: number }) {
@@ -604,135 +754,261 @@ export function PlanningClient({ initialSessions, btsIntakeYear }: { initialSess
   }
 
   return (
-    <div className={`${school.page} ${styles.page}`}>
-      <section className={`${school.hero} ${styles.hero}`} aria-labelledby="planning-title">
-        <div className={`${school.container} ${school.heroGrid} ${styles.heroGrid}`}>
-          <div className={school.heroCopy}>
-            <p className={school.eyebrow}><span className={school.smallLine} /> Planning des formations</p>
-            <h1 id="planning-title">Trouvez votre<br />formation.<br /><em>Choisissez<br /> votre date.</em></h1>
-            <p className={school.intro}>APS, A3P, Dirigeant, SSIAP 1, VTC ou BTS : comparez les prochaines rentrées et trouvez la session qui correspond à votre projet.</p>
-            <div className={school.heroActions}>
-              <a href="#choisir-formation" className={school.button}>Choisir ma formation <Icon name="arrow" /></a>
-              <button type="button" onClick={showCalendar} className={school.textLink}>Voir le calendrier <Icon name="calendar" /></button>
+    <main className={`${styles.page} overflow-hidden pb-24`}>
+      <section className="relative isolate overflow-hidden border-b border-academy-line/70 bg-[#f7f1e7] px-4 py-14 text-[#141820] sm:py-16 lg:py-20">
+        <div className="absolute -right-40 -top-48 -z-10 h-[34rem] w-[34rem] rounded-full bg-academy-gold/20" />
+        <div className="absolute -bottom-48 left-[38%] -z-10 h-[28rem] w-[28rem] rounded-full border border-academy-gold/20" />
+
+        <div className="page-container grid gap-9 lg:grid-cols-[1.2fr_.8fr] lg:items-center">
+          <div className="reveal">
+            <span className="inline-flex items-center gap-2 rounded-full border border-[#d9b548] bg-white/60 px-4 py-2 text-[10px] font-black uppercase tracking-[.2em] text-[#8f6810]">
+              <Icon name="calendar" className="h-4 w-4" />
+              Planning des formations
+            </span>
+            <h1 className="mt-6 max-w-5xl text-4xl font-black tracking-[-.045em] sm:text-5xl lg:text-[4.35rem] lg:leading-[1.02]">
+              Trouvez votre formation.<br />
+              <em className="text-[#b9820a]">Choisissez votre date.</em>
+            </h1>
+            <p className="mt-6 max-w-2xl text-base font-semibold leading-8 text-[#5f625f] sm:text-lg">
+              APS, A3P, Dirigeant, SSIAP 1, VTC ou BTS : accédez directement au bon parcours, comparez les rentrées et vérifiez les places disponibles.
+            </p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <a href="#choisir-formation" className="inline-flex items-center justify-center gap-2 rounded-full bg-[#111b2a] px-6 py-4 text-sm font-black text-white transition hover:-translate-y-0.5">
+                Choisir ma formation
+                <Icon name="arrow" className="h-4 w-4 text-academy-gold" />
+              </a>
+              <button type="button" onClick={showCalendar} className="inline-flex items-center justify-center gap-2 rounded-full border border-[#cfc3ae] bg-white/70 px-6 py-4 text-sm font-black text-[#141820] transition hover:-translate-y-0.5 hover:border-academy-gold">
+                Voir le calendrier
+                <Icon name="calendar" className="h-4 w-4 text-[#b9820a]" />
+              </button>
             </div>
-            <p className={school.heroTrust}><span aria-hidden="true">✦</span> Les prochaines dates, les lieux et les places disponibles.</p>
           </div>
-          <figure className={`${school.heroPhoto} ${styles.heroPhoto}`}>
-            <Image src="/images/campus/campus-accueil.jpg" alt="L’accueil d’Intégrale Academy à Puget-sur-Argens, avec ses fauteuils jaunes et l’entrée des salles de formation" fill priority sizes="(max-width: 800px) 100vw, 50vw" />
-            <span className={school.photoLabel}>Votre prochain chapitre.</span>
-            <figcaption><span>INTÉGRALE ACADEMY</span><span>Une date pour commencer. <Icon name="arrow" /></span></figcaption>
-          </figure>
+
+          <div className="reveal relative overflow-hidden rounded-[2rem] bg-[#111b2a] p-6 text-white shadow-[0_30px_90px_rgba(17,27,42,.18)] sm:p-8">
+            <div className="absolute -right-24 -top-28 h-64 w-64 rounded-full bg-academy-gold/12" />
+            <div className="relative">
+              <p className="text-[10px] font-black uppercase tracking-[.2em] text-academy-gold">Votre planning, simplement</p>
+              <h2 className="mt-4 text-2xl font-black tracking-tight sm:text-3xl">Du projet à l’inscription en trois étapes.</h2>
+              <div className="mt-7 divide-y divide-white/10 border-y border-white/10">
+                {[
+                  ['01', 'Choisissez la formation', 'Accès direct à chaque parcours.'],
+                  ['02', 'Comparez les dates', 'Liste détaillée ou frise calendrier.'],
+                  ['03', 'Découvrez la formation', 'Programme, prérequis et inscription.'],
+                ].map(([number, label, description]) => (
+                  <div key={number} className="grid grid-cols-[2.7rem_1fr] gap-4 py-4">
+                    <span className="grid h-9 w-9 place-items-center rounded-full bg-academy-gold text-[10px] font-black text-academy-gold-text">{number}</span>
+                    <span>
+                      <span className="block text-sm font-black">{label}</span>
+                      <span className="mt-1 block text-xs font-semibold text-white/50">{description}</span>
+                    </span>
+                  </div>
+                ))}
+              </div>
+              <p className="mt-5 flex items-center gap-2 text-xs font-bold text-white/55">
+                <span className="h-2 w-2 rounded-full bg-emerald-400" />
+                Retrouvez les prochaines dates de vos formations
+              </p>
+            </div>
+          </div>
         </div>
-        <nav className={`${school.container} ${school.chapterNav}`} aria-label="Les rubriques du planning">
-          <span>PRÉPARONS VOTRE RENTRÉE</span>
-          <a href="#choisir-formation"><span>01</span> Votre formation</a>
-          <a href="#sessions"><span>02</span> Les prochaines dates</a>
-          <a href="#preparer-inscription"><span>03</span> Votre inscription</a>
-          <a href="#questions"><span>04</span> Vos questions</a>
-        </nav>
       </section>
 
-      <section className={styles.stepsSection} aria-label="Du projet à l’inscription en trois étapes">
-        <div className={`${school.container} ${styles.stepsGrid}`}>
-          {[
-            ['01', 'Choisissez la formation', 'Accès direct à chaque parcours.'],
-            ['02', 'Comparez les dates', 'Liste détaillée ou frise calendrier.'],
-            ['03', 'Découvrez la formation', 'Programme, prérequis et inscription.'],
-          ].map(([number, label, description]) => <div key={number}><span>{number}</span><div><h2>{label}</h2><p>{description}</p></div></div>)}
-        </div>
-      </section>
-
-      <section id="choisir-formation" className={`${school.section} ${styles.formationSection}`} aria-labelledby="formations-title">
-        <div className={school.container}>
-          <div className={school.sectionHeading}>
-            <div><p className={school.eyebrow}>01 / Votre formation</p><h2 id="formations-title">Quel parcours<br /><em>vous ressemble ?</em></h2></div>
-            <p>Cliquez sur votre formation pour afficher les dates correspondantes, puis choisissez le centre et la session qui vous conviennent.</p>
+      <section id="choisir-formation" className="relative overflow-hidden bg-[#101a29] py-14 text-white sm:py-16">
+        <div className="absolute -left-40 -top-40 h-80 w-80 rounded-full bg-academy-gold/[.07]" />
+        <div className="page-container relative">
+          <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+              <p className="text-[10px] font-black uppercase tracking-[.2em] text-academy-gold">Accès direct</p>
+              <h2 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl">Quelle formation recherchez-vous ?</h2>
+              <p className="mt-3 max-w-3xl text-sm font-semibold leading-6 text-white/58 sm:text-base">Cliquez sur votre parcours pour afficher immédiatement les dates correspondantes.</p>
+            </div>
+            <button type="button" onClick={() => chooseFormation('all')} className={'w-fit rounded-full px-5 py-3 text-xs font-black transition ' + (activeFormation === 'all' ? 'bg-academy-gold text-academy-gold-text' : 'border border-white/15 bg-white/5 text-white hover:bg-white/10')}>
+              Toutes les formations
+            </button>
           </div>
-          <button type="button" aria-pressed={activeFormation === 'all'} onClick={() => chooseFormation('all')} className={`${styles.allFormations} ${activeFormation === 'all' ? styles.activeFilter : ''}`}>Toutes les formations <Icon name="arrow" /></button>
-          <div className={styles.formationGrid}>
+
+          <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
             {formationFilters.map((formation, index) => {
               const count = formationSessionCounts[formation.key];
               const selected = activeFormation === formation.key;
-              return <button key={formation.key} type="button" aria-pressed={selected} onClick={() => chooseFormation(formation.key)} className={`${planningThemeClass(formation.accent)} ${styles.formationCard} ${selected ? styles.selectedFormation : ''}`}>
-                <span className={styles.formationEyebrow}><span aria-hidden="true" className="planning-accent-indicator" />0{index + 1} / {formation.eyebrow}</span>
-                <strong>{formation.label}</strong><span className={styles.formationDescription}>{formation.description}</span>
-                <span className={styles.formationAction}>{formation.key === 'bts' ? `Rentrées ${btsIntakeYear} et ${btsIntakeYear + 1}` : count ? count + (count > 1 ? ' sessions' : ' session') : 'Créer une alerte'}<Icon name="arrow" /></span>
-              </button>;
+              return (
+                <button
+                  key={formation.key}
+                  type="button"
+                  aria-pressed={selected}
+                  onClick={() => chooseFormation(formation.key)}
+                  className={planningThemeClass(formation.accent) + ' planning-formation-card group flex min-h-[13.5rem] flex-col rounded-[1.45rem] border p-5 text-left transition duration-300 hover:-translate-y-1 ' + (selected ? 'planning-formation-card-selected' : '')}
+                >
+                  <span className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[.14em] text-white/55">
+                    <span aria-hidden="true" className="planning-accent-indicator h-2 w-2 shrink-0 rounded-full" />
+                    0{index + 1} · {formation.eyebrow}
+                  </span>
+                  <span className="mt-5 block text-xl font-black tracking-tight">{formation.label}</span>
+                  <span className="mt-2 block text-xs font-semibold leading-5 text-white/48">{formation.description}</span>
+                  <span className="mt-auto flex items-center justify-between border-t border-white/10 pt-4 text-[10px] font-black uppercase tracking-[.08em]">
+                    {formation.key === 'bts' ? `Rentrées ${btsIntakeYear} et ${btsIntakeYear + 1}` : count ? count + (count > 1 ? ' sessions' : ' session') : 'Créer une alerte'}
+                    <span className={'grid h-7 w-7 place-items-center rounded-full transition group-hover:translate-x-1 ' + (selected ? 'bg-academy-gold text-academy-gold-text' : 'bg-white/10 text-white')}>
+                      <Icon name="arrow" className="h-3.5 w-3.5" />
+                    </span>
+                  </span>
+                </button>
+              );
             })}
           </div>
         </div>
       </section>
 
-      <section id="sessions" className={`${school.section} ${styles.sessionsSection} ${activePlanningTheme}`} aria-labelledby="sessions-title">
-        <div className={school.container}>
-          <div className={school.sectionHeading}>
-            <div><p className={school.eyebrow}>02 / Les prochaines dates</p><h2 id="sessions-title">Votre prochaine rentrée,<br /><em>à portée de main.</em></h2></div>
-            <p>Consultez les dates, les lieux et les disponibilités. Chaque session vous donne accès au programme, aux prérequis et aux modalités d’inscription.</p>
+      <section id="sessions" className={activePlanningTheme + ' page-container py-14 sm:py-20'}>
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <p className="text-2xl font-black text-academy-ink dark:text-white">
+              {activeFormation === 'bts' ? 'Rentrées BTS' : filteredSessions.length + (filteredSessions.length > 1 ? ' sessions disponibles' : ' session disponible')}
+            </p>
+            <p className="mt-1 text-sm font-semibold text-academy-muted">
+              {activeFormation === 'bts' ? 'BTS en alternance' : view === 'list' ? 'Triées par prochaine date de rentrée ou échéance d’inscription' : 'Affichées dans le calendrier'}
+            </p>
           </div>
-          <div className={styles.sessionToolbar}>
-            <div className={styles.sessionCount} aria-live="polite" aria-atomic="true"><strong>{activeFormation === 'bts' ? 'Rentrées BTS' : filteredSessions.length + (filteredSessions.length > 1 ? ' sessions disponibles' : ' session disponible')}</strong><p>{activeFormation === 'bts' ? 'BTS en alternance' : view === 'list' ? 'Triées par prochaine date de rentrée ou échéance d’inscription' : 'Affichées dans le calendrier'}</p></div>
-            {activeFormation !== 'bts' && <div className={styles.filters}>
-              <div className={styles.filterGroup} role="group" aria-label="Filtrer les sessions par centre">
-                {sessionLocationFilters.map(filter => <button key={filter.key} type="button" aria-pressed={locationFilter === filter.key} onClick={() => { setLocationFilter(filter.key); setShowAll(false); }} className={locationFilter === filter.key ? styles.activeFilter : ''}>{filter.label}</button>)}
-              </div>
-              <div className={styles.filterGroup} role="group" aria-label="Affichage des sessions">
-                <button type="button" aria-pressed={view === 'list'} onClick={() => setView('list')} className={view === 'list' ? styles.activeFilter : ''}>Vue liste</button>
-                <button type="button" aria-pressed={view === 'calendar'} onClick={() => setView('calendar')} className={view === 'calendar' ? styles.activeFilter : ''}>Vue calendrier</button>
-              </div>
-            </div>}
-          </div>
-          {activeFormation === 'bts' ? <BtsIntakes year={btsIntakeYear} /> : filteredSessions.length ? (
-            view === 'list' ? <>
-              <div className={styles.sessionList}>{visibleSessions.map((session, index) => <SessionCard key={session.id} session={session} isNext={index === 0} />)}</div>
-              {filteredSessions.length > visibleSessions.length && <div className={styles.showMore}><button type="button" onClick={() => setShowAll(true)} className={school.button}>Voir toutes les dates ({filteredSessions.length}) <Icon name="arrow" /></button></div>}
-            </> : <CalendarView sessions={filteredSessions} />
-          ) : <div className={styles.emptyState}>
-            <Icon name="search" /><h3>Aucune session ouverte pour cette sélection.</h3><p>Choisissez un autre centre, consultez toutes les sessions ou créez une alerte pour être prévenu de la prochaine date disponible.</p>
-            <div><button type="button" onClick={() => { setLocationFilter('all'); chooseFormation('all'); }} className={school.button}>Voir toutes les sessions</button><Link href="/contact?motif=alerte-planning" className={school.textLink}>Créer une alerte <Icon name="arrow" /></Link></div>
-          </div>}
-          {activeFormation === 'all' && <BtsIntakes year={btsIntakeYear} />}
+
+          {activeFormation !== 'bts' ? <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+            <div className="flex w-fit items-center rounded-full border border-academy-line bg-white p-1 dark:bg-white/5" aria-label="Filtrer les sessions par centre">
+              <span className="hidden px-3 text-[9px] font-black uppercase tracking-[.12em] text-academy-muted sm:inline">Centre</span>
+              {sessionLocationFilters.map((filter) => {
+                const selected = locationFilter === filter.key;
+                return (
+                  <button
+                    key={filter.key}
+                    type="button"
+                    aria-pressed={selected}
+                    onClick={() => {
+                      setLocationFilter(filter.key);
+                      setShowAll(false);
+                    }}
+                    className={'rounded-full px-3.5 py-2.5 text-xs font-black transition sm:px-4 ' + (selected ? 'planning-neutral-action' : 'text-academy-muted hover:text-academy-ink')}
+                  >
+                    {filter.label}
+                  </button>
+                );
+              })}
+            </div>
+
+            <div className="flex w-fit rounded-full border border-academy-line bg-white p-1 dark:bg-white/5">
+              <button type="button" aria-pressed={view === 'list'} onClick={() => setView('list')} className={'rounded-full px-4 py-2.5 text-xs font-black transition ' + (view === 'list' ? 'planning-neutral-action' : 'text-academy-muted hover:text-academy-ink')}>Vue liste</button>
+              <button type="button" aria-pressed={view === 'calendar'} onClick={() => setView('calendar')} className={'rounded-full px-4 py-2.5 text-xs font-black transition ' + (view === 'calendar' ? 'planning-neutral-action' : 'text-academy-muted hover:text-academy-ink')}>Vue calendrier</button>
+            </div>
+          </div> : null}
         </div>
+
+        {activeFormation === 'bts' ? <BtsIntakes year={btsIntakeYear} /> : filteredSessions.length ? (
+          view === 'list' ? (
+            <>
+              <div className="mt-6 grid gap-4">
+                {visibleSessions.map((session, index) => (
+                  <SessionCard key={session.id} session={session} isNext={index === 0} />
+                ))}
+              </div>
+              {filteredSessions.length > visibleSessions.length ? (
+                <div className="mt-7 text-center">
+                  <button type="button" onClick={() => setShowAll(true)} className="planning-accent-hover rounded-full border border-academy-line bg-white px-6 py-3.5 text-sm font-black text-academy-ink shadow-soft transition hover:-translate-y-0.5 dark:bg-white/5 dark:text-white">
+                    Voir toutes les dates ({filteredSessions.length})
+                  </button>
+                </div>
+              ) : null}
+            </>
+          ) : (
+            <div className="mt-8"><CalendarView sessions={filteredSessions} /></div>
+          )
+        ) : (
+          <div className="mt-6 rounded-[2rem] border border-dashed border-academy-line bg-white/65 p-8 text-center shadow-soft dark:bg-white/5 sm:p-12">
+            <Icon name="search" className="planning-accent-text mx-auto h-10 w-10" />
+            <h3 className="mt-4 text-2xl font-black text-academy-ink dark:text-white">Aucune session ouverte pour cette sélection.</h3>
+            <p className="mx-auto mt-3 max-w-xl text-sm font-semibold leading-6 text-academy-muted">Choisissez un autre centre, consultez toutes les sessions ou créez une alerte pour être prévenu de la prochaine date disponible.</p>
+            <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
+              <button type="button" onClick={() => { setLocationFilter('all'); chooseFormation('all'); }} className="rounded-full bg-[#101a29] px-5 py-3 text-sm font-black text-white">Voir toutes les sessions</button>
+              <Link href="/contact?motif=alerte-planning" className="planning-neutral-action rounded-full px-5 py-3 text-sm font-black">Créer une alerte</Link>
+            </div>
+          </div>
+        )}
+        {activeFormation === 'all' ? <BtsIntakes year={btsIntakeYear} /> : null}
       </section>
 
       <MissingDates sessions={sortedSessions} activeFormation={activeFormation} />
 
-      <section id="preparer-inscription" className={school.section} aria-labelledby="prepare-title">
-        <div className={school.container}>
-          <div className={school.sectionHeading}>
-            <div><p className={school.eyebrow}>03 / Préparez votre inscription</p><h2 id="prepare-title">Toutes les réponses.<br /><em>Pour faire votre choix.</em></h2></div>
-            <p>Découvrez les formations, vérifiez votre financement et échangez avec l’équipe avant de réserver votre place.</p>
-          </div>
-          <div className={styles.resourceGrid}>
-            {[
-              ['01', 'Découvrir les formations', 'Comparer APS, A3P, SSIAP 1, VTC et BTS.', '/formations-securite'],
-              ['02', 'Trouver un financement', 'CPF, France Travail, employeur et autres solutions.', '/financements'],
-              ['03', 'Recruter ou former', 'Alternance, POEI et montée en compétences.', '/entreprises'],
-              ['04', 'Parler à Cassandre', 'Valider mon projet et mes prochaines étapes.', '/contact?motif=rdv'],
-            ].map(([number, label, description, href]) => <Link key={number} href={href} className={styles.resourceCard}>
-              <span className={school.eyebrow}>{number}</span><h3>{label}</h3><p>{description}</p><span className={styles.resourceAction}>En savoir plus <Icon name="arrow" /></span>
-            </Link>)}
-          </div>
-          <div id="questions" className={styles.questionsGrid}>
-            <div><p className={school.eyebrow}>04 / Questions fréquentes</p><h3 className={styles.questionsTitle}>Avant de réserver une place</h3>
-              <div className={styles.faq}>
-                {[
-                  ['Comment savoir s’il reste des places ?', 'Le nombre affiché sur chaque session est synchronisé avec les informations publiées par l’équipe.'],
-                  ['Puis-je demander un financement avant de m’inscrire ?', 'Oui. Nous pouvons étudier votre situation avant la validation définitive de votre inscription.'],
-                  ['Que faire si aucune date ne me convient ?', 'Créez une alerte planning : l’équipe vous préviendra dès qu’une nouvelle session sera ouverte.'],
-                ].map(([question, answer]) => <details key={question}><summary>{question}<span className={school.plus} aria-hidden="true">+</span></summary><p>{answer}</p></details>)}
-              </div>
+      <section className="page-container py-16 sm:py-20">
+        <div className="max-w-4xl">
+          <p className="text-[11px] font-black uppercase tracking-[.22em] text-academy-gold-strong">Préparez votre inscription</p>
+          <h2 className="mt-4 text-3xl font-black tracking-tight text-academy-ink dark:text-white sm:text-5xl">Toutes les réponses avant de choisir votre session.</h2>
+          <p className="mt-4 max-w-3xl text-base font-semibold leading-7 text-academy-muted">Découvrez les formations, vérifiez votre financement et échangez avec l’équipe avant de réserver votre place.</p>
+        </div>
+
+        <div className="mt-9 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          {[
+            ['01', 'Découvrir les formations', 'Comparer APS, A3P, SSIAP 1, VTC et BTS.', '/formations-securite'],
+            ['02', 'Trouver un financement', 'CPF, France Travail, employeur et autres solutions.', '/financements'],
+            ['03', 'Recruter ou former', 'Alternance, POEI et montée en compétences.', '/entreprises'],
+            ['04', 'Parler à Cassandre', 'Valider mon projet et mes prochaines étapes.', '/contact?motif=rdv'],
+          ].map(([number, label, description, href]) => (
+            <Link key={number} href={href} className="group flex min-h-[15rem] flex-col rounded-[1.5rem] border border-academy-line/70 bg-academy-surface p-5 shadow-[0_16px_45px_rgba(54,40,20,.06)] transition hover:-translate-y-1 hover:border-academy-gold">
+              <span className="text-2xl font-black text-academy-gold">{number}</span>
+              <h3 className="mt-6 text-lg font-black text-academy-ink dark:text-white">{label}</h3>
+              <p className="mt-3 text-sm font-semibold leading-6 text-academy-muted">{description}</p>
+              <span className="mt-auto flex items-center justify-between border-t border-academy-line/60 pt-4 text-xs font-black text-academy-ink dark:text-white">
+                En savoir plus
+                <Icon name="arrow" className="h-4 w-4 text-academy-gold-strong transition group-hover:translate-x-1" />
+              </span>
+            </Link>
+          ))}
+        </div>
+
+        <div className="mt-10 grid gap-6 lg:grid-cols-[1.1fr_.9fr]">
+          <div>
+            <p className="text-[10px] font-black uppercase tracking-[.18em] text-academy-gold-strong">Questions fréquentes</p>
+            <h3 className="mt-3 text-2xl font-black text-academy-ink dark:text-white sm:text-3xl">Avant de réserver une place</h3>
+            <div className="mt-5 grid gap-3">
+              {[
+                ['Comment savoir s’il reste des places ?', 'Le nombre affiché sur chaque session est synchronisé avec les informations publiées par l’équipe.'],
+                ['Puis-je demander un financement avant de m’inscrire ?', 'Oui. Nous pouvons étudier votre situation avant la validation définitive de votre inscription.'],
+                ['Que faire si aucune date ne me convient ?', 'Créez une alerte planning : l’équipe vous préviendra dès qu’une nouvelle session sera ouverte.'],
+              ].map(([question, answer]) => (
+                <details key={question} className="group rounded-2xl border border-academy-line/70 bg-academy-surface p-4">
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-sm font-black text-academy-ink dark:text-white">
+                    {question}
+                    <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-academy-gold text-academy-gold-text transition group-open:rotate-45">+</span>
+                  </summary>
+                  <p className="mt-3 border-t border-academy-line/60 pt-3 text-sm font-semibold leading-6 text-academy-muted">{answer}</p>
+                </details>
+              ))}
             </div>
-            <div className={styles.adviserPanel}>
-              <p className={school.eyebrow}>Besoin d’un conseil ?</p><h3>Parlons de votre<br /><em>prochaine rentrée.</em></h3><p>Cassandre vous aide à choisir la formation, la session et le financement adaptés à votre projet.</p>
-              <div className={styles.adviser}><span aria-hidden="true">CM</span><div><strong>Cassandre</strong><p>Responsable commerciale</p></div></div>
-              <Link href="/contact?motif=rdv" className={school.button}>Réserver un échange <Icon name="arrow" /></Link>
+          </div>
+
+          <div className="relative overflow-hidden rounded-[2rem] bg-[#101a29] p-6 text-white shadow-[0_25px_80px_rgba(16,26,41,.20)] sm:p-8">
+            <div className="absolute -bottom-24 -right-16 h-64 w-64 rounded-full bg-academy-gold/15" />
+            <div className="relative">
+              <p className="text-[10px] font-black uppercase tracking-[.2em] text-academy-gold">Besoin d’un conseil ?</p>
+              <h3 className="mt-4 text-2xl font-black tracking-tight sm:text-3xl">Parlons de votre prochaine rentrée.</h3>
+              <p className="mt-4 text-sm font-semibold leading-6 text-white/65">Cassandre vous aide à choisir la formation, la session et le financement adaptés à votre projet.</p>
+              <div className="mt-7 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex items-center gap-3">
+                  <span className="grid h-12 w-12 place-items-center rounded-full bg-academy-gold text-sm font-black text-academy-gold-text">CM</span>
+                  <span>
+                    <span className="block text-xs font-black uppercase tracking-[.12em]">Cassandre</span>
+                    <span className="mt-1 block text-xs font-semibold text-white/50">Responsable commerciale</span>
+                  </span>
+                </div>
+                <Link href="/contact?motif=rdv" className="inline-flex items-center justify-center gap-2 rounded-full bg-academy-gold px-5 py-3.5 text-sm font-black text-academy-gold-text transition hover:-translate-y-0.5">
+                  Réserver un échange
+                  <Icon name="arrow" className="h-4 w-4" />
+                </Link>
+              </div>
             </div>
           </div>
         </div>
       </section>
-      <nav className={styles.mobileActions} aria-label="Contacter l’équipe admissions">
-        <a href="tel:0422470768">Appeler</a><Link href="/contact?motif=alerte-planning">Alerte</Link><Link href="https://assistance-alw9.onrender.com/demande-informations-formations">S’inscrire</Link>
-      </nav>
-    </div>
+
+      <div className="fixed inset-x-3 bottom-[calc(.75rem+env(safe-area-inset-bottom))] z-40 grid grid-cols-3 gap-2 rounded-[1.5rem] border border-white/70 bg-white/92 p-2 shadow-[0_18px_60px_rgba(17,17,17,.18)] backdrop-blur md:hidden">
+        <Link href="tel:0422470768" className="rounded-2xl bg-[#101a29] px-3 py-3 text-center text-xs font-black text-white">Appeler</Link>
+        <Link href="/contact?motif=alerte-planning" className="rounded-2xl border border-academy-line bg-white px-3 py-3 text-center text-xs font-black text-academy-ink">Alerte</Link>
+        <Link href="https://assistance-alw9.onrender.com/demande-informations-formations" className="planning-neutral-action rounded-2xl px-3 py-3 text-center text-xs font-black">S’inscrire</Link>
+      </div>
+    </main>
   );
 }
