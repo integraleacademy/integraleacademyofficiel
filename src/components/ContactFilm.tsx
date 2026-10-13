@@ -133,7 +133,7 @@ export function ContactFilm() {
             ))}
             <button type="button" onClick={() => selectScene(7)} aria-current={current === 7 ? 'step' : undefined} aria-controls="contact-scene-projet">Votre projet</button>
           </nav>
-          <a href="#demande" className={styles.contact}>Parlons de votre projet <span aria-hidden="true">↗</span></a>
+          <a href="#demande" className={styles.contact}>Parlons de votre projet <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12" /></svg></a>
         </div>
         {!quietMode && <button type="button" className={styles.motion} onClick={toggleMotion}>{paused ? 'Reprendre l’animation' : 'Mettre l’animation en pause'}</button>}
       </div>

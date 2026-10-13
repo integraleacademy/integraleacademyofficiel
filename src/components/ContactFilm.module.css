@@ -25,8 +25,8 @@
 .chapters button[aria-current]::after { transform: scaleX(1); }
 .chapters button:hover { color: rgb(var(--accent-strong)); }
 .contact { display: inline-flex; min-height: 44px; align-items: center; gap: 16px; color: rgb(var(--text-main)); font-size: 12px; font-weight: 800; white-space: nowrap; }
-.contact span { color: rgb(var(--accent-strong)); font-size: 25px; line-height: 1; transition: transform .2s; }
-.contact:hover span { transform: translate(2px, -2px); }
+.contact svg { width: 22px; height: 22px; flex-shrink: 0; color: rgb(var(--accent-strong)); font-size: 25px; line-height: 1; transition: transform .2s; }
+.contact:hover svg { transform: translate(2px, -2px); }
 .motion { display: block; min-height: 44px; margin-top: 4px; border: 0; padding: 10px 0; background: transparent; color: rgb(var(--text-muted)); font: inherit; font-size: 10px; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
 .motion:hover { color: rgb(var(--accent-strong)); }
 .section button:focus-visible, .section a:focus-visible { outline: 2px solid rgb(var(--accent-strong)); outline-offset: 5px; }
