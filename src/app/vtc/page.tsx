@@ -21,7 +21,6 @@ export const metadata: Metadata = createPageMetadata('/vtc');
 const contactHref = (subject: string) => `/contact?formation=vtc&objet=${encodeURIComponent(subject)}`;
 const registrationFormUrl = 'https://assistance-alw9.onrender.com/demande-informations-formations';
 const navigationItems = [
-  { label: 'Pack Intégrale', href: '#pack-integrale' },
   { label: 'Formule', href: '#formule' },
   { label: 'Formation', href: '#formation' },
   { label: 'Dates & tarifs', href: '#dates-tarifs' },
@@ -172,6 +171,14 @@ export default function VtcPage() {
       </div>
     </section>
 
+    <TrainingSectionNavigation
+      mark="VTC"
+      title="Chauffeur VTC"
+      items={navigationItems}
+      registrationHref={registrationFormUrl}
+      theme="violet"
+    />
+
     <TrainingWelcomePack course="vtc" />
 
     <CourseJourney course="vtc" />
@@ -186,14 +193,6 @@ export default function VtcPage() {
         </div>
       </div>
     </section>
-
-    <TrainingSectionNavigation
-      mark="VTC"
-      title="Chauffeur VTC"
-      items={navigationItems}
-      registrationHref={registrationFormUrl}
-      theme="violet"
-    />
 
     <section id="formule" className={styles.promise}>
       <div className={styles.container}>

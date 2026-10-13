@@ -329,11 +329,11 @@ export function BtsMosReferencePage() {
         </div>
       </section>
 
+      <BtsSectionNavigation code="MOS" competencyHref="#metier" competencyLabel="Le métier" faqHref="#faq-mos" registrationHref={applicationUrl} />
+
       <TrainingWelcomePack course="bts-mos" />
 
       <CourseJourney course="bts-mos" />
-
-      <BtsSectionNavigation code="MOS" competencyHref="#metier" competencyLabel="Le métier" faqHref="#faq-mos" registrationHref={applicationUrl} />
 
       <BtsStudentBenefits courseName="BTS MOS" />
 

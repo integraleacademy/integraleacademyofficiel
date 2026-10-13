@@ -29,7 +29,6 @@ const relatedCourses = [
 ];
 
 const navigationItems = [
-  { label: 'Pack Intégrale', href: '#pack-integrale' },
   { label: 'Missions', href: '#missions' },
   { label: 'Admission', href: '#admission' },
   { label: 'Programme', href: '#programme' },
@@ -231,9 +230,6 @@ export function SsiapCoursePage({ config, sessions = [] }: { config: SsiapCourse
       </section>
       )}
 
-      {heroKey && <IntegraleWelcomePack course={heroKey} />}
-      {heroKey && <CourseJourney course={heroKey} />}
-
       {heroKey ? <TrainingSectionNavigation
         mark="SSIAP"
         title={config.label}
@@ -256,6 +252,9 @@ export function SsiapCoursePage({ config, sessions = [] }: { config: SsiapCourse
           <CTA href={contactHref(config, 'inscription')} variant="red" className="min-h-10 px-4 py-2">Je m’inscris</CTA>
         </div>
       </nav>}
+
+      {heroKey && <IntegraleWelcomePack course={heroKey} />}
+      {heroKey && <CourseJourney course={heroKey} />}
 
       <Section id="missions" eyebrow="Le parcours" title="Des compétences directement liées à votre fonction." intro={config.audience}>
         <div className="grid gap-4 lg:grid-cols-3">

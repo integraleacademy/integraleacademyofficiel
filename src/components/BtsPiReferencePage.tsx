@@ -332,11 +332,11 @@ export function BtsPiReferencePage() {
         </div>
       </section>
 
+      <BtsSectionNavigation code="PI" competencyHref="#competences" competencyLabel="Compétences" faqHref="#faq-pi" registrationHref={applicationUrl} />
+
       <TrainingWelcomePack course="bts-pi" />
 
       <CourseJourney course="bts-pi" />
-
-      <BtsSectionNavigation code="PI" competencyHref="#competences" competencyLabel="Compétences" faqHref="#faq-pi" registrationHref={applicationUrl} />
 
       <BtsStudentBenefits courseName="BTS Professions Immobilières" />
 

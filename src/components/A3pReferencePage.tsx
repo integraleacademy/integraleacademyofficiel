@@ -180,7 +180,6 @@ const jobs = ['Agent de protection rapprochée', 'Agent de protection physique d
 const salaryFactors = ['Niveau de risque', 'Durée', 'Horaires', 'Mobilité', 'Conduite', 'Langues', 'Expérience', 'Réputation'];
 const registrationFormUrl = 'https://assistance-alw9.onrender.com/demande-informations-formations';
 const a3pNavigationItems = [
-  { label: 'Pack Intégrale', href: '#pack-integrale' },
   { label: 'Métier', href: '#metier' },
   { label: 'Immersion', href: '#pedagogie' },
   { label: 'Programme', href: '#programme' },
@@ -223,9 +222,6 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
       </div>
     </section>
 
-    <IntegraleWelcomePack course="a3p" />
-    <CourseJourney course="a3p" />
-
     <TrainingSectionNavigation
       mark="A3P"
       title="TFP A3P"
@@ -233,6 +229,9 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
       registrationHref={registrationFormUrl}
       theme="green"
     />
+
+    <IntegraleWelcomePack course="a3p" />
+    <CourseJourney course="a3p" />
 
     <Section id="metier" label="01 — Le métier" title={<>Protéger, anticiper, <span className="decoration-emerald-500 decoration-[.16em] underline underline-offset-[-.03em]">décider.</span></>} intro="L’agent de protection physique des personnes assure la sécurité de dirigeants, personnalités, artistes ou toute personne exposée. Son rôle : préparer la mission, analyser les risques et protéger avec efficacité, proportionnalité et discrétion.">
       <div className="grid gap-4 md:grid-cols-3">{métierCards.map(([number, title, body], index) => <article key={title} className="rounded-[1.75rem] border border-academy-line bg-[#FFFDF8] p-6 shadow-soft"><div className={styles.cardArtwork}><ManualArtwork illustration={[originalArtwork['a3p-mission-preparation'], originalArtwork['a3p-mission-trajets'], a3pArtwork.discretion][index]} natural /></div><span className="mt-5 grid h-10 w-10 place-items-center rounded-full bg-[#0D1725] text-xs font-black text-emerald-300">{number}</span><h3 className="mt-8 text-xl font-black tracking-[-.03em]">{title}</h3><p className="mt-3 text-sm font-semibold leading-7 text-academy-muted">{body}</p></article>)}</div>

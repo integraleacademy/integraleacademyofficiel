@@ -16,7 +16,6 @@ export function BtsSectionNavigation({
   registrationHref,
 }: BtsSectionNavigationProps) {
   const items = [
-    { label: 'Pack Intégrale', href: '#pack-integrale' },
     { label: 'Pour qui ?', href: '#pour-qui' },
     { label: competencyLabel, href: competencyHref },
     { label: 'Formats', href: '#formats' },

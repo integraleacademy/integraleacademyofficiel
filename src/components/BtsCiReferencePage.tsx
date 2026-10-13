@@ -329,11 +329,11 @@ export function BtsCiReferencePage() {
         </div>
       </section>
 
+      <BtsSectionNavigation code="CI" competencyHref="#competences" competencyLabel="Compétences" faqHref="#faq-ci" registrationHref={applicationUrl} />
+
       <TrainingWelcomePack course="bts-ci" />
 
       <CourseJourney course="bts-ci" />
-
-      <BtsSectionNavigation code="CI" competencyHref="#competences" competencyLabel="Compétences" faqHref="#faq-ci" registrationHref={applicationUrl} />
 
       <BtsStudentBenefits courseName="BTS Commerce International" />
 

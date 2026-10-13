@@ -329,11 +329,11 @@ export function BtsMcoReferencePage() {
         </div>
       </section>
 
+      <BtsSectionNavigation code="MCO" competencyHref="#metier" competencyLabel="Le métier" faqHref="#faq-mco" registrationHref={applicationUrl} />
+
       <TrainingWelcomePack course="bts-mco" />
 
       <CourseJourney course="bts-mco" />
-
-      <BtsSectionNavigation code="MCO" competencyHref="#metier" competencyLabel="Le métier" faqHref="#faq-mco" registrationHref={applicationUrl} />
 
       <BtsStudentBenefits courseName="BTS MCO" />
 
