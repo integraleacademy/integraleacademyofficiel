@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import styles from './planning-help.module.css';
 
 type HelpIcon = 'book' | 'wallet' | 'company' | 'message' | 'arrow' | 'phone';
@@ -29,7 +30,17 @@ const questions = [
   ['Que faire si aucune date ne me convient ?', 'Créez une alerte planning : l’équipe vous préviendra dès qu’une nouvelle session sera ouverte.'],
 ];
 
-export function PlanningHelp() {
+export function PlanningHelp({ selectedSession, formation, formationSlug, onRequest, onClear }: {
+  selectedSession?: { title: string; dates: string; location?: string };
+  formation?: string;
+  formationSlug?: string;
+  onRequest: () => void;
+  onClear: () => void;
+}) {
+  const isBts = formationSlug === 'bts';
+  const adviser = isBts ? 'Aurélie' : 'Cassandre';
+  const phone = isBts ? '04 87 83 06 15' : '04 22 47 07 68';
+  const contactHref = '/contact?motif=rdv' + (formationSlug ? '&formation=' + encodeURIComponent(formationSlug) : '');
   return (
     <section id="preparer-inscription" className={`page-container ${styles.section}`} aria-labelledby="planning-help-title">
       <div className={styles.heading}>
@@ -42,10 +53,10 @@ export function PlanningHelp() {
 
       <nav className={styles.resources} aria-label="Les ressources pour votre inscription">
         {resources.map(({ icon, label, description, href }) => (
-          <Link key={href} href={href} className={styles.resource}>
+          <Link key={href} href={icon === 'message' ? '#planning-advice' : href} className={styles.resource}>
             <span className={styles.resourceIcon}><Icon name={icon} /></span>
             <span className={styles.resourceCopy}>
-              <span className={styles.resourceTitle}>{label}</span>
+              <span className={styles.resourceTitle}>{icon === 'message' ? 'Parler à ' + adviser : label}</span>
               <span className={styles.resourceDescription}>{description}</span>
             </span>
             <span className={styles.resourceArrow}><Icon name="arrow" /></span>
@@ -70,21 +81,19 @@ export function PlanningHelp() {
           </div>
         </div>
 
-        <aside className={styles.advice} aria-labelledby="planning-advice-title">
+        <aside id="planning-advice" className={styles.advice} aria-labelledby="planning-advice-title">
           <div className={styles.adviser}>
-            <span className={styles.avatar} aria-hidden="true">CM</span>
+            <span className={styles.avatar} aria-hidden="true">{isBts ? 'AC' : <Image src="/images/cassandre-memoji.png" alt="" width={64} height={64} />}</span>
             <div>
-              <span className={styles.adviserName}>Cassandre</span>
-              <span className={styles.adviserRole}>Responsable commerciale</span>
+              <span className={styles.adviserName}>{adviser}</span>
+              <span className={styles.adviserRole}>{isBts ? 'Relations clients & responsable BTS' : 'Responsable commerciale'}</span>
             </div>
             <span className={styles.adviserIcon}><Icon name="message" /></span>
           </div>
-          <h3 id="planning-advice-title">Parlons de votre <em>prochaine rentrée.</em></h3>
-          <p>Cassandre vous aide à choisir la formation, la session et le financement adaptés à votre projet.</p>
-          <Link href="/contact?motif=rdv" className={styles.appointment}>
-            Réserver un échange <Icon name="arrow" />
-          </Link>
-          <a href="tel:0422470768" className={styles.phone}><Icon name="phone" /> 04 22 47 07 68</a>
+          <h3 id="planning-advice-title">{selectedSession ? <>Cette session <em>vous intéresse ?</em></> : <>Parlons de votre <em>{formation ? 'projet ' + formation + '.' : 'prochaine rentrée.'}</em></>}</h3>
+          <p>{adviser} vous aide à {isBts ? 'préparer votre candidature et votre recherche d’entreprise.' : 'choisir la formation, la session et le financement adaptés à votre projet.'}</p>
+          {selectedSession ? <><div className={styles.selectedSession}><span>Votre choix</span><strong>{selectedSession.title}</strong><p>{selectedSession.dates}</p>{selectedSession.location ? <p>{selectedSession.location}</p> : null}<button type="button" onClick={onClear}>Retirer cette sélection</button></div><button type="button" onClick={onRequest} className={styles.appointment}>Parler de cette session <Icon name="arrow" /></button></> : <Link href={contactHref} className={styles.appointment}>Réserver un échange <Icon name="arrow" /></Link>}
+          <a href={'tel:' + phone.replaceAll(' ', '')} className={styles.phone}><Icon name="phone" /> {phone}</a>
         </aside>
       </div>
     </section>

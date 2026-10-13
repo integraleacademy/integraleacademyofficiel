@@ -1,7 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { useMemo, useState } from 'react';
+import Image from 'next/image';
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import { formatSessionDate, formatSessionPeriod, hasDetailedDeliveryPeriods } from '@/lib/public-sessions';
 import { getSessionSeatAvailability, resolveSessionSeatCapacity } from '@/lib/session-seat-availability';
 import { sessionLocationFilters, sessionMatchesLocation, type SessionLocationFilterKey } from '@/lib/session-location-filter';
@@ -10,6 +11,9 @@ import { planningFormationHref } from '@/lib/planning-data';
 import { vtcCourse } from '@/data/vtc';
 import styles from './planning.module.css';
 import { PlanningHelp } from './PlanningHelp';
+import { PlanningPreview } from './PlanningPreview';
+import { PlanningCalendar } from './PlanningCalendar';
+import { PlanningRegistration } from './PlanningRegistration';
 
 type Session = any;
 type CategoryKey = 'security' | 'fire' | 'vtc' | 'bts';
@@ -92,9 +96,11 @@ const formationFilters: {
   category: CategoryKey;
   slugs: string[];
   accent: PlanningAccent;
+  image: string;
 }[] = [
   {
     key: 'aps',
+    image: '/images/formation-scenes-manuel/aps-arrivee.webp',
     label: 'APS',
     eyebrow: 'Surveillance humaine',
     description: 'Agent de prévention et de sécurité',
@@ -104,6 +110,7 @@ const formationFilters: {
   },
   {
     key: 'a3p',
+    image: '/images/formation-scenes-manuel/a3p-parcours.webp',
     label: 'A3P',
     eyebrow: 'Protection rapprochée',
     description: 'Agent privé de protection de personnes',
@@ -113,6 +120,7 @@ const formationFilters: {
   },
   {
     key: 'director',
+    image: '/images/formation-scenes-manuel/desp-initial-parcours.webp',
     label: 'DIRIGEANT',
     eyebrow: 'DESP / DSSP',
     description: 'Diriger une entreprise de sécurité privée',
@@ -122,6 +130,7 @@ const formationFilters: {
   },
   {
     key: 'ssiap',
+    image: '/images/formation-scenes-manuel/ssiap-1-mission-ensemble.webp',
     label: 'SSIAP 1',
     eyebrow: 'Sécurité incendie',
     description: 'Agent de sécurité incendie',
@@ -131,6 +140,7 @@ const formationFilters: {
   },
   {
     key: 'vtc',
+    image: '/images/formation-scenes-manuel/vtc-parcours.webp',
     label: 'VTC',
     eyebrow: 'Transport de personnes',
     description: 'Préparer le métier et l’examen VTC',
@@ -140,6 +150,7 @@ const formationFilters: {
   },
   {
     key: 'bts',
+    image: '/images/formation-scenes-manuel/bts-mco-ventes.webp',
     label: 'BTS',
     eyebrow: 'Alternance',
     description: 'MOS, MCO, NDRC, CI et PI',
@@ -276,34 +287,6 @@ function planningThemeForSession(session: Session) {
   return planningThemeClass(planningAccentForSession(session));
 }
 
-function timelineTitle(session: Session) {
-  return sessionTitle(session);
-}
-
-function monthKey(value?: string | Date) {
-  if (!value) return '';
-  const date = new Date(value);
-  return date.getUTCFullYear() + '-' + String(date.getUTCMonth() + 1).padStart(2, '0');
-}
-
-function timelineMonthLabel(value: Date) {
-  const label = new Intl.DateTimeFormat('fr-FR', {
-    month: 'short',
-    timeZone: 'Europe/Paris',
-    year: 'numeric',
-  }).format(value).replace('.', '');
-  return label.toUpperCase();
-}
-
-function timelineDateLabel(value?: string | Date) {
-  if (!value) return '';
-  return new Intl.DateTimeFormat('fr-FR', {
-    day: '2-digit',
-    month: 'short',
-    timeZone: 'Europe/Paris',
-  }).format(new Date(value)).replace('.', '');
-}
-
 function shortDate(value?: string | Date) {
   if (!value) return { day: '--', month: '' };
   const date = new Date(value);
@@ -392,9 +375,13 @@ function deliveryPeriodRows(session: Session): { label: string; value: string; i
 function SessionCard({
   session,
   isNext,
+  selected,
+  onSelect,
 }: {
   session: Session;
   isNext: boolean;
+  selected: boolean;
+  onSelect: (session: Session) => void;
 }) {
   const date = shortDate(session.startDate);
   const seatAvailability = planningSeatAvailability(session);
@@ -403,7 +390,7 @@ function SessionCard({
   const themeClass = planningThemeForSession(session);
 
   return (
-    <article className={themeClass + ' group relative overflow-hidden rounded-[1.6rem] border bg-white p-4 shadow-[0_18px_55px_rgba(54,40,20,.08)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_70px_rgba(54,40,20,.14)] dark:bg-white/5 sm:p-5 ' + (isNext ? 'planning-accent-border' : 'border-academy-line/70 dark:border-white/10')}>
+    <article data-selected={selected || undefined} className={styles.sessionCard + ' ' + themeClass + ' group relative overflow-hidden rounded-[1.6rem] border bg-white p-4 shadow-[0_18px_55px_rgba(54,40,20,.08)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_70px_rgba(54,40,20,.14)] dark:bg-white/5 sm:p-5 ' + (isNext ? 'planning-accent-border' : 'border-academy-line/70 dark:border-white/10')}>
       <span aria-hidden="true" className="planning-accent-indicator absolute inset-y-0 left-0 w-1" />
       {isNext ? (
         <span className="absolute left-4 top-0 rounded-b-xl bg-[#101a29] px-3 py-1 text-[9px] font-black uppercase tracking-[.14em] text-white sm:left-5">
@@ -484,7 +471,8 @@ function SessionCard({
           </div>
         </div>
 
-        <div className="flex gap-2 lg:flex-col">
+        <div className="flex flex-wrap gap-2 lg:flex-col">
+          <button type="button" onClick={() => onSelect(session)} aria-haspopup="dialog" aria-label={'Découvrir la session ' + sessionTitle(session)} className={styles.sessionInterest}>{selected ? 'Session sélectionnée' : 'Cette session m’intéresse'} <Icon name="arrow" className="h-4 w-4" /></button>
           <Link
             href={planningFormationHref(session)}
             className="planning-neutral-action inline-flex flex-1 items-center justify-center gap-2 rounded-full px-5 py-3.5 text-sm font-black transition hover:-translate-y-0.5"
@@ -498,124 +486,29 @@ function SessionCard({
   );
 }
 
-function CalendarView({
-  sessions,
-}: {
-  sessions: Session[];
-}) {
-  const timeline = useMemo(() => {
-    const firstSessionDate = new Date(Math.min(...sessions.map((session) => +new Date(session.startDate))));
-    const finalSessionDate = new Date(Math.max(...sessions.map((session) => +new Date(session.examDate || session.endDate || session.startDate))));
-    const start = new Date(Date.UTC(firstSessionDate.getUTCFullYear(), firstSessionDate.getUTCMonth(), 1));
-    const end = new Date(Date.UTC(finalSessionDate.getUTCFullYear(), finalSessionDate.getUTCMonth() + 1, 1));
-    const total = Math.max(+end - +start, 1);
-    const months: { key: string; label: string; left: number; width: number }[] = [];
-
-    for (let cursor = new Date(start); cursor < end; cursor = new Date(Date.UTC(cursor.getUTCFullYear(), cursor.getUTCMonth() + 1, 1))) {
-      const next = new Date(Date.UTC(cursor.getUTCFullYear(), cursor.getUTCMonth() + 1, 1));
-      months.push({
-        key: monthKey(cursor),
-        label: timelineMonthLabel(cursor),
-        left: ((+cursor - +start) / total) * 100,
-        width: ((+next - +cursor) / total) * 100,
-      });
-    }
-
-    return { start, end, total, months };
-  }, [sessions]);
-
-  function sessionPosition(session: Session) {
-    const start = Math.max(+new Date(session.startDate), +timeline.start);
-    const finish = Math.min(+new Date(session.examDate || session.endDate || session.startDate), +timeline.end);
-    const rawLeft = ((start - +timeline.start) / timeline.total) * 100;
-    const rawWidth = ((Math.max(finish, start) - start) / timeline.total) * 100;
-    const width = Math.min(100, Math.max(10, rawWidth));
-    return { left: Math.min(rawLeft, 100 - width), width };
-  }
-
-  return (
-    <div className="relative overflow-hidden rounded-[2.4rem] bg-[#101a29] px-4 py-8 text-white shadow-[0_30px_90px_rgba(16,26,41,.24)] sm:px-7 sm:py-10 lg:px-10 lg:py-12">
-      <div className="absolute -right-40 -top-48 h-[32rem] w-[32rem] rounded-full bg-academy-gold/[.08]" />
-
-      <div className="relative flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-        <div>
-          <span className="inline-flex rounded-full border border-academy-gold/45 bg-academy-gold/10 px-4 py-2 text-[10px] font-black uppercase tracking-[.16em] text-academy-gold">
-            Vue calendrier
-          </span>
-          <h3 className="mt-5 max-w-4xl text-3xl font-black tracking-tight sm:text-4xl lg:text-5xl">
-            Visualisez les parcours dans le temps.
-          </h3>
-          <p className="mt-4 max-w-3xl text-sm font-semibold leading-6 text-white/62 sm:text-base">
-            Comparez les sessions, anticipez les examens et identifiez rapidement la meilleure rentrée.
-          </p>
-        </div>
-
-      </div>
-
-      <p className="relative mt-5 text-[10px] font-black uppercase tracking-[.14em] text-white/45 sm:hidden">
-        Faites glisser le calendrier horizontalement
-      </p>
-
-      <div className="relative mt-7 overflow-x-auto rounded-[1.7rem] bg-[#f8f4ec] text-[#171712] shadow-[inset_0_0_0_1px_rgba(255,255,255,.2)]">
-        <div className="min-w-[68rem] p-5 sm:p-7">
-          <div className="grid grid-cols-[15rem_minmax(48rem,1fr)] border-b border-[#d9cfbd]">
-            <div className="px-2 pb-5 text-[11px] font-black uppercase tracking-[.12em] text-[#6d685f]">Formation</div>
-            <div className="relative min-h-10">
-              {timeline.months.map((item) => (
-                <div key={item.key} className="absolute inset-y-0 border-l border-[#dfd5c4] px-3 text-center text-[11px] font-black uppercase tracking-[.08em] text-[#6d685f]" style={{ left: item.left + '%', width: item.width + '%' }}>
-                  {item.label}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            {sessions.map((session) => {
-              const position = sessionPosition(session);
-              const formation = formationFilterForSession(session);
-              const hasExam = Boolean(session.examDate);
-              const themeClass = planningThemeForSession(session);
-
-              return (
-                <div key={session.id} className="grid min-h-24 grid-cols-[15rem_minmax(48rem,1fr)] border-b border-[#e6dece] last:border-b-0">
-                  <div className={themeClass + ' flex flex-col justify-center px-2 py-4'}>
-                    <div className="flex items-center gap-2">
-                      <span aria-hidden="true" className="planning-accent-indicator h-2 w-2 shrink-0 rounded-full" />
-                      <p className="text-lg font-black tracking-tight">{timelineTitle(session)}</p>
-                    </div>
-                    <p className="mt-1 text-[11px] font-semibold text-[#6d685f]">{formation?.eyebrow || session.training?.shortDescription || 'Formation professionnelle'}</p>
-                  </div>
-
-                  <div className="relative min-h-24 overflow-hidden">
-                    {timeline.months.map((item) => (
-                      <span key={item.key} aria-hidden="true" className="pointer-events-none absolute inset-y-0 border-l border-[#dfd5c4]" style={{ left: item.left + '%' }} />
-                    ))}
-
-                    <Link
-                      href={planningFormationHref(session)}
-                      aria-label={'En savoir plus sur ' + sessionTitle(session)}
-                      title={session.scheduleKind === 'vtc-exam' ? 'Inscription avant le ' + formatSessionDate(session.startDate) + ' · Examen théorique le ' + formatSessionDate(session.endDate) + ' · Examen pratique le ' + formatSessionDate(session.examDate) : hasExam ? 'Examen le ' + formatSessionDate(session.examDate) : 'En savoir plus'}
-                      className={themeClass + ' planning-calendar-bar group absolute top-1/2 flex h-12 -translate-y-1/2 items-center justify-between gap-3 rounded-full px-4 text-left text-xs font-black transition hover:-translate-y-[54%]'}
-                      style={{ left: position.left + '%', width: position.width + '%' }}
-                    >
-                      <span className="truncate">{session.scheduleKind === 'vtc-exam' ? 'Inscription → examen' : timelineDateLabel(session.startDate) + ' → ' + timelineDateLabel(session.endDate)}</span>
-                      <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-[#111923] text-[9px] font-black text-white transition group-hover:scale-110">
-                        {hasExam ? 'E' : '›'}
-                      </span>
-                    </Link>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-          <p className="ml-[15rem] mt-1 px-2 pt-4 text-[10px] font-black uppercase tracking-[.08em] text-[#6d685f]">
-            E = examen · cliquez sur un parcours pour en savoir plus sur la formation
-          </p>
-        </div>
-      </div>
+function SessionDetails({ session, onClose, onRequest }: { session: Session; onClose: () => void; onRequest: () => void }) {
+  const dialog = useRef<HTMLDialogElement>(null);
+  useEffect(() => {
+    const node = dialog.current;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    node?.showModal();
+    return () => { node?.close(); document.body.style.overflow = previousOverflow; };
+  }, []);
+  const isVtc = session.scheduleKind === 'vtc-exam';
+  const availability = planningSeatAvailability(session);
+  return <dialog ref={dialog} onCancel={onClose} aria-labelledby="planning-session-title" className={`${styles.sessionDialog} ${planningThemeForSession(session)}`}>
+    <div className={styles.dialogHeader}><p className={styles.eyebrow}>Votre session sélectionnée</p><button type="button" onClick={onClose} aria-label="Fermer le détail de la session">×</button></div>
+    <h2 id="planning-session-title">{sessionTitle(session)}</h2>
+    {!isVtc ? <span className={'session-seats-badge mt-4 inline-block rounded-full border px-3 py-1 text-xs font-bold ' + availability.badgeClassName}>{availability.label}</span> : null}
+    <div className={styles.dialogDates}>
+      {isVtc ? <><p>{vtcCourse.startDescription}</p><dl>{[['Date limite d’inscription', session.startDate], ['Examen théorique', session.endDate], ['Examen pratique', session.examDate]].map(([label, date]) => <div key={label}><dt>{label}</dt><dd>{date ? formatSessionDate(date) : 'À confirmer'}</dd></div>)}</dl><p className={styles.examNotice}>{vtcCourse.examNotice}</p></> : <><p className={styles.dialogPeriod}>{formatSessionPeriod(session.startDate, session.endDate)}</p>{hasDetailedDeliveryPeriods(session) ? <dl>{deliveryPeriodRows(session).slice(1).map(period => <div key={period.label}><dt>{period.label}</dt><dd>{period.value}</dd></div>)}</dl> : null}{session.examDate ? <p>Examen le <strong>{formatSessionDate(session.examDate)}</strong></p> : null}</>}
     </div>
-  );
+    <p className={styles.dialogLocation}><Icon name="location" />{session.location || 'Centre à confirmer'}</p>
+    <dl className={styles.dialogFacts}><div><dt>Tarif</dt><dd>{displayPrice(session)}</dd></div><div><dt>Durée</dt><dd>{displayDuration(session)}</dd></div></dl>
+    <div className={styles.dialogActions}><button type="button" onClick={onRequest}>Parler de cette session <Icon name="arrow" /></button><Link href={planningFormationHref(session)}>Découvrir le programme <Icon name="arrow" /></Link></div>
+    <p className={styles.dialogFootnote}>Votre choix est repris dans la demande. L’équipe vous accompagne pour les prérequis, le financement et l’inscription.</p>
+  </dialog>;
 }
 
 function BtsIntakes({ year }: { year: number }) {
@@ -720,6 +613,9 @@ export function PlanningClient({ initialSessions, btsIntakeYear }: { initialSess
   const [locationFilter, setLocationFilter] = useState<SessionLocationFilterKey>('all');
   const [view, setView] = useState<ViewMode>('list');
   const [showAll, setShowAll] = useState(false);
+  const [selectedSessionId, setSelectedSessionId] = useState<string | null>(null);
+  const [detailSession, setDetailSession] = useState<Session | null>(null);
+  const [registrationSession, setRegistrationSession] = useState<Session | null>(null);
 
   const formationSessionCounts = useMemo(
     () => Object.fromEntries(formationFilters.map((formation) => [formation.key, sortedSessions.filter((session) => formationMatchesSlug(formation, session.training?.slug)).length])) as Record<Exclude<FormationFilterKey, 'all'>, number>,
@@ -737,15 +633,23 @@ export function PlanningClient({ initialSessions, btsIntakeYear }: { initialSess
   }, [activeFormation, locationFilter, sortedSessions]);
 
   const visibleSessions = showAll ? filteredSessions : filteredSessions.slice(0, 6);
+  const selectedSession = filteredSessions.find(session => session.id === selectedSessionId) || null;
+  const previewFormations = formationFilters.map(formation => ({ ...formation, session: sortedSessions.find(session => formationMatchesSlug(formation, session.training?.slug)) }));
+  const resultKey = `${activeFormation}-${locationFilter}-${view}`;
+
+  function selectSession(session: Session) {
+    setSelectedSessionId(session.id);
+    setDetailSession(session);
+  }
 
   function scrollToSessions() {
-    window.requestAnimationFrame(() => document.getElementById('sessions')?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+    window.requestAnimationFrame(() => document.getElementById('sessions')?.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' }));
   }
 
   function chooseFormation(formation: FormationFilterKey) {
     setActiveFormation(formation);
     setShowAll(false);
-    setView('list');
+    setSelectedSessionId(null);
     scrollToSessions();
   }
 
@@ -755,7 +659,7 @@ export function PlanningClient({ initialSessions, btsIntakeYear }: { initialSess
   }
 
   return (
-    <main className={`${styles.page} overflow-hidden pb-24`}>
+    <main className={`${styles.page} pb-24`}>
       <section className="relative isolate overflow-hidden border-b border-academy-line/70 bg-[#f7f1e7] px-4 py-14 text-[#141820] sm:py-16 lg:py-20">
         <div className="absolute -right-40 -top-48 -z-10 h-[34rem] w-[34rem] rounded-full bg-academy-gold/20" />
         <div className="absolute -bottom-48 left-[38%] -z-10 h-[28rem] w-[28rem] rounded-full border border-academy-gold/20" />
@@ -785,32 +689,7 @@ export function PlanningClient({ initialSessions, btsIntakeYear }: { initialSess
             </div>
           </div>
 
-          <div className="reveal relative overflow-hidden rounded-[2rem] bg-[#111b2a] p-6 text-white shadow-[0_30px_90px_rgba(17,27,42,.18)] sm:p-8">
-            <div className="absolute -right-24 -top-28 h-64 w-64 rounded-full bg-academy-gold/12" />
-            <div className="relative">
-              <p className="text-[10px] font-black uppercase tracking-[.2em] text-academy-gold">Votre planning, simplement</p>
-              <h2 className="mt-4 text-2xl font-black tracking-tight sm:text-3xl">Du projet à l’inscription en trois étapes.</h2>
-              <div className="mt-7 divide-y divide-white/10 border-y border-white/10">
-                {[
-                  ['01', 'Choisissez la formation', 'Accès direct à chaque parcours.'],
-                  ['02', 'Comparez les dates', 'Liste détaillée ou frise calendrier.'],
-                  ['03', 'Découvrez la formation', 'Programme, prérequis et inscription.'],
-                ].map(([number, label, description]) => (
-                  <div key={number} className="grid grid-cols-[2.7rem_1fr] gap-4 py-4">
-                    <span className="grid h-9 w-9 place-items-center rounded-full bg-academy-gold text-[10px] font-black text-academy-gold-text">{number}</span>
-                    <span>
-                      <span className="block text-sm font-black">{label}</span>
-                      <span className="mt-1 block text-xs font-semibold text-white/50">{description}</span>
-                    </span>
-                  </div>
-                ))}
-              </div>
-              <p className="mt-5 flex items-center gap-2 text-xs font-bold text-white/55">
-                <span className="h-2 w-2 rounded-full bg-emerald-400" />
-                Retrouvez les prochaines dates de vos formations
-              </p>
-            </div>
-          </div>
+          <PlanningPreview key={activeFormation} formations={previewFormations} initialFormation={activeFormation} onChoose={key => chooseFormation(key as FormationFilterKey)} />
         </div>
       </section>
 
@@ -838,8 +717,9 @@ export function PlanningClient({ initialSessions, btsIntakeYear }: { initialSess
                   type="button"
                   aria-pressed={selected}
                   onClick={() => chooseFormation(formation.key)}
-                  className={planningThemeClass(formation.accent) + ' planning-formation-card group flex min-h-[13.5rem] flex-col rounded-[1.45rem] border p-5 text-left transition duration-300 hover:-translate-y-1 ' + (selected ? 'planning-formation-card-selected' : '')}
+                  className={styles.formationCard + ' ' + planningThemeClass(formation.accent) + ' planning-formation-card group flex min-h-[13.5rem] flex-col rounded-[1.45rem] border p-5 text-left transition duration-300 hover:-translate-y-1 ' + (selected ? 'planning-formation-card-selected' : '')}
                 >
+                  <span className={styles.formationImage}><Image src={formation.image} alt="" width={300} height={190} sizes="(max-width: 640px) 90vw, (max-width: 1280px) 33vw, 200px" /><span className={styles.formationCheck} aria-hidden="true"><Icon name="check" className="h-4 w-4" /></span></span>
                   <span className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[.14em] text-white/55">
                     <span aria-hidden="true" className="planning-accent-indicator h-2 w-2 shrink-0 rounded-full" />
                     0{index + 1} · {formation.eyebrow}
@@ -860,18 +740,20 @@ export function PlanningClient({ initialSessions, btsIntakeYear }: { initialSess
       </section>
 
       <section id="sessions" className={activePlanningTheme + ' page-container py-14 sm:py-20'}>
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+        <div className={styles.filterBar}>
           <div>
-            <p className="text-2xl font-black text-academy-ink dark:text-white">
+            <p role="status" aria-live="polite" aria-atomic="true" className="text-2xl font-black text-academy-ink dark:text-white"><span key={`${activeFormation}-${locationFilter}`} className={styles.countEnter}>
               {activeFormation === 'bts' ? 'Rentrées BTS' : filteredSessions.length + (filteredSessions.length > 1 ? ' sessions disponibles' : ' session disponible')}
-            </p>
+            </span></p>
             <p className="mt-1 text-sm font-semibold text-academy-muted">
               {activeFormation === 'bts' ? 'BTS en alternance' : view === 'list' ? 'Triées par prochaine date de rentrée ou échéance d’inscription' : 'Affichées dans le calendrier'}
             </p>
           </div>
 
-          {activeFormation !== 'bts' ? <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-            <div className="flex w-fit items-center rounded-full border border-academy-line bg-white p-1 dark:bg-white/5" aria-label="Filtrer les sessions par centre">
+          <div className={styles.filterControls}>
+            <label className={styles.formationSelect}><span className="sr-only">Filtrer par formation</span><select value={activeFormation} onChange={event => chooseFormation(event.target.value as FormationFilterKey)}><option value="all">Toutes les formations</option>{formationFilters.map(formation => <option key={formation.key} value={formation.key}>{formation.label}</option>)}</select></label>
+          {activeFormation !== 'bts' ? <>
+            <div className={styles.centreFilters} aria-label="Filtrer les sessions par centre">
               <span className="hidden px-3 text-[9px] font-black uppercase tracking-[.12em] text-academy-muted sm:inline">Centre</span>
               {sessionLocationFilters.map((filter) => {
                 const selected = locationFilter === filter.key;
@@ -883,6 +765,7 @@ export function PlanningClient({ initialSessions, btsIntakeYear }: { initialSess
                     onClick={() => {
                       setLocationFilter(filter.key);
                       setShowAll(false);
+                      setSelectedSessionId(null);
                     }}
                     className={'rounded-full px-3.5 py-2.5 text-xs font-black transition sm:px-4 ' + (selected ? 'planning-neutral-action' : 'text-academy-muted hover:text-academy-ink')}
                   >
@@ -896,15 +779,17 @@ export function PlanningClient({ initialSessions, btsIntakeYear }: { initialSess
               <button type="button" aria-pressed={view === 'list'} onClick={() => setView('list')} className={'rounded-full px-4 py-2.5 text-xs font-black transition ' + (view === 'list' ? 'planning-neutral-action' : 'text-academy-muted hover:text-academy-ink')}>Vue liste</button>
               <button type="button" aria-pressed={view === 'calendar'} onClick={() => setView('calendar')} className={'rounded-full px-4 py-2.5 text-xs font-black transition ' + (view === 'calendar' ? 'planning-neutral-action' : 'text-academy-muted hover:text-academy-ink')}>Vue calendrier</button>
             </div>
-          </div> : null}
+          </> : null}
+          </div>
         </div>
 
+        <div key={resultKey} className={styles.resultEnter}>
         {activeFormation === 'bts' ? <BtsIntakes year={btsIntakeYear} /> : filteredSessions.length ? (
           view === 'list' ? (
             <>
               <div className="mt-6 grid gap-4">
                 {visibleSessions.map((session, index) => (
-                  <SessionCard key={session.id} session={session} isNext={index === 0} />
+                  <div key={session.id} className={styles.sessionEnter} style={{ '--session-delay': `${Math.min(index, 5) * 45}ms` } as CSSProperties}><SessionCard session={session} isNext={index === 0} selected={selectedSessionId === session.id} onSelect={selectSession} /></div>
                 ))}
               </div>
               {filteredSessions.length > visibleSessions.length ? (
@@ -916,7 +801,7 @@ export function PlanningClient({ initialSessions, btsIntakeYear }: { initialSess
               ) : null}
             </>
           ) : (
-            <div className="mt-8"><CalendarView sessions={filteredSessions} /></div>
+            <div className="mt-8"><PlanningCalendar sessions={filteredSessions} onSelect={selectSession} selectedId={selectedSessionId || undefined} themeForSession={planningThemeForSession} /></div>
           )
         ) : (
           <div className="mt-6 rounded-[2rem] border border-dashed border-academy-line bg-white/65 p-8 text-center shadow-soft dark:bg-white/5 sm:p-12">
@@ -930,16 +815,20 @@ export function PlanningClient({ initialSessions, btsIntakeYear }: { initialSess
           </div>
         )}
         {activeFormation === 'all' ? <BtsIntakes year={btsIntakeYear} /> : null}
+        </div>
       </section>
 
       <MissingDates sessions={sortedSessions} activeFormation={activeFormation} />
 
-      <PlanningHelp />
+      <PlanningHelp selectedSession={selectedSession ? { title: sessionTitle(selectedSession), dates: selectedSession.scheduleKind === 'vtc-exam' ? 'Inscription avant le ' + formatSessionDate(selectedSession.startDate) + ' · Examen théorique le ' + formatSessionDate(selectedSession.endDate) : formatSessionPeriod(selectedSession.startDate, selectedSession.endDate), location: selectedSession.location } : undefined} formation={selectedFormationDetails?.label} formationSlug={selectedFormationDetails?.slugs[0]} onRequest={() => selectedSession && setRegistrationSession(selectedSession)} onClear={() => setSelectedSessionId(null)} />
+
+      {detailSession ? <SessionDetails session={detailSession} onClose={() => setDetailSession(null)} onRequest={() => { setDetailSession(null); setRegistrationSession(detailSession); }} /> : null}
+      {registrationSession ? <PlanningRegistration session={registrationSession} onClose={() => setRegistrationSession(null)} /> : null}
 
       <div className="fixed inset-x-3 bottom-[calc(.75rem+env(safe-area-inset-bottom))] z-40 grid grid-cols-3 gap-2 rounded-[1.5rem] border border-white/70 bg-white/92 p-2 shadow-[0_18px_60px_rgba(17,17,17,.18)] backdrop-blur md:hidden">
         <Link href="tel:0422470768" className="rounded-2xl bg-[#101a29] px-3 py-3 text-center text-xs font-black text-white">Appeler</Link>
         <Link href="/contact?motif=alerte-planning" className="rounded-2xl border border-academy-line bg-white px-3 py-3 text-center text-xs font-black text-academy-ink">Alerte</Link>
-        <Link href="https://assistance-alw9.onrender.com/demande-informations-formations" className="planning-neutral-action rounded-2xl px-3 py-3 text-center text-xs font-black">S’inscrire</Link>
+        <button type="button" onClick={() => selectedSession ? setRegistrationSession(selectedSession) : document.getElementById('planning-advice-title')?.scrollIntoView({ behavior: 'auto', block: 'center' })} className="planning-neutral-action rounded-2xl px-3 py-3 text-center text-xs font-black">{selectedSession ? 'Ma session' : 'Mon projet'}</button>
       </div>
     </main>
   );

@@ -39,7 +39,15 @@
 .question[open] .toggle::after { transform: rotate(0); }
 .question > p { max-width: 520px; padding: 0 42px 23px 0; color: rgb(var(--text-muted)); font-size: 13px; font-weight: 500; line-height: 1.85; }
 
-.advice { min-width: 0; padding: 30px; border: 1px solid #27384a; border-radius: 26px; background: #101a29; color: #fffaf0; }
+.advice { min-width: 0; padding: 30px; border: 1px solid #27384a; border-radius: 26px; background: #101a29; color: #fffaf0; scroll-margin-top: calc(var(--site-header-height) + 24px); }
+.avatar { overflow: hidden; }
+.avatar img { width: 100%; height: 100%; object-fit: contain; }
+.selectedSession { margin-top: 22px; padding: 18px; border: 1px solid #5c5039; border-radius: 16px; background: #e7bd6510; }
+.selectedSession > span { display: block; margin-bottom: 8px; color: #e7bd65; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .12em; }
+.selectedSession strong { display: block; font-size: 15px; line-height: 1.5; }
+.selectedSession p { margin-top: 6px; color: #d1d7de; font-size: 12px; line-height: 1.7; }
+.selectedSession button { margin-top: 12px; text-decoration: underline; text-underline-offset: 3px; color: #e7bd65; font-size: 12px; }
+.advice button.appointment { width: 100%; text-align: left; }
 .adviser { display: flex; align-items: center; gap: 13px; padding-bottom: 23px; border-bottom: 1px solid #34404f; }
 .avatar { display: grid; flex: 0 0 49px; height: 49px; place-items: center; border: 1px solid #c2a366; border-radius: 50%; background: #e8cca0; color: #182234; font-family: Georgia, 'Times New Roman', serif; font-size: 20px; }
 .adviserName { display: block; font-size: 15px; font-weight: 800; letter-spacing: -.01em; }

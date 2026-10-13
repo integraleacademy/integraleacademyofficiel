@@ -79,7 +79,7 @@ export function GlobalContactCTA() {
     });
   }
 
-  if (pathname === '/ecole' || pathname === '/entreprises' || pathname === '/contact' || isFinancingPage || hiddenPathPrefixes.some((prefix) => pathname?.startsWith(prefix))) {
+  if (pathname === '/ecole' || pathname === '/entreprises' || pathname === '/contact' || pathname === '/planning' || isFinancingPage || hiddenPathPrefixes.some((prefix) => pathname?.startsWith(prefix))) {
     return null;
   }
 
