@@ -1,0 +1,183 @@
+.experience { overflow: clip; }
+.experience button { font-family: inherit; cursor: pointer; }
+.experience svg { display: block; width: 20px; height: 20px; flex-shrink: 0; }
+.experience button:focus-visible { outline: 3px solid var(--gold); outline-offset: 5px; }
+.selectorLabel { margin-bottom: 15px !important; color: var(--muted); font-size: 13px; font-weight: 700; }
+.interests { display: grid; grid-template-columns: 1fr 1fr 1fr 1.25fr; gap: 12px; }
+.interests > button { display: flex; align-items: center; gap: 12px; min-width: 0; min-height: 88px; padding: 17px; border: 1px solid var(--line); border-radius: 20px; background: rgb(var(--surface)); color: var(--ink); text-align: left; transition: border-color .25s, background .25s, box-shadow .25s, transform .25s; }
+.interests > button:hover { transform: translateY(-3px); border-color: var(--gold); }
+.interests > button[aria-selected='true'] { border-color: rgb(var(--accent)); background: rgb(var(--accent) / .13); box-shadow: inset 0 0 0 1px rgb(var(--accent)), 0 8px 20px rgb(80 53 10 / .04); }
+.interestIcon { display: grid; width: 37px; height: 37px; flex-shrink: 0; place-items: center; color: var(--gold); }
+.interests strong { display: block; font-size: 15px; font-weight: 800; line-height: 1.3; letter-spacing: -.02em; }
+.interests small { display: block; margin-top: 5px; color: var(--muted); font-size: 11px; line-height: 1.4; }
+.selectionMark { display: grid; width: 18px; height: 18px; flex: 0 0 18px; place-items: center; margin-left: auto; border: 1px solid var(--line); border-radius: 50%; color: transparent; }
+.selectionMark svg { width: 12px; height: 12px; }
+[aria-selected='true'] > .selectionMark { background: rgb(var(--accent)); border-color: rgb(var(--accent)); color: rgb(var(--accent-text)); }
+.journey { display: grid; grid-template-columns: .86fr 1.14fr; align-items: center; gap: 40px; margin-top: 46px; }
+.journeyCopy { padding-block: 25px; }
+.chapterLabel { color: var(--gold); font-size: 12px; font-weight: 750; letter-spacing: .015em; }
+.steps { margin-top: 19px; }
+.steps > button { position: relative; display: flex; width: 100%; gap: 22px; padding: 26px 0; border: 0; border-bottom: 1px solid var(--line); background: transparent; color: var(--ink); text-align: left; }
+.steps > button:last-child { border-bottom: 0; }
+.stepNumber { display: flex; align-items: center; align-self: flex-start; gap: 8px; padding-top: 6px; color: var(--muted); font-size: 12px; font-weight: 700; }
+.stepNumber svg { width: 15px; height: 15px; opacity: 0; transform: translateX(-6px); transition: opacity .25s, transform .25s; }
+.stepCopy { min-width: 0; }
+.stepCopy strong { display: block; color: var(--muted); font-size: clamp(21px, 2.2vw, 28px); font-weight: 800; line-height: 1.25; letter-spacing: -.04em; transition: color .25s; }
+.stepCopy > span { display: block; max-width: 345px; margin-top: 12px; color: var(--muted); font-size: 13px; line-height: 1.8; }
+.steps > button[aria-selected='true'] .stepNumber { color: var(--gold); }
+.steps > button[aria-selected='true'] .stepNumber svg { opacity: 1; transform: none; }
+.steps > button[aria-selected='true'] .stepCopy strong { color: var(--ink); }
+.journeyLink { margin-top: 21px; }
+.scene { position: relative; isolation: isolate; display: grid; justify-items: center; min-width: 0; padding: 42px 22px 22px; border: 1px solid rgb(var(--border) / .65); border-radius: 36px; background: linear-gradient(140deg, rgb(var(--surface)), rgb(var(--accent) / .07)); }
+.sceneHalo { position: absolute; z-index: -1; width: 400px; max-width: 88%; aspect-ratio: 1; top: 13%; border: 1px solid rgb(var(--accent) / .25); border-radius: 50%; background: radial-gradient(circle, rgb(var(--accent) / .19), transparent 70%); }
+.sceneHalo::before { content: ''; position: absolute; inset: 26px; border: 1px dashed rgb(var(--accent) / .24); border-radius: inherit; }
+.phone { position: relative; width: 278px; max-width: 100%; padding: 10px 10px 13px; border: 5px solid #26303a; border-radius: 43px; background: #fffaf2; color: #152438; box-shadow: 8px 18px 34px rgb(18 30 44 / .14), inset 0 0 0 1px #fff; }
+.phoneStatus { display: flex; align-items: center; justify-content: space-between; height: 27px; padding-inline: 10px; font-size: 10px; font-weight: 800; line-height: 1; }
+.phoneStatus i { width: 78px; height: 21px; border-radius: 999px; background: #26303a; }
+.phoneStatus > span:last-child { color: #26303a; font-size: 16px; }
+.phoneHeader { display: flex; align-items: center; gap: 9px; margin-top: 14px; padding: 11px 7px 17px; border-bottom: 1px solid #e6ddcd; }
+.phoneHeader img { flex-shrink: 0; }
+.phoneHeader strong { display: block; font-size: 12px; font-weight: 800; line-height: 1.4; }
+.phoneHeader span { display: block; margin-top: 3px; color: #6b6256; font-size: 9px; line-height: 1.4; }
+.phoneScreen { min-height: 340px; padding: 19px 6px 10px; }
+.screenLabel { display: block; margin-bottom: 15px; color: #706657; font-size: 9px; font-weight: 650; text-align: center; }
+.userBubble { margin-left: 22px; padding: 14px 16px; border-radius: 17px 17px 4px 17px; background: #efd18d; color: #302719; font-size: 12px; font-weight: 550; line-height: 1.6; animation: bubbleIn .55s both; }
+.previewIllustration { position: relative; margin-top: 16px; overflow: hidden; border: 1px solid #ddd3c2; border-radius: 15px; animation: bubbleIn .6s .1s both; }
+.previewIllustration img { display: block; width: 100%; height: 119px; object-fit: cover; }
+.previewIllustration > span { display: block; padding: 8px 10px; font-size: 10px; font-weight: 750; line-height: 1.5; background: #fffdf8; }
+.phoneScreen .phoneNote { margin-top: 12px; color: #74644d; font-size: 10px; text-align: center; }
+.adviserBubble { margin: 17px 12px 0 0; padding: 14px; border: 1px solid #e1d9cb; border-radius: 17px 17px 17px 4px; background: #fff; font-size: 12px; line-height: 1.65; animation: bubbleIn .6s .1s both; }
+.adviserBubble > span { display: block; margin-bottom: 7px; color: #92611c; font-size: 9px; font-weight: 800; }
+.phoneTopics { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 15px; animation: bubbleIn .6s .2s both; }
+.phoneTopics > span { display: flex; align-items: center; gap: 3px; padding: 5px 6px; border: 1px solid #e1d9cb; border-radius: 8px; background: #fffdf8; font-size: 9px; line-height: 1.4; }
+.phoneTopics svg { width: 11px; height: 11px; color: #886020; }
+.summaryCard { margin-top: 15px; padding: 14px; border: 1px solid #ddd3c2; border-radius: 17px; background: #fffdf9; animation: bubbleIn .6s .1s both; }
+.summaryIcon { display: grid; width: 28px; height: 28px; place-items: center; margin-bottom: 8px; border-radius: 8px; background: #f7e9c7; color: #85591d; }
+.summaryIcon svg { width: 16px; height: 16px; }
+.summaryCard > strong { display: block; font-size: 13px; font-weight: 800; line-height: 1.45; }
+.summaryCard > p { margin-top: 8px; color: #6c6254; font-size: 10px; line-height: 1.6; }
+.summaryStatus { display: flex; align-items: center; gap: 5px; margin-top: 12px; color: #886020; font-size: 9px; font-weight: 750; }
+.summaryStatus svg { width: 12px; height: 12px; }
+.phoneSignoff { display: flex; align-items: center; gap: 9px; margin-top: 14px; animation: bubbleIn .6s .2s both; }
+.phoneSignoff .avatar { width: 30px; height: 30px; font-size: 11px; }
+.phoneSignoff > span:last-child { font-size: 10px; font-weight: 800; line-height: 1.5; }
+.phoneSignoff small { display: block; font-size: 9px; font-weight: 400; color: #6c6254; }
+.phoneFooter { display: flex; justify-content: center; align-items: center; gap: 6px; margin: 9px 5px 0; padding-top: 13px; border-top: 1px solid #e6ddcd; color: #6d604c; font-size: 8px; line-height: 1.4; }
+.phoneFooter i { width: 3px; height: 3px; border-radius: 50%; background: #bf9752; }
+.homeIndicator { width: 80px; height: 4px; margin: 17px auto 0; border-radius: 99px; background: #26303a; }
+.avatar { display: grid; width: 44px; height: 44px; flex: 0 0 auto; overflow: hidden; place-items: center; border: 1px solid #e0c892; border-radius: 50%; background: linear-gradient(140deg, #253a50, #132334); color: #f1cd80; font-size: 16px; font-weight: 750; }
+.avatar img { width: 100%; height: 100%; object-fit: cover; }
+.floatingAdviser { position: absolute; z-index: 1; top: 31px; right: 17px; display: flex; align-items: center; gap: 10px; padding: 12px 14px; border: 1px solid #e1d4bf; border-radius: 18px; background: #fffdf6; box-shadow: 0 12px 25px rgb(52 42 23 / .08); color: #223248; animation: floatIn .65s both; }
+.floatingAdviser > span:nth-child(2) { display: block; line-height: 1.4; }
+.floatingAdviser strong { display: block; font-size: 13px; font-weight: 800; }
+.floatingAdviser small { display: block; margin-top: 3px; color: #746654; font-size: 10px; }
+.floatingAdviser > svg { width: 16px; height: 16px; margin-left: 8px; color: #99712f; }
+.floatingNote { position: absolute; z-index: 1; bottom: 88px; left: 12px; display: flex; align-items: center; gap: 12px; padding: 14px 16px; border: 1px solid #3e4a56; border-radius: 16px; color: #f1d598; background: #15283a; box-shadow: 0 10px 28px rgb(18 30 44 / .14); }
+.floatingNote > svg { width: 23px; height: 23px; }
+.floatingNote span { color: #e0e6ec; font-size: 10px; line-height: 1.5; }
+.floatingNote strong { display: block; color: #fffaf0; font-size: 11px; font-weight: 750; }
+.scene .sceneCaption { margin-top: 21px; color: var(--muted); font-size: 10px; line-height: 1.6; text-align: center; }
+.adviserCard { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; margin-top: 72px; padding: 48px; border: 1px solid var(--line); border-radius: 32px; background: rgb(var(--surface)); box-shadow: 0 22px 60px rgb(48 35 14 / .05); scroll-margin-top: calc(var(--site-header-height) + 28px); }
+.adviserIntro { display: flex; flex-direction: column; align-items: flex-start; }
+.adviserIntro > h2 { margin-top: 20px; font-size: clamp(32px, 3.2vw, 44px); }
+.person { display: flex; align-items: center; gap: 23px; margin-top: 40px; animation: bubbleIn .45s both; }
+.avatar.largeAvatar { width: 132px; height: 132px; border-width: 5px; border-color: rgb(var(--surface)); box-shadow: 0 0 0 1px var(--line), 0 12px 30px rgb(27 32 41 / .09); font-size: 44px; }
+.person h3 { font-size: 24px; line-height: 1.25; letter-spacing: -.035em; }
+.person p { max-width: 160px; margin-top: 8px; color: var(--muted); font-size: 12px; line-height: 1.7; }
+.person > div > span { display: block; margin-top: 9px; color: var(--gold); font-size: 10px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.adviserActions { min-width: 0; padding-left: 40px; border-left: 1px solid var(--line); animation: bubbleIn .4s both; }
+.projectBadge { display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border: 1px solid var(--line); border-radius: 999px; color: var(--gold); font-size: 11px; font-weight: 750; line-height: 1.4; }
+.projectBadge svg { width: 15px; height: 15px; }
+.adviserActions > h3 { margin-top: 20px; font-size: 25px; font-weight: 800; line-height: 1.25; letter-spacing: -.035em; }
+.adviserActions > p { margin-top: 13px; color: var(--muted); font-size: 13px; line-height: 1.8; }
+.topicTags { display: flex; flex-wrap: wrap; gap: 9px 13px; margin-top: 20px; }
+.topicTags > span { display: inline-flex; align-items: center; gap: 5px; color: var(--muted); font-size: 11px; font-weight: 650; }
+.topicTags svg { width: 13px; height: 13px; color: var(--gold); }
+.primaryAction { width: 100%; min-height: 54px; margin-top: 26px; }
+.adviserActions .actionHint { margin-top: 10px; font-size: 11px; }
+.directContact { display: flex; align-items: stretch; gap: 10px; margin-top: 22px; }
+.directContact > a { display: flex; flex: 1; align-items: center; gap: 12px; min-width: 0; min-height: 58px; padding: 10px 14px; border: 1px solid var(--line); border-radius: 16px; background: var(--paper); }
+.directContact > a > svg { color: var(--gold); width: 18px; height: 18px; }
+.directContact > a > span { font-size: 16px; font-weight: 800; line-height: 1.5; }
+.directContact small { display: block; color: var(--muted); font-size: 10px; font-weight: 550; }
+.directContact > a > svg:last-child { margin-left: auto; }
+.directContact .mailButton { flex: 0 0 56px; justify-content: center; }
+.directContact .mailButton svg:last-child { margin: 0; }
+.adviserActions .hours { margin-top: 10px; font-size: 10px; }
+.adviserActions .reassurance { display: flex; align-items: center; gap: 7px; margin-top: 19px; font-size: 10px; font-weight: 700; }
+.reassurance svg { width: 13px; height: 13px; color: var(--gold); }
+.experience .privacy { max-width: 820px; margin: 22px auto 0; color: var(--muted); font-size: 10px; line-height: 1.8; text-align: center; }
+.privacy a { text-decoration: underline; text-underline-offset: 3px; }
+@keyframes bubbleIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes floatIn { from { opacity: 0; transform: translateY(8px) rotate(2deg); } to { opacity: 1; transform: none; } }
+@media (max-width: 1100px) {
+  .interests { gap: 9px; }
+  .interests > button { gap: 7px; padding: 13px; }
+  .interestIcon { width: 26px; }
+  .interests strong { font-size: 13px; }
+  .interests small { font-size: 10px; }
+  .selectionMark { display: none; }
+  .journey { gap: 28px; }
+  .floatingAdviser { right: 8px; padding: 9px; }
+  .floatingNote { left: 8px; padding: 12px; }
+  .adviserCard { gap: 32px; padding: 36px; }
+  .adviserActions { padding-left: 30px; }
+  .person { gap: 15px; }
+  .avatar.largeAvatar { width: 105px; height: 105px; }
+}
+@media (max-width: 800px) {
+  .interests { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .interests > button { min-height: 80px; padding: 16px; gap: 10px; }
+  .interests strong { font-size: 15px; }
+  .interests small { font-size: 11px; }
+  .journey { grid-template-columns: minmax(0, 1fr); gap: 25px; margin-top: 34px; }
+  .journeyCopy { padding: 0; }
+  .steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 15px; margin-top: 17px; }
+  .steps > button { display: block; padding: 15px 0; border-bottom: 2px solid var(--line); }
+  .steps > button:last-child { border-bottom: 2px solid var(--line); }
+  .steps > button[aria-selected='true'] { border-bottom-color: var(--gold); }
+  .stepNumber { padding: 0; }
+  .stepCopy strong { margin-top: 10px; font-size: 19px; }
+  .stepCopy > span { font-size: 11px; line-height: 1.65; }
+  .journeyLink { margin-top: 18px; }
+  .scene { width: 100%; max-width: 570px; justify-self: center; padding-top: 35px; }
+  .floatingAdviser { right: 20px; top: 26px; padding: 12px; }
+  .floatingNote { left: 20px; bottom: 83px; }
+  .adviserCard { margin-top: 44px; grid-template-columns: 1fr; gap: 30px; padding: 30px; }
+  .adviserIntro > h2 { font-size: 38px; }
+  .person { margin-top: 26px; }
+  .person p { max-width: none; }
+  .adviserActions { padding: 28px 0 0; border-left: 0; border-top: 1px solid var(--line); }
+  .adviserActions .hours, .adviserActions .reassurance, .experience .privacy { font-size: 11px; }
+}
+@media (max-width: 480px) {
+  .interests { gap: 9px; }
+  .interests > button { padding: 13px 10px; gap: 8px; }
+  .interests strong { font-size: 13px; }
+  .interests small { font-size: 10px; }
+  .interestIcon { width: 22px; }
+  .interestIcon svg { width: 19px; height: 19px; }
+  .steps { gap: 10px; }
+  .steps > button { padding-block: 12px; }
+  .stepCopy strong { font-size: 16px; line-height: 1.3; }
+  .stepCopy > span { display: none; }
+  .scene { padding: 79px 12px 20px; border-radius: 26px; }
+  .floatingAdviser { top: 15px; right: 16px; padding: 8px 12px; border-radius: 14px; }
+  .floatingAdviser .avatar { width: 34px; height: 34px; font-size: 13px; }
+  .floatingAdviser small { font-size: 9px; }
+  .floatingNote { position: relative; inset: auto; margin-top: 19px; padding: 11px 17px; box-shadow: none; }
+  .scene .sceneCaption { margin-top: 13px; }
+  .phone { width: min(278px, 100%); }
+  .adviserCard { padding: 26px 20px; border-radius: 25px; }
+  .adviserIntro > h2 { font-size: 34px; }
+  .avatar.largeAvatar { width: 92px; height: 92px; font-size: 35px; }
+  .person h3 { font-size: 24px; }
+  .person p { font-size: 11px; }
+  .adviserActions > h3 { font-size: 24px; }
+  .directContact > a { gap: 9px; padding-inline: 11px; }
+  .directContact > a > span { font-size: 15px; }
+  .primaryAction { padding-inline: 18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .experience *, .experience *::before { animation: none !important; transition: none !important; }
+}
