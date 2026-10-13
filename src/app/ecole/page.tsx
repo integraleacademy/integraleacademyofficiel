@@ -49,7 +49,7 @@ export default function Page() {
       </div>
       <nav className={`${styles.container} ${styles.chapterNav}`} aria-label="Découvrir notre école">
         <span>FAISONS CONNAISSANCE</span>
-        <a href="#clement-vaillant"><span>01</span> Le fondateur</a><a href="#equipe"><span>02</span> L’équipe</a><a href="#campus"><span>03</span> Le lieu</a><a href="#pedagogie"><span>04</span> La pédagogie</a><a href="#agrements"><span>05</span> Nos engagements</a>
+        <a href="#clement-vaillant"><span>01</span> Le fondateur</a><a href="#equipe"><span>02</span> L’équipe</a><a href="#campus"><span>03</span> Nos implantations</a><a href="#pedagogie"><span>04</span> La pédagogie</a><a href="#agrements"><span>05</span> Nos engagements</a>
       </nav>
     </section>
 
@@ -102,24 +102,48 @@ export default function Page() {
     <section id="campus" className={`${styles.section} ${styles.campusSection}`} aria-labelledby="campus-title">
       <div className={styles.container}>
         <div className={styles.sectionHeading}>
-          <div><p className={styles.eyebrow}>03 / Un lieu pour votre prochain chapitre</p><h2 id="campus-title">Ancrés sur<br /><em>la Côte d’Azur.</em></h2></div>
-          <p>Notre école principale, à Puget-sur-Argens, réunit les espaces pour apprendre, s’entraîner et échanger. Un cadre accessible, pensé pour le quotidien des apprenants.</p>
+          <div><p className={styles.eyebrow}>03 / Nos implantations</p><h2 id="campus-title">De la Côte d’Azur<br /><em>à Paris.</em></h2></div>
+          <p>Notre siège à Puget-sur-Argens et notre implantation à Paris vous accueillent selon les formations et les sessions. Deux lieux, la même attention portée à votre parcours.</p>
         </div>
         <div className={styles.campusLayout}>
-          <div className={styles.addressPanel}>
-            <p className={styles.eyebrow}>L’école principale</p><h3>Puget-sur-Argens<span>Var · 83</span></h3>
-            <address>54 chemin du Carreou<br />83480 Puget-sur-Argens</address><a href="#visite" className={styles.textLink}>Organiser une visite <Arrow diagonal /></a>
-            <div className={styles.access}><span>À 500 m de l’A8</span><span>Parking gratuit</span><span>Bus 4 · Général de Gaulle</span></div>
+          <figure className={styles.franceMap} aria-labelledby="map-caption">
+            <figcaption id="map-caption"><span>INTÉGRALE ACADEMY</span>Retrouvez-nous en France.</figcaption>
+            <div className={styles.mapArtwork}>
+              <Image src="/images/campus/france-implantations.svg" alt="" width={400} height={400} aria-hidden="true" />
+              <a href="#campus-paris" className={`${styles.mapPin} ${styles.parisPin}`} aria-label="Voir notre implantation à Paris">
+                <svg viewBox="0 0 28 36" aria-hidden="true"><path d="M14 1C6.8 1 1 6.8 1 14c0 9.1 13 21 13 21s13-11.9 13-21C27 6.8 21.2 1 14 1Z" /><circle cx="14" cy="14" r="4.5" /></svg>
+                <span className={styles.mapLabel}>Paris<small>Île-de-France</small></span>
+              </a>
+              <a href="#campus-puget" className={`${styles.mapPin} ${styles.pugetPin}`} aria-label="Voir notre siège à Puget-sur-Argens">
+                <svg viewBox="0 0 28 36" aria-hidden="true"><path d="M14 1C6.8 1 1 6.8 1 14c0 9.1 13 21 13 21s13-11.9 13-21C27 6.8 21.2 1 14 1Z" /><circle cx="14" cy="14" r="4.5" /></svg>
+                <span className={styles.mapLabel}>Puget-sur-Argens<small>Notre siège · Côte d’Azur</small></span>
+              </a>
+            </div>
+          </figure>
+          <div className={styles.campusAddresses}>
+            <article id="campus-puget" className={styles.addressPanel}>
+              <p className={styles.eyebrow}>Notre siège · Côte d’Azur</p><h3>Puget-sur-Argens<span>Var · 83</span></h3>
+              <address>54 chemin du Carreou<br />83480 Puget-sur-Argens</address><a href="#visite" className={styles.textLink}>Organiser une visite <Arrow diagonal /></a>
+              <div className={styles.access}><span>À 500 m de l’A8</span><span>Parking gratuit</span><span>Bus 4 · Général de Gaulle</span></div>
+            </article>
+            {contact.locations.filter(location => location.id === 'paris').map(location => <article id="campus-paris" className={styles.addressPanel} key={location.id}>
+              <p className={styles.eyebrow}>Notre implantation · Île-de-France</p><h3>{location.name}</h3>
+              <address>{location.address}</address><p className={styles.locationDetail}>{location.detail}</p>
+              <Link href="/planning" className={styles.textLink}>Consulter les sessions <Arrow diagonal /></Link>
+            </article>)}
           </div>
-          <div className={styles.facilities}>
+        </div>
+        <div className={styles.campusFacilities}>
+          <p className={styles.eyebrow}>À Puget-sur-Argens · 400 m² pour apprendre et pratiquer</p>
+          <div className={`${styles.facilities} ${styles.facilitiesRow}`}>
             <div><span>01</span><div><h3>Apprendre & pratiquer</h3><p>Quatre salles de cours et des espaces de mise en situation pour relier la théorie aux réalités du métier.</p></div></div>
             <div><span>02</span><div><h3>Travailler & progresser</h3><p>Une salle informatique équipée Mac / PC pour les enseignements et les travaux numériques.</p></div></div>
             <div><span>03</span><div><h3>Se retrouver & échanger</h3><p>Un espace détente pour partager une pause et créer des liens tout au long de la formation.</p></div></div>
           </div>
         </div>
         <details className={styles.locations}>
-          <summary><span>Et aussi, selon les sessions : <strong>Paris & Aurillac</strong></span><span className={styles.plus} aria-hidden="true">+</span></summary>
-          <div className={styles.locationGrid}>{contact.locations.filter(location => location.id !== 'puget').map(location => <article key={location.id}><h3>{location.name}</h3><p>{location.address}</p><p>{location.detail}</p></article>)}</div>
+          <summary><span>Et aussi, selon les sessions : <strong>Aurillac</strong></span><span className={styles.plus} aria-hidden="true">+</span></summary>
+          <div className={styles.locationGrid}>{contact.locations.filter(location => location.id !== 'puget' && location.id !== 'paris').map(location => <article key={location.id}><h3>{location.name}</h3><p>{location.address}</p><p>{location.detail}</p></article>)}</div>
         </details>
       </div>
     </section>

@@ -92,7 +92,32 @@
 .campusSection { background: var(--navy); color: #fffaf0; }
 .campusSection .eyebrow, .campusSection h2 em { color: #e7bd65; }
 .campusSection .sectionHeading > p { color: #bcc7d1; }
-.campusLayout { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; }
+.campusLayout { display: grid; grid-template-columns: 1.12fr 1fr; align-items: center; gap: 40px; }
+.franceMap { min-width: 0; padding: 30px 20px 12px; overflow: hidden; border: 1px solid #ecdcc6; border-radius: 28px; background: radial-gradient(ellipse at 50% 45%, #fffdf8, #faf4e9); color: #26313a; }
+.franceMap figcaption { padding-inline: 14px; font-size: 23px; font-weight: 800; line-height: 1.35; letter-spacing: -.03em; }
+.franceMap figcaption > span { display: block; margin-bottom: 10px; color: #90622a; font-size: 10px; font-weight: 800; letter-spacing: .14em; }
+.mapArtwork { position: relative; width: 100%; margin-top: 12px; }
+.mapArtwork > img { display: block; width: 100%; height: auto; }
+.mapPin { position: absolute; display: block; width: 28px; height: 36px; transform: translate(-50%, -100%); color: #26313a; }
+.mapPin > svg { display: block; width: 28px; height: 36px; overflow: visible; fill: #f3a537; stroke: #fffdf8; stroke-width: 1.5; filter: drop-shadow(0 3px 3px rgb(118 72 13 / .18)); }
+.mapPin circle { fill: #fffdf8; stroke: none; }
+.parisPin { left: 48.75%; top: 28.75%; }
+.pugetPin { left: 74.25%; top: 74.5%; }
+.mapLabel { position: absolute; left: calc(100% + 8px); bottom: 7px; width: max-content; padding: 9px 12px; border: 1px solid #ecd5b4; border-radius: 12px; background: #fffdf8; box-shadow: 0 4px 16px rgb(118 72 13 / .06); font-size: 15px; font-weight: 800; line-height: 1.25; }
+.mapLabel small { display: block; margin-top: 4px; color: #856135; font-size: 10px; font-weight: 650; }
+.pugetPin .mapLabel { right: calc(100% + 8px); left: auto; }
+.mapPin:hover .mapLabel, .mapPin:focus-visible .mapLabel { border-color: #c5852c; background: #fff4df; }
+.campusAddresses { display: grid; gap: 18px; min-width: 0; }
+.campusAddresses > article { scroll-margin-top: calc(var(--site-header-height) + 24px); }
+.campusAddresses .addressPanel { padding: 26px 30px; }
+.campusAddresses .addressPanel h3 { margin-top: 12px; font-size: 28px; }
+.campusAddresses .addressPanel address { margin-top: 15px; }
+.campusAddresses .addressPanel .textLink { margin-top: 18px; }
+.campusAddresses .access { margin-top: 20px; padding-top: 17px; }
+.addressPanel .locationDetail { margin-top: 10px; color: #bcc7d1; font-size: 13px; line-height: 1.65; }
+.campusFacilities { margin-top: 38px; }
+.facilities.facilitiesRow { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 12px; }
+.facilities.facilitiesRow > div:first-child { padding-top: 21px; }
 .addressPanel { padding: 36px; border: 1px solid #40505f; border-radius: 28px; background: linear-gradient(140deg, #1c2c3d, #10202f); }
 .addressPanel h3 { margin-top: 20px; font-size: 32px; line-height: 1.25; letter-spacing: -.03em; }
 .addressPanel h3 span { display: block; margin-top: 8px; color: #e7bd65; font-size: 14px; font-weight: 700; }
@@ -193,6 +218,9 @@
   .teamGrid { grid-template-columns: repeat(2, 1fr); gap: 18px; } .person { padding: 22px; }
   .teamBottom { align-items: flex-start; flex-direction: column; gap: 18px; }
   .addressPanel { padding: 28px; }
+  .franceMap { width: 100%; max-width: 560px; justify-self: center; }
+  .facilities.facilitiesRow { grid-template-columns: 1fr; gap: 0; }
+  .campusFacilities { margin-top: 30px; }
   .approachCopy { order: -1; }
   .domains { margin-top: 40px; } .domainGrid { grid-template-columns: 1fr 1fr; gap: 18px; } .domainCardBody { padding: 20px; font-size: 16px; }
   .timeline { gap: 24px; } .timeline li { padding-right: 0; } .timeline h3 { font-size: 17px; }
@@ -212,6 +240,11 @@
   .teamGrid { grid-template-columns: 1fr; gap: 16px; } .person h3 { font-size: 23px; }
   .teamIllustration, .approachIllustration { border-radius: 22px; }
   .addressPanel h3 { font-size: 29px; } .locationGrid, .references dl { grid-template-columns: 1fr; gap: 22px; }
+  .franceMap { padding: 24px 10px 8px; border-radius: 24px; }
+  .franceMap figcaption { padding-inline: 12px; font-size: 21px; }
+  .mapLabel { padding: 8px 10px; font-size: 13px; }
+  .mapLabel small { font-size: 9px; }
+  .campusAddresses .addressPanel { padding: 24px; }
   .domainGrid { grid-template-columns: 1fr; } .domainCardBody { padding: 20px; }
   .timeline { grid-template-columns: 1fr; gap: 0; padding-left: 5px; } .timeline li { padding: 0 0 30px 25px; border-top: 0; border-left: 1px solid var(--line); } .timeline li::before { top: 7px; left: -5px; } .timeline li:last-child { padding-bottom: 0; } .timeline p { max-width: none; }
   .reviewsGrid { grid-template-columns: 1fr; } .reviewsGrid blockquote { font-size: 18px; }
