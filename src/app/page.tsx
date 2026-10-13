@@ -6,6 +6,7 @@ import { BtsTrainingGrid, type BtsTrainingHighlight } from '@/components/BtsTrai
 import { BtsTrainingComparisonModal } from '@/components/BtsTrainingComparisonModal';
 import { CampusSection } from '@/components/CampusSection';
 import { GoogleReviewsSection } from '@/components/GoogleReviewsSection';
+import { listPublicGoogleReviews } from '@/lib/google-reviews-data';
 import { HomePageAnimations } from '@/components/HomePageAnimations';
 import { SecurityTrainingComparisonModal } from '@/components/SecurityTrainingComparisonModal';
 import { SecurityTrainingGrid } from '@/components/SecurityTrainingGrid';
@@ -100,7 +101,8 @@ const proofItems = [
 ] as const;
 
 export default async function Home() {
-  const securityHighlights = createHomeSecurityHighlights(await listSessions());
+  const [sessions, googleReviews] = await Promise.all([listSessions(), listPublicGoogleReviews()]);
+  const securityHighlights = createHomeSecurityHighlights(sessions);
 
   return (
     <div className={styles.home} data-home-page>
@@ -188,7 +190,7 @@ export default async function Home() {
       </section>
 
       <CampusSection />
-      <GoogleReviewsSection />
+      <GoogleReviewsSection reviews={googleReviews} />
       <PremiumFAQSection badge="FAQ" title="Questions fréquentes" description="Retrouvez les réponses aux questions les plus courantes sur nos formations, les financements, les inscriptions et l’accompagnement Intégrale Academy." items={globalFaq} contactHref="/contact" />
     </div>
   );

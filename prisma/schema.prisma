@@ -92,3 +92,21 @@ model ApsGalleryPhoto {
 
   @@unique([gallery, slot])
 }
+
+model GoogleReview {
+  id           String   @id @default(cuid())
+  sourceId     String   @unique
+  author       String
+  rating       Int
+  originalText String   @default("")
+  excerpt      String   @default("")
+  categories   String[] @default([])
+  sourceUrl    String
+  reviewedAt   DateTime?
+  published    Boolean  @default(true)
+  featured     Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([published, rating])
+}

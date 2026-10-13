@@ -86,3 +86,12 @@ Après modification, redéployer le service. En local, les mêmes variables peuv
 ### Évolution leads
 
 Le tchat peut proposer un rappel. Une future route dédiée pourra enregistrer : nom, prénom, téléphone, email, formation souhaitée et message, avec consentement RGPD explicite.
+
+## Avis Google
+
+- Gestion protégée : `/admin/ia/avis-google` (lien dans le menu et le tableau de bord).
+- Plusieurs formations par avis, extrait modifiable, publication/masquage et mise en avant. Enregistrer chaque avis après modification.
+- L’accueil lit uniquement les avis publiés notés 5 étoiles en PostgreSQL. Les filtres et compteurs reflètent ces données ; aucune moyenne globale n’est calculée à partir de cette sélection.
+- La migration `20261013040000_google_reviews` crée la table et importe 41 avis/extraits, avec dédoublonnage de la sélection historique. Il s’agit d’un import partiel et manuel, pas d’une synchronisation exhaustive avec Google Business Profile. La provenance du lot initial figure dans `src/data/google-reviews-seed.json`.
+- Les nouveaux avis peuvent être ajoutés dans l’administration avec leur nom, date, lien Google et extrait corrigé. Les modifications ultérieures sont conservées en base et ne sont pas réinitialisées au déploiement.
+- Vérification ciblée : `node --import tsx --test tests/google-reviews.test.ts tests/admin-request-origin.test.ts`.
