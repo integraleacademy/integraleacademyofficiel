@@ -25,7 +25,7 @@ export function GlobalMobileCTA() {
     return null;
   }
 
-  if (pathname.replace(/\/+$/, '') === '/financements') {
+  if (pathname.replace(/\/+$/, '') === '/tarifs') {
     return <>
       <div aria-hidden="true" className="h-[calc(68px+env(safe-area-inset-bottom))] md:hidden" />
       <div className="fixed inset-x-0 bottom-0 z-40 border-t border-academy-line bg-academy-surface/95 px-4 pb-[calc(.5rem+env(safe-area-inset-bottom))] pt-2 backdrop-blur md:hidden">

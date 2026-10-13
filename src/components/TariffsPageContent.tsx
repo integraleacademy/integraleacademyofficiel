@@ -3,6 +3,8 @@
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import FinancingSimulator from '@/components/FinancingSimulator';
+import FundingSections from '@/components/FundingSections';
+import { financingFormationOptions } from '@/data/financing-options';
 import styles from './TariffsPageContent.module.css';
 
 export type PricingOfferCategory = 'security' | 'fire' | 'leadership' | 'mobility';
@@ -19,6 +21,7 @@ export type PricingOffer = {
   certification: string;
   price?: string;
   priceNote?: string;
+  priceDetails?: string[];
   eyebrow: string;
   category: PricingOfferCategory;
   categoryLabel: string;
@@ -34,33 +37,6 @@ const filters: Array<{ key: FilterKey; label: string }> = [
   { key: 'leadership', label: 'Direction & VAE' },
   { key: 'mobility', label: 'VTC' },
 ];
-
-const financingMethods = [
-  {
-    number: '01',
-    title: 'Compte Personnel de Formation',
-    label: 'CPF',
-    text: 'Mobilisez vos droits disponibles lorsque la formation et votre dossier sont éligibles.',
-  },
-  {
-    number: '02',
-    title: 'Accompagnement France Travail',
-    label: 'France Travail',
-    text: 'Préparez votre demande avec un devis et un projet professionnel clairement défini.',
-  },
-  {
-    number: '03',
-    title: 'Entreprise ou opérateur de compétences',
-    label: 'Employeur · OPCO',
-    text: 'Faites étudier la prise en charge de votre parcours dans le cadre professionnel.',
-  },
-  {
-    number: '04',
-    title: 'Financement personnel',
-    label: 'Paiement échelonné',
-    text: 'Étudiez une facilité de paiement adaptée à votre formation et à votre situation.',
-  },
-] as const;
 
 function ArrowIcon() {
   return (
@@ -112,8 +88,17 @@ function formatAmount(rawPrice?: string) {
   return { amount, note: 'Tarif de la formation' };
 }
 
-function PriceCard({ offer, index }: { offer: PricingOffer; index: number }) {
+function PriceCard({ offer, index, onSimulate }: {
+  offer: PricingOffer;
+  index: number;
+  onSimulate: (formation: string) => void;
+}) {
   const price = formatAmount(offer.price);
+  const simulation = financingFormationOptions.find(({ slug }) => slug === offer.slug);
+  const contactFormation = offer.slug === '/dirigeant' ? 'desp-initial'
+    : offer.slug === '/vaedirigeant' ? 'desp-vae'
+    : offer.slug.split('/').pop() || '';
+  const quoteHref = `/contact?formation=${encodeURIComponent(contactFormation)}&objet=devis`;
 
   return (
     <article className={styles.priceCard} data-tone={offer.tone}>
@@ -141,10 +126,13 @@ function PriceCard({ offer, index }: { offer: PricingOffer; index: number }) {
         </div>
       </div>
 
-      <div className={styles.cardFunding}>
+      {offer.priceDetails && <ul className={styles.cardPriceDetails} aria-label="Prestations et options">
+        {offer.priceDetails.map((detail) => <li key={detail}><CheckIcon />{detail}</li>)}
+      </ul>}
+      <a href="#solutions" className={styles.cardFunding}>
         <span><CheckIcon /></span>
         <p><strong>Financements possibles</strong>{offer.financing}</p>
-      </div>
+      </a>
 
       <div className={styles.cardFooter}>
         <div className={styles.priceBlock}>
@@ -153,10 +141,11 @@ function PriceCard({ offer, index }: { offer: PricingOffer; index: number }) {
           <small>{offer.priceNote ?? price.note}</small>
         </div>
         <div className={styles.cardActions}>
-          <Link href={offer.slug} className={styles.cardPrimaryAction}>
-            Voir la formation <ArrowIcon />
-          </Link>
-          <Link href="/contact" className={styles.cardSecondaryAction}>Demander un devis</Link>
+          {simulation ? <a href="#simulateur" onClick={() => onSimulate(simulation.label)} className={styles.cardPrimaryAction}>
+            Simuler mon financement <ArrowIcon />
+          </a> : <Link href={quoteHref} className={styles.cardPrimaryAction}>Demander un devis <ArrowIcon /></Link>}
+          {simulation && <Link href={quoteHref} className={styles.cardSecondaryAction}>Demander un devis</Link>}
+          <Link href={offer.slug} className={styles.cardDetailsLink}>Voir la formation <ArrowIcon /></Link>
         </div>
       </div>
     </article>
@@ -165,6 +154,7 @@ function PriceCard({ offer, index }: { offer: PricingOffer; index: number }) {
 
 export default function TariffsPageContent({ offers }: { offers: PricingOffer[] }) {
   const [activeFilter, setActiveFilter] = useState<FilterKey>('all');
+  const [selectedFormation, setSelectedFormation] = useState('APS');
 
   const visibleOffers = useMemo(
     () => activeFilter === 'all' ? offers : offers.filter((offer) => offer.category === activeFilter),
@@ -180,19 +170,19 @@ export default function TariffsPageContent({ offers }: { offers: PricingOffer[] 
           <nav className={styles.breadcrumb} aria-label="Fil d’Ariane">
             <Link href="/">Accueil</Link>
             <span aria-hidden="true">/</span>
-            <span>Tarifs</span>
+            <span>Tarifs et financements</span>
           </nav>
 
           <div className={styles.heroLayout}>
             <div className={styles.heroCopy}>
-              <span className={styles.heroBadge}><i aria-hidden="true" /> Tarifs des formations</span>
-              <h1>Choisissez votre formation avec une vision <em>claire du budget.</em></h1>
+              <span className={styles.heroBadge}><i aria-hidden="true" /> Votre budget formation</span>
+              <h1>Tarifs et <em>financements.</em></h1>
               <p>
-                Comparez les tarifs, les durées et les solutions de financement de nos parcours professionnels. Notre équipe vérifie ensuite votre situation et vous remet un devis personnalisé.
+                Comparez les tarifs de nos formations, découvrez les solutions adaptées à votre situation et estimez votre reste à charge, au même endroit.
               </p>
               <div className={styles.heroActions}>
                 <a href="#catalogue" className={styles.primaryButton}>Comparer les tarifs <ArrowIcon /></a>
-                <a href="#simulateur" className={styles.secondaryButton}>Simuler mon financement</a>
+                <a href="#solutions" className={styles.secondaryButton}>Trouver un financement</a>
               </div>
             </div>
 
@@ -210,7 +200,7 @@ export default function TariffsPageContent({ offers }: { offers: PricingOffer[] 
               <div className={styles.panelStats}>
                 <div><strong>{offers.length}</strong><span>parcours présentés</span></div>
                 <div><strong>10×</strong><span>jusqu’à, selon dossier</span></div>
-                <div><strong>4</strong><span>pistes de financement</span></div>
+                <div><strong>5</strong><span>pistes de financement</span></div>
               </div>
               <p className={styles.panelNote}><CheckIcon /> Un conseiller confirme toujours le montant final avant votre inscription.</p>
             </aside>
@@ -231,8 +221,8 @@ export default function TariffsPageContent({ offers }: { offers: PricingOffer[] 
         <div className={styles.container}>
           <div className={styles.sectionHeading}>
             <div>
-              <span className={styles.sectionLabel}>Catalogue professionnel · hors BTS</span>
-              <h2>Trouvez le parcours adapté à votre projet.</h2>
+              <span className={styles.sectionLabel}>01 / Les tarifs · hors BTS</span>
+              <h2>Comparez les tarifs de nos formations.</h2>
             </div>
             <p>Filtrez par univers métier, puis comparez les informations essentielles avant d’ouvrir la fiche détaillée.</p>
           </div>
@@ -265,71 +255,21 @@ export default function TariffsPageContent({ offers }: { offers: PricingOffer[] 
 
           <div className={styles.cardsGrid}>
             {visibleOffers.map((offer) => (
-              <PriceCard key={offer.slug} offer={offer} index={offers.indexOf(offer)} />
+              <PriceCard key={offer.slug} offer={offer} index={offers.indexOf(offer)} onSimulate={setSelectedFormation} />
             ))}
           </div>
+          <p className={styles.btsNote}>Vous recherchez un BTS ? <Link href="/bts">Découvrez nos parcours en alternance</Link> et <a href="#solutions">leurs possibilités de financement</a>.</p>
         </div>
       </section>
 
-      <section className={styles.financingIntro}>
-        <div className={styles.container}>
-          <div className={styles.financingHeading}>
-            <div>
-              <span className={styles.sectionLabel}>Financer votre projet</span>
-              <h2>Le prix affiché n’est pas forcément votre reste à charge.</h2>
-            </div>
-            <div>
-              <p>Selon votre situation, différents financements peuvent être étudiés séparément ou en complément.</p>
-              <Link href="/financements">Comprendre tous les financements <ArrowIcon /></Link>
-            </div>
-          </div>
+      <FundingSections simulator={
+        <FinancingSimulator
+          variant="editorial"
+          selectedFormation={selectedFormation}
+          onFormationChange={setSelectedFormation}
+        />
+      } />
 
-          <div className={styles.financingGrid}>
-            {financingMethods.map((method) => (
-              <article key={method.number}>
-                <div><span>{method.number}</span><strong>{method.label}</strong></div>
-                <h3>{method.title}</h3>
-                <p>{method.text}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <FinancingSimulator />
-
-      <section className={styles.btsCallout}>
-        <div className={styles.container}>
-          <div className={styles.btsCard}>
-            <div>
-              <span className={styles.sectionLabel}>Vous recherchez un BTS ?</span>
-              <h2>Les parcours en alternance ont leur propre accompagnement.</h2>
-              <p>Cette grille concerne les formations professionnelles hors BTS. Retrouvez les cursus, rythmes et modalités d’admission dans l’espace dédié.</p>
-            </div>
-            <div className={styles.btsActions}>
-              <Link href="/bts" className={styles.primaryButton}>Découvrir les BTS <ArrowIcon /></Link>
-              <Link href="/contact" className={styles.outlineButton}>Échanger avec l’équipe</Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className={styles.finalCta}>
-        <div className={styles.finalGlow} aria-hidden="true" />
-        <div className={styles.container}>
-          <div className={styles.finalCtaInner}>
-            <span className={styles.finalMark}>IA</span>
-            <div>
-              <span className={styles.sectionLabel}>Un doute sur le bon parcours ?</span>
-              <h2>Parlez-nous de votre projet. On vous aide à chiffrer la suite.</h2>
-            </div>
-            <div className={styles.finalActions}>
-              <Link href="/contact" className={styles.primaryButton}>Demander un devis <ArrowIcon /></Link>
-              <a href="tel:0422470768" className={styles.finalPhone}>04 22 47 07 68</a>
-            </div>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }

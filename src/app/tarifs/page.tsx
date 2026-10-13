@@ -14,6 +14,7 @@ type OfferPresentation = {
   categoryLabel: string;
   tone: PricingOfferTone;
   priceNote?: string;
+  priceDetails?: string[];
   eyebrow: string;
 };
 
@@ -28,6 +29,7 @@ const offerPresentation: Record<string, OfferPresentation> = {
   },
   '/formations-securite/a3p-apr': {
     shortTitle: 'A3P',
+    priceDetails: ['Hébergement collectif en option : 350 € TTC pour la formation, sur réservation.'],
     priceNote: 'Tarif 2027 TTC',
     category: 'security',
     categoryLabel: 'Protection rapprochée',
@@ -46,7 +48,8 @@ const offerPresentation: Record<string, OfferPresentation> = {
     category: 'fire',
     categoryLabel: 'Sécurité incendie',
     tone: 'red',
-    priceNote: '1 230 € avec SST',
+    priceNote: 'SSIAP 1 seul',
+    priceDetails: ['Formule SSIAP 1 + SST : 1 230 €.'],
     eyebrow: 'Diplôme réglementaire',
   },
   '/formations-securite/sst': {
@@ -78,6 +81,7 @@ const offerPresentation: Record<string, OfferPresentation> = {
     categoryLabel: 'Transport',
     tone: 'violet',
     priceNote: 'Formule tout inclus',
+    priceDetails: ['Théorie en e-learning et pratique en présentiel.', 'Livre, coaching et frais d’examen inclus.'],
     eyebrow: 'Préparation à l’examen VTC',
   },
 };

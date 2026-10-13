@@ -140,29 +140,24 @@ export const seoPages: Record<string, SeoPage> = {
     label: 'Planning des formations', type: 'CollectionPage',
   },
   '/tarifs': {
-    title: 'Tarifs des formations sécurité et VTC',
-    description: 'Comparez les tarifs, durées et prestations des formations APS, A3P, DESP, VAE, SSIAP, SST et VTC. Retrouvez les solutions de financement selon votre situation.',
-    label: 'Tarifs des formations', type: 'CollectionPage',
-  },
-  '/financements': {
-    title: 'Financer sa formation – CPF, alternance et aides',
-    description: 'Étudiez les solutions pour financer votre formation : CPF, France Travail, alternance, employeur ou financement personnel. Intégrale Academy vous accompagne.',
-    label: 'Financer sa formation', type: 'CollectionPage',
+    title: 'Tarifs et financements des formations',
+    description: 'Consultez les tarifs APS, A3P, DESP, SSIAP et VTC, explorez les financements CPF, France Travail et alternance, puis estimez votre reste à charge.',
+    label: 'Tarifs et financements', type: 'CollectionPage',
   },
   '/financements/cpf': {
     title: 'Financer sa formation avec le CPF',
     description: 'Préparez votre financement CPF : vérification de vos droits, choix d’une formation éligible et démarches sur Mon Compte Formation avec Intégrale Academy.',
-    label: 'Financement CPF', parent: '/financements',
+    label: 'Financement CPF', parent: '/tarifs',
   },
   '/financements/france-travail': {
     title: 'Financement de formation avec France Travail',
     description: 'Construisez votre projet de formation avec France Travail : choix du parcours, devis, demande de financement et validation de votre dossier avec votre conseiller.',
-    label: 'Financement France Travail', parent: '/financements',
+    label: 'Financement France Travail', parent: '/tarifs',
   },
   '/financements/alternance': {
     title: 'Financement et inscription en BTS en alternance',
     description: 'Découvrez le fonctionnement de l’alternance chez Intégrale Academy : candidature en BTS, recherche d’entreprise, contrat et prise en charge de la formation.',
-    label: 'Financement en alternance', parent: '/financements',
+    label: 'Financement en alternance', parent: '/tarifs',
   },
   '/entreprises': {
     title: 'Recrutement et formation en sécurité privée',

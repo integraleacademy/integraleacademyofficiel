@@ -215,14 +215,14 @@ export function Header(){
     ['BTS en alternance','/#bts','BTS sécurité (MOS), BTS commerce (CI, MCO, NDRC), BTS immobilier (PI).','🎓'],
     ['Chauffeur VTC','/vtc','Formation Théorique et Formation Pratique VTC.','🚘'],
   ] as const;
-  const nav=[['Nos formations',trainingNav],['Notre école','/ecole'],['Tarifs','/tarifs'],['Financements','/financements'],['Entreprises','/entreprises'],['Planning','/planning'],['Contact','/contact']] as const;
+  const nav=[['Nos formations',trainingNav],['Notre école','/ecole'],['Tarifs et financements','/tarifs'],['Entreprises','/entreprises'],['Planning','/planning'],['Contact','/contact']] as const;
   return <header className="sticky top-0 z-50 border-b border-white/15 bg-[linear-gradient(90deg,#40506a_0%,#344259_48%,#2b384d_100%)] text-white shadow-[0_16px_42px_rgba(31,42,58,.24)]"><div className="page-container flex items-center justify-between gap-2 px-0 py-1.5"><Link href="/" aria-label="Retour à l’accueil Intégrale Academy" className="group flex min-w-0 shrink items-center gap-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-academy-gold sm:gap-3"><BrandSigle placement="header"/><span className="min-w-0 whitespace-nowrap text-[11px] font-black tracking-[.06em] sm:text-[15px] sm:tracking-[.08em] xl:text-[20px]"><span className="text-white">INTÉGRALE</span><span className="ml-1 text-academy-gold sm:ml-1.5">ACADEMY</span></span></Link><nav className="hidden items-center gap-1 text-sm font-bold lg:flex" aria-label="Navigation principale">{nav.map(([n,h])=>typeof h!=='string'?<DesktopTrainingDropdown key={n} label={n} items={h}/>:<Link key={h} href={h} className="rounded-full px-3 py-2 text-white/80 transition hover:bg-white/10 hover:text-academy-gold focus:bg-white/10 focus:text-academy-gold">{n}</Link>)}</nav><div className="hidden items-center gap-2 xl:flex"><ThemeToggle/><Button href="tel:0422470768" variant="ghost">Appeler</Button><AppointmentButton/></div><div className="flex shrink-0 items-center gap-2 lg:hidden"><span className="hidden sm:block"><ThemeToggle/></span><MobileHeaderMenu nav={nav} appointmentFormUrl={appointmentFormUrl}/></div></div></header>
 }
 export function Footer(){
   const footerLinks=[
     {title:'Formations',links:[['APS','/formations-securite/aps'],['SSIAP','/formations-securite/ssiap'],['A3P','/formations-securite/a3p-apr'],['BTS en alternance','/bts'],['Chauffeur VTC','/vtc']]},
-    {title:'Financements',links:[['CPF','/financements/cpf'],['France Travail','/financements/france-travail'],['Alternance','/financements/alternance'],['Toutes les solutions','/financements']]},
-    {title:'Ressources',links:[['Planning','/planning'],['Dossiers formations','/dossiersfc'],['Dossiers BTS','/dossiersbts'],['Nos centres','/centres'],['Entreprises','/entreprises'],['Tarifs','/tarifs'],['Contact','/contact']]},
+    {title:'Tarifs et financements',links:[['CPF','/financements/cpf'],['France Travail','/financements/france-travail'],['Alternance','/financements/alternance'],['Tarifs et financements','/tarifs']]},
+    {title:'Ressources',links:[['Planning','/planning'],['Dossiers formations','/dossiersfc'],['Dossiers BTS','/dossiersbts'],['Nos centres','/centres'],['Entreprises','/entreprises'],['Contact','/contact']]},
   ];
   const trustItems=['Qualiopi','CNAPS','France Travail','OPCO AKTO'];
 

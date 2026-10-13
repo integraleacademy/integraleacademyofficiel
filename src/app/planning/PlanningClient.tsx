@@ -943,7 +943,7 @@ export function PlanningClient({ initialSessions, btsIntakeYear }: { initialSess
         <div className="mt-9 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           {[
             ['01', 'Découvrir les formations', 'Comparer APS, A3P, SSIAP 1, VTC et BTS.', '/formations-securite'],
-            ['02', 'Trouver un financement', 'CPF, France Travail, employeur et autres solutions.', '/financements'],
+            ['02', 'Trouver un financement', 'CPF, France Travail, employeur et autres solutions.', '/tarifs#solutions'],
             ['03', 'Recruter ou former', 'Alternance, POEI et montée en compétences.', '/entreprises'],
             ['04', 'Parler à Cassandre', 'Valider mon projet et mes prochaines étapes.', '/contact?motif=rdv'],
           ].map(([number, label, description, href]) => (
