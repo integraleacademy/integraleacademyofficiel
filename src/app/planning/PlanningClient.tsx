@@ -616,6 +616,7 @@ export function PlanningClient({ initialSessions, btsIntakeYear }: { initialSess
   const [selectedSessionId, setSelectedSessionId] = useState<string | null>(null);
   const [detailSession, setDetailSession] = useState<Session | null>(null);
   const [registrationSession, setRegistrationSession] = useState<Session | null>(null);
+  const sessionTrigger = useRef<HTMLElement | null>(null);
 
   const formationSessionCounts = useMemo(
     () => Object.fromEntries(formationFilters.map((formation) => [formation.key, sortedSessions.filter((session) => formationMatchesSlug(formation, session.training?.slug)).length])) as Record<Exclude<FormationFilterKey, 'all'>, number>,
@@ -638,12 +639,29 @@ export function PlanningClient({ initialSessions, btsIntakeYear }: { initialSess
   const resultKey = `${activeFormation}-${locationFilter}-${view}`;
 
   function selectSession(session: Session) {
+    sessionTrigger.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     setSelectedSessionId(session.id);
     setDetailSession(session);
   }
 
+  function openRegistration(session: Session, fromDetails = false) {
+    if (!fromDetails) sessionTrigger.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    setDetailSession(null);
+    setRegistrationSession(session);
+  }
+
+  function closeSessionDialog() {
+    setDetailSession(null);
+    setRegistrationSession(null);
+    window.requestAnimationFrame(() => sessionTrigger.current?.focus({ preventScroll: true }));
+  }
+
   function scrollToSessions() {
-    window.requestAnimationFrame(() => document.getElementById('sessions')?.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' }));
+    window.requestAnimationFrame(() => {
+      const section = document.getElementById('sessions');
+      section?.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+      section?.querySelector('select')?.focus({ preventScroll: true });
+    });
   }
 
   function chooseFormation(formation: FormationFilterKey) {
@@ -689,7 +707,7 @@ export function PlanningClient({ initialSessions, btsIntakeYear }: { initialSess
             </div>
           </div>
 
-          <PlanningPreview key={activeFormation} formations={previewFormations} initialFormation={activeFormation} onChoose={key => chooseFormation(key as FormationFilterKey)} />
+          <PlanningPreview key={activeFormation} formations={previewFormations} initialFormation={activeFormation} btsIntakeYear={btsIntakeYear} onChoose={key => chooseFormation(key as FormationFilterKey)} />
         </div>
       </section>
 
@@ -820,15 +838,15 @@ export function PlanningClient({ initialSessions, btsIntakeYear }: { initialSess
 
       <MissingDates sessions={sortedSessions} activeFormation={activeFormation} />
 
-      <PlanningHelp selectedSession={selectedSession ? { title: sessionTitle(selectedSession), dates: selectedSession.scheduleKind === 'vtc-exam' ? 'Inscription avant le ' + formatSessionDate(selectedSession.startDate) + ' · Examen théorique le ' + formatSessionDate(selectedSession.endDate) : formatSessionPeriod(selectedSession.startDate, selectedSession.endDate), location: selectedSession.location } : undefined} formation={selectedFormationDetails?.label} formationSlug={selectedFormationDetails?.slugs[0]} onRequest={() => selectedSession && setRegistrationSession(selectedSession)} onClear={() => setSelectedSessionId(null)} />
+      <PlanningHelp selectedSession={selectedSession ? { title: sessionTitle(selectedSession), dates: selectedSession.scheduleKind === 'vtc-exam' ? 'Inscription avant le ' + formatSessionDate(selectedSession.startDate) + ' · Examen théorique le ' + formatSessionDate(selectedSession.endDate) : formatSessionPeriod(selectedSession.startDate, selectedSession.endDate), location: selectedSession.location } : undefined} formation={selectedFormationDetails?.label} formationSlug={selectedFormationDetails?.slugs[0]} onRequest={() => selectedSession && openRegistration(selectedSession)} onClear={() => setSelectedSessionId(null)} />
 
-      {detailSession ? <SessionDetails session={detailSession} onClose={() => setDetailSession(null)} onRequest={() => { setDetailSession(null); setRegistrationSession(detailSession); }} /> : null}
-      {registrationSession ? <PlanningRegistration session={registrationSession} onClose={() => setRegistrationSession(null)} /> : null}
+      {detailSession ? <SessionDetails session={detailSession} onClose={closeSessionDialog} onRequest={() => openRegistration(detailSession, true)} /> : null}
+      {registrationSession ? <PlanningRegistration session={registrationSession} onClose={closeSessionDialog} /> : null}
 
       <div className="fixed inset-x-3 bottom-[calc(.75rem+env(safe-area-inset-bottom))] z-40 grid grid-cols-3 gap-2 rounded-[1.5rem] border border-white/70 bg-white/92 p-2 shadow-[0_18px_60px_rgba(17,17,17,.18)] backdrop-blur md:hidden">
         <Link href="tel:0422470768" className="rounded-2xl bg-[#101a29] px-3 py-3 text-center text-xs font-black text-white">Appeler</Link>
         <Link href="/contact?motif=alerte-planning" className="rounded-2xl border border-academy-line bg-white px-3 py-3 text-center text-xs font-black text-academy-ink">Alerte</Link>
-        <button type="button" onClick={() => selectedSession ? setRegistrationSession(selectedSession) : document.getElementById('planning-advice-title')?.scrollIntoView({ behavior: 'auto', block: 'center' })} className="planning-neutral-action rounded-2xl px-3 py-3 text-center text-xs font-black">{selectedSession ? 'Ma session' : 'Mon projet'}</button>
+        <button type="button" onClick={() => selectedSession ? openRegistration(selectedSession) : document.getElementById('planning-advice-title')?.scrollIntoView({ behavior: 'auto', block: 'center' })} className="planning-neutral-action rounded-2xl px-3 py-3 text-center text-xs font-black">{selectedSession ? 'Ma session' : 'Mon projet'}</button>
       </div>
     </main>
   );

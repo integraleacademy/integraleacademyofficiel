@@ -44,7 +44,9 @@
 .previewChoices button > span { display: block; overflow: hidden; aspect-ratio: 1.45; background: #f0e9d9; }
 .previewChoices img { width: 100%; height: 100%; object-fit: cover; }
 .previewChoices strong { display: block; padding: 8px 6px; font-size: 10px; }
-.previewChoices i { position: absolute; bottom: 6px; right: 7px; font-style: normal; color: #806124; font-size: 12px; }
+.previewChoices i { position: absolute; bottom: 7px; right: 7px; color: #806124; }
+.preview svg { width: 17px; height: 17px; flex-shrink: 0; }
+.previewChoices i svg { width: 12px; height: 12px; }
 .miniMonthHeading { display: flex; justify-content: space-between; align-items: center; gap: 12px; font-size: 16px; font-weight: 800; text-transform: capitalize; }
 .miniBadge { padding: 5px 9px; border-radius: 999px; background: #ede3cc; color: #76531c; font-size: 10px; text-transform: uppercase; }
 .miniMonth { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 3px; margin-top: 12px; text-align: center; }
@@ -59,6 +61,8 @@
 .previewSummaryImage > span { position: absolute; bottom: 8px; left: 8px; padding: 5px 8px; border-radius: 999px; background: #fffaf0ee; font-size: 9px; font-weight: 800; }
 .previewSummary h3 { margin-top: 12px; font-size: 17px; line-height: 1.25; letter-spacing: -.025em; }
 .previewSummary p { margin-top: 5px; color: #62655f; font-size: 11px; line-height: 1.5; }
+.previewSummary .btsPreviewDate { color: #806124; font-size: 16px; }
+.btsPreviewDate strong { font-size: 23px; }
 .previewSummary button, .previewEmpty button { display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; margin-top: 13px; padding: 11px 13px; border-radius: 999px; background: #172233; color: white; font-size: 11px; font-weight: 700; }
 .previewEmpty { display: grid; align-content: center; min-height: 236px; gap: 12px; }
 .previewEmpty p { font-size: 13px; line-height: 1.7; }
@@ -70,7 +74,8 @@
 .formationImage { display: block; position: relative; overflow: hidden; width: 100%; aspect-ratio: 1.65; margin-bottom: 17px; border-radius: 12px; background: #f5efdf; }
 .formationImage > img { width: 100%; height: 100%; object-fit: cover; transition: transform .45s ease; }
 .formationCard:hover .formationImage > img { transform: scale(1.04); }
-.formationCard > span:last-child { margin-top: 18px; }
+.formationCard > span:nth-last-child(2) { margin-bottom: 18px; }
+.formationCard > span:last-child { margin-top: auto; }
 .formationCheck { position: absolute; display: grid; place-items: center; right: 8px; top: 8px; width: 24px; height: 24px; border-radius: 50%; color: #111b2a; background: #e6ba5b; opacity: 0; transform: scale(.7); transition: opacity .2s, transform .2s; }
 .formationCard[aria-pressed='true'] .formationCheck { opacity: 1; transform: scale(1); }
 
@@ -124,6 +129,7 @@
 .inPersonPhase { background: rgb(var(--planning-accent) / .82); }
 .examMarker { position: absolute; display: grid; place-items: center; top: calc(50% - 13px); width: 26px; height: 26px; transform: translateX(-50%); border: 2px solid #faf6ed; border-radius: 50%; background: #182435; color: white; font-size: 9px; font-weight: 800; }
 .calendarRowArrow { position: absolute; right: 12px; top: calc(50% - 9px); color: #857149; font-size: 17px; }
+.calendarRowArrow svg { width: 17px; height: 17px; }
 .emptyMonths { padding: 40px 24px; font-size: 14px; line-height: 1.8; }
 .calendarCaption { margin-top: 13px; color: #b9c3ce; font-size: 11px; line-height: 1.7; }
 

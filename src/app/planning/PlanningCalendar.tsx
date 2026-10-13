@@ -60,7 +60,7 @@ export function PlanningCalendar({ sessions, onSelect, selectedId, themeForSessi
             })}
             {exam ? <span className={styles.examMarker} style={{ left: `clamp(14px, ${exam.left + exam.width / 2}%, calc(100% - 14px))` }} title={'Examen le ' + formatSessionDate(session.examDate)}>E</span> : null}
           </span>
-          <span className={styles.calendarRowArrow} aria-hidden="true">↗</span>
+          <span className={styles.calendarRowArrow}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12" /></svg></span>
         </button>;
       })}
       {!visible.length ? <p className={styles.emptyMonths}>Aucune session sur ces trois mois. Utilisez les flèches pour explorer les prochaines dates.</p> : null}
