@@ -27,8 +27,9 @@
 }
 .page * { box-sizing: border-box; }
 .page h1, .page h2, .page h3, .page h4, .page p { margin: 0; }
-.page h1, .page h2 { font-family: inherit; font-weight: 950; line-height: 1.03; letter-spacing: -.055em; text-wrap: balance; }
-.page em { color: var(--gold); font-style: normal; }
+/* Match École / Planning typography while preserving the brochure layout. */
+.page h1, .page h2 { font-family: inherit; font-weight: 900; line-height: 1.13; letter-spacing: -.045em; text-wrap: balance; }
+.page em { color: var(--gold); font-family: Georgia, 'Times New Roman', serif; font-style: italic; font-weight: 400; letter-spacing: -.04em; }
 .page svg { width: 22px; height: 22px; flex-shrink: 0; }
 .page a { text-decoration: none; }
 .page a:focus-visible, .page summary:focus-visible { outline: 3px solid var(--gold); outline-offset: 5px; }
@@ -40,8 +41,8 @@
 .heroInner { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); align-items: center; gap: 36px; padding: 76px 0 64px; }
 .eyebrow { display: inline-flex; align-items: center; gap: 10px; color: var(--muted); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .13em; }
 .eyebrow > span { width: 9px; height: 9px; background: var(--gold-bright); border-radius: 50%; }
-.heroCopy h1 { margin-top: 25px; font-size: clamp(44px, 5vw, 70px); line-height: 1.02; letter-spacing: -.065em; }
-.heroCopy > p { max-width: 610px; margin-top: 25px; color: var(--muted); font-size: 16px; font-weight: 550; line-height: 1.65; }
+.heroCopy h1 { margin-top: 25px; font-size: clamp(44px, 5vw, 70px); line-height: 1.06; letter-spacing: -.055em; }
+.heroCopy > p { max-width: 610px; margin-top: 25px; color: var(--muted); font-size: 16px; font-weight: 500; line-height: 1.65; }
 .heroActions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
 .primaryButton, .secondaryButton, .deviceButton { display: inline-flex; min-height: 52px; align-items: center; justify-content: center; gap: 15px; padding: 14px 22px; border: 1px solid transparent; border-radius: 999px; font-size: 14px; font-weight: 800; transition: background .18s ease, transform .18s ease; }
 .primaryButton { background: var(--gold-bright); color: #35311f; }
@@ -95,7 +96,7 @@
 .solutionTop { display: flex; align-items: center; justify-content: space-between; color: var(--device); }
 .solutionTop > svg { width: 32px; height: 32px; }
 .solutionLabel { font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
-.solutionCard h3 { min-height: 96px; margin-top: 23px; font-family: inherit; font-weight: 950; letter-spacing: -.045em; font-size: 27px; line-height: 1.1; }
+.solutionCard h3 { min-height: 96px; margin-top: 23px; font-family: inherit; font-weight: 800; letter-spacing: -.025em; font-size: 27px; line-height: 1.2; }
 .solutionFigure { min-height: 135px; border-bottom: 1px solid color-mix(in srgb,var(--device) 20%,transparent); padding-bottom: 24px; }
 .solutionFigure strong { color: var(--device); font-family: inherit; font-weight: 900; letter-spacing: -.04em; font-size: 57px; line-height: 1; }
 .solutionFigure p { max-width: 265px; font-size: 13px; line-height: 1.7; color: var(--muted); margin-top: 8px; }
@@ -134,7 +135,7 @@
 .qualificationGrid small { display: block; margin-top: 6px; font-size: 12px; color: var(--muted); }
 .ribbon { display: inline-block; padding: 5px 14px; border-radius: 0 9px 9px 0; background: var(--device-bright,var(--gold-bright)); color: #353126; font-weight: 600; font-size: 12px; }
 .timelineHeading { margin-top: 45px; }
-.timelineHeading h3 { margin-top: 15px; font-family: inherit; font-weight: 900; letter-spacing: -.04em; font-size: 34px; line-height: 1.15; }
+.timelineHeading h3 { margin-top: 15px; font-family: inherit; font-weight: 800; letter-spacing: -.025em; font-size: 34px; line-height: 1.15; }
 .timelineHeading p { margin-top: 9px; font-size: 13px; color: var(--muted); }
 .timeline { display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); gap: 24px; list-style: none; margin: 28px 0 0; padding: 0; }
 .timeline li { position: relative; }
@@ -188,7 +189,7 @@
 .yearsGrid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 25px; margin-top: 30px; }
 .yearsGrid article { background: var(--white); padding: 28px; border-radius: 14px; border: 1px solid var(--line); }
 .yearsGrid article > span { color: var(--device); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .13em; }
-.yearsGrid h3 { font-family: inherit; font-weight: 900; letter-spacing: -.04em; font-size: 33px; line-height: 1.05; margin-top: 16px; }
+.yearsGrid h3 { font-family: inherit; font-weight: 800; letter-spacing: -.025em; font-size: 33px; line-height: 1.15; margin-top: 16px; }
 .yearsGrid p { color: var(--muted); font-size: 14px; margin-top: 16px; line-height: 1.8; }
 .yearsGrid article > strong { display: block; font-family: inherit; font-weight: 900; letter-spacing: -.04em; font-size: 33px; margin-top: 20px; color: var(--device); }
 .yearsGrid strong small { font-family: inherit; font-size: 12px; font-weight: 400; color: var(--muted); }
@@ -202,12 +203,12 @@
 .supportGrid h3 { font-size: 16px; font-weight: 600; }
 .supportGrid p { margin-top: 9px; font-size: 14px; color: var(--muted); line-height: 1.8; }
 .partnerCard { display: grid; grid-template-columns: 1fr 1.5fr; gap: 45px; padding: 38px; border-radius: 20px; margin-top: 50px; background: var(--cream); }
-.partnerCard h3 { margin-top: 18px; font-family: inherit; font-weight: 900; letter-spacing: -.04em; font-size: 39px; line-height: 1.03; }
+.partnerCard h3 { margin-top: 18px; font-family: inherit; font-weight: 800; letter-spacing: -.025em; font-size: 39px; line-height: 1.15; }
 .partnerCard ul { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
 .partnerCard li { display: flex; gap: 12px; font-size: 14px; align-items: center; }
 .partnerCard li svg { color: var(--cyan); width: 18px; height: 18px; }
 .catalogHeading { margin-top: 55px; }
-.catalogHeading h3 { font-family: inherit; font-weight: 900; letter-spacing: -.04em; font-size: 38px; margin-top: 15px; line-height: 1.1; }
+.catalogHeading h3 { font-family: inherit; font-weight: 800; letter-spacing: -.025em; font-size: 38px; margin-top: 15px; line-height: 1.15; }
 .catalogGrid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 24px; margin-top: 30px; }
 .catalogGrid article { border-top: 1px solid var(--line); padding-top: 22px; }
 .catalogGrid svg { color: var(--gold); width: 28px; height: 28px; }
@@ -223,7 +224,7 @@
 .faqList details > div { padding: 0 40px 22px 0; }
 .faqList p { font-size: 13px; color: var(--muted); line-height: 1.9; }
 .diagnosticCard { padding: 38px; background: var(--cream); border-radius: 20px; }
-.diagnosticCard h3 { font-family: inherit; font-weight: 900; letter-spacing: -.04em; font-size: 40px; line-height: 1.08; margin-top: 23px; }
+.diagnosticCard h3 { font-family: inherit; font-weight: 800; letter-spacing: -.025em; font-size: 40px; line-height: 1.15; margin-top: 23px; }
 .diagnosticCard > p { color: var(--muted); font-size: 14px; line-height: 1.8; margin-top: 20px; }
 .contactPerson { display: flex; align-items: center; gap: 14px; padding: 23px 0; }
 .contactAvatar { display: grid; place-items: center; flex-shrink: 0; width: 61px; height: 61px; border-radius: 50%; background: var(--gold-bright); color: #35311f; font-size: 23px; font-weight: 900; }
@@ -364,7 +365,7 @@
 .sessionFigures strong { color: var(--device); font-size: 28px; font-weight: 900; letter-spacing: -.04em; line-height: 1; }
 .sessionFigures span { font-size: 11px; color: var(--muted); }
 .siteSkillsHeading { margin-top: 48px; max-width: 770px; }
-.siteSkillsHeading h3 { margin-top: 18px; font-size: clamp(30px,3vw,40px); font-weight: 900; line-height: 1.1; letter-spacing: -.045em; }
+.siteSkillsHeading h3 { margin-top: 18px; font-size: clamp(30px,3vw,40px); font-weight: 800; line-height: 1.15; letter-spacing: -.025em; }
 .siteSkillsHeading p { margin-top: 18px; font-size: 14px; color: var(--muted); }
 .siteSkillsGrid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 24px; margin-top: 28px; }
 .siteSkillsGrid article { overflow: hidden; background: var(--white); border: 1px solid var(--line); border-radius: 16px; }
