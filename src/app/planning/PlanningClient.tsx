@@ -671,6 +671,15 @@ export function PlanningClient({ initialSessions, btsIntakeYear }: { initialSess
     scrollToSessions();
   }
 
+  function showFormationDates(formation: FormationFilterKey) {
+    setActiveFormation(formation);
+    setLocationFilter('all');
+    setView('list');
+    setShowAll(true);
+    setSelectedSessionId(null);
+    scrollToSessions();
+  }
+
   function showCalendar() {
     setView('calendar');
     scrollToSessions();
@@ -707,7 +716,7 @@ export function PlanningClient({ initialSessions, btsIntakeYear }: { initialSess
             </div>
           </div>
 
-          <PlanningPreview key={activeFormation} formations={previewFormations} initialFormation={activeFormation} btsIntakeYear={btsIntakeYear} onChoose={key => chooseFormation(key as FormationFilterKey)} onSelectSession={id => { const session = sortedSessions.find(item => item.id === id); if (session) selectSession(session); }} />
+          <PlanningPreview key={activeFormation} formations={previewFormations} initialFormation={activeFormation} btsIntakeYear={btsIntakeYear} onChoose={key => showFormationDates(key as FormationFilterKey)} />
         </div>
       </section>
 
