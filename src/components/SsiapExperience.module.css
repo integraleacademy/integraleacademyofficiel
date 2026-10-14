@@ -31,17 +31,16 @@
 .journeyHeading > p strong { font-weight:650; color:var(--sx-ink); }
 .journeyRail { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); align-items:start; margin-top:34px; gap:0; }
 .journeyStep { display:contents; }
-.journeyStep summary { position:relative; display:flex; align-items:center; gap:11px; min-width:0; min-height:115px; padding:20px 22px 20px 0; cursor:pointer; list-style:none; border-top:1px solid var(--sx-line); order:0; }
-.journeyStep summary::-webkit-details-marker { display:none; }
+.journeyStep [data-journey-trigger] { position:relative; display:flex; align-items:center; gap:11px; min-width:0; min-height:115px; width:100%; text-align:left; padding:20px 22px 20px 0; cursor:pointer; list-style:none; border-top:1px solid var(--sx-line); order:0; }
 .journeyNumber { display:grid; place-items:center; position:absolute; top:-13px; left:0; width:26px; height:26px; border-radius:50%; background:var(--sx-ink); color:var(--sx-paper); font-size:10px; font-weight:750; }
-.journeyStep summary > span:nth-child(2) { display:grid; gap:8px; padding-top:7px; font-size:10px; text-transform:uppercase; letter-spacing:.08em; color:var(--sx-muted); }
-.journeyStep summary strong { font-size:16px; letter-spacing:-.025em; text-transform:none; color:var(--sx-ink); }
+.journeyStep [data-journey-trigger] > span:nth-child(2) { display:grid; gap:8px; padding-top:7px; font-size:10px; text-transform:uppercase; letter-spacing:.08em; color:var(--sx-muted); }
+.journeyStep [data-journey-trigger] strong { font-size:16px; letter-spacing:-.025em; text-transform:none; color:var(--sx-ink); }
 .disclosureIcon { margin-left:auto; color:var(--sx-red); font-size:22px; font-weight:400; transition:transform .2s; }
-.journeyStep[open] .disclosureIcon { transform:rotate(45deg); }
+.journeyStep[data-open='true'] .disclosureIcon { transform:rotate(45deg); }
 .journeyDetail { grid-column:1 / -1; order:1; margin-top:5px; padding:28px; background:var(--sx-soft); border-radius:16px; font-size:14px; line-height:1.8; column-count:2; column-gap:45px; }
-.journeyStep:not([open]) > .journeyDetail { display:none; }
-.journeyStep[open] summary { border-top-color:var(--sx-red); }
-.journeyStep[open] .journeyNumber { background:var(--sx-red); color:#fff; }
+.journeyDetail[hidden] { display:none; }
+.journeyStep[data-open='true'] [data-journey-trigger] { border-top-color:var(--sx-red); }
+.journeyStep[data-open='true'] .journeyNumber { background:var(--sx-red); color:#fff; }
 .journeyDetail > * + * { margin-top:14px; }
 .journeyDetail h3 { font-size:19px; line-height:1.2; letter-spacing:-.025em; font-weight:750; }
 .journeyDetail h4,.journeyDetail dt { font-weight:750; }
@@ -292,7 +291,7 @@
 }
 @media (max-width:600px) {
   .container { width:calc(100% - 36px); }.page .hero h1 { font-size:clamp(36px,9vw,50px); }.page .hero :global([class*='heroGrid']) { grid-template-columns:1fr; }.page .hero :global([class*='heroArtwork']) { width:100%; border-radius:20px; }.page .hero :global([class*='heroArtwork']) img { aspect-ratio:3 / 2; }.page .hero :global([class*='facts']) { grid-template-columns:repeat(2,minmax(0,1fr)); }
-  .journeyOverview { padding:42px 0; }.journeyRail { gap:22px 12px; }.journeyStep summary { min-height:112px; padding-right:3px; }.journeyStep summary strong { font-size:14px; }.journeyDetail { padding:20px; column-count:1; font-size:13px; }.journeyDetail h3 { font-size:19px; }
+  .journeyOverview { padding:42px 0; }.journeyRail { gap:22px 12px; }.journeyStep [data-journey-trigger] { min-height:112px; padding-right:3px; }.journeyStep [data-journey-trigger] strong { font-size:14px; }.journeyDetail { padding:20px; column-count:1; font-size:13px; }.journeyDetail h3 { font-size:19px; }
   .missionChoices { gap:9px; }.missionChoices strong { font-size:16px; }.missionDescription { font-size:11px; }.stageTop { font-size:8px; padding:14px 17px; }.stageCaption { padding:20px; }.skills { grid-template-columns:1fr; }.audience { margin-top:40px; }.audience li { font-size:12px; }
   .programExplorer { padding:20px 15px; border-radius:20px; }.programOverview { align-items:start; }.programOverview > div { gap:13px; }.programOverview > div > strong { font-size:62px; }.programOverview > p { display:none; }.programOverview p { font-size:12px; }.programOverview p span { font-size:9px; }.programTabs { grid-template-columns:1fr; gap:0; }.programTabs > button { display:grid; grid-template-columns:20px 1fr 30px; text-align:left; border-radius:0; border:0; border-bottom:1px solid var(--sx-line); padding:13px 9px; }.programTabs strong { font-size:13px; }.programTabs > button[aria-selected='true'] { border-radius:10px; }.hourRail { margin-bottom:20px; }.programCopy { padding:20px; }.programCopy h3 { font-size:25px; }
   .campusViews img { height:355px; }.campusControls button { flex-direction:column; align-items:start; font-size:10px; }.campusControls img { width:100%; height:55px; }.campusFooter { flex-direction:column; gap:8px; }.campusHeading h2 { font-size:39px; }

@@ -141,7 +141,7 @@ export function SsiapReferencePage({ sessions }: { sessions: any[] }) {
   const next = visibleSessions[0];
   const faqSchema = faq.map(item => ({ '@type': 'Question', name: item.q, acceptedAnswer: { '@type': 'Answer', text: item.a } }));
 
-  return <div className={`${styles.page} ${experience.page} relative overflow-x-clip pb-24 lg:pb-0`} data-ssiap-experience="immersive-v2">
+  return <div className={`${styles.page} ${experience.page} relative overflow-x-clip pb-24 lg:pb-0`} data-ssiap-experience="immersive-v2.1">
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeCourseJsonLd({ '@context': 'https://schema.org', '@graph': [
       { '@type': 'Course', name: 'Formation SSIAP 1 – Agent de sécurité incendie', description: 'Formation réglementaire SSIAP 1 de 67 heures à Puget-sur-Argens.', provider: { '@type': 'Organization', name: 'Intégrale Academy', telephone: '04 22 47 07 68' } },
       { '@type': 'FAQPage', mainEntity: faqSchema },

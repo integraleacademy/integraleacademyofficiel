@@ -1,11 +1,20 @@
 'use client';
 
 import Image from 'next/image';
-import { useRef, useState, type KeyboardEvent } from 'react';
+import { useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
 import { ManualArtwork } from './ManualArtwork';
 import { ssiapArtwork } from '@/data/manualIllustrations';
 import { originalArtwork } from '@/data/originalArtwork';
 import styles from './SsiapExperience.module.css';
+
+export function SsiapJourneyDisclosure({ labels, children }: { labels: string[]; children: ReactNode[] }) {
+  const [active, setActive] = useState<number | null>(null);
+  const titles = ['Découvrir le métier', 'Acquérir les bases', 'Pratiquer les gestes', 'Préparer le diplôme'];
+  return <div className={styles.journeyRail}>{labels.map((label, index) => <div key={label} className={styles.journeyStep} data-open={active === index}>
+    <button type="button" data-journey-trigger id={`journey-trigger-${index}`} aria-expanded={active === index} aria-controls={`journey-detail-${index}`} onClick={() => setActive(active === index ? null : index)}><span className={styles.journeyNumber}>0{index + 1}</span><span>{label}<strong>{titles[index]}</strong></span><span className={styles.disclosureIcon} aria-hidden="true">+</span></button>
+    <div id={`journey-detail-${index}`} role="region" aria-labelledby={`journey-trigger-${index}`} hidden={active !== index} className={styles.journeyDetail}>{children[index]}</div>
+  </div>)}</div>;
+}
 
 function useTabs(count: number) {
   const [active, setActive] = useState(0);

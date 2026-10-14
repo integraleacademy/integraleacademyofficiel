@@ -1,22 +1,24 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { Fragment } from 'react';
 import { courseJourneys } from '@/data/courseJourneys';
 import { ManualArtwork } from './ManualArtwork';
 import { ssiapArtwork } from '@/data/manualIllustrations';
 import styles from './SsiapExperience.module.css';
+import { SsiapJourneyDisclosure } from './SsiapExperienceInteractions';
 
 export function SsiapJourneyOverview() {
   const journey = courseJourneys['ssiap-1'];
   return <section id={journey.id} className={styles.journeyOverview} aria-labelledby="ssiap-journey-title"><div className={styles.container}>
     <div className={styles.journeyHeading}><div><p className={styles.eyebrow}>{journey.eyebrow}</p><h2 id="ssiap-journey-title">{journey.heading[0]}<br /><span>{journey.heading[1]}</span></h2></div><p>Votre projet prend forme.<br /><strong>Explorez les étapes de votre parcours.</strong></p></div>
-    <div className={styles.journeyRail}>{journey.steps.map((step, index) => <details key={step.label} name="ssiap-journey-overview" className={styles.journeyStep}><summary><span className={styles.journeyNumber}>0{index + 1}</span><span>{step.label}<strong>{['Découvrir le métier', 'Acquérir les bases', 'Pratiquer les gestes', 'Préparer le diplôme'][index]}</strong></span><span className={styles.disclosureIcon} aria-hidden="true">+</span></summary><div className={styles.journeyDetail}>
+    <SsiapJourneyDisclosure labels={journey.steps.map(step => step.label)}>{journey.steps.map((step, index) => <Fragment key={step.label}>
       <h3>{step.title}</h3><p>{step.description}</p>
       {index === 0 && <><Image src={journey.opening.image} alt="Un agent SSIAP 1 porte assistance à une personne en fauteuil roulant" width={1536} height={1024} sizes="(max-width: 700px) 90vw, 300px" /><p className={styles.eyebrow}>{journey.opening.kicker}</p><h4>{journey.opening.heading.join(' ')}</h4><p>{journey.opening.text}</p><p>{journey.opening.verbs.join(' · ')}</p></>}
       {index === 1 && <><h4>{journey.study.heading.join(' ')}</h4><p><strong>{journey.study.value}</strong> {journey.study.unit}</p><dl>{journey.study.panels.map(panel => <div key={panel.label}><dt>{panel.label} · {panel.value} {panel.unit}</dt><dd>{panel.detail}</dd></div>)}</dl><p className={styles.eyebrow}>Au cœur du parcours</p><ul>{journey.study.skills.map(skill => <li key={skill}>{skill}</li>)}</ul></>}
       {index === 2 && <><h4>{journey.practice.heading.join(' ')}</h4><p className={styles.eyebrow}>{journey.practice.eyebrow}</p><dl>{journey.practice.rows.map(row => <div key={row.title}><dt>{row.title}</dt><dd>{row.text}</dd></div>)}</dl><p>{journey.practice.note}</p></>}
       {index === 3 && <><h4>{journey.outcome.heading.join(' ')}</h4><p><strong>{journey.outcome.code}</strong> · {journey.outcome.role}</p>{journey.outcome.milestones.map(item => <Link key={item.title} href={item.href} className={styles.journeyMilestone}><small>{item.label}</small><strong>{item.title}</strong><span>{item.text} ↗</span></Link>)}<p>{journey.outcome.note}</p></>}
       <Link className={styles.inlineLink} href={step.href}>{step.link} ↗</Link>
-    </div></details>)}</div>
+    </Fragment>)}</SsiapJourneyDisclosure>
     <div id={`${journey.id}-suite`} />
   </div></section>;
 }
