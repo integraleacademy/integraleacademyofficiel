@@ -51,6 +51,34 @@
 .previewChoices strong { display: block; padding: 12px 31px 12px 11px; font-size: 13px; line-height: 1.25; letter-spacing: .015em; }
 .previewChoices strong small { display: block; margin-top: 5px; color: #62655f; font-size: 10px; font-weight: 600; letter-spacing: 0; }
 .previewCoursesLink { display: inline-flex; align-items: center; gap: 6px; margin: 6px 0 10px; color: #806124; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+.ssiapChoices { display: grid; gap: 22px; margin-top: 24px; }
+.ssiapGroup { min-width: 0; }
+.ssiapGroupHeading { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; margin-bottom: 10px; color: #172233; font-size: 16px; font-weight: 800; text-align: left; }
+.ssiapCourseGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.ssiapCourseGrid[hidden] { display: none; }
+.ssiapCourse { display: flex; flex-direction: column; min-width: 0; gap: 8px; padding: 18px; border: 1px solid #e4dccc; border-radius: 14px; background: #fff; color: #172233; text-align: left; transition: border-color .2s, background .2s; }
+.ssiapCourse:hover, .ssiapCourse[aria-pressed='true'] { border-color: #bf9238; background: #fffaf0; }
+.ssiapCourse strong { font-size: 16px; line-height: 1.35; }
+.ssiapCourse > span { color: #62655f; font-size: 13px; line-height: 1.5; }
+.ssiapCourse small { display: flex; justify-content: space-between; gap: 8px; margin-top: auto; padding-top: 8px; color: #806124; font-size: 12px; font-weight: 700; }
+.ssiapChoicesCompact { gap: 10px; margin-top: 10px; }
+.ssiapChoicesCompact .ssiapGroup { padding-bottom: 6px; border-bottom: 1px solid #e4dccc; }
+.ssiapChoicesCompact .ssiapGroupHeading { padding: 8px 0; font-size: 13px; }
+.ssiapChoicesCompact .ssiapCourseGrid { gap: 8px; }
+.ssiapChoicesCompact .ssiapCourse { gap: 6px; padding: 11px; border-radius: 10px; }
+.ssiapChoicesCompact .ssiapCourse strong { font-size: 12px; }
+.ssiapChoicesCompact .ssiapCourse > span, .ssiapChoicesCompact .ssiapCourse small { font-size: 10px; }
+.ssiapSelected { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-top: 24px; padding: 16px 20px; border: 1px solid #e4dccc; border-radius: 14px; background: #fcf9f2; }
+.ssiapSelected p { color: #736344; font-size: 12px; }
+.ssiapSelected strong { display: block; margin-top: 4px; color: #172233; font-size: 18px; }
+.ssiapSelected button { color: #806124; font-size: 13px; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+.previewTabs button:disabled { opacity: .45; cursor: default; }
+@media (max-width: 599px) {
+  .ssiapCourseGrid { grid-template-columns: 1fr; }
+  .ssiapChoicesCompact .ssiapCourse { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 8px; }
+  .ssiapChoicesCompact .ssiapCourse strong, .ssiapChoicesCompact .ssiapCourse > span { grid-column: 1; }
+  .ssiapChoicesCompact .ssiapCourse small { grid-column: 2; grid-row: 1 / 3; align-self: center; margin: 0; padding: 0; }
+}
 .previewChoices i { position: absolute; bottom: 12px; right: 10px; color: #806124; }
 .preview svg { width: 17px; height: 17px; flex-shrink: 0; }
 .previewChoices i svg { width: 15px; height: 15px; }
@@ -105,7 +133,8 @@
 /* Filters remain within reach, while the actual session data stays unchanged. */
 .filterBar { position: sticky; top: calc(var(--site-header-height) + 10px); z-index: 30; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; padding: 16px; margin: -16px -16px 0; border: 1px solid rgb(var(--border) / .75); border-radius: 20px; background: rgb(var(--background) / .97); box-shadow: 0 9px 24px #151f3010; backdrop-filter: blur(12px); }
 .filterControls { display: flex; flex-wrap: wrap; align-items: center; gap: 9px; }
-.formationSelect select { max-width: 190px; min-height: 39px; padding: 9px 30px 9px 13px; border: 1px solid rgb(var(--border)); border-radius: 999px; background-color: rgb(var(--surface)); color: rgb(var(--text-main)); font-size: 12px; font-weight: 800; }
+.formationSelect { min-width: 0; max-width: 100%; }
+.formationSelect select { width: 280px; max-width: 100%; min-height: 39px; padding: 9px 30px 9px 13px; border: 1px solid rgb(var(--border)); border-radius: 999px; background-color: rgb(var(--surface)); color: rgb(var(--text-main)); font-size: 12px; font-weight: 800; }
 .centreFilters { display: flex; flex-wrap: wrap; align-items: center; padding: 4px; border: 1px solid rgb(var(--border)); border-radius: 24px; background: rgb(var(--surface)); }
 .countEnter { display: inline-block; animation: countEnter .3s ease-out; }
 .resultEnter { animation: planningEnter .3s ease-out both; }

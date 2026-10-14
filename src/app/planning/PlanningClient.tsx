@@ -7,7 +7,9 @@ import { formatSessionDate, formatSessionPeriod, hasDetailedDeliveryPeriods } fr
 import { getSessionSeatAvailability, resolveSessionSeatCapacity } from '@/lib/session-seat-availability';
 import { sessionLocationFilters, sessionMatchesLocation, type SessionLocationFilterKey } from '@/lib/session-location-filter';
 import { formatTrainingPrice } from '@/lib/training-price';
-import { planningFormationHref, planningSsiapCourse, type SsiapPlanningCourse } from '@/lib/planning-data';
+import { planningFormationHref } from '@/lib/planning-data';
+import { planningSsiapCourse, ssiapPlanningCourses, ssiapPlanningGroups, ssiapPlanningContactHref, type SsiapPlanningCourse } from '@/lib/planning-ssiap';
+import { SsiapCourseChoices } from './SsiapCourseChoices';
 import { vtcCourse } from '@/data/vtc';
 import styles from './planning.module.css';
 import { PlanningHelp } from './PlanningHelp';
@@ -178,7 +180,6 @@ const alertOptions: {
   description: string;
   category: CategoryKey;
   formation: string;
-  ssiapCourse?: SsiapPlanningCourse;
   slugs: string[];
   accent: PlanningAccent;
 }[] = [
@@ -190,46 +191,6 @@ const alertOptions: {
     formation: 'desp',
     slugs: ['desp', 'desp-dssp', 'desp-initial', 'desp-vae'],
     accent: 'orange',
-  },
-  {
-    title: 'SSIAP 1',
-    label: 'Sécurité incendie',
-    description: 'Devenir agent de sécurité incendie et d’assistance à personnes.',
-    category: 'fire',
-    formation: 'ssiap-1',
-    ssiapCourse: 'ssiap-1',
-    slugs: ['ssiap-1', 'ssiap1'],
-    accent: 'red',
-  },
-  {
-    title: 'SSIAP 2',
-    label: 'Sécurité incendie',
-    description: 'Devenir chef d’équipe de sécurité incendie.',
-    category: 'fire',
-    formation: 'ssiap-2',
-    ssiapCourse: 'ssiap-2',
-    slugs: ['ssiap-2', 'ssiap2'],
-    accent: 'red',
-  },
-  {
-    title: 'SSIAP 3',
-    label: 'Sécurité incendie',
-    description: 'Devenir chef de service de sécurité incendie.',
-    category: 'fire',
-    formation: 'ssiap-3',
-    ssiapCourse: 'ssiap-3',
-    slugs: ['ssiap-3', 'ssiap3'],
-    accent: 'red',
-  },
-  {
-    title: 'Recyclages et remises à niveau',
-    label: 'Sécurité incendie',
-    description: 'Maintenir ou réactiver votre qualification SSIAP 1, 2 ou 3.',
-    category: 'fire',
-    formation: 'ssiap-maintien',
-    ssiapCourse: 'ssiap-maintien',
-    slugs: ['recyclage-remise-a-niveau-ssiap'],
-    accent: 'red',
   },
   {
     title: 'Chauffeur VTC',
@@ -576,9 +537,7 @@ function MissingDates({
   const selectedFormation = activeFormation === 'all' ? null : formationFilters.find((formation) => formation.key === activeFormation);
   const missing = alertOptions.filter((option) => {
     if (selectedFormation && !option.slugs.some((slug) => selectedFormation.slugs.includes(slug))) return false;
-    return !sessions.some((session) => option.ssiapCourse
-      ? planningSsiapCourse(session) === option.ssiapCourse
-      : option.slugs.includes(session.training?.slug));
+    return !sessions.some((session) => option.slugs.includes(session.training?.slug));
   });
 
   if (!missing.length) return null;
@@ -646,6 +605,7 @@ export function PlanningClient({ initialSessions, btsIntakeYear, initialLocation
     [initialSessions],
   );
   const [activeFormation, setActiveFormation] = useState<FormationFilterKey>('all');
+  const [activeSsiapCourse, setActiveSsiapCourse] = useState<SsiapPlanningCourse | null>(null);
   const [locationFilter, setLocationFilter] = useState<SessionLocationFilterKey>(initialLocation);
   const [view, setView] = useState<ViewMode>('list');
   const [showAll, setShowAll] = useState(initialLocation !== 'all');
@@ -660,19 +620,22 @@ export function PlanningClient({ initialSessions, btsIntakeYear, initialLocation
   );
   const selectedFormationDetails = activeFormation === 'all' ? null : formationFilters.find((formation) => formation.key === activeFormation) || null;
   const activePlanningTheme = planningThemeClass(selectedFormationDetails?.accent || 'gold');
+  const selectedSsiapCourse = activeFormation === 'ssiap' ? ssiapPlanningCourses.find(course => course.key === activeSsiapCourse) : undefined;
+  const isChoosingSsiap = activeFormation === 'ssiap' && !selectedSsiapCourse;
 
   const filteredSessions = useMemo(() => {
     const selectedFormation = activeFormation === 'all' ? null : formationFilters.find((formation) => formation.key === activeFormation);
     return sortedSessions.filter((session) => {
+      if (activeFormation === 'ssiap' && (!activeSsiapCourse || planningSsiapCourse(session) !== activeSsiapCourse)) return false;
       if (selectedFormation && !formationMatchesSlug(selectedFormation, session.training?.slug)) return false;
       return sessionMatchesLocation(session, locationFilter);
     });
-  }, [activeFormation, locationFilter, sortedSessions]);
+  }, [activeFormation, activeSsiapCourse, locationFilter, sortedSessions]);
 
   const visibleSessions = showAll ? filteredSessions : filteredSessions.slice(0, 6);
   const selectedSession = filteredSessions.find(session => session.id === selectedSessionId) || null;
   const previewFormations = formationFilters.map(formation => ({ ...formation, sessions: sortedSessions.filter(session => formationMatchesSlug(formation, session.training?.slug)) }));
-  const resultKey = `${activeFormation}-${locationFilter}-${view}`;
+  const resultKey = `${activeFormation}-${activeSsiapCourse}-${locationFilter}-${view}`;
 
   function selectSession(session: Session) {
     sessionTrigger.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
@@ -702,18 +665,25 @@ export function PlanningClient({ initialSessions, btsIntakeYear, initialLocation
 
   function chooseFormation(formation: FormationFilterKey) {
     setActiveFormation(formation);
+    setActiveSsiapCourse(null);
+    if (formation === 'ssiap') setLocationFilter('all');
     setShowAll(false);
     setSelectedSessionId(null);
     scrollToSessions();
   }
 
-  function showFormationDates(formation: FormationFilterKey) {
+  function showFormationDates(formation: FormationFilterKey, course: SsiapPlanningCourse | null = null) {
     setActiveFormation(formation);
+    setActiveSsiapCourse(formation === 'ssiap' ? course : null);
     setLocationFilter('all');
     setView('list');
     setShowAll(true);
     setSelectedSessionId(null);
     scrollToSessions();
+  }
+
+  function chooseSsiapCourse(course: SsiapPlanningCourse) {
+    showFormationDates('ssiap', course);
   }
 
   function showCalendar() {
@@ -752,7 +722,7 @@ export function PlanningClient({ initialSessions, btsIntakeYear, initialLocation
             </div>
           </div>
 
-          <PlanningPreview key={activeFormation} formations={previewFormations} initialFormation={activeFormation} btsIntakeYear={btsIntakeYear} onChoose={key => showFormationDates(key as FormationFilterKey)} />
+          <PlanningPreview key={`${activeFormation}-${activeSsiapCourse}`} formations={previewFormations} initialFormation={activeFormation} initialSsiapCourse={activeSsiapCourse} btsIntakeYear={btsIntakeYear} onChoose={(key, course) => showFormationDates(key as FormationFilterKey, course)} />
         </div>
       </section>
 
@@ -790,7 +760,7 @@ export function PlanningClient({ initialSessions, btsIntakeYear, initialLocation
                   <span className="mt-5 block text-xl font-black tracking-tight">{formation.label}</span>
                   <span className="mt-2 block text-xs font-semibold leading-5 text-white/48">{formation.description}</span>
                   <span className="mt-auto flex items-center justify-between border-t border-white/10 pt-4 text-[10px] font-black uppercase tracking-[.08em]">
-                    {formation.key === 'bts' ? `Rentrées ${btsIntakeYear} et ${btsIntakeYear + 1}` : count ? count + (count > 1 ? ' sessions' : ' session') : 'Créer une alerte'}
+                    {formation.key === 'ssiap' ? 'Choisir mon parcours' : formation.key === 'bts' ? `Rentrées ${btsIntakeYear} et ${btsIntakeYear + 1}` : count ? count + (count > 1 ? ' sessions' : ' session') : 'Créer une alerte'}
                     <span className={'grid h-7 w-7 place-items-center rounded-full transition group-hover:translate-x-1 ' + (selected ? 'bg-academy-gold text-academy-gold-text' : 'bg-white/10 text-white')}>
                       <Icon name="arrow" className="h-3.5 w-3.5" />
                     </span>
@@ -805,17 +775,21 @@ export function PlanningClient({ initialSessions, btsIntakeYear, initialLocation
       <section id="sessions" className={activePlanningTheme + ' page-container py-14 sm:py-20'}>
         <div className={styles.filterBar}>
           <div>
-            <p role="status" aria-live="polite" aria-atomic="true" className="text-2xl font-black text-academy-ink dark:text-white"><span key={`${activeFormation}-${locationFilter}`} className={styles.countEnter}>
-              {activeFormation === 'bts' ? 'Rentrées BTS' : filteredSessions.length + (filteredSessions.length > 1 ? ' sessions disponibles' : ' session disponible')}
+            <p role="status" aria-live="polite" aria-atomic="true" className="text-2xl font-black text-academy-ink dark:text-white"><span key={`${activeFormation}-${activeSsiapCourse}-${locationFilter}`} className={styles.countEnter}>
+              {isChoosingSsiap ? 'Sécurité incendie' : activeFormation === 'bts' ? 'Rentrées BTS' : filteredSessions.length + (filteredSessions.length > 1 ? ' sessions disponibles' : ' session disponible')}
             </span></p>
             <p className="mt-1 text-sm font-semibold text-academy-muted">
-              {activeFormation === 'bts' ? 'BTS en alternance' : view === 'list' ? 'Triées par prochaine date de rentrée ou échéance d’inscription' : 'Affichées dans le calendrier'}
+              {isChoosingSsiap ? 'Choisissez votre formation et votre niveau pour consulter les dates.' : activeFormation === 'bts' ? 'BTS en alternance' : view === 'list' ? 'Triées par prochaine date de rentrée ou échéance d’inscription' : 'Affichées dans le calendrier'}
             </p>
           </div>
 
           <div className={styles.filterControls}>
-            <label className={styles.formationSelect}><span className="sr-only">Filtrer par formation</span><select value={activeFormation} onChange={event => chooseFormation(event.target.value as FormationFilterKey)}><option value="all">Toutes les formations</option>{formationFilters.map(formation => <option key={formation.key} value={formation.key}>{formation.label}</option>)}</select></label>
-          {activeFormation !== 'bts' ? <>
+            <label className={styles.formationSelect}><span className="sr-only">Filtrer par formation</span><select value={activeSsiapCourse || activeFormation} onChange={event => {
+              const course = ssiapPlanningCourses.find(item => item.key === event.target.value);
+              if (course) chooseSsiapCourse(course.key);
+              else chooseFormation(event.target.value as FormationFilterKey);
+            }}><option value="all">Toutes les formations</option>{formationFilters.map(formation => <option key={formation.key} value={formation.key}>{formation.key === 'ssiap' ? 'Sécurité incendie — Choisir un parcours' : formation.label}</option>)}{ssiapPlanningGroups.map(group => <optgroup key={group.key} label={`Sécurité incendie · ${group.label}`}>{ssiapPlanningCourses.filter(course => course.group === group.key).map(course => <option key={course.key} value={course.key}>{course.label}</option>)}</optgroup>)}</select></label>
+          {activeFormation !== 'bts' && !isChoosingSsiap ? <>
             <div className={styles.centreFilters} aria-label="Filtrer les sessions par centre">
               <span className="hidden px-3 text-[9px] font-black uppercase tracking-[.12em] text-academy-muted sm:inline">Centre</span>
               {sessionLocationFilters.map((filter) => {
@@ -846,8 +820,9 @@ export function PlanningClient({ initialSessions, btsIntakeYear, initialLocation
           </div>
         </div>
 
+        {selectedSsiapCourse && <div className={styles.ssiapSelected}><div><p>Sécurité incendie · {ssiapPlanningGroups.find(group => group.key === selectedSsiapCourse.group)?.label}</p><strong>{selectedSsiapCourse.label}</strong></div><button type="button" onClick={() => chooseFormation('ssiap')}>Changer de parcours</button></div>}
         <div key={resultKey} className={styles.resultEnter}>
-        {activeFormation === 'bts' ? <BtsIntakes year={btsIntakeYear} /> : filteredSessions.length ? (
+        {isChoosingSsiap ? <SsiapCourseChoices sessions={sortedSessions} onChoose={chooseSsiapCourse} /> : activeFormation === 'bts' ? <BtsIntakes year={btsIntakeYear} /> : filteredSessions.length ? (
           view === 'list' ? (
             <>
               <div className="mt-6 grid gap-4">
@@ -866,6 +841,16 @@ export function PlanningClient({ initialSessions, btsIntakeYear, initialLocation
           ) : (
             <div className="mt-8"><PlanningCalendar sessions={filteredSessions} onSelect={selectSession} selectedId={selectedSessionId || undefined} themeForSession={planningThemeForSession} /></div>
           )
+        ) : selectedSsiapCourse ? (
+          <div className="mt-6 rounded-[2rem] border border-dashed border-academy-line bg-white/65 p-8 text-center shadow-soft dark:bg-white/5 sm:p-12">
+            <h3 className="text-2xl font-black text-academy-ink dark:text-white">Aucune date publiée pour {selectedSsiapCourse.label}{locationFilter !== 'all' ? ' dans ce centre' : ''}.</h3>
+            <p className="mx-auto mt-3 max-w-xl text-sm font-semibold leading-6 text-academy-muted">Contactez l’équipe pour connaître les prochaines ouvertures de ce parcours.</p>
+            <div className="mt-6 flex flex-wrap justify-center gap-3">
+              {locationFilter !== 'all' && <button type="button" onClick={() => setLocationFilter('all')} className="planning-neutral-action rounded-full px-5 py-3 text-sm font-black">Voir tous les centres</button>}
+              <Link href={selectedSsiapCourse.href} className="planning-neutral-action rounded-full px-5 py-3 text-sm font-black">Découvrir le programme</Link>
+              <a href={ssiapPlanningContactHref(selectedSsiapCourse.key)} className="rounded-full border border-academy-line bg-white px-5 py-3 text-sm font-black text-academy-ink">Demander les dates par e-mail</a>
+            </div>
+          </div>
         ) : (
           <div className="mt-6 rounded-[2rem] border border-dashed border-academy-line bg-white/65 p-8 text-center shadow-soft dark:bg-white/5 sm:p-12">
             <Icon name="search" className="planning-accent-text mx-auto h-10 w-10" />
@@ -883,7 +868,7 @@ export function PlanningClient({ initialSessions, btsIntakeYear, initialLocation
 
       <MissingDates sessions={sortedSessions} activeFormation={activeFormation} />
 
-      <PlanningHelp selectedSession={selectedSession ? { title: sessionTitle(selectedSession), dates: selectedSession.scheduleKind === 'vtc-exam' ? 'Inscription avant le ' + formatSessionDate(selectedSession.startDate) + ' · Examen théorique le ' + formatSessionDate(selectedSession.endDate) : formatSessionPeriod(selectedSession.startDate, selectedSession.endDate), location: selectedSession.location } : undefined} formation={selectedFormationDetails?.label} formationSlug={activeFormation === 'ssiap' ? 'ssiap' : selectedFormationDetails?.slugs[0]} onRequest={() => selectedSession && openRegistration(selectedSession)} onClear={() => setSelectedSessionId(null)} />
+      <PlanningHelp selectedSession={selectedSession ? { title: sessionTitle(selectedSession), dates: selectedSession.scheduleKind === 'vtc-exam' ? 'Inscription avant le ' + formatSessionDate(selectedSession.startDate) + ' · Examen théorique le ' + formatSessionDate(selectedSession.endDate) : formatSessionPeriod(selectedSession.startDate, selectedSession.endDate), location: selectedSession.location } : undefined} formation={selectedSsiapCourse?.label || selectedFormationDetails?.label} formationSlug={selectedSsiapCourse?.key || (activeFormation === 'ssiap' ? undefined : selectedFormationDetails?.slugs[0])} onRequest={() => selectedSession && openRegistration(selectedSession)} onClear={() => setSelectedSessionId(null)} />
 
       {detailSession ? <SessionDetails session={detailSession} onClose={closeSessionDialog} onRequest={() => openRegistration(detailSession, true)} /> : null}
       {registrationSession ? <PlanningRegistration session={registrationSession} onClose={closeSessionDialog} /> : null}
