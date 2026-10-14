@@ -17,7 +17,17 @@ for (const [filename, course] of pages) {
     assert.match(source, /iPad offert dès la signature/);
     assert.match(source, /Londres en 2ᵉ année · 100 % pris en charge/);
     assert.match(source, /<BtsStudentBenefits courseName=/);
-    assert.match(source, new RegExp(`<BtsCompleteInformation course="${course}"`));
+    if (course === 'mos') {
+      // The MOS guide is integrated into the relevant sections instead of repeated.
+      assert.match(source, /const course = btsExpandedCourses\.mos/);
+      for (const field of ['objective', 'profile', 'missions', 'competencyBlocks', 'examUnits', 'admission', 'employers', 'jobs', 'furtherStudies', 'specificPanel', 'campusEquipment']) {
+        assert.ok(source.includes(`course.${field}`), `Le contenu MOS doit conserver ${field}`);
+      }
+      assert.equal((source.match(/id="programme"/g) ?? []).length, 1);
+      assert.doesNotMatch(source, /<BtsCompleteInformation/);
+    } else {
+      assert.match(source, new RegExp(`<BtsCompleteInformation course="${course}"`));
+    }
   });
 }
 
