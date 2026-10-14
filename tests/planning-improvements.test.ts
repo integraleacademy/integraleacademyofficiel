@@ -4,6 +4,7 @@ import { toPublicSession } from '../src/lib/public-session-data';
 import { planningMonths, sessionMatchesMonth, nextBtsIntakeYear } from '../src/lib/planning-filters';
 import { planningRegistrationAction, validatePlanningRequest } from '../src/lib/planning-registration';
 import { getVtcPlanningSessions, planningSsiapCourse } from '../src/lib/planning-data';
+import { ssiapPlanningCourses, ssiapPlanningContactHref } from '../src/lib/planning-ssiap';
 import { sessionMatchesLocation } from '../src/lib/session-location-filter';
 
 test('the Auvergne centre can be selected independently of the other centres', () => {
@@ -12,18 +13,29 @@ test('the Auvergne centre can be selected independently of the other centres', (
   assert.equal(sessionMatchesLocation({ location: 'Puget-sur-Argens' }, 'auvergne'), false);
 });
 
-test('fire-safety opening alerts distinguish SSIAP levels from refresher courses', () => {
+test('each SSIAP level keeps initial, refresher and reinstatement sessions separate', () => {
   for (const level of [1, 2, 3]) {
     for (const slug of [`ssiap-${level}`, `ssiap${level}`]) {
       assert.equal(planningSsiapCourse({ training: { slug } }), `ssiap-${level}`);
-      assert.equal(planningSsiapCourse({ training: { slug }, title: `Recyclage SSIAP ${level}` }), 'ssiap-maintien');
-      assert.equal(planningSsiapCourse({ training: { slug }, title: `Remise à niveau SSIAP ${level}` }), 'ssiap-maintien');
+      assert.equal(planningSsiapCourse({ training: { slug }, title: `Recyclage SSIAP ${level}` }), `recyclage-ssiap-${level}`);
+      assert.equal(planningSsiapCourse({ training: { slug }, title: `Remise à niveau SSIAP ${level}` }), `remise-a-niveau-ssiap-${level}`);
     }
   }
-  for (const slug of ['recyclage-remise-a-niveau-ssiap', 'recyclage-ssiap-2', 'ssiap-3-ran']) {
-    assert.equal(planningSsiapCourse({ training: { slug } }), 'ssiap-maintien');
-  }
+  assert.equal(planningSsiapCourse({ training: { slug: 'recyclage-ssiap-2' } }), 'recyclage-ssiap-2');
+  assert.equal(planningSsiapCourse({ training: { slug: 'ssiap-3-ran' } }), 'remise-a-niveau-ssiap-3');
+  assert.equal(planningSsiapCourse({ training: { slug: 'recyclage-remise-a-niveau-ssiap' } }), null);
+  assert.equal(planningSsiapCourse({ training: { slug: 'recyclage-remise-a-niveau-ssiap' }, title: 'Recyclage SSIAP 2' }), 'recyclage-ssiap-2');
+  assert.equal(planningSsiapCourse({ training: { slug: 'ssiap' }, title: 'Recyclage SSIAP 1, 2 et 3' }), null);
   assert.equal(planningSsiapCourse({ training: { slug: 'aps' } }), null);
+});
+
+test('all nine SSIAP choices select only their own sessions and retain the exact request subject', () => {
+  const sessions = ssiapPlanningCourses.map(course => ({ id: course.key, title: course.label, training: { slug: course.key } }));
+  assert.equal(sessions.length, 9);
+  for (const course of ssiapPlanningCourses) {
+    assert.deepEqual(sessions.filter(session => planningSsiapCourse(session) === course.key).map(session => session.id), [course.key]);
+    assert.match(decodeURIComponent(ssiapPlanningContactHref(course.key)), new RegExp(course.label));
+  }
 });
 
 test('public sessions expose only approved fields, including nested training and VTC dates', () => {
