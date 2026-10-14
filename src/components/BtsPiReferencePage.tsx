@@ -1,5 +1,4 @@
 import { ManualArtwork } from '@/components/ManualArtwork';
-import { TrainingWelcomePack } from '@/components/TrainingWelcomePack';
 import { btsHeroArtwork, btsPracticeArtwork, btsMissionArtwork } from '@/data/btsIllustrations';
 import btsStyles from './BtsIdentity.module.css';
 import { btsRhythms } from '@/data/btsRhythms';
@@ -334,8 +333,6 @@ export function BtsPiReferencePage() {
 
       <BtsSectionNavigation code="PI" competencyHref="#competences" competencyLabel="Compétences" faqHref="#faq-pi" registrationHref={applicationUrl} />
 
-      <TrainingWelcomePack course="bts-pi" />
-
       <CourseJourney course="bts-pi" />
 
       <BtsStudentBenefits courseName="BTS Professions Immobilières" />
@@ -409,7 +406,7 @@ export function BtsPiReferencePage() {
             </div>
           </article>
           <article className="rounded-[2rem] border border-[#284661] bg-bts-950 p-6 text-white shadow-card sm:p-8">
-            <span className="inline-flex rounded-full bg-bts-400/15 px-3 py-2 text-[.62rem] font-black uppercase tracking-[.15em] text-bts-200 ring-1 ring-bts-300/30">◉ Classe virtuelle</span>
+            <span className="inline-flex rounded-full bg-bts-400/15 px-3 py-2 text-[.62rem] font-black uppercase tracking-[.15em] text-bts-200 ring-1 ring-bts-300/30">◉ Cours en live sur ZOOM</span>
             <h3 className="mt-6 text-3xl font-black tracking-[-.04em]">100 % à distance en visioconférence</h3>
             <p className="mt-4 leading-7 text-white/62">De vrais cours en direct avec vos formateurs et votre promotion, depuis chez vous — pas une simple plateforme laissée en autonomie.</p>
             <div className="mt-6 grid gap-3 sm:grid-cols-2">
