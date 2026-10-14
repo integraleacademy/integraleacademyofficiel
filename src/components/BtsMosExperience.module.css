@@ -199,7 +199,7 @@
 .packToggle { display: flex; align-items: center; gap: 22px; font-size: 12px; font-weight: 700; flex-shrink: 0; }
 .packToggle > span { font-size: 26px; font-weight: 400; transition: transform .2s; }
 .welcomePack[open] .packToggle > span { transform: rotate(45deg); }
-.admission { --mos-ink: #f1f6fc; --mos-muted: #bdcbdc; --mos-line: #34485f; --mos-blue: #aecdf9; --mos-surface: #142b43; --mos-soft: #1d354e; background: #0e2033; }
+.admission { --mos-ink: #f1f6fc; --mos-muted: #bdcbdc; --mos-line: #34485f; --mos-blue: #aecdf9; --mos-surface: #142b43; --mos-soft: #1d354e; color: var(--mos-ink); background: #0e2033; }
 .admissionSteps { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 24px; margin: 0 0 25px; padding: 0; list-style: none; }
 .admissionSteps li { position: relative; border-top: 1px solid #5b728c; padding-top: 22px; }
 .admissionSteps li > span { display: block; color: #9fc3f7; font-size: 12px; font-weight: 700; margin-bottom: 20px; }
