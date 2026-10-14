@@ -143,6 +143,30 @@
 :global(html.dark) .page .answers button { background:#202c39; border-color:#526071; }
 :global(html.dark) .page .answers button[data-selected=true] { background:#4b2d31; }
 :global(html.dark) .page .campusFooter { color:#c2cbd4; }
+/* Fit the complete desktop introduction without a fixed height or clipped content. */
+@media (min-width:1024px) {
+  .hero { padding:clamp(18px,3svh,28px) 0 14px; }
+  .heroArtwork { width:min(100%,clamp(340px,53svh,480px)); justify-self:end; }
+  .heroArtwork img { height:auto; aspect-ratio:3 / 2; object-fit:contain; }
+  .heroArtwork figcaption { gap:3px; padding:12px 20px; }
+  .heroArtwork figcaption span { line-height:1.4; }
+  .heroArtwork figcaption strong { font-size:21px; line-height:1.2; }
+  .heroBooking { margin-top:18px; }
+  .heroBooking aside { padding:12px 20px; }
+  .facts { margin-top:12px; }
+}
+@media (min-width:1024px) and (max-height:820px) {
+  .hero { padding-block:18px 12px; }
+  .hero h1 { margin-top:16px; font-size:clamp(44px,4vw,56px); }
+  .heroTagline { margin-top:18px; margin-bottom:8px; }
+  .heroDescription { font-size:15px; line-height:1.65; }
+  .actions { margin-top:18px; }
+  .heroHighlights { margin-top:16px; }
+  .heroBooking { margin-top:14px; }
+  .heroBooking [data-session-details] > div { padding:8px 10px; }
+  .facts { margin-top:8px; }
+  .facts > div { padding-block:4px; gap:3px; }
+}
 @media (max-width:1023px) {
   .heroGrid { gap:25px; }
   .hero h1 { font-size:46px; }
