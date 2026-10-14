@@ -26,27 +26,32 @@
 .page button:focus-visible, .page select:focus-visible, .sessionDialog button:focus-visible, .sessionDialog a:focus-visible { outline: 3px solid #d9ac42; outline-offset: 4px; }
 .eyebrow { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .18em; color: #e6ba5b; }
 
-/* A small, real planning interface in the hero. */
-.preview { min-width: 0; padding: 25px; background: #111b2a; color: #fffaf1; border: 1px solid #ffffff12; border-radius: 28px; box-shadow: 0 24px 60px #111b2a20; }
+/* Give the illustrated choices most of the desktop hero's available width. */
+.heroLayout { display: grid; align-items: center; gap: 32px; }
+.heroIntro { min-width: 0; }
+.heroTitle { max-width: 680px; font-size: clamp(36px, 4vw, 52px); line-height: 1.08; }
+
+/* The six professions stay readable without hiding any choice in a carousel. */
+.preview { width: 100%; max-width: 740px; min-width: 0; margin-inline: auto; padding: 20px; background: #111b2a; color: #fffaf1; border: 1px solid #ffffff12; border-radius: 28px; box-shadow: 0 24px 60px #111b2a20; }
 .previewHeading h2 { margin-top: 10px; font-size: clamp(23px, 2vw, 29px); line-height: 1.15; letter-spacing: -.035em; }
 .previewHeading h2 em, .calendarHeading h3 em { color: #e6ba5b; font-family: Georgia, 'Times New Roman', serif; font-weight: 400; }
 .previewTabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin: 22px 0 15px; }
-.previewTabs button { display: flex; align-items: center; gap: 7px; padding: 8px 0; border-bottom: 1px solid #ffffff25; color: #aeb7c4; text-align: left; font-size: 10px; font-weight: 700; transition: color .2s, border-color .2s; }
+.previewTabs button { display: flex; align-items: center; gap: 7px; padding: 8px 0; border-bottom: 1px solid #ffffff25; color: #aeb7c4; text-align: left; font-size: 12px; font-weight: 700; transition: color .2s, border-color .2s; }
 .previewTabs button span { display: grid; place-items: center; width: 24px; height: 24px; flex-shrink: 0; border-radius: 50%; background: #ffffff0c; font-size: 9px; }
 .previewTabs button[aria-selected='true'] { color: #fff; border-color: #e6ba5b; }
 .previewTabs button[aria-selected='true'] span { color: #111b2a; background: #e6ba5b; }
-.previewPanel { min-height: 275px; padding: 17px; background: #fcf9f2; border: 1px solid #ede5d6; border-radius: 19px; color: #172233; }
+.previewPanel { min-height: 275px; padding: 12px; background: #fcf9f2; border: 1px solid #ede5d6; border-radius: 19px; color: #172233; }
 .previewScene { animation: planningEnter .35s ease-out both; }
-.previewPrompt { margin-bottom: 13px; font-size: 14px; font-weight: 800; letter-spacing: -.02em; }
-.previewChoices { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.previewPrompt { margin-bottom: 13px; font-size: 16px; font-weight: 800; letter-spacing: -.02em; }
+.previewChoices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 .previewChoices button { position: relative; overflow: hidden; min-width: 0; border: 1px solid #e4dccc; border-radius: 12px; background: #fff; text-align: left; transition: transform .2s, border-color .2s; }
 .previewChoices button:hover { transform: translateY(-3px); border-color: #bf9238; }
-.previewChoices button > span { display: block; overflow: hidden; aspect-ratio: 1.45; background: #f0e9d9; }
-.previewChoices img { width: 100%; height: 100%; object-fit: cover; }
-.previewChoices strong { display: block; padding: 8px 6px; font-size: 10px; }
-.previewChoices i { position: absolute; bottom: 7px; right: 7px; color: #806124; }
+.previewChoices button > span { display: block; overflow: hidden; aspect-ratio: 4 / 3; background: #edf4fa; }
+.previewChoices img { width: 100%; height: 100%; object-fit: cover; object-position: center 42%; }
+.previewChoices strong { display: block; padding: 12px 31px 12px 11px; font-size: 13px; line-height: 1.25; letter-spacing: .015em; }
+.previewChoices i { position: absolute; bottom: 12px; right: 10px; color: #806124; }
 .preview svg { width: 17px; height: 17px; flex-shrink: 0; }
-.previewChoices i svg { width: 12px; height: 12px; }
+.previewChoices i svg { width: 15px; height: 15px; }
 .miniOverview { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 10px; color: #736344; }
 .miniMonthHeading { display: grid; grid-template-columns: 34px minmax(0, 1fr) 34px; align-items: center; gap: 7px; font-size: 16px; font-weight: 800; text-transform: capitalize; text-align: center; }
 .miniMonthHeading button { display: grid; place-items: center; width: 34px; height: 34px; border: 1px solid #d9cdb7; border-radius: 50%; }
@@ -175,6 +180,13 @@
 @keyframes countEnter { from { opacity: .45; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes daySelect { from { box-shadow: 0 0 0 8px #e6ba5b00; transform: scale(.92); } to { box-shadow: 0 0 0 3px #e6ba5b; transform: scale(1); } }
 
+@media (min-width: 600px) {
+  .previewChoices { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (min-width: 1200px) {
+  .heroLayout { grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr); }
+  .heroTitle { font-size: clamp(40px, 3.4vw, 50px); }
+}
 @media (max-width: 1100px) {
   .filterBar { gap: 12px; }
   .filterControls { width: 100%; }
@@ -182,7 +194,7 @@
   .calendarHeader, .calendarRow { grid-template-columns: 200px minmax(0, 1fr); }
 }
 @media (max-width: 700px) {
-  .preview { width: 100%; max-width: 500px; margin-inline: auto; padding: 21px; }
+  .preview { padding: 16px; border-radius: 23px; }
   .previewPanel { min-height: 270px; }
   .filterBar { top: var(--site-header-height); padding: 10px; margin-inline: -4px; border-radius: 16px; gap: 8px; }
   .filterBar > div:first-child > p:first-child { font-size: 17px; }
@@ -209,6 +221,18 @@
   .calendarSheet { border-radius: 14px; }
   .sessionDialog { padding: 20px; }
   .dialogDates dl { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 400px) {
+  .preview { padding: 12px; }
+  .previewPanel { padding: 9px; }
+  .previewChoices { gap: 9px; }
+  .previewTabs { gap: 5px; }
+  .previewTabs button { flex-direction: column; align-items: flex-start; gap: 6px; font-size: 11px; }
+  .previewChoices strong { padding-left: 8px; font-size: 12px; }
+}
+@media (max-width: 360px) {
+  .previewChoices strong { padding-right: 8px; }
+  .previewChoices i { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   .previewScene, .miniSelectedDay, .resultEnter, .sessionEnter, .countEnter { animation: none !important; }
