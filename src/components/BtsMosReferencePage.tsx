@@ -1,569 +1,176 @@
-import { ManualArtwork } from '@/components/ManualArtwork';
-import { TrainingWelcomePack } from '@/components/TrainingWelcomePack';
-import { btsHeroArtwork, btsPracticeArtwork, btsMissionArtwork } from '@/data/btsIllustrations';
-import btsStyles from './BtsIdentity.module.css';
-import { btsRhythms } from '@/data/btsRhythms';
-import { CourseJourney } from '@/components/CourseJourney';
-import { serializeCourseJsonLd } from '@/lib/seo';
+import Image from 'next/image';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
-import { BtsCompleteInformation, BtsStudentBenefits } from '@/components/BtsExpandedContent';
-import { BtsSectionNavigation } from '@/components/BtsSectionNavigation';
-import { MissionAnimation } from '@/components/MissionAnimation';
-import { TrainingIllustratedCards, type TrainingIllustratedCard } from '@/components/TrainingIllustratedCards';
-import { PremiumFAQSection } from '@/components/ui';
+import { BtsStudentBenefits } from '@/components/BtsExpandedContent';
+import { BtsMosMission, BtsMosCalendar } from '@/components/BtsMosExperience';
+import { TeamPortrait } from '@/components/TeamPortrait';
+import { TrainingSectionNavigation } from '@/components/TrainingSectionNavigation';
+import { TrainingWelcomePack } from '@/components/TrainingWelcomePack';
+import { btsHeroArtwork } from '@/data/btsIllustrations';
+import { btsExpandedCourses } from '@/data/btsExpanded';
+import { serializeCourseJsonLd } from '@/lib/seo';
+import identity from './BtsIdentity.module.css';
+import styles from './BtsMosExperience.module.css';
 
 const applicationUrl = 'https://inscriptionsbts.onrender.com/';
-const aurelieEmail = 'aurelie@integraleacademy.com';
-const aurelieDirectHref = 'tel:+33487830615';
-const aurelieMobileHref = 'tel:+33769390457';
-
-const contactHref = (subject = 'BTS MOS') =>
-  `mailto:${aurelieEmail}?subject=${encodeURIComponent(subject)}`;
-
-const careerSteps = [
-  {
-    number: "01", label: "Préparer",
-    title: "Concevoir une prestation",
-    description: "Analyser les besoins, prévoir les moyens et rédiger des consignes claires.",
-    scenes: [
-      { kind: "mission-map", description: "Animation d’un responsable organisant les moyens et les missions d’une prestation de sécurité" },
-      { kind: "compliance", description: "Animation d’un contrôle des procédures et obligations applicables à la prestation" },
-    ],
-  },
-  {
-    number: "02", label: "Organiser",
-    title: "Coordonner le terrain",
-    description: "Répartir les missions, contrôler la qualité et réagir face aux imprévus.",
-    scenes: [
-      { kind: "site-check", description: "Animation d’un site dont les accès et les points de contrôle sont supervisés" },
-      { kind: "fire-panel", description: "Animation d’un poste de sécurité centralisant les informations opérationnelles" },
-    ],
-  },
-  {
-    number: "03", label: "Manager",
-    title: "Animer une équipe",
-    description: "Communiquer, accompagner les agents et faire progresser le collectif.",
-    scenes: [
-      { kind: "team", description: "Animation d’une équipe d’agents coordonnée par son responsable opérationnel" },
-    ],
-  },
-  {
-    number: "04", label: "Conseiller",
-    title: "Suivre la relation client",
-    description: "Présenter les résultats, proposer des solutions et fidéliser le client.",
-    scenes: [
-      { kind: "briefing", description: "Animation d’un compte rendu de prestation présenté clairement au client" },
-    ],
-  },
-] as const satisfies readonly TrainingIllustratedCard[];
-
-const program = [
-  ['01', 'Culture générale et expression', 'Développer votre capacité à comprendre, argumenter, synthétiser et communiquer avec précision.'],
-  ['02', 'Langue vivante étrangère', 'Communiquer dans un contexte professionnel et mobiliser le vocabulaire utile aux situations de travail.'],
-  ['03', 'Culture économique, juridique et managériale', 'Comprendre l’environnement économique, le droit et les décisions de management qui structurent une organisation.'],
-  ['04', 'Préparation et mise en œuvre d’une prestation de sécurité', 'Analyser une demande, préparer les moyens humains et matériels et organiser la prestation.'],
-  ['05', 'Management des ressources humaines', 'Recruter, intégrer, planifier, animer et accompagner une équipe d’agents de sécurité.'],
-  ['06', 'Gestion de la relation client', 'Suivre la qualité, présenter les résultats et proposer des améliorations adaptées aux besoins du client.'],
+const phone = 'tel:+33487830615';
+const email = 'mailto:aurelie@integraleacademy.com?subject=Mon%20projet%20BTS%20MOS';
+const course = btsExpandedCourses.mos;
+const navigation = [
+  { label: 'Le métier', href: '#metier' },
+  { label: 'Alternance', href: '#alternance' },
+  { label: 'Formats', href: '#formats' },
+  { label: 'Programme', href: '#programme' },
+  { label: 'À l’école', href: '#experience' },
+  { label: 'Admissions', href: '#admission' },
+  { label: 'FAQ', href: '#faq-mos' },
+] as const;
+const generalSubjects = [
+  { title: 'Culture générale et expression', items: ['Comprendre, argumenter, synthétiser et communiquer avec précision.'] },
+  { title: 'Langue vivante étrangère', items: ['Communiquer dans un contexte professionnel et mobiliser le vocabulaire des situations de travail.'] },
+  { title: 'Culture économique, juridique et managériale', items: ['Comprendre l’environnement économique, le droit et les décisions de management d’une organisation.'] },
 ];
-
 const admissionSteps = [
-  ['01', 'Je candidate', 'Je complète mon dossier de pré-inscription en ligne.'],
-  ['02', 'Mon dossier est étudié', 'L’équipe vérifie mon projet, mon niveau et mes prérequis.'],
-  ['03', 'Je suis admis', 'Je reçois les informations pour finaliser mon inscription.'],
-  ['04', 'Je cherche mon entreprise', 'Je prépare ma recherche et mon contrat d’apprentissage.'],
-  ['05', 'Je fais ma rentrée', 'Je rejoins ma promotion à l’école ou en visioconférence.'],
+  ['Je candidate', 'Je complète mon dossier de pré-inscription en ligne.'],
+  ['Mon dossier est étudié', 'L’équipe vérifie mon projet, mon niveau et mes prérequis.'],
+  ['Je suis admis', 'Je reçois les informations pour finaliser mon inscription.'],
+  ['Je cherche mon entreprise', 'Je prépare ma recherche et mon contrat d’apprentissage.'],
+  ['Je fais ma rentrée', 'Je rejoins ma promotion à l’école ou en visioconférence.'],
 ];
-
 const faq = [
-  { q: 'Quel est le rythme de l’alternance en BTS MOS ?', a: btsRhythms.MOS.description },
-  {
-    q: 'Puis-je candidater juste après le bac ?',
-    a: 'Oui. Le BTS MOS est accessible aux candidats titulaires d’un baccalauréat ou d’un titre équivalent, sous réserve de l’étude du dossier et de la validation du projet d’alternance.',
-  },
-  {
-    q: 'Le BTS peut-il être suivi à distance ?',
-    a: 'Oui. Le parcours peut être suivi en présentiel à Puget-sur-Argens ou 100 % à distance en visioconférence selon les modalités validées avec l’équipe admissions. À distance, les cours sont assurés en direct avec les formateurs et la promotion.',
-  },
-  {
-    q: 'L’école aide-t-elle pour la recherche d’entreprise ?',
-    a: 'L’équipe vous accompagne dans la préparation de votre candidature, la compréhension du contrat d’apprentissage et les étapes à suivre jusqu’à la signature avec une entreprise d’accueil.',
-  },
-  {
-    q: 'Combien coûte le BTS en alternance ?',
-    a: 'Dans le cadre d’un contrat d’alternance, les frais de formation sont pris en charge selon l’accord de l’entreprise et de son OPCO. La formation est donc sans frais de scolarité pour l’apprenti lorsque le contrat et sa prise en charge sont validés.',
-  },
-  {
-    q: 'Le diplôme est-il reconnu par l’État ?',
-    a: 'Oui. Le BTS Management Opérationnel de la Sécurité est un diplôme national de niveau 5 délivré par le ministère de l’Éducation nationale et enregistré au RNCP sous le numéro 41000.',
-  },
-  {
-    q: 'Quels métiers peut-on exercer après le BTS MOS ?',
-    a: 'Le BTS prépare notamment aux fonctions de chef de poste, chef d’équipe sécurité, coordinateur ou assistant d’exploitation. Il permet également de poursuivre ses études ou d’évoluer progressivement vers davantage de responsabilités opérationnelles.',
-  },
-  {
-    q: 'Qui contacter pour parler du BTS ?',
-    a: 'Aurélie CHAUSSEZ, chargée des relations clients Intégrale Academy et responsable des BTS, répond à vos questions au 04 87 83 06 15, au 07 69 39 04 57 ou par e-mail à aurelie@integraleacademy.com.',
-  },
+  { q: 'Combien coûte le BTS en alternance ?', a: 'La formation est sans frais de scolarité pour l’apprenti lorsque le contrat d’alternance et sa prise en charge sont validés. Le financement s’organise avec l’entreprise et son OPCO.' },
+  { q: 'En visioconférence, les cours sont-ils en direct ?', a: 'Oui. Vous retrouvez les formateurs et votre promotion en classe virtuelle, avec des échanges et un suivi régulier. Les modalités sont validées avec l’équipe admissions. Les épreuves finales nécessitant une convocation se déroulent en présentiel selon les indications de l’académie.' },
+  { q: 'Le diplôme est-il le même dans les deux formats ?', a: 'Oui. En présentiel comme en classe virtuelle, vous préparez le BTS Management Opérationnel de la Sécurité, diplôme national de niveau 5 enregistré au RNCP sous le numéro 41000.' },
+  { q: 'Quand l’iPad est-il remis et le voyage organisé ?', a: 'L’iPad est offert dès la signature de votre contrat d’apprentissage. Le voyage à Londres a lieu en deuxième année et est intégralement pris en charge par Intégrale Academy pour les étudiants de la promotion.' },
+  { q: 'Comment suivre ma candidature ?', a: 'Après votre dossier de pré-inscription en ligne, l’équipe admissions vérifie votre projet et vous communique les informations utiles pour la suite. Aurélie répond à vos questions au 04 87 83 06 15 ou à aurelie@integraleacademy.com.' },
 ];
 
-function CTA({
-  href,
-  children,
-  variant = 'dark',
-  className = '',
-  external = false,
-}: {
-  href: string;
-  children: ReactNode;
-  variant?: 'dark' | 'gold' | 'light' | 'outline' | 'blue';
-  className?: string;
-  external?: boolean;
-}) {
-  const styles = {
-    dark: 'bg-bts-700 text-white hover:bg-bts-800',
-    gold: 'bg-bts-200 text-bts-950 hover:brightness-105',
-    light: 'border border-academy-line bg-white text-academy-ink hover:bg-academy-bg',
-    outline: 'border border-white/30 bg-white/5 text-white hover:bg-white/12',
-    blue: 'bg-bts-300 text-[#07121F] hover:bg-bts-200',
-  };
-  return (
-    <Link
-      href={href}
-      target={external ? '_blank' : undefined}
-      rel={external ? 'noopener noreferrer' : undefined}
-      className={`inline-flex min-h-12 items-center justify-center rounded-full px-5 py-3 text-center text-sm font-black transition hover:-translate-y-0.5 focus:outline-none focus:ring-4 focus:ring-bts-200/25 ${styles[variant]} ${className}`}
-    >
-      {children}
-    </Link>
-  );
+function Arrow() {
+  return <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>;
 }
-
-function Eyebrow({ children, light = false }: { children: ReactNode; light?: boolean }) {
-  return (
-    <p className={`text-[.66rem] font-black uppercase tracking-[.24em] ${light ? 'text-bts-300' : 'text-bts-700'}`}>
-      {children}
-    </p>
-  );
+function Apply({ children = 'Je candidate', className = '' }: { children?: ReactNode; className?: string }) {
+  return <a href={applicationUrl} target="_blank" rel="noopener noreferrer" className={`${styles.button} ${className}`}>{children}<Arrow /></a>;
 }
-
-function Section({
-  id,
-  eyebrow,
-  title,
-  intro,
-  children,
-  tone = 'cream',
-}: {
-  id?: string;
-  eyebrow: string;
-  title: ReactNode;
-  intro?: ReactNode;
-  children: ReactNode;
-  tone?: 'cream' | 'paper' | 'dark';
-}) {
-  const colors =
-    tone === 'dark'
-      ? 'bg-[#0D1725] text-white'
-      : tone === 'paper'
-        ? 'bg-[#FFFDF8] text-academy-ink'
-        : 'bg-academy-bg text-academy-ink';
-  return (
-    <section id={id} className={`${colors} scroll-mt-24 px-4 py-14 sm:py-16 lg:py-20`}>
-      <div className="page-container">
-        <div className="mb-9 grid gap-5 lg:grid-cols-[.78fr_1.22fr] lg:items-end lg:gap-16">
-          <div>
-            <Eyebrow light={tone === 'dark'}>{eyebrow}</Eyebrow>
-            <h2 className="mt-3 max-w-4xl text-3xl font-black tracking-[-.05em] sm:text-4xl lg:text-5xl">
-              {title}
-            </h2>
-          </div>
-          {intro && (
-            <div className={`max-w-3xl text-base font-medium leading-8 ${tone === 'dark' ? 'text-white/65' : 'text-academy-muted'}`}>
-              {intro}
-            </div>
-          )}
-        </div>
-        {children}
-      </div>
-    </section>
-  );
+function List({ items }: { items: string[] }) {
+  return <ul className={styles.list}>{items.map(item => <li key={item}><span aria-hidden="true">✓</span>{item}</li>)}</ul>;
 }
-
-function HeroRoadmap() {
-  const steps = [
-    ['01', 'Votre bac', 'Votre point de départ', 'PRÊT'],
-    ['02', 'L’école + l’entreprise', 'Apprendre en situation réelle', '2 ANS'],
-    ['03', 'Le diplôme d’État', 'BTS · niveau 5', 'BAC+2'],
-    ['04', 'Votre premier poste', 'Management opérationnel', 'GO'],
-  ];
-  return (
-    <aside className={`${btsStyles.roadmap} relative rounded-[2rem] border border-white/60 bg-[#FFFDF8] p-5 text-academy-ink shadow-[0_34px_100px_rgba(0,0,0,.34)] sm:p-6`}>
-      <span className="absolute -right-2 -top-3 rounded-full bg-bts-700 px-3 py-2 text-[.58rem] font-black uppercase tracking-[.14em] text-white shadow-soft">
-        Admissions 2026
-      </span>
-      <div className="flex items-start justify-between gap-3">
-        <div>
-          <Eyebrow>Votre trajectoire</Eyebrow>
-          <h2 className="mt-2 text-2xl font-black">Objectif : BTS MOS</h2>
-        </div>
-        <span className="rounded-full bg-bts-50 px-3 py-1.5 text-[.6rem] font-black uppercase tracking-[.12em] text-bts-800 ring-1 ring-bts-200">
-          Dossier en ligne
-        </span>
-      </div>
-      <div className={`${btsStyles.roadmapSteps} mt-5 rounded-[1.5rem] border border-[#E4D9C8] bg-[#F4EFE6] p-4`}>
-        {steps.map(([number, title, detail, status], index) => (
-          <div key={number} className={`grid grid-cols-[2.3rem_1fr_auto] items-center gap-3 py-3 ${index ? 'border-t border-[#DED4C5]' : ''}`}>
-            <span className="grid h-9 w-9 place-items-center rounded-xl bg-[#0D1725] text-[.65rem] font-black text-bts-200">
-              {number}
-            </span>
-            <div>
-              <p className="text-sm font-black">{title}</p>
-              <p className="mt-0.5 text-[.68rem] font-semibold text-academy-muted">{detail}</p>
-            </div>
-            <span className="text-[.6rem] font-black text-bts-700">{status}</span>
-          </div>
-        ))}
-      </div>
-      <div className="mt-3 grid gap-3 sm:grid-cols-2">
-        <div className="rounded-2xl border border-academy-line bg-white p-4">
-          <p className="text-[.6rem] font-black uppercase tracking-[.15em] text-bts-700">École</p>
-          <p className="mt-1 font-black">Puget-sur-Argens</p>
-        </div>
-        <div className="rounded-2xl border border-academy-line bg-white p-4">
-          <p className="text-[.6rem] font-black uppercase tracking-[.15em] text-bts-700">Ou à distance</p>
-          <p className="mt-1 font-black">Visio en direct</p>
-        </div>
-      </div>
-    </aside>
-  );
+function Disclosure({ title, children, id }: { title: string; children: ReactNode; id?: string }) {
+  return <details id={id} className={styles.disclosure}><summary>{title}<span aria-hidden="true">+</span></summary><div className={styles.disclosureBody}>{children}</div></details>;
+}
+function Heading({ label, title, text }: { label: string; title: ReactNode; text?: string }) {
+  return <div className={styles.sectionHeading}><div><p className={styles.eyebrow}>{label}</p><h2>{title}</h2></div>{text && <p>{text}</p>}</div>;
 }
 
 export function BtsMosReferencePage() {
-  return (
-    <main data-bts="mos" className={`${btsStyles.page} relative overflow-x-clip pb-24 lg:pb-0`}>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: serializeCourseJsonLd({
-            '@context': 'https://schema.org',
-            '@graph': [
-              {
-                '@type': 'Course',
-                name: 'BTS Management Opérationnel de la Sécurité (MOS)',
-                description: 'BTS MOS en alternance, en présentiel à Puget-sur-Argens ou à distance en visioconférence.',
-                educationalCredentialAwarded: 'BTS - diplôme national de niveau 5',
-                provider: {
-                  '@type': 'EducationalOrganization',
-                  name: 'Intégrale Academy',
-                  telephone: '04 87 83 06 15',
-                  email: aurelieEmail,
-                },
-              },
-              {
-                '@type': 'FAQPage',
-                mainEntity: faq.map((item) => ({
-                  '@type': 'Question',
-                  name: item.q,
-                  acceptedAnswer: { '@type': 'Answer', text: item.a },
-                })),
-              },
-              {
-                '@type': 'BreadcrumbList',
-                itemListElement: [
-                  { '@type': 'ListItem', position: 1, name: 'Accueil', item: '/' },
-                  { '@type': 'ListItem', position: 2, name: 'BTS en alternance', item: '/#bts' },
-                  { '@type': 'ListItem', position: 3, name: 'BTS MOS', item: '/bts/mos' },
-                ],
-              },
-            ],
-          }, "/bts/mos"),
-        }}
-      />
+  return <main data-bts="mos" className={`${identity.page} ${styles.page}`}>
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeCourseJsonLd({
+      '@context': 'https://schema.org', '@graph': [
+        { '@type': 'Course', name: course.fullName, description: course.summary, educationalCredentialAwarded: 'BTS - diplôme national de niveau 5', provider: { '@type': 'EducationalOrganization', name: 'Intégrale Academy', telephone: '04 87 83 06 15', email: 'aurelie@integraleacademy.com' } },
+        { '@type': 'FAQPage', mainEntity: faq.map(item => ({ '@type': 'Question', name: item.q, acceptedAnswer: { '@type': 'Answer', text: item.a } })) },
+      ],
+    }, '/bts/mos') }} />
 
-      <section className={`${btsStyles.hero} relative isolate overflow-hidden bg-[#0A1725] px-4 pb-8 pt-10 text-white sm:pt-14 lg:pt-16`}>
-        <div className={`absolute inset-0 -z-10 ${btsStyles.heroGlow}`} />
-        <div className="absolute inset-0 -z-10 opacity-25 [background-image:linear-gradient(rgba(255,255,255,.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.08)_1px,transparent_1px)] [background-size:48px_48px]" />
-        <div className="page-container">
-          <div className={`${btsStyles.heroLayout} grid items-center gap-9 lg:grid-cols-[1.08fr_.92fr] lg:gap-12`}>
-            <div>
-              <span className="inline-flex items-center gap-2 rounded-full border border-bts-300/35 bg-white/8 px-4 py-2 text-[.66rem] font-black uppercase tracking-[.18em] text-bts-100 backdrop-blur">
-                <span className="h-2.5 w-2.5 rounded-full bg-bts-200 shadow-[0_0_16px_rgb(var(--bts-300)/.7)]" />
-                Diplôme d’État · Bac+2 · RNCP 41000
-              </span>
-              <h1 className="mt-5 max-w-4xl text-4xl font-black tracking-[-.06em] sm:text-5xl lg:text-6xl xl:text-7xl">
-                Devenez celui qui <span className="text-bts-200">pilote la sécurité.</span>
-              </h1>
-              <p className="mt-5 max-w-2xl text-lg font-medium leading-8 text-white/70 sm:text-xl">
-                Avec le BTS MOS, passez du terrain au management : organisez les missions, encadrez des équipes et devenez l’interlocuteur de confiance des clients.
-              </p>
-              <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-                <CTA href={applicationUrl} variant="gold" external>Je candidate pour 2026 →</CTA>
-                <CTA href={aurelieDirectHref} variant="outline">Parler à Aurélie</CTA>
-              </div>
-              <div className="mt-6 flex flex-wrap gap-2 text-xs font-bold text-white/75">
-                <span className="rounded-full border border-white/15 bg-white/7 px-3 py-2">✓ Sans frais de scolarité pour l’apprenti*</span>
-                <span className="rounded-full border border-bts-300/35 bg-bts-300/10 px-3 py-2 text-bts-100">✓ iPad offert dès la signature</span>
-                <span className="rounded-full border border-bts-200/40 bg-bts-200/10 px-3 py-2 text-bts-200">✓ Londres en 2ᵉ année · 100 % pris en charge</span>
-                <span className="rounded-full border border-white/15 bg-white/7 px-3 py-2">✓ Présentiel ou visioconférence</span>
-                <span className="rounded-full border border-white/15 bg-white/7 px-3 py-2">✓ Accompagnement jusqu’au contrat</span>
-              </div>
-            </div>
-            <div className={btsStyles.heroArtwork}><ManualArtwork illustration={btsHeroArtwork.mos} priority /></div>
+    <section className={styles.hero} aria-labelledby="mos-title">
+      <div className={styles.container}>
+        <div className={styles.heroGrid}>
+          <div className={styles.heroCopy}>
+            <p className={styles.eyebrow}>Diplôme d’État · Bac+2 · RNCP {course.rncp}</p>
+            <h1 id="mos-title"><span>BTS MOS</span>Management opérationnel<br className={styles.desktopBreak} /> de la sécurité.</h1>
+            <p className={styles.heroPromise}>Apprenez à <strong>prendre les commandes.</strong></p>
+            <p className={styles.intro}>Organiser les missions, encadrer une équipe, accompagner un client. Construisez votre avenir dans la sécurité avec l’expérience de l’alternance.</p>
+            <ul className={styles.heroFacts} aria-label="L’essentiel du BTS MOS"><li><strong>2 ans</strong>de formation</li><li><strong>Alternance</strong>école + entreprise</li><li><strong>Présentiel ou visio</strong>cours en direct</li></ul>
+            <div className={styles.actions}><Apply>Je candidate pour 2026</Apply><a href="#contact-mos" className={styles.textLink}>Parler à Aurélie <Arrow /></a></div>
+            <p className={styles.heroNote}>Sans frais de scolarité pour l’apprenti, sous réserve de la conclusion et de la prise en charge du contrat.</p>
           </div>
-          <HeroRoadmap />
-          <div className={`${btsStyles.heroFacts} mt-10 grid overflow-hidden rounded-[1.6rem] border border-white/10 bg-white/7 sm:grid-cols-2 lg:grid-cols-4`}>
-            {[
-              ['Durée', '2 ans · 1 350 heures'],
-              ['Alternance', btsRhythms.MOS.shortLabel],
-              ['Diplôme', 'BTS reconnu par l’État'],
-              ['Admission', 'Après le bac'],
-            ].map(([key, value]) => (
-              <div key={key} className="border-b border-white/10 p-4 last:border-b-0 sm:border-r lg:border-b-0">
-                <p className="text-[.58rem] font-black uppercase tracking-[.18em] text-white/42">{key}</p>
-                <p className="mt-1 font-black text-white">{value}</p>
-              </div>
-            ))}
-          </div>
-          <p className="mt-3 text-[.64rem] font-semibold text-white/40">* Sous réserve de la conclusion et de la prise en charge du contrat d’alternance.</p>
+          <figure className={styles.heroVisual}>
+            <div className={styles.heroImage}><Image src={btsHeroArtwork.mos.src} alt={btsHeroArtwork.mos.alt} width={1536} height={1024} priority sizes="(max-width: 850px) 94vw, 48vw" /></div>
+            <figcaption><span className={styles.visualNumber}>01</span><div><strong>Du terrain au management.</strong><span>Votre prochain chapitre commence ici.</span></div><span className={styles.visualArrow} aria-hidden="true">↗</span></figcaption>
+          </figure>
         </div>
-      </section>
+        <div className={styles.heroBottom}><span>Après le bac</span><span>1 350 heures de formation</span><span>Puget-sur-Argens ou à distance</span><a href="#metier">Découvrir le BTS <span aria-hidden="true">↓</span></a></div>
+      </div>
+    </section>
 
-      <BtsSectionNavigation code="MOS" competencyHref="#metier" competencyLabel="Le métier" faqHref="#faq-mos" registrationHref={applicationUrl} />
+    <div className={styles.navigation}><TrainingSectionNavigation mark="MOS" title="BTS MOS" items={navigation} registrationHref={applicationUrl} registrationLabel="Je candidate" theme="bts" externalRegistration ariaLabel="Sommaire du BTS MOS" /></div>
 
-      <TrainingWelcomePack course="bts-mos" />
+    <section id="metier" className={styles.section} aria-labelledby="mos-mission-title">
+      <div className={styles.container}>
+        <div className={styles.sectionHeading}><div><p className={styles.eyebrow}>01 / Votre futur métier</p><h2 id="mos-mission-title">Un site à sécuriser.<br /><span>Une équipe à guider.</span></h2></div><p>Découvrez une mise en situation : quatre décisions qui relient le terrain, l’organisation et la relation client. À vous de faire avancer la mission.</p></div>
+        <BtsMosMission />
+        <div id="pour-qui" className={styles.profile}>
+          <div><p className={styles.eyebrow}>Ce BTS est-il fait pour vous ?</p><h3>Le sens du terrain.<br />L’envie de manager.</h3></div>
+          <div><p>Vous aimez le travail en équipe, vous êtes rigoureux et vous voulez prendre des responsabilités ? Le BTS MOS vous apprend à organiser une prestation et à faire progresser un collectif.</p><Disclosure title="Voir le profil et les qualités attendues"><List items={course.profile} /></Disclosure></div>
+        </div>
+        <div className={styles.careers}><p className={styles.eyebrow}>Après le diplôme</p><h3>Des responsabilités qui se construisent.</h3><p>Chef de poste, chef d’équipe, assistant d’exploitation ou coordinateur : votre évolution dépend aussi de vos missions et de votre expérience.</p><div className={styles.twoColumns}><Disclosure title="Les métiers et les perspectives d’évolution"><List items={course.jobs} /></Disclosure><Disclosure title="Poursuivre ses études après le BTS"><List items={course.furtherStudies} /></Disclosure></div></div>
+      </div>
+    </section>
 
-      <CourseJourney course="bts-mos" />
+    <section id="alternance" className={`${styles.section} ${styles.tinted}`}>
+      <div className={styles.container}>
+        <Heading label="02 / Votre rythme" title={<>À l’école, vous apprenez.<br /><span>En entreprise, vous pratiquez.</span></>} text="Deux années pour préparer votre diplôme et développer votre expérience professionnelle. Un rythme qui vous laisse le temps de vous investir dans chaque environnement." />
+        <BtsMosCalendar />
+        <div className={styles.practicalGrid}>
+          <div><p className={styles.eyebrow}>Votre recherche d’entreprise</p><h3>Vous avancez avec l’équipe.</h3><p>Préparer votre candidature, comprendre le contrat et les étapes jusqu’à sa signature : l’équipe admissions vous guide dans vos démarches.</p><a className={styles.textLink} href="#admission">Voir les étapes d’admission <Arrow /></a></div>
+          <div>
+            <Disclosure title="Puis-je candidater sans avoir d’entreprise ?"><p>Oui, commencez par votre candidature. L’équipe vérifie votre situation et vous accompagne dans la préparation de votre recherche. Pour la rentrée 2026, vous pouvez commencer les cours et finaliser ensuite votre contrat selon les modalités validées avec l’école ; la date limite annoncée est le 15 décembre 2026.</p></Disclosure>
+            <Disclosure title="Je n’ai pas encore ma carte professionnelle CNAPS"><p>{course.specificPanel?.body}</p><List items={course.specificPanel?.items ?? []} /><Link className={styles.textLink} href="/formations-securite/aps">Découvrir la formation APS <Arrow /></Link></Disclosure>
+            <Disclosure title="Quelles missions et quelles entreprises d’accueil ?"><p>Les missions sont adaptées à l’activité de l’entreprise et à votre progression.</p><h4>Les missions possibles</h4><List items={course.missions} /><h4>Les structures d’accueil</h4><List items={course.employers} /></Disclosure>
+          </div>
+        </div>
+      </div>
+    </section>
 
+    <section id="formats" className={styles.section}>
+      <div className={styles.container}>
+        <Heading label="03 / Votre façon d’étudier" title={<>Une promotion.<br /><span>Deux façons de la rejoindre.</span></>} text="Le même diplôme, le même programme et une équipe à vos côtés. Choisissez votre organisation avec l’équipe admissions." />
+        <div className={styles.formats}>
+          <article className={styles.campusFormat}><div className={styles.formatPhoto}><Image src="/images/campus/campus-accueil.jpg" alt="L’accueil d’Intégrale Academy à Puget-sur-Argens" width={1600} height={1200} sizes="(max-width: 700px) 94vw, 45vw" /></div><div className={styles.formatCopy}><p className={styles.eyebrow}>En présentiel</p><h3>Rendez-vous à Puget-sur-Argens.</h3><p>Retrouvez votre promotion, échangez avec les formateurs et profitez des équipements de l’école.</p><span>Cours en groupe · Équipe sur place · Vie de promotion</span><Link href="/ecole#campus" className={styles.textLink}>Découvrir l’école <Arrow /></Link></div></article>
+          <article className={styles.remoteFormat}><div className={styles.liveVisual} aria-hidden="true"><span className={styles.liveBadge}>Cours en direct</span><div className={styles.liveWindow}><div className={styles.liveTop}><i /><i /><i /><span>Votre classe virtuelle</span></div><div className={styles.liveLesson}><span>Management des équipes</span><strong>Une question ?<br />Échangez avec votre formateur.</strong><div><span>Vous</span><span>Votre promotion</span><span>Votre formateur</span></div></div></div></div><div className={styles.formatCopy}><p className={styles.eyebrow}>En visioconférence</p><h3>La classe vient à vous.</h3><p>Suivez de vrais cours en direct, posez vos questions et travaillez avec votre promotion, depuis chez vous.</p><span>Cours interactifs · Suivi régulier · Partout en France</span><p className={styles.small}>Les épreuves finales nécessitant une convocation se déroulent en présentiel, selon les indications de l’académie.</p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="programme" className={`${styles.section} ${styles.program}`}>
+      <div id="guide-complet" className={styles.container}>
+        <Heading label="04 / Le programme complet" title={<>Comprendre. Organiser.<br /><span>Manager.</span></>} text="1 350 heures sur deux ans. Quatre blocs professionnels, des enseignements généraux et des situations issues de votre alternance." />
+        <div className={styles.programGrid}>
+          <div><p className={styles.programLabel}>Les 4 blocs professionnels</p><div className={styles.programRows}>{course.competencyBlocks.map((block, index) => <details key={block.title} className={styles.programRow} open={index === 0}><summary><span className={styles.blockNumber}>0{index + 1}</span><strong>{block.title}</strong><span className={styles.plus} aria-hidden="true">+</span></summary><div className={styles.programBody}><List items={block.items} /></div></details>)}</div></div>
+          <aside className={styles.generalSubjects}><p className={styles.programLabel}>Les enseignements généraux</p>{generalSubjects.map(subject => <Disclosure key={subject.title} title={subject.title}><List items={subject.items} /></Disclosure>)}<a href={course.rncpUrl} target="_blank" rel="noopener noreferrer" className={styles.textLink}>Fiche officielle RNCP {course.rncp} <Arrow /></a></aside>
+        </div>
+        <Disclosure title="Les objectifs de la formation"><List items={course.objective} /></Disclosure>
+        <Disclosure id="examens" title="Les épreuves, les coefficients et la validation du diplôme"><p>{course.examLocation}</p><div className={styles.examTable}><table><caption>Épreuves du BTS Management Opérationnel de la Sécurité</caption><thead><tr><th scope="col">Épreuve</th><th scope="col">Coefficient</th><th scope="col">Format principal</th></tr></thead><tbody>{course.examUnits.map(unit => <tr key={unit.title}><th scope="row">{unit.title}</th><td>{unit.coefficient}</td><td>{unit.format}</td></tr>)}</tbody></table></div><p>La forme exacte, contrôle en cours de formation ou épreuve ponctuelle, dépend du statut du candidat et de l’habilitation du CFA. L’équipe pédagogique confirme les modalités applicables à votre promotion.</p></Disclosure>
+      </div>
+    </section>
+
+    <section id="experience" className={`${styles.section} ${styles.experience}`}>
+      <div className={styles.container}>
+        <Heading label="05 / Votre vie à l’école" title={<>Les bons outils.<br /><span>Des expériences à partager.</span></>} text="Le projet de formation prend aussi vie dans les échanges, les ateliers et les moments passés avec votre promotion." />
+        <div className={styles.benefitPreview}><span>iPad offert dès la signature</span><span>Londres en 2ᵉ année · 100 % pris en charge</span></div>
+      </div>
       <BtsStudentBenefits courseName="BTS MOS" />
-
-      <Section
-        id="pour-qui"
-        eyebrow="01 — Un choix qui parle à toute la famille"
-        title={<>Un projet motivant pour vous. Un parcours rassurant pour vos parents.</>}
-        intro={<>Cette page répond aux deux vraies questions : « Est-ce que je vais aimer ? » et « Est-ce que cette école va bien m’accompagner ? »</>}
-      >
-        <div className="grid gap-5 lg:grid-cols-2">
-          <article className="rounded-[2rem] border border-[#22354C] bg-[#0D1725] p-6 text-white shadow-card sm:p-8">
-            <span className="grid h-14 w-14 place-items-center rounded-2xl bg-bts-400/15 text-2xl text-bts-300">↗</span>
-            <Eyebrow light>Pour le futur étudiant</Eyebrow>
-            <h3 className="mt-4 text-3xl font-black tracking-[-.04em]">Vous voulez bouger, décider et prendre des responsabilités.</h3>
-            <p className="mt-4 leading-7 text-white/62">Le BTS MOS s’adresse à celles et ceux qui ne veulent pas rester spectateurs : vous apprenez à organiser, communiquer et manager.</p>
-            <div className="mt-6 grid gap-3">
-              {['Des missions concrètes en entreprise', 'Un métier utile et tourné vers l’humain', 'Des compétences de management transférables'].map((item) => (
-                <p key={item} className="flex items-center gap-3 rounded-2xl bg-white/7 p-4 font-bold"><span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-bts-500 text-xs">✓</span>{item}</p>
-              ))}
-            </div>
-          </article>
-          <article className="rounded-[2rem] border border-academy-line bg-[#FFFDF8] p-6 shadow-card sm:p-8">
-            <span className="grid h-14 w-14 place-items-center rounded-2xl bg-bts-100 text-2xl text-bts-700">◎</span>
-            <Eyebrow>Pour les parents</Eyebrow>
-            <h3 className="mt-4 text-3xl font-black tracking-[-.04em]">Vous cherchez un diplôme solide et un cadre sérieux.</h3>
-            <p className="mt-4 leading-7 text-academy-muted">Le parcours associe un BTS délivré par l’Éducation nationale, l’expérience de l’alternance et le suivi d’une équipe disponible.</p>
-            <div className="mt-6 grid gap-3">
-              {['Diplôme d’État de niveau 5 — RNCP 41000', 'Formation prise en charge dans le cadre de l’alternance', 'Accompagnement de la candidature jusqu’au contrat'].map((item) => (
-                <p key={item} className="flex items-center gap-3 rounded-2xl bg-academy-bg p-4 font-bold"><span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-bts-500 text-xs text-white">✓</span>{item}</p>
-              ))}
-            </div>
-            <CTA href={contactHref('Question d’un parent sur le BTS MOS')} variant="light" className="mt-6">Poser une question à Aurélie →</CTA>
-          </article>
-        </div>
-      </Section>
-
-      <Section
-        id="metier"
-        eyebrow="02 — Du terrain au management"
-        title={<>Vous apprenez à prendre les commandes.</>}
-        intro={<>Le BTS MOS ne forme pas uniquement à « faire de la sécurité ». Il prépare à organiser une prestation, coordonner des agents et rendre compte à un client.</>}
-        tone="paper"
-      >
-        <TrainingIllustratedCards items={careerSteps} theme="bts" illustrations={btsPracticeArtwork.mos} singleIllustration />
-        <div className="mt-6 grid items-center gap-5 rounded-[1.7rem] border border-bts-200 bg-bts-50 p-6 sm:grid-cols-[1fr_auto]">
-          <div><Eyebrow>Votre montée en compétences</Eyebrow><h3 className="mt-3 text-2xl font-black text-bts-950">Une vision complète de la sécurité privée.</h3><p className="mt-3 max-w-3xl text-sm leading-7 text-bts-950/70">Vous progressez de la compréhension du terrain au pilotage d’une équipe et d’une prestation.</p></div>
-          <div className="rounded-2xl border border-bts-200 bg-white/70 px-6 py-4"><p className="text-4xl font-black text-bts-700">4</p><p className="mt-2 max-w-[14rem] text-xs font-black uppercase tracking-[.12em] text-bts-950/70">grands blocs professionnels</p></div>
-        </div>
-        <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          {['Chef de poste', 'Chef d’équipe sécurité', 'Assistant d’exploitation', 'Coordinateur sécurité'].map((job) => (
-            <div key={job} className="rounded-2xl border border-academy-line bg-academy-bg p-4 text-center font-black">{job}</div>
-          ))}
-        </div>
-        <MissionAnimation variant="mos" className="mt-8" illustration={btsMissionArtwork.mos} />
-      </Section>
-
-      <Section
-        id="formats"
-        eyebrow="03 — Deux formats, le même BTS"
-        title={<>Choisissez la façon d’étudier qui vous correspond vraiment.</>}
-        intro={<>Le format est un choix d’organisation. L’exigence, le diplôme et l’accompagnement restent au cœur du parcours.</>}
-      >
-        <div className="grid gap-5 lg:grid-cols-2">
-          <article className="rounded-[2rem] border border-academy-line bg-[#FFFDF8] p-6 shadow-card sm:p-8">
-            <span className="inline-flex rounded-full bg-bts-50 px-3 py-2 text-[.62rem] font-black uppercase tracking-[.15em] text-bts-800 ring-1 ring-bts-200">● À l’école</span>
-            <h3 className="mt-6 text-3xl font-black tracking-[-.04em]">En présentiel à Puget-sur-Argens</h3>
-            <p className="mt-4 leading-7 text-academy-muted">Un cadre vivant pour apprendre avec votre promotion, échanger directement avec les formateurs et profiter de l’école.</p>
-            <div className="mt-6 grid gap-3 sm:grid-cols-2">
-              {['Cours en groupe', 'Équipe sur place', 'Vie de promotion', 'Locaux dédiés'].map((item) => <p key={item} className="rounded-2xl bg-academy-bg p-4 text-sm font-black">✓ {item}</p>)}
-            </div>
-          </article>
-          <article className="rounded-[2rem] border border-[#284661] bg-bts-950 p-6 text-white shadow-card sm:p-8">
-            <span className="inline-flex rounded-full bg-bts-400/15 px-3 py-2 text-[.62rem] font-black uppercase tracking-[.15em] text-bts-200 ring-1 ring-bts-300/30">◉ Classe virtuelle</span>
-            <h3 className="mt-6 text-3xl font-black tracking-[-.04em]">100 % à distance en visioconférence</h3>
-            <p className="mt-4 leading-7 text-white/62">De vrais cours en direct avec vos formateurs et votre promotion, depuis chez vous — pas une simple plateforme laissée en autonomie.</p>
-            <div className="mt-6 grid gap-3 sm:grid-cols-2">
-              {['Cours en direct', 'Interactions en visio', 'Suivi régulier', 'Accessible partout en France'].map((item) => <p key={item} className="rounded-2xl bg-white/8 p-4 text-sm font-black">✓ {item}</p>)}
-            </div>
-          </article>
-        </div>
-        <div className="mt-5 flex flex-col items-start justify-between gap-4 rounded-[1.7rem] border border-bts-300 bg-bts-50 p-5 sm:flex-row sm:items-center">
-          <div><p className="text-lg font-black text-bts-950">Même diplôme d’État. Même programme. Même équipe à vos côtés.</p><p className="mt-1 text-sm font-semibold text-bts-900/65">Le format est validé avec l’équipe admissions selon votre situation.</p></div>
-          <span className="rounded-full bg-white px-4 py-2 text-xs font-black text-academy-ink ring-1 ring-bts-300">BTS MOS · RNCP 41000</span>
-        </div>
-      </Section>
-
-      <Section
-        id="alternance"
-        eyebrow="04 — L’alternance"
-        title={<>Apprenez. Travaillez. Construisez déjà votre CV.</>}
-        intro={<>{btsRhythms.MOS.description} Deux années pour obtenir un diplôme, acquérir une vraie expérience professionnelle et commencer à construire votre réseau.</>}
-        tone="paper"
-      >
-        <div className="grid gap-5 lg:grid-cols-[1.2fr_.8fr]">
-          <article className="rounded-[2rem] bg-[#0D1725] p-6 text-white shadow-card sm:p-8">
-            <Eyebrow light>Une formation qui se vit</Eyebrow>
-            <h3 className="mt-4 text-3xl font-black tracking-[-.04em]">À l’école, vous comprenez. En entreprise, vous appliquez.</h3>
-            <div className="mt-6 grid gap-3">
-              {[
-                ['01', '15 jours à l’école', 'Management, droit, organisation et relation client'],
-                ['02', '15 jours en entreprise', 'Des missions réelles au sein d’une équipe professionnelle'],
-                ['03', 'À la sortie', 'Un diplôme et deux années d’expérience sur le CV'],
-              ].map(([number, title, detail]) => (
-                <div key={number} className="grid grid-cols-[2.4rem_1fr] items-center gap-3 rounded-2xl bg-white/7 p-3">
-                  <span className="grid h-9 w-9 place-items-center rounded-xl bg-white/10 text-[.62rem] font-black text-bts-200">{number}</span>
-                  <div><p className="font-black">{title}</p><p className="mt-1 text-xs font-semibold text-white/48">{detail}</p></div>
-                </div>
-              ))}
-            </div>
-          </article>
-          <article className="rounded-[2rem] border border-bts-300 bg-bts-100 p-6 shadow-card sm:p-8">
-            <Eyebrow>Côté budget</Eyebrow>
-            <p className="mt-5 text-7xl font-black tracking-[-.08em]">0 €*</p>
-            <h3 className="mt-5 text-3xl font-black tracking-[-.04em]">de frais de scolarité pour l’apprenti.</h3>
-            <p className="mt-4 leading-7 text-bts-950/70">La formation est prise en charge dans le cadre du contrat d’alternance et de l’accord de l’entreprise avec son OPCO.</p>
-            <CTA href={contactHref('Question sur le financement du BTS MOS')} variant="dark" className="mt-6">Poser ma question à Aurélie →</CTA>
-            <p className="mt-4 text-[.62rem] font-semibold text-bts-950/55">* Sous réserve de la conclusion et de la prise en charge du contrat.</p>
-          </article>
-        </div>
-        <article className="mt-5 rounded-[2rem] border border-academy-line bg-academy-bg p-6 shadow-soft">
-          <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
-            <div><Eyebrow>Le coin des parents</Eyebrow><h3 className="mt-3 text-2xl font-black">Ce qui compte vraiment pour vous rassurer.</h3></div>
-            <CTA href={aurelieDirectHref} variant="light">Appeler Aurélie →</CTA>
-          </div>
-          <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {[
-              ['Diplôme officiel', 'BTS délivré par le ministère de l’Éducation nationale.'],
-              ['Équipe identifiée', 'Aurélie répond aux questions du jeune et de sa famille.'],
-              ['Parcours encadré', 'Un suivi pédagogique pendant les deux années.'],
-              ['Expérience utile', 'Des missions valorisables dès la sortie.'],
-            ].map(([title, text]) => <div key={title} className="rounded-2xl border border-academy-line bg-white p-4"><p className="font-black">{title}</p><p className="mt-2 text-xs leading-5 text-academy-muted">{text}</p></div>)}
-          </div>
-        </article>
-      </Section>
-
-      <Section
-        id="programme"
-        eyebrow="05 — Le programme"
-        title={<>Un programme complet pour comprendre, organiser et manager.</>}
-        intro={<>Les enseignements généraux du BTS se combinent à des blocs professionnels directement liés aux prestations de sécurité.</>}
-      >
-        <div className="grid gap-3 lg:grid-cols-2">
-          {program.map(([number, title, text], index) => (
-            <details key={number} open={index === 0} className="group rounded-[1.5rem] border border-academy-line bg-[#FFFDF8] p-5 shadow-soft">
-              <summary className="flex cursor-pointer list-none items-center gap-3">
-                <span className={`grid h-10 w-10 shrink-0 place-items-center rounded-full text-xs font-black ${index >= 3 ? 'bg-[#0D1725] text-bts-200' : 'bg-academy-bg text-academy-ink'}`}>{number}</span>
-                <strong className="min-w-0 flex-1">{title}</strong>
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-bts-200 font-black transition group-open:rotate-45">+</span>
-              </summary>
-              <p className="ml-[3.25rem] mt-4 text-sm leading-6 text-academy-muted">{text}</p>
-            </details>
-          ))}
-        </div>
-        <div className="mt-7 grid gap-5 rounded-[2rem] bg-[#0D1725] p-6 text-white lg:grid-cols-[.72fr_1.28fr] lg:p-8">
-          <div><Eyebrow light>Validation</Eyebrow><h3 className="mt-4 text-3xl font-black">Un diplôme national de niveau 5.</h3><p className="mt-4 leading-7 text-white/62">Les compétences sont validées à travers les épreuves nationales, les dossiers professionnels et les situations liées à l’alternance.</p></div>
-          <div className="grid gap-3 sm:grid-cols-3">
-            {[
-              ['01', 'Épreuves nationales', 'Selon le référentiel de l’Éducation nationale'],
-              ['02', 'Dossiers professionnels', 'Travaux et situations issus du parcours'],
-              ['03', 'Expérience en entreprise', 'Compétences développées en alternance'],
-            ].map(([number, title, text]) => <article key={number} className="rounded-2xl border border-white/10 bg-white/7 p-4"><span className="grid h-9 w-9 place-items-center rounded-full bg-bts-200 text-xs font-black text-bts-950">{number}</span><h4 className="mt-5 font-black">{title}</h4><p className="mt-2 text-xs leading-5 text-white/50">{text}</p></article>)}
-          </div>
-        </div>
-      </Section>
-
-      <BtsCompleteInformation course="mos" />
-
-      <section id="admission" className="relative isolate overflow-hidden bg-[#0A1725] px-4 py-14 text-white sm:py-16 lg:py-20">
-        <div className={`absolute inset-0 -z-10 ${btsStyles.admissionGlow}`} />
-        <div className="absolute inset-0 -z-10 opacity-20 [background-image:linear-gradient(rgba(255,255,255,.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.08)_1px,transparent_1px)] [background-size:48px_48px]" />
-        <div className="page-container">
-          <Eyebrow light>06 — Admissions 2026</Eyebrow>
-          <div className="mt-3 flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-end">
-            <div><h2 className="max-w-4xl text-3xl font-black tracking-[-.05em] sm:text-4xl lg:text-5xl">Votre candidature en cinq étapes. <span className="text-bts-200">Simple, claire, accompagnée.</span></h2><p className="mt-5 max-w-3xl text-base font-medium leading-8 text-white/62">Vous ne savez pas encore comment trouver une entreprise ? C’est normal. Commencez par votre candidature : notre équipe vous guide ensuite.</p></div>
-            <CTA href={applicationUrl} variant="gold" external>Je candidate pour 2026 →</CTA>
-          </div>
-          <div className="mt-9 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-            {admissionSteps.map(([number, title, text]) => (
-              <article key={number} className="rounded-[1.6rem] border border-white/10 bg-white/7 p-5">
-                <span className="grid h-11 w-11 place-items-center rounded-full bg-bts-200 text-xs font-black text-bts-950">{number}</span>
-                <h3 className="mt-7 text-lg font-black">{title}</h3>
-                <p className="mt-3 text-sm leading-6 text-white/50">{text}</p>
-              </article>
-            ))}
-          </div>
-          <div className="mt-6 grid gap-5 lg:grid-cols-[1.15fr_.85fr]">
-            <article className="rounded-[2rem] bg-[#FFFDF8] p-6 text-academy-ink shadow-card">
-              <Eyebrow>Après le BTS</Eyebrow>
-              <h3 className="mt-3 text-3xl font-black">Des débouchés concrets</h3>
-              <div className="mt-5 flex flex-wrap gap-2">
-                {['Chef de poste', 'Chef d’équipe sécurité', 'Assistant d’exploitation', 'Coordinateur sécurité', 'Responsable opérationnel junior', 'Poursuite d’études'].map((job) => <span key={job} className="rounded-full border border-academy-line bg-academy-bg px-4 py-2 text-xs font-black">{job}</span>)}
-              </div>
-            </article>
-            <article className="rounded-[2rem] bg-gradient-to-br from-bts-300 to-bts-200 p-6 text-bts-950 shadow-gold">
-              <Eyebrow>Votre avenir commence ici</Eyebrow>
-              <h3 className="mt-3 text-3xl font-black">Prêt à prendre les commandes ?</h3>
-              <p className="mt-4 text-sm font-semibold leading-6 opacity-70">Déposez votre candidature et échangez avec Aurélie avant toute décision définitive.</p>
-              <CTA href={aurelieDirectHref} variant="dark" className="mt-5">Parler à Aurélie →</CTA>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <div id="faq-mos">
-        <PremiumFAQSection theme="bts"
-          badge="FAQ BTS MOS"
-          title="Tout comprendre avant de vous lancer"
-          description="Admission, alternance, entreprise, visioconférence, coût ou diplôme : Aurélie répond aux questions du jeune comme à celles de sa famille."
-          items={faq}
-          contactHref={contactHref('Question sur le BTS MOS')}
-          contactLabel="Écrire à Aurélie"
-          callHref={aurelieDirectHref}
-          callLabel="Appeler Aurélie"
-        />
+      <div className={styles.container}>
+        <div className={styles.schoolResources}><div><p className={styles.eyebrow}>Apprendre par la pratique</p><h3>Des situations de métier.<br />Des équipements pour s’entraîner.</h3><p>{course.campusEquipment?.intro}</p><Disclosure title="Découvrir les équipements pédagogiques"><List items={course.campusEquipment?.items ?? []} /></Disclosure></div><figure><Image src="/images/bts/manuel/mos.webp" alt="Illustration pédagogique : une responsable prépare les missions avec son équipe au poste de sécurité" width={1536} height={1024} sizes="(max-width: 800px) 94vw, 45vw" /><figcaption>Illustration pédagogique · Préparer une mission en équipe.</figcaption></figure></div>
+        <details className={styles.welcomePack}><summary><span><small>Dès votre premier jour</small><strong>Votre Pack Intégrale vous attend.</strong><span>Supports de cours BTS MOS, carnet, stylo et Ecocup.</span></span><span className={styles.packToggle}>Découvrir le pack <span aria-hidden="true">+</span></span></summary><TrainingWelcomePack course="bts-mos" /></details>
       </div>
+    </section>
 
-      <section className="bg-[#FFFDF8] px-4 py-8">
-        <div className="page-container grid gap-4 rounded-[2rem] border border-academy-line bg-academy-bg p-5 shadow-soft sm:grid-cols-3">
-          <a href={`mailto:${aurelieEmail}`} className="rounded-2xl bg-white p-4 text-center transition hover:-translate-y-0.5"><p className="text-[.62rem] font-black uppercase tracking-[.15em] text-bts-700">E-mail BTS</p><p className="mt-2 break-all font-black">{aurelieEmail}</p></a>
-          <a href={aurelieDirectHref} className="rounded-2xl bg-white p-4 text-center transition hover:-translate-y-0.5"><p className="text-[.62rem] font-black uppercase tracking-[.15em] text-bts-700">Ligne directe</p><p className="mt-2 font-black">04 87 83 06 15</p></a>
-          <a href={aurelieMobileHref} className="rounded-2xl bg-white p-4 text-center transition hover:-translate-y-0.5"><p className="text-[.62rem] font-black uppercase tracking-[.15em] text-bts-700">Portable</p><p className="mt-2 font-black">07 69 39 04 57</p></a>
-        </div>
-      </section>
-
-      <div className="fixed inset-x-0 bottom-0 z-50 border-t border-academy-line bg-[#FFFDF8]/96 p-3 pb-[calc(.75rem+env(safe-area-inset-bottom))] shadow-[0_-12px_40px_rgba(0,0,0,.12)] backdrop-blur lg:hidden">
-        <div className="mx-auto flex max-w-lg gap-2">
-          <CTA href={aurelieDirectHref} variant="light" className="min-w-0 flex-1 px-3">Appeler Aurélie</CTA>
-          <CTA href={applicationUrl} variant="gold" className="min-w-0 flex-[1.2] px-3" external>Je candidate</CTA>
+    <section id="admission" className={`${styles.section} ${styles.admission}`}>
+      <div className={styles.container}>
+        <Heading label="06 / Admissions 2026" title={<>Votre prochain chapitre.<br /><span>On le prépare ensemble.</span></>} text="Commencez par votre candidature. L’équipe étudie votre projet et vous guide vers les prochaines étapes." />
+        <ol className={styles.admissionSteps}>{admissionSteps.map(([title, text], i) => <li key={title}><span>0{i + 1}</span><h3>{title}</h3><p>{text}</p></li>)}</ol>
+        <Disclosure title="Les conditions d’admission et d’alternance"><p>Le BTS est accessible après un baccalauréat ou un titre équivalent, sous réserve de l’étude de votre dossier.</p><List items={course.admission} /></Disclosure>
+        <div id="contact-mos" className={styles.adviser}>
+          <div className={styles.adviserCopy}><p className={styles.eyebrow}>Un interlocuteur pour vous et votre famille</p><h2>Vos questions ont<br /><span>un visage.</span></h2><p>Votre projet, le choix du format, la candidature ou le contrat : Aurélie vous aide à comprendre la suite, avant toute décision définitive.</p><div className={styles.parentTrust}><span>Diplôme d’État</span><span>Suivi pédagogique</span><span>Équipe identifiée</span></div><Apply>Déposer ma candidature</Apply></div>
+          <div className={styles.adviserCard}>
+            <div className={styles.adviserIdentity}><TeamPortrait person="aurelie" size={180} alt="Memoji d’Aurélie Chaussez, responsable des BTS" className={styles.portrait} sizes="(max-width: 600px) 120px, 160px" /><div><p className={styles.eyebrow}>Votre contact BTS</p><h3>Aurélie Chaussez</h3><p>Chargée des relations clients<br />Responsable des BTS</p></div></div>
+            <div className={styles.contactLinks}><a href={phone}>04 87 83 06 15 <span>Ligne directe <Arrow /></span></a><a href="tel:+33769390457">07 69 39 04 57 <span>Portable <Arrow /></span></a><a href={email}>aurelie@integraleacademy.com <Arrow /></a></div>
+            <a href={email} className={`${styles.button} ${styles.secondaryButton}`}>Écrire à Aurélie <Arrow /></a><p className={styles.small}>Un premier échange gratuit et sans engagement.</p>
+          </div>
         </div>
       </div>
-    </main>
-  );
+    </section>
+
+    <section id="faq-mos" className={`${styles.section} ${styles.faq}`}><div className={styles.container}><Heading label="07 / Les réponses utiles" title={<>Avant de vous lancer.</>} text="Les derniers repères pour préparer votre candidature sereinement." /><div className={styles.faqList}>{faq.map(item => <Disclosure key={item.q} title={item.q}><p>{item.a}</p></Disclosure>)}</div></div></section>
+    <div className={styles.mobileActions}><a href={phone}>Appeler Aurélie</a><Apply>Je candidate</Apply></div>
+  </main>;
 }
