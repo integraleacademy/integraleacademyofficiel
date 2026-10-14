@@ -1,5 +1,7 @@
 import { TeamPortrait } from '@/components/TeamPortrait';
-import { CourseJourney } from '@/components/CourseJourney';
+import { SsiapJourneyOverview, SsiapAdmissionDossier, SsiapExamExperience } from './SsiapExperienceSections';
+import { SsiapMissionShowcase, SsiapProgramExplorer, SsiapCampusTour } from './SsiapExperienceInteractions';
+import experience from './SsiapExperience.module.css';
 import { serializeCourseJsonLd } from '@/lib/seo';
 import Link from 'next/link';
 import { TrainingHeroSessionCard } from '@/components/TrainingHero';
@@ -26,6 +28,7 @@ const navigationItems = [
   { label: 'Métier', href: '#metier' },
   { label: 'Admission', href: '#admission' },
   { label: 'Programme', href: '#programme' },
+  { label: 'Pratique', href: '#pedagogie' },
   { label: 'Examen', href: '#examen' },
   { label: 'Dates & tarifs', href: '#dates-tarifs' },
   { label: 'Débouchés', href: '#debouches' },
@@ -122,7 +125,7 @@ function Eyebrow({ children, light = false }: { children: ReactNode; light?: boo
 
 function Section({ id, eyebrow, title, intro, children, tone = 'cream' }: { id?: string; eyebrow: string; title: ReactNode; intro?: ReactNode; children: ReactNode; tone?: 'cream' | 'paper' | 'stone' | 'dark' }) {
   const colors = tone === 'dark' ? 'bg-[#0D1725] text-white' : tone === 'paper' ? 'bg-[#FFFDF8] dark:bg-[#18232f] text-academy-ink' : tone === 'stone' ? 'bg-[#EFE7D9] dark:bg-[#18232f] text-academy-ink' : 'bg-academy-bg text-academy-ink';
-  return <section id={id} className={`${styles.section} ${colors} scroll-mt-24 px-4 py-14 sm:py-16 lg:py-20`}>
+  return <section id={id} className={`${styles.section} ${experience.section} ${colors} scroll-mt-24 px-4 py-14 sm:py-16 lg:py-20`}>
     <div className="page-container">
       <div className="mb-8 grid gap-5 lg:grid-cols-[.75fr_1.25fr] lg:items-end lg:gap-16">
         <div><Eyebrow light={tone === 'dark'}>{eyebrow}</Eyebrow><h2 className={styles.sectionTitle}>{title}</h2></div>
@@ -138,14 +141,14 @@ export function SsiapReferencePage({ sessions }: { sessions: any[] }) {
   const next = visibleSessions[0];
   const faqSchema = faq.map(item => ({ '@type': 'Question', name: item.q, acceptedAnswer: { '@type': 'Answer', text: item.a } }));
 
-  return <div className={`${styles.page} relative overflow-x-clip pb-24 lg:pb-0`}>
+  return <div className={`${styles.page} ${experience.page} relative overflow-x-clip pb-24 lg:pb-0`} data-ssiap-experience="immersive-v2">
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeCourseJsonLd({ '@context': 'https://schema.org', '@graph': [
       { '@type': 'Course', name: 'Formation SSIAP 1 – Agent de sécurité incendie', description: 'Formation réglementaire SSIAP 1 de 67 heures à Puget-sur-Argens.', provider: { '@type': 'Organization', name: 'Intégrale Academy', telephone: '04 22 47 07 68' } },
       { '@type': 'FAQPage', mainEntity: faqSchema },
       { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Accueil', item: '/' }, { '@type': 'ListItem', position: 2, name: 'Formations sécurité', item: '/formations-securite' }, { '@type': 'ListItem', position: 3, name: 'SSIAP 1', item: '/formations-securite/ssiap-1' }] },
     ] }, "/formations-securite/ssiap-1") }} />
 
-    <section className={styles.hero} aria-labelledby="ssiap-title">
+    <section className={`${styles.hero} ${experience.hero}`} aria-labelledby="ssiap-title">
       <div className={styles.container}>
         <div className={styles.heroGrid}>
           <div className={styles.heroCopy}>
@@ -153,7 +156,7 @@ export function SsiapReferencePage({ sessions }: { sessions: any[] }) {
             <h1 id="ssiap-title">Devenez agent de<br /><em>sécurité incendie.</em></h1>
             <p className={styles.heroTagline}>Apprenez le métier sur le terrain.</p>
             <p className={styles.heroDescription}>Préparez le diplôme SSIAP 1 et apprenez à prévenir les risques, surveiller les installations et porter assistance dans les ERP et les IGH.</p>
-            <div className={styles.actions}><CTA href="#dates-tarifs">Voir les prochaines dates →</CTA><CTA href="tel:0422470768" variant="outline">Parler à un conseiller</CTA></div>
+            <div className={styles.actions}><CTA href="#dates-tarifs">Voir les prochaines dates →</CTA><CTA href="tel:0422470768" variant="outline" className={experience.heroSecondary}>Parler à un conseiller</CTA></div>
             <div className={styles.heroHighlights}><span>✓ 67 heures minimum</span><span>✓ 12 stagiaires maximum</span><span>✓ Option SST</span></div>
           </div>
           <figure className={styles.heroArtwork}>
@@ -174,48 +177,45 @@ export function SsiapReferencePage({ sessions }: { sessions: any[] }) {
       theme="red"
     />
 
-    <CourseJourney course="ssiap-1" />
+    <SsiapJourneyOverview />
 
     <Section id="metier" eyebrow="Le métier" title={<>Un rôle essentiel dans les ERP et les IGH.</>} intro={<>L’agent SSIAP 1 protège les personnes et les bâtiments. Il prévient les risques, contrôle les installations et intervient au sein d’un service de sécurité incendie.</>}>
-      <div className={styles.missions}>{missions.map(([number, title, text], index) => <article key={number} className={styles.mission}>
-        <div className={styles.missionImage}><ManualArtwork illustration={[ssiapArtwork.ronde, ssiapArtwork.pc, ssiapArtwork.secours][index]} natural /></div>
-        <div className={styles.missionCopy}><span className={styles.missionNumber}>{number}</span><h3>{title}</h3><p>{text}</p><a className={styles.textLink} href="#programme">Découvrir ce que vous apprendrez <span aria-hidden="true">↗</span></a></div>
-      </article>)}</div>
-      <div className="mt-8 grid gap-5 rounded-[2rem] border border-academy-line bg-white dark:bg-[#202c39] p-6 shadow-soft lg:grid-cols-[.75fr_1.25fr] lg:p-8"><div><Eyebrow>À qui s’adresse la formation ?</Eyebrow><h3 className="mt-3 text-3xl font-black">Un parcours ouvert aux projets sérieux.</h3></div><div className="grid gap-3 sm:grid-cols-2">{audiences.map(item => <div key={item} className="flex items-center gap-3 rounded-2xl bg-academy-bg p-4 font-bold"><span className="grid h-7 w-7 place-items-center rounded-full bg-red-600 text-xs font-black text-white">✓</span>{item}</div>)}</div></div>
-      <div className="mt-8 rounded-[2rem] bg-[#EFE7D9] dark:bg-[#18232f] p-6 lg:p-8"><div className="grid gap-7 lg:grid-cols-[.65fr_1.35fr]"><div><Eyebrow>SSIAP 1 ou APS ?</Eyebrow><h3 className="mt-3 text-3xl font-black">Deux qualifications, deux missions.</h3><p className="mt-3 leading-7 text-academy-muted">Le SSIAP 1 concerne la sécurité incendie. L’APS concerne la surveillance humaine et le gardiennage. L’un ne remplace pas l’autre.</p></div><div className="grid gap-4 sm:grid-cols-2"><div className="rounded-[1.5rem] bg-white dark:bg-[#202c39] p-5"><p className="text-xs font-black uppercase tracking-[.2em] text-red-700">SSIAP 1</p><p className="mt-3 text-xl font-black">Prévention et intervention incendie</p></div><div className="rounded-[1.5rem] bg-[#0D1725] p-5 text-white"><p className="text-xs font-black uppercase tracking-[.2em] text-blue-300">APS</p><p className="mt-3 text-xl font-black">Surveillance et sécurité privée</p></div></div></div></div>
-      <div className="mt-8 grid gap-3 md:grid-cols-2 lg:grid-cols-3">{skills.map(([title, text], index) => <div key={title} className={`rounded-[1.5rem] border p-5 ${index === 0 ? 'border-red-300 bg-red-50 dark:bg-[#39252b]' : 'border-academy-line bg-[#FFFDF8] dark:bg-[#202c39]'}`}><span className="grid h-9 w-9 place-items-center rounded-full bg-[#0D1725] text-sm font-black text-red-300">{String(index + 1).padStart(2, '0')}</span><h3 className="mt-4 text-xl font-black">{title}</h3><p className="mt-2 text-sm leading-6 text-academy-muted">{text}</p></div>)}</div>
+      <SsiapMissionShowcase missions={missions} />
+      <div className={experience.audience}><div><p className={experience.eyebrow}>À qui s’adresse la formation ?</p><h3>Un parcours ouvert aux projets sérieux.</h3></div><ul>{audiences.map(item => <li key={item}>{item}</li>)}</ul></div>
+      <div className={experience.qualificationCompare}><div><p className={experience.eyebrow}>SSIAP 1 ou APS ?</p><h3>Deux qualifications, deux missions.</h3><p>Le SSIAP 1 concerne la sécurité incendie. L’APS concerne la surveillance humaine et le gardiennage. L’un ne remplace pas l’autre.</p></div><div><strong>SSIAP 1</strong><h4>Prévention et intervention incendie</h4></div><div><strong>APS</strong><h4>Surveillance et sécurité privée</h4></div></div>
+      <div className={experience.skills}>{skills.map(([title, text], index) => <div key={title}><span>{String(index + 1).padStart(2, '0')}</span><div><h3>{title}</h3><p>{text}</p></div></div>)}</div>
     </Section>
 
     <Section id="admission" eyebrow="Admission" title={<>Les prérequis, expliqués simplement.</>} intro={<>Notre équipe vérifie chaque pièce avant l’entrée en formation pour sécuriser votre admission et éviter toute mauvaise surprise le jour de l’examen.</>} tone="paper">
-      <div className="grid gap-4 md:grid-cols-2">{prerequisites.map(([title, text], index) => <article key={title} className="rounded-[1.7rem] border border-academy-line bg-white dark:bg-[#202c39] p-5 shadow-soft"><div className="flex items-start gap-4"><span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-red-100 font-black text-red-700">{index + 1}</span><div><h3 className="text-xl font-black">{title}</h3><p className="mt-2 leading-7 text-academy-muted">{text}</p></div></div></article>)}</div>
-      <div className={styles.admissionLinks}><a href="/documents/certificat-medical-ssiap.pdf" target="_blank" rel="noopener noreferrer">Télécharger le certificat médical (PDF) ↗</a><a href="#dates-tarifs">Choisir entre SSIAP 1 et SSIAP 1 + SST →</a></div>
-      <div className="mt-10"><Eyebrow>Inscription</Eyebrow><h3 className="mt-3 text-3xl font-black">Cinq étapes, un dossier maîtrisé.</h3><div className="mt-6 grid gap-3 md:grid-cols-5">{enrollment.map((item, index) => <div key={item} className="relative rounded-[1.4rem] border border-academy-line bg-white dark:bg-[#202c39] p-4"><span className="text-3xl font-black text-red-500">0{index + 1}</span><p className="mt-6 font-black leading-6">{item}</p></div>)}</div></div>
+      <SsiapAdmissionDossier prerequisites={prerequisites} enrollment={enrollment} />
     </Section>
 
     <Section id="programme" eyebrow="Programme" title={<>67 heures pour devenir opérationnel.</>} intro={<>Un programme réglementaire complet qui progresse des fondamentaux du feu jusqu’aux rondes et mises en situation professionnelles.</>}>
-      <div className="space-y-3">{program.map(([number, title, hours, text], index) => <details key={number} open={index === 0} className="group rounded-[1.6rem] border border-academy-line bg-[#FFFDF8] dark:bg-[#202c39] p-5 shadow-soft"><summary className="flex cursor-pointer list-none items-center gap-4"><span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-[#0D1725] font-black text-red-300">{number}</span><span className="min-w-0 flex-1"><strong className="block text-lg font-black sm:text-xl">{title}</strong><small className="font-bold text-academy-muted">{hours}</small></span><span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-red-600 font-black text-white transition group-open:rotate-45">+</span></summary><p className="ml-0 mt-5 border-t border-academy-line pt-5 leading-7 text-academy-muted sm:ml-16">{text}</p></details>)}</div>
+      <SsiapProgramExplorer parts={program} />
       <div className={styles.admissionLinks}><a href="/documents/programme-ssiap-1.pdf" target="_blank" rel="noopener noreferrer">Télécharger le programme SSIAP 1 (PDF) ↗</a></div>
     </Section>
 
-    <section id="pedagogie" className={styles.terrain} aria-labelledby="terrain-title"><div className={styles.container}>
+    <section id="pedagogie" className={`${styles.terrain} ${experience.terrain}`} aria-labelledby="terrain-title"><div className={styles.container}>
       <div className={styles.sectionHead}><div><p className={styles.eyebrow}>Votre formation, sur le terrain</p><h2 id="terrain-title" className={styles.sectionTitle}>Comprendre en cours.<br /><em>Apprendre en pratiquant.</em></h2></div><p className={styles.intro}>À Puget-sur-Argens, les connaissances prennent forme dans les exercices. Découvrez votre environnement de formation et les gestes que vous travaillerez.</p></div>
-      <div className={styles.campusPhotos}>
-        <figure><Image src="/images/campus/salle-formation.webp" alt="La salle de formation du centre Intégrale Academy à Puget-sur-Argens" width={1600} height={1066} sizes="(max-width: 700px) 100vw, 60vw" /><figcaption>Votre salle de formation · Puget-sur-Argens</figcaption></figure>
-        <div><figure><Image src="/images/campus/accueil-centre.webp" alt="L’accueil du centre Intégrale Academy" width={1600} height={805} sizes="(max-width: 700px) 47vw, 30vw" /><figcaption>Un accueil, une équipe.</figcaption></figure><figure><Image src="/images/campus/espace-detente.webp" alt="L’espace détente du centre Intégrale Academy" width={1600} height={1162} sizes="(max-width: 700px) 47vw, 30vw" /><figcaption>Un espace pour les pauses.</figcaption></figure></div>
-      </div>
-      <div className={styles.campusFooter}><span>Photographies de notre centre de formation</span><Link href="/ecole#photos">Découvrir les autres espaces ↗</Link></div>
-      <div  className="grid gap-6 rounded-[2rem] bg-[#0D1725] p-6 text-white lg:grid-cols-[.8fr_1.2fr] lg:p-9"><div><Eyebrow light>Pédagogie terrain</Eyebrow><h3 className="mt-3 text-3xl font-black">On apprend en faisant.</h3><p className="mt-4 leading-7 text-white/65">Cours réglementaires, démonstrations et entraînements sont complétés par des rondes, des manipulations et des scénarios proches du terrain.</p></div><div className="grid gap-3 sm:grid-cols-2">{['Manipulation des équipements', 'Rondes avec anomalies', 'Visites applicatives', 'Mises en situation', 'Entraînement au QCM', 'Préparation à l’examen'].map((item, index) => <div key={item} className="rounded-2xl border border-white/10 bg-white/7 p-4"><span className="text-xs font-black text-red-300">0{index + 1}</span><p className="mt-3 font-black">{item}</p></div>)}</div></div>
-      <MissionAnimation variant="ssiap" className="mt-8" illustration={originalArtwork['ssiap-1-mission-ensemble']} />
-      <TrainingMotionGallery variant="ssiap" illustrations={ssiapPracticeArtwork} />
+      <div className={experience.pedagogyLead}><div><p className={experience.eyebrow}>Pédagogie terrain</p><h3>On apprend en faisant.</h3><p>Cours réglementaires, démonstrations et entraînements sont complétés par des rondes, des manipulations et des scénarios proches du terrain.</p><ul>{['Manipulation des équipements', 'Rondes avec anomalies', 'Visites applicatives', 'Mises en situation', 'Entraînement au QCM', 'Préparation à l’examen'].map((item, index) => <li key={item}><span>0{index + 1}</span>{item}</li>)}</ul></div><div className={experience.pedagogyVisual}><MissionAnimation variant="ssiap" illustration={originalArtwork['ssiap-1-mission-ensemble']} /></div></div>
+      <div className={experience.practiceGallery}><TrainingMotionGallery variant="ssiap" illustrations={ssiapPracticeArtwork} /></div>
       <SsiapPracticeQuestion />
       <div className={styles.trainer}><div><p className={styles.eyebrow}>La pratique accompagnée</p><h3>Un formateur à vos côtés.</h3><p>Manipulations, rondes, mises en situation : vous vous entraînez avec un formateur et bénéficiez de retours pour progresser. L’effectif est limité à 12 stagiaires pour favoriser la pratique encadrée.</p></div><Link href="/ecole#equipe" className={styles.textLink}>Rencontrer les personnes qui vous accompagnent ↗</Link></div>
     </div></section>
 
-    <IntegraleWelcomePack course="ssiap-1" />
     <SsiapManualPreview />
+    <div className={experience.supportPack}><IntegraleWelcomePack course="ssiap-1" /></div>
+
+    <section id="campus-ssiap" className={experience.campusSection} aria-labelledby="campus-ssiap-title"><div className={styles.container}>
+      <div className={experience.campusHeading}><div><p className={experience.eyebrow}>Votre école, en vrai</p><h2 id="campus-ssiap-title">Et si votre prochaine étape<br />commençait ici ?</h2></div><p>Découvrez les espaces d’Intégrale Academy à Puget-sur-Argens, avant votre premier jour de formation.</p></div>
+      <SsiapCampusTour />
+      <div className={experience.campusFooter}><span>Photographies de notre centre de formation</span><Link href="/ecole#photos">Découvrir les autres espaces ↗</Link></div>
+    </div></section>
+
+    <SsiapTestimonials />
 
     <Section id="examen" eyebrow="Certification" title={<>Un examen officiel, préparé sans zone d’ombre.</>} intro={<>Vous connaissez les attendus, vous vous entraînez dans les conditions les plus proches de l’épreuve et vous recevez un retour précis sur votre progression.</>} tone="dark">
-      <div className="grid gap-4 lg:grid-cols-3">{examSteps.map(([number, title, text], index) => <article key={number} className={`rounded-[1.8rem] border p-6 ${index === 1 ? 'border-red-300/35 bg-red-400/10' : 'border-white/10 bg-white/6'}`}><span className="text-5xl font-black text-red-300">{number}</span><h3 className="mt-8 text-2xl font-black">{title}</h3><p className="mt-3 leading-7 text-white/65">{text}</p></article>)}</div>
+      <SsiapExamExperience steps={examSteps} />
       <div className="mt-8 flex flex-wrap items-center justify-between gap-5 rounded-[1.7rem] border border-white/10 bg-white/6 p-5"><div><p className="font-black">Une préparation exigeante, un effectif maîtrisé.</p><p className="mt-1 text-sm text-white/55">12 stagiaires maximum · diplôme SSIAP 1 · RS5641</p></div><CTA href={contactHref('conditions examen')} variant="outline">Poser une question</CTA></div>
     </Section>
 
@@ -227,13 +227,12 @@ export function SsiapReferencePage({ sessions }: { sessions: any[] }) {
     }))} />
 
     <Section id="debouches" eyebrow="Après le SSIAP 1" title={<>Travaillez, évoluez, maintenez vos compétences.</>} intro={<>Le SSIAP 1 ouvre l’accès aux fonctions d’agent de sécurité incendie. L’expérience permet ensuite d’envisager le SSIAP 2 et la responsabilité d’une équipe.</>}>
-      <div className="grid gap-5 lg:grid-cols-2"><article className="rounded-[2rem] border border-academy-line bg-[#FFFDF8] dark:bg-[#202c39] p-6"><Eyebrow>Débouchés</Eyebrow><h3 className="mt-3 text-3xl font-black">Les postes accessibles</h3><div className="mt-5 grid gap-3 sm:grid-cols-2">{jobs.map(item => <div key={item} className="rounded-2xl bg-academy-bg p-4 font-black">{item}</div>)}</div></article><article className="rounded-[2rem] bg-[#0D1725] p-6 text-white"><Eyebrow light>Évolution</Eyebrow><h3 className="mt-3 text-3xl font-black">Objectif SSIAP 2</h3><p className="mt-4 leading-7 text-white/65">Après l’expérience réglementaire requise, vous pouvez préparer le SSIAP 2 et évoluer vers le métier de chef d’équipe de sécurité incendie.</p><CTA href={contactHref('évolution SSIAP 2')} variant="outline" className="mt-5">Préparer mon évolution</CTA></article></div>
-      <div className="mt-5 grid gap-5 lg:grid-cols-[1.15fr_.85fr]"><article className="rounded-[2rem] border border-academy-line bg-white dark:bg-[#202c39] p-6"><Eyebrow>Où exercer ?</Eyebrow><div className="mt-5 flex flex-wrap gap-2">{workplaces.map(item => <span key={item} className="rounded-full border border-academy-line bg-academy-bg px-4 py-2 text-sm font-bold">{item}</span>)}</div></article><article className="rounded-[2rem] border border-red-200 bg-red-50 dark:bg-[#39252b] p-6"><Eyebrow>Maintien des acquis</Eyebrow><h3 className="mt-3 text-2xl font-black">Recyclage tous les 3 ans</h3><p className="mt-3 leading-7 text-academy-muted">Le secourisme doit rester à jour. Une remise à niveau peut être nécessaire selon la date d’expiration et l’activité exercée.</p></article></div>
-      <div className="mt-8 grid gap-4 rounded-[2rem] bg-[#EFE7D9] dark:bg-[#18232f] p-6 md:grid-cols-3 lg:p-8">{[['Centre agréé', 'SSIAP n°8323'], ['Cadre officiel', 'Arrêté n°26/099 du 29 mai 2026'], ['Formation suivie', '12 stagiaires maximum']].map(([title, text]) => <div key={title} className="rounded-2xl bg-white dark:bg-[#202c39] p-5 text-center"><p className="text-sm font-black uppercase tracking-[.16em] text-red-700">{title}</p><p className="mt-3 text-xl font-black">{text}</p></div>)}</div>      <a className={styles.accreditation} href="https://www.integraleacademy.com/_files/ugd/008e7b_cc8ed006f785482f9eee3f22e08c323c.pdf" target="_blank" rel="noopener noreferrer"><Image src="/images/certifications/ssiap-apercu.webp" alt="Aperçu de l’agrément SSIAP d’Intégrale Academy" width={130} height={180} /><div><p className={styles.eyebrow}>Un cadre vérifiable</p><h3>Consultez notre agrément SSIAP.</h3><p>Agrément n°8323 · arrêté préfectoral n°26/099 du 29 mai 2026</p><strong>Télécharger l’agrément (PDF) ↗</strong></div></a>
+      <div className={experience.outcomes}><article><p className={experience.eyebrow}>Débouchés</p><h3>Les postes accessibles</h3><ul className={experience.jobs}>{jobs.map(item => <li key={item}>{item}<span aria-hidden="true">↗</span></li>)}</ul></article><article className={experience.career}><p className={experience.eyebrow}>Évolution</p><h3>Objectif SSIAP 2</h3><div className={experience.careerLadder} aria-hidden="true"><strong><small>Agent</small>SSIAP 1</strong><span>→</span><strong><small>Chef d’équipe</small>SSIAP 2</strong></div><p>Après l’expérience réglementaire requise, vous pouvez préparer le SSIAP 2 et évoluer vers le métier de chef d’équipe de sécurité incendie.</p><CTA href={contactHref('évolution SSIAP 2')} variant="outline" className="mt-5">Préparer mon évolution</CTA></article></div>
+      <div className={experience.workplaces}><article><p className={experience.eyebrow}>Où exercer ?</p><ul>{workplaces.map(item => <li key={item}>{item}</li>)}</ul></article><article className={experience.renewal}><strong aria-hidden="true">3<span>ans</span></strong><div><p className={experience.eyebrow}>Maintien des acquis</p><h3>Recyclage tous les 3 ans</h3><p>Le secourisme doit rester à jour. Une remise à niveau peut être nécessaire selon la date d’expiration et l’activité exercée.</p></div></article></div>
+      <dl className={experience.credentials}>{[['Centre agréé', 'SSIAP n°8323'], ['Cadre officiel', 'Arrêté n°26/099 du 29 mai 2026'], ['Formation suivie', '12 stagiaires maximum']].map(([title, text]) => <div key={title}><dt>{title}</dt><dd>{text}</dd></div>)}</dl>
+      <a className={styles.accreditation} href="https://www.integraleacademy.com/_files/ugd/008e7b_cc8ed006f785482f9eee3f22e08c323c.pdf" target="_blank" rel="noopener noreferrer"><Image src="/images/certifications/ssiap-apercu.webp" alt="Aperçu de l’agrément SSIAP d’Intégrale Academy" width={130} height={180} /><div><p className={styles.eyebrow}>Un cadre vérifiable</p><h3>Consultez notre agrément SSIAP.</h3><p>Agrément n°8323 · arrêté préfectoral n°26/099 du 29 mai 2026</p><strong>Télécharger l’agrément (PDF) ↗</strong></div></a>
 
     </Section>
-
-    <SsiapTestimonials />
 
     <div id="faq-ssiap"><PremiumFAQSection theme="red" badge="FAQ SSIAP 1" title="Vos questions sur la formation SSIAP 1" description="Prérequis, examen, financement, validité et évolution : retrouvez les réponses essentielles avant votre inscription." items={faq} contactHref={contactHref('question SSIAP 1')} /></div>
 
