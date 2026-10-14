@@ -7,6 +7,7 @@ import styles from './ecole.module.css';
 import experience from './school-experience.module.css';
 import { SchoolNavigation, SchoolCampuses, SchoolPedagogy, SchoolVisitButton, SchoolVisitAdviser } from './SchoolExperience';
 import { SchoolCommitments } from './SchoolCommitments';
+import { SchoolGallery } from './SchoolGallery';
 
 export const metadata = createPageMetadata('/ecole');
 
@@ -67,6 +68,8 @@ export default function Page() {
         </div>
       </div>
     </section>
+
+    <SchoolGallery />
 
     <section id="equipe" className={styles.section} aria-labelledby="team-title">
       <div className={styles.container}>
