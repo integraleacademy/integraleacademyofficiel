@@ -81,7 +81,7 @@ export function TrainingHeroSessionCard({
   modality = 'Présentiel', capacity = 12, assistantKey, label = 'Prochaine session',
   emptyTitle = 'Prochaines dates à confirmer',
   emptyDescription = 'Contactez-nous pour recevoir les prochaines dates et préparer votre inscription.',
-  emptyActionLabel = 'Recevoir les prochaines dates →', examLabel = 'Examen le',
+  emptyActionLabel = 'Recevoir les prochaines dates →', examLabel = 'Examen le', registrationHref, priceNote,
 }: {
   session?: TrainingDatesPricingSession | null;
   theme: HeroTheme;
@@ -96,6 +96,8 @@ export function TrainingHeroSessionCard({
   emptyDescription?: string;
   emptyActionLabel?: string;
   examLabel?: string;
+  registrationHref?: string;
+  priceNote?: string;
 }) {
   const availability = session ? getSessionSeatAvailability(session, capacity) : null;
   const full = availability?.tone === 'full';
@@ -114,10 +116,10 @@ export function TrainingHeroSessionCard({
         ['Tarif', formatTrainingPrice(session, defaultPrice)],
         ['Lieu', session?.location || defaultLocation],
         ['Modalité', modality],
-      ].map(([key, value]) => <div key={key} className="min-w-0 rounded-2xl border border-[#E8DECE] bg-[#F5EFE4] p-3.5"><p className="text-[.6rem] font-black uppercase tracking-[.16em] text-[#837968]">{key}</p><p className="mt-1 text-sm font-black sm:text-base">{value}</p></div>)}
+      ].map(([key, value]) => <div key={key} className="min-w-0 rounded-2xl border border-[#E8DECE] bg-[#F5EFE4] p-3.5"><p className="text-[.6rem] font-black uppercase tracking-[.16em] text-[#837968]">{key}</p><p className="mt-1 text-sm font-black sm:text-base">{value}</p>{key === 'Tarif' && priceNote && <p className="mt-1 text-xs leading-4 text-academy-muted">{priceNote}</p>}</div>)}
     </div>
     <div data-session-actions className={styles.sessionActions}>
-    <Link href={trainingRegistrationUrl} className={`${styles.action} ${full ? styles.waitingAction : styles.primaryAction} mt-5 w-full`}>{full ? 'Être alerté de la prochaine session' : session ? 'Réserver ma place →' : emptyActionLabel}</Link>
+    <Link href={registrationHref || trainingRegistrationUrl} className={`${styles.action} ${full ? styles.waitingAction : styles.primaryAction} mt-5 w-full`}>{full ? 'Être alerté de la prochaine session' : session ? 'Réserver ma place →' : emptyActionLabel}</Link>
     <p className="mt-3 text-center text-xs font-semibold leading-5 text-academy-muted">Un conseiller vérifie votre dossier avant validation.</p>
     <div className="mt-3"><OrientationAssistant initialFormationKey={assistantKey} hideInfoAction variant="modalTrigger" /></div>
     </div>

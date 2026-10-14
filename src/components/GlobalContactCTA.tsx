@@ -80,7 +80,7 @@ export function GlobalContactCTA() {
     });
   }
 
-  if (pathname === '/bts/mos' || pathname === '/ecole' || pathname === '/entreprises' || pathname === '/contact' || pathname === '/planning' || isFinancingPage || hiddenPathPrefixes.some((prefix) => pathname?.startsWith(prefix))) {
+  if (pathname?.replace(/\/+$/, '') === '/formations-securite/ssiap-1' || pathname === '/bts/mos' || pathname === '/ecole' || pathname === '/entreprises' || pathname === '/contact' || pathname === '/planning' || isFinancingPage || hiddenPathPrefixes.some((prefix) => pathname?.startsWith(prefix))) {
     return null;
   }
 

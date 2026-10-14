@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { SsiapContactChoice } from '@/components/SsiapContactChoice';
 import Link from 'next/link';
 import { createPageMetadata } from '@/lib/seo';
 import { informationRequestHref } from '@/lib/contact-request';
@@ -92,6 +93,8 @@ export default async function Page({ searchParams }: { searchParams: Promise<Rec
           </a>
         </div>
       </section>
+
+      <SsiapContactChoice params={params} />
 
       <ContactExperience initialInterest={initialInterest} requestLinks={{ general: generalHref, security: hasSecurityFormation ? requestHref : generalHref, vtc: informationRequestHref({ ...params, formation: 'vtc' }) }} hours={contact.hours} />
 

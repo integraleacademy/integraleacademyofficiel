@@ -31,6 +31,7 @@ type Action = {
 type TrainingDatesPricingSectionProps = {
   sessions: TrainingDatesPricingSession[];
   defaultPrice: string;
+  summaryPrice?: string;
   priceYear?: number;
   defaultLocation?: string;
   priceDescription: string;
@@ -183,6 +184,7 @@ function serializeSession(
 export function TrainingDatesPricingSection({
   sessions,
   defaultPrice,
+  summaryPrice,
   priceYear,
   defaultLocation = 'Puget-sur-Argens',
   priceDescription,
@@ -209,7 +211,7 @@ export function TrainingDatesPricingSection({
 }: TrainingDatesPricingSectionProps) {
   const sessionTheme = themeStyles[theme];
   const serializedSessions = sessions.map((session) => serializeSession(session, registrationHref));
-  const displayedPrice = formatTrainingPrice(
+  const displayedPrice = summaryPrice || formatTrainingPrice(
     priceYear ? undefined : sessions.find((session) => (
       session.priceCents !== null && session.priceCents !== undefined
       || session.priceLabel !== null && session.priceLabel !== undefined
