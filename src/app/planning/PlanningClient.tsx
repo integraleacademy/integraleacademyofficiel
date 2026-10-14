@@ -100,7 +100,7 @@ const formationFilters: {
 }[] = [
   {
     key: 'aps',
-    image: '/images/formation-scenes-manuel/aps-arrivee.webp',
+    image: '/images/planning-metiers/aps.webp',
     label: 'APS',
     eyebrow: 'Surveillance humaine',
     description: 'Agent de prévention et de sécurité',
@@ -110,7 +110,7 @@ const formationFilters: {
   },
   {
     key: 'a3p',
-    image: '/images/formation-scenes-manuel/a3p-parcours.webp',
+    image: '/images/planning-metiers/a3p.webp',
     label: 'A3P',
     eyebrow: 'Protection rapprochée',
     description: 'Agent privé de protection de personnes',
@@ -120,7 +120,7 @@ const formationFilters: {
   },
   {
     key: 'director',
-    image: '/images/formation-scenes-manuel/desp-initial-parcours.webp',
+    image: '/images/planning-metiers/dirigeant.webp',
     label: 'DIRIGEANT',
     eyebrow: 'DESP / DSSP',
     description: 'Diriger une entreprise de sécurité privée',
@@ -130,7 +130,7 @@ const formationFilters: {
   },
   {
     key: 'ssiap',
-    image: '/images/formation-scenes-manuel/ssiap-1-mission-ensemble.webp',
+    image: '/images/planning-metiers/ssiap.webp',
     label: 'SSIAP 1',
     eyebrow: 'Sécurité incendie',
     description: 'Agent de sécurité incendie',
@@ -140,7 +140,7 @@ const formationFilters: {
   },
   {
     key: 'vtc',
-    image: '/images/formation-scenes-manuel/vtc-parcours.webp',
+    image: '/images/planning-metiers/vtc.webp',
     label: 'VTC',
     eyebrow: 'Transport de personnes',
     description: 'Préparer le métier et l’examen VTC',
@@ -150,7 +150,7 @@ const formationFilters: {
   },
   {
     key: 'bts',
-    image: '/images/formation-scenes-manuel/bts-mco-ventes.webp',
+    image: '/images/planning-metiers/bts.webp',
     label: 'BTS',
     eyebrow: 'Alternance',
     description: 'MOS, MCO, NDRC, CI et PI',
@@ -691,20 +691,20 @@ export function PlanningClient({ initialSessions, btsIntakeYear, initialLocation
         <div className="absolute -right-40 -top-48 -z-10 h-[34rem] w-[34rem] rounded-full bg-academy-gold/20" />
         <div className="absolute -bottom-48 left-[38%] -z-10 h-[28rem] w-[28rem] rounded-full border border-academy-gold/20" />
 
-        <div className="page-container grid gap-9 lg:grid-cols-[1.2fr_.8fr] lg:items-center">
-          <div className="reveal">
+        <div className={`page-container ${styles.heroLayout}`}>
+          <div className={`reveal ${styles.heroIntro}`}>
             <span className="inline-flex items-center gap-2 rounded-full border border-[#d9b548] bg-white/60 px-4 py-2 text-[10px] font-black uppercase tracking-[.2em] text-[#8f6810]">
               <Icon name="calendar" className="h-4 w-4" />
               Planning des formations
             </span>
-            <h1 className="mt-6 max-w-5xl text-4xl font-black tracking-[-.045em] sm:text-5xl lg:text-[4.35rem] lg:leading-[1.02]">
+            <h1 className={`mt-6 font-black tracking-[-.045em] ${styles.heroTitle}`}>
               Trouvez votre formation.<br />
               <em className="text-[#b9820a]">Choisissez votre date.</em>
             </h1>
             <p className="mt-6 max-w-2xl text-base font-semibold leading-8 text-[#5f625f] sm:text-lg">
               APS, A3P, Dirigeant, SSIAP 1, VTC ou BTS : accédez directement au bon parcours, comparez les rentrées et vérifiez les places disponibles.
             </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <a href="#choisir-formation" className="inline-flex items-center justify-center gap-2 rounded-full bg-[#111b2a] px-6 py-4 text-sm font-black text-white transition hover:-translate-y-0.5">
                 Choisir ma formation
                 <Icon name="arrow" className="h-4 w-4 text-academy-gold" />
