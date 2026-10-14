@@ -1,0 +1,253 @@
+/* SSIAP 1 only: the MOS composition, with the fire-safety course identity. */
+.page {
+  --sm-bg: #fbfaf7;
+  --sm-surface: #fff;
+  --sm-ink: #102132;
+  --sm-muted: #56616c;
+  --sm-line: #deded8;
+  --sm-soft: #f3eee7;
+  --sm-red: #b33236;
+  --ssiap-paper: var(--sm-bg);
+  --ssiap-ink: var(--sm-ink);
+  --ssiap-line: var(--sm-line);
+  --ssiap-red: var(--sm-red);
+  background: var(--sm-bg);
+  color: var(--sm-ink);
+}
+
+:global(html.dark) .page {
+  --sm-bg: #101b28;
+  --sm-surface: #172738;
+  --sm-ink: #eff4fc;
+  --sm-muted: #bfccda;
+  --sm-line: #354b61;
+  --sm-soft: #1a2e43;
+  --sm-red: #ffb4aa;
+}
+
+.container { width: min(1200px, calc(100% - 64px)); margin-inline: auto; }
+.page section[id], .page [id='dates-tarifs'], .page [id='pack-integrale'] { scroll-margin-top: 155px; }
+.page .section { padding: clamp(64px, 7vw, 96px) 0; }
+.page h3 { letter-spacing: -.025em; }
+.sectionHeading { display: grid; grid-template-columns: 1.3fr 1fr; align-items: end; gap: 48px; margin-bottom: 38px; }
+.page .sectionHeading h2, .page .adviser h2 {
+  margin-top: 12px;
+  font-size: clamp(32px, 3.7vw, 49px);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -.045em;
+  text-wrap: balance;
+}
+.page .sectionHeading h2 em, .page .adviser h2 em { font-family: inherit; font-style: normal; font-weight: inherit; color: var(--sm-red); }
+.sectionHeading > p, .sectionHeading > div:nth-child(2) { margin: 0; max-width: 440px; font-size: 15px; line-height: 1.8; }
+.sectionHeading > div:nth-child(2) > p { margin-top: 0; }
+.accent { color: var(--sm-red); }
+
+/* Hero: natural content height, no cropped illustration or viewport clipping. */
+.page .hero { padding: clamp(24px, 3.5vh, 40px) 0 22px; color: var(--sm-ink); background: radial-gradient(ellipse at 90% 10%, #dc817715, transparent 58%), var(--sm-bg); }
+.page .heroGrid { grid-template-columns: 1.05fr 1fr; align-items: center; gap: 48px; }
+.page .heroBadge { color: var(--sm-red); font-size: 10px; }
+.page .hero h1 { margin-top: 16px; font-size: clamp(27px, 2.5vw, 36px); line-height: 1.15; letter-spacing: -.035em; font-weight: 650; }
+.page .hero h1 em { font-family: inherit; font-style: normal; font-weight: inherit; color: var(--sm-ink); }
+.courseName { display: block; margin-bottom: 13px; font-size: clamp(60px, 6.7vw, 88px); line-height: .98; font-weight: 900; letter-spacing: -.06em; }
+.hero :global([class*='heroTagline']) { color: var(--sm-red); margin: 20px 0 10px; font-size: 20px; }
+.hero :global([class*='heroDescription']) { font-size: 15px; line-height: 1.75; max-width: 530px; color: var(--sm-muted); }
+.hero :global([class*='heroHighlights']) { color: var(--sm-muted); margin-top: 18px; gap: 8px 20px; }
+.hero :global([class*='actions']) { margin-top: 20px; }
+.page .heroSecondary { background: var(--sm-surface); border-color: var(--sm-line); color: var(--sm-ink); }
+.page .heroArtwork { width: 100%; max-width: 520px; justify-self: end; padding: 11px; overflow: hidden; border: 1px solid var(--sm-line); border-radius: 28px; background: var(--sm-surface); box-shadow: 0 24px 65px #10213212; }
+.page .heroArtwork > div { border-radius: 18px; overflow: hidden; }
+.page .heroArtwork img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: contain; }
+.page .heroArtwork figcaption { padding: 18px 10px 10px; background: transparent; color: var(--sm-ink); gap: 4px; }
+.page .heroArtwork figcaption span:first-child { color: var(--sm-red); font-size: 10px; font-weight: 750; }
+.page .heroArtwork figcaption strong { font-size: 22px; line-height: 1.25; }
+.page .heroArtwork figcaption span:last-child { color: var(--sm-muted); }
+.page .heroBooking { margin-top: 26px; }
+.page .heroBooking aside { display: grid; grid-template-columns: 1fr 1.2fr 1fr; gap: 24px; padding: 18px 22px; border-radius: 20px; border: 1px solid var(--sm-line); background: var(--sm-surface); color: var(--sm-ink); box-shadow: 0 8px 24px #10213205; }
+.page .heroBooking h2 { font-size: 23px; line-height: 1.22; margin-top: 10px; }
+.page .heroBooking [data-session-details] { gap: 8px; }
+.page .heroBooking [data-session-details] > div { padding: 9px 12px; border-radius: 10px; border-color: var(--sm-line); background: var(--sm-bg); }
+.page .heroBooking [data-session-details] > div > p:first-child { color: var(--sm-muted); font-size: 9px; }
+.page .heroBooking [data-session-details] > div > p:nth-child(2) { font-size: 13px; }
+.page .heroBooking [data-session-details] > div > p:nth-child(3) { font-size: 10px; }
+.page .facts { margin-top: 20px; padding-top: 15px; border-top: 1px solid var(--sm-line); }
+.page .facts > div { border-color: var(--sm-line); padding-block: 0; }
+.page .facts span, .page .facts small { color: var(--sm-muted); }
+.page .facts strong { color: var(--sm-ink); }
+
+/* Keep all three existing scenes, with the illustrated MOS framing. */
+.missions { gap: 34px; }
+.page .mission { grid-template-columns: 1fr 1fr; gap: 40px; padding: 14px; align-items: center; border: 0; border-radius: 28px; background: var(--sm-surface); box-shadow: 0 12px 45px #10213205; }
+.page .mission:nth-child(2) { background: #102132; }
+.missionVisual { min-width: 0; margin: 0; border-radius: 20px; background: var(--sm-soft); overflow: hidden; }
+.page .missionVisual img { width: 100%; height: auto; min-height: 0; aspect-ratio: 3 / 2; object-fit: contain; }
+.missionVisual figcaption { display: grid; grid-template-columns: 1fr auto; gap: 6px 16px; align-items: center; padding: 18px 22px; background: var(--sm-surface); color: var(--sm-ink); }
+.missionVisual figcaption > span:first-child { grid-column: 1; color: var(--sm-red); font-size: 9px; font-weight: 750; letter-spacing: .1em; text-transform: uppercase; }
+.missionVisual figcaption strong { grid-column: 1; font-size: 15px; line-height: 1.4; }
+.missionVisual figcaption > span:last-child { grid-column: 2; grid-row: 1 / 3; font-size: 26px; color: var(--sm-red); }
+.mission :global([class*='missionCopy']) { padding: 20px 30px 20px 0; }
+.mission:nth-child(2) :global([class*='missionCopy']) { padding: 20px 0 20px 30px; }
+.mission :global([class*='missionCopy']) h3 { font-size: clamp(25px, 2.6vw, 36px); }
+.profile { display: grid; grid-template-columns: .85fr 1.2fr; align-items: start; gap: 54px; margin-top: 54px; padding-top: 36px; border-top: 1px solid var(--sm-line); }
+.profile h3 { font-size: 28px; line-height: 1.2; }
+.profileItem { display: flex; align-items: center; gap: 12px; min-height: 50px; padding: 10px 0; font-size: 14px; font-weight: 600; border-bottom: 1px solid var(--sm-line); }
+.profileItem > span { color: var(--sm-red); }
+.prerequisites { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 30px; }
+.prerequisites article { padding: 24px 0 12px; border-top: 1px solid var(--sm-line); }
+.prerequisites article > span { display: block; color: var(--sm-red); font-size: 12px; font-weight: 750; margin-bottom: 24px; }
+.prerequisites h3 { font-size: 19px; font-weight: 750; line-height: 1.3; }
+.prerequisites p { margin-top: 12px; color: var(--sm-muted); font-size: 14px; line-height: 1.8; }
+.enrollment { margin-top: 40px; padding: 30px; border-radius: 24px; background: var(--sm-soft); }
+.enrollment h3 { font-size: 28px; line-height: 1.2; }
+.enrollment ol { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 24px; list-style: none; padding: 0; margin-top: 30px; }
+.enrollment li { border-top: 1px solid var(--sm-line); padding-top: 18px; }
+.enrollment li > span { color: var(--sm-red); font-size: 12px; font-weight: 750; }
+.enrollment li > p { font-size: 14px; font-weight: 650; line-height: 1.65; margin-top: 15px; }
+
+/* The full welcome pack and four readable previews remain together. */
+.resources { padding-top: 64px; background: var(--sm-soft); border-top: 1px solid var(--sm-line); }
+.resources :global(#pack-integrale) { width: min(1264px, 100%); margin-inline: auto; padding-top: 20px; background: transparent; border: 0; }
+.resources :global(#pack-integrale-title) { font-size: clamp(32px, 3.7vw, 49px); line-height: 1.12; letter-spacing: -.045em; }
+.resources :global(#pack-integrale-title) span { color: #b33236; }
+.resources :global([class*='IntegraleWelcomePack_overview']), .resources :global([class*='IntegraleWelcomePack_cup__']) { border: 1px solid #e0d8cd; border-radius: 24px; padding: 22px; background: #fffdf8; }
+.resources :global([class*='IntegraleWelcomePack_cupVisual']) { border-radius: 16px; overflow: hidden; }
+.page .manual { padding: 24px 0 80px; background: transparent; }
+.page .manual > div > .sectionHeading { padding-top: 42px; border-top: 1px solid var(--sm-line); }
+.manualPages button { padding: 14px 14px 18px; border-radius: 18px; }
+.manualPages button > small { display: block; text-align: left; font-size: 12px; line-height: 1.5; color: var(--sm-muted); }
+
+/* Admission and the identified adviser form one connected area. */
+.page .booking { padding: 84px 0 0; background: #0e2033; color: #f1f6fc; border: 0; }
+.booking > .container > .sectionHeading > p, .booking .bookingNote { color: #bdcbdc; }
+.booking > .container > .sectionHeading h2 em { color: #ffb6ac; }
+.booking > .container > .sectionHeading :global([class*='eyebrow']) { color: #ffb6ac; }
+.formulas { gap: 24px; margin-top: 0; }
+.page .booking .formulas > label { min-width: 0; padding: 30px; border-radius: 24px; border: 1px solid #435568; background: #172e45; color: #f1f6fc; box-shadow: none; transition: border-color .2s, background .2s; }
+.page .booking .formulas > label > span, .page .booking .formulas > label > small { color: #c6d3df; }
+.page .booking .formulas > label > :global([class*='eyebrow']) { color: #ffb6ac; }
+.page .booking .formulas > label[data-selected='true'] { background: #fff5ed; border-color: #ffb6ac; color: #102132; box-shadow: inset 0 0 0 1px #ffb6ac; }
+.page .booking .formulas > label[data-selected='true'] > span, .page .booking .formulas > label[data-selected='true'] > small { color: #565f68; }
+.page .booking .formulas > label[data-selected='true'] > :global([class*='eyebrow']) { color: #ac3035; }
+.formulas > label strong { font-size: 30px; }
+.formulas > label b { font-size: 48px; line-height: 1.1; margin-top: 12px; padding-top: 0; }
+.formulas input { accent-color: #b33236; }
+.selectionRow { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 18px; margin: 24px 0 14px; }
+.selectionRow > p { margin: 0; }
+.selectionRow > p > span { color: #ffb6ac; }
+.selectionRow > a { display: inline-flex; align-items: center; gap: 30px; padding: 13px 20px; border: 1px solid #6f8192; border-radius: 999px; font-size: 13px; font-weight: 700; }
+.selectionRow > a:hover { background: #ffffff0d; }
+.bookingNote { max-width: 920px; }
+.page .datesPanel { margin-top: 40px; padding: 34px; border-radius: 28px; background: var(--sm-bg); color: var(--sm-ink); }
+.datesPanel > section { padding: 0; background: transparent; scroll-margin-top: 175px; }
+.datesPanel :global(.page-container) { width: 100%; max-width: none; padding-inline: 0; }
+.datesPanel :global(.page-container) > div:first-child { grid-template-columns: 1.2fr 1fr; gap: 32px; }
+.datesPanel h2 { font-size: 32px; line-height: 1.15; }
+.page .adviser { padding: 64px 0 72px; border: 0; background: transparent; }
+.page .adviserGrid { gap: 70px; grid-template-columns: 1.15fr 1fr; }
+.page .adviser h2 em { color: #ffb6ac; }
+.adviser :global([class*='eyebrow']) { color: #ffb6ac; }
+.page .adviser :global([class*='intro']), .page .adviser :global([class*='small']) { color: #bdcbdc; }
+.adviser :global([class*='supportPills']) > span { background: #1e364d; }
+.page .adviserCard { gap: 12px; padding: 28px; color: #102132; background: #fffdf8; border: 1px solid #e4e4dd; box-shadow: none; }
+.page .adviserCard > :global([class*='eyebrow']) { color: #b33236; }
+.page .adviserCard > p:not(:global([class*='eyebrow'])), .page .adviserCard small { color: #56616c; }
+.adviserCard img { width: 130px; height: 130px; }
+.adviserCard h3 { font-size: 30px; }
+
+:global(html.dark) .page .resources :global(#pack-integrale) { color-scheme: light; }
+:global(html.dark) .page .resources :global(#pack-integrale-title) { color: var(--sm-ink); }
+:global(html.dark) .page .resources :global(#pack-integrale-title) span { color: var(--sm-red); }
+
+@media (min-width: 1024px) and (max-height: 800px) {
+  .page .hero { padding-top: 20px; }
+  .page .heroArtwork { max-width: 440px; }
+  .courseName { font-size: 66px; margin-bottom: 10px; }
+  .page .hero h1 { font-size: 28px; margin-top: 12px; }
+  .hero :global([class*='heroTagline']) { margin-top: 15px; font-size: 18px; }
+  .hero :global([class*='heroDescription']) { font-size: 14px; line-height: 1.65; }
+  .hero :global([class*='heroHighlights']) { margin-top: 12px; }
+  .page .heroBooking { margin-top: 18px; }
+  .page .heroBooking aside { padding-block: 12px; }
+  .page .facts { margin-top: 16px; }
+}
+
+@media (max-width: 1023px) {
+  .page .heroGrid { gap: 28px; }
+  .page .heroBooking aside { grid-template-columns: 1fr 1fr; }
+  .page .heroBooking [data-session-actions] { grid-column: 1 / -1; }
+  .page .facts { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 20px; }
+  .page .facts > div:nth-child(3) { border: 0; }
+  .page .facts > div:nth-child(4) { padding-left: 0; }
+  .prerequisites { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .enrollment ol { gap: 18px; }
+  .page .adviserGrid { gap: 36px; }
+}
+
+@media (max-width: 850px) {
+  .page .heroGrid, .sectionHeading { grid-template-columns: 1fr; gap: 28px; }
+  .page .heroArtwork { width: 100%; max-width: 600px; justify-self: center; }
+  .page .hero h1 { font-size: 30px; }
+  .courseName { font-size: 72px; }
+  .sectionHeading > p, .sectionHeading > div:nth-child(2) { max-width: 620px; }
+  .page .mission { gap: 22px; }
+  .mission :global([class*='missionCopy']), .mission:nth-child(2) :global([class*='missionCopy']) { padding: 18px 10px; }
+  .profile { grid-template-columns: 1fr; gap: 24px; }
+  .enrollment ol { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 30px; }
+  .page .adviserGrid { grid-template-columns: 1fr; }
+  .adviserCard { width: 100%; max-width: 580px; }
+  .datesPanel :global(.page-container) > div:first-child { grid-template-columns: 1fr; gap: 18px; }
+}
+
+@media (max-width: 600px) {
+  .container { width: calc(100% - 32px); }
+  .page .section { padding-block: 54px; }
+  .sectionHeading { margin-bottom: 28px; gap: 20px; }
+  .page .sectionHeading h2, .page .adviser h2 { font-size: 34px; }
+  .page .hero { padding-top: 28px; }
+  .page .hero h1 { font-size: 27px; }
+  .courseName { font-size: 64px; }
+  .page .heroArtwork { padding: 8px; border-radius: 22px; }
+  .page .heroArtwork figcaption { padding: 14px 8px 8px; }
+  .page .heroArtwork figcaption strong { font-size: 20px; }
+  .page .heroBooking aside { grid-template-columns: 1fr; padding: 20px; gap: 20px; }
+  .page .heroBooking [data-session-actions] { grid-column: auto; }
+  .page .heroBooking h2 { font-size: 25px; }
+  .page .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .page .facts > div { padding: 0 12px; border-right: 1px solid var(--sm-line); }
+  .page .facts > div:nth-child(odd) { padding-left: 0; }
+  .page .facts > div:nth-child(even) { border: 0; padding-left: 12px; }
+  .page .facts > div:nth-child(3) { border-right: 1px solid var(--sm-line); }
+  .page .mission { grid-template-columns: 1fr; gap: 0; padding: 10px; border-radius: 24px; }
+  .page .mission:nth-child(2) .missionVisual { order: 0; }
+  .mission :global([class*='missionCopy']), .mission:nth-child(2) :global([class*='missionCopy']) { padding: 26px 12px 20px; }
+  .missionVisual figcaption { padding: 16px; }
+  .missionVisual figcaption strong { font-size: 14px; }
+  .profile { margin-top: 36px; }
+  .prerequisites { gap: 24px 18px; }
+  .prerequisites h3 { font-size: 17px; }
+  .prerequisites p { font-size: 13px; }
+  .enrollment { padding: 24px; }
+  .enrollment ol { grid-template-columns: 1fr; gap: 0; }
+  .enrollment li { display: grid; grid-template-columns: 30px 1fr; gap: 12px; padding: 18px 0; }
+  .enrollment li:last-child { padding-bottom: 0; }
+  .enrollment li > p { margin: 0; }
+  .resources { padding-top: 48px; }
+  .resources :global(#pack-integrale) > div { width: calc(100% - 32px); }
+  .resources :global([class*='IntegraleWelcomePack_overview']), .resources :global([class*='IntegraleWelcomePack_cup__']) { padding: 18px; }
+  .page .manual { padding-bottom: 54px; }
+  .manualPages { gap: 14px; }
+  .manualPages button { padding: 8px 8px 14px; }
+  .manualPages button > small { font-size: 11px; }
+  .page .booking { padding-top: 54px; }
+  .formulas { grid-template-columns: 1fr; gap: 16px; }
+  .page .booking .formulas > label { padding: 24px; }
+  .formulas > label b { font-size: 42px; }
+  .page .datesPanel { width: calc(100% - 24px); padding: 22px 14px; border-radius: 22px; }
+  .datesPanel h2 { font-size: 29px; }
+  .page .adviser { padding: 48px 0 54px; }
+  .page .adviserCard { padding: 25px 18px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .formulas > label, .manualPages button { transition: none; }
+}

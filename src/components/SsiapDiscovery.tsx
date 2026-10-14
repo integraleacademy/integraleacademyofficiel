@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import styles from './SsiapReferencePage.module.css';
+import mos from './SsiapMos.module.css';
 
 const specimenUrl = 'https://gestionstagiaires-test-v2.onrender.com/static/manuals/specimens/ssiap1-20-pages.pdf';
 const pages = [
@@ -20,10 +21,10 @@ export function SsiapManualPreview() {
     if (selected !== null && !dialog.current?.open) dialog.current?.showModal();
   }, [selected]);
   function close() { dialog.current?.close(); setSelected(null); opener.current?.focus(); }
-  return <section className={styles.manual} aria-labelledby="manuel-ssiap-title">
-    <div className={styles.container}>
-      <div className={styles.sectionHead}><div><p className={styles.eyebrow}>Votre support, avant même le premier cours</p><h2 id="manuel-ssiap-title" className={styles.sectionTitle}>Ouvrez votre<br /><em>manuel SSIAP 1.</em></h2></div><div><p className={styles.intro}>Des cours illustrés, des schémas et des repères pour apprendre et réviser. Découvrez une sélection de pages de votre manuel de formation.</p><a className={styles.textLink} href={specimenUrl} target="_blank" rel="noopener noreferrer">Feuilleter les 20 pages sélectionnées <span aria-hidden="true">↗</span><span className="sr-only"> (PDF, nouvel onglet)</span></a></div></div>
-      <div className={styles.manualPages}>{pages.map((page, index) => <button type="button" key={page.file} onClick={event => { opener.current = event.currentTarget; setSelected(index); }} aria-label={`Agrandir l’extrait ${index + 1} du manuel SSIAP 1`}><Image src={`/images/ssiap-1/extraits/${page.file}`} alt={`Extrait du manuel SSIAP 1 : ${page.label}`} width={780} height={1103} sizes="(max-width: 600px) 43vw, 23vw" /><span>Extrait {String(index + 1).padStart(2, '0')} <span aria-hidden="true">↗</span></span></button>)}</div>
+  return <section className={`${styles.manual} ${mos.manual}`} aria-labelledby="manuel-ssiap-title">
+    <div className={mos.container}>
+      <div className={mos.sectionHeading}><div><p className={styles.eyebrow}>Votre support, avant même le premier cours</p><h2 id="manuel-ssiap-title" className={styles.sectionTitle}>Ouvrez votre<br /><em>manuel SSIAP 1.</em></h2></div><div><p className={styles.intro}>Des cours illustrés, des schémas et des repères pour apprendre et réviser. Découvrez une sélection de pages de votre manuel de formation.</p><a className={styles.textLink} href={specimenUrl} target="_blank" rel="noopener noreferrer">Feuilleter les 20 pages sélectionnées <span aria-hidden="true">↗</span><span className="sr-only"> (PDF, nouvel onglet)</span></a></div></div>
+      <div className={`${styles.manualPages} ${mos.manualPages}`}>{pages.map((page, index) => <button type="button" key={page.file} onClick={event => { opener.current = event.currentTarget; setSelected(index); }} aria-label={`Agrandir l’extrait ${index + 1} du manuel SSIAP 1`}><Image src={`/images/ssiap-1/extraits/${page.file}`} alt={`Extrait du manuel SSIAP 1 : ${page.label}`} width={780} height={1103} sizes="(max-width: 600px) 43vw, 23vw" /><span>Extrait {String(index + 1).padStart(2, '0')} <span aria-hidden="true">↗</span></span><small>{page.label}</small></button>)}</div>
     </div>
     <dialog ref={dialog} className={styles.manualDialog} aria-label="Extrait du manuel SSIAP 1" onCancel={event => { event.preventDefault(); close(); }} onClick={event => { if (event.target === event.currentTarget) close(); }} onKeyDown={event => {
       if (selected === null) return;
