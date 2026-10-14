@@ -159,7 +159,7 @@ export function BtsMosReferencePage() {
             </div>
           </article>
           <article className={`${styles.formatCard} ${styles.remoteFormat}`}>
-            <div className={styles.formatPhoto}><Image src="/images/bts/experience/cours-zoom.webp" alt="Illustration : une étudiante participe depuis chez elle à un cours en visioconférence avec son formateur et sa promotion" width={1200} height={800} sizes="(max-width: 700px) 94vw, 46vw" /><span className={`${styles.formatBadge} ${styles.zoomBadge}`}><i aria-hidden="true" />En live sur ZOOM</span></div>
+            <div className={styles.formatPhoto}><Image src="/images/bts/experience/cours-zoom-manuel.webp" alt="Illustration : une étudiante participe depuis chez elle à un cours en visioconférence avec son formateur et sa promotion" width={1200} height={800} sizes="(max-width: 700px) 94vw, 46vw" /><span className={`${styles.formatBadge} ${styles.zoomBadge}`}><i aria-hidden="true" />En live sur ZOOM</span></div>
             <div className={styles.formatCopy}>
               <p className={styles.eyebrow}>Intégrale Academy Paris · Online</p><h3>Vos cours en live.<br />100 % à distance.</h3>
               <p>Connectez-vous en visioconférence ZOOM : votre formateur anime le cours en direct, avec toute votre promotion.</p>

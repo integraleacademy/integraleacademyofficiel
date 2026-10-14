@@ -11,17 +11,10 @@ export function BtsIllustratedBenefits({ courseName }: { courseName: string }) {
   return <section id="avantages-bts" aria-label={`Les avantages de votre ${courseName}`} className={styles.benefits}>
     <div className={styles.cards}>
       <article className={styles.card}>
-        <div className={styles.tabletScene} role="img" aria-label="Visuel d’illustration : une tablette pour organiser ses cours et ses projets de BTS">
-          <div className={styles.tablet} aria-hidden="true">
-            <div className={styles.tabletScreen}>
-              <div className={styles.screenTop}><span>INTÉGRALE ACADEMY</span><span>Mes études</span></div>
-              <div className={styles.screenTitle}><span>MON ESPACE DE TRAVAIL</span><strong>{courseName}</strong><p>Apprendre. Organiser. Avancer.</p></div>
-              <div className={styles.screenTiles}><span><i />Mes cours</span><span><i />Mes notes</span><span><i />Mes projets</span></div>
-              <div className={styles.screenLines}><i /><i /><i /></div>
-            </div>
-          </div>
-          <span className={styles.tabletCaption} aria-hidden="true">Votre compagnon de formation.</span>
-        </div>
+        <figure className={styles.benefitScene}>
+          <Image src="/images/bts/experience/ipad-manuel.webp" alt="Illustration : une étudiante utilise sa tablette et un stylet pour travailler ses cours de BTS" width={1200} height={800} sizes="(max-width: 700px) 94vw, 46vw" />
+          <figcaption>Votre compagnon de formation.</figcaption>
+        </figure>
         <div className={styles.copy}>
           <span className={styles.badge}>Dès la signature du contrat</span>
           <h3>Un iPad offert.<br /><span>Pour vos deux années.</span></h3>
@@ -30,8 +23,8 @@ export function BtsIllustratedBenefits({ courseName }: { courseName: string }) {
         </div>
       </article>
       <article className={styles.card}>
-        <figure className={styles.londonScene}>
-          <Image src="/images/bts/experience/voyage-londres.webp" alt="Illustration d’un groupe d’étudiants découvrant Londres, devant Big Ben et le palais de Westminster" width={1200} height={800} sizes="(max-width: 700px) 94vw, 46vw" />
+        <figure className={styles.benefitScene}>
+          <Image src="/images/bts/experience/voyage-londres-manuel.webp" alt="Illustration d’un groupe d’étudiants découvrant Londres, devant Big Ben et le palais de Westminster" width={1200} height={800} sizes="(max-width: 700px) 94vw, 46vw" />
           <figcaption>Votre promotion, à Londres.</figcaption>
         </figure>
         <div className={styles.copy}>
