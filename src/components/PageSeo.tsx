@@ -12,7 +12,7 @@ export function PageSeo() {
   const breadcrumbs = pageBreadcrumbs(pathname);
   return <>
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(data) }} />
-    {breadcrumbs.length > 1 && <nav aria-label="Fil d’Ariane du site" className="page-container py-5 text-xs font-semibold text-academy-muted">
+    {pathname !== '/bts/mos' && breadcrumbs.length > 1 && <nav aria-label="Fil d’Ariane du site" className="page-container py-5 text-xs font-semibold text-academy-muted">
       <ol className="flex flex-wrap items-center gap-x-2 gap-y-2">
         {breadcrumbs.map((item, index) => <li key={item.path} className="flex items-center gap-2">
           {index > 0 && <span aria-hidden="true">›</span>}
