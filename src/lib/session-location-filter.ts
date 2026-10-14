@@ -46,3 +46,9 @@ export function nextSessionForLocation<T extends { location?: string | null; sta
   return next;
 }
 
+
+/** Accept only public campus filter keys from incoming links. */
+export function parseSessionLocationFilter(value: string | string[] | undefined): SessionLocationFilterKey {
+  const key = Array.isArray(value) ? value[0] : value;
+  return sessionLocationFilters.some(item => item.key === key) ? key as SessionLocationFilterKey : 'all';
+}

@@ -4,15 +4,16 @@ import Link from 'next/link';
 import { createPageMetadata } from '@/lib/seo';
 import { contact } from '@/data/site';
 import styles from './ecole.module.css';
+import experience from './school-experience.module.css';
+import { SchoolNavigation, SchoolCampuses, SchoolPedagogy, SchoolVisitButton, SchoolVisitAdviser } from './SchoolExperience';
 
 export const metadata = createPageMetadata('/ecole');
-const appointmentFormUrl = 'https://assistance-alw9.onrender.com/demande-informations-formations';
 
 const team = [
-  { portrait: 'cassandre' as const, name: 'Cassandre Menard', role: 'Responsable commerciale', mission: 'Votre interlocutrice pour choisir votre formation, préparer votre admission et trouver le financement adapté.', specialty: 'Orientation & admissions' },
-  { portrait: 'aurelie' as const, name: 'Aurélie Chaussez', role: 'Chargée des relations clients', mission: 'Le lien entre les apprenants, les entreprises et l’école, pour un parcours bien accompagné.', specialty: 'Relation apprenants & entreprises' },
-  { portrait: 'elsa' as const, name: 'Elsa Duquesne', role: 'Assistante de direction', mission: 'Un suivi administratif attentif et une organisation quotidienne au service de votre formation.', specialty: 'Organisation & suivi' },
-  { portrait: 'yannice' as const, name: 'Yannice Libault', role: 'Coordinateur pédagogique · Azzera Academy', mission: 'La coordination des programmes et des intervenants, avec une attention portée au suivi pédagogique.', specialty: 'Pédagogie & coordination' },
+  { portrait: 'cassandre' as const, name: 'Cassandre Menard', role: 'Responsable commerciale', mission: 'Votre interlocutrice pour choisir votre formation, préparer votre admission et trouver le financement adapté.', specialty: 'Pour choisir votre formation' },
+  { portrait: 'aurelie' as const, name: 'Aurélie Chaussez', role: 'Relations clients · Responsable BTS', mission: 'Le lien entre les apprenants, les entreprises et l’école, pour un parcours bien accompagné.', specialty: 'Pour votre BTS et votre alternance' },
+  { portrait: 'elsa' as const, name: 'Elsa Duquesne', role: 'Assistante de direction', mission: 'Un suivi administratif attentif et une organisation quotidienne au service de votre formation.', specialty: 'Pour préparer et suivre votre dossier' },
+  { portrait: 'yannice' as const, name: 'Yannice Libault', role: 'Coordinateur pédagogique · Azzera Academy', mission: 'La coordination des programmes et des intervenants, avec une attention portée au suivi pédagogique.', specialty: 'Pour votre suivi pédagogique' },
 ];
 const certifications = [
   ['Qualiopi', 'Certification qualité n°03169 du 21/10/2024.'],
@@ -29,15 +30,15 @@ function Arrow({ diagonal = false }: { diagonal?: boolean }) {
 }
 
 export default function Page() {
-  return <div className={styles.page}>
-    <section className={styles.hero} aria-labelledby="school-title">
+  return <div className={`${styles.page} ${experience.guidedPage}`}>
+    <section className={`${styles.hero} ${experience.guidedHero}`} aria-labelledby="school-title">
       <div className={`${styles.container} ${styles.heroGrid}`}>
         <div className={styles.heroCopy}>
           <p className={styles.eyebrow}><span className={styles.smallLine} /> Notre école · Depuis 2018</p>
           <h1 id="school-title">Un lieu pour<br /> apprendre.<br /><em>Une équipe<br /> pour avancer.</em></h1>
           <p className={styles.intro}>Des métiers concrets. Des personnes engagées. À Puget-sur-Argens, Intégrale Academy vous accompagne dans la suite de votre parcours professionnel.</p>
           <div className={styles.heroActions}>
-            <a href="#visite" className={styles.button}>Venez découvrir l’école <Arrow /></a>
+            <a href="#campus" className={styles.button}>Explorer l’école <Arrow /></a>
             <a href="#equipe" className={styles.textLink}>Rencontrer l’équipe <Arrow diagonal /></a>
           </div>
           <p className={styles.heroTrust}><span aria-hidden="true">✦</span> Formation professionnelle & alternance</p>
@@ -48,34 +49,31 @@ export default function Page() {
           <figcaption><span>INTÉGRALE ACADEMY</span><span>Puget-sur-Argens · Côte d’Azur <Arrow diagonal /></span></figcaption>
         </figure>
       </div>
-      <nav className={`${styles.container} ${styles.chapterNav}`} aria-label="Découvrir notre école">
-        <span>FAISONS CONNAISSANCE</span>
-        <a href="#clement-vaillant"><span>01</span> Le fondateur</a><a href="#equipe"><span>02</span> L’équipe</a><a href="#campus"><span>03</span> Nos implantations</a><a href="#pedagogie"><span>04</span> La pédagogie</a><a href="#agrements"><span>05</span> Nos engagements</a>
-      </nav>
     </section>
+
+    <SchoolNavigation />
 
     <section className={styles.stats} aria-label="L’école en quelques repères">
       <div className={`${styles.container} ${styles.statsGrid}`}>
-        <div><strong>2018</strong><span>Le début de l’aventure</span></div><div><strong>400 <small>m²</small></strong><span>Pour apprendre à Puget-sur-Argens</span></div><div><strong>4 <small>salles</small></strong><span>Théorie & mise en pratique</span></div><div><strong>3 <small>implantations</small></strong><span>Côte d’Azur, Paris & Centre France</span></div>
+        <div><strong>2018</strong><span>Le début de l’aventure</span></div><div><strong>400 <small>m²</small></strong><span>Pour apprendre à Puget-sur-Argens</span></div><div><strong>4 <small>salles</small></strong><span>Théorie & mise en pratique</span></div><div><strong>3 <small>implantations</small></strong><span>Puget, Paris · Aurillac selon les sessions</span></div>
       </div>
     </section>
 
-    <section id="clement-vaillant" className={`${styles.section} ${styles.founderSection}`} aria-labelledby="founder-title">
-      <div className={`${styles.container} ${styles.founderGrid}`}>
-        <div className={styles.founderCopy}>
-          <p className={styles.eyebrow}>01 / Le fondateur</p>
-          <h2 id="founder-title">Clément Vaillant</h2>
-          <p className={styles.founderRole}>Fondateur & directeur général</p>
-          <p className={styles.founderLead}>Le terrain comme point de départ. <em>L’humain comme fil conducteur.</em></p>
-          <p>Entrepreneur engagé dans la formation professionnelle, Clément Vaillant a construit son parcours au croisement de la sécurité privée, de la gestion d’équipes, de la communication et de la formation. Son expérience, acquise dans des environnements exigeants et réglementés, l’a conduit des fonctions opérationnelles à la coordination puis à la direction de projets et d’équipes.</p>
-          <p>Titulaire d’un Master 2 en communication et stratégies d’image, il associe culture du terrain, pilotage d’entreprise et amélioration continue des parcours proposés par Intégrale Academy. Sa conviction : faire grandir l’école en conservant l’exigence, la proximité et un cadre clair pour chaque apprenant.</p>
-          <div className={styles.founderValues}><span>Culture du terrain</span><span>Accompagnement de proximité</span></div>
-          <a href="https://fr.linkedin.com/in/vaillantclement" target="_blank" rel="noopener noreferrer" className={styles.textLink}>Découvrir son parcours sur LinkedIn <Arrow diagonal /></a>
+    <section id="campus" className={`${styles.section} ${styles.campusSection}`} aria-labelledby="campus-title">
+      <div className={styles.container}>
+        <div className={styles.sectionHeading}>
+          <div><p className={styles.eyebrow}>01 / Les lieux pour apprendre</p><h2 id="campus-title">De la Côte d’Azur<br /><em>à Paris.</em></h2></div>
+          <p>Notre siège à Puget-sur-Argens et notre implantation à Paris vous accueillent selon les formations et les sessions. Aurillac complète ces implantations pour certaines sessions DESP.</p>
         </div>
-        <figure className={styles.packPhoto}>
-          <Image src="/images/welcome-pack/carnet-bienvenue.webp" alt="La page de bienvenue du carnet Intégrale Academy, signée Clément Vaillant" width={1092} height={1531} sizes="(max-width: 390px) calc(100vw - 32px), (max-width: 800px) 330px, 360px" />
-          <figcaption>Le mot de bienvenue de Clément Vaillant · Carnet Intégrale Academy</figcaption>
-        </figure>
+        <SchoolCampuses />
+        <div className={styles.campusFacilities}>
+          <p className={styles.eyebrow}>À Puget-sur-Argens · 400 m² pour apprendre et pratiquer</p>
+          <div className={`${styles.facilities} ${styles.facilitiesRow}`}>
+            <div><span>01</span><div><h3>Apprendre & pratiquer</h3><p>Quatre salles de cours et des espaces de mise en situation pour relier la théorie aux réalités du métier.</p></div></div>
+            <div><span>02</span><div><h3>Travailler & progresser</h3><p>Une salle informatique équipée Mac / PC pour les enseignements et les travaux numériques.</p></div></div>
+            <div><span>03</span><div><h3>Se retrouver & échanger</h3><p>Un espace détente pour partager une pause et créer des liens tout au long de la formation.</p></div></div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -90,81 +88,24 @@ export default function Page() {
             <Image src="/images/formation-scenes-manuel/aps-arrivee.webp" alt="Illustration de l’accueil et de l’accompagnement d’apprenants à leur arrivée en formation APS" width={1536} height={1024} sizes="(max-width: 800px) 100vw, 42vw" />
             <figcaption>Un accompagnement dès votre arrivée.</figcaption>
           </figure>
-          <div className={styles.teamGrid}>
-            {team.map((person, index) => <article className={styles.person} key={person.name}>
-              <div className={styles.personAvatar} aria-hidden="true"><TeamPortrait person={person.portrait} size={76} /></div>
-              <p className={styles.personTop}><span>0{index + 1}</span>{person.specialty}</p><h3>{person.name}</h3><p className={styles.role}>{person.role}</p><p className={styles.mission}>{person.mission}</p>
+          <div className={`${styles.teamGrid} ${experience.teamCards}`}>
+            {team.map(person => <article className={`${styles.person} ${experience.teamCard}`} key={person.name}>
+              <div className={styles.personAvatar} aria-hidden="true"><TeamPortrait person={person.portrait} size={92} /></div>
+              <p className={experience.helpLabel}>{person.specialty}</p><h3>{person.name}</h3><p className={styles.role}>{person.role}</p><p className={styles.mission}>{person.mission}</p>
             </article>)}
           </div>
         </div>
-        <div className={styles.teamBottom}><p>À leurs côtés, des formateurs, évaluateurs et professionnels du terrain interviennent selon les parcours.</p><a href={appointmentFormUrl} className={styles.textLink}>Échanger avec l’équipe <Arrow diagonal /></a></div>
-      </div>
-    </section>
-
-    <section id="campus" className={`${styles.section} ${styles.campusSection}`} aria-labelledby="campus-title">
-      <div className={styles.container}>
-        <div className={styles.sectionHeading}>
-          <div><p className={styles.eyebrow}>03 / Nos implantations</p><h2 id="campus-title">De la Côte d’Azur<br /><em>à Paris.</em></h2></div>
-          <p>Notre siège à Puget-sur-Argens et notre implantation à Paris vous accueillent selon les formations et les sessions. Deux lieux, la même attention portée à votre parcours.</p>
-        </div>
-        <div className={styles.campusLayout}>
-          <figure className={styles.franceMap} aria-labelledby="map-caption">
-            <figcaption id="map-caption"><span>INTÉGRALE ACADEMY</span>Retrouvez-nous en France.</figcaption>
-            <div className={styles.mapArtwork}>
-              <Image src="/images/campus/france-implantations.svg" alt="" width={400} height={400} aria-hidden="true" />
-              <a href="#campus-paris" className={`${styles.mapPin} ${styles.parisPin}`} aria-label="Voir notre implantation à Paris">
-                <svg viewBox="0 0 28 36" aria-hidden="true"><path d="M14 1C6.8 1 1 6.8 1 14c0 9.1 13 21 13 21s13-11.9 13-21C27 6.8 21.2 1 14 1Z" /><circle cx="14" cy="14" r="4.5" /></svg>
-                <span className={styles.mapLabel}>Paris<small>Île-de-France</small></span>
-              </a>
-              <a href="#campus-puget" className={`${styles.mapPin} ${styles.pugetPin}`} aria-label="Voir notre siège à Puget-sur-Argens">
-                <svg viewBox="0 0 28 36" aria-hidden="true"><path d="M14 1C6.8 1 1 6.8 1 14c0 9.1 13 21 13 21s13-11.9 13-21C27 6.8 21.2 1 14 1Z" /><circle cx="14" cy="14" r="4.5" /></svg>
-                <span className={styles.mapLabel}>Puget-sur-Argens<small>Notre siège · Côte d’Azur</small></span>
-              </a>
-            </div>
-          </figure>
-          <div className={styles.campusAddresses}>
-            <article id="campus-puget" className={styles.addressPanel}>
-              <p className={styles.eyebrow}>Notre siège · Côte d’Azur</p><h3>Puget-sur-Argens<span>Var · 83</span></h3>
-              <address>54 chemin du Carreou<br />83480 Puget-sur-Argens</address><a href="#visite" className={styles.textLink}>Organiser une visite <Arrow diagonal /></a>
-              <div className={styles.access}><span>À 500 m de l’A8</span><span>Parking gratuit</span><span>Bus 4 · Général de Gaulle</span></div>
-            </article>
-            {contact.locations.filter(location => location.id === 'paris').map(location => <article id="campus-paris" className={styles.addressPanel} key={location.id}>
-              <p className={styles.eyebrow}>Notre implantation · Île-de-France</p><h3>{location.name}</h3>
-              <address>{location.address}</address><p className={styles.locationDetail}>{location.detail}</p>
-              <Link href="/planning" className={styles.textLink}>Consulter les sessions <Arrow diagonal /></Link>
-            </article>)}
-          </div>
-        </div>
-        <div className={styles.campusFacilities}>
-          <p className={styles.eyebrow}>À Puget-sur-Argens · 400 m² pour apprendre et pratiquer</p>
-          <div className={`${styles.facilities} ${styles.facilitiesRow}`}>
-            <div><span>01</span><div><h3>Apprendre & pratiquer</h3><p>Quatre salles de cours et des espaces de mise en situation pour relier la théorie aux réalités du métier.</p></div></div>
-            <div><span>02</span><div><h3>Travailler & progresser</h3><p>Une salle informatique équipée Mac / PC pour les enseignements et les travaux numériques.</p></div></div>
-            <div><span>03</span><div><h3>Se retrouver & échanger</h3><p>Un espace détente pour partager une pause et créer des liens tout au long de la formation.</p></div></div>
-          </div>
-        </div>
-        <details className={styles.locations}>
-          <summary><span>Et aussi, selon les sessions : <strong>Aurillac</strong></span><span className={styles.plus} aria-hidden="true">+</span></summary>
-          <div className={styles.locationGrid}>{contact.locations.filter(location => location.id !== 'puget' && location.id !== 'paris').map(location => <article key={location.id}><h3>{location.name}</h3><p>{location.address}</p><p>{location.detail}</p></article>)}</div>
-        </details>
+        <div className={styles.teamBottom}><p>À leurs côtés, des formateurs, évaluateurs et professionnels du terrain interviennent selon les parcours.</p><Link href="/contact#demande" className={styles.textLink}>Échanger avec l’équipe <Arrow diagonal /></Link></div>
       </div>
     </section>
 
     <section id="pedagogie" className={styles.section} aria-labelledby="approach-title">
-      <div className={`${styles.container} ${styles.approachGrid}`}>
-        <figure className={styles.approachIllustration}>
-          <Image src="/images/formation-scenes-manuel/sst-pedagogie.webp" alt="Illustration d’un atelier de premiers secours encadré par des formateurs" width={1536} height={1024} sizes="(max-width: 800px) 100vw, 45vw" />
-          <figcaption>Apprendre, s’entraîner, puis gagner en assurance.</figcaption>
-        </figure>
-        <div className={styles.approachCopy}>
-          <p className={styles.eyebrow}>04 / Notre manière de former</p><h2 id="approach-title">Du concret.<br />De l’exigence.<br /><em>Et de l’attention.</em></h2>
-          <div className={styles.approachPoints}>
-            <div><span>01</span><div><h3>Apprendre auprès de professionnels</h3><p>Des intervenants issus du terrain et des situations reliées aux métiers que vous préparez.</p></div></div>
-            <div><span>02</span><div><h3>Pratiquer dans un cadre structuré</h3><p>Des programmes, des mises en situation et des évaluations adaptés aux exigences de chaque formation.</p></div></div>
-            <div><span>03</span><div><h3>Être accompagné à chaque étape</h3><p>Projet, financement, suivi et préparation à l’emploi : une équipe accessible pour avancer avec vous.</p></div></div>
-          </div>
-          <Link href="/formations-securite/aps" className={styles.textLink}>Découvrir la formation APS <Arrow diagonal /></Link>
+      <div className={styles.container}>
+        <div className={styles.sectionHeading}>
+          <div><p className={styles.eyebrow}>03 / Notre manière de former</p><h2 id="approach-title">Du concret. De l’exigence.<br /><em>Et de l’attention.</em></h2></div>
+          <p>Choisissez une étape pour découvrir comment nous vous accompagnons, du premier échange à la mise en pratique.</p>
         </div>
+        <SchoolPedagogy />
       </div>
       <div className={`${styles.container} ${styles.domains}`}>
         <p className={styles.eyebrow}>Plusieurs voies. La même exigence.</p>
@@ -182,11 +123,28 @@ export default function Page() {
       </div>
     </section>
 
-    <section id="histoire" className={`${styles.section} ${styles.storySection}`} aria-labelledby="story-title">
-      <div className={styles.container}>
-        <div className={styles.sectionHeading}><div><p className={styles.eyebrow}>Notre histoire</p><h2 id="story-title">Une école qui grandit.<br /><em>Une conviction qui reste.</em></h2></div><p>Depuis sa création, Intégrale Academy se développe au contact des métiers, des candidats et des entreprises.</p></div>
+    <section id="clement-vaillant" className={`${styles.section} ${styles.founderSection}`} aria-labelledby="founder-title">
+      <div className={`${styles.container} ${styles.founderGrid} ${experience.founderWelcome}`}>
+        <div className={styles.founderCopy}>
+          <p className={styles.eyebrow}>04 / Notre histoire · Depuis 2018</p>
+          <h2 id="founder-title">Le terrain comme point de départ.<br /><em>L’humain comme fil conducteur.</em></h2>
+          <blockquote className={experience.welcomeQuote}>« Osez poser vos questions, essayer et progresser. Toute l’équipe est à vos côtés pour vous accompagner. »</blockquote>
+          <div className={experience.founderSignature}><TeamPortrait person="clement" size={72} /><div><p>Clément Vaillant</p><span>Fondateur & directeur général</span></div></div>
+          <details className={experience.biography}><summary>Découvrir le parcours du fondateur <span className={styles.plus} aria-hidden="true">+</span></summary>
+          <p>Entrepreneur engagé dans la formation professionnelle, Clément Vaillant a construit son parcours au croisement de la sécurité privée, de la gestion d’équipes, de la communication et de la formation. Son expérience, acquise dans des environnements exigeants et réglementés, l’a conduit des fonctions opérationnelles à la coordination puis à la direction de projets et d’équipes.</p>
+          <p>Titulaire d’un Master 2 en communication et stratégies d’image, il associe culture du terrain, pilotage d’entreprise et amélioration continue des parcours proposés par Intégrale Academy. Sa conviction : faire grandir l’école en conservant l’exigence, la proximité et un cadre clair pour chaque apprenant.</p>
+            <a href="https://fr.linkedin.com/in/vaillantclement" target="_blank" rel="noopener noreferrer" className={styles.textLink}>Découvrir son parcours sur LinkedIn <Arrow diagonal /></a>
+          </details>
+        </div>
+        <figure className={styles.packPhoto}>
+          <Image src="/images/welcome-pack/carnet-bienvenue.webp" alt="La page de bienvenue du carnet Intégrale Academy, signée Clément Vaillant" width={1092} height={1531} sizes="(max-width: 340px) calc(100vw - 64px), 280px" />
+          <figcaption>Le mot de bienvenue de Clément Vaillant · Carnet Intégrale Academy</figcaption>
+        </figure>
+      </div>
+      <div id="histoire" className={`${styles.container} ${experience.history}`}>
+        <p className={styles.eyebrow}>Une école qui grandit. Une conviction qui reste.</p>
         <ol className={styles.timeline}>
-          <li><span>2018</span><h3>Le début de l’aventure</h3><p>La création d’une école de formation professionnelle issue du terrain.</p></li><li><span>Au fil des années</span><h3>De nouvelles perspectives</h3><p>Sécurité, incendie, VTC et alternance enrichissent les parcours proposés.</p></li><li><span>Aujourd’hui</span><h3>La même proximité</h3><p>Une équipe structurée et trois implantations, mobilisées selon les formations.</p></li>
+          <li><span>2018</span><h3>Le début de l’aventure</h3><p>La création d’une école de formation professionnelle issue du terrain.</p></li><li><span>Au fil des années</span><h3>De nouvelles perspectives</h3><p>Sécurité, incendie, VTC et alternance enrichissent les parcours proposés.</p></li><li><span>Aujourd’hui</span><h3>La même proximité</h3><p>Puget-sur-Argens, Paris et Aurillac, selon les formations et les sessions.</p></li>
         </ol>
       </div>
     </section>
@@ -213,7 +171,7 @@ export default function Page() {
     <section id="visite" className={styles.visit} aria-labelledby="visit-title">
       <div className={`${styles.container} ${styles.visitGrid}`}>
         <div><p className={styles.eyebrow}>La prochaine étape se fait ensemble</p><h2 id="visit-title">Poussez la porte.<br /><em>Parlons de la suite.</em></h2><p>Découvrez les lieux, rencontrez l’équipe et échangez sur votre projet. Nous vous aidons à préparer votre venue.</p></div>
-        <div className={styles.visitActions}><a href={appointmentFormUrl} className={styles.button}>Organiser une visite <Arrow /></a><a href="tel:+33422470768" className={styles.visitPhone}>{contact.phone}</a><p>Un premier échange gratuit et sans engagement.</p><Link href="/planning" className={styles.textLink}>Voir les prochaines sessions <Arrow diagonal /></Link></div>
+        <div className={styles.visitActions}><SchoolVisitAdviser /><SchoolVisitButton className={styles.button} /><a href="tel:+33422470768" className={styles.visitPhone}>{contact.phone}</a><p>Un premier échange gratuit et sans engagement.</p><Link href="/planning" className={styles.textLink}>Voir les prochaines sessions <Arrow diagonal /></Link></div>
       </div>
     </section>
   </div>;

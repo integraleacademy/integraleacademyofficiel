@@ -604,15 +604,15 @@ function MissingDates({
   );
 }
 
-export function PlanningClient({ initialSessions, btsIntakeYear }: { initialSessions: Session[]; btsIntakeYear: number }) {
+export function PlanningClient({ initialSessions, btsIntakeYear, initialLocation = 'all' }: { initialSessions: Session[]; btsIntakeYear: number; initialLocation?: SessionLocationFilterKey }) {
   const sortedSessions = useMemo(
     () => [...initialSessions].sort((a, b) => +new Date(a.startDate) - +new Date(b.startDate)),
     [initialSessions],
   );
   const [activeFormation, setActiveFormation] = useState<FormationFilterKey>('all');
-  const [locationFilter, setLocationFilter] = useState<SessionLocationFilterKey>('all');
+  const [locationFilter, setLocationFilter] = useState<SessionLocationFilterKey>(initialLocation);
   const [view, setView] = useState<ViewMode>('list');
-  const [showAll, setShowAll] = useState(false);
+  const [showAll, setShowAll] = useState(initialLocation !== 'all');
   const [selectedSessionId, setSelectedSessionId] = useState<string | null>(null);
   const [detailSession, setDetailSession] = useState<Session | null>(null);
   const [registrationSession, setRegistrationSession] = useState<Session | null>(null);
