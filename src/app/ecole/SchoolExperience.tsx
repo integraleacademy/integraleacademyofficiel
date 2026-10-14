@@ -10,6 +10,10 @@ import { schoolVisitCampuses, type SchoolVisitCampus } from '@/lib/school-visit'
 import school from './ecole.module.css';
 import styles from './school-experience.module.css';
 
+function Arrow({ diagonal = false }: { diagonal?: boolean }) {
+  return <svg className={styles.arrow} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={diagonal ? 'M6 18 18 6M6 6h12v12' : 'M4 12h16m-6-6 6 6-6 6'} /></svg>;
+}
+
 const chapters = [
   ['campus', 'Les lieux'], ['equipe', 'L’équipe'], ['pedagogie', 'La pédagogie'],
   ['clement-vaillant', 'Notre histoire'], ['agrements', 'Nos engagements'],
@@ -69,13 +73,13 @@ export function SchoolPedagogy() {
   return <div className={styles.pedagogy}>
     <div className={styles.approachChoices} role="group" aria-label="Découvrir notre manière de former">
       {approaches.map((item, index) => <button type="button" key={item.label} id={`school-approach-${index}`} aria-pressed={selected === index} aria-controls="school-approach-detail" onClick={() => setSelected(index)}>
-        <span className={styles.stepNumber}>0{index + 1}</span><span><strong>{item.label}</strong><span>{item.text}</span></span><span className={styles.stepArrow} aria-hidden="true">↗</span>
+        <span className={styles.stepNumber}>0{index + 1}</span><span><strong>{item.label}</strong><span>{item.text}</span></span><span className={styles.stepArrow}><Arrow diagonal /></span>
       </button>)}
     </div>
     <div id="school-approach-detail" className={styles.approachDetail} role="region" aria-labelledby={`school-approach-${selected}`}>
       <figure key={approach.image} className={styles.scene}>
         <Image src={`/images/formation-scenes-manuel/${approach.image}`} alt={approach.alt} width={1536} height={1024} sizes="(max-width: 800px) 100vw, 50vw" />
-        <figcaption><span className={school.eyebrow}>{approach.example}</span><h3>{approach.title}</h3><p>{approach.detail}</p><Link href={approach.href} className={school.textLink}>{approach.link}<span aria-hidden="true">↗</span></Link></figcaption>
+        <figcaption><span className={school.eyebrow}>{approach.example}</span><h3>{approach.title}</h3><p>{approach.detail}</p><Link href={approach.href} className={school.textLink}>{approach.link}<Arrow diagonal /></Link></figcaption>
       </figure>
       <p className={styles.stepStatus} aria-live="polite">0{selected + 1} / 03 · {approach.label}</p>
     </div>
@@ -118,7 +122,7 @@ export function SchoolCampuses() {
           <address>{location.address}</address>
           <div className={styles.campusTags}>{location.tags.map(tag => <span key={tag}>{tag}</span>)}</div>
           <p className={styles.campusDescription}>{isPuget ? '400 m² pour apprendre, pratiquer et échanger avec l’équipe.' : location.detail}</p>
-          <Link href={`/planning?lieu=${isPuget ? 'cote-azur' : 'paris'}#sessions`} className={`${school.button} ${styles.campusDates}`}>Voir les dates dans ce centre <span aria-hidden="true">→</span></Link>
+          <Link href={`/planning?lieu=${isPuget ? 'cote-azur' : 'paris'}#sessions`} className={`${school.button} ${styles.campusDates}`}>Voir les dates dans ce centre <Arrow /></Link>
           <SchoolVisitButton campus={selected} className={school.textLink} label={isPuget ? 'Organiser ma visite' : 'Préparer ma venue'} />
           <div className={school.access}>{(isPuget ? ['À 500 m de l’A8', 'Parking gratuit', 'Bus 4 · Général de Gaulle'] : ['Accueil selon les sessions', 'Venue à convenir avec l’équipe']).map(item => <span key={item}>{item}</span>)}</div>
         </article>
@@ -126,7 +130,7 @@ export function SchoolCampuses() {
     </div>
     <article className={styles.aurillac}>
       <div><p className={school.eyebrow}>Notre troisième implantation · Selon les sessions</p><h3>Aurillac · Centre France</h3><p>{aurillac.address}</p><p>{aurillac.detail}</p></div>
-      <Link href="/planning?lieu=auvergne#sessions" className={school.textLink}>Voir les dates à Aurillac <span aria-hidden="true">↗</span></Link>
+      <Link href="/planning?lieu=auvergne#sessions" className={school.textLink}>Voir les dates à Aurillac <Arrow diagonal /></Link>
     </article>
   </>;
 }
@@ -135,7 +139,7 @@ export function SchoolVisitButton({ campus = 'puget', className, label = 'Organi
   const [open, setOpen] = useState(false);
   const trigger = useRef<HTMLButtonElement>(null);
   function close() { setOpen(false); requestAnimationFrame(() => trigger.current?.focus({ preventScroll: true })); }
-  return <><button ref={trigger} type="button" onClick={() => setOpen(true)} className={className}>{label}<span aria-hidden="true">→</span></button>{open && createPortal(<VisitDialog campus={campus} onClose={close} />, document.body)}</>;
+  return <><button ref={trigger} type="button" onClick={() => setOpen(true)} className={className}>{label}<Arrow /></button>{open && createPortal(<VisitDialog campus={campus} onClose={close} />, document.body)}</>;
 }
 
 function VisitDialog({ campus, onClose }: { campus: SchoolVisitCampus; onClose: () => void }) {
@@ -176,7 +180,7 @@ function VisitDialog({ campus, onClose }: { campus: SchoolVisitCampus; onClose: 
       <div className={styles.honeypot} aria-hidden="true"><label>Ne pas renseigner<input name="website" tabIndex={-1} autoComplete="off" /></label></div>
       <p className={styles.formHint}>Vos coordonnées sont utilisées pour préparer votre visite. <Link href="/politique-confidentialite">Protection de vos données</Link>.</p>
       {error && <p className={styles.formError} role="alert">{error}</p>}
-      <button className={school.button} disabled={sending}>{sending ? 'Envoi en cours…' : 'Envoyer ma demande de visite'}<span aria-hidden="true">→</span></button>
+      <button className={school.button} disabled={sending}>{sending ? 'Envoi en cours…' : 'Envoyer ma demande de visite'}<Arrow /></button>
       <a className={styles.formPhone} href="tel:+33422470768">Ou appelez-nous au 04 22 47 07 68</a>
     </form>}
   </dialog>;

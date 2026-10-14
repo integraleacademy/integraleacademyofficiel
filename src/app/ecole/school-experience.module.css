@@ -1,3 +1,4 @@
+.arrow { width: 20px; height: 20px; flex-shrink: 0; }
 .guidedPage { --school-nav-height: 70px; }
 .guidedPage section[id], .guidedPage details[id], .guidedPage button[id] { scroll-margin-top: calc(var(--site-header-height) + var(--school-nav-height) + 24px); }
 .guidedPage button { font-family: inherit; cursor: pointer; }
