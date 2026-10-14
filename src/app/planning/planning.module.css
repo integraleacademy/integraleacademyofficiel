@@ -44,11 +44,13 @@
 .previewScene { animation: planningEnter .35s ease-out both; }
 .previewPrompt { margin-bottom: 13px; font-size: 16px; font-weight: 800; letter-spacing: -.02em; }
 .previewChoices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-.previewChoices button { position: relative; overflow: hidden; min-width: 0; border: 1px solid #e4dccc; border-radius: 12px; background: #fff; text-align: left; transition: transform .2s, border-color .2s; }
+.previewChoices button { position: relative; display: flex; flex-direction: column; overflow: hidden; min-width: 0; border: 1px solid #e4dccc; border-radius: 12px; background: #fff; text-align: left; transition: transform .2s, border-color .2s; }
 .previewChoices button:hover { transform: translateY(-3px); border-color: #bf9238; }
 .previewChoices button > span { display: block; overflow: hidden; aspect-ratio: 4 / 3; background: #edf4fa; }
 .previewChoices img { width: 100%; height: 100%; object-fit: cover; object-position: center 42%; }
 .previewChoices strong { display: block; padding: 12px 31px 12px 11px; font-size: 13px; line-height: 1.25; letter-spacing: .015em; }
+.previewChoices strong small { display: block; margin-top: 5px; color: #62655f; font-size: 10px; font-weight: 600; letter-spacing: 0; }
+.previewCoursesLink { display: inline-flex; align-items: center; gap: 6px; margin: 6px 0 10px; color: #806124; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
 .previewChoices i { position: absolute; bottom: 12px; right: 10px; color: #806124; }
 .preview svg { width: 17px; height: 17px; flex-shrink: 0; }
 .previewChoices i svg { width: 15px; height: 15px; }

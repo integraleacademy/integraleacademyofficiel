@@ -15,7 +15,7 @@ type PreviewSession = {
   scheduleKind?: string;
   training?: { name?: string } | null;
 };
-type PreviewFormation = { key: string; label: string; image: string; sessions: PreviewSession[] };
+type PreviewFormation = { key: string; label: string; previewDetail?: string; image: string; sessions: PreviewSession[] };
 const steps = ['La formation', 'Les dates', 'Votre session'];
 
 function Arrow({ diagonal = false }: { diagonal?: boolean }) {
@@ -36,7 +36,7 @@ export function PlanningPreview({ formations, initialFormation, btsIntakeYear, o
   const available = formations.map(item => ({ ...item, sessions: item.sessions
     .filter(session => planningDay(session.startDate) !== null)
     .sort((a, b) => planningDay(a.startDate)! - planningDay(b.startDate)!)
-  })).filter(formation => formation.key === 'bts' || formation.sessions.length > 0);
+  })).filter(formation => formation.key === 'bts' || formation.key === 'ssiap' || formation.sessions.length > 0);
   const formation = available.find(item => item.key === formationKey) || available[0];
   const sessions = formation?.sessions || [];
   const isBts = formation?.key === 'bts';
@@ -79,7 +79,7 @@ export function PlanningPreview({ formations, initialFormation, btsIntakeYear, o
       <div key={`${step}-${formation?.key}`} className={styles.previewScene}>
         {!formation ? <div className={styles.previewEmpty}><strong>Votre projet commence ici.</strong><p>Découvrez les parcours et contactez l’équipe pour les prochaines ouvertures.</p><button type="button" onClick={() => onChoose('all')}>Découvrir les formations <Arrow /></button></div> : step === 0 ? <>
           <p className={styles.previewPrompt}>Quel métier vous attire ?</p>
-          <div className={styles.previewChoices}>{available.map(item => <button key={item.key} type="button" onClick={() => { setFormationKey(item.key); setVisibleMonth(null); setSelectedSessionId(null); goToStep(1); }} aria-label={`Voir les prochaines dates ${item.label}`}><span><Image src={item.image} alt="" width={600} height={400} style={{ objectPosition: item.key === 'director' ? 'right center' : undefined }} sizes="(min-width: 1440px) 210px, (min-width: 1200px) 18vw, (min-width: 700px) 210px, (min-width: 600px) 27vw, 45vw" priority /></span><strong>{item.label}</strong><i><Arrow diagonal /></i></button>)}</div>
+          <div className={styles.previewChoices}>{available.map(item => <button key={item.key} type="button" onClick={() => { setFormationKey(item.key); setVisibleMonth(null); setSelectedSessionId(null); goToStep(1); }} aria-label={`Voir les prochaines dates ${item.label}`}><span><Image src={item.image} alt="" width={600} height={400} style={{ objectPosition: item.key === 'director' ? 'right center' : undefined }} sizes="(min-width: 1440px) 210px, (min-width: 1200px) 18vw, (min-width: 700px) 210px, (min-width: 600px) 27vw, 45vw" priority /></span><strong>{item.label}{item.previewDetail && <small>{item.previewDetail}</small>}</strong><i><Arrow diagonal /></i></button>)}</div>
         </> : isBts ? <div className={styles.previewSummary}>
           <div className={styles.previewSummaryImage}><Image src={formation.image} alt="" fill sizes="(max-width: 640px) 90vw, 400px" /></div>
           <span className={styles.previewSummaryLabel}>BTS en alternance</span>
@@ -87,8 +87,13 @@ export function PlanningPreview({ formations, initialFormation, btsIntakeYear, o
           <p className={styles.btsPreviewDate}>Septembre <strong>{btsIntakeYear}</strong></p>
           <p>{step === 1 ? `Rentrée suivante : septembre ${btsIntakeYear + 1}.` : 'Choix du BTS et recherche d’entreprise : Aurélie vous accompagne.'}</p>
           <button type="button" onClick={() => step === 1 ? goToStep(2) : onChoose('bts')}>{step === 1 ? 'Préparer ma rentrée' : 'Voir toutes les dates'} <Arrow /></button>
+        </div> : !sessions.length ? <div className={styles.previewEmpty}>
+          <strong>Sécurité incendie</strong>
+          <p>SSIAP 1, SSIAP 2, SSIAP 3, recyclages et remises à niveau : soyez prévenu des prochaines ouvertures.</p>
+          <button type="button" onClick={() => onChoose(formation.key)}>Voir les parcours et créer une alerte <Arrow /></button>
         </div> : step === 1 ? <>
           <div className={styles.miniOverview}><span className={styles.miniBadge}>{formation.label}</span><span>{sessions.length} session{sessions.length > 1 ? 's' : ''} à venir</span></div>
+          {formation.key === 'ssiap' && <p className={styles.miniHint}>SSIAP 1, SSIAP 2, SSIAP 3, recyclages et remises à niveau. <button type="button" className={styles.previewCoursesLink} onClick={() => onChoose(formation.key)}>Voir tous les parcours et les prochaines ouvertures <Arrow /></button></p>}
           <div className={styles.miniMonthHeading}>
             <button type="button" aria-label="Mois précédent" disabled={month === null || month === firstMonth} onClick={() => setVisibleMonth(calendarMonth(month!, -1))}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m14 6-6 6 6 6" /></svg></button>
             <span id="planning-preview-month" aria-live="polite" aria-atomic="true">{monthLabel}</span>

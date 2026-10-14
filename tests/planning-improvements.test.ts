@@ -3,13 +3,27 @@ import test from 'node:test';
 import { toPublicSession } from '../src/lib/public-session-data';
 import { planningMonths, sessionMatchesMonth, nextBtsIntakeYear } from '../src/lib/planning-filters';
 import { planningRegistrationAction, validatePlanningRequest } from '../src/lib/planning-registration';
-import { getVtcPlanningSessions } from '../src/lib/planning-data';
+import { getVtcPlanningSessions, planningSsiapCourse } from '../src/lib/planning-data';
 import { sessionMatchesLocation } from '../src/lib/session-location-filter';
 
 test('the Auvergne centre can be selected independently of the other centres', () => {
   assert.equal(sessionMatchesLocation({ location: 'Aurillac · 14 avenue du Garric' }, 'auvergne'), true);
   assert.equal(sessionMatchesLocation({ location: 'Terres d’Auvergne' }, 'auvergne'), true);
   assert.equal(sessionMatchesLocation({ location: 'Puget-sur-Argens' }, 'auvergne'), false);
+});
+
+test('fire-safety opening alerts distinguish SSIAP levels from refresher courses', () => {
+  for (const level of [1, 2, 3]) {
+    for (const slug of [`ssiap-${level}`, `ssiap${level}`]) {
+      assert.equal(planningSsiapCourse({ training: { slug } }), `ssiap-${level}`);
+      assert.equal(planningSsiapCourse({ training: { slug }, title: `Recyclage SSIAP ${level}` }), 'ssiap-maintien');
+      assert.equal(planningSsiapCourse({ training: { slug }, title: `Remise à niveau SSIAP ${level}` }), 'ssiap-maintien');
+    }
+  }
+  for (const slug of ['recyclage-remise-a-niveau-ssiap', 'recyclage-ssiap-2', 'ssiap-3-ran']) {
+    assert.equal(planningSsiapCourse({ training: { slug } }), 'ssiap-maintien');
+  }
+  assert.equal(planningSsiapCourse({ training: { slug: 'aps' } }), null);
 });
 
 test('public sessions expose only approved fields, including nested training and VTC dates', () => {
