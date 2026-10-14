@@ -127,6 +127,12 @@
 :global(html.dark) .page .heroBooking aside { background:#202c39; border-color:#3a4959; color:#eef2f6; }
 :global(html.dark) .page .heroBooking [data-session-details] > div { background:#18232f; border-color:#3a4959; }
 :global(html.dark) .page .heroBooking [data-session-details] > div > p:first-child { color:#bdc7d2; }
+:global(html.dark) .page .booking article { background:#202c39; border-color:#3a4959; }
+:global(html.dark) .page .booking :global(.text-red-700) { color:#ffb4aa; }
+:global(html.dark) .page .missionNumber { color:#ffb4aa; }
+:global(html.dark) .page .review figcaption span:not(.avatar) { color:#c2cbd4; }
+:global(html.dark) .page .avatar { color:#b6383d; }
+:global(html.dark) .page :global(#faq-ssiap) { --text-main:23 19 13; --text-muted:70 58 42; --border:214 199 174; color:#17212b; color-scheme:light; }
 :global(html.dark) .page :is(.terrain,.manual,.testimonials) { background:#18232f; }
 :global(html.dark) .page :is(.mission,.formula,.review,.accreditation,.contactCard,.manualPages button) { background:#202c39; color:#eef2f6; border-color:#3a4959; }
 :global(html.dark) .page :is(.intro,.small,.missionCopy > p,.formula > span:not(.eyebrow),.formula small,.practiceQuestion p:not(.eyebrow),.trainer p:not(.eyebrow),.contactCard > p:not(.eyebrow),.contactCard small,.accreditation p:not(.eyebrow)) { color:#c2cbd4; }
