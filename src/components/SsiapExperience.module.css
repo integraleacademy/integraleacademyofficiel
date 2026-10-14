@@ -1,14 +1,14 @@
-.page { --sx-paper:#fcfbf8; --sx-ink:#18232c; --sx-muted:#606568; --sx-line:#deddd6; --sx-soft:#f1eee7; --sx-card:#fff; --sx-red:#b33236; --sx-pale:#f9e7df; background:var(--sx-paper); color:var(--sx-ink); }
+.page,.retained { --sx-paper:#fcfbf8; --sx-ink:#18232c; --sx-muted:#606568; --sx-line:#deddd6; --sx-soft:#f1eee7; --sx-card:#fff; --sx-red:#b33236; --sx-pale:#f9e7df; background:var(--sx-paper); color:var(--sx-ink); }
 .page [id] { scroll-margin-top:150px; }
 .page :where(button,a,input,summary):focus-visible { outline:3px solid var(--sx-red); outline-offset:5px; }
 .container { width:min(1180px,calc(100% - 48px)); margin-inline:auto; }
 .eyebrow { margin:0; font-size:10px; line-height:1.6; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--sx-red); }
 .inlineLink { display:inline-flex; align-items:center; gap:15px; padding:16px 0; font-size:13px; font-weight:750; text-decoration:underline; text-underline-offset:5px; }
-.page .section { padding-block:90px; border-bottom:1px solid var(--sx-line); background:var(--sx-paper); color:var(--sx-ink); }
-.page .section:global(#programme) { background:var(--sx-soft); }
-.page .section:global(#examen) { background:#13202a; color:#fff; }
-.page :global([class*='sectionTitle']) { font-family:inherit; font-size:clamp(34px,4.05vw,56px); line-height:1.05; letter-spacing:-.055em; }
-.page :global([class*='sectionTitle']) em { font-family:inherit; font-style:normal; font-weight:700; }
+.page .section,.retained.section { padding-block:90px; border-bottom:1px solid var(--sx-line); background:var(--sx-paper); color:var(--sx-ink); }
+.page .section:global(#programme),.retained.section:global(#programme) { background:var(--sx-soft); }
+.page .section:global(#examen),.retained.section:global(#examen) { background:#13202a; color:#fff; }
+.page :global([class*='sectionTitle']),.retained :global([class*='sectionTitle']) { font-family:inherit; font-size:clamp(34px,4.05vw,56px); line-height:1.05; letter-spacing:-.055em; }
+.page :global([class*='sectionTitle']) em,.retained :global([class*='sectionTitle']) em { font-family:inherit; font-style:normal; font-weight:700; }
 .page .hero { background:radial-gradient(ellipse at 75% 35%,var(--sx-pale),transparent 65%),var(--sx-paper); color:var(--sx-ink); padding-top:30px; }
 .page .hero h1 { font-size:clamp(40px,4.4vw,64px); line-height:1.04; letter-spacing:-.055em; }
 .page .hero h1 em { font-family:inherit; font-style:normal; font-weight:800; color:var(--sx-red); }
@@ -142,7 +142,7 @@
 .panelNavigation { display:flex; justify-content:space-between; align-items:center; gap:15px; border-top:1px solid var(--sx-line); padding-top:16px; margin-top:20px; font-size:11px; color:var(--sx-muted); }
 .panelNavigation button { color:var(--sx-ink); font-weight:750; }
 .panelNavigation button span { padding-left:8px; }
-.page .terrain { padding:90px 0; background:var(--sx-paper); }
+.page .terrain,.retained.terrain { padding:90px 0; background:var(--sx-paper); }
 .pedagogyLead { display:grid; grid-template-columns:.8fr 1.25fr; gap:50px; align-items:center; }
 .pedagogyLead h3 { font-size:clamp(32px,4vw,50px); line-height:1.08; letter-spacing:-.05em; font-weight:750; margin:15px 0 20px; }
 .pedagogyLead p:not(.eyebrow) { font-size:15px; line-height:1.9; color:var(--sx-muted); }
@@ -268,16 +268,16 @@
 .booking [data-formula][data-selected='true'] { background:var(--sx-pale); box-shadow:inset 0 4px var(--sx-red); }
 .booking [data-formula] b { font-size:56px; line-height:1.15; letter-spacing:-.05em; }
 .bookingJourney { display:flex; gap:24px; flex-wrap:wrap; margin:22px 0 30px; font-size:12px; color:var(--sx-muted); }.bookingJourney > span { display:flex; align-items:center; gap:9px; }.bookingJourney b { display:grid; place-items:center; width:24px; height:24px; border:1px solid var(--sx-line); border-radius:50%; color:var(--sx-red); font-size:10px; }
-:global(html.dark) .page { --sx-paper:#111b24; --sx-ink:#eef2f5; --sx-muted:#bac5cd; --sx-line:#35434d; --sx-soft:#182630; --sx-card:#202f39; --sx-red:#ffb3a5; --sx-pale:#3b2b2b; }
+:global(html.dark) .page,:global(html.dark) .retained { --sx-paper:#111b24; --sx-ink:#eef2f5; --sx-muted:#bac5cd; --sx-line:#35434d; --sx-soft:#182630; --sx-card:#202f39; --sx-red:#ffb3a5; --sx-pale:#3b2b2b; }
 :global(html.dark) .page .hero { background:radial-gradient(ellipse at 75% 35%,#52322a80,transparent 65%),var(--sx-paper); }
 :global(html.dark) .programImage img,:global(html.dark) .missionPanel img { background:#e3eaf0; }
 :global(html.dark) .hourRail button[data-active='true'] { background:#fff1df; color:#18232c; }
-:global(html.dark) .campusSection,:global(html.dark) .page .section:global(#examen) { background:#0c141b; }
+:global(html.dark) .campusSection,:global(html.dark) .page .section:global(#examen),:global(html.dark) .retained.section:global(#examen) { background:#0c141b; }
 @keyframes panelEnter { from { opacity:.5; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
 @media (min-width:1024px) and (max-height:820px) { .page .hero h1 { font-size:clamp(38px,4vw,54px); }.page .hero { padding-top:18px; } }
 @media (max-width:1050px) { .admissionDossier { gap:40px; }.missionShowcase { gap:30px; }.programExplorer { padding:25px; }.programBody { grid-template-columns:.9fr 1.2fr; gap:22px; }.manualLayout { gap:30px; }.journeyRail { grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; }.hero :global([class*='heroArtwork']) { max-width:100%; }.examTheory { padding:30px; } }
 @media (max-width:800px) {
-  .page .section,.page .terrain,.campusSection,.page .manualSection,.reviewsSection { padding-block:55px; }
+  .page .section,.retained.section,.page .terrain,.retained.terrain,.campusSection,.page .manualSection,.reviewsSection { padding-block:55px; }
   .missionShowcase,.admissionDossier,.programBody,.pedagogyLead,.manualLayout,.outcomes,.workplaces,.reviewsComposition,.practiceQuestion,.examExperience { grid-template-columns:1fr; }
   .missionShowcase { gap:24px; }.missionStage { position:relative; top:auto; }.missionChoices { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }.missionChoices > button { padding:15px 0; }.missionChoices strong { font-size:18px; }.missionDescription { font-size:12px; line-height:1.65; }.missionChoices > a { grid-column:1 / -1; padding-top:0; }
   .audience { grid-template-columns:1fr; gap:25px; }.qualificationCompare { grid-template-columns:1fr 1fr; gap:25px; }.qualificationCompare > div:first-child { grid-column:1 / -1; }.qualificationCompare > div:nth-child(2) { border-left:0; padding-left:0; }.skills { grid-template-columns:repeat(2,minmax(0,1fr)); }

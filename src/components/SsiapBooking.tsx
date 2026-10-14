@@ -4,25 +4,23 @@ import { useState } from 'react';
 import { TrainingDatesPricingSection, type TrainingDatesPricingSession } from './TrainingDatesPricingSection';
 import { ssiapRegistrationHref, type SsiapFormula } from '@/lib/ssiap-registration';
 import styles from './SsiapReferencePage.module.css';
-import experience from './SsiapExperience.module.css';
 
 export function SsiapBooking({ sessions }: { sessions: TrainingDatesPricingSession[] }) {
   const [formula, setFormula] = useState<SsiapFormula>('ssiap-1');
-  return <div id="dates-tarifs" className={`${styles.booking} ${experience.booking}`}>
+  return <div id="dates-tarifs" className={styles.booking}>
     <div className={styles.container}>
       <p className={styles.eyebrow}>Votre inscription · 01 / La formule</p>
       <h2 className={styles.sectionTitle}>Le bon parcours.<br /><em>Le tarif expliqué.</em></h2>
       <p className={styles.intro}>Choisissez votre formule, puis la session qui vous convient. Notre équipe vérifie votre dossier et confirme les dates avant votre inscription.</p>
-      <div className={experience.bookingJourney}><span><b>01</b> Je choisis ma formule</span><span><b>02</b> Je choisis mes dates</span><span><b>03</b> Je prépare mon dossier</span></div>
-      <fieldset className={styles.formulas} data-formulas>
+      <fieldset className={styles.formulas}>
         <legend className="sr-only">Choisissez votre formule SSIAP 1</legend>
-        <label className={styles.formula} data-formula data-selected={formula === 'ssiap-1'}>
+        <label className={styles.formula} data-selected={formula === 'ssiap-1'}>
           <input type="radio" name="ssiap-formule" value="ssiap-1" checked={formula === 'ssiap-1'} onChange={() => setFormula('ssiap-1')} />
           <span className={styles.eyebrow}>Formule essentielle</span><strong>SSIAP 1</strong>
           <span>Pour les candidats dont la qualification de secourisme est déjà en cours de validité.</span>
           <b>980 €</b><small>Formation SSIAP 1 · examen final</small>
         </label>
-        <label className={styles.formula} data-formula data-selected={formula === 'ssiap-1-sst'}>
+        <label className={styles.formula} data-selected={formula === 'ssiap-1-sst'}>
           <input type="radio" name="ssiap-formule" value="ssiap-1-sst" checked={formula === 'ssiap-1-sst'} onChange={() => setFormula('ssiap-1-sst')} />
           <span className={styles.eyebrow}>Formule complète</span><strong>SSIAP 1 + SST</strong>
           <span>Pour obtenir ou renouveler votre qualification de secourisme avant la formation SSIAP.</span>
