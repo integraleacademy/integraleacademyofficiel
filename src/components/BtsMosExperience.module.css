@@ -24,7 +24,7 @@
 .page * { box-sizing: border-box; }
 .page img { max-width: 100%; }
 .page a { text-decoration: none; }
-.page section[id], .page [id='contact-mos'], .page [id='pour-qui'], .page details[id] { scroll-margin-top: 160px; }
+.page section[id], .page [id='contact-mos'], .page [id='pour-qui'], .page details[id], .page [id='candidature-parcoursup'] { scroll-margin-top: 160px; }
 .page a:focus-visible, .page button:focus-visible, .page summary:focus-visible, .page [role='tabpanel']:focus-visible { outline: 3px solid #e8ab31; outline-offset: 5px; }
 .container { width: min(1200px, calc(100% - 64px)); margin-inline: auto; }
 .section { padding-block: clamp(64px, 7vw, 100px); }
@@ -74,18 +74,17 @@
 .missionTabs button:hover { background: var(--mos-soft); color: var(--mos-ink); }
 .missionTabs button[aria-selected='true']:hover { background: #142d49; color: white; }
 .stepCheck { width: 10px; color: #3f946f; font-size: 12px; }
-.missionPanel { display: grid; grid-template-columns: 1.3fr 1fr; min-height: 488px; }
-.missionScene { align-self: center; padding: 24px; min-width: 0; }
+.missionPanel { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); align-items: stretch; }
+.missionScene { margin: 0; padding: 24px; min-width: 0; }
+.missionScene figcaption { min-height: 42px; margin-top: 12px; font-size: 12px; line-height: 1.6; color: var(--mos-muted); }
 .sceneTop { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 12px; color: var(--mos-muted); font-size: 10px; font-weight: 700; letter-spacing: .055em; text-transform: uppercase; }
-.sceneImage { position: relative; overflow: hidden; border-radius: 15px; }
-.sceneImage > img { display: block; width: 100%; height: auto; }
-.scenePin { position: absolute; display: flex; align-items: center; gap: 7px; transform: translate(-50%, -50%); width: max-content; max-width: 90%; border: 1px solid #d1e1f8; border-radius: 999px; padding: 7px 11px; background: #fffffff5; color: #142d49; font-size: 11px; font-weight: 750; box-shadow: 0 5px 25px #10213230; animation: pinIn .35s ease both; }
-.scenePin i { width: 8px; height: 8px; background: #1d4ed8; border-radius: 50%; box-shadow: 0 0 0 4px #1d4ed81a; }
+.sceneImage { aspect-ratio: 3 / 2; overflow: hidden; border-radius: 15px; background: var(--mos-soft); }
+.sceneImage > img { display: block; width: 100%; height: 100%; object-fit: contain; }
 .sceneProgress { display: grid; grid-template-columns: repeat(4, 1fr); gap: 7px; margin-top: 20px; }
 .sceneProgress span { height: 3px; background: var(--mos-line); border-radius: 3px; transition: background .25s; }
 .sceneProgress span[data-complete='true'] { background: #4079e4; }
 .missionCopy { display: flex; flex-direction: column; align-items: flex-start; padding: 32px; border-left: 1px solid var(--mos-line); animation: contentIn .3s ease both; }
-.missionCopy h3 { font-size: clamp(24px, 2.5vw, 32px); margin: 13px 0 14px; }
+.missionCopy h3 { font-size: clamp(24px, 2.3vw, 30px); min-height: 2.6em; margin: 13px 0 14px; text-wrap: balance; }
 .missionCopy > p:not(.eyebrow) { color: var(--mos-muted); font-size: 14px; margin: 0; }
 .missionResult { margin: 24px 0; padding: 17px 0 0; width: 100%; border-top: 1px solid var(--mos-line); }
 .missionResult > span { display: block; font-size: 10px; text-transform: uppercase; letter-spacing: .1em; color: var(--mos-muted); }
@@ -93,7 +92,7 @@
 .missionResult ul { padding: 0; list-style: none; margin: 10px 0 0; }
 .missionResult li { display: flex; align-items: flex-start; gap: 10px; font-size: 12px; color: var(--mos-muted); margin-top: 5px; }
 .missionResult li > span { color: var(--mos-blue); }
-.nextStep { display: flex; width: 100%; justify-content: space-between; gap: 10px; align-items: center; margin-top: auto; padding: 13px 0 0; min-height: 44px; border: 0; background: none; font-size: 13px; font-weight: 750; color: var(--mos-blue); cursor: pointer; text-align: left; }
+.nextStep { display: flex; width: 100%; justify-content: space-between; gap: 10px; align-items: center; margin-top: 4px; padding: 15px 0 0; min-height: 44px; border: 0; border-top: 1px solid var(--mos-line); background: none; font-size: 13px; font-weight: 750; color: var(--mos-blue); cursor: pointer; text-align: left; }
 .nextStep > span { font-size: 22px; }
 .profile, .practicalGrid { display: grid; grid-template-columns: 1fr 1.35fr; gap: 60px; margin-top: 48px; }
 .profile { border-top: 1px solid var(--mos-line); padding-top: 34px; }
@@ -104,7 +103,7 @@
 .twoColumns { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
 .disclosure { border-bottom: 1px solid var(--mos-line); }
 .disclosure summary { display: flex; align-items: center; justify-content: space-between; gap: 22px; min-height: 60px; padding: 17px 0; list-style: none; font-size: 14px; font-weight: 700; line-height: 1.6; cursor: pointer; }
-.disclosure summary::-webkit-details-marker, .programRow summary::-webkit-details-marker, .welcomePack summary::-webkit-details-marker { display: none; }
+.disclosure summary::-webkit-details-marker, .programRow summary::-webkit-details-marker { display: none; }
 .disclosure summary > span:last-child { flex-shrink: 0; font-size: 24px; font-weight: 400; color: var(--mos-blue); transition: transform .2s; }
 .disclosure[open] > summary > span:last-child { transform: rotate(45deg); }
 .disclosureBody { padding: 0 0 22px; color: var(--mos-muted); font-size: 14px; }
@@ -191,16 +190,8 @@
 .schoolResources figure { margin: 0; background: var(--mos-surface); overflow: hidden; border-radius: 22px; border: 1px solid var(--mos-line); }
 .schoolResources img { display: block; width: 100%; height: auto; }
 .schoolResources figcaption { padding: 14px 18px; font-size: 11px; color: var(--mos-muted); }
-.welcomePack { border: 1px solid var(--mos-line); border-radius: 22px; background: var(--mos-surface); overflow: hidden; }
-.welcomePack > summary { display: flex; align-items: center; justify-content: space-between; gap: 26px; padding: 28px; list-style: none; cursor: pointer; }
-.welcomePack > summary small { display: block; text-transform: uppercase; letter-spacing: .1em; font-size: 10px; color: var(--mos-blue); font-weight: 700; }
-.welcomePack > summary strong { display: block; margin: 7px 0; font-size: 24px; font-weight: 700; line-height: 1.3; }
-.welcomePack > summary > span:first-child > span { display: block; color: var(--mos-muted); font-size: 12px; }
-.packToggle { display: flex; align-items: center; gap: 22px; font-size: 12px; font-weight: 700; flex-shrink: 0; }
-.packToggle > span { font-size: 26px; font-weight: 400; transition: transform .2s; }
-.welcomePack[open] .packToggle > span { transform: rotate(45deg); }
 .admission { --mos-ink: #f1f6fc; --mos-muted: #bdcbdc; --mos-line: #34485f; --mos-blue: #aecdf9; --mos-surface: #142b43; --mos-soft: #1d354e; color: var(--mos-ink); background: #0e2033; }
-.admissionSteps { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 24px; margin: 0 0 25px; padding: 0; list-style: none; }
+.admissionSteps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; margin: 0 0 35px; padding: 0; list-style: none; }
 .admissionSteps li { position: relative; border-top: 1px solid #5b728c; padding-top: 22px; }
 .admissionSteps li > span { display: block; color: #9fc3f7; font-size: 12px; font-weight: 700; margin-bottom: 20px; }
 .admissionSteps h3 { font-size: 17px; margin: 0 0 12px; }
@@ -227,7 +218,52 @@
 .faqList { max-width: 900px; margin-left: auto; }
 .faqList .disclosure summary { padding-block: 23px; font-size: 16px; }
 .mobileActions { display: none; }
-@keyframes pinIn { from { opacity: 0; translate: 0 7px; } to { opacity: 1; translate: 0 0; } }
+.applicationPrompt { margin: 24px 0 0; color: var(--mos-ink); font-size: 13px; font-weight: 750; }
+.heroCopy .actions { gap: 10px; margin-top: 12px; }
+.heroCopy .button { font-size: 12px; padding-inline: 18px; }
+.heroCopy > .textLink { margin-top: 4px; font-size: 12px; }
+.heroFunding { display: flex; align-items: center; gap: 14px; margin-top: 22px; color: var(--mos-blue); }
+.heroFunding > strong { font-size: 44px; line-height: 1; letter-spacing: -.05em; }
+.heroFunding sup { font-size: 18px; vertical-align: super; }
+.heroFunding > span { font-size: 12px; line-height: 1.5; font-weight: 700; color: var(--mos-ink); }
+.parcoursupLogo { display: block; width: 210px; height: auto; max-width: 100%; }
+.parcoursupButton { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 50px; padding: 13px 16px; border: 1px solid #bbcbe1; border-radius: 999px; background: #fff; color: #102132; font-size: 12px; font-weight: 700; }
+.parcoursupButton .parcoursupLogo { width: 108px; }
+.parcoursupButton svg { flex-shrink: 0; width: 16px; }
+.parcoursupButton:hover { border-color: #1d4ed8; background: #f4f7fd; }
+.fundingGrid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 24px; margin-top: 36px; }
+.alternanceBenefits, .fundingCard { border-radius: 24px; padding: 32px; }
+.alternanceBenefits { background: #142b43; color: #fff; --mos-muted: #c6d5e6; --mos-blue: #b5d1fa; }
+.alternanceBenefits h3 { margin: 18px 0 24px; font-size: 30px; }
+.alternanceBenefits > p:last-child { color: var(--mos-muted); font-size: 14px; margin-bottom: 0; }
+.fundingCard { background: #e4edff; color: #102132; --mos-ink: #102132; --mos-muted: #465976; --mos-blue: #204fab; border: 1px solid #b9cef3; }
+.fundingAmount { margin: 18px 0 8px; font-size: 82px; line-height: 1; letter-spacing: -.07em; font-weight: 850; }
+.fundingAmount sup { font-size: 32px; vertical-align: super; }
+.fundingCard h3 { margin: 12px 0 20px; font-size: 28px; }
+.fundingCard > p:not(.eyebrow):not(.fundingAmount) { color: var(--mos-muted); }
+.fundingCard .small { margin-bottom: 0; }
+.applicationBanner { display: flex; align-items: center; justify-content: space-between; gap: 28px; margin-top: 44px; padding: 28px 32px; border: 1px solid var(--mos-line); border-radius: 20px; background: var(--mos-surface); }
+.applicationBanner h3 { margin: 8px 0; font-size: 26px; }
+.applicationBanner p:last-child { margin: 0; color: var(--mos-muted); font-size: 13px; }
+.applicationBanner .button { flex-shrink: 0; }
+.remoteFeatures { padding-left: 18px; margin-block: 18px; color: var(--mos-muted); font-size: 13px; line-height: 1.75; }
+.remoteFeatures li + li { margin-top: 10px; }
+.applicationChoices { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; margin-bottom: 48px; }
+.applicationCard { display: flex; flex-direction: column; align-items: flex-start; padding: 32px; border-radius: 24px; background: #fff; color: #102132; --mos-muted: #526071; --mos-blue: #1d4ed8; --mos-line: #dce3e9; min-width: 0; }
+.applicationCard h3 { margin: 20px 0; font-size: 28px; }
+.applicationCard > p:not(.eyebrow) { color: var(--mos-muted); }
+.applicationCard > .button { margin-top: auto; }
+.applicationCard > .small { margin-top: 18px; margin-bottom: 0; }
+.parcoursupCard > .parcoursupLogo { margin-top: 22px; }
+.parcoursupCard h3 { font-size: 22px; }
+.parcoursupLinks { display: grid; gap: 10px; width: 100%; }
+.parcoursupLinks a { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 15px 18px; border: 1px solid #b9cef3; border-radius: 12px; color: #173eab; background: #edf3fe; }
+.parcoursupLinks a:hover { background: #dce9ff; }
+.parcoursupLinks strong { display: block; font-size: 14px; }
+.parcoursupLinks small { display: block; font-size: 11px; margin-top: 3px; color: #465976; }
+.parcoursupLinks svg { flex-shrink: 0; }
+.admissionIntro { margin-bottom: 28px; }
+.admissionIntro h3 { font-size: 28px; margin: 12px 0 0; }
 @keyframes contentIn { from { opacity: .4; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 @media (max-width: 1050px) {
   .heroGrid { gap: 28px; }
@@ -253,6 +289,9 @@
   .navigation nav > div > div { width: 100%; }
 }
 @media (max-width: 850px) {
+  .fundingGrid, .applicationChoices { grid-template-columns: 1fr; }
+  .applicationBanner { flex-direction: column; align-items: flex-start; }
+  .applicationCard > .button { margin-top: 12px; }
   .hero { padding-top: 30px; }
   .heroGrid { grid-template-columns: 1fr; gap: 30px; }
   .heroVisual { max-width: 620px; width: 100%; margin-inline: auto; }
@@ -261,7 +300,7 @@
   .sectionHeading > p { max-width: 600px; }
   .missionPanel { grid-template-columns: 1fr; }
   .missionScene { max-width: 700px; width: 100%; margin: auto; }
-  .missionCopy { border-left: 0; border-top: 1px solid var(--mos-line); min-height: 370px; }
+  .missionCopy { border-left: 0; border-top: 1px solid var(--mos-line); min-height: 0; }
   .profile, .practicalGrid { gap: 30px; grid-template-columns: 1fr 1.3fr; }
   .calendar { grid-template-columns: 1fr; }
   .periodDetail { position: relative; padding-right: 145px; min-height: 300px; }
@@ -272,12 +311,21 @@
   .generalSubjects { padding: 24px; }
   .schoolResources { grid-template-columns: 1fr; }
   .schoolResources figure { max-width: 640px; margin-inline: auto; }
-  .admissionSteps { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 28px; }
+  .admissionSteps { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 28px; }
   .adviser { grid-template-columns: 1fr; gap: 32px; }
   .adviserCard { max-width: 560px; width: 100%; }
   .adviserIdentity .portrait { width: 160px; height: 160px; }
 }
 @media (max-width: 600px) {
+  .heroCopy .actions { align-items: stretch; flex-direction: column; }
+  .heroCopy .actions > a { width: 100%; }
+  .heroCopy .button, .parcoursupButton { font-size: 14px; }
+  .parcoursupButton .parcoursupLogo { width: 125px; }
+  .fundingCard, .alternanceBenefits, .applicationCard, .applicationBanner { padding: 25px 22px; }
+  .fundingAmount { font-size: 72px; }
+  .fundingCard h3, .alternanceBenefits h3, .applicationCard h3 { font-size: 26px; }
+  .applicationCard > .button { width: 100%; padding-inline: 14px; font-size: 13px; }
+  .missionCopy h3 { min-height: 0; }
   .container { width: calc(100% - 32px); }
   .section { padding-block: 54px; }
   .heroCopy h1 { font-size: 26px; }
@@ -305,9 +353,8 @@
   .missionTabs button:nth-child(n+3) { border-bottom: 0; }
   .missionScene { padding: 14px; }
   .sceneTop { font-size: 8px; }
-  .scenePin { padding: 5px 8px; font-size: 9px; }
   .sceneImage { border-radius: 10px; }
-  .missionCopy { padding: 24px 20px; min-height: 390px; }
+  .missionCopy { padding: 24px 20px; min-height: 0; }
   .missionCopy h3 { font-size: 27px; }
   .profile, .practicalGrid, .twoColumns, .formats { grid-template-columns: 1fr; gap: 22px; }
   .profile h3, .practicalGrid h3 { font-size: 27px; }
@@ -341,9 +388,6 @@
   .examTable th:first-child { min-width: 130px; }
   .benefitPreview { font-size: 12px; gap: 8px; flex-direction: column; }
   .schoolResources { gap: 24px; }
-  .welcomePack > summary { flex-direction: column; align-items: flex-start; padding: 22px; gap: 18px; }
-  .welcomePack > summary strong { font-size: 23px; }
-  .packToggle { width: 100%; justify-content: space-between; }
   .admissionSteps { grid-template-columns: 1fr; gap: 0; }
   .admissionSteps li { border-top: 0; border-left: 1px solid #5b728c; margin-left: 18px; padding: 0 0 24px 34px; }
   .admissionSteps li:last-child { padding-bottom: 0; border-color: transparent; }

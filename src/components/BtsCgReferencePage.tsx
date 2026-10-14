@@ -1,5 +1,4 @@
 import { ManualArtwork } from '@/components/ManualArtwork';
-import { TrainingWelcomePack } from '@/components/TrainingWelcomePack';
 import { btsHeroArtwork, btsPracticeArtwork, btsMissionArtwork } from '@/data/btsIllustrations';
 import btsStyles from './BtsIdentity.module.css';
 import { btsRhythms } from '@/data/btsRhythms';
@@ -229,8 +228,6 @@ export function BtsCgReferencePage() {
 
       <BtsSectionNavigation code="CG" competencyHref="#competences" competencyLabel="Compétences" faqHref="#faq-cg" registrationHref={applicationUrl} />
 
-      <TrainingWelcomePack course="bts-cg" />
-
       <CourseJourney course="bts-cg" />
 
       <Section id="pour-qui" eyebrow="01 — Un choix qui rassure et qui ouvre des portes" title={<>Un métier utile pour vous. Un diplôme solide pour vos parents.</>} intro={<>Un BTS pour celles et ceux qui aiment comprendre, organiser, vérifier et rendre les choses plus claires — avec des compétences recherchées dans tous les secteurs.</>}>
@@ -253,7 +250,7 @@ export function BtsCgReferencePage() {
       <Section id="formats" eyebrow="03 — Deux formats, le même BTS" title={<>Choisissez la façon d’étudier qui vous correspond vraiment.</>} intro={<>Le format est un choix d’organisation. Le diplôme, le programme officiel, les cours en direct et l’accompagnement restent les mêmes.</>}>
         <div className="grid gap-5 lg:grid-cols-2">
           <article className="rounded-[2rem] border border-academy-line bg-[#FFFDF8] p-6 shadow-card sm:p-8"><span className="inline-flex rounded-full bg-bts-50 px-3 py-2 text-[.62rem] font-black uppercase tracking-[.15em] text-bts-800 ring-1 ring-bts-200">● À l’école</span><h3 className="mt-6 text-3xl font-black tracking-[-.04em]">En présentiel à Puget-sur-Argens</h3><p className="mt-4 leading-7 text-academy-muted">Un cadre vivant pour apprendre avec votre promotion, échanger directement avec les formateurs et profiter de l’école.</p><div className="mt-6 grid gap-3 sm:grid-cols-2">{['Cours en groupe', 'Équipe sur place', 'Vie de promotion', 'Locaux dédiés'].map((item) => <p key={item} className="rounded-2xl bg-academy-bg p-4 text-sm font-black">✓ {item}</p>)}</div></article>
-          <article className="rounded-[2rem] border border-[#284661] bg-bts-950 p-6 text-white shadow-card sm:p-8"><span className="inline-flex rounded-full bg-bts-400/15 px-3 py-2 text-[.62rem] font-black uppercase tracking-[.15em] text-bts-200 ring-1 ring-bts-300/30">◉ Classe virtuelle</span><h3 className="mt-6 text-3xl font-black tracking-[-.04em]">100 % à distance en visioconférence</h3><p className="mt-4 leading-7 text-white/62">De vrais cours en direct avec vos formateurs et votre promotion, depuis chez vous — pas une simple plateforme laissée en autonomie.</p><div className="mt-6 grid gap-3 sm:grid-cols-2">{['Cours en direct', 'Interactions en visio', 'Suivi régulier', 'Accessible partout en France'].map((item) => <p key={item} className="rounded-2xl bg-white/8 p-4 text-sm font-black">✓ {item}</p>)}</div></article>
+          <article className="rounded-[2rem] border border-[#284661] bg-bts-950 p-6 text-white shadow-card sm:p-8"><span className="inline-flex rounded-full bg-bts-400/15 px-3 py-2 text-[.62rem] font-black uppercase tracking-[.15em] text-bts-200 ring-1 ring-bts-300/30">◉ Cours en live sur ZOOM</span><h3 className="mt-6 text-3xl font-black tracking-[-.04em]">100 % à distance en visioconférence</h3><p className="mt-4 leading-7 text-white/62">De vrais cours en direct avec vos formateurs et votre promotion, depuis chez vous — pas une simple plateforme laissée en autonomie.</p><div className="mt-6 grid gap-3 sm:grid-cols-2">{['Cours en direct', 'Interactions en visio', 'Suivi régulier', 'Accessible partout en France'].map((item) => <p key={item} className="rounded-2xl bg-white/8 p-4 text-sm font-black">✓ {item}</p>)}</div></article>
         </div>
         <div className="mt-5 flex flex-col items-start justify-between gap-4 rounded-[1.7rem] border border-bts-300 bg-bts-50 p-5 sm:flex-row sm:items-center"><div><p className="text-lg font-black text-bts-950">Même diplôme d’État. Même programme. Même équipe à vos côtés.</p><p className="mt-1 text-sm font-semibold text-bts-900/65">Le format est validé avec l’équipe admissions selon votre situation.</p></div><span className="rounded-full bg-white px-4 py-2 text-xs font-black text-academy-ink ring-1 ring-bts-300">BTS CG · RNCP 39159</span></div>
       </Section>

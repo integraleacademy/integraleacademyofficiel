@@ -137,7 +137,7 @@ export function BtsCompleteInformation({ course }: { course: BtsExpandedCourseKe
           {[
             ['Durée', '2 ans · 1 350 heures'],
             ['Rythme', data.rhythm],
-            ['Modalités', 'Présentiel à Puget-sur-Argens ou classe virtuelle en direct'],
+            ['Modalités', 'Présentiel à Puget-sur-Argens ou cours en live 100 % à distance en visioconférence ZOOM'],
             ['Diplôme', `Diplôme national de niveau 5 · RNCP ${data.rncp}`],
           ].map(([label, value]) => (
             <article key={label} className="rounded-[1.5rem] border border-academy-line bg-academy-bg p-5 shadow-soft">
