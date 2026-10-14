@@ -52,7 +52,7 @@
 :global(html.dark) .intro { color:#c2cbd4; }
 :global(html.dark) .booking [data-city-sessions] > section { background:#18232f; border-color:#3a4959; }
 /* Existing light callouts keep their own legible palette in dark mode. */
-:global(html.dark) .page :is(:global(.bg-white),:global(.bg-white\/90),:global(.bg-white\/95),:global(.bg-\[\#FFFDF8\]),:global(.bg-\[\#EFE7D9\]),:global(.bg-\[\#F3EEE5\]),:global(.bg-red-50),:global(.bg-emerald-50),:global(.bg-orange-50),:global(.bg-blue-50),:global(.bg-emerald-50\/70),:global(.bg-emerald-50\/60)) {
+:global(html.dark) .page :is(:global(.bg-white),:global(.bg-white\/90),:global(.bg-white\/95),:global(.bg-\[\#FFFDF8\]),:global(.bg-\[\#EFE7D9\]),:global(.bg-\[\#F3EEE5\]),:global(.bg-red-50),:global(.bg-emerald-50),:global(.bg-orange-50),:global(.bg-blue-50),:global(.bg-emerald-50\/70),:global(.bg-emerald-50\/60),:global([class*='bg-[linear-gradient(']),:global(.from-orange-100)) {
   --text-main:23 33 43; --text-muted:77 87 99; --background:250 247 240; --surface:255 253 248; --border:223 217 205; color:#17212b;
 }
 :global(html.dark) .page .booking > aside { --text-main:238 242 246; --text-muted:194 203 212; color:#eef2f6; }
@@ -64,6 +64,8 @@
   .mobileBar { display:none; }
   .hero h1 { font-size:clamp(42px,4.1vw,60px); }
   .hero :global([class*='heroGrid']) { gap:36px; }
+  .hero[data-extended-copy] :global([class*='heroGrid']) { grid-template-columns:minmax(0,1.25fr) minmax(0,1fr); }
+  .hero[data-extended-copy] .description { max-width:none; }
   .hero .description { font-size:15px; line-height:1.65; }
   .booking [data-session-details] > div { padding:10px 12px; }
   .booking [data-session-overview] > h2 { font-size:25px; }

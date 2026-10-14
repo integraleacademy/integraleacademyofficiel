@@ -26,6 +26,7 @@ export function DespHero({ variant, title, subtitle, stats, sessions }: {
     title={title}
     tagline={isVae ? 'Faites reconnaître votre expérience.' : 'Créez, reprenez, dirigez votre entreprise.'}
     description={subtitle}
+    extendedCopy
     primaryAction={{ href: `/contact?formation=desp-${variant}`, label: 'Recevoir le dossier →' }}
     additionalAction={<Link href="/despvaeouinitial" className="self-center text-sm font-bold text-orange-200 underline decoration-orange-300/50 underline-offset-4">Comparer initial et VAE →</Link>}
     highlights={isVae ? ['Accompagnement individualisé', 'À distance', 'Préparation du jury'] : ['7 semaines · 245 h', 'Distanciel + présentiel', 'Suivi personnalisé']}
