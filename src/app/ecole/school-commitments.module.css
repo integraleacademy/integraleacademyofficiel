@@ -1,0 +1,68 @@
+.commitments { border-top: 1px solid rgb(var(--border)); background: linear-gradient(180deg, rgb(var(--accent) / .065), transparent 65%); }
+.featured { display: grid; grid-template-columns: 1.15fr 1fr; gap: 24px; }
+.documentCard { display: flex; flex-direction: column; min-width: 0; padding: 34px; border: 1px solid transparent; border-radius: 28px; }
+.qualiopi { color: #fffaf0; background: #081626; border-color: #263a4c; }
+.ssiap { color: #182b3c; background: #f3e5c6; border-color: #dec99d; }
+.cardKicker { display: flex; align-items: center; gap: 12px; font-size: 10px; font-weight: 800; line-height: 1.5; letter-spacing: .09em; text-transform: uppercase; }
+.qualiopi .cardKicker { color: #f2d89a; }
+.icon { display: grid; place-items: center; width: 44px; height: 44px; flex-shrink: 0; border: 1px solid currentColor; border-radius: 13px; }
+.icon svg { width: 25px; height: 25px; }
+.documentType { margin-left: auto; padding: 3px 8px; border: 1px solid currentColor; border-radius: 6px; font-size: 9px; letter-spacing: .08em; }
+.documentTitle { display: flex; align-items: center; flex-wrap: wrap; gap: 10px 18px; margin-top: 26px; }
+.documentTitle h3 { font-size: clamp(30px, 3vw, 40px); line-height: 1.1; letter-spacing: -.035em; }
+.documentTitle > span { padding: 5px 11px; border: 1px solid currentColor; border-radius: 30px; font-size: 11px; font-weight: 700; white-space: nowrap; }
+.qualiopi .documentTitle > span { color: #f2d89a; border-color: #56616a; }
+.ssiap .documentTitle > span { border-color: #baa67c; }
+.documentCard .documentIntro { margin-top: 16px; font-size: 14px; line-height: 1.8; }
+.qualiopi .documentIntro { color: #d0d7dd; }
+.documentCard .scopeIntro { margin-top: 24px; color: #c4ced7; font-size: 12px; line-height: 1.7; }
+.scopeList { display: grid; gap: 0; margin: 13px 0 26px; padding: 0; list-style: none; }
+.scopeList li { display: flex; gap: 14px; padding-block: 11px; border-top: 1px solid #314253; font-size: 13px; line-height: 1.65; }
+.scopeList li > span:first-child { color: #e7bd65; font-size: 10px; font-weight: 800; padding-top: 2px; }
+.decree { display: grid; align-content: center; flex: 1; gap: 4px; margin-block: 26px; padding: 22px 0; border-block: 1px solid #ceba8f; }
+.decree p, .decree > span { font-size: 12px; }
+.decree > strong { font-size: clamp(32px, 3.8vw, 48px); font-weight: 800; line-height: 1.4; letter-spacing: -.035em; }
+.download { display: flex; align-items: center; justify-content: space-between; gap: 18px; min-height: 50px; margin-top: auto; padding: 14px 18px; border-radius: 14px; font-size: 12px; font-weight: 800; line-height: 1.5; transition: background .2s, transform .2s; }
+.download svg { width: 20px; height: 20px; flex-shrink: 0; }
+.qualiopi .download { background: #f2d28d; color: #182b3c; }
+.ssiap .download { background: #182b3c; color: #fffaf0; }
+.qualiopi .download:hover { background: #ffe3a6; transform: translateY(-2px); }
+.ssiap .download:hover { background: #30495e; transform: translateY(-2px); }
+.referencesGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 24px; scroll-margin-top: calc(var(--site-header-height) + var(--school-nav-height) + 24px); }
+.referencePanel { min-width: 0; padding: 30px 34px; border: 1px solid rgb(var(--border)); border-radius: 26px; background: rgb(var(--surface)); }
+.panelHeading { display: flex; align-items: center; gap: 16px; padding-bottom: 24px; }
+.panelHeading .icon { color: rgb(var(--accent-strong)); background: rgb(var(--accent) / .1); border-color: rgb(var(--accent-strong) / .25); }
+.panelHeading p { margin-bottom: 5px; color: rgb(var(--accent-strong)); font-size: 9px; font-weight: 800; line-height: 1.5; letter-spacing: .08em; text-transform: uppercase; }
+.panelHeading h3 { font-size: 22px; line-height: 1.3; letter-spacing: -.025em; }
+.referenceList { margin: 0; }
+.referenceList > div { padding-block: 19px; border-top: 1px solid rgb(var(--border)); }
+.referenceList > div:last-child { padding-bottom: 0; }
+.referenceList dt { margin-bottom: 7px; font-size: 13px; font-weight: 800; line-height: 1.5; }
+.referenceList dd { margin: 0; color: rgb(var(--text-muted)); font-size: 12px; line-height: 1.85; overflow-wrap: anywhere; }
+.referenceList dd strong { display: block; margin-top: 4px; color: rgb(var(--text-main)); font-size: 12px; font-weight: 750; }
+.referenceList dd .inlineReference { display: inline; }
+.adefList { display: grid; gap: 6px; margin: 10px 0 0; padding: 0; list-style: none; }
+.adefList li { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 2px 12px; }
+.referenceList .adefList strong { margin: 0; font-variant-numeric: tabular-nums; }
+@media (max-width: 1100px) {
+  .documentCard, .referencePanel { padding: 28px; }
+  .featured { grid-template-columns: 1.1fr 1fr; gap: 20px; }
+  .referencesGrid { gap: 20px; }
+}
+@media (max-width: 800px) {
+  .featured, .referencesGrid { grid-template-columns: 1fr; }
+  .decree { min-height: 170px; }
+  .panelHeading h3 { font-size: 23px; }
+}
+@media (max-width: 480px) {
+  .documentCard, .referencePanel { padding: 24px; border-radius: 22px; }
+  .cardKicker { gap: 10px; font-size: 9px; }
+  .icon { width: 40px; height: 40px; }
+  .documentType { padding-inline: 6px; }
+  .documentTitle { margin-top: 24px; }
+  .documentTitle h3 { font-size: 32px; }
+  .documentIntro { font-size: 13px; }
+  .panelHeading { gap: 12px; }
+  .panelHeading h3 { font-size: 21px; }
+  .download { gap: 12px; padding-inline: 14px; }
+}

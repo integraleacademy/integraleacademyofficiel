@@ -6,6 +6,7 @@ import { contact } from '@/data/site';
 import styles from './ecole.module.css';
 import experience from './school-experience.module.css';
 import { SchoolNavigation, SchoolCampuses, SchoolPedagogy, SchoolVisitButton, SchoolVisitAdviser } from './SchoolExperience';
+import { SchoolCommitments } from './SchoolCommitments';
 
 export const metadata = createPageMetadata('/ecole');
 
@@ -14,16 +15,6 @@ const team = [
   { portrait: 'aurelie' as const, name: 'Aurélie Chaussez', role: 'Relations clients · Responsable BTS', mission: 'Le lien entre les apprenants, les entreprises et l’école, pour un parcours bien accompagné.', specialty: 'Pour votre BTS et votre alternance' },
   { portrait: 'elsa' as const, name: 'Elsa Duquesne', role: 'Assistante de direction', mission: 'Un suivi administratif attentif et une organisation quotidienne au service de votre formation.', specialty: 'Pour préparer et suivre votre dossier' },
   { portrait: 'yannice' as const, name: 'Yannice Libault', role: 'Coordinateur pédagogique · Azzera Academy', mission: 'La coordination des programmes et des intervenants, avec une attention portée au suivi pédagogique.', specialty: 'Pour votre suivi pédagogique' },
-];
-const certifications = [
-  ['Qualiopi', 'Certification qualité n°03169 du 21/10/2024.'],
-  ['NDA DREETS', 'Déclaration d’activité n°93830600283.'],
-  ['CFA · UAI', 'Côte d’Azur 0831774C · Paris 0756548K.'],
-  ['CNAPS', 'Autorisation FOR-083-2027-02-08-20200755135.'],
-  ['ADEF', 'Agréments APS 8320032701 · A3P 8320111201 · CPSP 8325091511.'],
-  ['SSIAP', 'Référence sécurité incendie n°8323.'],
-  ['INRS · SST', 'Habilitation H34836/2020/SST-1/O/07.'],
-  ['VTC', 'Agrément préfectoral VTC-26-001.'],
 ];
 function Arrow({ diagonal = false }: { diagonal?: boolean }) {
   return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={diagonal ? 'M6 18 18 6M6 6h12v12' : 'M4 12h16m-6-6 6 6-6 6'} /></svg>;
@@ -84,10 +75,21 @@ export default function Page() {
           <p>Avant, pendant et après la formation, des interlocuteurs identifiés vous accompagnent. Voici les personnes à qui vous pouvez vous adresser.</p>
         </div>
         <div className={styles.teamLayout}>
-          <figure className={styles.teamIllustration}>
-            <Image src="/images/formation-scenes-manuel/aps-arrivee.webp" alt="Illustration de l’accueil et de l’accompagnement d’apprenants à leur arrivée en formation APS" width={1536} height={1024} sizes="(max-width: 800px) 100vw, 42vw" />
-            <figcaption>Un accompagnement dès votre arrivée.</figcaption>
-          </figure>
+          <div className={experience.teamLead}>
+            <article className={experience.directorCard}>
+              <p className={experience.directorLabel}>La direction de l’école</p>
+              <div className={experience.directorIdentity}>
+                <div aria-hidden="true"><TeamPortrait person="clement" size={92} /></div>
+                <div><h3>Clément Vaillant</h3><p>Fondateur & directeur général</p></div>
+              </div>
+              <p className={experience.directorMission}>Il pilote le développement de l’école avec l’équipe, en portant une même exigence : la qualité des parcours et la proximité avec chaque apprenant.</p>
+              <a href="#clement-vaillant" className={styles.textLink}>Découvrir son parcours <Arrow diagonal /></a>
+            </article>
+            <figure className={styles.teamIllustration}>
+              <Image src="/images/formation-scenes-manuel/aps-arrivee.webp" alt="Illustration de l’accueil et de l’accompagnement d’apprenants à leur arrivée en formation APS" width={1536} height={1024} sizes="(max-width: 800px) 100vw, 42vw" />
+              <figcaption>Un accompagnement dès votre arrivée.</figcaption>
+            </figure>
+          </div>
           <div className={`${styles.teamGrid} ${experience.teamCards}`}>
             {team.map(person => <article className={`${styles.person} ${experience.teamCard}`} key={person.name}>
               <div className={styles.personAvatar} aria-hidden="true"><TeamPortrait person={person.portrait} size={92} /></div>
@@ -160,13 +162,7 @@ export default function Page() {
       </div>
     </section>
 
-    <section id="agrements" className={styles.certifications} aria-labelledby="certifications-title">
-      <div className={styles.container}>
-        <div className={styles.certificationIntro}><p className={styles.eyebrow}>05 / Nos engagements</p><h2 id="certifications-title">Un cadre sérieux. Des références accessibles.</h2></div>
-        <div className={styles.certificationStrip}><span>Qualiopi<small>Certification qualité</small></span><span>CNAPS<small>Autorisation de formation</small></span><span>CFA · UAI<small>Formation en alternance</small></span></div>
-        <details id="references" className={styles.references}><summary>Consulter les certifications et références administratives<span className={styles.plus} aria-hidden="true">+</span></summary><dl>{certifications.map(([title, detail]) => <div key={title}><dt>{title}</dt><dd>{detail}</dd></div>)}</dl></details>
-      </div>
-    </section>
+    <SchoolCommitments />
 
     <section id="visite" className={styles.visit} aria-labelledby="visit-title">
       <div className={`${styles.container} ${styles.visitGrid}`}>
