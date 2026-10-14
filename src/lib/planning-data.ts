@@ -6,6 +6,17 @@ export function isBtsTraining(slug = '') {
   return slug === 'bts' || slug.startsWith('bts-') || ['commerce-international', 'comptabilite-gestion'].includes(slug);
 }
 
+export type SsiapPlanningCourse = 'ssiap-1' | 'ssiap-2' | 'ssiap-3' | 'ssiap-maintien';
+
+export function planningSsiapCourse(session: { title?: string; training?: { slug?: string; name?: string } | null }): SsiapPlanningCourse | null {
+  const slug = (session.training?.slug || '').toLowerCase();
+  if (!slug.includes('ssiap')) return null;
+  const label = [slug, session.title, session.training?.name].join(' ').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  if (/recycl|remise|(?:^|[\s-])ran(?:[\s-]|$)/.test(label)) return 'ssiap-maintien';
+  const level = label.match(/\bssiap[\s-]*([123])\b/)?.[1];
+  return level ? `ssiap-${level}` as SsiapPlanningCourse : null;
+}
+
 export function planningFormationHref(session: { training?: { slug?: string; pageUrl?: string } | null }) {
   const slug = session.training?.slug || '';
   if (['desp', 'desp-dssp', 'desp-initial'].includes(slug)) return '/dirigeant';

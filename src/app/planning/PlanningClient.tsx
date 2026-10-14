@@ -7,7 +7,7 @@ import { formatSessionDate, formatSessionPeriod, hasDetailedDeliveryPeriods } fr
 import { getSessionSeatAvailability, resolveSessionSeatCapacity } from '@/lib/session-seat-availability';
 import { sessionLocationFilters, sessionMatchesLocation, type SessionLocationFilterKey } from '@/lib/session-location-filter';
 import { formatTrainingPrice } from '@/lib/training-price';
-import { planningFormationHref } from '@/lib/planning-data';
+import { planningFormationHref, planningSsiapCourse, type SsiapPlanningCourse } from '@/lib/planning-data';
 import { vtcCourse } from '@/data/vtc';
 import styles from './planning.module.css';
 import { PlanningHelp } from './PlanningHelp';
@@ -58,8 +58,8 @@ const categorySections: {
   {
     key: 'fire',
     title: 'Formations sécurité incendie',
-    shortTitle: 'Incendie',
-    intro: 'SSIAP 1 et parcours dédiés à la sécurité incendie.',
+    shortTitle: 'Sécurité incendie',
+    intro: 'SSIAP 1, SSIAP 2, SSIAP 3, recyclages et remises à niveau.',
     slugs: ['ssiap-1', 'ssiap1', 'ssiap-2', 'ssiap2', 'ssiap-3', 'ssiap3', 'recyclage-remise-a-niveau-ssiap'],
   },
   {
@@ -91,6 +91,7 @@ const categorySections: {
 const formationFilters: {
   key: Exclude<FormationFilterKey, 'all'>;
   label: string;
+  previewDetail?: string;
   eyebrow: string;
   description: string;
   category: CategoryKey;
@@ -131,9 +132,10 @@ const formationFilters: {
   {
     key: 'ssiap',
     image: '/images/planning-metiers/ssiap.webp',
-    label: 'SSIAP 1',
-    eyebrow: 'Sécurité incendie',
-    description: 'Agent de sécurité incendie',
+    label: 'Sécurité incendie',
+    previewDetail: 'SSIAP 1, 2 et 3',
+    eyebrow: 'SSIAP 1, 2 et 3',
+    description: 'Formations initiales, recyclages et remises à niveau',
     category: 'fire',
     slugs: ['ssiap-1', 'ssiap1', 'ssiap-2', 'ssiap2', 'ssiap-3', 'ssiap3', 'recyclage-remise-a-niveau-ssiap'],
     accent: 'red',
@@ -176,6 +178,7 @@ const alertOptions: {
   description: string;
   category: CategoryKey;
   formation: string;
+  ssiapCourse?: SsiapPlanningCourse;
   slugs: string[];
   accent: PlanningAccent;
 }[] = [
@@ -194,7 +197,38 @@ const alertOptions: {
     description: 'Devenir agent de sécurité incendie et d’assistance à personnes.',
     category: 'fire',
     formation: 'ssiap-1',
+    ssiapCourse: 'ssiap-1',
     slugs: ['ssiap-1', 'ssiap1'],
+    accent: 'red',
+  },
+  {
+    title: 'SSIAP 2',
+    label: 'Sécurité incendie',
+    description: 'Devenir chef d’équipe de sécurité incendie.',
+    category: 'fire',
+    formation: 'ssiap-2',
+    ssiapCourse: 'ssiap-2',
+    slugs: ['ssiap-2', 'ssiap2'],
+    accent: 'red',
+  },
+  {
+    title: 'SSIAP 3',
+    label: 'Sécurité incendie',
+    description: 'Devenir chef de service de sécurité incendie.',
+    category: 'fire',
+    formation: 'ssiap-3',
+    ssiapCourse: 'ssiap-3',
+    slugs: ['ssiap-3', 'ssiap3'],
+    accent: 'red',
+  },
+  {
+    title: 'Recyclages et remises à niveau',
+    label: 'Sécurité incendie',
+    description: 'Maintenir ou réactiver votre qualification SSIAP 1, 2 ou 3.',
+    category: 'fire',
+    formation: 'ssiap-maintien',
+    ssiapCourse: 'ssiap-maintien',
+    slugs: ['recyclage-remise-a-niveau-ssiap'],
     accent: 'red',
   },
   {
@@ -542,7 +576,9 @@ function MissingDates({
   const selectedFormation = activeFormation === 'all' ? null : formationFilters.find((formation) => formation.key === activeFormation);
   const missing = alertOptions.filter((option) => {
     if (selectedFormation && !option.slugs.some((slug) => selectedFormation.slugs.includes(slug))) return false;
-    return !sessions.some((session) => option.slugs.includes(session.training?.slug));
+    return !sessions.some((session) => option.ssiapCourse
+      ? planningSsiapCourse(session) === option.ssiapCourse
+      : option.slugs.includes(session.training?.slug));
   });
 
   if (!missing.length) return null;
@@ -702,7 +738,7 @@ export function PlanningClient({ initialSessions, btsIntakeYear, initialLocation
               <em className="text-[#b9820a]">Choisissez votre date.</em>
             </h1>
             <p className="mt-6 max-w-2xl text-base font-semibold leading-8 text-[#5f625f] sm:text-lg">
-              APS, A3P, Dirigeant, SSIAP 1, VTC ou BTS : accédez directement au bon parcours, comparez les rentrées et vérifiez les places disponibles.
+              APS, A3P, Dirigeant, Sécurité incendie, VTC ou BTS : accédez directement au bon parcours, comparez les rentrées et vérifiez les places disponibles.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <a href="#choisir-formation" className="inline-flex items-center justify-center gap-2 rounded-full bg-[#111b2a] px-6 py-4 text-sm font-black text-white transition hover:-translate-y-0.5">
@@ -847,7 +883,7 @@ export function PlanningClient({ initialSessions, btsIntakeYear, initialLocation
 
       <MissingDates sessions={sortedSessions} activeFormation={activeFormation} />
 
-      <PlanningHelp selectedSession={selectedSession ? { title: sessionTitle(selectedSession), dates: selectedSession.scheduleKind === 'vtc-exam' ? 'Inscription avant le ' + formatSessionDate(selectedSession.startDate) + ' · Examen théorique le ' + formatSessionDate(selectedSession.endDate) : formatSessionPeriod(selectedSession.startDate, selectedSession.endDate), location: selectedSession.location } : undefined} formation={selectedFormationDetails?.label} formationSlug={selectedFormationDetails?.slugs[0]} onRequest={() => selectedSession && openRegistration(selectedSession)} onClear={() => setSelectedSessionId(null)} />
+      <PlanningHelp selectedSession={selectedSession ? { title: sessionTitle(selectedSession), dates: selectedSession.scheduleKind === 'vtc-exam' ? 'Inscription avant le ' + formatSessionDate(selectedSession.startDate) + ' · Examen théorique le ' + formatSessionDate(selectedSession.endDate) : formatSessionPeriod(selectedSession.startDate, selectedSession.endDate), location: selectedSession.location } : undefined} formation={selectedFormationDetails?.label} formationSlug={activeFormation === 'ssiap' ? 'ssiap' : selectedFormationDetails?.slugs[0]} onRequest={() => selectedSession && openRegistration(selectedSession)} onClear={() => setSelectedSessionId(null)} />
 
       {detailSession ? <SessionDetails session={detailSession} onClose={closeSessionDialog} onRequest={() => openRegistration(detailSession, true)} /> : null}
       {registrationSession ? <PlanningRegistration session={registrationSession} onClose={closeSessionDialog} /> : null}
