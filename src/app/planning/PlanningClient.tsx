@@ -659,7 +659,7 @@ export function PlanningClient({ initialSessions, btsIntakeYear, initialLocation
     window.requestAnimationFrame(() => {
       const section = document.getElementById('sessions');
       section?.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
-      section?.querySelector('select')?.focus({ preventScroll: true });
+      section?.querySelector<HTMLElement>('[data-planning-focus], select')?.focus({ preventScroll: true });
     });
   }
 
@@ -773,22 +773,26 @@ export function PlanningClient({ initialSessions, btsIntakeYear, initialLocation
       </section>
 
       <section id="sessions" className={activePlanningTheme + ' page-container py-14 sm:py-20'}>
-        <div className={styles.filterBar}>
-          <div>
+        <div className={isChoosingSsiap ? styles.ssiapPickerHeading : styles.filterBar}>
+          {isChoosingSsiap ? <div>
+            <p className={styles.ssiapPickerEyebrow}>Votre parcours SSIAP</p>
+            <h2 tabIndex={-1} data-planning-focus>Sécurité incendie</h2>
+            <p>Choisissez votre niveau, puis le type de formation qui vous concerne.</p>
+          </div> : <div>
             <p role="status" aria-live="polite" aria-atomic="true" className="text-2xl font-black text-academy-ink dark:text-white"><span key={`${activeFormation}-${activeSsiapCourse}-${locationFilter}`} className={styles.countEnter}>
-              {isChoosingSsiap ? 'Sécurité incendie' : activeFormation === 'bts' ? 'Rentrées BTS' : filteredSessions.length + (filteredSessions.length > 1 ? ' sessions disponibles' : ' session disponible')}
+              {activeFormation === 'bts' ? 'Rentrées BTS' : filteredSessions.length + (filteredSessions.length > 1 ? ' sessions disponibles' : ' session disponible')}
             </span></p>
             <p className="mt-1 text-sm font-semibold text-academy-muted">
-              {isChoosingSsiap ? 'Choisissez votre formation et votre niveau pour consulter les dates.' : activeFormation === 'bts' ? 'BTS en alternance' : view === 'list' ? 'Triées par prochaine date de rentrée ou échéance d’inscription' : 'Affichées dans le calendrier'}
+              {activeFormation === 'bts' ? 'BTS en alternance' : view === 'list' ? 'Triées par prochaine date de rentrée ou échéance d’inscription' : 'Affichées dans le calendrier'}
             </p>
-          </div>
+          </div>}
 
           <div className={styles.filterControls}>
-            <label className={styles.formationSelect}><span className="sr-only">Filtrer par formation</span><select value={activeSsiapCourse || activeFormation} onChange={event => {
+            {isChoosingSsiap ? <button type="button" className={styles.ssiapBack} onClick={() => chooseFormation('all')}><span aria-hidden="true">←</span> Toutes les formations</button> : <label className={styles.formationSelect}><span className="sr-only">Filtrer par formation</span><select value={activeSsiapCourse || activeFormation} onChange={event => {
               const course = ssiapPlanningCourses.find(item => item.key === event.target.value);
               if (course) chooseSsiapCourse(course.key);
               else chooseFormation(event.target.value as FormationFilterKey);
-            }}><option value="all">Toutes les formations</option>{formationFilters.map(formation => <option key={formation.key} value={formation.key}>{formation.key === 'ssiap' ? 'Sécurité incendie — Choisir un parcours' : formation.label}</option>)}{ssiapPlanningGroups.map(group => <optgroup key={group.key} label={`Sécurité incendie · ${group.label}`}>{ssiapPlanningCourses.filter(course => course.group === group.key).map(course => <option key={course.key} value={course.key}>{course.label}</option>)}</optgroup>)}</select></label>
+            }}><option value="all">Toutes les formations</option>{formationFilters.map(formation => <option key={formation.key} value={formation.key}>{formation.key === 'ssiap' ? 'Sécurité incendie — Choisir un parcours' : formation.label}</option>)}{ssiapPlanningGroups.map(group => <optgroup key={group.key} label={`Sécurité incendie · ${group.label}`}>{ssiapPlanningCourses.filter(course => course.group === group.key).map(course => <option key={course.key} value={course.key}>{course.label}</option>)}</optgroup>)}</select></label>}
           {activeFormation !== 'bts' && !isChoosingSsiap ? <>
             <div className={styles.centreFilters} aria-label="Filtrer les sessions par centre">
               <span className="hidden px-3 text-[9px] font-black uppercase tracking-[.12em] text-academy-muted sm:inline">Centre</span>
