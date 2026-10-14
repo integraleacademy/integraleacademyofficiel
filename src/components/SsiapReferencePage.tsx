@@ -170,7 +170,7 @@ export function SsiapReferencePage({ sessions }: { sessions: any[] }) {
       mark="SSIAP"
       title="SSIAP 1"
       items={navigationItems}
-      registrationHref={sessionHref(next)}
+      registrationHref="#dates-tarifs"
       theme="red"
     />
 
@@ -242,6 +242,6 @@ export function SsiapReferencePage({ sessions }: { sessions: any[] }) {
       <div className={styles.contactCard}><TeamPortrait person="cassandre" size={240} alt="Memoji de Cassandre, responsable commerciale Intégrale Academy" className={styles.portrait} /><p className={styles.eyebrow}>Votre conseillère · Contactez Cassandre</p><h3>Cassandre</h3><p>Responsable commerciale — Intégrale Academy</p><a className={styles.phone} href="tel:0422470768">04 22 47 07 68</a><CTA href={contactHref('rendez-vous avec Cassandre')}>Réserver un rendez-vous téléphonique →</CTA><a className={styles.textLink} href="tel:0422470768">Appeler Cassandre</a><small>Échange gratuit et sans engagement</small></div>
     </div></section>
 
-    <div className="fixed inset-x-0 bottom-0 z-40 border-t border-academy-line bg-[#FFFDF8]/96 dark:bg-[#18232f]/96 p-3 pb-[calc(.75rem+env(safe-area-inset-bottom))] shadow-[0_-12px_40px_rgba(0,0,0,.12)] backdrop-blur lg:hidden"><div className="mx-auto flex max-w-lg gap-2"><CTA href="tel:0422470768" variant="light" className="min-w-0 flex-1 px-3">Appeler</CTA><CTA href={sessionHref(next)} variant="red" className="min-w-0 flex-[1.4] px-3">Réserver ma place</CTA></div></div>
+    <div className="fixed inset-x-0 bottom-0 z-40 border-t border-academy-line bg-[#FFFDF8]/96 dark:bg-[#18232f]/96 p-3 pb-[calc(.75rem+env(safe-area-inset-bottom))] shadow-[0_-12px_40px_rgba(0,0,0,.12)] backdrop-blur lg:hidden"><div className="mx-auto flex max-w-lg gap-2"><CTA href="tel:0422470768" variant="light" className="min-w-0 flex-1 px-3">Appeler</CTA><CTA href="#dates-tarifs" variant="red" className="min-w-0 flex-[1.4] px-3">Réserver ma place</CTA></div></div>
   </div>;
 }
