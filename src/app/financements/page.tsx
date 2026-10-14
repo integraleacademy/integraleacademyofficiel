@@ -1,3 +1,4 @@
+import { TeamPortrait } from '@/components/TeamPortrait';
 import { createPageMetadata } from '@/lib/seo';
 import FinancingSimulator from '@/components/FinancingSimulator';
 import type { Metadata } from 'next';
@@ -136,7 +137,7 @@ export default function FinancementsPage() {
         <div className={styles.contactPanel}>
           <div><span className={styles.eyebrow}>Le prochain pas, ensemble</span><h2 id="contact-title">Votre projet mérite<br /><em>une conversation.</em></h2><p>Expliquez-nous votre situation. Cassandre vous accompagne pour faire le point sur les possibilités de financement.</p></div>
           <div className={styles.contactDetails}>
-            <div className={styles.contactPerson}><span className={styles.contactInitial} aria-hidden="true">C.</span><div><strong>Cassandre</strong><span>Votre interlocutrice chez Intégrale Academy</span></div></div>
+            <div className={styles.contactPerson}><span className={styles.contactInitial} aria-hidden="true"><TeamPortrait person="cassandre" size={48} /></span><div><strong>Cassandre</strong><span>Votre interlocutrice chez Intégrale Academy</span></div></div>
             <Link href={appointmentFormUrl} className={styles.primaryButton}>Parler de mon financement <Icon name="arrow" /></Link>
             <a href="tel:+33422470768" className={styles.phone}>04 22 47 07 68</a>
             <p>Échange gratuit et sans engagement</p>

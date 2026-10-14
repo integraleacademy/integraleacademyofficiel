@@ -1,5 +1,5 @@
+import { TeamPortrait } from '@/components/TeamPortrait';
 import Link from 'next/link';
-import Image from 'next/image';
 import styles from './planning-help.module.css';
 
 type HelpIcon = 'book' | 'wallet' | 'company' | 'message' | 'arrow' | 'phone';
@@ -83,7 +83,7 @@ export function PlanningHelp({ selectedSession, formation, formationSlug, onRequ
 
         <aside id="planning-advice" className={styles.advice} aria-labelledby="planning-advice-title">
           <div className={styles.adviser}>
-            <span className={styles.avatar} aria-hidden="true">{isBts ? 'AC' : <Image src="/images/cassandre-memoji.png" alt="" width={64} height={64} />}</span>
+            <span className={styles.avatar} aria-hidden="true"><TeamPortrait person={isBts ? 'aurelie' : 'cassandre'} size={64} /></span>
             <div>
               <span className={styles.adviserName}>{adviser}</span>
               <span className={styles.adviserRole}>{isBts ? 'Relations clients & responsable BTS' : 'Responsable commerciale'}</span>

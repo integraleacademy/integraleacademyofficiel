@@ -1,5 +1,6 @@
 'use client';
 
+import { TeamPortrait } from '@/components/TeamPortrait';
 import Link from 'next/link';
 import { useEffect, useId, useRef, useState } from 'react';
 import styles from './AcademyExperience.module.css';
@@ -101,7 +102,7 @@ export function AcademyJourney() {
             <div key={active} className={styles.phoneContent}>
               <p className={styles.phoneEyebrow}>ÉTAPE 0{active + 1} / 03</p><h3>{steps[active].label}</h3>
               {active === 0 && <><img className={styles.phoneArt} src="/images/formation-scenes-manuel/aps-arrivee.webp" alt="Illustration de l’accueil d’un apprenant" width="420" height="280" loading="lazy" /><div className={styles.choice}>Sécurité privée <span>↗︎</span></div><div className={styles.choice}>Chauffeur VTC <span>↗︎</span></div><div className={styles.choice}>BTS en alternance <span>↗︎</span></div></>}
-              {active === 1 && <><div className={styles.phoneAdviser}><img src="/images/cassandre-memoji.png" width="100" height="100" alt="Memoji de Cassandre" loading="lazy" /><strong>On regarde votre projet<br />ensemble.</strong></div><div className={styles.checklist}>{['Votre formation', 'Vos prérequis', 'Votre financement', 'Vos dates'].map((item, i) => <div key={item} style={{ animationDelay: `${i * 100}ms` }}><span aria-hidden="true">✓</span>{item}</div>)}</div><p className={styles.phoneNote}>Des conseils adaptés à votre situation.</p></>}
+              {active === 1 && <><div className={styles.phoneAdviser}><TeamPortrait person="cassandre" size={100} alt="Memoji de Cassandre" loading="lazy" /><strong>On regarde votre projet<br />ensemble.</strong></div><div className={styles.checklist}>{['Votre formation', 'Vos prérequis', 'Votre financement', 'Vos dates'].map((item, i) => <div key={item} style={{ animationDelay: `${i * 100}ms` }}><span aria-hidden="true">✓</span>{item}</div>)}</div><p className={styles.phoneNote}>Des conseils adaptés à votre situation.</p></>}
               {active === 2 && <><img className={styles.phoneArt} src="/images/formation-scenes-manuel/aps-atelier-radio.webp" alt="Illustration d’un exercice pratique de communication radio" width="420" height="280" loading="lazy" /><div className={styles.lesson}><span>VOTRE FORMATION</span><strong>Du savoir<br />au savoir-faire.</strong><div><i /><i /><i /></div><small>Comprendre · S’exercer · Progresser</small></div></>}
             </div>
             <div className={styles.phoneDots} aria-hidden="true">{steps.map((_, i) => <i key={i} data-active={i === active} />)}</div>

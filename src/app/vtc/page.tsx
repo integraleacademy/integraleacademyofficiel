@@ -1,7 +1,7 @@
+import { TeamPortrait } from '@/components/TeamPortrait';
 import { CourseJourney } from '@/components/CourseJourney';
 import { createPageMetadata } from '@/lib/seo';
 import type { Metadata } from 'next';
-import Image from 'next/image';
 import Link from 'next/link';
 import { ManualArtwork } from '@/components/ManualArtwork';
 import { TrainingWelcomePack } from '@/components/TrainingWelcomePack';
@@ -304,7 +304,7 @@ export default function VtcPage() {
       <div className={styles.container}>
         <div className={styles.contactCard}>
           <div><span>UNE QUESTION SUR VOTRE PROJET ?</span><h2>Faites le premier pas<br/>vers votre <em>future activité.</em></h2><p>Cassandre vérifie votre éligibilité, vous explique le calendrier et vous aide à choisir le financement adapté.</p></div>
-          <aside><Image src="/images/cassandre-memoji.png" width={96} height={96} alt="Cassandre, responsable commerciale Intégrale Academy"/><div><span>VOTRE CONSEILLÈRE</span><h3>Cassandre</h3><p>Responsable commerciale</p></div><a href="tel:0422470768">04 22 47 07 68</a><CTA href={contactHref('Être rappelé au sujet de la formation VTC')}>Réserver un échange</CTA></aside>
+          <aside><TeamPortrait person="cassandre" size={96} alt="Cassandre, responsable commerciale Intégrale Academy"/><div><span>VOTRE CONSEILLÈRE</span><h3>Cassandre</h3><p>Responsable commerciale</p></div><a href="tel:0422470768">04 22 47 07 68</a><CTA href={contactHref('Être rappelé au sujet de la formation VTC')}>Réserver un échange</CTA></aside>
         </div>
       </div>
     </section>

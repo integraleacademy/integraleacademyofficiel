@@ -1,5 +1,6 @@
 'use client';
 
+import { TeamPortrait } from '@/components/TeamPortrait';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRef, useState, type KeyboardEvent } from 'react';
@@ -38,7 +39,7 @@ function Icon({ name, className }: { name: string; className?: string }) {
 }
 
 function Avatar({ bts, large = false }: { bts: boolean; large?: boolean }) {
-  return <span className={`${styles.avatar} ${large ? styles.largeAvatar : ''}`} aria-hidden="true">{bts ? <span>AC</span> : <Image src="/images/cassandre-memoji.png" alt="" width={large ? 176 : 48} height={large ? 176 : 48} sizes={large ? '176px' : '48px'} />}</span>;
+  return <span className={`${styles.avatar} ${large ? styles.largeAvatar : ''}`} aria-hidden="true"><TeamPortrait person={bts ? 'aurelie' : 'cassandre'} size={large ? 176 : 48} sizes={large ? '176px' : '48px'} /></span>;
 }
 
 export function ContactExperience({ initialInterest = 'undecided', requestLinks, hours }: {

@@ -1,5 +1,6 @@
 'use client';
 
+import { TeamPortrait } from '@/components/TeamPortrait';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -57,8 +58,7 @@ export function ProjectTrainingPopup() {
             className="relative grid h-16 w-16 shrink-0 place-items-center overflow-hidden rounded-full bg-gradient-to-br from-academy-gold via-yellow-200 to-white text-xl font-black text-academy-gold-text shadow-gold ring-4 ring-white"
             aria-label={isBts ? 'Aurélie CHAUSSEZ, responsable des BTS' : 'Cassandre M., responsable commerciale Intégrale Academy'}
           >
-            <span className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,.95),transparent_38%)]" aria-hidden="true" />
-            <span className="relative">{isBts ? 'AC' : 'CM'}</span>
+            <TeamPortrait person={isBts ? 'aurelie' : 'cassandre'} size={64} className="h-full w-full" />
           </div>
           <div>
             <p className="text-xs font-black uppercase tracking-[.18em] text-yellow-700">

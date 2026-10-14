@@ -1,3 +1,4 @@
+import { TeamPortrait } from '@/components/TeamPortrait';
 import Image from 'next/image';
 import Link from 'next/link';
 import { createPageMetadata } from '@/lib/seo';
@@ -8,10 +9,10 @@ export const metadata = createPageMetadata('/ecole');
 const appointmentFormUrl = 'https://assistance-alw9.onrender.com/demande-informations-formations';
 
 const team = [
-  { name: 'Cassandre Menard', role: 'Responsable commerciale', mission: 'Votre interlocutrice pour choisir votre formation, préparer votre admission et trouver le financement adapté.', specialty: 'Orientation & admissions' },
-  { name: 'Aurélie Chaussez', role: 'Chargée des relations clients', mission: 'Le lien entre les apprenants, les entreprises et l’école, pour un parcours bien accompagné.', specialty: 'Relation apprenants & entreprises' },
-  { name: 'Elsa Duquesne', role: 'Assistante de direction', mission: 'Un suivi administratif attentif et une organisation quotidienne au service de votre formation.', specialty: 'Organisation & suivi' },
-  { name: 'Yannice Libault', role: 'Coordinateur pédagogique · Azzera Academy', mission: 'La coordination des programmes et des intervenants, avec une attention portée au suivi pédagogique.', specialty: 'Pédagogie & coordination' },
+  { portrait: 'cassandre' as const, name: 'Cassandre Menard', role: 'Responsable commerciale', mission: 'Votre interlocutrice pour choisir votre formation, préparer votre admission et trouver le financement adapté.', specialty: 'Orientation & admissions' },
+  { portrait: 'aurelie' as const, name: 'Aurélie Chaussez', role: 'Chargée des relations clients', mission: 'Le lien entre les apprenants, les entreprises et l’école, pour un parcours bien accompagné.', specialty: 'Relation apprenants & entreprises' },
+  { portrait: 'elsa' as const, name: 'Elsa Duquesne', role: 'Assistante de direction', mission: 'Un suivi administratif attentif et une organisation quotidienne au service de votre formation.', specialty: 'Organisation & suivi' },
+  { portrait: 'yannice' as const, name: 'Yannice Libault', role: 'Coordinateur pédagogique · Azzera Academy', mission: 'La coordination des programmes et des intervenants, avec une attention portée au suivi pédagogique.', specialty: 'Pédagogie & coordination' },
 ];
 const certifications = [
   ['Qualiopi', 'Certification qualité n°03169 du 21/10/2024.'],
@@ -91,7 +92,7 @@ export default function Page() {
           </figure>
           <div className={styles.teamGrid}>
             {team.map((person, index) => <article className={styles.person} key={person.name}>
-              <div className={styles.personAvatar} aria-hidden="true">{index === 0 ? <img src="/images/cassandre-memoji.png" width="76" height="76" alt="" loading="lazy" /> : <span>{person.name.split(' ').map(part => part[0]).slice(0, 2).join('')}</span>}</div>
+              <div className={styles.personAvatar} aria-hidden="true"><TeamPortrait person={person.portrait} size={76} /></div>
               <p className={styles.personTop}><span>0{index + 1}</span>{person.specialty}</p><h3>{person.name}</h3><p className={styles.role}>{person.role}</p><p className={styles.mission}>{person.mission}</p>
             </article>)}
           </div>

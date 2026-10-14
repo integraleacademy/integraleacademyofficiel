@@ -1,3 +1,4 @@
+import { TeamPortrait } from '@/components/TeamPortrait';
 import { createPageMetadata } from '@/lib/seo';
 import type { Metadata } from 'next';
 import Link from 'next/link';
@@ -112,9 +113,9 @@ const siteSkills = [
 ];
 
 const contacts = [
-  { initials: 'CM', firstName: 'Cassandre', name: 'Cassandre MENARD', role: 'Responsable commerciale', email: 'cassandre@integraleacademy.com', phone: '04 87 83 06 16', phoneHref: '+33487830616', mobile: '07 43 58 22 64', mobileHref: '+33743582264' },
-  { initials: 'AC', firstName: 'Aurélie', name: 'Aurélie CHAUSSEZ', role: 'Chargée des relations clients', email: 'aurelie@integraleacademy.com', phone: '04 87 83 06 15', phoneHref: '+33487830615', mobile: '07 69 39 04 57', mobileHref: '+33769390457' },
-  { initials: 'CV', firstName: 'Clément', name: 'Clément VAILLANT', role: 'Directeur général', email: 'clement@integraleacademy.com', phone: '04 87 83 06 14', phoneHref: '+33487830614', mobile: '06 65 24 52 71', mobileHref: '+33665245271' },
+  { portrait: 'cassandre' as const, firstName: 'Cassandre', name: 'Cassandre MENARD', role: 'Responsable commerciale', email: 'cassandre@integraleacademy.com', phone: '04 87 83 06 16', phoneHref: '+33487830616', mobile: '07 43 58 22 64', mobileHref: '+33743582264' },
+  { portrait: 'aurelie' as const, firstName: 'Aurélie', name: 'Aurélie CHAUSSEZ', role: 'Chargée des relations clients', email: 'aurelie@integraleacademy.com', phone: '04 87 83 06 15', phoneHref: '+33487830615', mobile: '07 69 39 04 57', mobileHref: '+33769390457' },
+  { portrait: 'clement' as const, firstName: 'Clément', name: 'Clément VAILLANT', role: 'Directeur général', email: 'clement@integraleacademy.com', phone: '04 87 83 06 14', phoneHref: '+33487830614', mobile: '06 65 24 52 71', mobileHref: '+33665245271' },
 ];
 
 const poeiProgram = [
@@ -322,7 +323,7 @@ export default function EntreprisesPage() {
       <div className={styles.container}>
         <div className={styles.sectionHeading}><span className={styles.sectionEyebrow}>Parlons de votre projet</span><h2 id="contacts-title">Vos prochains recrutements<br /><em>commencent ici.</em></h2><p>Besoins ponctuels ou massifs, événementiel, sites sensibles, sécurité incendie ou protection rapprochée : construisons ensemble la solution adaptée à votre entreprise.</p></div>
         <div className={styles.contactsGrid}>{contacts.map((contact) => <article key={contact.email} className={styles.contactCard}>
-          <div className={styles.contactPerson}><div className={styles.contactAvatar} aria-hidden="true">{contact.initials}</div><div><h3>{contact.name}</h3><span>{contact.role}</span></div></div>
+          <div className={styles.contactPerson}><div className={styles.contactAvatar} aria-hidden="true"><TeamPortrait person={contact.portrait} size={61} className={styles.contactPortrait} /></div><div><h3>{contact.name}</h3><span>{contact.role}</span></div></div>
           <address className={styles.contactDetails}>
             <a href={`tel:${contact.phoneHref}`}><Icon name="phone" /><span><small>Ligne directe</small><strong>{contact.phone}</strong></span></a>
             <a href={`tel:${contact.mobileHref}`}><Icon name="phone" /><span><small>Portable</small><strong>{contact.mobile}</strong></span></a>

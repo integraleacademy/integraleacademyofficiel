@@ -1,5 +1,6 @@
 'use client';
 
+import { TeamPortrait } from '@/components/TeamPortrait';
 import { usePathname } from 'next/navigation';
 import { type CSSProperties, type MouseEvent, useEffect, useRef, useState } from 'react';
 import { appointmentFormUrl } from '@/components/ui';
@@ -112,23 +113,13 @@ export function GlobalContactCTA() {
               <div className={`${styles.contactCard} ${styles.revealItem}`} style={{ '--delay': '380ms' } as CSSProperties}>
                 <div className="grid gap-5 sm:grid-cols-[auto_1fr] sm:items-start">
                   <div className={styles.memojiWrap}>
-                    {isBts ? (
-                      <div
-                        className="grid h-full w-full place-items-center rounded-[2rem] bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,.9),transparent_34%),linear-gradient(145deg,#F7E5AC,#C99925)] text-5xl font-black text-academy-ink shadow-gold"
-                        aria-label="Aurélie CHAUSSEZ, chargée des relations clients et responsable des BTS"
-                      >
-                        AC
-                      </div>
-                    ) : (
-                      <img
-                        src="/images/cassandre-memoji.png"
-                        alt="Memoji détouré de Cassandre, responsable commerciale d’Intégrale Academy"
-                        className={styles.memoji}
-                        width="190"
-                        height="190"
-                        loading="lazy"
-                      />
-                    )}
+                    <TeamPortrait
+                      person={isBts ? 'aurelie' : 'cassandre'}
+                      alt={`Memoji de ${contactName}, ${contactRole}`}
+                      className={styles.memoji}
+                      size={190}
+                      sizes="(max-width: 640px) 136px, 168px"
+                    />
                   </div>
 
                   <div className="min-w-0 pt-1 sm:pt-2">
