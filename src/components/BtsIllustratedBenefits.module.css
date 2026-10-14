@@ -1,27 +1,9 @@
 .benefits { width: min(1200px, calc(100% - 64px)); margin-inline: auto; }
 .cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
 .card { min-width: 0; overflow: hidden; border-radius: 24px; border: 1px solid var(--mos-line); background: var(--mos-surface); }
-.tabletScene, .londonScene { position: relative; aspect-ratio: 16 / 10; overflow: hidden; margin: 0; border-bottom: 1px solid var(--mos-line); }
-.tabletScene { display: grid; place-items: center; padding: 22px 24px 44px; background: radial-gradient(ellipse at 75% 15%, #fff 0, transparent 60%), #dce9fb; }
-.tablet { position: relative; width: 76%; max-width: 390px; padding: 11px 17px; border-radius: 24px; border: 3px solid #8394a8; background: #162538; box-shadow: 12px 20px 30px #0e2a563b, inset 0 0 0 2px #283b53; transform: rotate(-6deg); }
-.tablet::before { content: ''; position: absolute; left: 5px; top: 49%; width: 4px; height: 4px; border-radius: 50%; background: #576b80; }
-.tabletScreen { aspect-ratio: 4 / 3; overflow: hidden; border-radius: 8px; background: #f8fbff; color: #142b43; text-align: left; }
-.screenTop { display: flex; justify-content: space-between; gap: 6px; padding: 9px 12px; color: #527099; border-bottom: 1px solid #d8e5f8; font-size: clamp(6px, .65vw, 9px); font-weight: 750; }
-.screenTitle { margin: 10px 12px; padding: 13px 15px; border-radius: 10px; color: #fff; background: #1d4ed8; }
-.screenTitle > span { font-size: clamp(5px, .55vw, 8px); letter-spacing: .1em; }
-.screenTitle strong { display: block; margin: 4px 0; font-size: clamp(19px, 2.4vw, 32px); line-height: 1; letter-spacing: -.04em; }
-.screenTitle p { margin: 8px 0 0; font-size: clamp(6px, .7vw, 10px); }
-.screenTiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; padding: 0 12px; }
-.screenTiles > span { padding: 7px; border: 1px solid #d5e2f4; border-radius: 7px; background: #fff; font-size: clamp(6px, .7vw, 10px); font-weight: 700; }
-.screenTiles i { display: block; width: 13px; height: 15px; margin-bottom: 5px; border: 2px solid #5b88e0; border-radius: 3px; }
-.screenTiles > span:nth-child(2) i { border-color: #249574; }
-.screenTiles > span:nth-child(3) i { border-color: #bb8643; }
-.screenLines { display: grid; gap: 5px; margin: 13px 13px 0; }
-.screenLines i { height: 3px; width: 85%; background: #d9e6f6; border-radius: 3px; }
-.screenLines i:nth-child(2) { width: 63%; }
-.screenLines i:nth-child(3) { width: 74%; }
-.tabletCaption, .londonScene figcaption { position: absolute; bottom: 16px; left: 20px; max-width: calc(100% - 40px); border-radius: 999px; padding: 7px 13px; background: #fff; color: #142b43; font-size: 11px; font-weight: 750; box-shadow: 0 5px 20px #142b4312; }
-.londonScene img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.benefitScene { position: relative; aspect-ratio: 16 / 10; overflow: hidden; margin: 0; border-bottom: 1px solid var(--mos-line); }
+.benefitScene figcaption { position: absolute; bottom: 16px; left: 20px; max-width: calc(100% - 40px); border-radius: 999px; padding: 7px 13px; background: #fff; color: #142b43; font-size: 11px; font-weight: 750; box-shadow: 0 5px 20px #142b4312; }
+.benefitScene img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .copy { padding: 28px; }
 .badge { display: inline-block; border-radius: 999px; padding: 6px 11px; color: #204fab; background: #e9f1ff; font-size: 11px; font-weight: 750; line-height: 1.5; }
 .copy h3 { margin: 16px 0; font-size: clamp(25px, 2.5vw, 32px); }
@@ -35,39 +17,18 @@
 .extras h3 { margin: 4px 0 7px; font-size: 15px; }
 .extras p { margin: 0; color: var(--mos-muted); font-size: 12px; line-height: 1.7; }
 @media (max-width: 950px) {
-  .tablet { width: 86%; padding: 8px 13px; border-radius: 18px; }
-  .screenTitle { margin: 7px 9px; padding: 9px 11px; }
-  .screenTiles { padding-inline: 9px; }
-  .screenLines { display: none; }
   .copy { padding: 24px; }
   .extras { gap: 16px; }
   .extras article { gap: 9px; }
 }
 @media (max-width: 700px) {
   .cards { grid-template-columns: 1fr; }
-  .tablet { max-width: 380px; }
-  .screenTop { font-size: 9px; }
-  .screenTitle { margin: 12px; padding: 16px; }
-  .screenTitle > span { font-size: 8px; }
-  .screenTitle strong { font-size: 30px; }
-  .screenTitle p, .screenTiles > span { font-size: 10px; }
-  .screenLines { display: grid; }
   .extras { grid-template-columns: 1fr; gap: 0; padding-top: 20px; }
   .extras article { padding-block: 17px; }
 }
 @media (max-width: 600px) {
   .benefits { width: calc(100% - 32px); }
-  .tabletScene { padding: 18px 18px 38px; }
-  .tablet { width: 83%; padding: 7px 12px; border-radius: 17px; }
-  .screenTop { padding: 6px 9px; font-size: 6px; }
-  .screenTitle { margin: 7px 9px; padding: 9px 11px; }
-  .screenTitle > span { font-size: 5px; }
-  .screenTitle strong { font-size: 22px; }
-  .screenTitle p { font-size: 7px; margin-top: 6px; }
-  .screenTiles > span { padding: 5px; font-size: 7px; }
-  .screenTiles i { width: 10px; height: 11px; margin-bottom: 3px; }
-  .screenLines { display: none; }
-  .tabletCaption, .londonScene figcaption { font-size: 10px; left: 16px; bottom: 12px; }
+  .benefitScene figcaption { font-size: 10px; left: 16px; bottom: 12px; }
   .copy { padding: 23px 21px; }
   .copy h3 { font-size: 27px; }
   .detail { font-size: 11px; }
