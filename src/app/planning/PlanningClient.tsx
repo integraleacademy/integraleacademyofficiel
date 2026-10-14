@@ -841,7 +841,7 @@ export function PlanningClient({ initialSessions, btsIntakeYear, initialLocation
             </div>
           </div>
         )}
-        {activeFormation === 'all' ? <BtsIntakes year={btsIntakeYear} /> : null}
+        {activeFormation === 'all' && (locationFilter === 'all' || locationFilter === 'cote-azur') ? <BtsIntakes year={btsIntakeYear} /> : null}
         </div>
       </section>
 
