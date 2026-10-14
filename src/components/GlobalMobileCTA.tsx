@@ -6,8 +6,14 @@ import { usePathname } from 'next/navigation';
 const dedicatedSecurityPages = new Set([
   '/formations-securite/aps',
   '/formations-securite/ssiap-1',
+  '/formations-securite/ssiap-2',
+  '/formations-securite/ssiap-3',
   '/formations-securite/sst',
   '/formations-securite/a3p-apr',
+  '/formations-securite/desp-initial',
+  '/formations-securite/desp-vae',
+  '/dirigeant',
+  '/vaedirigeant',
 ]);
 
 export function hasDedicatedMobileCta(pathname: string) {

@@ -1,6 +1,9 @@
-import { TrainingIllustratedCards, type TrainingIllustratedCard } from '@/components/TrainingIllustratedCards';
-import { TrainingMissionCards } from '@/components/TrainingMissionCards';
 import type { SceneKind } from '@/components/TrainingMotionGallery';
+import { type TrainingIllustratedCard } from '@/components/TrainingIllustratedCards';
+import { TrainingReferenceMissions } from '@/components/TrainingReferenceLayout';
+import { TrainingMotionIllustration } from '@/components/TrainingMotionGallery';
+import { TrainingMissionCards } from '@/components/TrainingMissionCards';
+
 import { despPracticeArtwork, despArtwork, type ManualIllustration } from '@/data/manualIllustrations';
 import { originalArtwork } from '@/data/originalArtwork';
 
@@ -42,5 +45,9 @@ export function DespIllustratedCards({ items, variant = 'initial' }: { items: re
     evidence: originalArtwork['desp-vae-preuves'],
     jury: originalArtwork['desp-vae-jury'],
   } : despPracticeArtwork;
-  return <TrainingIllustratedCards items={items} theme="orange" illustrations={illustrations} threeColumns />;
+  return <TrainingReferenceMissions label="Étape" items={items.map(item => ({
+    title: item.title,
+    description: item.description,
+    visual: <div>{item.scenes.map(scene => <TrainingMotionIllustration key={scene.kind} kind={scene.kind} theme="orange" description={scene.description} illustration={illustrations[scene.kind]} natural />)}</div>,
+  }))} />;
 }

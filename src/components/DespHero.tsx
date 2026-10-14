@@ -1,6 +1,8 @@
-import Link from 'next/link';
 import type { ReactNode } from 'react';
-import { TrainingHero, TrainingHeroSessionCard } from '@/components/TrainingHero';
+import { TrainingReferenceHero } from '@/components/TrainingReferenceLayout';
+import Link from 'next/link';
+
+import { TrainingHeroSessionCard } from '@/components/TrainingHero';
 import { DespHeroSessions } from '@/components/DespHeroSessions';
 import { despArtwork } from '@/data/manualIllustrations';
 
@@ -14,16 +16,15 @@ export function DespHero({ variant, title, subtitle, stats, sessions }: {
   const isVae = variant === 'vae';
   const next = sessions.find(session => session.training?.slug === 'desp-vae');
   const price = stats.find(([label]) => label === 'Tarif' || label === 'Tarif 2027')?.[1] || (isVae ? '3 850 € TTC' : '4 350 € TTC');
-  return <TrainingHero
-    compact
-    factsWithArtwork
-    theme="orange"
-    imageSrc={isVae ? despArtwork.direction.src : despArtwork.pilotage.src}
-    illustrationAlt={isVae ? despArtwork.direction.alt : despArtwork.pilotage.alt}
+  return <TrainingReferenceHero
+    id={`desp-${variant}`}
+    heading={isVae ? 'Votre expérience.' : 'Devenez dirigeant'}
+    accent={isVae ? 'Votre titre DESP.' : 'en sécurité privée.'}
+    illustration={isVae ? despArtwork.direction : despArtwork.pilotage}
+    caption={isVae ? 'Démontrer. Valoriser. Faire reconnaître.' : 'Créer. Gérer. Développer.'}
     badge={`DESP · RNCP n°40385 · Niveau 5 · ${isVae ? 'VAE' : 'Formation initiale'}`}
     title={title}
-    tagline={isVae ? 'Faites reconnaître' : 'Créez, reprenez,'}
-    taglineAccent={isVae ? 'votre expérience.' : 'dirigez votre entreprise.'}
+    tagline={isVae ? 'Faites reconnaître votre expérience.' : 'Créez, reprenez, dirigez votre entreprise.'}
     description={subtitle}
     primaryAction={{ href: `/contact?formation=desp-${variant}`, label: 'Recevoir le dossier →' }}
     additionalAction={<Link href="/despvaeouinitial" className="self-center text-sm font-bold text-orange-200 underline decoration-orange-300/50 underline-offset-4">Comparer initial et VAE →</Link>}
@@ -43,6 +44,7 @@ export function DespHero({ variant, title, subtitle, stats, sessions }: {
       emptyDescription="Nous étudions votre expérience et définissons votre accompagnement. Le jury est organisé selon la convocation du certificateur."
       emptyActionLabel="Démarrer mon dossier VAE →"
       examLabel="Jury le"
+      registrationHref="/contact?formation=desp-vae"
     /> : <DespHeroSessions sessions={sessions} defaultPrice={price} />}
-  </TrainingHero>;
+  </TrainingReferenceHero>;
 }

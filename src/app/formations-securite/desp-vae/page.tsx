@@ -1,7 +1,9 @@
+import { TrainingReferencePage, TrainingReferenceSection, TrainingReferenceContact, TrainingReferenceMobileBar } from '@/components/TrainingReferenceLayout';
+import { TrainingCourseTestimonials } from '@/components/TrainingCourseTestimonials';
 import { originalArtwork } from '@/data/originalArtwork';
 import { CourseJourney } from '@/components/CourseJourney';
 import { TrainingWelcomePack } from '@/components/TrainingWelcomePack';
-import { despArtwork } from '@/data/manualIllustrations';
+
 import { createPageMetadata } from '@/lib/seo';
 import { VaeEligibilityModal } from '@/components/VaeEligibilityModal';
 import { isPublicUpcomingSession } from '@/components/PublicTrainingSessions';
@@ -112,17 +114,16 @@ async function getSessions(){return (await listSessions()).filter((session:any)=
 export default async function DespVaePage(){
   const sessions = await getSessions();
   const includedEntries = Object.entries(despVaeAdmin.included).filter(([,value])=>Boolean(value));
-  return <main className="relative overflow-x-clip pb-28 lg:pb-0">
+  return <TrainingReferencePage theme="orange">
     <DespHero variant="vae" title="Dirigeant de sécurité privée par la VAE" subtitle={<><p>Faites reconnaître officiellement les compétences acquises en management, création, gestion ou direction grâce à un accompagnement VAE centré sur vos preuves et votre dossier.</p><p>La VAE ne remplace pas automatiquement le jury : elle vous aide à démontrer que votre expérience couvre les activités attendues du titre RNCP DESP.</p></>} stats={[["Format","VAE","accompagnement individualisé"],["Durée","Variable","selon dossier et jury"],["Tarif 2027",despVaeAdmin.price,"TTC"],["Lieu","Distance","jury selon convocation"],["RNCP",despVaeAdmin.rncp,despVaeAdmin.level],["Objectif","Titre DESP","validation totale visée"]]} sessions={sessions}/>
     <TrainingSectionNavigation
       mark="DESP"
       title="DESP en VAE"
       items={navigationItems}
-      registrationHref={registrationFormUrl}
+      registrationHref="#dates-tarifs"
       theme="orange"
     />
 
-    <TrainingWelcomePack course="desp-vae" />
     <CourseJourney course="desp-vae" />
 
     <section className="page-container py-10"><MissionAnimation variant="despVae" className="mb-8" illustration={originalArtwork['desp-vae-accompagnement']} /><div className="grid gap-4 md:grid-cols-3"><FeatureCard title="Durée">{despVaeAdmin.duration}<br/><br/>{despVaeAdmin.durationNote}</FeatureCard><FeatureCard title="Public concerné">Profils expérimentés en sécurité, encadrement, gestion, création ou direction d’entreprise.</FeatureCard><FeatureCard title="Prérequis">Expérience justifiée en management, création, gestion d’entreprise ou responsabilités proches du référentiel DESP.</FeatureCard><FeatureCard title="Lieux">Accompagnement VAE possible en visioconférence ; jury selon convocation. L’accompagnement peut être réalisé à distance selon l’organisation convenue. Le lieu, la date et le format du jury dépendent de la convocation du certificateur.</FeatureCard><FeatureCard title="Financement">CPF, entreprise, OPCO, France Travail ou financement personnel selon dossier.</FeatureCard><FeatureCard title="Certification / examen">Titre RNCP Dirigeant d’entreprise de sécurité privée – niveau 5<br/><br/>La certification permet de justifier de l’aptitude professionnelle nécessaire à la demande d’agrément dirigeant. L’agrément est ensuite délivré séparément par le CNAPS après étude du dossier.<br/><br/>{despVaeAdmin.rncp} · {despVaeAdmin.level} · Certificateur : {despVaeAdmin.certifier} · Échéance actuelle : {despVaeAdmin.deadline}<br/>Tarif actuel de l’accompagnement : {despVaeAdmin.price}</FeatureCard></div></section>
@@ -152,6 +153,7 @@ export default async function DespVaePage(){
     <ConversionStrip theme="orange"/>
     <Info title="Objectifs de la formation" items={objectives}/>
     <Info title="Accompagnement VAE" items={accompaniment}/><TextBlock title="Rôle de l’accompagnateur"><p>L’accompagnateur aide le candidat à analyser et présenter son expérience. Il ne rédige pas le dossier à sa place et ne peut pas garantir la décision du jury.</p></TextBlock>
+    <TrainingWelcomePack course="desp-vae" />
     <section className="page-container py-8"><h2 className="text-2xl font-black">Ce qui est inclus dans les {despVaeAdmin.price}</h2>{includedEntries.length>0 ? <div className="mt-5 grid gap-3">{includedEntries.map(([key,value])=><FeatureCard key={key} title={key}>{String(value)}</FeatureCard>)}</div> : <Note>Un devis détaillé précisant les prestations incluses est remis avant tout engagement.</Note>}</section>
     <TextBlock id="jury" title="Comment se déroule le jury VAE ?"><p>Le jury étudie le dossier de validation puis échange avec le candidat afin de vérifier que les compétences présentées correspondent à celles du titre DESP.</p><p>Le jury peut notamment interroger le candidat sur : {juryTopics.join(', ')}.</p><p>Le jury est composé de trois professionnels extérieurs au certificateur, indépendants du parcours et du candidat.</p></TextBlock>
     <Info title="Modalités d’évaluation" items={evaluation}/>
@@ -160,11 +162,17 @@ export default async function DespVaePage(){
     <section className="page-container py-8"><h2 className="text-2xl font-black">Financements</h2><div className="mt-5 grid gap-4 md:grid-cols-3">{despVaeAdmin.financing.map(item=><FeatureCard key={item} title={item}>{item}</FeatureCard>)}</div><Note>Le financement porte sur les prestations prévues au devis. Il ne signifie pas que la recevabilité ou la réussite devant le jury est garantie.</Note><div className="mt-5"><Button href="/contact" variant="orange">Recevoir un devis VAE personnalisé</Button></div></section>
     <TextBlock title="Accessibilité"><p>Intégrale Academy étudie les besoins d’adaptation de chaque candidat, notamment pour les rendez-vous, les outils numériques et la préparation du jury.</p><p>Référent handicap : {despVaeAdmin.accessibilityReferent.name} · {despVaeAdmin.accessibilityReferent.email} · {despVaeAdmin.accessibilityReferent.phone}</p></TextBlock>
     <Info title="Pourquoi suivre cette VAE chez Intégrale Academy" items={why}/>
+    <TrainingCourseTestimonials category="VAE DESP" />
     <div id="faq-desp-vae"><PremiumFAQSection theme="orange" badge="FAQ DESP VAE" title="Vos questions sur la VAE DESP" description="Retrouvez les réponses essentielles sur l’éligibilité, la recevabilité, le dossier de preuves, le jury, les financements et l’accompagnement." items={[...formationFaq, ...despVaeFaq]} contactHref="/contact?formation=desp-vae" contactLabel="Poser une question VAE"/></div>
-    <section className="page-container py-8"><div className="grid gap-4 rounded-[2rem] bg-academy-surface p-5 shadow-soft ring-1 ring-academy-line md:grid-cols-[1fr_auto]"><div><b className="text-academy-ink">Cassandre vous accompagne dans votre choix</b><p className="mt-1 text-sm text-academy-muted">Cassandre étudie votre expérience, vous aide à choisir entre le DESP initial et la VAE et vous présente les modalités d’accompagnement et de financement.</p></div><div className="flex flex-wrap items-center gap-2"><VaeEligibilityModal label="Tester mon éligibilité"/><Button href="/contact" variant="orange">Recevoir un devis VAE</Button><Button href="tel:0422470768" variant="ghost">Réserver un rendez-vous téléphonique</Button></div></div></section>
-  </main>
+    <TrainingReferenceContact
+      description={<><p className="font-bold">Cassandre vous accompagne dans votre choix</p><p>Cassandre étudie votre expérience, vous aide à choisir entre le DESP initial et la VAE et vous présente les modalités d’accompagnement et de financement.</p></>}
+      href="/contact?formation=desp-vae&objet=rendez-vous"
+      additionalActions={<><VaeEligibilityModal label="Tester mon éligibilité"/><Button href="/contact?formation=desp-vae" variant="orange">Recevoir un devis VAE</Button></>}
+    />
+    <TrainingReferenceMobileBar href="#eligibilite" label="Tester mon éligibilité" />
+  </TrainingReferencePage>
 }
 
-function Info({id,title,items,intro}:{id?:string;title:string;items:string[];intro?:string}){return <section id={id} className="page-container scroll-mt-36 py-10 sm:py-14"><div className="mb-8 max-w-3xl"><p className="text-xs font-black uppercase tracking-[.24em] text-orange-600">DESP VAE</p><h2 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl">{title}</h2>{intro&&<p className="mt-4 text-lg leading-8 text-academy-muted">{intro}</p>}</div><div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">{items.map(i=><div key={i} className="rounded-2xl border border-academy-line bg-academy-surface p-4 shadow-soft"><p className="font-semibold leading-7 text-academy-muted">✓ {i}</p></div>)}</div></section>}
-function TextBlock({id,eyebrow,title,children}:{id?:string;eyebrow?:string;title:string;children:React.ReactNode}){return <section id={id} className="page-container scroll-mt-36 py-10 sm:py-14"><div className="rounded-[2rem] border border-academy-line bg-academy-surface p-6 shadow-card sm:p-8"><>{eyebrow&&<p className="text-xs font-black uppercase tracking-[.24em] text-orange-600">{eyebrow}</p>}<h2 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl">{title}</h2><div className="mt-5 space-y-4 text-lg leading-8 text-academy-muted">{children}</div></></div></section>}
+function Info({id,title,items,intro}:{id?:string;title:string;items:string[];intro?:string}){return <TrainingReferenceSection id={id} eyebrow="DESP VAE" title={title} intro={intro} tone="paper"><div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">{items.map(i=><div key={i} className="rounded-2xl border border-academy-line bg-academy-surface p-4 shadow-soft"><p className="font-semibold leading-7 text-academy-muted">✓ {i}</p></div>)}</div></TrainingReferenceSection>}
+function TextBlock({id,eyebrow,title,children}:{id?:string;eyebrow?:string;title:string;children:React.ReactNode}){return <TrainingReferenceSection id={id} eyebrow={eyebrow} title={title} tone="stone"><div className="max-w-4xl space-y-4 text-lg leading-8 text-academy-muted">{children}</div></TrainingReferenceSection>}
 function Note({children}:{children:React.ReactNode}){return <p className="mt-5 rounded-2xl border border-orange-300/50 bg-orange-50 p-4 font-bold leading-7 text-academy-ink">{children}</p>}

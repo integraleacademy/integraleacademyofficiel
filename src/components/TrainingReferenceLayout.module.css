@@ -1,0 +1,87 @@
+.page { --course-accent:#b6383d; --course-pale:#ffc0b6; --course-rgb:182,56,61; padding-bottom:84px; overflow-x:clip; }
+.page[data-course-theme='blue'] { --course-accent:#285e99; --course-pale:#b5d8ff; --course-rgb:40,94,153; }
+.page[data-course-theme='green'] { --course-accent:#17694f; --course-pale:#afe4cb; --course-rgb:23,105,79; }
+.page[data-course-theme='orange'] { --course-accent:#ac4b23; --course-pale:#ffd0ad; --course-rgb:172,75,35; }
+.page { --ssiap-red:var(--course-accent); }
+.hero.hero { background:radial-gradient(ellipse at 90% 5%,rgba(var(--course-rgb),.35),transparent 55%),#111c28; }
+.hero h1 em,.hero :global([class*='heroBadge']) { color:var(--course-pale); }
+.hero h1 { text-wrap:balance; }
+.description > * + * { margin-top:10px; }
+.hero figure img { object-fit:contain; height:auto; aspect-ratio:3 / 2; }
+.action { display:inline-flex; min-height:48px; align-items:center; justify-content:center; border-radius:999px; padding:12px 22px; text-align:center; font-size:13px; line-height:1.4; font-weight:750; transition:transform .2s,filter .2s; }
+.action:hover { transform:translateY(-2px); filter:brightness(1.08); }
+.primary { color:#fff; background:var(--course-accent); }
+.outline { border:1px solid #ffffff40; color:#fff; background:#ffffff08; }
+.booking aside { min-width:0; }
+.booking [data-session-grid] { display:contents; }
+.booking [data-session-actions] > a { margin-top:0; }
+.booking [data-layout='cities'] { grid-template-columns:minmax(0,.85fr) minmax(0,2fr); }
+.booking [data-city-sessions] { grid-template-columns:repeat(2,minmax(0,1fr)); margin-top:0; gap:14px; }
+.booking [data-city-sessions] > section { padding:12px; }
+.booking [data-city-sessions] > section > p:first-of-type { font-size:21px; }
+.booking [data-city-summary] > h2 { margin-top:0; font-size:11px; }
+.section { padding:72px 0; border-bottom:1px solid var(--ssiap-line); scroll-margin-top:150px; }
+.cream { background:var(--ssiap-paper); }
+.paper { background:#fffdf8; }
+.stone { background:#f0ebe2; }
+.dark { background:#111c28; color:#fff; }
+.eyebrow { color:var(--course-accent); font-size:11px; font-weight:800; letter-spacing:.15em; line-height:1.6; text-transform:uppercase; }
+.intro { color:#60636a; font-size:16px; line-height:1.8; }
+.dark .eyebrow { color:var(--course-pale); }
+.dark .intro { color:#c2cbd4; }
+.section h2 :global(span[class*='decoration-']) { font-family:Georgia,serif; color:var(--course-accent); font-style:italic; font-weight:400; text-decoration:none; }
+.mission .missionImage { display:grid; align-items:center; background:#eaf0f3; }
+.mission .missionImage img { height:auto; min-height:0; aspect-ratio:3 / 2; object-fit:contain; }
+.mission:nth-child(2n) { background:#17212b; color:#fff; border-color:#17212b; }
+.mission:nth-child(2n) .missionImage { order:2; }
+.mission:nth-child(2n) p { color:#c2cbd2; }
+.mission:nth-child(2n) :global([class*='missionNumber']) { color:var(--course-pale); }
+.mission :global([class*='missionNumber']) { color:var(--course-accent); }
+.missionDetails { width:100%; margin-top:24px; }
+.mobileBar { position:fixed; inset:auto 0 0; display:flex; justify-content:center; gap:8px; z-index:40; padding:12px 18px calc(12px + env(safe-area-inset-bottom)); border-top:1px solid var(--ssiap-line); background:var(--ssiap-paper); box-shadow:0 -10px 30px #0001; }
+.mobileBar > a { flex:1; max-width:300px; }
+.page :global([id]) { scroll-margin-top:155px; }
+.page :global([id^='faq-']) { --text-main:23 19 13; --text-muted:70 58 42; --border:214 199 174; color:#17212b; color-scheme:light; }
+/* Retain the complete specialised course cards while matching the new rhythm. */
+.page > section:global(.page-container) { padding-block:54px; }
+.page > section:global(.page-container) > h2 { font-size:clamp(30px,3.5vw,46px); letter-spacing:-.045em; line-height:1.15; }
+:global(html.dark) .page { --ssiap-red:var(--course-pale); }
+:global(html.dark) .paper { background:#14202c; }
+:global(html.dark) .stone { background:#18232f; }
+:global(html.dark) .eyebrow { color:var(--course-pale); }
+:global(html.dark) .intro { color:#c2cbd4; }
+:global(html.dark) .booking [data-city-sessions] > section { background:#18232f; border-color:#3a4959; }
+/* Existing light callouts keep their own legible palette in dark mode. */
+:global(html.dark) .page :is(:global(.bg-white),:global(.bg-white\/90),:global(.bg-white\/95),:global(.bg-\[\#FFFDF8\]),:global(.bg-\[\#EFE7D9\]),:global(.bg-\[\#F3EEE5\]),:global(.bg-red-50),:global(.bg-emerald-50),:global(.bg-orange-50),:global(.bg-blue-50),:global(.bg-emerald-50\/70),:global(.bg-emerald-50\/60)) {
+  --text-main:23 33 43; --text-muted:77 87 99; --background:250 247 240; --surface:255 253 248; --border:223 217 205; color:#17212b;
+}
+:global(html.dark) .page .booking > aside { --text-main:238 242 246; --text-muted:194 203 212; color:#eef2f6; }
+:global(html.dark) .page .booking [data-session-details] > div > p:first-child { color:#bdc7d2; }
+:global(html.dark) .page .mission :global([class*='missionNumber']) { color:var(--course-pale); }
+:global(html.dark) .section h2 :global(span[class*='decoration-']) { color:var(--course-pale); }
+@media (min-width:1024px) {
+  .page { padding-bottom:0; }
+  .mobileBar { display:none; }
+  .hero h1 { font-size:clamp(42px,4.1vw,60px); }
+  .hero :global([class*='heroGrid']) { gap:36px; }
+  .hero .description { font-size:15px; line-height:1.65; }
+  .booking [data-session-details] > div { padding:10px 12px; }
+  .booking [data-session-overview] > h2 { font-size:25px; }
+}
+@media (min-width:1024px) and (max-height:820px) {
+  .hero h1 { font-size:clamp(38px,4vw,52px); }
+  .hero .description { font-size:14px; line-height:1.55; }
+  .hero :global([class*='heroTagline']) { font-size:19px; }
+  .booking [data-city-sessions] > section > p:first-of-type { font-size:18px; }
+}
+@media (max-width:1023px) {
+  .booking [data-layout='cities'] { grid-template-columns:1fr; }
+  .booking [data-city-summary] { max-width:600px; }
+}
+@media (max-width:700px) {
+  .section { padding:48px 0; }
+  .booking [data-city-sessions] { grid-template-columns:1fr; }
+  .mission:nth-child(2n) .missionImage { order:0; }
+  .page > section:global(.page-container) { padding-block:36px; }
+}
+@media (prefers-reduced-motion:reduce) { .action { transition:none; } }

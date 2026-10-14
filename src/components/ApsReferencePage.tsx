@@ -1,10 +1,12 @@
-import { TeamPortrait } from '@/components/TeamPortrait';
-import viewportStyles from './TrainingHeroViewport.module.css';
+import type { ReactNode } from 'react';
+import { TrainingReferencePage, TrainingReferenceHero, TrainingReferenceSection as Section, TrainingReferenceContact, TrainingReferenceMobileBar } from '@/components/TrainingReferenceLayout';
+import { TrainingCourseTestimonials } from '@/components/TrainingCourseTestimonials';
+
 import { originalArtwork } from '@/data/originalArtwork';
 import { serializeCourseJsonLd } from '@/lib/seo';
-import Image from 'next/image';
+
 import Link from 'next/link';
-import type { ReactNode } from 'react';
+
 import { ApsSectionNavigation } from '@/components/ApsSectionNavigation';
 import { ApsFacilitiesSections } from '@/components/ApsFacilitiesSections';
 import { ApsJourney } from '@/components/ApsJourney';
@@ -14,7 +16,6 @@ import { PremiumFAQSection } from '@/components/ui';
 import { TrainingDatesPricingSection } from '@/components/TrainingDatesPricingSection';
 import { TrainingMissionCards } from '@/components/TrainingMissionCards';
 import { ManualArtwork } from '@/components/ManualArtwork';
-import { TrainingEditorialSection as Section } from '@/components/TrainingEditorialSection';
 import { getSessionSeatAvailability } from '@/lib/session-seat-availability';
 import styles from './ApsReferencePage.module.css';
 
@@ -241,52 +242,27 @@ function HeroSession({ session }: { session: any }) {
 export function ApsReferencePage({ sessions }: { sessions: any[] }) {
   const visibleSessions = sortSessionsChronologically(sessions.length ? sessions : fallbackSessions);
   const next = visibleSessions[0];
-  return <main className={`${styles.page} relative pb-24 lg:pb-0`}>
+  return <TrainingReferencePage theme="blue">
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeCourseJsonLd({ '@context': 'https://schema.org', '@graph': [
       { '@type': 'Course', name: 'Formation Agent de Prévention et de Sécurité APS', description: 'Formation TFP APS de 175 heures à Puget-sur-Argens : 124 heures en présentiel, dont 63,5 heures de pratique et 60,5 heures de théorie, et 51 heures à distance.', provider: { '@type': 'Organization', name: 'Intégrale Academy', telephone: '04 22 47 07 68' } },
       { '@type': 'FAQPage', mainEntity: faq.map(item => ({ '@type': 'Question', name: item.q, acceptedAnswer: { '@type': 'Answer', text: item.a } })) },
       { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Accueil', item: '/' }, { '@type': 'ListItem', position: 2, name: 'Formations sécurité', item: '/formations-securite' }, { '@type': 'ListItem', position: 3, name: 'APS', item: '/formations-securite/aps' }] },
     ] }, "/formations-securite/aps") }} />
 
-    <section className={`${styles.hero} ${viewportStyles.hero} relative px-4 text-white`}>
-      <div className={styles.heroOverlay}/>
-      <div data-hero-content className={`page-container ${styles.heroContent}`}>
-        <div data-hero-copy className="max-w-4xl">
-          <span className={`${styles.heroBadge} inline-flex items-center gap-2 rounded-full border border-blue-300/45 bg-blue-950/35 px-4 py-2 text-[.68rem] font-black uppercase tracking-[.2em] text-blue-100 backdrop-blur-md`}>
-            <span className="h-2.5 w-2.5 rounded-full bg-blue-400 shadow-[0_0_16px_rgba(96,165,250,.95)]"/>
-            TFP APS · RNCP 36648 · niveau 3
-          </span>
-          <h1 className={`${styles.heroTitle} mt-7 max-w-4xl text-[2.65rem] font-black leading-[.98] tracking-[-.055em] sm:text-[3.75rem] lg:text-[4.75rem] xl:text-[5.15rem]`}>
-            Formation agent de prévention et de sécurité
-          </h1>
-          <p className={`${styles.heroTagline} mt-5 max-w-3xl text-2xl font-black tracking-[-.035em] text-white sm:text-3xl`}>
-            Apprenez le métier <span className={styles.heroTitleAccent}>sur le terrain.</span>
-          </p>
-          <p className="mt-5 max-w-2xl text-lg font-medium leading-8 text-white/78 sm:text-xl">Rondes, contrôle d’accès, palpation, inspection des bagages et gestion d’incidents&nbsp;: entraînez-vous aux situations que vous rencontrerez réellement en poste.</p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <CTA href={apsContact('démarrer mon projet')} variant="blue">Je démarre mon projet</CTA>
-            <CTA href="tel:0422470768" variant="outline">Parler à un conseiller</CTA>
-          </div>
-          <div className="mt-8 flex flex-wrap gap-2 text-xs font-bold text-white/80">
-            <span className="rounded-full border border-blue-200/25 bg-blue-950/25 px-3 py-2 backdrop-blur">✓ 175 heures</span>
-            <span className="rounded-full border border-blue-200/25 bg-blue-950/25 px-3 py-2 backdrop-blur">✓ SST inclus</span>
-            <span className="rounded-full border border-blue-200/25 bg-blue-950/25 px-3 py-2 backdrop-blur">✓ CNAPS accompagné</span>
-            <span className="rounded-full border border-blue-200/25 bg-blue-950/25 px-3 py-2 backdrop-blur">✓ Financements possibles</span>
-          </div>
-        </div>
-        <div data-hero-artwork className={styles.heroArtwork}>
-          <Image src="/images/aps/manuel/equipe.webp" alt="Deux agents de sécurité préparent leur ronde, illustration du manuel APS Intégrale Academy" width={1536} height={1024} priority sizes="(max-width: 1023px) 90vw, 50vw" />
-        </div>
-      </div>
-      <div data-hero-booking className={`page-container ${styles.heroBooking}`}><HeroSession session={next} /></div>
-      <div className="page-container"><div data-hero-facts className={`${styles.facts} relative grid overflow-hidden rounded-[1.6rem] border border-white/15 bg-[#0A1421]/85 text-white backdrop-blur-xl sm:grid-cols-2 lg:grid-cols-6`}>
-        {heroFacts.map(([key,value,detail]) => <div key={key} className={`${styles.fact} border-b border-white/10 p-4 last:border-b-0 sm:border-r lg:border-b-0`}><p className="text-[.58rem] font-black uppercase tracking-[.18em] text-white/42">{key}</p><p className="mt-1 font-black text-white">{value}</p><p className="mt-1 text-[.68rem] font-semibold leading-4 text-white/48">{detail}</p></div>)}
-      </div></div>
-    </section>
+    <TrainingReferenceHero
+      id="aps" badge="TFP APS · RNCP 36648 · niveau 3"
+      heading="Devenez agent de" accent="prévention et sécurité."
+      title="Formation agent de prévention et de sécurité"
+      tagline="Apprenez le métier sur le terrain."
+      description={<p>Rondes, contrôle d’accès, palpation, inspection des bagages et gestion d’incidents : entraînez-vous aux situations que vous rencontrerez réellement en poste.</p>}
+      illustration={{ src: '/images/aps/manuel/equipe.webp', alt: 'Deux agents de sécurité préparent leur ronde, illustration du manuel APS Intégrale Academy' }}
+      caption="Observer. Prévenir. Protéger."
+      primaryAction={{ href: apsContact('démarrer mon projet'), label: 'Je démarre mon projet' }}
+      highlights={['175 heures', 'SST inclus', 'CNAPS accompagné', 'Financements possibles']}
+      facts={heroFacts}
+    ><HeroSession session={next} /></TrainingReferenceHero>
 
-    <ApsSectionNavigation registrationHref={apsRegistrationFormUrl} />
-
-    <IntegraleWelcomePack course="aps" />
+    <ApsSectionNavigation registrationHref="#dates-tarifs" />
 
     <ApsJourney />
 
@@ -362,6 +338,8 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
       <div className="mt-5 rounded-[1.5rem] border border-academy-gold/60 bg-academy-gold/10 p-5"><p className="font-black">Vous n’êtes jamais seul devant votre écran.</p><p className="mt-1 text-sm font-semibold text-academy-muted">Votre progression à distance est suivie et l’équipe pédagogique reste disponible. Les enseignements en présentiel associent théorie, exercices et mises en situation.</p></div>
       <div className="mt-10"><Eyebrow>Organisation</Eyebrow><h3 className="mt-3 text-3xl font-black">Une session, quatre temps forts.</h3><div className="mt-6 grid gap-3 md:grid-cols-4">{[['Accueil au centre','Présentation du parcours'],['51 h à distance','Notions autorisées en distanciel'],['124 h à l’école','Théorie et pratique encadrées'],['Examen en présentiel','Évaluation devant jury']].map(([title,text],index) => <div key={title} className={`rounded-[1.5rem] border p-5 ${index===3 ? 'border-academy-gold bg-academy-gold/10' : 'border-academy-line bg-academy-bg'}`}><span className="text-3xl font-black text-yellow-600">0{index+1}</span><h4 className="mt-6 text-lg font-black">{title}</h4><p className="mt-2 text-sm leading-6 text-academy-muted">{text}</p></div>)}</div></div>
     </Section>
+
+    <IntegraleWelcomePack course="aps" />
 
     <Section id="examen" eyebrow="06 — Examen" title={<>Un examen qui valide vos réflexes.</>} intro={<>Connaissances, gestes professionnels et capacité à réagir : l’évaluation finale associe des QCU et deux mises en situation individuelles, en présentiel.</>} tone="paper">
       <div className={`${styles.examGrid} grid gap-4 sm:grid-cols-2 lg:grid-cols-4`}>
@@ -515,10 +493,15 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
       </article>
     </Section>
 
+    <TrainingCourseTestimonials category="APS" />
+
     <div id="faq-aps"><PremiumFAQSection theme="blue" badge="FAQ APS" title="Les réponses avant de vous lancer" description="CNAPS, e-learning, examen, carte professionnelle et financement : retrouvez les informations indispensables avant votre inscription." items={faq} contactHref={apsContact('question APS')} /></div>
 
-    <section className="bg-academy-bg px-4 pb-20 pt-8"><div className={`${styles.finalCta} page-container rounded-[2.4rem] border border-white/10 shadow-card`}><div className={`${styles.finalCtaContent} grid items-center lg:grid-cols-[1.05fr_.95fr]`}><div className="p-7 sm:p-9 lg:p-12"><Eyebrow light>Une question sur votre projet ?</Eyebrow><h2 className="mt-4 text-4xl font-black tracking-[-.05em] sm:text-5xl">Faites le premier pas vers votre futur métier.</h2><p className="mt-5 max-w-xl text-lg leading-8 text-white/65">Cassandre vérifie votre éligibilité, votre dossier CNAPS et votre financement. Vous repartez avec des réponses claires et les prochaines étapes adaptées à votre situation.</p><div className="mt-6 flex flex-col gap-3 sm:flex-row"><CTA href={apsContact('rendez-vous avec Cassandre')} variant="gold">Réserver un rendez-vous →</CTA><CTA href="tel:0422470768" variant="outline">Appeler Cassandre</CTA></div><div className="mt-7 flex flex-wrap gap-2 text-xs font-bold text-white/60"><span className="rounded-full border border-white/10 bg-white/5 px-3 py-2">✓ Sans engagement</span><span className="rounded-full border border-white/10 bg-white/5 px-3 py-2">✓ Étude personnalisée</span><span className="rounded-full border border-white/10 bg-white/5 px-3 py-2">✓ Réponse sur le CNAPS et le financement</span></div></div><div className="relative min-h-[390px] p-7"><div className="absolute left-1/2 top-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/10 shadow-[0_0_0_50px_rgba(255,255,255,.025),0_0_0_100px_rgba(255,255,255,.015)]"/><div className={`${styles.adviserCard} absolute inset-x-7 bottom-9 rounded-[1.8rem] border border-white/70 bg-white/95 p-5 text-academy-ink backdrop-blur`}><div className="flex items-center gap-4"><div className="relative"><div className="absolute -inset-1 rounded-[1.15rem] bg-gradient-to-br from-academy-gold to-sky-400 opacity-70 blur"/><TeamPortrait person="cassandre" size={88} alt="Cassandre, responsable commerciale Intégrale Academy" className="relative h-20 w-20 rounded-2xl bg-white object-cover"/></div><div><p className="text-xs font-black uppercase tracking-[.18em] text-yellow-700">Votre conseillère</p><p className="mt-1 text-2xl font-black">Cassandre</p><p className="text-sm font-semibold text-academy-muted">Responsable commerciale</p></div></div><a href="tel:0422470768" className="mt-4 block rounded-full bg-academy-gold px-5 py-3 text-center font-black text-academy-gold-text transition hover:brightness-105">04 22 47 07 68</a></div></div></div></div></section>
-
-    <div className="fixed inset-x-0 bottom-0 z-40 border-t border-academy-line bg-[#FFFDF8]/96 p-3 pb-[calc(.75rem+env(safe-area-inset-bottom))] shadow-[0_-12px_40px_rgba(0,0,0,.12)] backdrop-blur lg:hidden"><div className="mx-auto flex max-w-lg gap-2"><CTA href="tel:0422470768" variant="light" className="min-w-0 flex-1 px-3">Appeler</CTA><CTA href={sessionHref()} variant="gold" className="min-w-0 flex-[1.4] px-3">Réserver ma place</CTA></div></div>
-  </main>;
+    <TrainingReferenceContact
+      description="Cassandre vérifie votre éligibilité, votre dossier CNAPS et votre financement. Vous repartez avec des réponses claires et les prochaines étapes adaptées à votre situation."
+      href={apsContact('rendez-vous avec Cassandre')}
+      assurances={['Sans engagement', 'Étude personnalisée', 'Réponse sur le CNAPS et le financement']}
+    />
+    <TrainingReferenceMobileBar label="Réserver ma place" />
+  </TrainingReferencePage>;
 }
