@@ -67,6 +67,17 @@ export default function FinancementsPage() {
       </div>
     </section>
 
+    <nav className={styles.chapterNav} aria-label="Les rubriques de la page Financements">
+      <div className={`${styles.container} ${styles.chapterNavInner}`}>
+        <span>Financer votre projet</span>
+        <a href="#solutions"><span>01</span> Les solutions</a>
+        <a href="#simulateur"><span>02</span> Le simulateur</a>
+        <a href="#accompagnement"><span>03</span> L’accompagnement</a>
+        <a href="#questions-frequentes"><span>04</span> Questions fréquentes</a>
+        <a href="#contact-financement"><span>05</span> Parlons-en</a>
+      </div>
+    </nav>
+
     <section id="solutions" className={styles.solutionsSection} aria-labelledby="solutions-title">
       <div className={styles.container}>
         <div className={styles.sectionIntro}>
@@ -120,7 +131,7 @@ export default function FinancementsPage() {
       </div>
     </section>
 
-    <section className={styles.faqSection} aria-labelledby="faq-title">
+    <section id="questions-frequentes" className={styles.faqSection} aria-labelledby="faq-title">
       <div className={`${styles.container} ${styles.faqLayout}`}>
         <div className={styles.faqIntro}><span className={styles.eyebrow}>Les réponses utiles</span><h2 id="faq-title">Encore une <br /><em>question ?</em></h2><p>Quelques repères avant de vous lancer.</p><Link href="#contact-financement" className={styles.textLink}>Parlons-en ensemble <Icon name="arrow" /></Link></div>
         <div className={styles.faqList}>

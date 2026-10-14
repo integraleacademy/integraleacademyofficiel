@@ -6,6 +6,7 @@
   --line: rgb(var(--border));
   --gold: rgb(var(--accent));
   --gold-ink: rgb(var(--accent-strong));
+  --financing-nav-height: 70px;
   background: var(--paper);
   color: var(--ink);
   font-family: inherit;
@@ -14,7 +15,7 @@
   line-height: 1.75;
 }
 .container { width: min(1240px, calc(100% - 160px)); margin-inline: auto; }
-.page section[id] { scroll-margin-top: 104px; }
+.page section[id] { scroll-margin-top: calc(var(--site-header-height) + var(--financing-nav-height) + 24px); }
 .page :is(h1, h2) em { font-family: Georgia, 'Times New Roman', serif; font-style: italic; font-weight: 400; color: var(--gold-ink); }
 .page a, .page button, .page summary { -webkit-tap-highlight-color: transparent; }
 .page :is(a,button,summary):focus-visible { outline: 3px solid var(--gold-ink); outline-offset: 5px; }
@@ -59,6 +60,13 @@
 .proofBar svg { width: 16px; height: 16px; color: var(--gold-ink); }
 .rating strong { color: var(--ink); font-size: 14px; }
 .stars { color: var(--gold-ink); letter-spacing: 1px; }
+.chapterNav { position: sticky; top: var(--site-header-height); z-index: 30; border-block: 1px solid rgb(var(--border) / .75); background: rgb(var(--background) / .96); backdrop-filter: blur(16px); }
+.chapterNavInner { display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: var(--financing-nav-height); }
+.chapterNavInner > span { flex-shrink: 0; color: var(--muted); font-size: 10px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+.chapterNavInner a { display: inline-flex; align-items: center; gap: 8px; flex-shrink: 0; align-self: stretch; padding-block: 17px; color: var(--ink); font-size: 12px; font-weight: 800; white-space: nowrap; }
+.chapterNavInner a > span { color: var(--gold-ink); font-size: 11px; }
+.chapterNavInner a:hover { color: var(--gold-ink); }
+.chapterNavInner a:focus-visible { outline-offset: -3px; }
 .solutionsSection { padding: 74px 0 64px; border-top: 1px solid var(--line); }
 .sectionIntro { display: grid; grid-template-columns: 1.1fr 1fr; gap: 80px; align-items: end; margin-bottom: 32px; }
 .sectionIntro h2, .faqIntro h2, .contactPanel h2 { margin-top: 16px; font-size: clamp(34px,3.6vw,49px); line-height: 1.13; letter-spacing: -.045em; font-weight: 900; }
@@ -129,14 +137,18 @@
 @media (min-width: 1600px) { .heroCopy h1 { font-size: 74px; } }
 @media (max-width: 1100px) {
   .container { width: calc(100% - 64px); }
+  .chapterNavInner { gap: 14px; }
+  .chapterNavInner > span { display: none; }
   .heroLayout { gap: 36px; grid-template-columns: 1fr 1fr; }
   .fundingGrid { grid-template-columns: repeat(2,minmax(0,1fr)); }
   .fundingHeading { gap: 14px; }
   .contactPanel { gap: 38px; padding: 36px; }
 }
 @media (max-width: 800px) {
+  .page { --financing-nav-height: 58px; }
   .container { width: calc(100% - 40px); }
-  .page section[id] { scroll-margin-top: 82px; }
+  .chapterNavInner { width: 100%; justify-content: flex-start; gap: 26px; padding-inline: 20px; overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: thin; }
+  .chapterNavInner a { padding-block: 16px; }
   .hero { padding-top: 32px; }
   .heroLayout { grid-template-columns: 1fr; gap: 32px; padding-bottom: 28px; }
   .heroCopy h1 { max-width: 540px; margin-top: 18px; font-size: clamp(43px,8vw,63px); line-height: 1.06; }
