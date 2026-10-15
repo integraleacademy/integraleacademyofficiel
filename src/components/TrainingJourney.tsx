@@ -35,6 +35,7 @@ export function TrainingJourney({ id, name, eyebrow, title, steps, continuationH
   const headingRefs = useRef<(HTMLHeadingElement | null)[]>([]);
   const pendingFocusRef = useRef<number | null>(null);
   const [enhanced, setEnhanced] = useState(false);
+  const [pinned, setPinned] = useState(false);
   const [active, setActive] = useState(0);
 
   const getBounds = useCallback(() => {
@@ -58,8 +59,8 @@ export function TrainingJourney({ id, name, eyebrow, title, steps, continuationH
   }, [getBounds, steps.length]);
 
   useEffect(() => {
-    // Desktop always presents one step at a time. Height and motion preferences
-    // must not silently turn the journey back into four stacked cards.
+    // Desktop keeps one step at a time, even when a shorter window requires
+    // button navigation instead of a pinned, scroll-driven stage.
     const media = window.matchMedia('(min-width: 1024px)');
     const sync = () => setEnhanced(media.matches);
     sync();
@@ -70,7 +71,11 @@ export function TrainingJourney({ id, name, eyebrow, title, steps, continuationH
   }, []);
 
   useEffect(() => {
-    if (!enhanced) return;
+    if (!enhanced) {
+      setPinned(false);
+      sectionRef.current?.style.removeProperty('--journey-stage-height');
+      return;
+    }
     let frame = 0;
     let bounds = getBounds();
     let measureNeeded = true;
@@ -82,15 +87,23 @@ export function TrainingJourney({ id, name, eyebrow, title, steps, continuationH
       frame = 0;
       if (measureNeeded) {
         measureNeeded = false;
-        // The grid reserves the largest card/copy, including hidden steps.
-        // If text needs more room, let the entire stage grow and scroll with
-        // the document instead of clipping content or disabling the journey.
-        const stageHeight = `${Math.ceil(stage.getBoundingClientRect().height)}px`;
+        // All four steps reserve their intrinsic height. Only pin the stage if
+        // it fits below BOTH menus; never move its title behind the header to
+        // make its lower edge fit. The single-card layout stays available.
+        const measuredHeight = Math.ceil(stage.getBoundingClientRect().height);
+        const stageHeight = `${measuredHeight}px`;
         if (section.style.getPropertyValue('--journey-stage-height') !== stageHeight) {
           section.style.setProperty('--journey-stage-height', stageHeight);
         }
+        const stickyTop = Number.parseFloat(getComputedStyle(stage).top) || 0;
+        const fits = measuredHeight <= window.innerHeight - stickyTop + 1;
+        if (fits !== pinned) {
+          setPinned(fits);
+          return;
+        }
         bounds = getBounds();
       }
+      if (!pinned) return;
       if (!bounds) return;
       const distance = Math.max(1, bounds.end - bounds.start);
       const position = window.scrollY - bounds.start;
@@ -113,16 +126,15 @@ export function TrainingJourney({ id, name, eyebrow, title, steps, continuationH
     observer.observe(stage);
     stage.querySelectorAll<HTMLElement>(`.${styles.visualInner} > *, .${styles.copy}`).forEach(element => observer.observe(element));
     schedule();
-    window.addEventListener('scroll', schedule, { passive: true });
+    if (pinned) window.addEventListener('scroll', schedule, { passive: true });
     window.addEventListener('resize', measure);
     return () => {
       observer.disconnect();
       window.cancelAnimationFrame(frame);
       window.removeEventListener('scroll', schedule);
       window.removeEventListener('resize', measure);
-      section.style.removeProperty('--journey-stage-height');
     };
-  }, [enhanced, getBounds, steps.length]);
+  }, [enhanced, pinned, getBounds, steps.length]);
 
   useEffect(() => {
     if (pendingFocusRef.current !== active) return;
@@ -140,11 +152,19 @@ export function TrainingJourney({ id, name, eyebrow, title, steps, continuationH
       return;
     }
     if (index !== active) pendingFocusRef.current = index;
+    if (!pinned) {
+      setActive(index);
+      sectionRef.current?.scrollIntoView({
+        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
+        block: 'start',
+      });
+      return;
+    }
     scrollToStep(index);
   }
 
   return (
-    <><section id={id} ref={sectionRef} className={styles.journey} data-enhanced={enhanced} data-theme={theme} data-navigation-only="true" data-visual-format="landscape" aria-labelledby={`${id}-title`}>
+    <><section id={id} ref={sectionRef} className={styles.journey} data-enhanced={enhanced} data-pinned={enhanced && pinned} data-theme={theme} data-navigation-only="true" data-visual-format="landscape" aria-labelledby={`${id}-title`}>
       <div ref={stageRef} className={styles.stage}>
         <header className={styles.intro}>
           <p className={styles.eyebrow}>{eyebrow}</p>
