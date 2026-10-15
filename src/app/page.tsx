@@ -133,7 +133,7 @@ export default async function Home() {
         </div>
       </section>
 
-      <section id="formations-securite" aria-labelledby="security-heading" className={`scroll-mt-28 ${carouselStyles.section}`}>
+      <section id="formations-securite" aria-labelledby="security-heading" className={carouselStyles.section}>
         <div className="page-container">
           <div className={carouselStyles.heading}>
             <h2 id="security-heading">Les métiers de la sécurité</h2>
@@ -150,7 +150,7 @@ export default async function Home() {
         </div>
       </section>
 
-      <section id="formation-vtc" aria-labelledby="formation-vtc-title" className={`scroll-mt-28 ${carouselStyles.section} ${carouselStyles.sectionAlternate}`}>
+      <section id="formation-vtc" aria-labelledby="formation-vtc-title" className={`${carouselStyles.section} ${carouselStyles.sectionAlternate}`}>
         <div className="page-container">
           <div className={carouselStyles.heading}>
             <h2 id="formation-vtc-title">{vtcFormation.title}</h2>
@@ -165,7 +165,7 @@ export default async function Home() {
         </div>
       </section>
 
-      <section id="bts" aria-labelledby="bts-heading" className={`scroll-mt-28 ${carouselStyles.section}`}>
+      <section id="bts" aria-labelledby="bts-heading" className={carouselStyles.section}>
         <div className="page-container">
           <div className={carouselStyles.heading}>
             <h2 id="bts-heading">BTS en alternance</h2>

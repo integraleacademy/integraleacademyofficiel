@@ -14,21 +14,30 @@ function GoogleIcon(){
 
 export function GoogleRatingBadge(){
   const pathname = usePathname();
-  const [homeHeroVisible, setHomeHeroVisible] = useState(pathname === '/');
+  const [homeIntroVisible, setHomeIntroVisible] = useState(pathname === '/');
 
   useEffect(() => {
-    const hero = pathname === '/' ? document.getElementById('home-hero-title')?.closest('section') : null;
-    if (!hero) {
-      setHomeHeroVisible(false);
+    const sections = pathname === '/'
+      ? document.querySelectorAll('[data-home-page] > section:is([aria-labelledby="home-hero-title"], #formations-securite, #formation-vtc, #bts)')
+      : [];
+    if (!sections.length) {
+      setHomeIntroVisible(false);
       return;
     }
-    // Keep every orientation choice accessible in the first screen, even on short windows.
-    const observer = new IntersectionObserver(([entry]) => setHomeHeroVisible(entry.isIntersecting));
-    observer.observe(hero);
+    // Keep orientation choices and course navigation clear of the floating badge.
+    const visibleSections = new Set<Element>();
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) visibleSections.add(entry.target);
+        else visibleSections.delete(entry.target);
+      }
+      setHomeIntroVisible(visibleSections.size > 0);
+    });
+    sections.forEach((section) => observer.observe(section));
     return () => observer.disconnect();
   }, [pathname]);
 
-  if ((pathname === '/' && homeHeroVisible) || pathname === '/ecole' || pathname?.replace(/\/+$/, '') === '/financements') {
+  if ((pathname === '/' && homeIntroVisible) || pathname === '/ecole' || pathname?.replace(/\/+$/, '') === '/financements') {
     return null;
   }
 
