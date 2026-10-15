@@ -247,7 +247,7 @@ export function SsiapReferencePage({ sessions }: { sessions: any[] }) {
             <span className={mos.dualPlus} aria-hidden="true">+</span>
             <div className={mos.dualFire}>
               <span className={mos.dualLabel}>SSIAP 1</span>
-              <ManualArtwork illustration={{ src: '/images/aps/manuel/extincteurs.webp', alt: 'Trois extincteurs présentés dans le manuel APS' }} natural className={mos.dualVisual} sizes="(max-width: 360px) 85vw, (max-width: 900px) 42vw, 230px" />
+              <ManualArtwork illustration={ssiapArtwork.evacuation} natural className={mos.dualVisual} sizes="(max-width: 360px) 85vw, (max-width: 900px) 42vw, 230px" />
               <h4>Alerter & protéger</h4>
               <p>Prévention incendie, évacuation et assistance aux personnes.</p>
             </div>

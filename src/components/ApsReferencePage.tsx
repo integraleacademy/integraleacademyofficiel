@@ -3,6 +3,7 @@ import { TrainingReferencePage, TrainingReferenceHero, TrainingReferenceSection 
 import { TrainingCourseTestimonials } from '@/components/TrainingCourseTestimonials';
 
 import { originalArtwork } from '@/data/originalArtwork';
+import { ssiapArtwork } from '@/data/manualIllustrations';
 import { serializeCourseJsonLd } from '@/lib/seo';
 
 import Link from 'next/link';
@@ -453,7 +454,7 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
         <div className={styles.dualPanels}>
           <div className={styles.dualSecurity}><span className={styles.dualLabel}>TFP APS</span><ApsPracticalVisual kind="patrol" illustration={originalArtwork['aps-metier-site']} /><h4>Prévenir & surveiller</h4><p>Rondes, contrôle d’accès, protection des personnes et des biens.</p></div>
           <span className={styles.dualPlus} aria-hidden="true">+</span>
-          <div className={styles.dualFire}><span className={styles.dualLabel}>SSIAP 1</span><ApsPracticalVisual kind="extinguisher" illustration={{ src: "/images/aps/manuel/extincteurs.webp", alt: "Trois extincteurs présentés dans le manuel APS" }} /><h4>Alerter & protéger</h4><p>Prévention incendie, évacuation et assistance aux personnes.</p></div>
+          <div className={styles.dualFire}><span className={styles.dualLabel}>SSIAP 1</span><ApsPracticalVisual kind="extinguisher" illustration={ssiapArtwork.evacuation} /><h4>Alerter & protéger</h4><p>Prévention incendie, évacuation et assistance aux personnes.</p></div>
         </div>
         <div className={styles.dualFooter}><span>Surveillance humaine <b>+</b> Sécurité incendie</span><CTA href="/formations-securite/ssiap-1" variant="dark" className="w-full">Découvrir le SSIAP 1 →</CTA><p>Deux qualifications complémentaires, chacune avec ses prérequis et son examen.</p></div>
       </article></div><article className="mt-5 rounded-[2rem] border border-academy-line bg-white p-6"><h3 className="text-2xl font-black">Où travailler ?</h3><p className="mt-2 leading-7 text-academy-muted">Les agents APS interviennent aussi bien dans des lieux ouverts au public que sur des sites professionnels à accès contrôlé.</p><div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{workplaces.map(item => <div key={item} className={`${styles.workplace} rounded-2xl bg-academy-bg p-4 text-center font-black`}>{item}</div>)}</div></article><div className="mt-5 rounded-[1.5rem] border border-academy-line bg-[#FFFDF8] p-5"><p className="font-black">Bon à savoir : horaires et conditions varient selon les postes.</p><p className="mt-2 text-sm leading-6 text-academy-muted">Le secteur propose des emplois de jour ou de nuit, à temps plein ou partiel, sur site fixe ou mobile. Disponibilité, ponctualité, présentation, maîtrise de soi et qualité du compte rendu sont particulièrement recherchées par les employeurs.</p></div></Section>
