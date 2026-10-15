@@ -103,7 +103,7 @@ export function BtsMosReferencePage() {
             <a href="#contact-mos" className={styles.textLink}>Une question ? Parler à Aurélie <Arrow /></a>
           </div>
           <figure className={styles.heroVisual}>
-            <div className={styles.heroImage}><Image src={btsHeroArtwork.mos.src} alt={btsHeroArtwork.mos.alt} width={1536} height={1024} priority sizes="(max-width: 850px) 94vw, 48vw" /></div>
+            <div className={styles.heroImage}><Image src={btsHeroArtwork.mos.src} alt={btsHeroArtwork.mos.alt} width={1536} height={1024} priority sizes="(max-width: 650px) 94vw, (max-width: 1023px) 600px, (max-width: 1504px) 46vw, 650px" /></div>
             <figcaption><span className={styles.visualNumber}>01</span><div><strong>Du terrain au management.</strong><span>Votre prochain chapitre commence ici.</span></div><span className={styles.visualArrow} aria-hidden="true">↗</span></figcaption>
           </figure>
         </div>
