@@ -14,30 +14,30 @@ function GoogleIcon(){
 
 export function GoogleRatingBadge(){
   const pathname = usePathname();
-  const [homeIntroVisible, setHomeIntroVisible] = useState(pathname === '/');
+  const [contentNeedsClearSpace, setContentNeedsClearSpace] = useState(pathname === '/');
 
   useEffect(() => {
-    const sections = pathname === '/'
-      ? document.querySelectorAll('[data-home-page] > section:is([aria-labelledby="home-hero-title"], #formations-securite, #formation-vtc, #bts)')
-      : [];
+    const selectors = ['[data-site-footer]'];
+    if (pathname === '/') selectors.push('[data-home-page] > section:is([aria-labelledby="home-hero-title"], #formations-securite, #formation-vtc, #bts)');
+    const sections = document.querySelectorAll(selectors.join(', '));
     if (!sections.length) {
-      setHomeIntroVisible(false);
+      setContentNeedsClearSpace(false);
       return;
     }
-    // Keep orientation choices and course navigation clear of the floating badge.
+    // Keep orientation choices, course navigation and footer information unobstructed.
     const visibleSections = new Set<Element>();
     const observer = new IntersectionObserver((entries) => {
       for (const entry of entries) {
         if (entry.isIntersecting) visibleSections.add(entry.target);
         else visibleSections.delete(entry.target);
       }
-      setHomeIntroVisible(visibleSections.size > 0);
+      setContentNeedsClearSpace(visibleSections.size > 0);
     });
     sections.forEach((section) => observer.observe(section));
     return () => observer.disconnect();
   }, [pathname]);
 
-  if ((pathname === '/' && homeIntroVisible) || pathname === '/ecole' || pathname?.replace(/\/+$/, '') === '/financements') {
+  if (contentNeedsClearSpace || pathname === '/ecole' || pathname?.replace(/\/+$/, '') === '/financements') {
     return null;
   }
 
