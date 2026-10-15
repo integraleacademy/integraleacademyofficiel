@@ -1,3 +1,6 @@
+import { PageSectionNavigation } from '@/components/PageSectionNavigation';
+import navigation from '@/components/PageSectionNavigation.module.css';
+import { PremiumFAQSection } from '@/components/FAQ';
 import { TeamPortrait } from '@/components/TeamPortrait';
 import { createPageMetadata } from '@/lib/seo';
 import FinancingSimulator from '@/components/FinancingSimulator';
@@ -26,6 +29,12 @@ function Icon({ name, className = '' }: { name: IconName; className?: string }) 
   return <svg {...common}><path d="M5 12h13M13 7l5 5-5 5" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.9"/></svg>;
 }
 
+const financingChapters = [
+  ['solutions', 'Les solutions'], ['simulateur', 'Le simulateur'],
+  ['accompagnement', 'L’accompagnement'], ['questions-frequentes', 'Questions fréquentes'],
+  ['contact-financement', 'Parlons-en'],
+] as const;
+
 const fundingOptions: { icon: IconName; audience: string; title: string; description: string; href: string; cta: string; logo?: { src: string; alt: string } }[] = [
   { icon: 'cpf', logo: { src: '/images/mon-compte-formation.svg', alt: 'Mon Compte Formation (CPF)' }, audience: 'Vos droits à la formation', title: 'Le CPF', description: 'Utilisez vos droits disponibles pour une formation éligible. Nous vous aidons à vérifier les possibilités et le reste à charge.', href: '/financements/cpf', cta: 'Comprendre le CPF' },
   { icon: 'briefcase', logo: { src: '/images/financements/france-travail.svg', alt: 'France Travail' }, audience: 'Demandeurs d’emploi', title: 'France Travail', description: 'Présentez votre projet à votre conseiller. Le programme et le devis permettent d’étudier une éventuelle prise en charge.', href: '/financements/france-travail', cta: 'Préparer ma demande' },
@@ -43,7 +52,7 @@ const faqItems = [
 ];
 
 export default function FinancementsPage() {
-  return <div className={styles.page}>
+  return <div className={`${styles.page} ${navigation.scope}`}>
     <section className={styles.hero} aria-labelledby="financements-title">
       <div className={styles.container}>
         <div className={styles.heroLayout}>
@@ -67,16 +76,7 @@ export default function FinancementsPage() {
       </div>
     </section>
 
-    <nav className={styles.chapterNav} aria-label="Les rubriques de la page Financements">
-      <div className={`${styles.container} ${styles.chapterNavInner}`}>
-        <span>Financer votre projet</span>
-        <a href="#solutions"><span>01</span> Les solutions</a>
-        <a href="#simulateur"><span>02</span> Le simulateur</a>
-        <a href="#accompagnement"><span>03</span> L’accompagnement</a>
-        <a href="#questions-frequentes"><span>04</span> Questions fréquentes</a>
-        <a href="#contact-financement"><span>05</span> Parlons-en</a>
-      </div>
-    </nav>
+    <PageSectionNavigation chapters={financingChapters} label="Financer votre projet" ariaLabel="Les rubriques de la page Financements" />
 
     <section id="solutions" className={styles.solutionsSection} aria-labelledby="solutions-title">
       <div className={styles.container}>
@@ -131,17 +131,12 @@ export default function FinancementsPage() {
       </div>
     </section>
 
-    <section id="questions-frequentes" className={styles.faqSection} aria-labelledby="faq-title">
-      <div className={`${styles.container} ${styles.faqLayout}`}>
-        <div className={styles.faqIntro}><span className={styles.eyebrow}>Les réponses utiles</span><h2 id="faq-title">Encore une <br /><em>question ?</em></h2><p>Quelques repères avant de vous lancer.</p><Link href="#contact-financement" className={styles.textLink}>Parlons-en ensemble <Icon name="arrow" /></Link></div>
-        <div className={styles.faqList}>
-          {faqItems.map((item) => <details key={item.question}>
-            <summary>{item.question}<span aria-hidden="true">+</span></summary>
-            <p>{item.answer}</p>
-          </details>)}
-        </div>
-      </div>
-    </section>
+    <PremiumFAQSection
+      id="questions-frequentes" badge="Les réponses utiles" title={<>Encore une question ?</>}
+      description="Quelques repères avant de vous lancer."
+      items={faqItems.map(({ question, answer }) => ({ q: question, a: answer }))}
+      contactHref="#contact-financement" contactLabel="Parlons-en ensemble"
+    />
 
     <section id="contact-financement" className={styles.contactSection} aria-labelledby="contact-title">
       <div className={styles.container}>

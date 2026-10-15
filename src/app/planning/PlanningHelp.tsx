@@ -1,3 +1,4 @@
+import { PremiumFAQSection } from '@/components/FAQ';
 import { TeamPortrait } from '@/components/TeamPortrait';
 import Link from 'next/link';
 import styles from './planning-help.module.css';
@@ -64,23 +65,11 @@ export function PlanningHelp({ selectedSession, formation, formationSlug, onRequ
         ))}
       </nav>
 
-      <div className={styles.helpGrid}>
-        <div className={styles.faq}>
-          <p className={styles.eyebrow}>Questions fréquentes</p>
-          <h3>Avant de réserver une place</h3>
-          <div className={styles.questions}>
-            {questions.map(([question, answer]) => (
-              <details key={question} className={styles.question}>
-                <summary>
-                  <span>{question.replace(/ \?$/, '\u00a0?')}</span>
-                  <span className={styles.toggle} aria-hidden="true" />
-                </summary>
-                <p>{answer}</p>
-              </details>
-            ))}
-          </div>
-        </div>
-
+      <PremiumFAQSection
+        contained badge="Questions fréquentes" title="Avant de réserver une place"
+        description="Les réponses pour choisir votre prochaine session."
+        items={questions.map(([q, a]) => ({ q, a }))}
+        contactContent={
         <aside id="planning-advice" className={styles.advice} aria-labelledby="planning-advice-title">
           <div className={styles.adviser}>
             <span className={styles.avatar} aria-hidden="true"><TeamPortrait person={isBts ? 'aurelie' : 'cassandre'} size={64} /></span>
@@ -95,7 +84,8 @@ export function PlanningHelp({ selectedSession, formation, formationSlug, onRequ
           {selectedSession ? <><div className={styles.selectedSession}><span>Votre choix</span><strong>{selectedSession.title}</strong><p>{selectedSession.dates}</p>{selectedSession.location ? <p>{selectedSession.location}</p> : null}<button type="button" onClick={onClear}>Retirer cette sélection</button></div><button type="button" onClick={onRequest} className={styles.appointment}>Parler de cette session <Icon name="arrow" /></button></> : <Link href={contactHref} className={styles.appointment}>Réserver un échange <Icon name="arrow" /></Link>}
           <a href={'tel:' + phone.replaceAll(' ', '')} className={styles.phone}><Icon name="phone" /> {phone}</a>
         </aside>
-      </div>
+        }
+      />
     </section>
   );
 }
