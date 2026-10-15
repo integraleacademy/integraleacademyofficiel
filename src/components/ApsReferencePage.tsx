@@ -258,7 +258,6 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
       illustration={{ src: '/images/aps/manuel/equipe.webp', alt: 'Deux agents de sécurité préparent leur ronde, illustration du manuel APS Intégrale Academy' }}
       caption="Observer. Prévenir. Protéger."
       primaryAction={{ href: apsContact('démarrer mon projet'), label: 'Je démarre mon projet' }}
-      highlights={['175 heures', 'SST inclus', 'CNAPS accompagné', 'Financements possibles']}
       facts={heroFacts}
     ><HeroSession session={next} /></TrainingReferenceHero>
 

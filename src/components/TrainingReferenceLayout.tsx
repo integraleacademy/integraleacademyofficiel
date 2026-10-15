@@ -22,10 +22,10 @@ export function TrainingReferenceAction({ href, children, outline = false }: { h
   return <Link href={href} className={`${styles.action} ${outline ? styles.outline : styles.primary}`}>{children}</Link>;
 }
 
-export function TrainingReferenceHero({ id, badge, heading, accent, title, tagline, description, illustration, caption, primaryAction, additionalAction, highlights, facts, children, extendedCopy = false }: {
+export function TrainingReferenceHero({ id, badge, heading, accent, title, tagline, description, illustration, caption, primaryAction, additionalAction, highlights = [], facts, children, extendedCopy = false }: {
   id: string; badge: string; heading: string; accent: string; title: string;
   tagline: string; description: ReactNode; illustration: ManualIllustration; caption: string;
-  primaryAction: Action; additionalAction?: ReactNode; highlights: readonly string[];
+  primaryAction: Action; additionalAction?: ReactNode; highlights?: readonly string[];
   facts: ReadonlyArray<ReadonlyArray<string | undefined>>; children: ReactNode; extendedCopy?: boolean;
 }) {
   return <section className={`${reference.hero} ${styles.hero}`} aria-labelledby={`${id}-title`} data-extended-copy={extendedCopy || undefined}>
@@ -37,7 +37,7 @@ export function TrainingReferenceHero({ id, badge, heading, accent, title, tagli
           <p className={reference.heroTagline}>{tagline}</p>
           <div className={`${reference.heroDescription} ${styles.description}`}>{description}</div>
           <div className={reference.actions}><TrainingReferenceAction href={primaryAction.href}>{primaryAction.label}</TrainingReferenceAction><TrainingReferenceAction href="tel:0422470768" outline>Parler à un conseiller</TrainingReferenceAction>{additionalAction}</div>
-          <div className={reference.heroHighlights}>{highlights.map(item => <span key={item}>✓ {item}</span>)}</div>
+          {highlights.length > 0 && <div className={reference.heroHighlights}>{highlights.map(item => <span key={item}>✓ {item}</span>)}</div>}
         </div>
         <figure className={reference.heroArtwork}>
           <ManualArtwork illustration={illustration} priority natural sizes="(max-width: 700px) 92vw, 480px" />
