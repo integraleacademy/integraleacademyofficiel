@@ -257,6 +257,47 @@
 .parcoursupLinks svg { flex-shrink: 0; }
 .admissionIntro { margin-bottom: 28px; }
 .admissionIntro h3 { font-size: 28px; margin: 12px 0 0; }
+/* Keep the complete desktop introduction and section menu in the first screen.
+   Natural height is preserved for zoom, larger text and smaller devices. */
+@media (min-width: 1024px) {
+  .hero { padding-top: clamp(16px, 3svh, 32px); }
+  .heroGrid { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: clamp(28px, 3vw, 44px); }
+  .heroCopy { min-width: 0; }
+  .heroCopy h1 { margin-top: 12px; font-size: clamp(26px, 3.5svh, 32px); line-height: 1.12; }
+  .heroCopy h1 > span { margin-bottom: 8px; font-size: clamp(56px, 8.5svh, 78px); }
+  .heroPromise { margin: clamp(14px, 2svh, 18px) 0 6px; font-size: clamp(18px, 2.4svh, 21px); }
+  .intro { max-width: none; line-height: 1.5; }
+  .applicationPrompt { margin-top: clamp(12px, 1.8svh, 16px); line-height: 1.4; }
+  .heroCopy .actions { margin-top: 8px; }
+  .heroCopy .button, .heroCopy .parcoursupButton { min-height: 44px; padding-block: 12px; }
+  .heroEssentials { display: flex; align-items: center; gap: 16px; margin-top: clamp(14px, 2svh, 18px); }
+  .heroFunding { flex-shrink: 0; gap: 8px; margin-top: 0; }
+  .heroFunding > strong { font-size: 34px; white-space: nowrap; }
+  .heroFunding > span { font-size: 11px; }
+  .heroFacts { flex: 1; min-width: 0; margin-top: 0; }
+  .heroFacts li { padding-inline: 10px; font-size: 11px; }
+  .heroFacts li:last-child { padding-right: 0; }
+  .heroFacts strong { font-size: 12px; }
+  .heroNote { max-width: none; margin-top: 10px; }
+  .heroCopy > .textLink { min-height: 36px; margin-top: 0; }
+  .heroVisual { padding: 10px; }
+  .heroImage img { max-height: min(40svh, 380px); }
+  .heroVisual figcaption { padding: 14px 6px 6px; }
+  .visualNumber { width: 36px; height: 36px; }
+  .heroBottom { gap: 12px 28px; margin-top: clamp(14px, 2.4svh, 24px); padding-block: 10px; }
+}
+@media (min-width: 1024px) and (max-height: 700px) {
+  .hero { padding-top: 16px; }
+  .heroCopy h1 { margin-top: 10px; font-size: 26px; }
+  .heroCopy h1 > span { font-size: 56px; }
+  .heroPromise { margin-top: 14px; font-size: 18px; }
+  .intro { font-size: 14px; }
+  .applicationPrompt { margin-top: 12px; }
+  .heroEssentials { margin-top: 14px; }
+  .heroNote { margin-top: 8px; }
+  .heroCopy > .textLink { min-height: 32px; }
+  .heroBottom { margin-top: 14px; padding-block: 8px; }
+}
 @keyframes contentIn { from { opacity: .4; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 @media (max-width: 1050px) {
   .heroGrid { gap: 28px; }
