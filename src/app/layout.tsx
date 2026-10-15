@@ -6,7 +6,6 @@ import { OrganizationSeo } from '@/components/OrganizationSeo';
 import { PageSeo } from '@/components/PageSeo';
 import './globals.css';
 import './global-contact-cta-continuous.css';
-import './home-height-animation.css';
 import { Header, Footer } from '@/components/ui';
 import { ProjectTrainingPopup } from '@/components/ProjectTrainingPopup';
 import { GoogleRatingBadge } from '@/components/GoogleRatingBadge';

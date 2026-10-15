@@ -1,7 +1,7 @@
 import { createPageMetadata } from '@/lib/seo';
 import Link from 'next/link';
 import { OrientationAssistant } from '@/components/OrientationAssistant';
-import { ContactFilm } from '@/components/ContactFilm';
+import { HomeHeroIllustrations } from '@/components/HomeHeroIllustrations';
 import { AcademyJourney, AcademyLearningStudio } from '@/components/AcademyExperience';
 import { BtsTrainingGrid, type BtsTrainingHighlight } from '@/components/BtsTrainingGrid';
 import { BtsTrainingComparisonModal } from '@/components/BtsTrainingComparisonModal';
@@ -107,17 +107,16 @@ export default async function Home() {
   return (
     <div className={styles.home} data-home-page>
       <HomePageAnimations />
-      <section className={heroStyles.hero}>
-        <span className={heroStyles.heroGlow} data-home-ambient aria-hidden="true" />
+      <section className={heroStyles.hero} aria-labelledby="home-hero-title">
         <div className={heroStyles.container}>
           <div className={heroStyles.heroComposition}>
             <div className={heroStyles.heroCopy}>
               <span className={heroStyles.heroBadge} data-home-hero-item><i aria-hidden="true" /> Intégrale Academy · fondée en 2018</span>
-              <h1 data-home-hero-item>Votre futur métier mérite une formation <em>à la hauteur.</em></h1>
-              <p data-home-hero-item>Des parcours concrets, des formateurs issus du terrain et une équipe qui vous accompagne réellement — du choix de la formation jusqu’à votre projet professionnel.</p>
+              <h1 id="home-hero-title" data-home-hero-item>Votre futur métier mérite une formation <em>à la hauteur.</em></h1>
+              <p data-home-hero-item>Des formations en sécurité, VTC et BTS, et une équipe à vos côtés pour construire la suite.</p>
               <div className={heroStyles.heroActions} data-home-hero-item>
-                <Link href="#formations-securite" className={heroStyles.primaryButton}>Trouver ma formation <span aria-hidden="true">→</span></Link>
-                <Link href="/planning" className={heroStyles.goldButton}>Voir le planning</Link>
+                <Link href="#formations-securite" className={heroStyles.primaryButton}>Découvrir les formations <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg></Link>
+                <OrientationAssistant variant="modalTrigger" triggerLabel="Être conseillé" triggerAppearance="button" triggerClassName={heroStyles.secondaryButton} />
               </div>
               <div className={heroStyles.heroProofs} data-home-hero-item aria-label="Points forts d’Intégrale Academy">
                 <span>Formations réglementées</span>
@@ -125,15 +124,19 @@ export default async function Home() {
                 <span>Côte d’Azur · Paris · Centre France</span>
               </div>
             </div>
+            <HomeHeroIllustrations />
           </div>
 
-          <div id="assistant-orientation" data-home-assistant className={`${heroStyles.assistantDock} scroll-mt-28`}>
-            <OrientationAssistant variant="homeDock" />
+          <div id="assistant-orientation" data-home-assistant className={heroStyles.assistantDock}>
+            <OrientationAssistant
+              variant="modalTrigger"
+              triggerLabel="Vous hésitez sur votre formation ?"
+              triggerDescription="Ouvrez l’assistant pour faire le point sur votre projet, les financements et les prochaines étapes."
+              triggerClassName={heroStyles.assistantTrigger}
+            />
           </div>
         </div>
       </section>
-
-      <ContactFilm />
 
       <section id="formations-securite" aria-labelledby="security-heading" className={`scroll-mt-28 ${carouselStyles.section}`}>
         <div className="page-container">
