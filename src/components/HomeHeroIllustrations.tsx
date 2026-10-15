@@ -24,7 +24,7 @@ const scenes = [
     title: 'Un diplôme. De l’expérience.',
     description: 'Choisissez parmi 6 BTS et construisez votre avenir entre cours et entreprise.',
     action: 'Découvrir les BTS en alternance',
-    image: 'bts-ndrc-parcours', alt: 'Des étudiants en BTS construisent un projet en équipe.',
+    image: 'bts-campus-etudiante', alt: 'Une étudiante en BTS, en jean et sweat, présente son projet avec son formateur.',
   },
 ];
 
