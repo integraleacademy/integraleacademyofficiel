@@ -262,26 +262,49 @@
 .parcoursupLinks svg { flex-shrink: 0; }
 .admissionIntro { margin-bottom: 28px; }
 .admissionIntro h3 { font-size: 28px; margin: 12px 0 0; }
-.cnapsPanel { margin-top: 44px; padding: 36px; border: 1px solid var(--mos-line); border-radius: 24px; background: var(--mos-surface); }
-.cnapsHeading { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; }
-.cnapsHeading h3 { margin: 12px 0 0; font-size: clamp(27px, 3vw, 36px); }
+.cnapsPanel { --mos-ink: #102132; --mos-muted: #526071; --mos-blue: #1d4ed8; --mos-line: #dce3e9; --mos-surface: #fff; --mos-soft: #eff4f9; margin-top: 48px; border: 1px solid #d5e2f3; border-radius: 28px; background: #fff; color: var(--mos-ink); overflow: hidden; }
+.cnapsHeading { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(240px, 1fr); align-items: center; gap: 48px; padding: 40px; border-bottom: 1px solid #d5e2f3; background: radial-gradient(ellipse at 100% 0, #c9e0ff, transparent 65%), #f0f5fc; }
+.cnapsHeading h3 { margin: 14px 0 0; font-size: clamp(27px, 3vw, 36px); text-wrap: balance; }
 .cnapsHeading h3 span { color: var(--mos-blue); }
-.cnapsBadge { flex-shrink: 0; border: 1px solid var(--mos-line); border-radius: 999px; padding: 8px 13px; color: var(--mos-blue); background: var(--mos-soft); font-size: 11px; font-weight: 750; }
-.cnapsIntro { max-width: 900px; color: var(--mos-muted); margin: 24px 0; font-size: 15px; }
+.cnapsIntro { color: var(--mos-muted); margin: 20px 0 0; font-size: 14px; }
+.cnapsVisual { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 14px 12px 0; }
+.cnapsCardArt { position: relative; isolation: isolate; width: 100%; max-width: 310px; padding: 22px 24px; border: 1px solid #6b8eb7; border-radius: 18px; color: #fff; background: radial-gradient(ellipse at 100% 0, #365d92, transparent 70%), #142b43; box-shadow: 0 20px 32px #14386026; transform: rotate(-5deg); }
+.cnapsCardArt::before { content: ''; position: absolute; z-index: -2; inset: -9px 10px 5px -8px; border: 1px solid #92b6e2; border-radius: 18px; background: #bcd5f5; transform: rotate(10deg); }
+.cnapsCardArt::after { content: ''; position: absolute; z-index: -1; inset: 0; border-radius: inherit; background: inherit; }
+.cnapsCardTop { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; color: #c3daf9; }
+.cnapsCardTop > span { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; }
+.cnapsCardTop svg { flex-shrink: 0; color: #b7e6dd; }
+.cnapsCardArt > strong { display: block; margin: 4px 0 22px; font-size: 28px; font-weight: 700; line-height: 1.16; letter-spacing: -.03em; }
+.cnapsCardBottom { display: flex; justify-content: space-between; align-items: end; gap: 12px; padding-top: 14px; border-top: 1px solid #6b8eb7; font-size: 10px; line-height: 1.5; color: #c3daf9; }
+.cnapsCardBottom > span:last-child { color: #fff; font-weight: 750; font-size: 12px; letter-spacing: .1em; }
+.cnapsVisualCaption { max-width: 270px; margin-top: 28px; color: #465976; font-size: 11px; text-align: center; }
+.cnapsContent { padding: 32px 40px; }
 .cnapsCases { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
-.cnapsCases article { padding: 24px; border-radius: 16px; background: var(--mos-soft); }
-.cnapsCases h4 { margin: 12px 0; color: var(--mos-ink); font-size: 19px; font-weight: 750; line-height: 1.4; }
+.cnapsCases article { padding: 24px; border: 1px solid #d4e2de; border-radius: 18px; background: #f1f8f5; }
+.cnapsCases .cnapsPrepare { border-color: #ccdafa; background: #f1f5fe; }
+.cnapsCaseLabel { display: flex; align-items: center; gap: 12px; }
+.cnapsCaseIcon { display: grid; place-items: center; flex-shrink: 0; width: 38px; height: 38px; border-radius: 50%; background: #d9ede4; color: #22654b; font-size: 20px; }
+.cnapsReady .eyebrow { color: #22654b; }
+.cnapsPrepare .cnapsCaseIcon { color: #1d4ed8; background: #dce7ff; }
+.cnapsCaseLabel .eyebrow { font-size: 10px; letter-spacing: .08em; }
+.cnapsCases h4 { margin: 18px 0 12px; color: var(--mos-ink); font-size: 20px; font-weight: 750; line-height: 1.4; letter-spacing: -.02em; }
 .cnapsCases article > p:last-child { margin: 0; color: var(--mos-muted); font-size: 13px; }
-.cnapsSteps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; padding: 0; margin: 30px 0; list-style: none; }
-.cnapsSteps li > span { display: grid; place-items: center; width: 36px; height: 36px; border: 1px solid var(--mos-line); border-radius: 50%; color: var(--mos-blue); font-size: 11px; font-weight: 750; }
-.cnapsSteps p { margin: 12px 0 0; color: var(--mos-muted); font-size: 13px; }
-.cnapsFooter { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 36px; padding-top: 28px; border-top: 1px solid var(--mos-line); }
-.cnapsPrice { margin: 10px 0; color: var(--mos-blue); font-size: 42px; line-height: 1.3; font-weight: 800; letter-spacing: -.04em; }
-.cnapsPrice span { display: inline-block; color: var(--mos-ink); font-size: 14px; letter-spacing: 0; font-weight: 650; }
+.cnapsJourney { margin-top: 32px; }
+.cnapsJourneyHeading h4 { margin: 7px 0 0; font-size: 22px; font-weight: 750; letter-spacing: -.025em; line-height: 1.4; }
+.cnapsSteps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; padding: 0; margin: 24px 0 32px; list-style: none; }
+.cnapsSteps li { position: relative; }
+.cnapsSteps li:not(:last-child)::before { content: ''; position: absolute; top: 22px; left: 56px; right: -16px; height: 1px; background: #cbdaf0; }
+.cnapsStepNumber { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid #bfcef0; border-radius: 50%; background: #edf3fe; color: #1d4ed8; font-size: 12px; font-weight: 800; }
+.cnapsSteps h5 { margin: 16px 0 8px; font-size: 15px; font-weight: 750; line-height: 1.4; }
+.cnapsSteps p { margin: 0; color: var(--mos-muted); font-size: 13px; }
+.cnapsFooter { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 32px; padding: 28px; border: 1px solid #c9dafa; border-radius: 18px; background: #eaf1ff; }
+.cnapsFooter .eyebrow { font-size: 10px; letter-spacing: .08em; }
+.cnapsPrice { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 18px; margin: 10px 0; color: var(--mos-blue); font-size: 50px; line-height: 1.1; font-weight: 800; letter-spacing: -.045em; }
+.cnapsPrice span { color: var(--mos-ink); font-size: 14px; line-height: 1.5; letter-spacing: 0; font-weight: 650; }
 .cnapsFooter > div > p:last-child { max-width: 510px; margin: 0; color: var(--mos-muted); font-size: 12px; }
-.cnapsActions { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+.cnapsActions { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
 .cnapsActions .textLink { font-size: 12px; }
-.cnapsNote { margin: 24px 0 0; color: var(--mos-muted); font-size: 11px; line-height: 1.7; }
+.cnapsNote { margin: 20px 0 0; color: var(--mos-muted); font-size: 11px; line-height: 1.7; }
 .cnapsNote a { color: var(--mos-blue); text-decoration: underline; text-underline-offset: 3px; }
 /* Keep the menu within a normal desktop viewport, but cap the extra space on
    tall screens. Content can still grow when text wraps or the user zooms in. */
@@ -351,7 +374,11 @@
   .formatOr { flex-direction: row; gap: 18px; }
   .formatOr::before, .formatOr::after { height: 1px; width: auto; }
   .formatOr > span { width: 64px; height: 64px; font-size: 22px; }
-  .cnapsHeading { flex-direction: column; gap: 18px; }
+  .cnapsHeading { grid-template-columns: minmax(0, 1fr); gap: 28px; padding: 32px; }
+  .cnapsContent { padding: 28px 32px; }
+  .cnapsCardArt { padding: 18px; }
+  .cnapsCardArt > strong { font-size: 24px; }
+  .cnapsVisual { width: min(100%, 340px); justify-self: center; padding-inline: 8px; }
   .cnapsFooter { grid-template-columns: 1fr; gap: 22px; }
   .formatCopy { padding: 24px 22px; }
   .formatActions { gap: 6px; }
@@ -381,12 +408,21 @@
   .adviserIdentity .portrait { width: 160px; height: 160px; }
 }
 @media (max-width: 600px) {
-  .cnapsPanel { padding: 26px 20px; }
-  .cnapsCases, .cnapsSteps { grid-template-columns: 1fr; gap: 18px; }
+  .cnapsPanel { margin-top: 32px; border-radius: 22px; }
+  .cnapsHeading { grid-template-columns: minmax(0, 1fr); padding: 28px 20px; gap: 26px; }
+  .cnapsHeading h3 { font-size: 28px; }
+  .cnapsVisual { padding-top: 8px; }
+  .cnapsCardArt { max-width: 270px; padding: 20px; }
+  .cnapsCardArt > strong { font-size: 26px; }
+  .cnapsContent { padding: 24px 20px; }
+  .cnapsCases, .cnapsSteps { grid-template-columns: minmax(0, 1fr); gap: 18px; }
   .cnapsCases article { padding: 20px; }
-  .cnapsSteps li { display: flex; gap: 14px; align-items: flex-start; }
-  .cnapsSteps li > span { flex-shrink: 0; }
-  .cnapsSteps p { margin: 4px 0 0; }
+  .cnapsSteps li { display: flex; gap: 16px; align-items: flex-start; }
+  .cnapsStepNumber { flex-shrink: 0; }
+  .cnapsSteps li:not(:last-child)::before { top: 52px; left: 22px; right: auto; bottom: -10px; width: 1px; height: auto; }
+  .cnapsSteps h5 { margin-top: 4px; }
+  .cnapsFooter { padding: 22px 18px; gap: 20px; }
+  .cnapsPrice { font-size: 46px; }
   .cnapsActions { align-items: stretch; }
   .cnapsActions .button { font-size: 12px; padding-inline: 14px; }
   .heroCopy .actions { align-items: stretch; flex-direction: column; }

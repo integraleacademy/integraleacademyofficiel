@@ -144,23 +144,6 @@ export function BtsMosReferencePage() {
             <Disclosure title="Quelles missions et quelles entreprises d’accueil ?"><p>Les missions sont adaptées à l’activité de l’entreprise et à votre progression.</p><h4>Les missions possibles</h4><List items={course.missions} /><h4>Les structures d’accueil</h4><List items={course.employers} /></Disclosure>
           </div>
         </div>
-        <section id="carte-professionnelle" className={styles.cnapsPanel} aria-labelledby="cnaps-title">
-          <div className={styles.cnapsHeading}>
-            <div><p className={styles.eyebrow}>Avant votre entrée en formation</p><h3 id="cnaps-title">La carte professionnelle.<br /><span>Une étape à préparer ensemble.</span></h3></div>
-            <span className={styles.cnapsBadge}>CNAPS · Sécurité privée</span>
-          </div>
-          <p className={styles.cnapsIntro}>{course.specificPanel?.body}</p>
-          <div className={styles.cnapsCases}>
-            <article><p className={styles.eyebrow}>Vous avez déjà votre carte</p><h4>Vous êtes dispensé de la formation APS.</h4><p>Votre carte professionnelle « surveillance humaine et gardiennage » devra être en cours de validité. Notre équipe vérifiera avec vous les activités autorisées et sa date d’expiration.</p></article>
-            <article><p className={styles.eyebrow}>Vous n’avez pas encore votre carte</p><h4>Nous préparons votre parcours APS.</h4><p>Intégrale Academy organise la formation Agent de prévention et de sécurité (TFP APS). Contactez notre équipe dès votre pré-inscription pour choisir une session et anticiper les démarches avant votre entrée en BTS.</p></article>
-          </div>
-          <ol className={styles.cnapsSteps}>{course.specificPanel?.items.map((item, index) => <li key={item}><span aria-hidden="true">0{index + 1}</span><p>{item}</p></li>)}</ol>
-          <div className={styles.cnapsFooter}>
-            <div><p className={styles.eyebrow}>Tarif spécial futurs étudiants BTS MOS</p><p className={styles.cnapsPrice}>950 € <span>pour la formation APS</span></p><p>À la charge de l’apprenti, en complément du BTS en alternance. Notre équipe vous communiquera les prochaines sessions disponibles.</p></div>
-            <div className={styles.cnapsActions}><Link className={styles.button} href="/formations-securite/aps">Découvrir la formation APS <Arrow /></Link><a className={styles.textLink} href="#contact-mos">Préparer mes démarches avec Aurélie <Arrow /></a></div>
-          </div>
-          <p className={styles.cnapsNote}>L’autorisation préalable permet d’entrer en formation APS ; elle ne permet pas d’exercer une activité de sécurité privée en entreprise. La délivrance de la carte professionnelle reste soumise à l’examen de votre dossier par le CNAPS. <a href="https://www.cnaps.interieur.gouv.fr/Demarches-en-ligne/Vous-etes-un-particulier/Se-former-aux-metiers-de-la-securite-privee/Se-former-aux-metiers-de-la-securite-privee" target="_blank" rel="noopener noreferrer">Consulter les démarches officielles.</a></p>
-        </section>
         <div className={styles.applicationBanner}><div><p className={styles.eyebrow}>Votre candidature</p><h3>Votre projet se précise ?</h3><p>Dossier en ligne ou Parcoursup : choisissez votre façon de vous inscrire.</p></div><Apply>Je m’inscris en BTS MOS</Apply></div>
       </div>
     </section>
@@ -180,7 +163,7 @@ export function BtsMosReferencePage() {
           </article>
           <div className={styles.formatOr} aria-label="ou : choisissez l’un des deux parcours"><span>OU</span></div>
           <article className={`${styles.formatCard} ${styles.remoteFormat}`}>
-            <div className={styles.formatPhoto}><Image src="/images/bts/experience/cours-zoom-manuel.webp" alt="Illustration : une étudiante participe depuis chez elle à un cours en visioconférence avec son formateur et sa promotion" width={1200} height={800} sizes="(max-width: 850px) 94vw, 43vw" /><span className={`${styles.formatBadge} ${styles.zoomBadge}`}><i aria-hidden="true" />En live sur ZOOM</span></div>
+            <div className={styles.formatPhoto}><Image src="/images/bts/experience/cours-zoom-manuel.webp" alt="Illustration : une étudiante participe depuis chez elle à un cours en visioconférence avec son formateur et sa promotion" width={1200} height={800} sizes="(max-width: 850px) 94vw, 43vw" /><span className={`${styles.formatBadge} ${styles.zoomBadge}`}><i aria-hidden="true" />En ligne, à distance</span></div>
             <div className={styles.formatCopy}>
               <p className={styles.eyebrow}>Intégrale Academy Paris · Online</p><h3>Vos cours en live.<br />100 % à distance.</h3>
               <p>Connectez-vous en visioconférence ZOOM : votre formateur anime le cours en direct, avec toute votre promotion.</p>
@@ -230,6 +213,50 @@ export function BtsMosReferencePage() {
         <div className={styles.admissionIntro}><p className={styles.eyebrow}>Et ensuite ?</p><h3>De votre candidature à votre rentrée.</h3></div>
         <ol className={styles.admissionSteps}>{admissionSteps.map(([title, text], i) => <li key={title}><span>0{i + 1}</span><h3>{title}</h3><p>{text}</p></li>)}</ol>
         <Disclosure title="Les conditions d’admission et d’alternance"><p>Le BTS est accessible après un baccalauréat ou un titre équivalent, sous réserve de l’étude de votre dossier.</p><List items={course.admission} /><a className={styles.textLink} href="#carte-professionnelle">Comprendre les démarches de carte professionnelle <Arrow /></a></Disclosure>
+        <section id="carte-professionnelle" className={styles.cnapsPanel} aria-labelledby="cnaps-title">
+          <div className={styles.cnapsHeading}>
+            <div>
+              <p className={styles.eyebrow}>À préparer avec votre inscription</p>
+              <h3 id="cnaps-title">La carte professionnelle.<br /><span>Une étape à préparer ensemble.</span></h3>
+              <p className={styles.cnapsIntro}>{course.specificPanel?.body}</p>
+            </div>
+            <div className={styles.cnapsVisual} aria-hidden="true">
+              <div className={styles.cnapsCardArt}>
+                <div className={styles.cnapsCardTop}><span>Sécurité privée</span><svg width="42" height="46" viewBox="0 0 42 46" fill="none"><path d="M21 3 37 9v12c0 10-7 17-16 22C12 38 5 31 5 21V9L21 3Z" stroke="currentColor" strokeWidth="1.8" /><path d="m13 22 5 5 11-12" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" /></svg></div>
+                <strong>Carte<br />professionnelle</strong>
+                <div className={styles.cnapsCardBottom}><span>Surveillance humaine<br />&amp; gardiennage</span><span>CNAPS</span></div>
+              </div>
+              <span className={styles.cnapsVisualCaption}>Votre accès aux missions de sécurité privée</span>
+            </div>
+          </div>
+          <div className={styles.cnapsContent}>
+            <div className={styles.cnapsCases}>
+              <article className={styles.cnapsReady}>
+                <div className={styles.cnapsCaseLabel}><span className={styles.cnapsCaseIcon} aria-hidden="true">✓</span><p className={styles.eyebrow}>Vous avez déjà votre carte</p></div>
+                <h4>Vous êtes dispensé<br />de la formation APS.</h4>
+                <p>Vous êtes dispensé de la formation APS si votre carte professionnelle « surveillance humaine et gardiennage » est en cours de validité. Notre équipe vérifiera avec vous les activités autorisées et sa date d’expiration.</p>
+              </article>
+              <article className={styles.cnapsPrepare}>
+                <div className={styles.cnapsCaseLabel}><span className={styles.cnapsCaseIcon}><Arrow /></span><p className={styles.eyebrow}>Vous n’avez pas encore votre carte</p></div>
+                <h4>Nous préparons<br />votre parcours APS.</h4>
+                <p>Intégrale Academy organise la formation Agent de prévention et de sécurité (TFP APS). Contactez notre équipe dès votre pré-inscription pour choisir une session et anticiper les démarches avant votre entrée en BTS.</p>
+              </article>
+            </div>
+            <div className={styles.cnapsJourney}>
+              <div className={styles.cnapsJourneyHeading}><p className={styles.eyebrow}>Si vous préparez votre carte</p><h4>Trois étapes, avec notre équipe.</h4></div>
+              <ol className={styles.cnapsSteps}>{course.specificPanel?.items.map((item, index) => {
+                const separator = item.indexOf(' : ');
+                const description = item.slice(separator + 3);
+                return <li key={item}><span className={styles.cnapsStepNumber} aria-hidden="true">0{index + 1}</span><div><h5>{item.slice(0, separator)}</h5><p>{description.charAt(0).toUpperCase() + description.slice(1)}</p></div></li>;
+              })}</ol>
+            </div>
+            <div className={styles.cnapsFooter}>
+              <div><p className={styles.eyebrow}>Tarif spécial futurs étudiants BTS MOS</p><p className={styles.cnapsPrice}>950 € <span>pour la formation APS</span></p><p>À la charge de l’apprenti, en complément du BTS en alternance. Notre équipe vous communiquera les prochaines sessions disponibles.</p></div>
+              <div className={styles.cnapsActions}><Link className={styles.button} href="/formations-securite/aps">Découvrir la formation APS <Arrow /></Link><a className={styles.textLink} href="#contact-mos">Préparer mes démarches avec Aurélie <Arrow /></a></div>
+            </div>
+            <p className={styles.cnapsNote}>L’autorisation préalable permet d’entrer en formation APS ; elle ne permet pas d’exercer une activité de sécurité privée en entreprise. La délivrance de la carte professionnelle reste soumise à l’examen de votre dossier par le CNAPS. <a href="https://www.cnaps.interieur.gouv.fr/Demarches-en-ligne/Vous-etes-un-particulier/Se-former-aux-metiers-de-la-securite-privee/Se-former-aux-metiers-de-la-securite-privee" target="_blank" rel="noopener noreferrer">Consulter les démarches officielles.</a></p>
+          </div>
+        </section>
         <div id="contact-mos" className={styles.adviser}>
           <div className={styles.adviserCopy}><p className={styles.eyebrow}>Un interlocuteur pour vous et votre famille</p><h2>Vos questions ont<br /><span>un visage.</span></h2><p>Votre projet, le choix du format, la candidature ou le contrat : Aurélie vous aide à comprendre la suite, avant toute décision définitive.</p><div className={styles.parentTrust}><span>Diplôme d’État</span><span>Suivi pédagogique</span><span>Équipe identifiée</span></div><Apply>Déposer ma candidature</Apply></div>
           <div className={styles.adviserCard}>
