@@ -10,6 +10,11 @@
 .list .summary { padding: 16px; gap: 12px; font-size: .95rem; font-weight: 900; line-height: 24px; }
 .list .summary::-webkit-details-marker { display: none; }
 .list .answer { margin: 0; padding: 12px 0 0; font-size: .95rem; font-weight: 500; line-height: 28px; }
+.answerLinks { display: flex; flex-wrap: wrap; gap: 4px 24px; margin: 12px 0 0; padding: 0; list-style: none; }
+.answerLinks li { min-width: 0; max-width: 100%; }
+.answerLinks a { display: inline-flex; min-height: 44px; align-items: center; gap: 10px; padding-block: 6px; color: var(--faq-focus, rgb(var(--accent-strong))); font-size: .95rem; font-weight: 750; line-height: 1.5; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+.answerLinks a:hover { text-decoration-thickness: 2px; }
+.answerLinks a > span { flex-shrink: 0; }
 .section.section a:focus-visible, .list.list summary:focus-visible { outline: 3px solid var(--faq-focus, rgb(var(--accent-strong))); outline-offset: -3px; }
 .context { margin-top: 24px; }
 .contained { margin-top: 54px; border-radius: 24px; }
