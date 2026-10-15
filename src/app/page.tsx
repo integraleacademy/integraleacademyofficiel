@@ -154,15 +154,10 @@ export default async function Home() {
       </VisualSection>
 
       <VisualSection tone="vtc">
-        <section className="page-container py-14 md:py-16">
-          <div data-training-heading className={styles.vtcTrainingHeading}>
-            <span className={styles.securityTrainingEyebrow}>2. Chauffeur VTC</span>
-            <h2>Prenez le volant de <span>votre avenir.</span></h2>
-            <p>Une préparation complète à l’examen VTC, de la théorie à la pratique, pour lancer votre activité dans les meilleures conditions.</p>
-          </div>
+        <section id="formation-vtc" aria-labelledby="formation-vtc-title" className="scroll-mt-28 page-container py-14 md:py-16">
           <VtcTrainingCard
             title={vtcFormation.title}
-            description="Préparez l’examen, maîtrisez la conduite professionnelle et développez une qualité de service qui fera la différence."
+            description="Apprenez la théorie à votre rythme, entraînez-vous au volant et préparez l’examen avec une formule tout inclus."
             duration={vtcFormation.duration}
             price={vtcFormation.price ?? '1 500 € tout inclus'}
             href={vtcFormation.slug}
