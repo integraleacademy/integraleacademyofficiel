@@ -32,11 +32,6 @@
 .assistantTrigger strong { font-size: 16px; font-weight: 750; line-height: 1.4; }
 .assistantTrigger small { margin-top: 4px; color: rgb(var(--text-muted)); font-size: 12px; font-weight: 400; line-height: 1.6; }
 .hero button:focus-visible, .hero a:focus-visible { outline: 2px solid rgb(var(--accent-strong)); outline-offset: 4px; }
-@media (min-width: 901px) and (max-height: 750px) {
-  .hero { padding-top: 30px; padding-bottom: 28px; }
-  .heroCopy h1 { font-size: clamp(40px, 4vw, 54px); }
-  .assistantDock { margin-top: 24px; }
-}
 @media (max-width: 1100px) {
   .heroComposition { gap: 32px; }
   .heroActions { gap: 10px; }
@@ -81,13 +76,35 @@
 /* Shared responsive scale: readable at 100%, with natural content height. */
 .container { width: var(--site-content-width); min-width: 0; }
 
-/* Shared responsive scale: readable at 100%, with natural content height. */
-
 .heroCopy > p { max-width: 56ch; font-size: var(--site-body-size); }
 .primaryButton, .secondaryButton { font-size: .875rem; }
 .heroProofs, .assistantTrigger small { font-size: .8125rem; }
 .heroBadge { font-size: .75rem; }
 @media (min-width: 1024px) {
-  .heroCopy h1 { font-size: var(--site-title-size); }
-  .heroComposition { gap: calc(clamp(32px, 4vw, 72px) * var(--site-desktop-scale)); }
+  /* Leave room below the illustration for its navigation and the complete assistant.
+     Content can still grow naturally at larger text/zoom settings. */
+  .hero {
+    --home-scene-height: clamp(260px, calc(100svh - var(--site-header-height) - 21rem), 480px);
+    padding-block: clamp(12px, 2.5svh, 32px);
+  }
+  .heroComposition { gap: clamp(24px, 3vw, 48px); }
+  .heroCopy { padding: 0; }
+  .heroCopy h1 { margin-top: 14px; font-size: clamp(36px, min(3.6vw, 6.2svh), 68px); }
+  .heroCopy > p { margin-top: 14px; line-height: 1.5; }
+  .heroActions { margin-top: 16px; gap: 10px; }
+  .heroProofs { margin-top: 14px; gap: 4px 12px; line-height: 1.5; }
+  .assistantDock { margin-top: clamp(14px, 2svh, 24px); }
+
+  .assistantDock > aside { padding: 18px 20px; border-radius: 24px; }
+  .assistantDock [data-home-dock-layout] {
+    grid-template-columns: minmax(200px, .24fr) minmax(0, 1fr);
+    gap: 22px;
+    align-items: center;
+  }
+  .assistantDock [data-home-dock-intro] h2 { margin-top: 8px; font-size: clamp(22px, 1.75vw, 26px); line-height: 1.08; }
+  .assistantDock [data-home-dock-status] { margin-top: 10px; }
+  .assistantDock [data-home-formation-options] { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .assistantDock [data-home-formation-options] > button { min-height: 96px; padding: 12px; border-radius: 16px; }
+  .assistantDock [data-home-formation-options] > button:last-child { grid-column: auto; }
+  .assistantDock [data-home-dock-footer] { margin-top: 10px; gap: 12px; }
 }
