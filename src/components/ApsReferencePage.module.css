@@ -1877,3 +1877,8 @@
 @media (prefers-reduced-motion: reduce) {
   .storyBagCheck, .storyPatdownAgent, .storyPatdownZones { animation: none; }
 }
+
+/* One complete illustration per workshop, in the same 3:2 frame as the palpation scene. */
+.practicalVisual { aspect-ratio:3 / 2; }
+.practicalVisual .manualVisual.naturalVisual { width:100%; height:100%; aspect-ratio:3 / 2; }
+.practicalVisual .manualVisual.naturalVisual img { display:block; width:100%; height:100%; object-fit:contain; object-position:center; }

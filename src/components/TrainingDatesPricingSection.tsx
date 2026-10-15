@@ -55,6 +55,7 @@ type TrainingDatesPricingSectionProps = {
   priceAction: Action;
   emptyAction?: Action;
   children?: ReactNode;
+  compact?: boolean;
 };
 
 type TrainingTheme = 'blue' | 'green' | 'violet' | 'orange' | 'red' | 'gold';
@@ -208,6 +209,7 @@ export function TrainingDatesPricingSection({
   priceAction,
   emptyAction,
   children,
+  compact = false,
 }: TrainingDatesPricingSectionProps) {
   const sessionTheme = themeStyles[theme];
   const serializedSessions = sessions.map((session) => serializeSession(session, registrationHref));
@@ -227,6 +229,7 @@ export function TrainingDatesPricingSection({
       </div>
 
       <TrainingSessionCards
+        compact={compact}
         sessions={serializedSessions}
         theme={theme}
         sessionTheme={sessionTheme}
@@ -245,7 +248,10 @@ export function TrainingDatesPricingSection({
         emptyAction={emptyAction}
       />
 
-      <div className="mt-7 grid gap-5 lg:grid-cols-2">
+      {compact ? <div className="mt-7 flex flex-wrap items-center justify-between gap-6 border-t border-academy-line pt-7">
+        <div><p className={`text-[.65rem] font-bold uppercase tracking-[.15em] ${sessionTheme.eyebrow}`}>Tarif{priceYear ? ` ${priceYear}` : ''}</p><p className="mt-2 text-3xl font-black">{displayedPrice}</p><p className="mt-2 text-xs text-academy-muted">{priceDescription}</p></div>
+        <div className="flex flex-wrap items-center gap-5"><ActionLink action={priceAction} variant={theme} /><Link href="/financements#simulateur" className={`text-sm font-bold underline underline-offset-4 ${sessionTheme.eyebrow}`}>Simuler mon financement ↗</Link></div>
+      </div> : <div className="mt-7 grid gap-5 lg:grid-cols-2">
         <article className="rounded-[2rem] border border-academy-line bg-white p-6 shadow-soft">
           <p className={`text-[.66rem] font-black uppercase tracking-[.24em] ${sessionTheme.eyebrow}`}>Tarif{priceYear ? ` ${priceYear}` : ''}</p>
           <p className="mt-3 text-[clamp(1.8rem,6vw,3rem)] font-black">{displayedPrice}</p>
@@ -261,7 +267,7 @@ export function TrainingDatesPricingSection({
           <ActionLink action={{ href: '/financements#simulateur', label: 'Ouvrir le simulateur →' }} variant={theme} className="mt-5 w-full" />
           <div className="mt-5 grid grid-cols-2 gap-3">{fundingOptions.map(([optionTitle, text]) => <div key={optionTitle} className="rounded-2xl border border-white/10 bg-white/7 p-4"><p className="font-black">{optionTitle}</p><p className="mt-1 text-xs text-white/50">{text}</p></div>)}</div>
         </article>
-      </div>
+      </div>}
 
       {children}
     </div>

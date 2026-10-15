@@ -1,0 +1,47 @@
+{
+  "created": "2026-10-15",
+  "illustrations": {
+    "tool": "image_gen, outil intégré",
+    "style_reference": "/images/aps/manuel/palpation.webp",
+    "style_prompt": "Illustration de manuel pédagogique, dessin 2D, contours fins bleu marine, aplats lumineux, ombres douces, personnages adultes proportionnés, uniformes bleu marine, architecture bleu clair et crème, plantes vertes. Format paysage 3:2. Aucun titre, logo ni filigrane.",
+    "assets": [
+      {
+        "file": "pc-securite.webp",
+        "prompt": "Vue en grand angle d’un poste central de sécurité dédié : bureau en U, six écrans de vidéosurveillance, main courante électronique, téléphone, radios, SSI et alarme intrusion distincts. Une agente et un formateur, équipements au premier plan."
+      },
+      {
+        "file": "programme.webp",
+        "prompt": "Une formatrice présente un plan de site et les fondamentaux du métier à quatre stagiaires adultes dans une salle lumineuse. Cahiers et manuels bleus, écran avec pictogrammes bouclier, radio et œil."
+      },
+      {
+        "file": "examen.webp",
+        "prompt": "Une candidate APS effectue une ronde et signale à la radio des cartons obstruant une issue. Une examinatrice en tenue civile observe avec une grille d’évaluation. Deux personnages en pied dans un couloir lumineux."
+      }
+    ]
+  },
+  "elearning-apercu.webp": {
+    "source": "https://gestionstagiaires-test-v2.onrender.com/static/images/course-showcase/aps.webp",
+    "description": "Capture réelle de la démonstration publique, utilisée sans modification.",
+    "demo": "https://gestionstagiaires-test-v2.onrender.com/e-learning/demo/aps/cours"
+  },
+  "landscape_adaptations": {
+    "tool": "image_gen, outil intégré",
+    "prompt": "Adapter l’illustration verticale en paysage 3:2, conserver les personnages et leur action, étendre naturellement le décor latéral. Aucun étirement, aucune bande, aucun personnage coupé. Même style de manuel pédagogique.",
+    "files": [
+      "atelier-vigilance.webp",
+      "atelier-bagages.webp",
+      "atelier-acces.webp",
+      "atelier-pc-securite.webp",
+      "atelier-conflit.webp",
+      "atelier-incendie.webp"
+    ],
+    "references": [
+      "/images/aps/manuel/vigilance.webp",
+      "/images/aps/manuel/bagages.webp",
+      "/images/aps/manuel/acces.webp",
+      "/images/aps/manuel/pc-securite.webp",
+      "/images/aps/manuel/conflit.webp",
+      "/images/aps/manuel/incendie.webp"
+    ]
+  }
+}
