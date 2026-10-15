@@ -1,0 +1,244 @@
+{
+  "createdAt": "2026-10-15",
+  "tool": "image_gen__imagegen",
+  "reference": "formation-scenes-manuel/bts-campus-etudiante-chino-sauge.webp",
+  "commonPrompt": "Use case: identity-preserve. Edit target is image 1. Image 2 is ONLY the approved wardrobe/style direction for young French BTS students: relaxed clean crewneck sweatshirts or knitwear, regular straight cotton chino trousers, muted sage/ecru/taupe, youthful natural hair, flat suede clog mules for classroom/home when feet are visible. Preserve image 1's original illustrated school-manual style, linework, rendering, composition, camera, background, lighting, props, activity, skin tones, character count and positions. Keep this a polished educational illustration, not a photograph. Only update the indicated student's clothing and gently youthful appearance (adult 18–22), never childlike. Do not copy image 2's scene or teacher into image 1. Keep teachers, customers, uniforms and safety PPE unchanged unless explicitly requested. No text, branding, new objects or watermarks. Preserve aspect ratio and crop. ",
+  "jobs": [
+    {
+      "id": "mco-accueil",
+      "source": "formation-scenes-manuel/bts-mco-accueil.webp",
+      "change": "Update ONLY the young woman on the LEFT holding the bowl: cream relaxed crewneck sweatshirt with the existing small store badge, straight sage-green chino trousers where visible; youthful natural loosely tied curly hair. Keep the male supervisor's navy suit and the customer's outfit exactly as they are.",
+      "destination": "bts/tenues-2026/mco-accueil.webp"
+    },
+    {
+      "id": "ndrc-accueil",
+      "source": "formation-scenes-manuel/bts-ndrc-accueil.webp",
+      "change": "Update ONLY the young woman on the LEFT demonstrating the tablet: light sage fine-knit crewneck sweatshirt, soft straight taupe chinos where visible, natural loose dark hair, modest casual smart student outfit. Keep male customer in navy blazer/beige trousers unchanged.",
+      "destination": "bts/tenues-2026/ndrc-accueil.webp"
+    },
+    {
+      "id": "ci-accueil",
+      "source": "formation-scenes-manuel/bts-ci-accueil.webp",
+      "change": "Update ONLY the young woman on the LEFT behind the parcel: replace her formal blazer/shirt underneath the yellow high-visibility vest with a cream crewneck sweatshirt and straight sage chinos where visible. Keep her HIGH VISIBILITY VEST, tied hair for work, document-checking gesture, all workers, all protective gear, all warehouse details unchanged. Feet are not visible; do not invent them.",
+      "destination": "bts/tenues-2026/ci-accueil.webp"
+    },
+    {
+      "id": "pi-accueil",
+      "source": "formation-scenes-manuel/bts-pi-accueil.webp",
+      "change": "Update ONLY the young female property apprentice on the RIGHT presenting the building: cream crewneck fine-knit top, straight sage-green cotton chinos with a clean regular leg, neat white low-top sneakers appropriate for walking between visits, loose natural shoulder-length brown hair. Keep her tablet and outstretched arm. Keep the client couple unchanged. No blazer or high heels for the apprentice.",
+      "destination": "bts/tenues-2026/pi-accueil.webp"
+    },
+    {
+      "id": "cg-accueil",
+      "source": "formation-scenes-manuel/bts-cg-accueil.webp",
+      "change": "Update ONLY foreground young woman handling invoices: relaxed cream sweatshirt with neat ribbed round collar, long natural brown hair partly tucked behind ear, adult 18–22 student. Sage straight chinos only if visible in existing framing. Keep calculator, binder, paperwork, computer, background colleague exactly unchanged.",
+      "destination": "bts/tenues-2026/cg-accueil.webp"
+    },
+    {
+      "id": "mos-carte",
+      "source": "bts/manuel/mos.webp",
+      "change": "Update ONLY the standing young woman presenting the plan, as a BTS MOS apprentice practising a team briefing: cream relaxed crewneck sweatshirt, straight sage chino trousers, natural brown shoulder-length hair. Keep both seated security professionals in their exact navy uniforms, radios, video wall, plan, body gestures, clipboard and teaching context unchanged.",
+      "destination": "bts/tenues-2026/mos-carte.webp"
+    },
+    {
+      "id": "mco-carte",
+      "source": "bts/manuel/mco.webp",
+      "change": "Update ONLY foreground young woman holding the tablet in the shop: loose natural brown hair with a simple half-up tie, muted warm terracotta crewneck sweatshirt (no blazer/shirt collar), clean straight ecru chinos where visible. Keep other staff, customers, clothing displays, orange/blue store palette unchanged.",
+      "destination": "bts/tenues-2026/mco-carte.webp"
+    },
+    {
+      "id": "ndrc-carte",
+      "source": "bts/manuel/ndrc.webp",
+      "change": "Update ONLY the headset-wearing young woman at the laptop: a soft lilac relaxed crewneck sweatshirt instead of business blazer, youthful natural shoulder-length dark brown hair. Keep headset, video-call person, man on her right, office and all equipment unchanged; no need to show hidden trousers or shoes.",
+      "destination": "bts/tenues-2026/ndrc-carte.webp"
+    },
+    {
+      "id": "ci-carte",
+      "source": "bts/manuel/ci.webp",
+      "change": "Update BOTH two young adult BTS students reviewing the folder: woman in a soft sage crewneck sweatshirt with natural brown hair, man in a relaxed light blue sweatshirt instead of formal collared shirt. Their trousers, if visible at all, should be regular straight taupe/ecru chinos. Preserve all props, maritime view, gestures and their faces.",
+      "destination": "bts/tenues-2026/ci-carte.webp"
+    },
+    {
+      "id": "pi-carte",
+      "source": "bts/manuel/pi.webp",
+      "change": "Update ONLY the female property apprentice on the RIGHT holding keys and floor plan: cream relaxed fine-knit crewneck, straight sage chinos, loose natural brown shoulder-length hair tucked behind ear. Keep client couple completely unchanged, especially their garments. Keep apartment, keys, plan and hand poses.",
+      "destination": "bts/tenues-2026/pi-carte.webp"
+    },
+    {
+      "id": "cg-carte",
+      "source": "bts/manuel/cg.webp",
+      "change": "Update ONLY young male BTS apprentice seated on the LEFT writing invoices: relaxed light sage crewneck sweatshirt instead of formal collared shirt, youthful adult 18–22. Keep the female tutor in her navy blazer, computer, papers and all desk objects unchanged.",
+      "destination": "bts/tenues-2026/cg-carte.webp"
+    },
+    {
+      "id": "cours-visio",
+      "source": "bts/experience/cours-zoom-manuel.webp",
+      "change": "Update the young woman seen from behind studying at home: cream relaxed sweatshirt with ribbed collar and cuffs, natural brown hair loose below her shoulders under the headset instead of the high bun. Keep teacher and pupils on the laptop, classroom call, desk props, exact sitting pose and framing. Do not add visible legs or feet.",
+      "destination": "bts/tenues-2026/cours-visio.webp"
+    },
+    {
+      "id": "ipad",
+      "source": "bts/experience/ipad-manuel.webp",
+      "change": "Update the young adult woman using the tablet: relaxed cream sweatshirt, natural long brown hair softly falling over shoulders, youthful BTS student 18–22; preserve her face features and expression. Keep stylus, tablet, hand gestures, screen illustration, classroom and props unchanged.",
+      "destination": "bts/tenues-2026/ipad.webp"
+    },
+    {
+      "id": "londres",
+      "source": "bts/experience/voyage-londres-manuel.webp",
+      "change": "Update the four adult students' trousers from denim to regular straight cotton chinos in varied muted shades: left man taupe, blonde woman sage, centre-right man ecru, right woman olive-gray. Make their outer layers casual college wear: short navy/cream jackets and relaxed sweaters/hoodies suitable for an autumn walking trip, replacing the women's long tailored coats with simple hip-length casual jackets. Keep warm scarves, backpacks, all faces, hair, poses, crop, exact London backdrop. Avoid skinny or excessively baggy fits. Feet are outside image; do not change framing to invent them.",
+      "destination": "bts/tenues-2026/londres.webp"
+    },
+    {
+      "id": "planning",
+      "source": "planning-metiers/bts.webp",
+      "change": "Update ONLY woman on LEFT: cream relaxed sweatshirt instead of olive blazer, natural loose dark brown hair rather than a formal ponytail; youthful 18–22 student. Keep male student in existing blue sweatshirt unchanged, keep laptop and notes. Preserve image 1's entire composition and its 3:2 format.",
+      "destination": "bts/tenues-2026/planning.webp"
+    },
+    {
+      "id": "mos-parcours",
+      "source": "formation-scenes-manuel/bts-mos-parcours.webp",
+      "change": "Update ONLY apprentice young woman on LEFT walking on the blue pedestrian path: cream relaxed crewneck sweatshirt instead of navy blazer, straight sage cotton chinos with regular leg (not skinny or wide), natural brown hair loosely tied, retain sturdy CLOSED dark walking shoes for industrial site. Keep the male professional's uniform and high-visibility vest exactly unchanged, all site elements unchanged.",
+      "destination": "bts/tenues-2026/mos-parcours.webp"
+    },
+    {
+      "id": "ci-parcours",
+      "source": "formation-scenes-manuel/bts-ci-parcours.webp",
+      "change": "Update ONLY young female apprentice on LEFT viewing port: cream crewneck sweatshirt underneath her existing HIGH VISIBILITY VEST, sage straight chinos where visible. Preserve the vest, tied curly hair, hand pose, man tutor in exact existing clothes and port environment. No changes to PPE.",
+      "destination": "bts/tenues-2026/ci-parcours.webp"
+    },
+    {
+      "id": "pi-parcours",
+      "source": "formation-scenes-manuel/bts-pi-parcours.webp",
+      "change": "Update ONLY young adult male apprentice on LEFT holding laser measuring tool: relaxed light blue crewneck sweatshirt and straight taupe cotton chino trousers instead of the navy work jacket/cargo pants. Keep youthful curly hair, measurement device, pose and laser beam. Female supervisor on RIGHT with tablet stays unchanged.",
+      "destination": "bts/tenues-2026/pi-parcours.webp"
+    },
+    {
+      "id": "cg-parcours",
+      "source": "formation-scenes-manuel/bts-cg-parcours.webp",
+      "change": "Update ONLY young male apprentice on LEFT taking notes: relaxed light sage crewneck sweatshirt instead of formal light-blue shirt, regular taupe chinos in the little visible lap area. Keep female tutor in navy business outfit unchanged, all gestures, computer screens, and documents.",
+      "destination": "bts/tenues-2026/cg-parcours.webp"
+    },
+    {
+      "id": "mos-mission",
+      "source": "formation-scenes-manuel/bts-mos-mission.webp",
+      "change": "Update ONLY young woman on LEFT presenting a training project: cream relaxed fine-knit crewneck and regular straight sage chinos instead of business suit. Keep the existing lanyard badge, natural brown hair loose, gesture toward presentation screen. Keep male client, graph screen, office and industrial background unchanged.",
+      "destination": "bts/tenues-2026/mos-mission.webp"
+    },
+    {
+      "id": "mco-ventes",
+      "source": "formation-scenes-manuel/bts-mco-ventes.webp",
+      "change": "Update young apprentice woman on LEFT in cream crewneck sweatshirt, straight sage chinos; update young apprentice woman on RIGHT in muted lilac crewneck sweatshirt and straight taupe chinos. Keep small employee badges on both. Keep the central female supervisor's navy blouse unchanged. Preserve all faces, natural tied hairstyles, products and actions. Closed neutral sneakers where shoes visible, suitable for shop work.",
+      "destination": "bts/tenues-2026/mco-ventes.webp"
+    },
+    {
+      "id": "ndrc-negociation",
+      "source": "formation-scenes-manuel/bts-ndrc-negociation.webp",
+      "change": "Update ONLY centre young woman showing tablet to the two clients: muted pale sage crewneck fine-knit sweater and straight taupe chinos, natural dark brown shoulder-length hair. Preserve clients in original formal clothing and all meeting props, tablet, positions and gestures.",
+      "destination": "bts/tenues-2026/ndrc-negociation.webp"
+    },
+    {
+      "id": "ndrc-mission",
+      "source": "formation-scenes-manuel/bts-ndrc-mission.webp",
+      "change": "Update young adult male student at laptop: relaxed light blue crewneck sweatshirt instead of formal navy collared shirt, straight taupe chinos where lap visible. Preserve headset, youthful curly hair, exact typing and listening gesture, screens, notebook, office setting.",
+      "destination": "bts/tenues-2026/ndrc-mission.webp"
+    },
+    {
+      "id": "ci-prospection",
+      "source": "formation-scenes-manuel/bts-ci-prospection.webp",
+      "change": "Update ONLY young female apprentice in foreground: cream relaxed crewneck sweatshirt instead of white collared shirt, straight sage chinos in visible lap, naturally loose dark brown hair while keeping face visible. Keep male business partner on screen in original suit, all products, samples, world map, hand gestures and decor unchanged.",
+      "destination": "bts/tenues-2026/ci-prospection.webp"
+    },
+    {
+      "id": "ci-mission",
+      "source": "formation-scenes-manuel/bts-ci-mission.webp",
+      "change": "Update ONLY young female apprentice on LEFT presenting the catalogue: soft sage crewneck fine-knit top, straight taupe chinos if visible, natural brown loose hair. Keep the lanyard badge, catalogue presentation gesture. Keep middle woman and right male international business partner in all their exact original clothes and headwear, and all exhibition surroundings unchanged.",
+      "destination": "bts/tenues-2026/ci-mission.webp"
+    },
+    {
+      "id": "pi-client",
+      "source": "formation-scenes-manuel/bts-pi-client.webp",
+      "change": "Update ONLY young female apprentice on LEFT showing property image: cream relaxed crewneck sweatshirt instead of business blazer, naturally loose brown hair, youthful adult BTS student. Straight sage chinos only if visible. Keep male client with green shirt, photographs, laptop and all props unchanged.",
+      "destination": "bts/tenues-2026/pi-client.webp"
+    },
+    {
+      "id": "cg-budget",
+      "source": "formation-scenes-manuel/bts-cg-budget.webp",
+      "change": "Keep the standing male teacher in navy suit unchanged. Update BOTH seated young adult students: LEFT woman in cream relaxed crewneck sweatshirt, natural loose brown hair; RIGHT man with glasses in muted sage sweatshirt replacing the business jacket. Taupe chinos if visible. Keep graphs, positions, laptops, paperwork, glasses unchanged.",
+      "destination": "bts/tenues-2026/cg-budget.webp"
+    },
+    {
+      "id": "atelier-client",
+      "source": "desp/manuel/client.webp",
+      "change": "Create a BTS-only version, retaining this portrait composition. Update ONLY young male student on LEFT reviewing the site plan: relaxed pale-blue crewneck sweatshirt, regular straight taupe chinos and clean white low-top sneakers instead of formal shirt/trousers/dress shoes. Keep female tutor with navy blazer/orange scarf and all site security staff and environment unchanged.",
+      "destination": "bts/tenues-2026/atelier-client.webp"
+    },
+    {
+      "id": "atelier-conformite",
+      "source": "desp/manuel/conformite.webp",
+      "change": "Create a BTS-only version. Update ONLY young woman seated on far RIGHT holding tablet: cream relaxed crewneck sweatshirt, natural soft ponytail with loose strands, youthful adult student. Keep female tutor beside her wearing navy blazer, male security worker and all reception equipment unchanged.",
+      "destination": "bts/tenues-2026/atelier-conformite.webp"
+    },
+    {
+      "id": "atelier-equipe",
+      "source": "desp/manuel/direction.webp",
+      "change": "Create a BTS-only version. Update ONLY young male student in MIDDLE holding ID card and reviewing file: relaxed pale sage crewneck sweatshirt instead of formal light blue shirt. Keep bearded professional on LEFT in navy polo and woman tutor on RIGHT in navy blazer and gold top unchanged. Preserve all gestures, ID card, files and office.",
+      "destination": "bts/tenues-2026/atelier-equipe.webp"
+    },
+    {
+      "id": "atelier-finances",
+      "source": "desp/manuel/finances.webp",
+      "change": "Create a BTS-only version, same portrait framing. Update ONLY young woman on LEFT using calculator: cream relaxed crewneck sweatshirt instead of blazer/orange blouse, natural longer loose brown hair, youthful adult 18–22. Keep older male tutor, gray hair, glasses and pale-blue shirt fully unchanged. Keep calculator, charts, coins, all desk props.",
+      "destination": "bts/tenues-2026/atelier-finances.webp"
+    },
+    {
+      "id": "atelier-pilotage",
+      "source": "desp/manuel/pilotage.webp",
+      "change": "Create a BTS-only version. Update ONLY young male student on LEFT holding phone and papers: relaxed pale sage crewneck sweatshirt instead of suit/shirt. Keep woman tutor on RIGHT in her coral top, pointing gesture, schedule board, all desk objects unchanged.",
+      "destination": "bts/tenues-2026/atelier-pilotage.webp"
+    },
+    {
+      "id": "atelier-projet",
+      "source": "desp/manuel/projet.webp",
+      "change": "Create a BTS-only version, same portrait framing. Update ONLY young male apprentice on LEFT seated at computer: relaxed light-blue crewneck sweatshirt instead of formal shirt. Keep central female tutor in navy blazer/orange top, right male security professional uniform, all gestures and documents unchanged.",
+      "destination": "bts/tenues-2026/atelier-projet.webp"
+    },
+    {
+      "id": "atelier-supervision",
+      "source": "desp/manuel/supervision.webp",
+      "change": "Create a BTS-only version. Update ONLY young female apprentice inspecting the site on RIGHT: cream sweatshirt underneath existing yellow high-visibility vest, straight sage cotton chinos and sturdy closed dark walking shoes. Keep her high-visibility vest, pointing gesture and clipboard, keep male security tutor in exact navy uniform. Preserve all visible obstacles, cable, boxes, equipment, industrial setting.",
+      "destination": "bts/tenues-2026/atelier-supervision.webp"
+    },
+    {
+      "id": "atelier-management",
+      "source": "desp/manuel/management.webp",
+      "change": "Create a BTS-only version. Update ONLY young adult male in MIDDLE practising a briefing: relaxed light sage crewneck sweatshirt, regular straight taupe chinos instead of formal suit. Keep woman tutor on RIGHT in coral jacket, all navy-uniformed guards, radios, notes and industrial background unchanged.",
+      "destination": "bts/tenues-2026/atelier-management.webp"
+    }
+  ],
+  "reuse": [
+    {
+      "source": "formation-scenes-manuel/bts-ndrc-parcours.webp",
+      "replacement": "formation-scenes-manuel/bts-campus-etudiante-chino-sauge.webp"
+    }
+  ],
+  "retained": [
+    {
+      "source": "formation-scenes-manuel/bts-mos-accueil.webp",
+      "reason": "Uniformes de sécurité en situation professionnelle."
+    },
+    {
+      "source": "formation-scenes-manuel/bts-ci-logistique.webp",
+      "reason": "Tenue de travail, gilet et chaussures adaptés à la logistique."
+    },
+    {
+      "source": "formation-scenes-manuel/bts-mco-parcours.webp",
+      "reason": "Sweat écru sous tablier de travail déjà cohérent."
+    }
+  ],
+  "corrections": [
+    {
+      "id": "atelier-pilotage",
+      "prompt": "Use case: precise image edit. Edit the supplied illustration ONLY to fix the young male student on the LEFT having three arms/hands. Remove completely the extra raised arm and hand that touches his chin. The student must have exactly TWO arms and TWO hands total: one hand holding the white paperwork in front of him, and the other hand holding the dark smartphone. Ensure these two hands connect naturally to his two sweatshirt sleeves. Restore plain sage sweatshirt fabric where the extra forearm was. Preserve his face, youthful appearance, sage crewneck sweatshirt, body posture, the female tutor on the right and both her existing arms/hands, the schedule board, all desk objects, background, colors, educational illustration style, composition and dimensions. No other changes."
+    }
+  ]
+}

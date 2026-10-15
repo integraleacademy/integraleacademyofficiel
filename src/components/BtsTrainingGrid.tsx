@@ -1,6 +1,7 @@
 "use client";
 
 import { TrainingCarousel } from './TrainingCarousel';
+import { btsArtwork } from '@/data/btsIllustrations';
 
 export type BtsVisual = 'mos' | 'mco' | 'ndrc' | 'ci' | 'pi' | 'cg';
 
@@ -62,7 +63,7 @@ export function BtsTrainingGrid({ items }: { items: BtsTrainingHighlight[] }) {
     items={items.map((item) => ({
       ...item,
       ctaLabel: `Découvrir le ${item.shortTitle}`,
-      imageSrc: `/images/bts/manuel/${item.visual}.webp`,
+      imageSrc: btsArtwork[item.visual].src,
       imageAlt: illustrationDescriptions[item.visual],
       tabPrefix: 'BTS ',
       tabLabel: item.shortTitle.replace(/^BTS\s+/, ''),

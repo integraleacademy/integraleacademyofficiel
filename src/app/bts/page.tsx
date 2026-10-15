@@ -1,5 +1,5 @@
 import { btsArtworkForPath } from '@/data/btsIllustrations';
-import { despArtwork } from '@/data/manualIllustrations';
+import { originalArtwork } from '@/data/originalArtwork';
 import { btsRhythms } from '@/data/btsRhythms';
 import { CourseJourney } from '@/components/CourseJourney';
 import { createPageMetadata } from '@/lib/seo';
@@ -38,7 +38,7 @@ export default function Page() {
             </Button>
           </>
         }
-        visual={<ArtDirectionVisual world="bts" illustration={despArtwork.direction} />}
+        visual={<ArtDirectionVisual world="bts" illustration={originalArtwork['bts-ndrc-parcours']} />}
       />
       <CourseJourney course="bts-overview" />
       <ChatGptAgentBanner />
