@@ -10,7 +10,7 @@
 .list .summary { padding: 16px; gap: 12px; font-size: .95rem; font-weight: 900; line-height: 24px; }
 .list .summary::-webkit-details-marker { display: none; }
 .list .answer { margin: 0; padding: 12px 0 0; font-size: .95rem; font-weight: 500; line-height: 28px; }
-.section a:focus-visible, .list summary:focus-visible { outline: 3px solid #2563eb; outline-offset: -3px; }
+.section.section a:focus-visible, .list.list summary:focus-visible { outline: 3px solid var(--faq-focus, rgb(var(--accent-strong))); outline-offset: -3px; }
 .context { margin-top: 24px; }
 .contained { margin-top: 54px; border-radius: 24px; }
 .containedInner { padding-inline: 24px; }
@@ -25,3 +25,12 @@
   .section *, .list * { transition: none !important; animation: none !important; }
   .list .item:hover { transform: none; }
 }
+
+/* Keep the APS layout, but use the host page's selected accent for focus. */
+.section[data-faq-theme='gold'], .list[data-faq-theme='gold'] { --faq-focus: rgb(var(--accent-strong)); }
+.section[data-faq-theme='blue'], .list[data-faq-theme='blue'] { --faq-focus: #2563eb; }
+.section[data-faq-theme='green'], .list[data-faq-theme='green'] { --faq-focus: #059669; }
+.section[data-faq-theme='red'], .list[data-faq-theme='red'] { --faq-focus: #dc2626; }
+.section[data-faq-theme='orange'], .list[data-faq-theme='orange'] { --faq-focus: #ea580c; }
+.section[data-faq-theme='violet'], .list[data-faq-theme='violet'] { --faq-focus: #7c3aed; }
+.section[data-faq-theme='bts'], .list[data-faq-theme='bts'] { --faq-focus: rgb(var(--bts-700)); }

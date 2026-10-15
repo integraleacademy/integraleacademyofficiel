@@ -306,7 +306,7 @@ export default function EntreprisesPage() {
       </div>
     </section>
 
-    <PremiumFAQSection
+    <PremiumFAQSection theme="gold"
       id="diagnostic" badge="Les réponses à vos questions" title="Avant de se lancer."
       description="Retrouvez les réponses utiles pour préparer votre projet de recrutement ou de formation."
       items={faqItems.map(({ question, answer }) => ({ q: question, a: answer }))}

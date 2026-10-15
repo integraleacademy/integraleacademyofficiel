@@ -189,7 +189,7 @@ export function SstReferencePage({ sessions }: { sessions: TrainingDatesPricingS
 
     <TrainingCourseTestimonials category="SST" />
 
-    <div id="faq-sst"><PremiumFAQSection badge="FAQ SST" title="Vos questions sur la formation SST" description="Public, durée, certificat, maintien des compétences, financement et organisation en entreprise : retrouvez les réponses essentielles." items={faq} contactHref={contactHref('question SST')} /></div>
+    <div id="faq-sst"><PremiumFAQSection theme="green" badge="FAQ SST" title="Vos questions sur la formation SST" description="Public, durée, certificat, maintien des compétences, financement et organisation en entreprise : retrouvez les réponses essentielles." items={faq} contactHref={contactHref('question SST')} /></div>
 
     <TrainingReferenceContact
       description="Cassandre vous aide à choisir la bonne session, étudier l’organisation pour votre entreprise et préparer votre inscription."

@@ -65,7 +65,7 @@ export function PlanningHelp({ selectedSession, formation, formationSlug, onRequ
         ))}
       </nav>
 
-      <PremiumFAQSection
+      <PremiumFAQSection theme="gold"
         contained badge="Questions fréquentes" title="Avant de réserver une place"
         description="Les réponses pour choisir votre prochaine session."
         items={questions.map(([q, a]) => ({ q, a }))}
