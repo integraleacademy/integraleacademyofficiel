@@ -18,6 +18,7 @@ const parcoursup = {
   campus: 'https://dossier.parcoursup.fr/Candidats/public/fiches/afficherFicheFormation?g_ta_cod=34004',
   remote: 'https://dossier.parcoursup.fr/Candidats/public/fiches/afficherFicheFormation?g_ta_cod=46600&typeBac=0',
 };
+const brochureUrl = 'https://57256b2f.sibforms.com/serve/MUIFAFEpeLidk8sqo9gYowYZHk-4EKC2_tLhM60baTLIu9CRfzbdr8iFEvM_A-bGvLzdCrcPvhCOkaRJ-KsO8DPTS4BwR_duqew_4BvUdjTKZNXP4-m-Hhxmr8LDnm5vKNULRUiOm4Fis816EzjRST6Utd8yRdDG-7oNjZAyVxtauUlT1bcOTVk05EmsisMk0A-yN_DR41V2tysE';
 const phone = 'tel:+33487830615';
 const email = 'mailto:aurelie@integraleacademy.com?subject=Mon%20projet%20BTS%20MOS';
 const course = btsExpandedCourses.mos;
@@ -28,16 +29,16 @@ const navigation = [
   { label: 'Formats', href: '#formats' },
   { label: 'Programme', href: '#programme' },
   { label: 'À l’école', href: '#experience' },
-  { label: 'Candidater', href: '#admission' },
+  { label: 'S’inscrire', href: '#admission' },
   { label: 'FAQ', href: '#faq-mos' },
 ] as const;
 const generalSubjects = [
   { title: 'Culture générale et expression', items: ['Comprendre, argumenter, synthétiser et communiquer avec précision.'] },
-  { title: 'Langue vivante étrangère', items: ['Communiquer dans un contexte professionnel et mobiliser le vocabulaire des situations de travail.'] },
+  { title: 'Langue vivante étrangère : anglais', items: ['Communiquer dans un contexte professionnel et mobiliser le vocabulaire des situations de travail.'] },
   { title: 'Culture économique, juridique et managériale', items: ['Comprendre l’environnement économique, le droit et les décisions de management d’une organisation.'] },
 ];
 const admissionSteps = [
-  ['Je choisis comment candidater', 'Je remplis le dossier de pré-inscription en ligne ou je formule mon vœu sur Parcoursup.'],
+  ['Je choisis comment m’inscrire', 'Je remplis le dossier de pré-inscription en ligne ou je formule mon vœu sur Parcoursup.'],
   ['L’école étudie ma candidature', 'L’équipe examine mon dossier et mon projet. Pour Parcoursup, l’étude intervient dans les 10 jours suivant la réception du vœu.'],
   ['Je complète mon inscription', 'Si je suis admis, je reçois le dossier d’inscription par e-mail. Je le complète et le retourne à l’école par courrier.'],
   ['Mon inscription est confirmée', 'Une fois le dossier complet, l’école confirme mon inscription et m’envoie par courrier ma carte étudiante et mon certificat de scolarité.'],
@@ -45,13 +46,14 @@ const admissionSteps = [
   ['Je rejoins ma promotion', 'Je suis les cours à Puget-sur-Argens ou en live sur ZOOM. Je peux commencer les cours avant la signature du contrat, selon les modalités validées avec l’école.'],
 ];
 const faq = [
-  { q: 'Puis-je candidater juste après le bac ?', a: 'Oui. Le BTS MOS est accessible après un baccalauréat ou un titre équivalent, sous réserve de l’étude de votre dossier. Aurélie vous accompagne pour vérifier les prérequis et préparer votre inscription.' },
+  { q: 'Puis-je m’inscrire juste après le bac ?', a: 'Oui. Le BTS MOS est accessible après un baccalauréat ou un titre équivalent, sous réserve de l’étude de votre dossier. Aurélie vous accompagne pour vérifier les prérequis et préparer votre inscription.' },
   { q: 'Puis-je m’inscrire sans avoir trouvé d’entreprise ?', a: 'Oui, vous pouvez commencer par votre candidature. L’équipe vous accompagne dans la préparation de votre recherche d’entreprise et vous explique les étapes du contrat d’apprentissage.' },
-  { q: 'Comment candidater au BTS MOS ?', a: 'Vous avez deux possibilités : remplir notre dossier de pré-inscription en ligne ou candidater directement sur Parcoursup en choisissant la fiche présentiel ou 100 % à distance. Les candidatures sur Parcoursup suivent le calendrier de la plateforme. Pour une candidature en cours d’année, utilisez le dossier en ligne et échangez avec Aurélie.' },
+  { q: 'Comment m’inscrire en BTS MOS ?', a: 'Vous avez deux possibilités : remplir notre dossier de pré-inscription en ligne ou candidater directement sur Parcoursup en choisissant la fiche présentiel ou 100 % à distance. Les candidatures sur Parcoursup suivent le calendrier de la plateforme. Pour une candidature en cours d’année, utilisez le dossier en ligne et échangez avec Aurélie.' },
+  { q: 'Faut-il une carte professionnelle CNAPS pour intégrer le BTS MOS ?', a: 'Pour intégrer notre parcours BTS MOS en alternance dans la sécurité privée, vous devrez être titulaire de la carte professionnelle CNAPS correspondant aux missions de surveillance humaine et de gardiennage avant votre entrée en formation. Si vous possédez déjà cette carte en cours de validité, vous êtes dispensé de la formation APS préalable. Sinon, notre équipe vous accompagne dans les démarches et vous oriente vers une session APS. Le tarif spécial futurs étudiants BTS MOS est de 950 €, à la charge de l’apprenti et distinct du financement du BTS. Vous pouvez commencer votre dossier de pré-inscription pour préparer ces étapes avec nous.' },
   { q: 'Combien coûte le BTS en alternance ?', a: 'La formation est sans frais de scolarité pour l’apprenti lorsque le contrat d’alternance et sa prise en charge sont validés. Le financement s’organise avec l’entreprise et son OPCO.' },
-  { q: 'Comment se déroulent les cours à distance ?', a: 'Ce sont des cours en live, 100 % à distance en visioconférence ZOOM. Vous vous connectez aux horaires prévus à l’emploi du temps et suivez les cours en direct avec vos formateurs et votre promotion. Vous pouvez poser vos questions et participer aux échanges. Les épreuves finales se déroulent en présentiel selon votre convocation.' },
+  { q: 'Comment se déroulent les cours à distance ?', a: 'Ce sont des cours en live, 100 % à distance en visioconférence ZOOM. Vous vous connectez aux horaires prévus à l’emploi du temps et suivez les cours en direct avec vos formateurs et votre promotion. Vous pouvez poser vos questions et participer aux échanges. Les épreuves finales sont organisées en présentiel par l’Académie de Nice, dans le centre indiqué sur votre convocation.' },
   { q: 'Le diplôme est-il le même dans les deux formats ?', a: 'Oui. En présentiel comme en live à distance sur ZOOM, vous préparez le BTS Management Opérationnel de la Sécurité, diplôme national de niveau 5 enregistré au RNCP sous le numéro 41000.' },
-  { q: 'Quand l’iPad est-il remis et le voyage organisé ?', a: 'L’iPad est offert dès la signature de votre contrat d’apprentissage. Le voyage à Londres a lieu en deuxième année et est intégralement pris en charge par Intégrale Academy pour les étudiants de la promotion.' },
+  { q: 'Quand l’iPad est-il remis et le voyage organisé ?', a: 'L’iPad est offert dès la signature de votre contrat d’apprentissage. Le voyage à Londres a lieu en deuxième année et est intégralement pris en charge par Intégrale Academy. L’iPad et le voyage sont tous deux proposés sous réserve de signature d’un contrat d’apprentissage.' },
   { q: 'Que se passe-t-il après ma candidature ?', a: 'L’équipe étudie votre dossier ; les vœux Parcoursup sont étudiés dans les 10 jours suivant leur réception. Si vous êtes admis, vous recevez par e-mail le dossier d’inscription à compléter et à retourner par courrier. Une fois le dossier complet, votre inscription est confirmée et l’école vous envoie votre carte étudiante et votre certificat de scolarité.' },
 ];
 
@@ -93,11 +95,11 @@ export function BtsMosReferencePage() {
             <h1 id="mos-title"><span>BTS MOS</span>Management opérationnel<br className={styles.desktopBreak} /> de la sécurité.</h1>
             <p className={styles.heroPromise}>Apprenez à <strong>prendre les commandes.</strong></p>
             <p className={styles.intro}>Organiser les missions, encadrer une équipe, accompagner un client. Construisez votre avenir dans la sécurité avec l’expérience de l’alternance.</p>
-            <p className={styles.applicationPrompt}>Deux façons de candidater au BTS MOS</p>
+            <p className={styles.applicationPrompt}>Deux façons de s’inscrire en BTS MOS</p>
             <div className={styles.actions}><Apply href={applicationUrl}>Candidater en ligne</Apply><a href="#candidature-parcoursup" className={styles.parcoursupButton}><span>Candidater sur</span><ParcoursupLogo /><Arrow /></a></div>
             <div className={styles.heroEssentials}>
               <div className={styles.heroFunding}><strong>0 €<sup>*</sup></strong><span>de frais de scolarité<br />pour l’apprenti</span></div>
-              <ul className={styles.heroFacts} aria-label="L’essentiel du BTS MOS"><li><strong>2 ans</strong>de formation</li><li><strong>Alternance</strong>école + entreprise</li><li><strong>Présentiel ou ZOOM</strong>cours en live</li></ul>
+              <ul className={styles.heroFacts} aria-label="L’essentiel du BTS MOS"><li><strong>2 ans</strong>de formation</li><li><strong>Alternance</strong>école + entreprise</li><li><strong>Présentiel ou 100 % en ligne</strong>à distance, en visioconférence</li></ul>
             </div>
             <p className={styles.heroNote}>* Sous réserve de la conclusion et de la prise en charge du contrat d’apprentissage.</p>
             <a href="#contact-mos" className={styles.textLink}>Une question ? Parler à Aurélie <Arrow /></a>
@@ -133,26 +135,42 @@ export function BtsMosReferencePage() {
         <BtsMosCalendar />
         <div className={styles.fundingGrid}>
           <div className={styles.alternanceBenefits}><p className={styles.eyebrow}>Un diplôme, une expérience, un salaire</p><h3>Vous apprenez un métier.<br />Vous prenez votre place.</h3><List items={['Un BTS reconnu par l’État, de niveau Bac+2.', 'Une expérience professionnelle construite pendant deux ans.', 'Une rémunération dans le cadre de votre contrat d’apprentissage.']} /><p>Vous alternez les cours avec des missions concrètes au sein de votre entreprise d’accueil.</p></div>
-          <div className={styles.fundingCard}><p className={styles.eyebrow}>Côté budget</p><p className={styles.fundingAmount}>0 €<sup>*</sup></p><h3>de frais de scolarité pour l’apprenti.</h3><p>La formation BTS est prise en charge dans le cadre du contrat d’apprentissage et de l’accord de l’entreprise avec son OPCO.</p><a href="#contact-mos" className={styles.textLink}>Poser ma question à Aurélie <Arrow /></a><p className={styles.small}>* Sous réserve de la conclusion et de la prise en charge du contrat. La formation APS préalable, si nécessaire, est distincte du BTS : ses modalités sont à vérifier avec l’équipe.</p></div>
+          <div className={styles.fundingCard}><p className={styles.eyebrow}>Côté budget</p><p className={styles.fundingAmount}>0 €<sup>*</sup></p><h3>de frais de scolarité pour l’apprenti.</h3><p>La formation BTS est prise en charge dans le cadre du contrat d’apprentissage et de l’accord de l’entreprise avec son OPCO.</p><a href="#contact-mos" className={styles.textLink}>Poser ma question à Aurélie <Arrow /></a><p className={styles.small}>* Sous réserve de la conclusion et de la prise en charge du contrat. La formation APS préalable, si nécessaire, est distincte du BTS : tarif spécial futurs étudiants BTS MOS de 950 €, à la charge de l’apprenti.</p></div>
         </div>
         <div className={styles.practicalGrid}>
-          <div><p className={styles.eyebrow}>Votre recherche d’entreprise</p><h3>Vous avancez avec l’équipe.</h3><p>Préparer votre candidature, comprendre le contrat et les étapes jusqu’à sa signature : l’équipe admissions vous guide dans vos démarches.</p><a className={styles.textLink} href="#admission">Voir les étapes d’admission <Arrow /></a></div>
+          <div><p className={styles.eyebrow}>Votre recherche d’entreprise</p><h3>Vous avancez avec notre équipe.</h3><p>Préparer votre candidature, comprendre le contrat et les étapes jusqu’à sa signature : l’équipe admissions vous guide dans vos démarches.</p><a className={styles.textLink} href="#admission">Voir les étapes d’admission <Arrow /></a></div>
           <div>
             <Disclosure title="Puis-je candidater sans avoir d’entreprise ?"><p>Oui, commencez par votre candidature. L’équipe vérifie votre situation et vous accompagne dans la préparation de votre recherche. Pour la rentrée 2026, vous pouvez commencer les cours et finaliser ensuite votre contrat selon les modalités validées avec l’école ; la date limite annoncée est le 15 décembre 2026.</p></Disclosure>
-            <Disclosure title="Je n’ai pas encore ma carte professionnelle CNAPS"><p>{course.specificPanel?.body}</p><List items={course.specificPanel?.items ?? []} /><Link className={styles.textLink} href="/formations-securite/aps">Découvrir la formation APS <Arrow /></Link></Disclosure>
             <Disclosure title="Quelles missions et quelles entreprises d’accueil ?"><p>Les missions sont adaptées à l’activité de l’entreprise et à votre progression.</p><h4>Les missions possibles</h4><List items={course.missions} /><h4>Les structures d’accueil</h4><List items={course.employers} /></Disclosure>
           </div>
         </div>
-        <div className={styles.applicationBanner}><div><p className={styles.eyebrow}>Votre candidature</p><h3>Votre projet se précise ?</h3><p>Dossier en ligne ou Parcoursup : choisissez votre façon de candidater.</p></div><Apply>Je m’inscris en BTS MOS</Apply></div>
+        <section id="carte-professionnelle" className={styles.cnapsPanel} aria-labelledby="cnaps-title">
+          <div className={styles.cnapsHeading}>
+            <div><p className={styles.eyebrow}>Avant votre entrée en formation</p><h3 id="cnaps-title">La carte professionnelle.<br /><span>Une étape à préparer ensemble.</span></h3></div>
+            <span className={styles.cnapsBadge}>CNAPS · Sécurité privée</span>
+          </div>
+          <p className={styles.cnapsIntro}>{course.specificPanel?.body}</p>
+          <div className={styles.cnapsCases}>
+            <article><p className={styles.eyebrow}>Vous avez déjà votre carte</p><h4>Vous êtes dispensé de la formation APS.</h4><p>Votre carte professionnelle « surveillance humaine et gardiennage » devra être en cours de validité. Notre équipe vérifiera avec vous les activités autorisées et sa date d’expiration.</p></article>
+            <article><p className={styles.eyebrow}>Vous n’avez pas encore votre carte</p><h4>Nous préparons votre parcours APS.</h4><p>Intégrale Academy organise la formation Agent de prévention et de sécurité (TFP APS). Contactez notre équipe dès votre pré-inscription pour choisir une session et anticiper les démarches avant votre entrée en BTS.</p></article>
+          </div>
+          <ol className={styles.cnapsSteps}>{course.specificPanel?.items.map((item, index) => <li key={item}><span aria-hidden="true">0{index + 1}</span><p>{item}</p></li>)}</ol>
+          <div className={styles.cnapsFooter}>
+            <div><p className={styles.eyebrow}>Tarif spécial futurs étudiants BTS MOS</p><p className={styles.cnapsPrice}>950 € <span>pour la formation APS</span></p><p>À la charge de l’apprenti, en complément du BTS en alternance. Notre équipe vous communiquera les prochaines sessions disponibles.</p></div>
+            <div className={styles.cnapsActions}><Link className={styles.button} href="/formations-securite/aps">Découvrir la formation APS <Arrow /></Link><a className={styles.textLink} href="#contact-mos">Préparer mes démarches avec Aurélie <Arrow /></a></div>
+          </div>
+          <p className={styles.cnapsNote}>L’autorisation préalable permet d’entrer en formation APS ; elle ne permet pas d’exercer une activité de sécurité privée en entreprise. La délivrance de la carte professionnelle reste soumise à l’examen de votre dossier par le CNAPS. <a href="https://www.cnaps.interieur.gouv.fr/Demarches-en-ligne/Vous-etes-un-particulier/Se-former-aux-metiers-de-la-securite-privee/Se-former-aux-metiers-de-la-securite-privee" target="_blank" rel="noopener noreferrer">Consulter les démarches officielles.</a></p>
+        </section>
+        <div className={styles.applicationBanner}><div><p className={styles.eyebrow}>Votre candidature</p><h3>Votre projet se précise ?</h3><p>Dossier en ligne ou Parcoursup : choisissez votre façon de vous inscrire.</p></div><Apply>Je m’inscris en BTS MOS</Apply></div>
       </div>
     </section>
 
     <section id="formats" className={styles.section}>
       <div className={styles.container}>
-        <Heading label="03 / Votre façon d’étudier" title={<>À l’école ou sur ZOOM.<br /><span>Toujours avec votre promotion.</span></>} text="Le même BTS, deux façons de suivre les cours. Choisissez le format qui correspond à votre quotidien avec l’équipe admissions." />
+        <Heading label="03 / Votre façon d’étudier" title={<>En présentiel ou 100 % en ligne.<br /><span>Toujours avec votre promotion.</span></>} text="Deux parcours distincts : vous choisissez soit les cours à l’école, soit les cours 100 % en ligne, à distance en visioconférence. Notre équipe vous aide à choisir celui qui correspond à votre quotidien." />
         <div className={styles.formats}>
           <article className={styles.formatCard}>
-            <div className={styles.formatPhoto}><Image src="/images/campus/salle-formation.webp" alt="Une salle de cours d’Intégrale Academy à Puget-sur-Argens" width={1600} height={1066} sizes="(max-width: 700px) 94vw, 46vw" /><span className={styles.formatBadge}>À l’école</span></div>
+            <div className={styles.formatPhoto}><Image src="/images/campus/salle-formation.webp" alt="Une salle de cours d’Intégrale Academy à Puget-sur-Argens" width={1600} height={1066} sizes="(max-width: 850px) 94vw, 43vw" /><span className={styles.formatBadge}>À l’école</span></div>
             <div className={styles.formatCopy}>
               <p className={styles.eyebrow}>Campus de Puget-sur-Argens</p><h3>Votre promotion.<br />Votre école, au quotidien.</h3>
               <p>Retrouvez vos formateurs et les autres étudiants sur place, dans les salles et les espaces de l’école.</p>
@@ -160,20 +178,21 @@ export function BtsMosReferencePage() {
               <div className={styles.formatActions}><Apply>Choisir le présentiel</Apply><Link href="/ecole#campus" className={styles.textLink}>Voir le campus <Arrow /></Link></div>
             </div>
           </article>
+          <div className={styles.formatOr} aria-label="ou : choisissez l’un des deux parcours"><span>OU</span></div>
           <article className={`${styles.formatCard} ${styles.remoteFormat}`}>
-            <div className={styles.formatPhoto}><Image src="/images/bts/experience/cours-zoom-manuel.webp" alt="Illustration : une étudiante participe depuis chez elle à un cours en visioconférence avec son formateur et sa promotion" width={1200} height={800} sizes="(max-width: 700px) 94vw, 46vw" /><span className={`${styles.formatBadge} ${styles.zoomBadge}`}><i aria-hidden="true" />En live sur ZOOM</span></div>
+            <div className={styles.formatPhoto}><Image src="/images/bts/experience/cours-zoom-manuel.webp" alt="Illustration : une étudiante participe depuis chez elle à un cours en visioconférence avec son formateur et sa promotion" width={1200} height={800} sizes="(max-width: 850px) 94vw, 43vw" /><span className={`${styles.formatBadge} ${styles.zoomBadge}`}><i aria-hidden="true" />En live sur ZOOM</span></div>
             <div className={styles.formatCopy}>
               <p className={styles.eyebrow}>Intégrale Academy Paris · Online</p><h3>Vos cours en live.<br />100 % à distance.</h3>
               <p>Connectez-vous en visioconférence ZOOM : votre formateur anime le cours en direct, avec toute votre promotion.</p>
               <List items={['Les mêmes cours, aux horaires de l’emploi du temps.', 'Vos questions et vos échanges en temps réel.', 'Vos devoirs déposés en ligne, corrigés par les enseignants.']} />
-              <div className={styles.formatActions}><Apply>Choisir les cours sur ZOOM</Apply></div>
+              <div className={styles.formatActions}><Apply>Choisir le parcours à distance</Apply></div>
             </div>
           </article>
         </div>
         <div className={styles.formatCommon}>
           <div><span>Le diplôme</span><strong>Le même BTS MOS.</strong><p>Un diplôme d’État Bac+2, préparé en deux ans.</p></div>
           <div><span>Le rythme</span><strong>15 jours / 15 jours.</strong><p>15 jours de cours, sur place ou sur ZOOM, puis 15 jours en entreprise.</p></div>
-          <div><span>Les examens</span><strong>En présentiel.</strong><p>Les épreuves finales ont lieu en fin de deuxième année, dans le centre indiqué sur votre convocation.</p></div>
+          <div><span>Les examens</span><strong>En présentiel.</strong><p>Les épreuves finales ont lieu en fin de deuxième année, dans le centre indiqué sur votre convocation de l’Académie de Nice.</p></div>
         </div>
       </div>
     </section>
@@ -185,36 +204,37 @@ export function BtsMosReferencePage() {
           <div><p className={styles.programLabel}>Les 4 blocs professionnels</p><div className={styles.programRows}>{course.competencyBlocks.map((block, index) => <details key={block.title} className={styles.programRow} open={index === 0}><summary><span className={styles.blockNumber}>0{index + 1}</span><strong>{block.title}</strong><span className={styles.plus} aria-hidden="true">+</span></summary><div className={styles.programBody}><List items={block.items} /></div></details>)}</div></div>
           <aside className={styles.generalSubjects}><p className={styles.programLabel}>Les enseignements généraux</p>{generalSubjects.map(subject => <Disclosure key={subject.title} title={subject.title}><List items={subject.items} /></Disclosure>)}<a href={course.rncpUrl} target="_blank" rel="noopener noreferrer" className={styles.textLink}>Fiche officielle RNCP {course.rncp} <Arrow /></a></aside>
         </div>
+        <a className={styles.textLink} href={brochureUrl} target="_blank" rel="noopener noreferrer">Recevoir le dossier de présentation du BTS MOS <Arrow /></a>
         <Disclosure title="Les objectifs de la formation"><List items={course.objective} /></Disclosure>
-        <Disclosure id="examens" title="Les épreuves, les coefficients et la validation du diplôme"><p>{course.examLocation}</p><div className={styles.examTable}><table><caption>Épreuves du BTS Management Opérationnel de la Sécurité</caption><thead><tr><th scope="col">Épreuve</th><th scope="col">Coefficient</th><th scope="col">Format principal</th></tr></thead><tbody>{course.examUnits.map(unit => <tr key={unit.title}><th scope="row">{unit.title}</th><td>{unit.coefficient}</td><td>{unit.format}</td></tr>)}</tbody></table></div><p>La forme exacte, contrôle en cours de formation ou épreuve ponctuelle, dépend du statut du candidat et de l’habilitation du CFA. L’équipe pédagogique confirme les modalités applicables à votre promotion.</p></Disclosure>
+        <Disclosure id="examens" title="Les épreuves, les coefficients et la validation du diplôme"><p>{course.examLocation} Les épreuves se tiennent en fin de deuxième année, généralement entre avril et juin. Vous devrez vous rendre dans le centre indiqué sur la convocation de l’Éducation nationale, y compris si vous suivez les cours à distance.</p><div className={styles.examTable}><table><caption>Épreuves du BTS Management Opérationnel de la Sécurité</caption><thead><tr><th scope="col">Épreuve</th><th scope="col">Coefficient</th><th scope="col">Épreuve ponctuelle · format et durée</th></tr></thead><tbody>{course.examUnits.map(unit => <tr key={unit.title}><th scope="row">{unit.title}</th><td>{unit.coefficient}</td><td>{unit.format}</td></tr>)}</tbody></table></div><p>La forme exacte, contrôle en cours de formation ou épreuve ponctuelle, dépend du statut du candidat et de l’habilitation du CFA. L’équipe pédagogique confirme les modalités applicables à votre promotion.</p></Disclosure>
       </div>
     </section>
 
     <section id="experience" className={styles.section}>
       <div className={styles.container}>
-        <Heading label="05 / Votre vie à l’école" title={<>Votre BTS MOS,<br /><span>avec l’iPad et Londres.</span></>} text="iPad offert dès la signature du contrat d’apprentissage. Londres en 2ᵉ année · 100 % pris en charge. Deux avantages inclus pour votre promotion." />
+        <Heading label="05 / Votre vie à l’école" title={<>Votre BTS MOS,<br /><span>avec l’iPad et Londres.</span></>} text="iPad offert dès la signature du contrat d’apprentissage. Londres en 2ᵉ année · 100 % pris en charge. Ces deux avantages sont proposés sous réserve de signature d’un contrat d’apprentissage." />
       </div>
       <BtsStudentBenefits courseName="BTS MOS" variant="illustrated" />
       <div className={styles.container}>
-        <div className={styles.schoolResources}><div><p className={styles.eyebrow}>Apprendre par la pratique</p><h3>Des situations de métier.<br />Des équipements pour s’entraîner.</h3><p>{course.campusEquipment?.intro}</p><Disclosure title="Découvrir les équipements pédagogiques"><List items={course.campusEquipment?.items ?? []} /></Disclosure></div><figure><Image src="/images/bts/manuel/mos.webp" alt="Illustration pédagogique : une responsable prépare les missions avec son équipe au poste de sécurité" width={1536} height={1024} sizes="(max-width: 800px) 94vw, 45vw" /><figcaption>Illustration pédagogique · Préparer une mission en équipe.</figcaption></figure></div>
+        <div className={styles.schoolResources}><div><p className={styles.eyebrow}>Apprendre par la pratique</p><h3>Des situations de métier.<br />Des équipements pour s’entraîner.</h3><p>{course.campusEquipment?.intro}</p><Disclosure title="Découvrir les équipements pédagogiques"><List items={course.campusEquipment?.items ?? []} /></Disclosure></div><figure><Image src="/images/bts/manuel/mos.webp" alt="Une responsable prépare les missions avec son équipe au poste de sécurité" width={1536} height={1024} sizes="(max-width: 800px) 94vw, 45vw" /><figcaption>Préparer une mission en équipe.</figcaption></figure></div>
       </div>
     </section>
 
     <section id="admission" className={`${styles.section} ${styles.admission}`}>
       <div className={styles.container}>
-        <Heading label="06 / Candidature et admission" title={<>Candidatez au BTS MOS.<br /><span>Deux possibilités.</span></>} text="Remplissez votre dossier de pré-inscription en ligne ou candidatez directement sur Parcoursup. L’équipe vous accompagne ensuite jusqu’à l’inscription et au contrat d’apprentissage." />
+        <Heading label="06 / Candidature et admission" title={<>Votre inscription en BTS MOS.<br /><span>Deux possibilités.</span></>} text="Remplissez votre dossier de pré-inscription en ligne ou candidatez directement sur Parcoursup. L’équipe vous accompagne ensuite jusqu’à l’inscription et au contrat d’apprentissage." />
         <div className={styles.applicationChoices}>
           <article className={styles.applicationCard}><p className={styles.eyebrow}>Option 01 · Auprès de l’école</p><h3>Votre dossier<br />de pré-inscription en ligne.</h3><p>Présentez votre parcours et votre projet directement à Intégrale Academy. Vous pouvez candidater avant d’avoir trouvé votre entreprise.</p><Apply href={applicationUrl}>Candidater en ligne</Apply><p className={styles.small}>L’équipe admissions vous accompagne pour la suite.</p></article>
           <article id="candidature-parcoursup" className={`${styles.applicationCard} ${styles.parcoursupCard}`}><p className={styles.eyebrow}>Option 02 · Sur Parcoursup</p><ParcoursupLogo /><h3>Choisissez votre format<br />et formulez votre vœu.</h3><div className={styles.parcoursupLinks}><a href={parcoursup.campus} target="_blank" rel="noopener noreferrer"><span><strong>BTS MOS en présentiel</strong><small>Intégrale Academy · Puget-sur-Argens</small></span><Arrow /></a><a href={parcoursup.remote} target="_blank" rel="noopener noreferrer"><span><strong>BTS MOS 100 % à distance</strong><small>Intégrale Academy Paris · Cours en live sur ZOOM</small></span><Arrow /></a></div><p className={styles.small}>Selon le calendrier Parcoursup. Pour une candidature en cours d’année, utilisez le dossier en ligne ou contactez Aurélie.</p></article>
         </div>
         <div className={styles.admissionIntro}><p className={styles.eyebrow}>Et ensuite ?</p><h3>De votre candidature à votre rentrée.</h3></div>
         <ol className={styles.admissionSteps}>{admissionSteps.map(([title, text], i) => <li key={title}><span>0{i + 1}</span><h3>{title}</h3><p>{text}</p></li>)}</ol>
-        <Disclosure title="Les conditions d’admission et d’alternance"><p>Le BTS est accessible après un baccalauréat ou un titre équivalent, sous réserve de l’étude de votre dossier.</p><List items={course.admission} /></Disclosure>
+        <Disclosure title="Les conditions d’admission et d’alternance"><p>Le BTS est accessible après un baccalauréat ou un titre équivalent, sous réserve de l’étude de votre dossier.</p><List items={course.admission} /><a className={styles.textLink} href="#carte-professionnelle">Comprendre les démarches de carte professionnelle <Arrow /></a></Disclosure>
         <div id="contact-mos" className={styles.adviser}>
           <div className={styles.adviserCopy}><p className={styles.eyebrow}>Un interlocuteur pour vous et votre famille</p><h2>Vos questions ont<br /><span>un visage.</span></h2><p>Votre projet, le choix du format, la candidature ou le contrat : Aurélie vous aide à comprendre la suite, avant toute décision définitive.</p><div className={styles.parentTrust}><span>Diplôme d’État</span><span>Suivi pédagogique</span><span>Équipe identifiée</span></div><Apply>Déposer ma candidature</Apply></div>
           <div className={styles.adviserCard}>
-            <div className={styles.adviserIdentity}><TeamPortrait person="aurelie" size={180} alt="Memoji d’Aurélie Chaussez, responsable des BTS" className={styles.portrait} sizes="(max-width: 600px) 120px, 160px" /><div><p className={styles.eyebrow}>Votre contact BTS</p><h3>Aurélie Chaussez</h3><p>Chargée des relations clients<br />Responsable des BTS</p></div></div>
-            <div className={styles.contactLinks}><a href={phone}>04 87 83 06 15 <span>Ligne directe <Arrow /></span></a><a href="tel:+33769390457">07 69 39 04 57 <span>Portable <Arrow /></span></a><a href={email}>aurelie@integraleacademy.com <Arrow /></a></div>
+            <div className={styles.adviserIdentity}><TeamPortrait person="aurelie" size={180} alt="Memoji d’Aurélie BAYARD-CHAUSSEZ, responsable des BTS" className={styles.portrait} sizes="(max-width: 600px) 120px, 160px" /><div><p className={styles.eyebrow}>Votre contact BTS</p><h3>Aurélie <span>BAYARD-CHAUSSEZ</span></h3><p>Chargée des relations clients<br />Responsable des BTS</p></div></div>
+            <div className={styles.contactLinks}><a href={phone}>04 87 83 06 15 <span>Ligne directe <Arrow /></span></a><a href="tel:+33769390457">07 69 39 04 57 <span>Portable <Arrow /></span></a><a href={email}>aurelie@integraleacademy.com <Arrow /></a><a href="https://wa.me/33744304527" target="_blank" rel="noopener noreferrer">Échanger sur WhatsApp <Arrow /></a></div>
             <a href={email} className={`${styles.button} ${styles.secondaryButton}`}>Écrire à Aurélie <Arrow /></a><p className={styles.small}>Un premier échange gratuit et sans engagement.</p>
           </div>
         </div>

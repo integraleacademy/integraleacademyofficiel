@@ -260,7 +260,7 @@ function btsJourney(profile: BtsJourneyProfile): CourseJourneyConfig {
     outcome: { heading: ['Votre talent.', 'De nouvelles possibilités.'], code: `BTS ${profile.code}`, role: profile.name, milestones: [
       { label: '01 · BAC+2', title: 'Le diplôme.', text: 'Préparer les compétences et les épreuves', href: '#programme' },
       { label: '02 · ALTERNANCE', title: 'L’expérience.', text: 'Apprendre au sein d’une entreprise', href: profile.hasBenefitsSection === false ? '#alternance' : '#avantages-bts' },
-    ], note: profile.hasBenefitsSection === false ? 'Un diplôme national et une expérience professionnelle à valoriser.' : 'iPad dès le contrat d’apprentissage · Londres en 2ᵉ année.' },
+    ], note: profile.hasBenefitsSection === false ? 'Un diplôme national et une expérience professionnelle à valoriser.' : profile.code === 'MOS' ? 'iPad offert · Londres en 2ᵉ année · Sous réserve de signature d’un contrat d’apprentissage.' : 'iPad dès le contrat d’apprentissage · Londres en 2ᵉ année.' },
   };
 }
 

@@ -123,22 +123,24 @@ export const btsExpandedCourses: Record<BtsExpandedCourseKey, BtsExpandedCourse>
         ],
       },
     ],
+    // Épreuves ponctuelles : arrêté du 2 mars 2020, annexe II c.
+    // Culture générale : 3 h depuis la session 2025 (arrêté du 13 juillet 2023).
     examUnits: [
-      { title: 'Culture générale et expression', coefficient: '4', format: 'Écrit / CCF selon statut' },
-      { title: 'Langue vivante étrangère', coefficient: '4', format: 'Écrit et oral / CCF selon statut' },
-      { title: 'Culture économique, juridique et managériale', coefficient: '6', format: 'Écrit / CCF selon statut' },
-      { title: 'Préparation et mise en œuvre d’une prestation de sécurité', coefficient: '8', format: 'Oral ou CCF' },
-      { title: 'Management des ressources humaines', coefficient: '5', format: 'Oral ou CCF' },
-      { title: 'Gestion de la relation client', coefficient: '5', format: 'Oral ou CCF' },
-      { title: 'Participation à la sécurité globale', coefficient: '6', format: 'Écrit / CCF selon statut' },
+      { title: 'Culture générale et expression', coefficient: '4', format: 'Écrit · 3 h' },
+      { title: 'Langue vivante étrangère : anglais', coefficient: '4', format: 'Écrit · 2 h + oral · 20 min (préparation : 20 min)' },
+      { title: 'Culture économique, juridique et managériale', coefficient: '6', format: 'Écrit · 4 h' },
+      { title: 'Préparation et mise en œuvre d’une prestation de sécurité', coefficient: '8', format: 'Oral · 50 min' },
+      { title: 'Management des ressources humaines', coefficient: '5', format: 'Oral · 30 min' },
+      { title: 'Gestion de la relation client', coefficient: '5', format: 'Oral · 30 min (préparation : 1 h)' },
+      { title: 'Participation à la sécurité globale', coefficient: '6', format: 'Écrit · 4 h' },
     ],
     rhythm: btsRhythms.MOS.description,
-    examLocation: 'Les épreuves finales nécessitant une convocation se déroulent en présentiel, selon les indications de l’académie.',
+    examLocation: 'Les épreuves finales sont organisées en présentiel par l’Académie de Nice, dans le centre indiqué sur votre convocation.',
     admission: [
       'Étude du dossier et validation de la cohérence du projet professionnel.',
       'Contrat d’apprentissage en principe accessible jusqu’à 29 ans révolus, sous réserve des dérogations légales.',
       'Casier judiciaire compatible avec l’exercice d’une activité privée de sécurité.',
-      'Pour l’alternance en sécurité privée, disposer de la carte professionnelle CNAPS demandée pour les missions concernées.',
+      'Pour notre parcours BTS MOS en alternance dans la sécurité privée, détenir une carte professionnelle CNAPS en cours de validité avant l’entrée en formation.',
     ],
     employers: [
       'Entreprises de sécurité privée',
@@ -166,11 +168,11 @@ export const btsExpandedCourses: Record<BtsExpandedCourseKey, BtsExpandedCourse>
     specificPanel: {
       title: 'Carte professionnelle CNAPS et formation APS',
       body:
-        'La carte professionnelle « surveillance humaine et gardiennage » est déterminante pour effectuer les missions d’alternance dans une entreprise de sécurité privée. Si vous ne la possédez pas encore, Intégrale Academy peut vous orienter vers la formation APS nécessaire.',
+        'Pour intégrer notre parcours BTS MOS en alternance dans la sécurité privée, vous devrez disposer d’une carte professionnelle CNAPS « surveillance humaine et gardiennage » en cours de validité avant votre entrée en formation. Cette carte vous sera demandée par l’entreprise d’accueil pour exercer les missions de sécurité privée concernées.',
       items: [
-        'Vérification de votre situation avec l’équipe admissions',
-        'Orientation vers la prochaine session APS adaptée',
-        'Information sur les démarches CNAPS et les délais à anticiper',
+        'Avant la formation APS : notre équipe vous accompagne pour constituer et déposer votre demande d’autorisation préalable auprès du CNAPS.',
+        'Pendant la formation APS : vous apprenez les compétences du métier d’agent de sécurité privée et préparez l’examen du TFP APS.',
+        'Après la réussite à l’examen : vous devrez demander votre carte professionnelle au CNAPS. Notre équipe vous accompagne dans cette démarche avant vos missions en entreprise.',
       ],
     },
     campusEquipment: {

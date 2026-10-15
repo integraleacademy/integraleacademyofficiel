@@ -19,6 +19,7 @@ export function BtsIllustratedBenefits({ courseName }: { courseName: string }) {
           <span className={styles.badge}>Dès la signature du contrat</span>
           <h3>Un iPad offert.<br /><span>Pour vos deux années.</span></h3>
           <p>L’iPad est offert dès la signature de votre contrat d’apprentissage. Vos cours, vos notes et vos projets vous accompagnent au quotidien.</p>
+          <p className={styles.condition}>Sous réserve de signature d’un contrat d’apprentissage.</p>
           <div className={styles.detail}><span aria-hidden="true">✓</span> Un outil pour travailler et vous organiser.</div>
         </div>
       </article>
@@ -31,6 +32,7 @@ export function BtsIllustratedBenefits({ courseName }: { courseName: string }) {
           <span className={styles.badge}>En 2ᵉ année · 100 % pris en charge</span>
           <h3>Direction Londres.<br /><span>Un voyage à partager.</span></h3>
           <p>Partez avec votre promotion en deuxième année. Le voyage à Londres est intégralement financé par Intégrale Academy pour les étudiants de la promotion.</p>
+          <p className={styles.condition}>Sous réserve de signature d’un contrat d’apprentissage.</p>
           <div className={styles.detail}><span aria-hidden="true">✓</span> Une expérience collective au-delà des cours.</div>
         </div>
       </article>

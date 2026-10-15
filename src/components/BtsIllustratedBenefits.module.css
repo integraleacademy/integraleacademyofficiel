@@ -9,6 +9,7 @@
 .copy h3 { margin: 16px 0; font-size: clamp(25px, 2.5vw, 32px); }
 .copy h3 span { color: var(--mos-blue); }
 .copy > p { margin: 0; color: var(--mos-muted); font-size: 14px; line-height: 1.8; }
+.copy > .condition { margin-top: 14px; color: var(--mos-ink); font-size: 12px; font-weight: 700; }
 .detail { display: flex; align-items: center; gap: 9px; margin-top: 20px; padding-top: 15px; border-top: 1px solid var(--mos-line); color: var(--mos-ink); font-size: 12px; font-weight: 650; }
 .detail > span { color: var(--mos-blue); }
 .extras { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; padding-top: 26px; }
