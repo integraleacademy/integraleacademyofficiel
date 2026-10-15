@@ -1,19 +1,35 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useId, useRef, useState, type KeyboardEvent } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styles from './HomeHeroIllustrations.module.css';
 
 const scenes = [
-  { label: 'Sécurité', image: 'aps-atelier-radio', alt: 'Des stagiaires en sécurité privée s’entraînent à communiquer par radio.' },
-  { label: 'VTC', image: 'vtc-parcours', alt: 'Une stagiaire prépare son véhicule avec son formateur VTC.' },
-  { label: 'BTS', image: 'bts-ndrc-parcours', alt: 'Des étudiants en BTS construisent un projet en équipe.' },
+  {
+    label: 'Sécurité privée', href: '#formations-securite',
+    title: 'Protéger. Intervenir. Évoluer.',
+    description: 'Sécurité privée, incendie, protection rapprochée ou direction : trouvez votre parcours.',
+    action: 'Découvrir les formations en sécurité',
+    image: 'aps-atelier-radio', alt: 'Des stagiaires en sécurité privée s’entraînent à communiquer par radio.',
+  },
+  {
+    label: 'Chauffeur VTC', href: '#formation-vtc',
+    title: 'Prenez le volant de votre avenir.',
+    description: 'De la théorie à la conduite, préparez votre examen VTC avec une formule tout inclus.',
+    action: 'Découvrir la formation VTC',
+    image: 'vtc-parcours', alt: 'Une stagiaire prépare son véhicule avec son formateur VTC.',
+  },
+  {
+    label: 'BTS en alternance', href: '#bts',
+    title: 'Un diplôme. De l’expérience.',
+    description: 'Choisissez parmi 6 BTS et construisez votre avenir entre cours et entreprise.',
+    action: 'Découvrir les BTS en alternance',
+    image: 'bts-ndrc-parcours', alt: 'Des étudiants en BTS construisent un projet en équipe.',
+  },
 ];
 
 export function HomeHeroIllustrations() {
-  const carouselId = useId();
   const root = useRef<HTMLDivElement>(null);
-  const tabs = useRef<(HTMLButtonElement | null)[]>([]);
   const [current, setCurrent] = useState(0);
   const [visible, setVisible] = useState(false);
   const [pageVisible, setPageVisible] = useState(true);
@@ -50,21 +66,9 @@ export function HomeHeroIllustrations() {
     return () => window.clearTimeout(timer);
   }, [current, running]);
 
-  function selectScene(index: number) {
+  function moveScene(direction: number) {
     setPaused(true);
-    setCurrent(index);
-  }
-
-  function handleTabKeyDown(event: KeyboardEvent<HTMLButtonElement>, index: number) {
-    let next: number;
-    if (event.key === 'ArrowRight') next = (index + 1) % scenes.length;
-    else if (event.key === 'ArrowLeft') next = (index + scenes.length - 1) % scenes.length;
-    else if (event.key === 'Home') next = 0;
-    else if (event.key === 'End') next = scenes.length - 1;
-    else return;
-    event.preventDefault();
-    selectScene(next);
-    tabs.current[next]?.focus();
+    setCurrent(index => (index + direction + scenes.length) % scenes.length);
   }
 
   return (
@@ -79,61 +83,64 @@ export function HomeHeroIllustrations() {
       onPointerLeave={() => setHovered(false)}
       onFocusCapture={event => { if (!(event.target as Element).closest('[data-rotation-control]')) setPaused(true); }}
     >
-      <div className={styles.stage} aria-live={running ? 'off' : 'polite'}>
-        {scenes.map((scene, index) => (
-          <figure
-            key={scene.label}
-            id={`${carouselId}-panel-${index}`}
-            role="tabpanel"
-            aria-labelledby={`${carouselId}-tab-${index}`}
-            aria-hidden={index !== current}
-            inert={index !== current}
-            data-current={index === current}
-            className={styles.scene}
-          >
-            <Image
-              src={`/images/formation-scenes-manuel/${scene.image}.webp`}
-              alt={scene.alt}
-              width={1536}
-              height={1024}
-              sizes="(max-width: 900px) calc(100vw - 40px), (max-width: 1320px) 50vw, 640px"
-              priority={index === 0}
-              loading={index === 0 ? undefined : 'eager'}
-              draggable={false}
-            />
-          </figure>
-        ))}
-      </div>
-      <div className={styles.navigation}>
-        <div className={styles.tabs} role="tablist" aria-label="Choisir un univers de formation">
+      <div className={styles.stage}>
+        <div className={styles.scenes} aria-live={running ? 'off' : 'polite'}>
           {scenes.map((scene, index) => (
-            <button
+            <article
               key={scene.label}
-              ref={element => { tabs.current[index] = element; }}
-              id={`${carouselId}-tab-${index}`}
-              role="tab"
-              type="button"
-              aria-selected={index === current}
-              aria-controls={`${carouselId}-panel-${index}`}
-              tabIndex={index === current ? 0 : -1}
-              onClick={() => selectScene(index)}
-              onKeyDown={event => handleTabKeyDown(event, index)}
-            >{scene.label}</button>
+              role="group"
+              aria-roledescription="diapositive"
+              aria-label={`${index + 1} sur ${scenes.length} : ${scene.label}`}
+              aria-hidden={index !== current}
+              inert={index !== current}
+              data-current={index === current}
+              className={styles.scene}
+            >
+              <a href={scene.href} className={styles.sceneLink} aria-label={scene.action} onClick={() => setPaused(true)}>
+                <Image
+                  src={`/images/formation-scenes-manuel/${scene.image}.webp`}
+                  alt={scene.alt}
+                  width={1536}
+                  height={1024}
+                  sizes="(max-width: 900px) calc(100vw - 40px), (max-width: 1320px) 50vw, 640px"
+                  priority={index === 0}
+                  loading={index === 0 ? undefined : 'eager'}
+                  draggable={false}
+                />
+                <div className={styles.sceneContent}>
+                  <span className={styles.sceneLabel}>{scene.label}</span>
+                  <h2>{scene.title}</h2>
+                  <p>{scene.description}</p>
+                  <span className={styles.sceneAction}>{scene.action} <span aria-hidden="true">→</span></span>
+                </div>
+              </a>
+            </article>
           ))}
         </div>
-        {!quietMode && <button
-          type="button"
-          className={styles.motion}
-          data-rotation-control
-          aria-label={paused ? 'Reprendre le défilement des illustrations' : 'Mettre le défilement des illustrations en pause'}
-          title={paused ? 'Reprendre le défilement' : 'Mettre en pause'}
-          onClick={() => setPaused(value => !value)}
-        >
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">{paused
-            ? <path d="m9 5 10 7-10 7V5Z" fill="currentColor" />
-            : <path d="M9 6v12M15 6v12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />}</svg>
-        </button>}
+        <div className={styles.controls} aria-label="Parcourir les univers de formation" role="group">
+          <span className={styles.counter} aria-hidden="true">0{current + 1} / 03</span>
+          <button type="button" aria-label="Univers précédent" onClick={() => moveScene(-1)}><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg></button>
+          <button type="button" aria-label="Univers suivant" onClick={() => moveScene(1)}><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg></button>
+          {!quietMode && <button
+            type="button"
+            data-rotation-control
+            aria-label={paused ? 'Reprendre le défilement des univers' : 'Mettre le défilement des univers en pause'}
+            title={paused ? 'Reprendre le défilement' : 'Mettre en pause'}
+            onClick={() => setPaused(value => !value)}
+          >
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">{paused
+              ? <path d="m9 5 10 7-10 7V5Z" fill="currentColor" />
+              : <path d="M9 6v12M15 6v12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />}</svg>
+          </button>}
+        </div>
       </div>
+      <nav className={styles.navigation} aria-label="Accès direct aux formations">
+        {scenes.map((scene, index) => (
+          <a key={scene.label} href={scene.href} data-active={index === current} onClick={() => { setCurrent(index); setPaused(true); }}>
+            {scene.label} <span aria-hidden="true">↓</span>
+          </a>
+        ))}
+      </nav>
     </div>
   );
 }
