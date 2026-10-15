@@ -1,0 +1,135 @@
+.section {
+  padding: clamp(48px, 5vw, 80px) 0 0;
+  color: rgb(var(--text-main));
+  background: rgb(var(--background));
+  scroll-margin-top: calc(var(--site-header-height) + 24px);
+}
+
+.section *, .section *::before, .section *::after { box-sizing: border-box; }
+.container { width: var(--site-content-width); min-width: 0; margin-inline: auto; }
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(360px, .85fr);
+  align-items: center;
+  gap: clamp(40px, 6vw, 100px);
+  padding-top: clamp(40px, 4vw, 64px);
+  border-top: 1px solid rgb(var(--border));
+}
+
+.copy { min-width: 0; }
+.eyebrow { display: flex; align-items: center; gap: 12px; margin: 0 0 24px; color: rgb(var(--accent-strong)); font-size: .75rem; font-weight: 750; letter-spacing: .14em; line-height: 1.5; text-transform: uppercase; }
+.eyebrow > span { width: 30px; height: 2px; background: currentColor; flex: 0 0 auto; }
+.title { margin: 0; font-size: clamp(2.5rem, 3.65vw, 4rem); font-weight: 750; letter-spacing: -.05em; line-height: 1.1; }
+.title em { display: inline-block; margin-top: 8px; color: rgb(var(--accent-strong)); font-family: Georgia, 'Times New Roman', serif; font-weight: 400; letter-spacing: -.05em; }
+.intro { max-width: 47ch; margin: 24px 0 0; color: rgb(var(--text-muted)); font-size: var(--site-body-size); line-height: 1.8; }
+
+.talkingPoints { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin: 36px 0 0; padding: 0; list-style: none; }
+.talkingPoints li { position: relative; min-width: 0; padding-top: 17px; border-top: 1px solid rgb(var(--border)); }
+.talkingPoints li::before { position: absolute; top: -1px; left: 0; width: 24px; height: 2px; background: rgb(var(--accent)); content: ''; }
+.stepNumber { display: block; margin-bottom: 12px; color: rgb(var(--accent-strong)); font-size: .7rem; font-weight: 700; letter-spacing: .06em; font-variant-numeric: tabular-nums; }
+.talkingPoints strong { display: block; font-size: .9rem; font-weight: 750; line-height: 1.5; }
+.talkingPoints p { max-width: 20ch; margin: 7px 0 0; color: rgb(var(--text-muted)); font-size: .8125rem; line-height: 1.65; }
+.teamLink { display: inline-flex; align-items: center; gap: 16px; min-height: 44px; margin-top: 23px; color: rgb(var(--text-muted)); font-size: .8125rem; font-weight: 650; text-decoration: none; }
+.teamLink svg { width: 19px; height: 19px; color: rgb(var(--accent-strong)); transition: transform .2s; }
+.teamLink:hover { color: rgb(var(--text-main)); }
+.teamLink:hover svg { transform: translateX(4px); }
+
+.contactCard {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid #ffffff12;
+  border-radius: 26px;
+  padding: clamp(26px, 2.8vw, 40px);
+  color: #fffaf0;
+  background: #28394f;
+  box-shadow: 0 18px 36px #17253612;
+}
+.contactCard::before { position: absolute; top: 0; left: 40px; width: 64px; height: 3px; border-radius: 0 0 4px 4px; background: #e7b343; content: ''; }
+.cardEyebrow { margin: 0 0 26px; color: #f0c974; font-size: .6875rem; font-weight: 700; letter-spacing: .12em; line-height: 1.6; text-transform: uppercase; }
+.person { display: flex; align-items: center; gap: 22px; }
+.person > div:last-child { min-width: 0; }
+.portraitFrame { flex: 0 0 112px; width: 112px; height: 112px; padding: 5px; border: 1px solid #e7b34370; border-radius: 50%; }
+.portrait { display: block; width: 100%; height: 100%; }
+.person h3 { margin: 0 0 6px; font-size: clamp(1.625rem, 2.2vw, 2rem); font-weight: 700; letter-spacing: -.035em; line-height: 1.2; }
+.person p { margin: 0; color: #e4e8ed; font-size: .8125rem; line-height: 1.6; }
+.person span { display: block; margin-top: 3px; color: #b8c5d4; font-size: .75rem; line-height: 1.5; }
+
+.appointment { margin-top: 27px; padding-top: 25px; border-top: 1px solid #ffffff26; }
+.appointment > p:first-child { margin: 0; font-size: 1.0625rem; font-weight: 650; line-height: 1.5; letter-spacing: -.015em; }
+.appointment > span { display: block; max-width: 36ch; margin-top: 8px; color: #c8d2df; font-size: .875rem; line-height: 1.7; }
+.primaryButton { display: flex; align-items: center; justify-content: center; gap: 12px; min-height: 54px; margin-top: 23px; border: 1px solid transparent; border-radius: 12px; padding: 13px 16px; background: #efc15e; color: #1d2838; font-size: .875rem; font-weight: 750; line-height: 1.5; text-align: center; text-decoration: none; transition: background .2s, transform .2s; }
+.primaryButton svg { width: 20px; height: 20px; flex: 0 0 auto; }
+.primaryButton svg:last-child { margin-left: auto; transition: transform .2s; }
+.primaryButton span { flex: 1; }
+.primaryButton:hover { transform: translateY(-2px); background: #f7d387; }
+.primaryButton:hover svg:last-child { transform: translateX(3px); }
+.appointment .reassurance { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 6px; margin: 13px 0 0; color: #ccd6e1; font-size: .75rem; font-weight: 400; line-height: 1.5; }
+.reassurance svg { width: 15px; height: 15px; color: #f0c974; }
+.reassurance > span { margin-inline: 3px; }
+.phoneLink { display: flex; align-items: center; gap: 13px; min-height: 66px; margin-top: 22px; padding-top: 22px; border-top: 1px solid #ffffff26; color: #fffaf0; text-decoration: none; }
+.phoneIcon { display: grid; width: 40px; height: 40px; flex: 0 0 auto; place-items: center; border: 1px solid #ffffff30; border-radius: 50%; }
+.phoneIcon svg { width: 19px; height: 19px; }
+.phoneLink small { display: block; margin-bottom: 4px; color: #c8d2df; font-size: .75rem; line-height: 1.4; }
+.phoneLink strong { display: block; font-size: 1.25rem; font-weight: 650; letter-spacing: .025em; line-height: 1.3; }
+.phoneLink > svg { width: 20px; height: 20px; flex: 0 0 auto; margin-left: auto; color: #f0c974; transition: transform .2s; }
+.phoneLink:hover strong { text-decoration: underline; text-underline-offset: 5px; }
+.phoneLink:hover > svg { transform: translateX(4px); }
+.section a:focus-visible { outline: 2px solid rgb(var(--accent-strong)); outline-offset: 5px; }
+.contactCard a:focus-visible { outline-color: #f0c974; }
+
+@media (max-width: 1100px) {
+  .layout { grid-template-columns: minmax(0, 1fr) minmax(340px, .9fr); gap: 32px; }
+  .title { font-size: clamp(2.25rem, 3.8vw, 3rem); }
+  .person { gap: 16px; }
+  .portraitFrame { flex-basis: 96px; width: 96px; height: 96px; }
+  .talkingPoints { gap: 12px; }
+}
+
+@media (max-width: 900px) {
+  .layout { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .copy { max-width: 700px; }
+  .title { font-size: clamp(2.5rem, 6vw, 3.5rem); }
+  .contactCard { width: 100%; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0 32px; padding: 30px; }
+  .cardEyebrow { grid-column: 1 / -1; margin-bottom: 22px; }
+  .person { align-self: center; }
+  .appointment { grid-column: 2; grid-row: 2 / 4; margin: 0; padding: 0 0 0 28px; border-top: 0; border-left: 1px solid #ffffff26; }
+  .phoneLink { margin-top: 20px; padding-top: 20px; }
+  .primaryButton { padding-inline: 12px; gap: 8px; }
+}
+
+@media (max-width: 600px) {
+  .section { padding-top: 36px; }
+  .layout { padding-top: 32px; gap: 26px; }
+  .eyebrow { margin-bottom: 20px; font-size: .6875rem; letter-spacing: .12em; }
+  .title { font-size: clamp(2rem, 7.5vw, 2.75rem); }
+  .title em { margin-top: 6px; }
+  .intro { margin-top: 20px; font-size: 1rem; line-height: 1.75; }
+  .talkingPoints { grid-template-columns: minmax(0, 1fr); gap: 0; margin-top: 27px; }
+  .talkingPoints li { display: grid; grid-template-columns: 28px minmax(0, 1fr); column-gap: 12px; padding: 14px 0; }
+  .talkingPoints li::before { display: none; }
+  .stepNumber { grid-row: 1 / 3; margin: 3px 0 0; }
+  .talkingPoints p { max-width: none; grid-column: 2; margin-top: 3px; }
+  .teamLink { margin-top: 7px; }
+  .contactCard { display: block; border-radius: 22px; padding: 26px 24px; }
+  .contactCard::before { left: 26px; }
+  .cardEyebrow { font-size: .625rem; letter-spacing: .1em; margin-bottom: 22px; }
+  .portraitFrame { flex-basis: 88px; width: 88px; height: 88px; }
+  .person h3 { font-size: 1.75rem; }
+  .appointment { margin-top: 24px; padding: 22px 0 0; border-top: 1px solid #ffffff26; border-left: 0; }
+  .phoneLink { margin-top: 21px; padding-top: 21px; }
+}
+
+@media (max-width: 360px) {
+  .contactCard { padding-inline: 20px; }
+  .person { gap: 12px; }
+  .portraitFrame { flex-basis: 72px; width: 72px; height: 72px; }
+  .person h3 { font-size: 1.5rem; }
+  .phoneLink { gap: 10px; }
+  .phoneLink strong { font-size: 1.125rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section a, .section svg { transition: none; }
+  .section a:hover, .section a:hover svg { transform: none; }
+}
