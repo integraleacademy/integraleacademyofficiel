@@ -83,7 +83,8 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
   const [isOpen, setIsOpen] = useState(true);
   const [isExpanded, setIsExpanded] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
-  const sessionsActive = variant !== 'modalTrigger' || isExpanded;
+  const isModalVariant = variant === 'modalTrigger' || variant === 'homeDock';
+  const sessionsActive = !isModalVariant || isExpanded;
   const [step, setStep] = useState<Step>(initialStep ?? (initialFormationKey ? 2 : 'formations'));
   const [sessions, setSessions] = useState<AssistantSession[]>([]);
   const [selectedKey, setSelectedKey] = useState<FormationKey | null>(initialFormationKey ?? null);
@@ -121,7 +122,7 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
   }, []);
 
   useEffect(() => {
-    if (variant !== 'modalTrigger' || !isExpanded || !isMounted) return;
+    if (!isModalVariant || !isExpanded || !isMounted) return;
     const dialog = dialogRef.current;
     if (!dialog) return;
     const previousOverflow = document.body.style.overflow;
@@ -132,7 +133,7 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
       document.body.style.overflow = previousOverflow;
       triggerRef.current?.focus();
     };
-  }, [variant, isExpanded, isMounted]);
+  }, [isModalVariant, isExpanded, isMounted]);
 
   function chooseFormation(key: FormationKey){
     if (loadingTimeoutRef.current) window.clearTimeout(loadingTimeoutRef.current);
@@ -196,7 +197,7 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
       </div>
       <div>
         <div className="grid grid-cols-2 gap-2.5 xl:grid-cols-5" data-home-formation-options>
-          {formations.map((formation,index) => <button key={formation.key} type="button" onClick={() => chooseFormation(formation.key)} className="group flex min-h-24 flex-col rounded-[1.25rem] border border-white/10 bg-white/[.055] p-3 text-left transition last:col-span-2 hover:-translate-y-1 hover:border-academy-gold/50 hover:bg-white/[.09] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-academy-gold sm:min-h-28 sm:p-4 xl:last:col-span-1">
+          {formations.map((formation,index) => <button key={formation.key} type="button" aria-haspopup="dialog" aria-expanded={isExpanded && selectedKey === formation.key} aria-controls={dialogId} onClick={(event) => { triggerRef.current = event.currentTarget; chooseFormation(formation.key); }} className="group flex min-h-24 flex-col rounded-[1.25rem] border border-white/10 bg-white/[.055] p-3 text-left transition last:col-span-2 hover:-translate-y-1 hover:border-academy-gold/50 hover:bg-white/[.09] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-academy-gold sm:min-h-28 sm:p-4 xl:last:col-span-1">
             <span className="text-[10px] font-black text-academy-gold">{String(index + 1).padStart(2,'0')}</span>
             <span className="mt-auto text-sm font-black leading-5 text-white">{formation.homeTitle}</span>
             <span className="mt-1 flex w-full items-center justify-between gap-2 text-[10px] font-bold text-white/55"><span>{formation.homeSubtitle}</span><span className="text-academy-gold transition group-hover:translate-x-1" aria-hidden="true">→</span></span>
@@ -204,7 +205,7 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
         </div>
         <div className="mt-4 flex flex-col gap-3 text-[10px] font-semibold text-white/50 sm:flex-row sm:items-center sm:justify-between">
           <span>L’assistant conserve votre parcours : formation, situation, financement, dates et prise de rendez-vous.</span>
-          <button type="button" onClick={() => { setSelectedKey(null); setStep('formations'); setIsExpanded(true); }} className="shrink-0 font-black text-white underline decoration-academy-gold/50 underline-offset-4 transition hover:text-academy-gold">Je ne sais pas encore →</button>
+          <button type="button" aria-haspopup="dialog" aria-expanded={isExpanded && selectedKey === null} aria-controls={dialogId} onClick={(event) => { triggerRef.current = event.currentTarget; setSelectedKey(null); setStep('formations'); setIsExpanded(true); }} className="shrink-0 font-black text-white underline decoration-academy-gold/50 underline-offset-4 transition hover:text-academy-gold">Je ne sais pas encore →</button>
         </div>
       </div>
     </div>
@@ -219,7 +220,7 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
           <h2 className="mt-2 text-2xl font-black tracking-tight sm:text-3xl">Notre assistant va vous aider</h2>
           <p className="mt-2 text-sm font-medium leading-6 text-stone-600">{step === 'formations' ? 'Je souhaite des renseignements concernant la formation :' : selectedFormation?.label}</p>
         </div>
-        <button type="button" onClick={minimizeAssistant} className={isExpanded ? 'shrink-0 rounded-full border border-academy-line bg-white px-4 py-2 text-sm font-black text-stone-600 transition hover:bg-stone-50 hover:text-academy-ink' : 'grid h-10 w-10 shrink-0 place-items-center rounded-full border border-academy-line bg-white text-lg font-black text-stone-500 transition hover:bg-stone-50 hover:text-academy-ink'} aria-label={variant === 'modalTrigger' ? 'Fermer l’assistant' : 'Réduire l’assistant'}>{variant === 'modalTrigger' ? 'Fermer ×' : isExpanded ? 'Réduire' : '×'}</button>
+        <button type="button" onClick={minimizeAssistant} className={isExpanded ? 'shrink-0 rounded-full border border-academy-line bg-white px-4 py-2 text-sm font-black text-stone-600 transition hover:bg-stone-50 hover:text-academy-ink' : 'grid h-10 w-10 shrink-0 place-items-center rounded-full border border-academy-line bg-white text-lg font-black text-stone-500 transition hover:bg-stone-50 hover:text-academy-ink'} aria-label={isModalVariant ? 'Fermer l’assistant' : 'Réduire l’assistant'}>{isModalVariant ? 'Fermer ×' : isExpanded ? 'Réduire' : '×'}</button>
       </div>
 
 
@@ -277,7 +278,7 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
     </div>
   </aside>;
 
-  if (variant === 'modalTrigger') {
+  if (isModalVariant) {
     const triggerTheme = !initialFormationKey ? 'gold' : initialFormationKey === 'a3p' || initialFormationKey === 'sst' ? 'green' : initialFormationKey?.startsWith('desp') ? 'orange' : initialFormationKey?.startsWith('ssiap') ? 'red' : 'blue';
     const triggerStyles = {
       blue: { border: 'hover:border-blue-300 focus-visible:outline-blue-600', icon: 'bg-blue-50 text-blue-700', arrow: 'text-blue-700' },
@@ -288,13 +289,13 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
     }[triggerTheme];
     const triggerDescription = customTriggerDescription ?? (!initialFormationKey ? 'Formation, financement et inscription : trouvons votre parcours.' : initialFormationKey === 'aps' ? 'Les réponses à vos questions sur l’APS.' : initialFormationKey === 'a3p' ? 'Les réponses à vos questions sur l’A3P.' : `Les réponses à vos questions sur le ${formationDetails[initialFormationKey].shortLabel}.`);
     return <>
-      <button ref={triggerRef} type="button" aria-haspopup="dialog" aria-expanded={isExpanded} aria-controls={dialogId} onClick={() => setIsExpanded(true)} className={triggerClassName ?? `flex w-full items-center gap-3 rounded-[1.35rem] border border-academy-line bg-white p-4 text-left text-academy-ink shadow-soft transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${triggerStyles.border}`}>
+      {variant === 'homeDock' ? homeDockPanel : <button ref={triggerRef} type="button" aria-haspopup="dialog" aria-expanded={isExpanded} aria-controls={dialogId} onClick={() => setIsExpanded(true)} className={triggerClassName ?? `flex w-full items-center gap-3 rounded-[1.35rem] border border-academy-line bg-white p-4 text-left text-academy-ink shadow-soft transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${triggerStyles.border}`}>
         {triggerAppearance === 'button' ? <>{triggerLabel}<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg></> : <>
         <span className={`grid h-10 w-10 shrink-0 place-items-center rounded-full text-xl font-black ${triggerStyles.icon}`} aria-hidden="true">✦</span>
         <span className="min-w-0 flex-1"><strong className="block text-sm font-black">{triggerLabel}</strong><small className="mt-1 block text-xs font-semibold text-academy-muted">{triggerDescription}</small></span>
         <svg className={`h-5 w-5 shrink-0 ${triggerStyles.arrow}`} viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
         </>}
-      </button>
+      </button>}
       {isExpanded && isMounted && createPortal(
         <dialog ref={dialogRef} id={dialogId} aria-label="Notre assistant va vous aider" onCancel={() => resetAssistantState()} onClick={(event) => {
           if (event.target !== event.currentTarget) return;
@@ -311,8 +312,6 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
     const expandedPanel = <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-academy-ink/45 p-3 backdrop-blur-sm sm:p-6" role="presentation">{assistantPanel}</div>;
     return isMounted && typeof document !== 'undefined' ? createPortal(expandedPanel, document.body) : expandedPanel;
   }
-
-  if (variant === 'homeDock') return homeDockPanel;
 
   return assistantPanel;
 }
