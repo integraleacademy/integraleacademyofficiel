@@ -176,7 +176,7 @@ export default async function Home() {
             <p className={btsGridStyles.formats}>Sur notre campus à <strong>{btsCommon.onsiteLocation}</strong> ou <strong>en visioconférence</strong>.</p>
             <div className={btsGridStyles.actions}>
               <BtsTrainingComparisonModal items={btsHighlights} className={btsGridStyles.secondary} />
-              <Link href="/planning" className={btsGridStyles.secondary}>Voir les rentrées <span aria-hidden="true">↗</span></Link>
+              <Link href="/planning" className={btsGridStyles.secondary}>Voir les rentrées <span aria-hidden="true">→</span></Link>
             </div>
           </div>
         </div>
