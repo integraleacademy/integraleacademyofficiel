@@ -64,7 +64,18 @@ const formationDetails: Record<FormationKey, AssistantFormationDetails> = {
   bts: { title: 'BTS en alternance', shortLabel: 'BTS', sessionSlugs: ['bts-mos', 'bts-mco'], price: 'Sans frais pour l’apprenti', keyPoints: ['Parcours : MOS, MCO, NDRC, Commerce international, Professions immobilières et Comptabilité-Gestion', 'Durée habituelle : 2 ans en alternance', 'Modalités : présentiel ou distanciel selon le BTS et le dossier', 'Certification : diplôme national de niveau 5 délivré par le Ministère de l’Éducation nationale', 'Admission : niveau bac ou titre équivalent et projet d’alternance', 'Financement : prise en charge par l’entreprise et son OPCO selon le contrat'] },
 };
 
-export function OrientationAssistant({initialFormationKey, initialStep, hideInfoAction = false, variant = 'default'}:{initialFormationKey?:FormationKey; initialStep?:Step; hideInfoAction?:boolean; variant?:'default'|'homeDock'|'modalTrigger'} = {}){
+type OrientationAssistantProps = {
+  initialFormationKey?: FormationKey;
+  initialStep?: Step;
+  hideInfoAction?: boolean;
+  variant?: 'default' | 'homeDock' | 'modalTrigger';
+  triggerLabel?: string;
+  triggerDescription?: string;
+  triggerAppearance?: 'card' | 'button';
+  triggerClassName?: string;
+};
+
+export function OrientationAssistant({initialFormationKey, initialStep, hideInfoAction = false, variant = 'default', triggerLabel = 'Notre assistant va vous aider', triggerDescription: customTriggerDescription, triggerAppearance = 'card', triggerClassName}: OrientationAssistantProps = {}){
   const pathname = usePathname();
   const dialogRef = useRef<HTMLDialogElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -267,19 +278,22 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
   </aside>;
 
   if (variant === 'modalTrigger') {
-    const triggerTheme = initialFormationKey === 'a3p' || initialFormationKey === 'sst' ? 'green' : initialFormationKey?.startsWith('desp') ? 'orange' : initialFormationKey?.startsWith('ssiap') ? 'red' : 'blue';
+    const triggerTheme = !initialFormationKey ? 'gold' : initialFormationKey === 'a3p' || initialFormationKey === 'sst' ? 'green' : initialFormationKey?.startsWith('desp') ? 'orange' : initialFormationKey?.startsWith('ssiap') ? 'red' : 'blue';
     const triggerStyles = {
       blue: { border: 'hover:border-blue-300 focus-visible:outline-blue-600', icon: 'bg-blue-50 text-blue-700', arrow: 'text-blue-700' },
       green: { border: 'hover:border-emerald-300 focus-visible:outline-emerald-600', icon: 'bg-emerald-50 text-emerald-700', arrow: 'text-emerald-700' },
       orange: { border: 'hover:border-orange-300 focus-visible:outline-orange-600', icon: 'bg-orange-50 text-orange-700', arrow: 'text-orange-700' },
       red: { border: 'hover:border-red-300 focus-visible:outline-red-600', icon: 'bg-red-50 text-red-700', arrow: 'text-red-700' },
+      gold: { border: 'hover:border-academy-gold focus-visible:outline-academy-gold', icon: 'bg-academy-gold/15 text-yellow-700', arrow: 'text-yellow-700' },
     }[triggerTheme];
-    const triggerDescription = initialFormationKey === 'aps' || !initialFormationKey ? 'Les réponses à vos questions sur l’APS.' : initialFormationKey === 'a3p' ? 'Les réponses à vos questions sur l’A3P.' : `Les réponses à vos questions sur le ${formationDetails[initialFormationKey].shortLabel}.`;
+    const triggerDescription = customTriggerDescription ?? (!initialFormationKey ? 'Formation, financement et inscription : trouvons votre parcours.' : initialFormationKey === 'aps' ? 'Les réponses à vos questions sur l’APS.' : initialFormationKey === 'a3p' ? 'Les réponses à vos questions sur l’A3P.' : `Les réponses à vos questions sur le ${formationDetails[initialFormationKey].shortLabel}.`);
     return <>
-      <button ref={triggerRef} type="button" aria-haspopup="dialog" aria-expanded={isExpanded} aria-controls={dialogId} onClick={() => setIsExpanded(true)} className={`flex w-full items-center gap-3 rounded-[1.35rem] border border-academy-line bg-white p-4 text-left text-academy-ink shadow-soft transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${triggerStyles.border}`}>
+      <button ref={triggerRef} type="button" aria-haspopup="dialog" aria-expanded={isExpanded} aria-controls={dialogId} onClick={() => setIsExpanded(true)} className={triggerClassName ?? `flex w-full items-center gap-3 rounded-[1.35rem] border border-academy-line bg-white p-4 text-left text-academy-ink shadow-soft transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${triggerStyles.border}`}>
+        {triggerAppearance === 'button' ? <>{triggerLabel}<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg></> : <>
         <span className={`grid h-10 w-10 shrink-0 place-items-center rounded-full text-xl font-black ${triggerStyles.icon}`} aria-hidden="true">✦</span>
-        <span className="min-w-0 flex-1"><strong className="block text-sm font-black">Notre assistant va vous aider</strong><small className="mt-1 block text-xs font-semibold text-academy-muted">{triggerDescription}</small></span>
-        <span className={`text-lg font-black ${triggerStyles.arrow}`} aria-hidden="true">↗</span>
+        <span className="min-w-0 flex-1"><strong className="block text-sm font-black">{triggerLabel}</strong><small className="mt-1 block text-xs font-semibold text-academy-muted">{triggerDescription}</small></span>
+        <svg className={`h-5 w-5 shrink-0 ${triggerStyles.arrow}`} viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
+        </>}
       </button>
       {isExpanded && isMounted && createPortal(
         <dialog ref={dialogRef} id={dialogId} aria-label="Notre assistant va vous aider" onCancel={() => resetAssistantState()} onClick={(event) => {

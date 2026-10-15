@@ -1,0 +1,27 @@
+.carousel { min-width: 0; }
+.stage { display: grid; overflow: hidden; border-radius: 26px; background: rgb(var(--surface-soft)); }
+.scene { grid-area: 1 / 1; min-width: 0; margin: 0; visibility: hidden; opacity: 0; transform: translateX(12px); pointer-events: none; transition: opacity .6s ease, transform .6s ease, visibility .6s; }
+.scene[data-current='true'] { visibility: visible; opacity: 1; transform: none; pointer-events: auto; }
+.scene img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: contain; user-select: none; }
+.navigation { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-top: 16px; border-top: 1px solid rgb(var(--border)); padding-top: 8px; }
+.tabs { display: flex; flex-wrap: wrap; gap: 30px; }
+.tabs button { position: relative; min-width: 44px; min-height: 46px; border: 0; padding: 10px 0; background: transparent; color: rgb(var(--text-muted)); font: inherit; font-size: 13px; font-weight: 750; cursor: pointer; }
+.tabs button::after { content: ''; position: absolute; right: 0; bottom: 2px; left: 0; height: 2px; background: rgb(var(--accent-strong)); transform: scaleX(0); transform-origin: left; transition: transform .25s; }
+.tabs button[aria-selected='true'] { color: rgb(var(--text-main)); }
+.tabs button[aria-selected='true']::after { transform: scaleX(1); }
+.tabs button:hover { color: rgb(var(--accent-strong)); }
+.motion { display: grid; flex: 0 0 44px; width: 44px; height: 44px; place-items: center; border: 1px solid rgb(var(--border)); border-radius: 50%; background: transparent; color: rgb(var(--text-main)); cursor: pointer; }
+.motion svg { width: 20px; height: 20px; }
+.motion:hover { border-color: rgb(var(--accent-strong)); background: rgb(var(--surface)); }
+.carousel button:focus-visible { outline: 2px solid rgb(var(--accent-strong)); outline-offset: 4px; }
+.carousel[data-motion='reduced'] .scene { transition: none; transform: none; }
+@media (max-width: 700px) {
+  .stage { border-radius: 20px; }
+  .navigation { margin-top: 12px; }
+  .tabs { gap: 24px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .carousel *, .carousel *::after { transition: none !important; transform: none; }
+  .tabs button::after { transform: scaleX(0); }
+  .tabs button[aria-selected='true']::after { transform: scaleX(1); }
+}
