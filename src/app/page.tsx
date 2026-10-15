@@ -191,7 +191,7 @@ export default async function Home() {
 
       <CampusSection />
       <GoogleReviewsSection reviews={googleReviews} />
-      <PremiumFAQSection theme="gold" badge="FAQ" title="Questions fréquentes" description="Retrouvez les réponses aux questions les plus courantes sur nos formations, les financements, les inscriptions et l’accompagnement Intégrale Academy." items={globalFaq} contactHref="/contact" />
+      <PremiumFAQSection id="questions-frequentes" theme="gold" badge="FAQ" title="Questions fréquentes" description="Formations, financements, lieux et inscriptions : des réponses concrètes et les liens utiles pour préparer votre projet." items={globalFaq} contactHref="/contact" />
     </div>
   );
 }

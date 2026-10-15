@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 import layout from './FAQ.module.css';
 
 export type FAQTheme = 'gold' | 'blue' | 'green' | 'orange' | 'red' | 'violet' | 'bts';
-export type FAQItem = { q: string; a: ReactNode };
+export type FAQItem = { q: string; a: ReactNode; links?: readonly { href: string; label: string }[] };
 
 export const premiumFaqThemes: Record<FAQTheme, { shell:string; glow:string; badge:string; contact:string; icon:string; item:string; bar:string; number:string; toggle:string; check:string }> = {
   bts: { shell:'bg-gradient-to-br from-bts-50 via-white to-bts-100', glow:'bg-bts-400/20', badge:'border-bts-300/45 text-bts-700', contact:'border-bts-300/45', icon:'bg-bts-100 text-bts-700', item:'border-bts-200/75 hover:border-bts-400 open:border-bts-500', bar:'bg-bts-700', number:'bg-bts-50 text-bts-700', toggle:'bg-bts-700 text-white shadow-soft', check:'bg-bts-100 text-bts-700' },
@@ -35,6 +35,9 @@ export function FAQ({ items, theme = 'gold' }: { items: readonly FAQItem[]; them
       <div className="grid grid-rows-[0fr] transition-[grid-template-rows] duration-500 ease-out group-open:grid-rows-[1fr]">
         <div className="overflow-hidden"><div className="px-4 pb-5 sm:px-5">
           <p className={`${layout.answer} border-t border-academy-line/80 pt-3 text-[0.95rem] font-medium leading-7 text-academy-muted sm:text-base sm:leading-8`}>{item.a}</p>
+          {item.links?.length ? <ul className={layout.answerLinks} aria-label="Pour en savoir plus">
+            {item.links.map(link => <li key={link.href}><Link href={link.href}>{link.label}<span aria-hidden="true">→</span></Link></li>)}
+          </ul> : null}
         </div></div>
       </div>
     </details>)}

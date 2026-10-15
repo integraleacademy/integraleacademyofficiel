@@ -18,6 +18,7 @@
 /* Overlapping slides reserve the tallest content's height, so navigation stays still. */
 .slide { grid-area: 1 / 1; display: grid; grid-template-columns: minmax(0, .88fr) minmax(0, 1.12fr); gap: calc(56px * var(--site-desktop-scale)); align-items: center; min-height: calc(425px * var(--site-desktop-scale)); visibility: hidden; pointer-events: none; }
 .slide[data-active='true'] { visibility: visible; pointer-events: auto; }
+.visualFirst { grid-template-columns: minmax(0, 1.12fr) minmax(0, .88fr); }
 .copy { min-width: 0; padding: 12px 0 22px; }
 .category { margin: 0 0 18px; color: rgb(var(--text-muted)); font-size: 12px; line-height: 1.5; }
 .title { margin: 0; }
@@ -83,6 +84,7 @@
   .heading h2::before { width: 4px; }
   .heading p { width: 100%; max-width: none; margin: 0; padding-left: 18px; font-size: 12px; }
   .slide { grid-template-columns: minmax(0, 1fr); grid-template-rows: 1fr auto; align-items: start; min-height: 0; gap: 22px; }
+  .visualFirst { grid-template-rows: auto auto; }
   .copy { padding: 0; }
   .category { margin-bottom: 12px; font-size: 11px; }
   .title strong { font-size: clamp(42px, 10vw, 60px); }

@@ -19,21 +19,7 @@ export function VtcTrainingCard({ description, duration, price, href }: VtcTrain
   return (
     <div className={styles.carousel}>
       <div className={styles.stage}>
-        <article className={styles.slide} data-active="true" aria-labelledby="vtc-course-title">
-          <div className={styles.copy}>
-            <p className={styles.category}>Transport de personnes</p>
-            <h3 id="vtc-course-title" className={styles.title}>
-              <strong>VTC</strong>
-              <em>Chauffeur professionnel</em>
-            </h3>
-            <p className={styles.description}>{description}</p>
-            <dl className={styles.courseFacts}>
-              <div><dt className="sr-only">Durée</dt><dd>{duration}</dd></div>
-              <div><dt className="sr-only">Modalités</dt><dd>E-learning + présentiel</dd></div>
-              <div className={styles.courseLocation}><dt className="sr-only">Lieu de pratique</dt><dd>Nice, Cannes, Toulon ou Fréjus</dd></div>
-            </dl>
-            <Link href={href} className={styles.discover}>Découvrir la formation VTC <ArrowIcon /></Link>
-          </div>
+        <article className={`${styles.slide} ${styles.visualFirst}`} data-active="true" aria-labelledby="vtc-course-title">
           <div className={styles.visual}>
             <figure className={styles.artwork}>
               <img
@@ -50,6 +36,20 @@ export function VtcTrainingCard({ description, duration, price, href }: VtcTrain
               <strong>{price}</strong>
               <span>CPF selon éligibilité</span>
             </div>
+          </div>
+          <div className={styles.copy}>
+            <p className={styles.category}>Transport de personnes</p>
+            <h3 id="vtc-course-title" className={styles.title}>
+              <strong>VTC</strong>
+              <em>Chauffeur professionnel</em>
+            </h3>
+            <p className={styles.description}>{description}</p>
+            <dl className={styles.courseFacts}>
+              <div><dt className="sr-only">Durée</dt><dd>{duration}</dd></div>
+              <div><dt className="sr-only">Modalités</dt><dd>E-learning + présentiel</dd></div>
+              <div className={styles.courseLocation}><dt className="sr-only">Lieu de pratique</dt><dd>Nice, Cannes, Toulon ou Fréjus</dd></div>
+            </dl>
+            <Link href={href} className={styles.discover}>Découvrir la formation chauffeur VTC <ArrowIcon /></Link>
           </div>
         </article>
       </div>
