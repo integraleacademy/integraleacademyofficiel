@@ -176,6 +176,22 @@
   text-wrap: balance;
 }
 
+.sessionApproval { margin-top: 16px; color: #52657a; font-size: 11px; line-height: 1.6; }
+.sessionPrice { display: grid; gap: 2px; margin: 0 0 12px; text-align: center; }
+.sessionPrice > span { color: #52657a; font-size: 10px; font-weight: 750; letter-spacing: .08em; text-transform: uppercase; }
+.sessionPrice > strong { font-size: 26px; font-weight: 800; line-height: 1.25; letter-spacing: -.035em; }
+.sessionCard[data-aps-session] [data-session-overview],
+.sessionCard[data-aps-session] [data-session-actions] { min-width: 0; }
+:global(html.dark) .sessionApproval,
+:global(html.dark) .sessionPrice > span { color: #b9c9dc; }
+
+@media (min-width: 1024px) {
+  .sessionCard[data-aps-session] { grid-template-columns: minmax(0, .8fr) minmax(0, 1.5fr) minmax(0, .8fr); }
+}
+@media (min-width: 701px) and (max-width: 1023px) {
+  .sessionCard[data-aps-session] { grid-template-columns: minmax(0, .75fr) minmax(0, 1.25fr); }
+}
+
 .metric {
   position: relative;
   overflow: hidden;

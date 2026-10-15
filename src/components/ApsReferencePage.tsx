@@ -229,7 +229,26 @@ function CompactAssistant() {
 function HeroSession({ session }: { session: any }) {
   const full = isSessionFull(session);
   const seatAvailability = getSessionSeatAvailability(session, 12);
-  return <aside className={`${styles.sessionCard} rounded-[2rem] border border-white/80 bg-[#FFFDF8] p-5 text-academy-ink sm:p-6 lg:p-7`}><div data-session-grid className="grid gap-5"><div data-session-overview><div className="flex flex-wrap items-center gap-2"><span className="rounded-full bg-blue-50 px-3 py-1.5 text-[.62rem] font-black uppercase tracking-[.16em] text-blue-800 ring-1 ring-blue-200">Prochaine session</span><span className={`rounded-full border px-3 py-1.5 text-[.68rem] font-black ${seatAvailability.badgeClassName}`}>{seatAvailability.label}</span></div><h2 className={`${styles.sessionDate} mt-4 text-3xl font-black tracking-[-.04em] sm:text-4xl`}>{formatDate(session?.startDate, true)} <span className="text-yellow-600">→</span><br />{formatDate(session?.endDate, true)}</h2><p className="mt-2 text-sm font-extrabold text-academy-muted">Examen final le {formatDate(session?.examDate, true)}</p></div><div data-session-details className="grid grid-cols-2 gap-2.5">{[['Durée', '175 heures'], ['Tarif', priceLabel(session?.priceLabel)], ['Lieu', session?.location || 'Puget-sur-Argens'], ['Format', 'Hybride (Distanciel + Présentiel)']].map(([key, value]) => <div key={key} className={`${styles.metric} rounded-2xl border border-[#E8DECE] bg-[#F5EFE4] p-3.5`}><p className="text-[.6rem] font-black uppercase tracking-[.16em] text-[#837968]">{key}</p><p className="mt-1 text-sm font-black sm:text-base">{value}</p></div>)}</div><div data-session-actions><CTA href={sessionHref()} variant={full ? 'light' : 'blue'} className="w-full">{full ? 'Être alerté de la prochaine session' : 'Réserver ma place →'}</CTA><p className="mt-3 text-center text-xs font-bold text-academy-muted">Un conseiller vérifie votre dossier avant validation.</p><CompactAssistant /></div></div></aside>;
+  return <aside data-aps-session aria-label="Prochaine session APS" className={`${styles.sessionCard} rounded-[2rem] border border-white/80 bg-[#FFFDF8] p-5 text-academy-ink sm:p-6 lg:p-7`}>
+    <div data-session-grid className="grid gap-5">
+      <div data-session-overview>
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="rounded-full bg-blue-50 px-3 py-1.5 text-[.62rem] font-black uppercase tracking-[.16em] text-blue-800 ring-1 ring-blue-200">Prochaine session</span>
+          <span className={`rounded-full border px-3 py-1.5 text-[.68rem] font-black ${seatAvailability.badgeClassName}`}>{seatAvailability.label}</span>
+        </div>
+        <h2 className={`${styles.sessionDate} mt-4 text-3xl font-black tracking-[-.04em] sm:text-4xl`}>{formatDate(session?.startDate, true)} <span className="text-yellow-600">→</span><br />{formatDate(session?.endDate, true)}</h2>
+        <p className="mt-2 text-sm font-extrabold text-academy-muted">Examen final le {formatDate(session?.examDate, true)}</p>
+        <p className={styles.sessionApproval}>Agrément ADEF n° 8320032701</p>
+      </div>
+      <ApsTrainingSummary location={session?.location || 'Puget-sur-Argens'} />
+      <div data-session-actions>
+        <p className={styles.sessionPrice}><span>Tarif de la session</span><strong>{priceLabel(session?.priceLabel)}</strong></p>
+        <CTA href={sessionHref()} variant={full ? 'light' : 'blue'} className="w-full">{full ? 'Être alerté de la prochaine session' : 'Réserver ma place →'}</CTA>
+        <p className="mt-3 text-center text-xs font-bold text-academy-muted">Un conseiller vérifie votre dossier avant validation.</p>
+        <CompactAssistant />
+      </div>
+    </div>
+  </aside>;
 }
 
 export function ApsReferencePage({ sessions }: { sessions: any[] }) {
@@ -254,8 +273,6 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
     ><HeroSession session={next} /></TrainingReferenceHero>
 
     <ApsSectionNavigation registrationHref="#dates-tarifs" />
-
-    <ApsTrainingSummary />
 
     <ApsJourney />
 

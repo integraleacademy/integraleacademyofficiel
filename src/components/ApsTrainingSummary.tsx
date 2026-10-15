@@ -1,35 +1,34 @@
 import styles from './ApsTrainingSummary.module.css';
 
-export function ApsTrainingSummary() {
-  return <section className={styles.summary} aria-label="La formation APS en bref">
-    <div className={styles.container}>
-      <dl className={styles.facts}>
-        <div className={styles.fact}>
-          <dt>Votre certification</dt>
-          <dd>
-            <strong>TFP APS</strong>
-            <span>Titre à finalité professionnelle</span>
-            <small>Niveau 3 · RNCP 36648</small>
-          </dd>
-        </div>
-        <div className={styles.fact}>
-          <dt>Votre formation</dt>
-          <dd>
-            <strong>175 heures</strong>
-            <span>51 h à distance · 124 h en présentiel</span>
-            <small>À Puget-sur-Argens</small>
-          </dd>
-        </div>
-        <div className={styles.fact}>
-          <dt>Le secourisme inclus</dt>
-          <dd>
-            <strong>SST inclus</strong>
-            <span>Sauveteur secouriste du travail</span>
-            <small>Intégré à votre parcours</small>
-          </dd>
-        </div>
-      </dl>
-      <p className={styles.approval}>Agrément ADEF <span>n° 8320032701</span></p>
+export function ApsTrainingSummary({ location }: { location: string }) {
+  return <dl data-session-details className={styles.facts} aria-label="La formation APS en bref">
+    <div className={styles.fact}>
+      <dt>Certification</dt>
+      <dd>
+        <strong>TFP APS</strong>
+        <span>Titre à finalité professionnelle</span>
+        <small>Niveau 3 · RNCP 36648</small>
+      </dd>
     </div>
-  </section>;
+    <div className={styles.fact}>
+      <dt>Durée et format</dt>
+      <dd>
+        <strong>175 heures</strong>
+        <span>51 h à distance</span>
+        <span>124 h en présentiel</span>
+      </dd>
+    </div>
+    <div className={styles.fact}>
+      <dt>Secourisme</dt>
+      <dd>
+        <strong>SST inclus</strong>
+        <span>Sauveteur secouriste du travail</span>
+        <small>Intégré à votre parcours</small>
+      </dd>
+    </div>
+    <div className={styles.fact}>
+      <dt>Lieu de formation</dt>
+      <dd><strong>{location}</strong></dd>
+    </div>
+  </dl>;
 }
