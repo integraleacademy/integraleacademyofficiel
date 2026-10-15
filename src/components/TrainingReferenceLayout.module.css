@@ -4,7 +4,7 @@
 .page[data-course-theme='orange'] { --course-accent:#ac4b23; --course-pale:#ffd0ad; --course-rgb:172,75,35; }
 .page { --ssiap-red:var(--course-accent); }
 .hero.hero { background:radial-gradient(ellipse at 90% 5%,rgba(var(--course-rgb,182,56,61),.35),transparent 55%),#111c28; }
-.hero h1 em,.hero :global([class*='heroBadge']) { color:var(--course-pale,#ffc0b6); }
+.page .hero h1 em,.hero :global([class*='heroBadge']) { color:var(--course-pale,#ffc0b6); }
 .hero h1 { text-wrap:balance; }
 .description > * + * { margin-top:10px; }
 .hero figure img { object-fit:contain; height:auto; aspect-ratio:3 / 2; }
