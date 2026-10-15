@@ -88,6 +88,4 @@
 }
 @media (prefers-reduced-motion:reduce) { .action { transition:none; } }
 
-.animatedPortrait { animation:advisorGreeting 5s ease-in-out infinite; transform-origin:50% 80%; }
-@keyframes advisorGreeting { 0%,100% { transform:translateY(0) rotate(-3deg); } 35% { transform:translateY(-7px) rotate(3deg); } 65% { transform:translateY(-3px) rotate(-1deg); } }
-@media(prefers-reduced-motion:reduce) { .animatedPortrait { animation:none; transform:none; } }
+.portraitMedallion { padding:12px; border:1px solid #bfd3e7; box-shadow:0 0 0 9px #edf3f8; margin:10px 0 14px; animation:none; transform:none; }

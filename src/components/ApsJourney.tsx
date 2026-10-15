@@ -29,7 +29,7 @@ const steps = [
   {
     label: 'Votre prochain chapitre',
     title: 'Préparez le titre APS. Avancez vers votre futur métier.',
-    description: 'La réussite à l’examen permet d’obtenir le TFP APS. Vous pouvez ensuite demander votre carte professionnelle auprès du CNAPS. Notre équipe vous aide à préparer votre parcours, votre dossier et votre financement.',
+    description: 'La réussite à l’examen permet d’obtenir le TFP APS. Vous pouvez ensuite demander votre carte professionnelle auprès du CNAPS (ministère de l’Intérieur). Notre équipe vous aide à préparer votre parcours, votre dossier et votre financement.',
     link: 'Préparer mon inscription', href: '#inscription-financement',
   },
 ] as const;
@@ -100,7 +100,7 @@ function JourneyVisual({ index, onNext }: { index: number; onNext: () => void })
     <div className={styles.destination}><strong>APS<span><Icon kind="rise" /></span></strong><p>Agent de prévention<br />et de sécurité.</p></div>
     <div className={styles.futureSteps}>
       <Link href="#examen"><span>01 · LE TITRE<Icon kind="rise" /></span><strong>Le TFP APS.</strong><small>Réussir votre examen</small></Link>
-      <Link href="#debouches"><span>02 · LA CARTE<Icon kind="rise" /></span><strong>Le CNAPS.</strong><small>Demander votre carte professionnelle</small></Link>
+      <Link href="#debouches"><span>02 · LA CARTE<Icon kind="rise" /></span><strong>La carte professionnelle.</strong><small>CNAPS (ministère de l’Intérieur)</small></Link>
     </div>
     <p className={styles.validationNote}>Le titre obtenu, la demande de carte est une démarche distincte.</p>
     <CardAction href="#inscription-financement">Préparer mon inscription</CardAction>

@@ -12,7 +12,7 @@ import { ApsSectionNavigation } from '@/components/ApsSectionNavigation';
 import { ApsTrainingSummary } from '@/components/ApsTrainingSummary';
 import { ApsFacilitiesSections } from '@/components/ApsFacilitiesSections';
 import { ApsProgramExplorer } from '@/components/ApsProgramExplorer';
-import { ApsAdmission, ApsHybridExperience, ApsExamExperience, ApsFundingLogo } from '@/components/ApsExperienceSections';
+import { ApsAdmission, ApsHybridExperience, ApsExamExperience, ApsFundingLogo, ApsWorkplaces, ApsOfficialReferences } from '@/components/ApsExperienceSections';
 import { ApsJourney } from '@/components/ApsJourney';
 import { IntegraleWelcomePack } from '@/components/IntegraleWelcomePack';
 import { OrientationAssistant } from '@/components/OrientationAssistant';
@@ -59,15 +59,15 @@ const apsVisuals = {
 type ApsPracticalVisualKind = keyof typeof apsVisuals;
 const apsMissionArtwork = ['aps-mission-surveillance', 'aps-mission-acces', 'aps-mission-ronde', 'aps-mission-prevention', 'aps-mission-incident', 'aps-mission-secours'].map(key => originalArtwork[key as keyof typeof originalArtwork]);
 
-const audiences = ['Reconversion professionnelle', 'Demandeurs d’emploi', 'Salariés en évolution', 'Débutants motivés', 'Futurs titulaires CNAPS', 'Projet APS + SSIAP 1'];
+const audiences = ['Reconversion professionnelle', 'Demandeurs d’emploi', 'Salariés en évolution', 'Débutants motivés', 'Futurs agents de sécurité', 'Projet APS + SSIAP 1'];
 
 const prerequisites = [
-  ['Autorisation préalable CNAPS', 'Obligatoire avant l’entrée en formation, sauf carte professionnelle valide.'],
-  ['Français et principes de la République', 'Justifier d’une connaissance suffisante de la langue française et attester de la connaissance des principes de la République.'],
-  ['Conditions de moralité', 'L’autorisation et la future carte professionnelle sont soumises aux vérifications et à l’enquête administrative du CNAPS.'],
-  ['Ressortissants étrangers', 'La fiche RNCP prévoit un titre de séjour détenu depuis au moins cinq ans pour demander l’autorisation préalable, sous réserve des règles applicables à chaque situation.'],
-  ['Pièce d’identité valide', 'Carte nationale d’identité, passeport ou titre admis en cours de validité.'],
-  ['Justificatif de domicile récent', 'Document récent nécessaire à la préparation du dossier administratif.'],
+  ['Autorisation préalable d’entrée en formation', 'Le CNAPS (ministère de l’Intérieur) délivre l’autorisation nécessaire pour commencer une formation en sécurité privée. Vous devez l’obtenir avant votre entrée en formation, sauf si vous possédez déjà une carte professionnelle en cours de validité permettant cet accès. Notre équipe vous accompagne pour constituer et déposer la demande.'],
+  ['Compréhension du français', 'Vous devez pouvoir comprendre les cours et les consignes, lire des documents et rédiger un compte rendu simple. Les ressortissants étrangers, y compris européens, doivent justifier d’un niveau de français B1 minimum avec un diplôme ou une attestation reconnue. La formation aborde aussi les principes de la République, dont la liberté, l’égalité, la fraternité et la laïcité.'],
+  ['Antécédents judiciaires et enquête administrative', 'Le CNAPS (ministère de l’Intérieur) vérifie que vos antécédents et votre comportement sont compatibles avec le métier. Cette enquête administrative porte notamment sur le bulletin n° 2 du casier judiciaire et sur les fichiers de police et de gendarmerie, dont le traitement des antécédents judiciaires (TAJ). Des condamnations ou des faits incompatibles avec l’exercice de la sécurité privée peuvent entraîner un refus d’autorisation.'],
+  ['Ressortissants étrangers', 'Pour les ressortissants hors Union européenne et Espace économique européen, la réglementation prévoit un titre de séjour en cours de validité autorisant à travailler, détenu depuis au moins cinq ans pour demander l’autorisation préalable. Les règles diffèrent pour les ressortissants européens. Selon votre situation, un extrait de casier judiciaire du pays d’origine ou de provenance de moins de trois mois, avec une traduction en français, est également demandé. Nous vérifions avec vous les pièces nécessaires.'],
+  ['Pièce d’identité en cours de validité', 'Préparez une copie lisible de votre carte nationale d’identité, de votre passeport ou de votre titre de séjour, selon votre situation. Le document doit être en cours de validité. Pour une carte d’identité ou un titre de séjour, fournissez le recto et le verso ; pour un passeport, la page comportant votre photo et votre identité.'],
+  ['Justificatif de domicile de moins de trois mois', 'Fournissez un justificatif de domicile de moins de trois mois : par exemple une facture d’électricité, de gaz, d’eau ou une quittance de loyer délivrée par un organisme social ou une agence immobilière. Si vous êtes hébergé, ajoutez une attestation d’hébergement signée, la pièce d’identité de l’hébergeant et son justificatif de domicile de moins de trois mois.'],
 ];
 
 const program = [
@@ -149,13 +149,13 @@ const nationalStats = [
 ];
 
 const faq = [
-  { q: 'Faut-il une autorisation CNAPS avant d’entrer en formation ?', a: 'Oui, sauf si vous possédez déjà une carte professionnelle en cours de validité pour l’activité concernée. Intégrale Academy vous accompagne dans la préparation et le dépôt de la demande.' },
+  { q: 'Faut-il une autorisation CNAPS (ministère de l’Intérieur) avant d’entrer en formation ?', a: 'Oui, sauf si vous possédez déjà une carte professionnelle en cours de validité pour l’activité concernée. Intégrale Academy vous accompagne dans la préparation et le dépôt de la demande.' },
   { q: 'La formation APS est-elle entièrement à distance ?', a: 'Non. Sur les 175 heures, 51 heures sont réalisées à distance et 124 heures se déroulent en présentiel à Puget-sur-Argens. L’examen est obligatoirement organisé en présentiel.' },
   { q: 'Quelle est la part de pratique ?', a: 'Le programme prévoit 63,5 heures de pratique et 60,5 heures de théorie en présentiel. Les 51 heures restantes sont réalisées à distance.' },
   { q: 'Le e-learning est-il obligatoire ?', a: 'Oui lorsqu’il est prévu dans le calendrier de la session. Il représente 51 heures, doit être suivi et validé, et la progression est contrôlée par l’équipe pédagogique.' },
   { q: 'Comment se déroule l’examen APS ?', a: 'L’examen associe des QCU contextualisés organisés électroniquement et deux mises en situation professionnelles individuelles, notamment autour de la ronde et du poste de contrôle.' },
-  { q: 'La formation permet-elle d’obtenir directement la carte professionnelle ?', a: 'La réussite permet d’obtenir le TFP APS, qui justifie l’aptitude professionnelle. Vous devez ensuite déposer une demande de carte professionnelle auprès du CNAPS.' },
-  { q: 'Quelles conditions concernent les ressortissants étrangers ?', a: 'La fiche RNCP indique qu’un ressortissant étranger doit être titulaire d’un titre de séjour depuis au moins cinq ans pour demander l’autorisation préalable. L’équipe vérifie les règles et pièces applicables à chaque situation.' },
+  { q: 'La formation permet-elle d’obtenir directement la carte professionnelle ?', a: 'La réussite permet d’obtenir le TFP APS, qui justifie l’aptitude professionnelle. Vous devez ensuite déposer une demande de carte professionnelle auprès du CNAPS (ministère de l’Intérieur).' },
+  { q: 'Quelles conditions concernent les ressortissants étrangers ?', a: 'Pour les ressortissants hors Union européenne et Espace économique européen, la réglementation prévoit un titre de séjour en cours de validité autorisant à travailler, détenu depuis au moins cinq ans pour demander l’autorisation préalable. Un justificatif de français B1 minimum est demandé aux ressortissants étrangers, y compris européens. Notre équipe vérifie les pièces adaptées à votre situation.' },
   { q: 'Quel est le prix de la formation ?', a: 'Le tarif 2027 est de 1 700 € TTC. Retrouvez le prix dans la carte Tarif et les dates et places disponibles dans les cartes de session.' },
   { q: 'Puis-je financer la formation avec mon CPF ?', a: 'Oui, selon votre éligibilité et l’offre active. France Travail, un employeur, un OPCO ou un paiement personnel peuvent également être étudiés.' },
   { q: 'Le SST est-il inclus ?', a: 'Oui. Le parcours comprend la préparation au certificat Sauveteur Secouriste du Travail.' },
@@ -283,7 +283,7 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
     </Section>
 
     <Section id="admission" eyebrow="02 — Admission" title={<>Votre dossier est-il prêt pour l’APS&nbsp;?</>} intro={<>Les conditions essentielles, une équipe pour vous guider et un dossier préparé ensemble.</>} tone="stone">
-      <ApsAdmission prerequisites={prerequisites} href={apsContact('autorisation préalable CNAPS')} />
+      <ApsAdmission prerequisites={prerequisites} href={apsContact('autorisation préalable CNAPS (ministère de l’Intérieur)')} />
     </Section>
 
     <Section id="pratique" eyebrow="03 — Immersion terrain" title={<>Vous ne regardez pas seulement&nbsp;: vous pratiquez.</>} intro={<>La formation vous place dans des situations proches du réel. Chaque geste est expliqué, répété, observé puis débriefé avec le formateur.</>} tone="dark">
@@ -400,7 +400,7 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
       </div>
     </section>
 
-    <Section id="debouches" eyebrow="09 — Débouchés & emploi" title={<>Un vrai diplôme dans un secteur qui recrute.</>} intro={<>Les besoins sont réguliers dans de nombreux environnements : commerce, industrie, logistique, santé, bureaux, événementiel et sites sensibles. Le TFP APS ouvre l’accès à des missions variées, sous réserve d’obtenir la carte professionnelle CNAPS.</>} tone="paper"><div className="mb-8 grid gap-4 md:grid-cols-3"><article className={`${styles.outcomeCard} rounded-[1.7rem] border border-blue-200 bg-blue-50 p-6`}><p className="text-sm font-black uppercase tracking-[.16em] text-blue-700">Un besoin permanent</p><h3 className="mt-3 text-2xl font-black">Des recrutements toute l’année</h3><p className="mt-3 leading-7 text-blue-950/70">Les entreprises de sécurité doivent couvrir des prestations de jour, de nuit, en semaine, le week-end et lors de grands événements.</p></article><article className={`${styles.outcomeCard} rounded-[1.7rem] border border-sky-200 bg-sky-50 p-6`}><p className="text-sm font-black uppercase tracking-[.16em] text-sky-700">Des missions variées</p><h3 className="mt-3 text-2xl font-black">De nombreux sites à sécuriser</h3><p className="mt-3 leading-7 text-sky-950/70">Vous pouvez travailler sur un site fixe, effectuer des rondes, contrôler des accès, sécuriser un événement ou intervenir sur plusieurs sites.</p></article><article className={`${styles.outcomeCard} rounded-[1.7rem] border border-yellow-300 bg-yellow-50 p-6`}><p className="text-sm font-black uppercase tracking-[.16em] text-yellow-800">Des évolutions possibles</p><h3 className="mt-3 text-2xl font-black">Construire un parcours</h3><p className="mt-3 leading-7 text-yellow-950/70">Avec l’expérience et des qualifications complémentaires, vous pouvez viser des fonctions de chef de poste, de sécurité incendie, de télésurveillance ou d’encadrement.</p></article></div><div className="grid gap-4 md:grid-cols-4">{[['Réussir le TFP APS','Valider les épreuves'],['Recevoir le titre niveau 3','Obtenir la certification'],['Demander la carte CNAPS','Constituer le dossier'],['Commencer à exercer','Après délivrance de la carte']].map(([title,text],index) => <article key={title} className={`${styles.examCard} rounded-[1.7rem] border border-academy-line bg-white p-5 text-center`}><span className="mx-auto grid h-11 w-11 place-items-center rounded-full bg-academy-gold font-black">0{index+1}</span><h3 className="mt-6 text-lg font-black">{title}</h3><p className="mt-2 text-sm text-academy-muted">{text}</p></article>)}</div><div className="mt-5 rounded-[1.4rem] border border-yellow-300 bg-yellow-50 p-4 font-bold text-yellow-900">Important : le TFP APS ne déclenche pas automatiquement la carte professionnelle.</div><div className="mt-8 grid gap-5 lg:grid-cols-2"><article className="rounded-[2rem] border border-academy-line bg-white p-6"><Eyebrow>Débouchés</Eyebrow><h3 className="mt-3 text-3xl font-black">Les métiers accessibles</h3><div className="mt-5 grid gap-3 sm:grid-cols-2">{jobs.map(([icon,title]) => <div key={title} className={styles.jobCard}><span className={styles.jobIcon}>{icon}</span><span className="text-sm font-black leading-5">{title}</span></div>)}</div></article><article className={styles.dualSkill}>
+    <Section id="debouches" eyebrow="09 — Débouchés & emploi" title={<>Un vrai diplôme dans un secteur qui recrute.</>} intro={<>Les besoins sont réguliers dans de nombreux environnements : commerce, industrie, logistique, santé, bureaux, événementiel et sites sensibles. Le TFP APS ouvre l’accès à des missions variées, sous réserve d’obtenir la carte professionnelle CNAPS (ministère de l’Intérieur).</>} tone="paper"><div className="mb-8 grid gap-4 md:grid-cols-3"><article className={`${styles.outcomeCard} rounded-[1.7rem] border border-blue-200 bg-blue-50 p-6`}><p className="text-sm font-black uppercase tracking-[.16em] text-blue-700">Un besoin permanent</p><h3 className="mt-3 text-2xl font-black">Des recrutements toute l’année</h3><p className="mt-3 leading-7 text-blue-950/70">Les entreprises de sécurité doivent couvrir des prestations de jour, de nuit, en semaine, le week-end et lors de grands événements.</p></article><article className={`${styles.outcomeCard} rounded-[1.7rem] border border-sky-200 bg-sky-50 p-6`}><p className="text-sm font-black uppercase tracking-[.16em] text-sky-700">Des missions variées</p><h3 className="mt-3 text-2xl font-black">De nombreux sites à sécuriser</h3><p className="mt-3 leading-7 text-sky-950/70">Vous pouvez travailler sur un site fixe, effectuer des rondes, contrôler des accès, sécuriser un événement ou intervenir sur plusieurs sites.</p></article><article className={`${styles.outcomeCard} rounded-[1.7rem] border border-yellow-300 bg-yellow-50 p-6`}><p className="text-sm font-black uppercase tracking-[.16em] text-yellow-800">Des évolutions possibles</p><h3 className="mt-3 text-2xl font-black">Construire un parcours</h3><p className="mt-3 leading-7 text-yellow-950/70">Avec l’expérience et des qualifications complémentaires, vous pouvez viser des fonctions de chef de poste, de sécurité incendie, de télésurveillance ou d’encadrement.</p></article></div><div className="grid gap-4 md:grid-cols-4">{[['Réussir le TFP APS','Valider les épreuves'],['Recevoir le titre niveau 3','Obtenir la certification'],['Demander la carte CNAPS (ministère de l’Intérieur)','Constituer le dossier'],['Commencer à exercer','Après délivrance de la carte']].map(([title,text],index) => <article key={title} className={`${styles.examCard} rounded-[1.7rem] border border-academy-line bg-white p-5 text-center`}><span className="mx-auto grid h-11 w-11 place-items-center rounded-full bg-academy-gold font-black">0{index+1}</span><h3 className="mt-6 text-lg font-black">{title}</h3><p className="mt-2 text-sm text-academy-muted">{text}</p></article>)}</div><div className="mt-5 rounded-[1.4rem] border border-yellow-300 bg-yellow-50 p-4 font-bold text-yellow-900">Important : le TFP APS ne déclenche pas automatiquement la carte professionnelle.</div><div className="mt-8 grid gap-5 lg:grid-cols-2"><article className="rounded-[2rem] border border-academy-line bg-white p-6"><Eyebrow>Débouchés</Eyebrow><h3 className="mt-3 text-3xl font-black">Les métiers accessibles</h3><div className="mt-5 grid gap-3 sm:grid-cols-2">{jobs.map(([icon,title]) => <div key={title} className={styles.jobCard}><span className={styles.jobIcon}>{icon}</span><span className="text-sm font-black leading-5">{title}</span></div>)}</div></article><article className={styles.dualSkill}>
         <p className={styles.dualEyebrow}>Double compétence</p>
         <h3>Deux expertises.<br /><span>Plus de possibilités.</span></h3>
         <p className={styles.dualIntro}>Associez le TFP APS et le SSIAP 1 pour élargir vos missions dans la surveillance humaine et la sécurité incendie.</p>
@@ -410,51 +410,19 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
           <div className={styles.dualFire}><span className={styles.dualLabel}>SSIAP 1</span><ApsPracticalVisual kind="extinguisher" illustration={ssiapArtwork.evacuation} /><h4>Alerter & protéger</h4><p>Prévention incendie, évacuation et assistance aux personnes.</p></div>
         </div>
         <div className={styles.dualFooter}><span>Surveillance humaine <b>+</b> Sécurité incendie</span><CTA href="/formations-securite/ssiap-1" variant="dark" className="w-full">Découvrir le SSIAP 1 →</CTA><p>Deux qualifications complémentaires, chacune avec ses prérequis et son examen.</p></div>
-      </article></div><article className="mt-5 rounded-[2rem] border border-academy-line bg-white p-6"><h3 className="text-2xl font-black">Où travailler ?</h3><p className="mt-2 leading-7 text-academy-muted">Les agents APS interviennent aussi bien dans des lieux ouverts au public que sur des sites professionnels à accès contrôlé.</p><div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{workplaces.map(item => <div key={item} className={`${styles.workplace} rounded-2xl bg-academy-bg p-4 text-center font-black`}>{item}</div>)}</div></article><div className="mt-5 rounded-[1.5rem] border border-academy-line bg-[#FFFDF8] p-5"><p className="font-black">Bon à savoir : horaires et conditions varient selon les postes.</p><p className="mt-2 text-sm leading-6 text-academy-muted">Le secteur propose des emplois de jour ou de nuit, à temps plein ou partiel, sur site fixe ou mobile. Disponibilité, ponctualité, présentation, maîtrise de soi et qualité du compte rendu sont particulièrement recherchées par les employeurs.</p></div></Section>
+      </article></div><ApsWorkplaces places={workplaces} /></Section>
 
-    <Section id="reperes-rncp" eyebrow="10 — Repères officiels" title={<>Certification, conditions d’exercice et données d’insertion.</>} intro={<>Ces informations complètent la présentation commerciale avec les repères figurant dans la fiche RNCP36648 fournie.</>}>
-      <div className="grid gap-5 lg:grid-cols-[1.15fr_.85fr]">
-        <article className="rounded-[2rem] border border-academy-line bg-white p-6 shadow-soft lg:p-8">
-          <Eyebrow>Réalités du métier</Eyebrow>
-          <h3 className="mt-3 text-3xl font-black">Des conditions qui varient selon le poste.</h3>
-          <div className="mt-6 grid gap-3 sm:grid-cols-2">{workConditions.map(item => <div key={item} className="flex gap-3 rounded-2xl bg-academy-bg p-4 text-sm font-bold leading-6 text-academy-muted"><span className="mt-0.5 text-blue-700">✓</span><span>{item}</span></div>)}</div>
-        </article>
-        <article className="rounded-[2rem] bg-[#0D1725] p-6 text-white shadow-card lg:p-8">
-          <Eyebrow light>Identification</Eyebrow>
-          <h3 className="mt-3 text-3xl font-black">TFP APS · niveau 3</h3>
-          <dl className="mt-6 grid gap-3">{[['Répertoire','RNCP36648'],['Certificateurs','CPNE / ADEF'],['Code ROME','K2503'],['Code NSF','344'],['Formacode','42854'],['Échéance RNCP','1er juillet 2027']].map(([term,value]) => <div key={term} className="flex items-center justify-between gap-4 rounded-2xl border border-white/10 bg-white/7 px-4 py-3"><dt className="text-sm font-semibold text-white/55">{term}</dt><dd className="text-right font-black text-white">{value}</dd></div>)}</dl>
-          <a href="https://www.francecompetences.fr/recherche/rncp/36648/" target="_blank" rel="noopener noreferrer" className="mt-5 inline-flex font-black text-academy-gold transition hover:text-white">Consulter la fiche France compétences →</a>
-        </article>
-      </div>
-      <article className="mt-5 overflow-hidden rounded-[2rem] border border-academy-line bg-[#FFFDF8] p-6 shadow-soft lg:p-8">
-        <div className="flex flex-wrap items-end justify-between gap-4"><div><Eyebrow>Insertion nationale</Eyebrow><h3 className="mt-3 text-3xl font-black">Données historiques de la certification.</h3></div><p className="max-w-xl text-sm font-semibold leading-6 text-academy-muted">Statistiques nationales France compétences figurant dans la fiche RNCP fournie. Elles concernent la certification, pas les résultats propres à Intégrale Academy.</p></div>
-        <div className="mt-6 overflow-x-auto">
-          <table className="min-w-[720px] w-full border-separate border-spacing-y-2 text-left text-sm">
-            <thead><tr className="text-xs uppercase tracking-[.12em] text-academy-muted"><th className="px-4 py-2">Année</th><th className="px-4 py-2">Certifiés</th><th className="px-4 py-2">Insertion globale à 6 mois</th><th className="px-4 py-2">Métier visé à 6 mois</th><th className="px-4 py-2">Métier visé à 2 ans</th></tr></thead>
-            <tbody>{nationalStats.map(([year,certified,globalSix,targetSix,targetTwo]) => <tr key={year} className="bg-white font-bold"><td className="rounded-l-2xl px-4 py-4 font-black">{year}</td><td className="px-4 py-4">{certified}</td><td className="px-4 py-4">{globalSix}</td><td className="px-4 py-4">{targetSix}</td><td className="rounded-r-2xl px-4 py-4">{targetTwo}</td></tr>)}</tbody>
-          </table>
-        </div>
-        <details className="group mt-6 rounded-[1.4rem] border border-academy-line bg-white p-5">
-          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-black"><span>Autres informations de la fiche RNCP</span><span className="grid h-8 w-8 place-items-center rounded-full bg-academy-bg transition group-open:rotate-45">+</span></summary>
-          <div className="mt-5 grid gap-3 border-t border-academy-line pt-5 md:grid-cols-3">
-            <div className="rounded-2xl bg-academy-bg p-4"><p className="text-xs font-black uppercase tracking-[.12em] text-academy-muted">Voies d’accès recensées</p><p className="mt-2 text-sm font-bold leading-6">Apprentissage, formation continue, contrat de professionnalisation, candidature individuelle et VAE.</p></div>
-            <div className="rounded-2xl bg-academy-bg p-4"><p className="text-xs font-black uppercase tracking-[.12em] text-academy-muted">Blocs et correspondances</p><p className="mt-2 text-sm font-bold leading-6">Capitalisation des blocs : sans objet. Aucune correspondance déclarée avec une autre certification.</p></div>
-            <div className="rounded-2xl bg-academy-bg p-4"><p className="text-xs font-black uppercase tracking-[.12em] text-academy-muted">Historique</p><p className="mt-2 text-sm font-bold leading-6">La certification RNCP36648 remplace la certification antérieure RNCP34054.</p></div>
-          </div>
-          <p className="mt-4 text-xs font-semibold leading-5 text-academy-muted">Ces voies sont celles de la certification nationale ; leur disponibilité chez Intégrale Academy doit être confirmée avec l’équipe admissions.</p>
-        </details>
-      </article>
-    </Section>
+    <ApsOfficialReferences conditions={workConditions} stats={nationalStats} />
 
     <TrainingCourseTestimonials category="APS" layout="home" />
 
-    <div id="faq-aps"><PremiumFAQSection theme="blue" badge="FAQ APS" title="Les réponses avant de vous lancer" description="CNAPS, e-learning, examen, carte professionnelle et financement : retrouvez les informations indispensables avant votre inscription." items={faq} contactHref={apsContact('question APS')} /></div>
+    <div id="faq-aps"><PremiumFAQSection theme="blue" badge="FAQ APS" title="Les réponses avant de vous lancer" description="CNAPS (ministère de l’Intérieur), e-learning, examen, carte professionnelle et financement : retrouvez les informations indispensables avant votre inscription." items={faq} contactHref={apsContact('question APS')} /></div>
 
     <TrainingReferenceContact
-      animatedPortrait
-      description="Cassandre vérifie votre éligibilité, votre dossier CNAPS et votre financement. Vous repartez avec des réponses claires et les prochaines étapes adaptées à votre situation."
+      portraitMedallion
+      description="Cassandre vérifie votre éligibilité, votre dossier CNAPS (ministère de l’Intérieur) et votre financement. Vous repartez avec des réponses claires et les prochaines étapes adaptées à votre situation."
       href={apsContact('rendez-vous avec Cassandre')}
-      assurances={['Sans engagement', 'Étude personnalisée', 'Réponse sur le CNAPS et le financement']}
+      assurances={['Sans engagement', 'Étude personnalisée', 'Réponse sur le CNAPS (ministère de l’Intérieur) et le financement']}
     />
     <TrainingReferenceMobileBar label="Réserver ma place" />
   </TrainingReferencePage>;
