@@ -3,14 +3,14 @@
 .page[data-course-theme='green'] { --course-accent:#17694f; --course-pale:#afe4cb; --course-rgb:23,105,79; }
 .page[data-course-theme='orange'] { --course-accent:#ac4b23; --course-pale:#ffd0ad; --course-rgb:172,75,35; }
 .page { --ssiap-red:var(--course-accent); }
-.hero.hero { background:radial-gradient(ellipse at 90% 5%,rgba(var(--course-rgb),.35),transparent 55%),#111c28; }
-.hero h1 em,.hero :global([class*='heroBadge']) { color:var(--course-pale); }
+.hero.hero { background:radial-gradient(ellipse at 90% 5%,rgba(var(--course-rgb,182,56,61),.35),transparent 55%),#111c28; }
+.hero h1 em,.hero :global([class*='heroBadge']) { color:var(--course-pale,#ffc0b6); }
 .hero h1 { text-wrap:balance; }
 .description > * + * { margin-top:10px; }
 .hero figure img { object-fit:contain; height:auto; aspect-ratio:3 / 2; }
 .action { display:inline-flex; min-height:48px; align-items:center; justify-content:center; border-radius:999px; padding:12px 22px; text-align:center; font-size:13px; line-height:1.4; font-weight:750; transition:transform .2s,filter .2s; }
 .action:hover { transform:translateY(-2px); filter:brightness(1.08); }
-.primary { color:#fff; background:var(--course-accent); }
+.primary { color:#fff; background:var(--course-accent,#b6383d); }
 .outline { border:1px solid #ffffff40; color:#fff; background:#ffffff08; }
 .booking aside { min-width:0; }
 .booking [data-session-grid] { display:contents; }

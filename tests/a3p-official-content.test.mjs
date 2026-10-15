@@ -2,12 +2,14 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
+import { tsImport } from 'tsx/esm/api';
 
 const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
 const data = read('src/data/a3p.ts');
 const component = read('src/components/A3pReferencePage.tsx');
 const metadataPage = read('src/app/formations-securite/[slug]/page.tsx');
-const priceUtility = read('src/lib/training-price.ts');
+const { formatTrainingPrice } = await tsImport('../src/lib/training-price.ts', import.meta.url);
+const { getSessionSeatAvailability } = await tsImport('../src/lib/session-seat-availability.ts', import.meta.url);
 const planning = read('src/app/planning/PlanningClient.tsx');
 const programPdf = readFileSync(new URL('../public/documents/programme-tfp-a3p-2023.pdf', import.meta.url));
 
@@ -63,12 +65,15 @@ test('les modalités d’examen et leurs trois seuils sont affichés', () => {
 });
 
 test('le prix privilégie les centimes cohérents et une place inconnue ne rend pas la session complète', () => {
-  assert.match(priceUtility, /source\?\.priceCents/);
-  assert.match(priceUtility, /cents >= MINIMUM_COHERENT_TRAINING_PRICE_EUROS \* 100/);
-  assert.ok(priceUtility.indexOf('source?.priceCents') < priceUtility.indexOf('source?.priceLabel'));
-  assert.match(component, /formatTrainingPrice\(next, a3pConfig\.priceLabel\)/);
+  const normalizePrice = value => value.replace(/\s/g, ' ');
+  assert.equal(normalizePrice(formatTrainingPrice({ priceCents: 425000, priceLabel: '42 €' }, '4 250 € TTC')), '4 250 €');
+  assert.equal(normalizePrice(formatTrainingPrice({ priceCents: 42, priceLabel: '42 €' }, '4 250 € TTC')), '4 250 € TTC');
+  assert.equal(normalizePrice(formatTrainingPrice(null, '4 250 € TTC')), '4 250 € TTC');
+  for (const seatsLeft of [null, undefined, '']) {
+    assert.notEqual(getSessionSeatAvailability({ seatsLeft, status: 'OPEN' }, 12).tone, 'full');
+  }
+  assert.equal(getSessionSeatAvailability({ seatsLeft: 0, status: 'OPEN' }, 12).tone, 'full');
+  assert.equal(getSessionSeatAvailability({ seatsLeft: 4, status: 'FULL' }, 12).tone, 'full');
   assert.match(planning, /formatTrainingPrice\(session, fallbackPrices/);
   assert.match(planning, /slug === 'a3p' \|\| slug === 'a3p-apr'\) return '328 h'/);
-  assert.match(component, /hasSeatCount && Number\(next\.seatsLeft\) === 0/);
-  assert.doesNotMatch(component, /Number\(next\?\.seatsLeft\) === 0/);
 });

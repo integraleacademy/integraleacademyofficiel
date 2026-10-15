@@ -8,6 +8,7 @@ import { getSessionSeatAvailability } from '@/lib/session-seat-availability';
 import { formatTrainingPrice } from '@/lib/training-price';
 import styles from './TrainingHero.module.css';
 import { ManualArtwork } from '@/components/ManualArtwork';
+import { TrainingSessionSummary, type TrainingSessionFact } from '@/components/TrainingSessionSummary';
 
 type HeroTheme = 'orange' | 'red' | 'green';
 type HeroFacts = ReadonlyArray<ReadonlyArray<string>>;
@@ -77,18 +78,18 @@ function formatDate(value?: string | Date | null) {
 }
 
 export function TrainingHeroSessionCard({
-  session, theme, duration, defaultPrice, defaultLocation = 'Puget-sur-Argens',
-  modality = 'Présentiel', capacity = 12, assistantKey, label = 'Prochaine session',
+  session, theme, facts, defaultPrice, defaultLocation = 'Puget-sur-Argens',
+  capacity = 12, assistantKey, label = 'Prochaine session',
   emptyTitle = 'Prochaines dates à confirmer',
   emptyDescription = 'Contactez-nous pour recevoir les prochaines dates et préparer votre inscription.',
   emptyActionLabel = 'Recevoir les prochaines dates →', examLabel = 'Examen le', registrationHref, priceNote,
+  approval, locationNote, overviewControls, emptyBadgeLabel = 'Dates à confirmer',
 }: {
   session?: TrainingDatesPricingSession | null;
   theme: HeroTheme;
-  duration: string;
+  facts: readonly TrainingSessionFact[];
   defaultPrice: string;
   defaultLocation?: string;
-  modality?: string;
   capacity?: number;
   assistantKey: FormationKey;
   label?: string;
@@ -98,27 +99,27 @@ export function TrainingHeroSessionCard({
   examLabel?: string;
   registrationHref?: string;
   priceNote?: string;
+  approval?: string;
+  locationNote?: string;
+  overviewControls?: ReactNode;
+  emptyBadgeLabel?: string;
 }) {
   const availability = session ? getSessionSeatAvailability(session, capacity) : null;
   const full = availability?.tone === 'full';
-  return <aside className={`${styles.sessionCard} rounded-[2rem] border border-white/80 bg-[#FFFDF8] p-5 text-academy-ink sm:p-6 lg:p-7`} data-theme={theme} aria-label="Dates et inscription">
+  return <aside className={`${styles.sessionCard} rounded-[2rem] border border-white/80 bg-[#FFFDF8] p-5 text-academy-ink sm:p-6 lg:p-7`} data-theme={theme} data-layout="summary" aria-label="Dates et inscription">
     <div data-session-overview className={styles.sessionOverview}>
     <div className="flex flex-wrap items-center gap-2">
       <span className={styles.sessionLabel}>{label}</span>
-      <span className={`rounded-full border px-3 py-1.5 text-[.68rem] font-black ${availability?.badgeClassName || 'border-stone-200 bg-stone-100 text-stone-700'}`}>{availability?.label || 'Dates à confirmer'}</span>
+      <span className={`rounded-full border px-3 py-1.5 text-[.68rem] font-black ${availability?.badgeClassName || 'border-stone-200 bg-stone-100 text-stone-700'}`}>{availability?.label || emptyBadgeLabel}</span>
     </div>
+    {overviewControls}
     <h2 className="mt-5 text-3xl font-black tracking-[-.04em] sm:text-4xl">{session ? <>{formatDate(session.startDate)} <span className={styles.sessionAccent}>→</span><br />{formatDate(session.endDate)}</> : emptyTitle}</h2>
     <p className="mt-2 text-sm font-extrabold text-academy-muted">{session?.examDate ? `${examLabel} ${formatDate(session.examDate)}` : emptyDescription}</p>
+    {approval && <p className={styles.sessionApproval}>{approval}</p>}
     </div>
-    <div data-session-details className={`${styles.sessionDetails} mt-5 grid grid-cols-2 gap-2.5`}>
-      {[
-        ['Durée', duration],
-        ['Tarif', formatTrainingPrice(session, defaultPrice)],
-        ['Lieu', session?.location || defaultLocation],
-        ['Modalité', modality],
-      ].map(([key, value]) => <div key={key} className="min-w-0 rounded-2xl border border-[#E8DECE] bg-[#F5EFE4] p-3.5"><p className="text-[.6rem] font-black uppercase tracking-[.16em] text-[#837968]">{key}</p><p className="mt-1 text-sm font-black sm:text-base">{value}</p>{key === 'Tarif' && priceNote && <p className="mt-1 text-xs leading-4 text-academy-muted">{priceNote}</p>}</div>)}
-    </div>
+    <TrainingSessionSummary facts={facts} location={session?.location || defaultLocation} locationNote={locationNote} />
     <div data-session-actions className={styles.sessionActions}>
+    <p className={styles.sessionPrice}><span>{label === 'Votre parcours VAE' ? 'Tarif de l’accompagnement' : 'Tarif de la session'}</span><strong>{formatTrainingPrice(session, defaultPrice)}</strong>{priceNote && <small>{priceNote}</small>}</p>
     <Link href={registrationHref || trainingRegistrationUrl} className={`${styles.action} ${full ? styles.waitingAction : styles.primaryAction} mt-5 w-full`}>{full ? 'Être alerté de la prochaine session' : session ? 'Réserver ma place →' : emptyActionLabel}</Link>
     <p className="mt-3 text-center text-xs font-semibold leading-5 text-academy-muted">Un conseiller vérifie votre dossier avant validation.</p>
     <div className="mt-3"><OrientationAssistant initialFormationKey={assistantKey} hideInfoAction variant="modalTrigger" /></div>

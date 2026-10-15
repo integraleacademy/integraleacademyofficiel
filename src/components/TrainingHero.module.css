@@ -50,6 +50,30 @@
 .heroArtwork { overflow: hidden; border: 1px solid rgba(var(--hero-rgb), .5); border-radius: 2rem; background: #e8f1f9; box-shadow: 0 25px 75px #0004; transform: rotate(1deg); }
 .heroBooking { margin-bottom: 1.5rem; }
 .sessionOverview, .sessionDetails, .sessionActions { min-width: 0; }
+.sessionApproval { margin-top: 16px; color: #52657a; font-size: 11px; line-height: 1.6; }
+.sessionPrice { display: grid; gap: 2px; margin: 0 0 12px; text-align: center; }
+.sessionPrice > span { color: #52657a; font-size: 10px; font-weight: 750; letter-spacing: .08em; text-transform: uppercase; }
+.sessionPrice > strong { font-size: 26px; font-weight: 800; line-height: 1.25; letter-spacing: -.035em; }
+.sessionPrice > small { color: #52657a; font-size: 11px; line-height: 1.5; }
+.sessionCard[data-layout='summary'] { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.5fr) minmax(0, .8fr); align-items: center; gap: 22px; }
+.sessionCard[data-layout='summary'] [data-session-actions] > a { margin-top: 0; }
+.locationChoices { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 12px; }
+.locationChoices > button { border: 1px solid rgba(var(--hero-rgb), .25); border-radius: 999px; padding: 6px 10px; color: var(--hero-strong); background: transparent; font-size: 11px; font-weight: 750; }
+.locationChoices > button[aria-pressed='true'] { color: #fff; background: var(--hero-strong); border-color: var(--hero-strong); }
+:global(html.dark) .sessionCard[data-layout='summary'] { --text-main: 238 242 246; --text-muted: 194 203 212; background: #202c39; border-color: #3a4959; color: #eef2f6; }
+:global(html.dark) .sessionApproval,
+:global(html.dark) .sessionPrice > span,
+:global(html.dark) .sessionPrice > small { color: #b9c9dc; }
+:global(html.dark) .locationChoices > button { color: var(--hero-accent); }
+:global(html.dark) .locationChoices > button[aria-pressed='true'] { color: #fff; }
+@media (min-width: 701px) and (max-width: 1023px) {
+  .sessionCard[data-layout='summary'] { grid-template-columns: minmax(0, .75fr) minmax(0, 1.25fr); }
+  .sessionCard[data-layout='summary'] [data-session-actions] { grid-column: 1 / -1; }
+}
+@media (max-width: 700px) {
+  .sessionCard[data-layout='summary'] { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+  .sessionCard[data-layout='summary'] [data-session-actions] { grid-column: auto; }
+}
 
 @media (min-width: 1024px) {
   .heroContent { grid-template-columns: minmax(0, 1.2fr) minmax(0, .85fr); gap: clamp(2rem, 4vw, 4rem); }

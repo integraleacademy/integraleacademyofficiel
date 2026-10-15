@@ -132,17 +132,17 @@ export function SstReferencePage({ sessions }: { sessions: TrainingDatesPricingS
       tagline="Les bons gestes, au bon moment."
       description={<p>En 2 jours, apprenez à prévenir les risques, réagir face à un accident et porter les premiers secours.</p>}
       primaryAction={{ href: contactHref('programme SST'), label: 'Recevoir le programme →' }}
-      highlights={['2 jours · 14 heures', 'Aucun prérequis', 'Prévention + secours']}
-      facts={[
-        ['Certificat', 'SST', 'Valable pendant 24 mois'],
-        ['Durée', '14 heures', '2 jours de formation'],
-        ['Format', 'Présentiel', 'Pour apprendre et pratiquer'],
-        ['École', 'Puget-sur-Argens', 'Var · Côte d’Azur'],
-        ['Effectif', '4 à 10', 'Accompagnement personnalisé'],
-        ['Pratique', 'Mises en situation', 'Scénarios proches du terrain'],
-      ]}
     >
-      <TrainingHeroSessionCard session={next} theme="green" duration="2 jours · 14 heures" defaultPrice="Sur devis" capacity={10} assistantKey="sst" registrationHref={sessionHref(next)} />
+      <TrainingHeroSessionCard
+        session={next} theme="green" defaultPrice="Sur devis" capacity={10}
+        assistantKey="sst" registrationHref={sessionHref(next)}
+        approval="Habilitation INRS H34836/2020/SST-1/O/07"
+        facts={[
+          { label: 'Certification', value: 'Certificat SST', details: ['Sauveteur secouriste du travail', 'Valable pendant 24 mois'] },
+          { label: 'Durée et format', value: '14 heures · 2 jours', details: ['100 % présentiel', 'Mises en situation pratiques'] },
+          { label: 'Effectif', value: '4 à 10 stagiaires', details: ['Aucun prérequis', 'Accompagnement personnalisé'] },
+        ]}
+      />
     </TrainingReferenceHero>
 
     <TrainingSectionNavigation

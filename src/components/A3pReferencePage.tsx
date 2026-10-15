@@ -5,8 +5,7 @@ import { originalArtwork } from '@/data/originalArtwork';
 import { CourseJourney } from '@/components/CourseJourney';
 import { serializeCourseJsonLd } from '@/lib/seo';
 import Link from 'next/link';
-import { getSessionSeatAvailability } from '@/lib/session-seat-availability';
-import { OrientationAssistant } from '@/components/OrientationAssistant';
+import { TrainingHeroSessionCard } from '@/components/TrainingHero';
 import { MissionAnimation } from '@/components/MissionAnimation';
 import { PremiumFAQSection } from '@/components/ui';
 import { TrainingSectionNavigation } from '@/components/TrainingSectionNavigation';
@@ -27,7 +26,6 @@ import {
   a3pProgram,
   a3pWorkConditions,
 } from '@/data/a3p';
-import { formatTrainingPrice } from '@/lib/training-price';
 
 type CTAStyle = 'dark' | 'green' | 'light' | 'outline';
 
@@ -46,60 +44,10 @@ function Label({ children, light = false }: { children: React.ReactNode; light?:
   return <p className={`text-[.66rem] font-black uppercase tracking-[.24em] ${light ? 'text-emerald-300' : 'text-emerald-700'}`}>{children}</p>;
 }
 
-function formatDate(value?: string | null) {
-  if (!value) return 'À confirmer';
-  return new Intl.DateTimeFormat('fr-FR', { timeZone: 'Europe/Paris', day: '2-digit', month: 'short', year: 'numeric' }).format(new Date(value));
-}
-
 function sessionRegistrationHref(session: any) {
   if (!session?.id) return a3pContact('prochaine-session');
   return `/contact?formation=a3p-apr&session=${encodeURIComponent(String(session.id))}`;
 }
-
-function CompactAssistant() {
-  return <div className="mt-3"><OrientationAssistant initialFormationKey="a3p" hideInfoAction variant="modalTrigger" /></div>;
-}
-
-function HeroSession({ sessions }: { sessions: any[] }) {
-  const next = sessions[0];
-  const hasSeatCount = next?.seatsLeft !== null && next?.seatsLeft !== undefined && next?.seatsLeft !== '';
-  const isFull = next?.status === 'FULL' || (hasSeatCount && Number(next.seatsLeft) === 0);
-  const registrationHref = registrationFormUrl;
-  const seatAvailability = getSessionSeatAvailability(next, 12);
-
-  return <aside className={`${styles.sessionCard} rounded-[2rem] border border-white/80 bg-[#FFFDF8] p-5 text-academy-ink sm:p-6 lg:p-7`}>
-    <div data-session-overview className={styles.sessionOverview}>
-    <div className="flex flex-wrap items-center gap-2">
-      <span className="rounded-full bg-emerald-50 px-3 py-1.5 text-[.62rem] font-black uppercase tracking-[.16em] text-emerald-800 ring-1 ring-emerald-200">Prochaine session</span>
-      <span className={`rounded-full border px-3 py-1.5 text-[.68rem] font-black ${seatAvailability.badgeClassName}`}>{next ? seatAvailability.label : 'Dates à confirmer'}</span>
-    </div>
-    <h2 className="mt-5 text-3xl font-black tracking-[-.04em] sm:text-4xl">{next ? <>{formatDate(next.startDate)} <span className="text-emerald-700">→</span><br />{formatDate(next.endDate)}</> : 'Prochaine rentrée à confirmer'}</h2>
-    <p className="mt-2 text-sm font-extrabold text-academy-muted">{next?.examDate ? `Examen final le ${formatDate(next.examDate)}` : 'Contactez-nous pour recevoir les prochaines dates.'}</p>
-    </div>
-    <div data-session-details className={`${styles.sessionDetails} mt-5 grid grid-cols-2 gap-2.5`}>
-      {[
-        ['Durée', a3pConfig.durationHours],
-        ['Tarif', formatTrainingPrice(next, a3pConfig.priceLabel)],
-        ['Lieu', a3pConfig.location],
-        ['Modalité', a3pConfig.modality],
-      ].map(([key, value]) => <div key={key} className="rounded-2xl border border-[#E8DECE] bg-[#F5EFE4] p-3.5"><p className="text-[.6rem] font-black uppercase tracking-[.16em] text-[#837968]">{key}</p><p className="mt-1 text-sm font-black sm:text-base">{value}</p></div>)}
-    </div>
-    <div data-session-actions className={styles.sessionActions}>
-    <CTA href={registrationHref} variant={isFull ? 'light' : 'green'} className={`mt-5 w-full ${isFull ? '' : styles.heroPrimaryAction}`}>{isFull ? 'Être alerté de la prochaine session' : 'Réserver ma place →'}</CTA>
-    <p className="mt-3 text-center text-xs font-bold text-academy-muted">Un conseiller vérifie votre dossier avant validation.</p>
-    <CompactAssistant />
-    </div>
-  </aside>;
-}
-
-const heroFacts = [
-  ['Certification', 'TFP A3P', 'Titre RNCP niveau 4'],
-  ['Cadre', 'Réglementé', `Agrément ADEF ${a3pConfig.adefApproval}`],
-  ['Durée', a3pConfig.durationShort, a3pConfig.practiceHours],
-  ['École', 'Côte d’Azur', a3pConfig.location],
-  ['Format', 'Présentiel', 'Entraînements pratiques'],
-  ['Hébergement', 'Sur place', 'Sur réservation'],
-];
 
 const métierCards = [
   ['01', 'Anticiper les risques', 'Identifier les menaces, étudier les vulnérabilités et construire un dispositif adapté au contexte.'],
@@ -175,16 +123,26 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
     }, "/formations-securite/a3p-apr") }} />
 
     <TrainingReferenceHero
-      id="a3p" badge="TFP A3P · RNCP 38002 · Niveau 4"
+      id="a3p" badge="Formation TFP A3P"
       heading="Devenez agent de" accent="protection rapprochée."
       title="Formation agent de protection rapprochée"
       tagline="Apprenez le métier sur le terrain."
       description={<p>Préparez, organisez et sécurisez les déplacements de personnes exposées. Une formation réglementée, intensive et résolument tournée vers les réalités du terrain.</p>}
       illustration={a3pArtwork.protection} caption="Anticiper. Sécuriser. Protéger."
       primaryAction={{ href: a3pContact('dossier-a3p'), label: 'Recevoir le dossier A3P →' }}
-      highlights={[a3pConfig.durationShort, 'CNAPS accompagné', 'Financements possibles', 'Hébergement sur place']}
-      facts={heroFacts}
-    ><HeroSession sessions={sessions} /></TrainingReferenceHero>
+    >
+      <TrainingHeroSessionCard
+        session={sessions[0]} theme="green" defaultPrice={a3pConfig.priceLabel}
+        defaultLocation={a3pConfig.location} assistantKey="a3p"
+        registrationHref={registrationFormUrl} examLabel="Examen final le"
+        approval={`Agrément ADEF n° ${a3pConfig.adefApproval}`}
+        facts={[
+          { label: 'Certification', value: 'TFP A3P', details: ['Titre à finalité professionnelle', `${a3pConfig.level} · ${a3pConfig.rncp}`] },
+          { label: 'Durée et format', value: a3pConfig.durationHours, details: [a3pConfig.modality, a3pConfig.practiceHours] },
+          { label: 'Hébergement', value: a3pConfig.accommodationLabel, details: ['Sur réservation'] },
+        ]}
+      />
+    </TrainingReferenceHero>
 
     <TrainingSectionNavigation
       mark="A3P"

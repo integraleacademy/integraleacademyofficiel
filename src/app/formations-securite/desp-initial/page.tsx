@@ -98,7 +98,7 @@ async function getSessions(){return (await listSessions()).filter((session:any)=
 export default async function DespInitialPage(){
   const sessions = await getSessions();
   return <TrainingReferencePage theme="orange">
-    <DespHero variant="initial" title="Formation dirigeant d’entreprise de sécurité privée" subtitle={<><p>Apprenez étape par étape à créer, reprendre ou diriger une entreprise de sécurité privée avec un parcours DESP structuré, hybride et orienté projet professionnel.</p><p>Intégrale Academy vous accompagne sur la réglementation CNAPS, la gestion, le management, le développement commercial et la préparation aux évaluations du titre RNCP.</p></>} stats={[["Durée","245 h","175 h à distance + 70 h en présentiel"],["Rythme","7 semaines","parcours intensif"],["Tarif 2027",despInitialAdminData.priceLabel,"TTC"],["Lieux","3 sites","Paris, Côte d’Azur ou Aurillac"],["RNCP",despInitialAdminData.rncpCode,"niveau 5"],["Objectif","CNAPS","préparer l’agrément dirigeant"]]} sessions={sessions}/>
+    <DespHero variant="initial" title="Formation dirigeant d’entreprise de sécurité privée" subtitle={<p>Apprenez à créer, reprendre ou diriger une entreprise de sécurité privée. Préparez le titre DESP avec un parcours hybride, de la réglementation CNAPS au management et à la gestion.</p>} stats={[["Durée","245 h","175 h à distance + 70 h en présentiel"],["Rythme","7 semaines","parcours intensif"],["Tarif 2027",despInitialAdminData.priceLabel,"TTC"],["Lieux","3 sites","Paris, Côte d’Azur ou Aurillac"],["RNCP",despInitialAdminData.rncpCode,"niveau 5"],["Objectif","CNAPS","préparer l’agrément dirigeant"]]} sessions={sessions}/>
     <TrainingSectionNavigation
       mark="DESP"
       title="DESP initial"

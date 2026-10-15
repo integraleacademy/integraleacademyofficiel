@@ -115,7 +115,7 @@ export default async function DespVaePage(){
   const sessions = await getSessions();
   const includedEntries = Object.entries(despVaeAdmin.included).filter(([,value])=>Boolean(value));
   return <TrainingReferencePage theme="orange">
-    <DespHero variant="vae" title="Dirigeant de sécurité privée par la VAE" subtitle={<><p>Faites reconnaître officiellement les compétences acquises en management, création, gestion ou direction grâce à un accompagnement VAE centré sur vos preuves et votre dossier.</p><p>La VAE ne remplace pas automatiquement le jury : elle vous aide à démontrer que votre expérience couvre les activités attendues du titre RNCP DESP.</p></>} stats={[["Format","VAE","accompagnement individualisé"],["Durée","Variable","selon dossier et jury"],["Tarif 2027",despVaeAdmin.price,"TTC"],["Lieu","Distance","jury selon convocation"],["RNCP",despVaeAdmin.rncp,despVaeAdmin.level],["Objectif","Titre DESP","validation totale visée"]]} sessions={sessions}/>
+    <DespHero variant="vae" title="Dirigeant de sécurité privée par la VAE" subtitle={<p>Valorisez votre expérience en gestion, management ou direction. Nous vous accompagnons pour constituer votre dossier de preuves et préparer le jury du titre DESP.</p>} stats={[["Format","VAE","accompagnement individualisé"],["Durée","Variable","selon dossier et jury"],["Tarif 2027",despVaeAdmin.price,"TTC"],["Lieu","Distance","jury selon convocation"],["RNCP",despVaeAdmin.rncp,despVaeAdmin.level],["Objectif","Titre DESP","validation totale visée"]]} sessions={sessions}/>
     <TrainingSectionNavigation
       mark="DESP"
       title="DESP en VAE"

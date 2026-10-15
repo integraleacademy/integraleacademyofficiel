@@ -165,17 +165,19 @@ export function SsiapCoursePage({ config, sessions = [] }: { config: SsiapCourse
         tagline={heroKey === 'ssiap-2' ? 'Encadrez votre équipe sur le terrain.' : 'Pilotez la sécurité de votre établissement.'}
         description={<p>{config.intro}</p>}
         primaryAction={{ href: '#dates-tarifs', label: 'Recevoir les prochaines dates →' }}
-        highlights={[config.duration, '100 % présentiel', config.capacity]}
-        facts={facts}
       >
         <TrainingHeroSessionCard
           session={sessions[0]}
           theme="red"
-          duration={config.duration}
           defaultPrice="Sur devis"
           capacity={heroKey === 'ssiap-3' ? 10 : 12}
           assistantKey={heroKey}
           registrationHref={contactHref(config, 'inscription')}
+          facts={[
+            { label: 'Certification', value: config.certification, details: [config.role] },
+            { label: 'Durée et format', value: config.duration, details: [config.durationDetail, '100 % présentiel'] },
+            { label: 'Effectif', value: config.capacity },
+          ]}
         />
       </TrainingReferenceHero> : (
       <section className={`${compactHeroStyles.hero} relative isolate overflow-hidden bg-[#0D1725] px-4 pb-9 pt-10 text-white sm:pt-14 lg:pt-16`}>

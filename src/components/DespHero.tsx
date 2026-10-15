@@ -16,36 +16,39 @@ export function DespHero({ variant, title, subtitle, stats, sessions }: {
   const isVae = variant === 'vae';
   const next = sessions.find(session => session.training?.slug === 'desp-vae');
   const price = stats.find(([label]) => label === 'Tarif' || label === 'Tarif 2027')?.[1] || (isVae ? '3 850 € TTC' : '4 350 € TTC');
+  const rncp = stats.find(([label]) => label === 'RNCP')?.[1] || 'RNCP40385';
   return <TrainingReferenceHero
     id={`desp-${variant}`}
     heading={isVae ? 'Votre expérience.' : 'Devenez dirigeant'}
     accent={isVae ? 'Votre titre DESP.' : 'en sécurité privée.'}
     illustration={isVae ? despArtwork.direction : despArtwork.pilotage}
     caption={isVae ? 'Démontrer. Valoriser. Faire reconnaître.' : 'Créer. Gérer. Développer.'}
-    badge={`DESP · RNCP n°40385 · Niveau 5 · ${isVae ? 'VAE' : 'Formation initiale'}`}
+    badge={`DESP · ${isVae ? 'Validation des acquis de l’expérience' : 'Formation initiale'}`}
     title={title}
     tagline={isVae ? 'Faites reconnaître votre expérience.' : 'Créez, reprenez, dirigez votre entreprise.'}
     description={subtitle}
-    extendedCopy
     primaryAction={{ href: `/contact?formation=desp-${variant}`, label: 'Recevoir le dossier →' }}
     additionalAction={<Link href="/despvaeouinitial" className="self-center text-sm font-bold text-orange-200 underline decoration-orange-300/50 underline-offset-4">Comparer initial et VAE →</Link>}
-    highlights={isVae ? ['Accompagnement individualisé', 'À distance', 'Préparation du jury'] : ['7 semaines · 245 h', 'Distanciel + présentiel', 'Suivi personnalisé']}
-    facts={stats.map(([label, value, detail]) => [label, value, ...(detail ? [detail] : [])])}
   >
     {isVae ? <TrainingHeroSessionCard
       session={next}
       theme="orange"
       assistantKey="desp-vae"
-      duration="Selon dossier et jury"
       defaultPrice={price}
-      defaultLocation="À distance · jury selon convocation"
-      modality="Accompagnement VAE"
+      defaultLocation="À distance"
+      locationNote="Jury selon convocation"
       label="Votre parcours VAE"
       emptyTitle="Préparez votre parcours VAE"
-      emptyDescription="Nous étudions votre expérience et définissons votre accompagnement. Le jury est organisé selon la convocation du certificateur."
+      emptyDescription="Un calendrier personnalisé après étude de votre expérience. Jury selon convocation."
+      emptyBadgeLabel="Calendrier personnalisé"
       emptyActionLabel="Démarrer mon dossier VAE →"
       examLabel="Jury le"
       registrationHref="/contact?formation=desp-vae"
-    /> : <DespHeroSessions sessions={sessions} defaultPrice={price} />}
+      facts={[
+        { label: 'Certification visée', value: 'Titre DESP', details: ['Dirigeant d’entreprise de sécurité privée', `Niveau 5 · ${rncp}`] },
+        { label: 'Parcours VAE', value: 'Durée variable', details: ['Selon votre dossier et le jury'] },
+        { label: 'Accompagnement', value: 'Individualisé', details: ['Dossier de preuves', 'Préparation du jury'] },
+      ]}
+    /> : <DespHeroSessions sessions={sessions} defaultPrice={price} rncp={rncp} />}
   </TrainingReferenceHero>;
 }

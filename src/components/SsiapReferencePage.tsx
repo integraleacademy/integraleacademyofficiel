@@ -6,6 +6,7 @@ import experience from './SsiapExperience.module.css';
 import { serializeCourseJsonLd } from '@/lib/seo';
 import Link from 'next/link';
 import { TrainingHeroSessionCard } from '@/components/TrainingHero';
+import { TrainingReferenceHero } from '@/components/TrainingReferenceLayout';
 import { TrainingSectionNavigation } from '@/components/TrainingSectionNavigation';
 import type { ReactNode } from 'react';
 import { MissionAnimation } from '@/components/MissionAnimation';
@@ -141,24 +142,27 @@ export function SsiapReferencePage({ sessions }: { sessions: any[] }) {
       { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Accueil', item: '/' }, { '@type': 'ListItem', position: 2, name: 'Formations sécurité', item: '/formations-securite' }, { '@type': 'ListItem', position: 3, name: 'SSIAP 1', item: '/formations-securite/ssiap-1' }] },
     ] }, "/formations-securite/ssiap-1") }} />
 
-    <section className={`${styles.hero} ${mos.hero}`} aria-labelledby="ssiap-title">
-      <div className={mos.container}>
-        <div className={`${styles.heroGrid} ${mos.heroGrid}`}>
-          <div className={styles.heroCopy}>
-            <p className={`${styles.heroBadge} ${mos.heroBadge}`}><span aria-hidden="true" /> SSIAP 1 · Formation réglementée</p>
-            <h1 id="ssiap-title"><span className={mos.courseName}>SSIAP 1</span>Devenez agent de<br /><em>sécurité incendie.</em></h1>
-            <p className={styles.heroTagline}>Apprenez le métier sur le terrain.</p>
-            <p className={styles.heroDescription}>Préparez le diplôme SSIAP 1 et apprenez à prévenir les risques, surveiller les installations et porter assistance dans les ERP et les IGH.</p>
-            <div className={styles.actions}><CTA href="#dates-tarifs">Voir les prochaines dates →</CTA><CTA href="tel:0422470768" variant="light" className={mos.heroSecondary}>Parler à un conseiller</CTA></div>
-          </div>
-          <figure className={`${styles.heroArtwork} ${mos.heroArtwork}`}>
-            <ManualArtwork illustration={ssiapArtwork.prevention} priority natural />
-            <figcaption><span>FORMATION SSIAP 1</span><strong>Prévenir. Veiller. Intervenir.</strong><span>Formation agent de sécurité incendie</span></figcaption>
-          </figure>
-        </div>
-        <div className={`${styles.heroBooking} ${mos.heroBooking}`}><TrainingHeroSessionCard session={next} theme="red" duration="67 heures" defaultPrice="980 €" priceNote="SSIAP 1 seul · +250 € avec SST" assistantKey="ssiap-1" registrationHref={sessionHref(next)} /></div>
-      </div>
-    </section>
+    <TrainingReferenceHero
+      id="ssiap" badge="SSIAP 1 · Formation réglementée"
+      heading="Devenez agent de" accent="sécurité incendie."
+      title="Formation agent de sécurité incendie"
+      tagline="Apprenez le métier sur le terrain."
+      description={<p>Préparez le diplôme SSIAP 1 et apprenez à prévenir les risques, surveiller les installations et porter assistance dans les ERP et les IGH.</p>}
+      illustration={ssiapArtwork.prevention} caption="Prévenir. Veiller. Intervenir."
+      primaryAction={{ href: '#dates-tarifs', label: 'Voir les prochaines dates →' }}
+    >
+      <TrainingHeroSessionCard
+        session={next} theme="red" defaultPrice="980 €"
+        priceNote="SSIAP 1 seul · +250 € avec SST"
+        assistantKey="ssiap-1" registrationHref={sessionHref(next)}
+        approval="Agrément SSIAP n°8323"
+        facts={[
+          { label: 'Certification', value: 'Diplôme SSIAP 1', details: ['Agent de sécurité incendie'] },
+          { label: 'Durée et format', value: '67 heures', details: ['Hors examen et déplacements', '100 % présentiel'] },
+          { label: 'Effectif', value: '12 stagiaires maximum', details: ['Apprentissage sur le terrain'] },
+        ]}
+      />
+    </TrainingReferenceHero>
 
     <TrainingSectionNavigation
       mark="SSIAP"
