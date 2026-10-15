@@ -4,9 +4,9 @@ import { originalArtwork } from './originalArtwork';
 export type BtsArtworkCode = 'mos' | 'mco' | 'ndrc' | 'ci' | 'pi' | 'cg';
 
 export const btsArtwork: Record<BtsArtworkCode, ManualIllustration> = {
-  mos: { src: '/images/bts/tenues-2026/mos-carte.webp', alt: 'Illustration du BTS MOS : une étudiante prépare un briefing avec une équipe au poste de sécurité.' },
+  mos: { src: '/images/bts/mixite-2026/mos-carte.webp', alt: 'Illustration du BTS MOS : un étudiant prépare un briefing avec une équipe au poste de sécurité.' },
   mco: { src: '/images/bts/tenues-2026/mco-carte.webp', alt: 'Illustration du BTS MCO : une alternante participe à la vie du magasin et au conseil client.' },
-  ndrc: { src: '/images/bts/tenues-2026/ndrc-carte.webp', alt: 'Illustration du BTS NDRC : une alternante échange avec un client en visioconférence.' },
+  ndrc: { src: '/images/bts/mixite-2026/ndrc-carte.webp', alt: 'Illustration du BTS NDRC : un alternant échange avec un client en visioconférence.' },
   ci: { src: '/images/bts/tenues-2026/ci-carte.webp', alt: 'Illustration du BTS Commerce International : deux étudiants préparent des opérations commerciales et logistiques.' },
   pi: { src: '/images/bts/tenues-2026/pi-carte.webp', alt: 'Illustration du BTS Professions Immobilières : une alternante accompagne un couple pendant la visite d’un appartement.' },
   cg: { src: '/images/bts/tenues-2026/cg-carte.webp', alt: 'Illustration du BTS Comptabilité et Gestion : un étudiant analyse des factures avec sa tutrice.' },
