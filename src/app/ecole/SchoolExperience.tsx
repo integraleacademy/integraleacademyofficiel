@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { PageSectionNavigation } from '@/components/PageSectionNavigation';
 import Link from 'next/link';
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { createPortal } from 'react-dom';
@@ -20,45 +21,7 @@ const chapters = [
 ] as const;
 
 export function SchoolNavigation() {
-  const nav = useRef<HTMLElement>(null);
-  const [active, setActive] = useState<string>('campus');
-  useEffect(() => {
-    const node = nav.current;
-    if (!node) return;
-    let frame = 0;
-    const update = () => {
-      const header = document.querySelector('header')?.getBoundingClientRect().height || 80;
-      const threshold = header + node.offsetHeight + 70;
-      let current: string = chapters[0][0];
-      for (const [id] of chapters) {
-        const section = document.getElementById(id);
-        if (section && section.getBoundingClientRect().top <= threshold) current = id;
-      }
-      setActive(current);
-      frame = 0;
-    };
-    const schedule = () => { if (!frame) frame = requestAnimationFrame(update); };
-    const measure = () => {
-      node.parentElement?.style.setProperty('--school-nav-height', `${node.offsetHeight}px`);
-      schedule();
-    };
-    const observer = new ResizeObserver(measure);
-    observer.observe(node);
-    window.addEventListener('scroll', schedule, { passive: true });
-    window.addEventListener('hashchange', schedule);
-    measure();
-    return () => {
-      observer.disconnect(); cancelAnimationFrame(frame);
-      window.removeEventListener('scroll', schedule);
-      window.removeEventListener('hashchange', schedule);
-    };
-  }, []);
-  return <nav ref={nav} className={styles.navigation} aria-label="Découvrir notre école">
-    <div className={`${school.container} ${styles.navInner}`}>
-      <span>Faisons connaissance</span>
-      {chapters.map(([id, label], index) => <a key={id} href={`#${id}`} aria-current={active === id ? 'location' : undefined}><span>0{index + 1}</span>{label}</a>)}
-    </div>
-  </nav>;
+  return <PageSectionNavigation chapters={chapters} label="Faisons connaissance" ariaLabel="Découvrir notre école" />;
 }
 
 const approaches = [

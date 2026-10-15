@@ -4,7 +4,7 @@ import { TrainingDatesPricingSection, type TrainingDatesPricingSession } from '@
 import { VaeEligibilityModal } from '@/components/VaeEligibilityModal';
 import { ManualArtwork } from '@/components/ManualArtwork';
 import { despArtwork } from '@/data/manualIllustrations';
-import { Button, ConversionStrip, FAQ, Hero, SectionTitle } from '@/components/ui';
+import { Button, ConversionStrip, PremiumFAQSection, Hero, SectionTitle } from '@/components/ui';
 import { formationFaq } from '@/data/faq';
 
 function sessionHref(session: TrainingDatesPricingSession) {
@@ -233,10 +233,7 @@ export function DespChoiceReferencePage({ sessions }: { sessions: TrainingDatesP
         emptyAction={{ href: '/contact?formation=desp&objet=alerte-planning', label: 'Recevoir les prochaines dates →' }}
       />
       <ConversionStrip theme="orange" />
-      <section className="page-container py-10">
-        <SectionTitle title="FAQ formation" />
-        <FAQ items={formationFaq} theme="orange" />
-      </section>
+      <PremiumFAQSection badge="FAQ formation" title="Vos questions sur la formation DESP" description="Les réponses utiles avant de choisir votre parcours." items={formationFaq} theme="orange" contactHref="/contact?formation=desp" />
     </main>
   );
 }

@@ -1,3 +1,4 @@
+import { PremiumFAQSection } from '@/components/FAQ';
 import { TeamPortrait } from '@/components/TeamPortrait';
 import { createPageMetadata } from '@/lib/seo';
 import type { Metadata } from 'next';
@@ -305,19 +306,20 @@ export default function EntreprisesPage() {
       </div>
     </section>
 
-    <section id="diagnostic" className={styles.faqSection} aria-labelledby="faq-title">
-      <div className={styles.container}>
-        <div className={styles.faqLayout}>
-          <div><div className={styles.sectionHeading}><span className={styles.sectionEyebrow}>Les réponses à vos questions</span><h2 id="faq-title">Avant de<br /><em>se lancer.</em></h2></div><div className={styles.faqList}>{faqItems.map((item) => <details key={item.question}><summary><span>{item.question}</span><b aria-hidden="true">+</b></summary><div><p>{item.answer}</p></div></details>)}</div></div>
+    <PremiumFAQSection
+      id="diagnostic" badge="Les réponses à vos questions" title="Avant de se lancer."
+      description="Retrouvez les réponses utiles pour préparer votre projet de recrutement ou de formation."
+      items={faqItems.map(({ question, answer }) => ({ q: question, a: answer }))}
+      contactHref="#contact-entreprises"
+      contactContent={
           <aside id="brochure-entreprises" className={`${styles.diagnosticCard} ${styles.brochureCard}`} aria-labelledby="brochure-title">
             <span className={styles.ribbon}>Le dossier entreprises</span><h3 id="brochure-title">Toutes nos solutions,<br />à portée de main.</h3>
             <a href={brochureUrl} target="_blank" rel="noopener noreferrer" className={styles.brochureCover}><img src="/images/entreprises/brochure-entreprises-2026-10.webp" alt="Couverture de la brochure entreprises Intégrale Academy : recruter, former et faire évoluer vos futurs professionnels de la sécurité privée." width="1050" height="799" loading="lazy" /></a>
             <p>Les trois dispositifs, les programmes, les calendriers et les simulations pour préparer votre prochain recrutement.</p>
             <a href={brochureUrl} download="Brochure-Entreprises-Integrale-Academy.pdf" className={styles.primaryButton}>Télécharger la brochure <Icon name="document" /></a><small>PDF · 20 pages · dernière version</small>
           </aside>
-        </div>
-      </div>
-    </section>
+      }
+    />
 
     <section id="contact-entreprises" className={styles.contactsSection} aria-labelledby="contacts-title">
       <div className={styles.container}>

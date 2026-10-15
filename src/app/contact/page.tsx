@@ -1,3 +1,5 @@
+import { PageSectionNavigation } from '@/components/PageSectionNavigation';
+import navigation from '@/components/PageSectionNavigation.module.css';
 import Image from 'next/image';
 import { SsiapContactChoice } from '@/components/SsiapContactChoice';
 import Link from 'next/link';
@@ -14,6 +16,11 @@ export const metadata = createPageMetadata('/contact');
 const email = 'ecole@integraleacademy.com';
 const phoneHref = 'tel:+33422470768';
 const emailHref = `mailto:${email}?subject=Contact%20site%20internet`;
+
+const contactChapters = [
+  ['coordonnees', 'Nous joindre'], ['demande', 'Votre demande'],
+  ['venir', 'Venir à l’école'], ['reperes', 'Liens utiles'],
+] as const;
 
 const projectLinks = [
   { title: 'Les formations', text: 'Sécurité, incendie, VTC et BTS.', href: '/ecole#pedagogie' },
@@ -46,7 +53,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<Rec
   const otherLocations = contact.locations.filter(location => location.id !== 'puget');
 
   return (
-    <ContactMotion className={`${school.page} ${styles.page}`}>
+    <ContactMotion className={`${school.page} ${styles.page} ${navigation.scope}`}>
       <section className={`${school.hero} ${styles.hero}`} aria-labelledby="contact-title">
         <div className={`${school.container} ${school.heroGrid} ${styles.heroGrid}`}>
           <div className={school.heroCopy} data-contact-reveal>
@@ -65,14 +72,10 @@ export default async function Page({ searchParams }: { searchParams: Promise<Rec
             <figcaption><span>INTÉGRALE ACADEMY</span><span>Une équipe à votre écoute. <Arrow diagonal /></span></figcaption>
           </figure>
         </div>
-        <nav className={`${school.container} ${school.chapterNav}`} aria-label="Les rubriques de la page Contact">
-          <span>FAISONS LE PREMIER PAS</span>
-          <a href="#coordonnees"><span>01</span> Nous joindre</a>
-          <a href="#demande"><span>02</span> Votre demande</a>
-          <a href="#venir"><span>03</span> Venir à l’école</a>
-          <a href="#reperes"><span>04</span> Liens utiles</a>
-        </nav>
+
       </section>
+
+      <PageSectionNavigation chapters={contactChapters} label="Faisons le premier pas" ariaLabel="Les rubriques de la page Contact" />
 
       <section id="coordonnees" className={styles.channels} aria-label="Nos coordonnées">
         <div className={`${school.container} ${styles.channelGrid}`}>

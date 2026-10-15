@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { createPageMetadata } from '@/lib/seo';
 import { contact } from '@/data/site';
 import styles from './ecole.module.css';
+import navigation from '@/components/PageSectionNavigation.module.css';
 import experience from './school-experience.module.css';
 import { SchoolNavigation, SchoolCampuses, SchoolPedagogy, SchoolVisitButton, SchoolVisitAdviser } from './SchoolExperience';
 import { SchoolCommitments } from './SchoolCommitments';
@@ -22,7 +23,7 @@ function Arrow({ diagonal = false }: { diagonal?: boolean }) {
 }
 
 export default function Page() {
-  return <div className={`${styles.page} ${experience.guidedPage}`}>
+  return <div className={`${styles.page} ${experience.guidedPage} ${navigation.scope}`}>
     <section className={`${styles.hero} ${experience.guidedHero}`} aria-labelledby="school-title">
       <div className={`${styles.container} ${styles.heroGrid}`}>
         <div className={styles.heroCopy}>
