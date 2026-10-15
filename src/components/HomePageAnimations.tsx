@@ -7,6 +7,22 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 export function HomePageAnimations() {
   useEffect(() => {
     const root = document.querySelector<HTMLElement>('[data-home-page]');
+    const header = document.querySelector<HTMLElement>('.site-header');
+    if (!root || !header) return;
+
+    // Anchor offsets must follow the real menu height, including enlarged text.
+    const measure = () => root.style.setProperty('--home-header-height', `${header.getBoundingClientRect().height}px`);
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(header);
+    return () => {
+      observer.disconnect();
+      root.style.removeProperty('--home-header-height');
+    };
+  }, []);
+
+  useEffect(() => {
+    const root = document.querySelector<HTMLElement>('[data-home-page]');
     if (!root) return;
 
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;

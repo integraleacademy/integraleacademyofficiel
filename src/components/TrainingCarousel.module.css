@@ -1,4 +1,5 @@
 .section {
+  scroll-margin-top: var(--home-header-height, var(--site-header-height));
   padding: calc(64px * var(--site-desktop-scale)) 0;
   border-top: 2px solid rgb(var(--accent-strong) / .25);
   background: rgb(var(--background));
@@ -75,6 +76,41 @@
   .slide { gap: 32px; min-height: 410px; }
   .tabs { gap: 15px; }
   .tabPrefix { display: none; }
+}
+
+/* Keep the heading, course, navigation and footer in the available desktop
+   viewport. Images retain their full composition; text can still grow freely. */
+@media (min-width: 1024px) {
+  .section {
+    --course-artwork-height: clamp(220px, calc(100svh - var(--home-header-height, var(--site-header-height)) - 19rem), 540px);
+    padding-block: clamp(14px, calc(5svh - 16px), 40px);
+  }
+  .heading { gap: 10px 24px; margin-bottom: clamp(14px, 2.5svh, 28px); }
+  .heading h2 { font-size: calc(clamp(30px, min(3.4vw, 5.8svh), 52px) * var(--site-desktop-scale)); }
+  .slide { min-height: 0; gap: clamp(28px, 3.5vw, 56px); }
+  .copy { padding: 0; }
+  .category { margin-bottom: 8px; }
+  .title strong { font-size: clamp(2.625rem, min(4.8vw, 7.5svh), 4.25rem); }
+  .title em { margin-top: 8px; font-size: clamp(1.625rem, min(3vw, 4.4svh), 2.5rem); }
+  .description { margin-top: 12px; line-height: 1.55; }
+  .courseFacts { gap: 4px 12px; margin-top: 10px; }
+  .pathway { margin-top: 10px; }
+  .discover { margin-top: 10px; }
+  .visual { justify-self: end; width: 100%; max-width: calc(var(--course-artwork-height) * 1.5); }
+  .visualFirst .visual { justify-self: start; }
+  .caption { margin-top: 10px; }
+  .navigation { margin-top: 16px; padding-top: 8px; }
+  .footer { margin-top: 8px; }
+}
+
+@media (min-width: 1024px) and (max-height: 700px) {
+  .heading { margin-bottom: 14px; }
+  .category { margin-bottom: 6px; }
+  .title em { margin-top: 6px; }
+  .description { margin-top: 10px; }
+  .courseFacts, .pathway, .discover { margin-top: 8px; }
+  .navigation { margin-top: 10px; padding-top: 6px; }
+  .footer { margin-top: 4px; }
 }
 
 @media (max-width: 700px) {
