@@ -1,6 +1,7 @@
 'use client';
 
 import { TeamPortrait } from '@/components/TeamPortrait';
+import { HomeContactCTA } from '@/components/HomeContactCTA';
 import { usePathname } from 'next/navigation';
 import { type CSSProperties, type MouseEvent, useEffect, useRef, useState } from 'react';
 import { appointmentFormUrl } from '@/components/ui';
@@ -83,6 +84,8 @@ export function GlobalContactCTA() {
   if (['/formations-securite/ssiap-1', '/formations-securite/ssiap-2', '/formations-securite/ssiap-3', '/formations-securite/aps', '/formations-securite/a3p-apr', '/formations-securite/sst', '/formations-securite/desp-initial', '/formations-securite/desp-vae', '/dirigeant', '/vaedirigeant'].includes(pathname?.replace(/\/+$/, '') || '') || pathname === '/bts/mos' || pathname === '/ecole' || pathname === '/entreprises' || pathname === '/contact' || pathname === '/planning' || isFinancingPage || hiddenPathPrefixes.some((prefix) => pathname?.startsWith(prefix))) {
     return null;
   }
+
+  if (pathname === '/') return <HomeContactCTA />;
 
   return (
     <section className="px-4 py-10 sm:py-12 md:py-16" aria-labelledby="global-contact-cta-title">
