@@ -50,13 +50,14 @@
   }
 
   :root {
+    --site-desktop-scale: 1;
     --site-gutter: clamp(1rem, 3.2vw, 4rem);
-    --site-content-max: 90rem;
+    --site-content-max: calc(90rem * var(--site-desktop-scale));
     --site-content-width: min(calc(100% - 2 * var(--site-gutter)), var(--site-content-max));
-    --site-section-space: clamp(3rem, 4.5vw, 6rem);
-    --site-body-size: clamp(1rem, .9rem + .15vw, 1.125rem);
-    --site-title-size: clamp(2.5rem, 1.7rem + 2.8vw, 5rem);
-    --site-heading-size: clamp(2rem, 1.3rem + 2vw, 3.5rem);
+    --site-section-space: calc(clamp(3rem, 4.5vw, 6rem) * var(--site-desktop-scale));
+    --site-body-size: clamp(1rem, calc((.9rem + .15vw) * var(--site-desktop-scale)), 1.125rem);
+    --site-title-size: calc(clamp(2.5rem, 1.7rem + 2.8vw, 5rem) * var(--site-desktop-scale));
+    --site-heading-size: calc(clamp(2rem, 1.3rem + 2vw, 3.5rem) * var(--site-desktop-scale));
     --site-section-nav-height: 0px;
     --site-header-logo-height: 44px;
     --site-header-height: calc(var(--site-header-logo-height) + .75rem + 1px);
@@ -67,14 +68,23 @@
   }
 
   @media (min-width: 1280px) {
-    :root { --site-header-logo-height: 64px; }
+    :root { --site-header-logo-height: calc(64px * var(--site-desktop-scale)); }
+  }
+
+  /* Compact desktop windows need smaller display elements, not smaller reading text.
+     Touch layouts and the user's browser/text zoom keep their normal sizing. */
+  @media (min-width: 1024px) and (max-height: 1000px) and (hover: hover) and (pointer: fine) {
+    :root { --site-desktop-scale: .95; }
+  }
+  @media (min-width: 1024px) and (max-height: 850px) and (hover: hover) and (pointer: fine) {
+    :root { --site-desktop-scale: .9; }
   }
 
   html { font-size: 100%; scroll-behavior: smooth; background: rgb(var(--background)); color: rgb(var(--text-main)); }
   body { min-height: 100vh; overflow-x: hidden; overflow-x: clip; background: rgb(var(--background)); color: rgb(var(--text-main)); font-feature-settings: "ss01" on; transition: background-color .25s ease, color .25s ease; }
 
   @media (min-width: 2200px) {
-    :root { --site-content-max: 100rem; }
+    :root { --site-content-max: calc(100rem * var(--site-desktop-scale)); }
   }
   a, button, input, select, textarea, summary { outline-color: rgb(var(--accent)); outline-offset: 3px; }
   input, select, textarea { background: rgb(var(--surface-elevated)); color: rgb(var(--text-main)); border-color: rgb(var(--border)); }
@@ -96,6 +106,10 @@
 
   .text-container {
     max-width: 720px;
+  }
+
+  .site-header {
+    --site-content-width: min(calc(100% - 2 * var(--site-gutter)), 90rem);
   }
 
   input, select, textarea { font-size: 1rem; }

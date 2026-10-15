@@ -1,5 +1,5 @@
 .hero {
-  padding: clamp(36px, 4vw, 58px) 0 36px;
+  padding: calc(clamp(36px, 4vw, 58px) * var(--site-desktop-scale)) 0 calc(36px * var(--site-desktop-scale));
   background: rgb(var(--background));
   color: rgb(var(--text-main));
 }
@@ -26,7 +26,7 @@
 .secondaryButton:hover { border-color: rgb(var(--accent-strong)); background: rgb(var(--surface)); }
 .heroProofs { display: flex; flex-wrap: wrap; gap: 7px 20px; margin-top: 23px; color: rgb(var(--text-muted)); font-size: 11px; line-height: 1.6; }
 .heroProofs span::before { margin-right: 7px; color: rgb(var(--accent-strong)); content: '✓'; }
-.assistantDock { margin-top: 32px; scroll-margin-top: calc(var(--site-header-height) + 20px); }
+.assistantDock { margin-top: calc(32px * var(--site-desktop-scale)); scroll-margin-top: calc(var(--site-header-height) + 20px); }
 .assistantTrigger { display: flex; width: 100%; min-height: 84px; align-items: center; gap: 16px; border: 1px solid rgb(var(--border)); border-radius: 18px; padding: 17px 22px; background: rgb(var(--surface)); color: rgb(var(--text-main)); text-align: left; cursor: pointer; transition: border-color .2s, background .2s; }
 .assistantTrigger:hover { border-color: rgb(var(--accent-strong)); background: rgb(var(--surface-elevated)); }
 .assistantTrigger strong { font-size: 16px; font-weight: 750; line-height: 1.4; }
@@ -89,5 +89,5 @@
 .heroBadge { font-size: .75rem; }
 @media (min-width: 1024px) {
   .heroCopy h1 { font-size: var(--site-title-size); }
-  .heroComposition { gap: clamp(32px, 4vw, 72px); }
+  .heroComposition { gap: calc(clamp(32px, 4vw, 72px) * var(--site-desktop-scale)); }
 }
