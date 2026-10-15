@@ -85,7 +85,7 @@ export function ProjectTrainingPopup() {
 
         <div className="mt-5 grid gap-3">
           <Link
-            href={isBts ? 'tel:+33487830615' : 'tel:0422470768'}
+            href={isBts ? 'tel:+33487830615' : 'https://assistance-alw9.onrender.com/demande-informations-formations'}
             onClick={closePopup}
             className="inline-flex items-center justify-center rounded-full bg-academy-gold px-5 py-3 text-sm font-black text-academy-gold-text shadow-gold transition hover:-translate-y-0.5 hover:brightness-95"
           >
