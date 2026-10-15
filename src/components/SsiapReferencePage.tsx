@@ -150,7 +150,6 @@ export function SsiapReferencePage({ sessions }: { sessions: any[] }) {
             <p className={styles.heroTagline}>Apprenez le métier sur le terrain.</p>
             <p className={styles.heroDescription}>Préparez le diplôme SSIAP 1 et apprenez à prévenir les risques, surveiller les installations et porter assistance dans les ERP et les IGH.</p>
             <div className={styles.actions}><CTA href="#dates-tarifs">Voir les prochaines dates →</CTA><CTA href="tel:0422470768" variant="light" className={mos.heroSecondary}>Parler à un conseiller</CTA></div>
-            <div className={styles.heroHighlights}><span>✓ 67 heures minimum</span><span>✓ 12 stagiaires maximum</span><span>✓ Option SST</span></div>
           </div>
           <figure className={`${styles.heroArtwork} ${mos.heroArtwork}`}>
             <ManualArtwork illustration={ssiapArtwork.prevention} priority natural />
