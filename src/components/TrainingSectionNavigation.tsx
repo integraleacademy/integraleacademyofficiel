@@ -58,6 +58,7 @@ export function TrainingSectionNavigation({
       return Math.ceil(stickyTop + nav.offsetHeight + 20);
     };
     const updateAnchorOffsets = () => {
+      document.documentElement.style.setProperty('--site-section-nav-height', `${nav.offsetHeight}px`);
       const scrollMarginTop = `${getAnchorOffset()}px`;
       sections.forEach((section) => {
         section.style.scrollMarginTop = scrollMarginTop;
@@ -133,6 +134,7 @@ export function TrainingSectionNavigation({
     window.addEventListener('resize', handleResize);
 
     return () => {
+      document.documentElement.style.removeProperty('--site-section-nav-height');
       observer.disconnect();
       resizeObserver.disconnect();
       window.cancelAnimationFrame(animationFrame);

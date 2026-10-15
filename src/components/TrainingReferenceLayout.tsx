@@ -40,7 +40,7 @@ export function TrainingReferenceHero({ id, badge, heading, accent, title, tagli
           {highlights.length > 0 && <div className={reference.heroHighlights}>{highlights.map(item => <span key={item}>✓ {item}</span>)}</div>}
         </div>
         <figure className={reference.heroArtwork}>
-          <ManualArtwork illustration={illustration} priority natural sizes="(max-width: 700px) 92vw, 480px" />
+          <ManualArtwork illustration={illustration} priority natural sizes="(max-width: 700px) 94vw, (max-width: 1600px) 46vw, 760px" />
           <figcaption><span>INTÉGRALE ACADEMY</span><strong>{caption}</strong><span>{title}</span></figcaption>
         </figure>
       </div>

@@ -19,3 +19,10 @@
   .inner a { padding-block: 16px; flex-shrink: 0; }
 }
 @media (prefers-reduced-motion: reduce) { .inner a::after { transition: none; } }
+
+/* Shared responsive scale: readable at 100%, with natural content height. */
+
+.inner { width: var(--site-content-width); }
+.inner a { min-height: 44px; font-size: .875rem; }
+.inner > span { font-size: .75rem; }
+@media (max-width: 800px) { .inner { width: 100%; padding-inline: var(--site-gutter); } }

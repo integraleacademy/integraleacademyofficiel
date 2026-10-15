@@ -269,3 +269,12 @@
 .personAvatar{width:76px;height:76px;display:grid;place-items:center;border-radius:24px;background:linear-gradient(135deg,#f7e8c6,#ebbc4b);border:1px solid #ac802633;margin-bottom:24px;box-shadow:0 12px 24px #1524380d}
 .personAvatar img{width:100%;height:100%;object-fit:contain}
 .personAvatar>span{font-size:24px;font-weight:800;letter-spacing:-.04em;color:#253a50}
+
+/* Shared responsive scale: readable at 100%, with natural content height. */
+.container { width: var(--site-content-width); min-width: 0; }
+
+/* Shared responsive scale: readable at 100%, with natural content height. */
+
+.hero .intro { max-width: 58ch; font-size: var(--site-body-size); }
+.page summary { font-size: 1rem; }
+@media (min-width: 1024px) { .hero h1 { font-size: var(--site-title-size); } }

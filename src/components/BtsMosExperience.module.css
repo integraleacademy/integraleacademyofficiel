@@ -522,3 +522,26 @@
 @media (prefers-reduced-motion: reduce) {
   .page *, .page *::before, .page *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
+
+/* Shared responsive scale: readable at 100%, with natural content height. */
+.container { width: var(--site-content-width); min-width: 0; }
+
+/* Shared responsive scale: readable at 100%, with natural content height. */
+
+.intro { font-size: var(--site-body-size); line-height: 1.65; }
+.heroCopy .button, .heroCopy .parcoursupButton { font-size: .875rem; }
+.heroCopy > .textLink { font-size: .875rem; min-height: 44px; }
+.heroNote, .heroFacts li, .heroFacts strong, .heroFunding > span { font-size: .8125rem; }
+@media (min-width: 1024px) {
+  .hero > .container { width: var(--site-content-width); }
+  .hero { --mos-nav-height: 70px; }
+  .heroBottom { padding-right: 0; }
+  .navigation > nav > div { padding-right: 0; }
+}
+@media (min-width: 1024px) and (max-width: 1180px) { .hero { --mos-nav-height: 124px; } }
+
+/* Reading copy and touch controls retain their size on small screens. */
+.missionCopy > p:not(.eyebrow), .careers > p:not(.eyebrow), .periodDetail > p:not(.eyebrow),
+.formatCopy > p:not(.eyebrow), .alternanceBenefits > p:last-child, .cnapsIntro { font-size: var(--site-body-size); }
+.formatCopy .list li, .admissionSteps p, .cnapsCases article > p:last-child, .cnapsSteps p,
+.applicationBanner p:last-child, .periodDetail > ul { font-size: .875rem; }
