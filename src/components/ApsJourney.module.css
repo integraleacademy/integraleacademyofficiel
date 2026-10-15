@@ -218,3 +218,7 @@
 @container (min-width: 391px) and (max-width: 649px) {
   .card { width: min(100%, 420px); min-height: 630px; margin-inline: auto; border-radius: 36px; }
 }
+
+@media (min-width: 1024px) and (max-height: 850px) {
+  .card { width: 100%; min-height: var(--journey-card-height); aspect-ratio: auto; padding: 18px 22px; }
+}

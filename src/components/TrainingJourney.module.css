@@ -37,39 +37,33 @@
 @media (min-width: 1024px) {
   .journey[data-visual-format='landscape'] .step,
   .journey[data-visual-format='landscape'][data-enhanced='true'] .stage { grid-template-columns: minmax(0, 40fr) minmax(0, 60fr); }
-  .journey[data-enhanced='true'] { --journey-card-height: min(660px, max(0px, calc(100svh - var(--site-header-height) - var(--site-section-nav-height) - 48px))); overflow-anchor: none; }
-  /* The measured layout only sticks when its full height fits below the menus.
-     Otherwise it remains in normal flow with the same four tabbed steps. */
-  .journey[data-enhanced='true'] .stage { position: static; top: calc(var(--site-header-height) + var(--site-section-nav-height)); display: grid; min-height: min(800px, calc(100svh - var(--site-header-height) - var(--site-section-nav-height))); grid-template-columns: minmax(0, 44fr) minmax(0, 56fr); grid-template-rows: auto 1fr; padding: 0; }
-  .journey[data-enhanced='true'][data-pinned='true'] { height: calc(var(--journey-stage-height, calc(100svh - var(--site-header-height) - var(--site-section-nav-height))) + 160svh); }
-  .journey[data-enhanced='true'][data-pinned='true'] .stage { position: sticky; }
+  .journey[data-enhanced='true'] {
+    --journey-stage-height: min(800px, max(0px, calc(100svh - var(--site-header-height) - var(--site-section-nav-height))));
+    --journey-card-height: min(660px, max(0px, calc(var(--journey-stage-height) - 48px)));
+    height: calc(var(--journey-stage-height) + 160svh);
+    overflow-anchor: none;
+  }
+  /* Pin every desktop journey below both menus. Its available height is the
+     viewport, not the intrinsic height of the largest hidden card. */
+  .journey[data-enhanced='true'] .stage { position: sticky; top: calc(var(--site-header-height) + var(--site-section-nav-height)); display: grid; height: var(--journey-stage-height); grid-template-columns: minmax(0, 44fr) minmax(0, 56fr); grid-template-rows: auto minmax(0, 1fr); padding: 0; }
   .journey[data-enhanced='true'] .intro { grid-column: 1; grid-row: 1; align-self: end; padding: clamp(28px, 4vh, 52px) clamp(24px, 4.5vw, 88px) 0; }
   .journey[data-enhanced='true'] .intro h2 { font-size: clamp(30px, 2.8vw, 46px); }
   .journey[data-enhanced='true'] .navigation { display: flex; gap: 12px; align-items: center; margin-top: 20px; }
   .navigation button { display: grid; flex: 1; place-items: center; min-width: 38px; min-height: 44px; padding: 0; border-radius: 10px; color: #696974; font-size: 14px; font-weight: 800; transition: color .2s ease, background .2s ease; }
   .navigation button[aria-current='step'] { background: var(--accent-nav); color: var(--accent-current); }
   .journey[data-enhanced='true'] .scrollProgress { display: block; height: 3px; margin-top: 8px; overflow: hidden; border-radius: 3px; background: #e9e6e3; }
-  .journey[data-enhanced='true'][data-pinned='false'] .scrollProgress { visibility: hidden; }
   .scrollProgress > span { display: block; height: 100%; background: var(--accent); transform: scaleX(0); transform-origin: left; }
   .journey[data-enhanced='true'] .steps, .journey[data-enhanced='true'] .step { display: contents; }
   /* All four layouts stay measurable and reserve a stable amount of room. */
   .journey[data-enhanced='true'] .step[data-current='false'] > * { visibility: hidden; pointer-events: none; }
-  .journey[data-enhanced='true'] .copy { grid-column: 1; grid-row: 2; align-self: center; margin: 24px clamp(24px, 4.5vw, 88px) 28px; }
+  .journey[data-enhanced='true'] .copy { grid-column: 1; grid-row: 2; align-self: center; min-height: 0; max-height: calc(100% - var(--journey-copy-top) - var(--journey-copy-bottom)); margin: var(--journey-copy-top) clamp(24px, 4.5vw, 88px) var(--journey-copy-bottom); overflow-y: auto; scrollbar-width: thin; }
   .journey[data-enhanced='true'] .copy h3 { margin-top: 13px; }
   .journey[data-enhanced='true'] .description { margin-top: 15px; }
-  .journey[data-enhanced='true'] .visual { grid-column: 2; grid-row: 1 / 3; align-self: stretch; margin: 8px 0; padding-top: 12px; padding-bottom: 20px; }
+  /* At extreme window heights, keep every detail reachable without hiding the
+     title or disabling the scroll sequence. Normal laptop layouts fit in full. */
+  .journey[data-enhanced='true'] .visual { grid-column: 2; grid-row: 1 / 3; align-self: stretch; min-height: 0; align-items: safe center; margin: 8px 0; padding-top: 12px; padding-bottom: 20px; overflow-y: auto; scrollbar-width: thin; }
   .journey[data-enhanced='true'] .step[data-current='true'] .copy { animation: reveal .28s ease both; }
   .journey[data-enhanced='true'] .step[data-current='true'] .visualInner { animation: reveal .32s ease both; }
-}
-
-@media (min-width: 1024px) and (max-height: 850px) {
-  .journey[data-enhanced='true'] .intro { padding: 16px clamp(24px, 3vw, 58px) 0; }
-  .journey[data-enhanced='true'] .intro h2 { margin-top: 10px; font-size: clamp(28px, 2.35vw, 36px); }
-  .journey[data-enhanced='true'] .navigation { gap: 8px; margin-top: 12px; }
-  .journey[data-enhanced='true'] .copy { margin: 12px clamp(24px, 3vw, 58px) 16px; padding-left: 24px; }
-  .journey[data-enhanced='true'] .copy h3 { margin-top: 9px; font-size: clamp(23px, 1.85vw, 28px); line-height: 1.2; }
-  .journey[data-enhanced='true'] .description { margin-top: 10px; line-height: 1.5; }
-  .journey[data-enhanced='true'] .link { margin-top: 8px; }
 }
 
 @media (max-width: 1023px) {
@@ -124,17 +118,28 @@
 .journey[data-theme='bts'] .visual[data-scene='3'] { background: radial-gradient(ellipse at 85% 10%, rgb(var(--bts-200)), transparent 70%), rgb(var(--bts-50)); }
 .journey[data-theme='bts'] .visualCounter { color: var(--accent-strong); }
 
-/* Shared responsive scale: readable at 100%, with natural content height. */
+/* Readable at 100%; height-specific rules follow the shared desktop scale. */
 
 .description { font-size: var(--site-body-size); max-width: 56ch; }
 .journey { scroll-margin-top: calc(var(--site-header-height) + var(--site-section-nav-height)); }
 @media (min-width: 1024px) {
+  .journey[data-enhanced='true'] { --journey-copy-top: clamp(28px, 3vh, 42px); --journey-copy-bottom: 32px; }
   .journey[data-enhanced='true'] .intro { padding: 32px clamp(20px, 2.5vw, 48px) 0 0; align-self: start; }
   .journey[data-enhanced='true'] .intro h2 { font-size: clamp(2rem, 1.3rem + 1.6vw, 3rem); }
-  .journey[data-enhanced='true'] .copy { align-self: start; margin: clamp(28px, 3vh, 42px) clamp(20px, 2.5vw, 48px) 32px 0; }
+  .journey[data-enhanced='true'] .copy { align-self: start; margin-inline: 0 clamp(20px, 2.5vw, 48px); }
   .journey[data-enhanced='true'] .copy h3 { font-size: clamp(1.5rem, 1rem + .9vw, 2rem); }
   .journey[data-enhanced='true'] .visual { padding-inline: clamp(20px, 2vw, 40px); border-radius: 28px; }
   .journey[data-enhanced='true'] .description { line-height: 1.65; }
+}
+@media (min-width: 1024px) and (max-height: 850px) {
+  .journey[data-enhanced='true'] { --journey-copy-top: 12px; --journey-copy-bottom: 16px; }
+  .journey[data-enhanced='true'] .intro { padding-top: 16px; }
+  .journey[data-enhanced='true'] .intro h2 { margin-top: 10px; font-size: clamp(28px, 2.35vw, 36px); }
+  .journey[data-enhanced='true'] .navigation { gap: 8px; margin-top: 12px; }
+  .journey[data-enhanced='true'] .copy { padding-left: 24px; }
+  .journey[data-enhanced='true'] .copy h3 { margin-top: 9px; font-size: clamp(23px, 1.85vw, 28px); line-height: 1.2; }
+  .journey[data-enhanced='true'] .description { margin-top: 10px; line-height: 1.5; }
+  .journey[data-enhanced='true'] .link { margin-top: 8px; }
 }
 @media (max-width: 1023px) {
   .intro { padding-inline: 0; }
