@@ -17,7 +17,17 @@ jobs:
           node-version: '22'
           cache: npm
       - name: Apply scoped component migration
-        run: python3 .github/ui-consistency-update.py
+        run: |
+          if grep -q INSERT_ORIGINAL_FAQ_THEMES src/components/FAQ.tsx; then python3 .github/ui-consistency-update.py; fi
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('src/components/FAQ.tsx')
+          p.write_text(p.read_text().replace('\nconst premiumFaqThemes:', '\nexport const premiumFaqThemes:'))
+          p = Path('src/components/ui.tsx')
+          s = p.read_text()
+          imp = "import { premiumFaqThemes } from '@/components/FAQ';\n"
+          if imp not in s: p.write_text(imp + s)
+          PY
       - name: Install and generate Prisma client
         run: npm ci && npx prisma generate
       - name: Regression tests
@@ -26,7 +36,9 @@ jobs:
           npm run test:home-cards
           npm run test:a3p
       - name: Production build
-        run: npm run build 2>&1 | tee build-ui.log
+        run: |
+          set -o pipefail
+          npm run build 2>&1 | tee build-ui.log
       - name: Browser setup
         run: |
           npm install --no-save --package-lock=false playwright
@@ -52,9 +64,11 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git rm .github/ui-consistency-update.py .github/workflows/ui-consistency-review.yml
           git add src scripts/test-site-ui.mjs tests/site-ui-consistency.test.mjs
           git diff --cached --check
-          git commit -m 'fix: harmonise chapter menus and all FAQ layouts with the reference pages'
-          gh auth setup-git
-          git push origin HEAD:codex/harmonisation-menus-faq-20261015
+          if ! git diff --cached --quiet; then
+            git commit -m 'fix: harmonise chapter menus and all FAQ layouts with the reference pages'
+            gh auth setup-git
+            git push origin HEAD:codex/harmonisation-menus-faq-20261015
+          fi
+          git rev-parse HEAD
