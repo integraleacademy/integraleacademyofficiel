@@ -20,7 +20,7 @@ import { listPublicSessions as listSessions } from '@/lib/training-data';
 import { vtcFormation } from '@/data/site';
 import styles from './home.module.css';
 import heroStyles from './HomeHero.module.css';
-import btsGridStyles from '@/components/BtsTrainingGrid.module.css';
+import carouselStyles from '@/components/TrainingCarousel.module.css';
 
 export const dynamic = 'force-dynamic';
 
@@ -136,22 +136,22 @@ export default async function Home() {
 
       <ContactFilm />
 
-      <VisualSection tone="security">
-        <section id="formations-securite" className="scroll-mt-28 page-container py-14 md:py-16">
-          <div data-security-training-heading data-training-heading className={styles.securityTrainingHeading}>
-            <div>
-              <span className={styles.securityTrainingEyebrow}>Formations en sécurité privée</span>
-              <h2>Les métiers de la <span>sécurité.</span></h2>
-              <p>Comparez les durées, les modalités, les lieux et les prochaines sessions en un seul regard.</p>
-            </div>
-            <div className={styles.securityTrainingActions}>
-              <SecurityTrainingComparisonModal items={securityHighlights} className={styles.securityTrainingSecondary} />
-              <Link href="/planning" className={styles.securityTrainingPrimary}>Voir le planning <span aria-hidden="true">→</span></Link>
-            </div>
+      <section id="formations-securite" aria-labelledby="security-heading" className={`scroll-mt-28 ${carouselStyles.section}`}>
+        <div className="page-container">
+          <div className={carouselStyles.heading}>
+            <h2 id="security-heading">Les métiers de la sécurité</h2>
+            <p>5 parcours pour se former et évoluer</p>
           </div>
           <SecurityTrainingGrid items={securityHighlights} />
-        </section>
-      </VisualSection>
+          <div className={carouselStyles.footer}>
+            <p className={carouselStyles.formats}>Un projet à préciser ? <Link href="#assistant-orientation">Être orienté <span aria-hidden="true">→</span></Link></p>
+            <div className={carouselStyles.actions}>
+              <SecurityTrainingComparisonModal items={securityHighlights} className={carouselStyles.secondary} />
+              <Link href="/planning" className={carouselStyles.secondary}>Voir le planning <span aria-hidden="true">→</span></Link>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <VisualSection tone="vtc">
         <section id="formation-vtc" aria-labelledby="formation-vtc-title" className="scroll-mt-28 page-container py-14 md:py-16">
@@ -165,18 +165,18 @@ export default async function Home() {
         </section>
       </VisualSection>
 
-      <section id="bts" aria-labelledby="bts-heading" className={`scroll-mt-28 ${btsGridStyles.section}`}>
+      <section id="bts" aria-labelledby="bts-heading" className={`scroll-mt-28 ${carouselStyles.section}`}>
         <div className="page-container">
-          <div className={btsGridStyles.heading}>
+          <div className={carouselStyles.heading}>
             <h2 id="bts-heading">BTS en alternance</h2>
             <p>6 diplômes d’État · Bac +2 · 2 ans</p>
           </div>
           <BtsTrainingGrid items={btsHighlights} />
-          <div className={btsGridStyles.footer}>
-            <p className={btsGridStyles.formats}>Sur notre campus à <strong>{btsCommon.onsiteLocation}</strong> ou <strong>en visioconférence</strong>.</p>
-            <div className={btsGridStyles.actions}>
-              <BtsTrainingComparisonModal items={btsHighlights} className={btsGridStyles.secondary} />
-              <Link href="/planning" className={btsGridStyles.secondary}>Voir les rentrées <span aria-hidden="true">→</span></Link>
+          <div className={carouselStyles.footer}>
+            <p className={carouselStyles.formats}>Sur notre campus à <strong>{btsCommon.onsiteLocation}</strong> ou <strong>en visioconférence</strong>.</p>
+            <div className={carouselStyles.actions}>
+              <BtsTrainingComparisonModal items={btsHighlights} className={carouselStyles.secondary} />
+              <Link href="/planning" className={carouselStyles.secondary}>Voir les rentrées <span aria-hidden="true">→</span></Link>
             </div>
           </div>
         </div>

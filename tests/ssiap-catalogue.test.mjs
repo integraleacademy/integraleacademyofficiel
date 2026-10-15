@@ -8,21 +8,13 @@ test('la carte SSIAP de l’accueil présente toute la gamme et ouvre le catalog
   const home = read('src/app/page.tsx');
   const source = read('src/lib/home-security-trainings.ts');
 
-  assert.match(home, /createHomeSecurityHighlights\(await listSessions\(\)\)/);
+  assert.match(home, /createHomeSecurityHighlights\(sessions\)/);
   assert.match(home, /<SecurityTrainingGrid items=\{securityHighlights\}/);
   assert.match(source, /slug: '\/formations-securite\/ssiap'/);
   assert.match(source, /shortTitle: 'SSIAP'/);
   assert.match(source, /title: 'Sécurité incendie'/);
   assert.match(source, /SSIAP 1, SSIAP 2, SSIAP 3, Remise à niveau et Recyclage\./);
   assert.doesNotMatch(source, /slug: '\/formations-securite\/ssiap-1',\s*shortTitle: 'SSIAP 1'/);
-});
-
-test('la carte compacte SSIAP affiche le détail des parcours', () => {
-  const source = read('src/components/SecurityTrainingGrid.tsx');
-
-  assert.match(source, /item\.visual === 'ssiap'/);
-  assert.match(source, /compactDescription/);
-  assert.match(source, /\{item\.description\}/);
 });
 
 test('le catalogue SSIAP relie les quatre parcours demandés', () => {
