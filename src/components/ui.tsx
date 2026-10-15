@@ -202,7 +202,7 @@ function AppointmentButton(){
 
 function BrandSigle({ placement }: { placement: 'header' | 'footer' }){
   const size = placement === 'header'
-    ? 'h-[var(--site-header-logo-height)] w-[46px] sm:w-[53px] xl:w-[67px]'
+    ? 'h-[var(--site-header-logo-height)] w-[calc(var(--site-header-logo-height)*1.05)]'
     : 'h-[130px] w-[137px]';
 
   return <span className={`relative block shrink-0 overflow-hidden ${size}`} aria-hidden="true">
@@ -217,7 +217,7 @@ export function Header(){
     ['Chauffeur VTC','/vtc','Formation Théorique et Formation Pratique VTC.','🚘'],
   ] as const;
   const nav=[['Nos formations',trainingNav],['Notre école','/ecole'],['Financements','/financements'],['Entreprises','/entreprises'],['Planning','/planning'],['Contact','/contact']] as const;
-  return <header className="sticky top-0 z-50 border-b border-white/15 bg-[linear-gradient(90deg,#40506a_0%,#344259_48%,#2b384d_100%)] text-white shadow-[0_16px_42px_rgba(31,42,58,.24)]"><div className="page-container flex items-center justify-between gap-2 px-0 py-1.5"><Link href="/" aria-label="Retour à l’accueil Intégrale Academy" className="group flex min-w-0 shrink items-center gap-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-academy-gold sm:gap-3"><BrandSigle placement="header"/><span className="min-w-0 whitespace-nowrap text-[11px] font-black tracking-[.06em] sm:text-[15px] sm:tracking-[.08em] xl:text-[20px]"><span className="text-white">INTÉGRALE</span><span className="ml-1 text-academy-gold sm:ml-1.5">ACADEMY</span></span></Link><nav className="hidden items-center gap-1 text-sm font-bold xl:flex" aria-label="Navigation principale">{nav.map(([n,h])=>typeof h!=='string'?<DesktopTrainingDropdown key={n} label={n} items={h}/>:<Link key={h} href={h} className="rounded-full px-3 py-2 text-white/80 transition hover:bg-white/10 hover:text-academy-gold focus:bg-white/10 focus:text-academy-gold">{n}</Link>)}</nav><div className="hidden items-center gap-2 xl:flex"><ThemeToggle/><div className="hidden items-center gap-2 min-[1440px]:flex"><Button href="tel:0422470768" variant="ghost">Appeler</Button><AppointmentButton/></div></div><div className="flex shrink-0 items-center gap-2 xl:hidden"><span className="hidden sm:block"><ThemeToggle/></span><MobileHeaderMenu nav={nav} appointmentFormUrl={appointmentFormUrl}/></div></div></header>
+  return <header className="site-header sticky top-0 z-50 border-b border-white/15 bg-[linear-gradient(90deg,#40506a_0%,#344259_48%,#2b384d_100%)] text-white shadow-[0_16px_42px_rgba(31,42,58,.24)]"><div className="page-container flex items-center justify-between gap-2 px-0 py-1.5"><Link href="/" aria-label="Retour à l’accueil Intégrale Academy" className="group flex min-w-0 shrink items-center gap-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-academy-gold sm:gap-3"><BrandSigle placement="header"/><span className="min-w-0 whitespace-nowrap text-[11px] font-black tracking-[.06em] sm:text-[15px] sm:tracking-[.08em] xl:text-[calc(20px*var(--site-desktop-scale))]"><span className="text-white">INTÉGRALE</span><span className="ml-1 text-academy-gold sm:ml-1.5">ACADEMY</span></span></Link><nav className="hidden items-center gap-1 text-sm font-bold xl:flex" aria-label="Navigation principale">{nav.map(([n,h])=>typeof h!=='string'?<DesktopTrainingDropdown key={n} label={n} items={h}/>:<Link key={h} href={h} className="rounded-full px-3 py-2 text-white/80 transition hover:bg-white/10 hover:text-academy-gold focus:bg-white/10 focus:text-academy-gold">{n}</Link>)}</nav><div className="hidden items-center gap-2 xl:flex"><ThemeToggle/><div className="hidden items-center gap-2 min-[1440px]:flex"><Button href="tel:0422470768" variant="ghost">Appeler</Button><AppointmentButton/></div></div><div className="flex shrink-0 items-center gap-2 xl:hidden"><span className="hidden sm:block"><ThemeToggle/></span><MobileHeaderMenu nav={nav} appointmentFormUrl={appointmentFormUrl}/></div></div></header>
 }
 export function Footer(){
   const footerLinks=[
@@ -227,7 +227,7 @@ export function Footer(){
   ];
   const trustItems=['Qualiopi','CNAPS','France Travail','OPCO AKTO'];
 
-  return <footer className="relative mt-20 overflow-hidden border-t border-white/10 bg-[linear-gradient(135deg,#2a394d_0%,#202c3d_100%)] px-4 pb-8 pt-12 text-white">
+  return <footer className="relative mt-[calc(5rem*var(--site-desktop-scale))] overflow-hidden border-t border-white/10 bg-[linear-gradient(135deg,#2a394d_0%,#202c3d_100%)] px-4 pb-8 pt-12 text-white">
     <div className="pointer-events-none absolute inset-0 opacity-70" aria-hidden="true">
       <div className="absolute -left-32 top-0 h-80 w-80 rounded-full bg-academy-gold/15 blur-3xl"/>
       <div className="absolute -right-24 bottom-0 h-80 w-80 rounded-full bg-academy-gold/10 blur-3xl"/>

@@ -1,5 +1,5 @@
 .section {
-  padding: clamp(48px, 5vw, 80px) 0 0;
+  padding: calc(clamp(48px, 5vw, 80px) * var(--site-desktop-scale)) 0 0;
   color: rgb(var(--text-main));
   background: rgb(var(--background));
   scroll-margin-top: calc(var(--site-header-height) + 24px);
@@ -11,19 +11,19 @@
   display: grid;
   grid-template-columns: minmax(0, 1.25fr) minmax(360px, .85fr);
   align-items: center;
-  gap: clamp(40px, 6vw, 100px);
-  padding-top: clamp(40px, 4vw, 64px);
+  gap: calc(clamp(40px, 6vw, 100px) * var(--site-desktop-scale));
+  padding-top: calc(clamp(40px, 4vw, 64px) * var(--site-desktop-scale));
   border-top: 1px solid rgb(var(--border));
 }
 
 .copy { min-width: 0; }
 .eyebrow { display: flex; align-items: center; gap: 12px; margin: 0 0 24px; color: rgb(var(--accent-strong)); font-size: .75rem; font-weight: 750; letter-spacing: .14em; line-height: 1.5; text-transform: uppercase; }
 .eyebrow > span { width: 30px; height: 2px; background: currentColor; flex: 0 0 auto; }
-.title { margin: 0; font-size: clamp(2.5rem, 3.65vw, 4rem); font-weight: 750; letter-spacing: -.05em; line-height: 1.1; }
+.title { margin: 0; font-size: calc(clamp(2.5rem, 3.65vw, 4rem) * var(--site-desktop-scale)); font-weight: 750; letter-spacing: -.05em; line-height: 1.1; }
 .title em { display: inline-block; margin-top: 8px; color: rgb(var(--accent-strong)); font-family: Georgia, 'Times New Roman', serif; font-weight: 400; letter-spacing: -.05em; }
 .intro { max-width: 47ch; margin: 24px 0 0; color: rgb(var(--text-muted)); font-size: var(--site-body-size); line-height: 1.8; }
 
-.talkingPoints { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin: 36px 0 0; padding: 0; list-style: none; }
+.talkingPoints { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin: calc(36px * var(--site-desktop-scale)) 0 0; padding: 0; list-style: none; }
 .talkingPoints li { position: relative; min-width: 0; padding-top: 17px; border-top: 1px solid rgb(var(--border)); }
 .talkingPoints li::before { position: absolute; top: -1px; left: 0; width: 24px; height: 2px; background: rgb(var(--accent)); content: ''; }
 .stepNumber { display: block; margin-bottom: 12px; color: rgb(var(--accent-strong)); font-size: .7rem; font-weight: 700; letter-spacing: .06em; font-variant-numeric: tabular-nums; }
@@ -40,25 +40,25 @@
   overflow: hidden;
   border: 1px solid #ffffff12;
   border-radius: 26px;
-  padding: clamp(26px, 2.8vw, 40px);
+  padding: calc(clamp(26px, 2.8vw, 40px) * var(--site-desktop-scale));
   color: #fffaf0;
   background: #28394f;
   box-shadow: 0 18px 36px #17253612;
 }
 .contactCard::before { position: absolute; top: 0; left: 40px; width: 64px; height: 3px; border-radius: 0 0 4px 4px; background: #e7b343; content: ''; }
-.cardEyebrow { margin: 0 0 26px; color: #f0c974; font-size: .6875rem; font-weight: 700; letter-spacing: .12em; line-height: 1.6; text-transform: uppercase; }
+.cardEyebrow { margin: 0 0 calc(26px * var(--site-desktop-scale)); color: #f0c974; font-size: .6875rem; font-weight: 700; letter-spacing: .12em; line-height: 1.6; text-transform: uppercase; }
 .person { display: flex; align-items: center; gap: 22px; }
 .person > div:last-child { min-width: 0; }
-.portraitFrame { flex: 0 0 112px; width: 112px; height: 112px; padding: 5px; border: 1px solid #e7b34370; border-radius: 50%; }
+.portraitFrame { flex: 0 0 calc(112px * var(--site-desktop-scale)); width: calc(112px * var(--site-desktop-scale)); height: calc(112px * var(--site-desktop-scale)); padding: 5px; border: 1px solid #e7b34370; border-radius: 50%; }
 .portrait { display: block; width: 100%; height: 100%; }
-.person h3 { margin: 0 0 6px; font-size: clamp(1.625rem, 2.2vw, 2rem); font-weight: 700; letter-spacing: -.035em; line-height: 1.2; }
+.person h3 { margin: 0 0 6px; font-size: calc(clamp(1.625rem, 2.2vw, 2rem) * var(--site-desktop-scale)); font-weight: 700; letter-spacing: -.035em; line-height: 1.2; }
 .person p { margin: 0; color: #e4e8ed; font-size: .8125rem; line-height: 1.6; }
 .person span { display: block; margin-top: 3px; color: #b8c5d4; font-size: .75rem; line-height: 1.5; }
 
-.appointment { margin-top: 27px; padding-top: 25px; border-top: 1px solid #ffffff26; }
+.appointment { margin-top: calc(27px * var(--site-desktop-scale)); padding-top: calc(25px * var(--site-desktop-scale)); border-top: 1px solid #ffffff26; }
 .appointment > p:first-child { margin: 0; font-size: 1.0625rem; font-weight: 650; line-height: 1.5; letter-spacing: -.015em; }
 .appointment > span { display: block; max-width: 36ch; margin-top: 8px; color: #c8d2df; font-size: .875rem; line-height: 1.7; }
-.primaryButton { display: flex; align-items: center; justify-content: center; gap: 12px; min-height: 54px; margin-top: 23px; border: 1px solid transparent; border-radius: 12px; padding: 13px 16px; background: #efc15e; color: #1d2838; font-size: .875rem; font-weight: 750; line-height: 1.5; text-align: center; text-decoration: none; transition: background .2s, transform .2s; }
+.primaryButton { display: flex; align-items: center; justify-content: center; gap: 12px; min-height: max(48px, calc(54px * var(--site-desktop-scale))); margin-top: calc(23px * var(--site-desktop-scale)); border: 1px solid transparent; border-radius: 12px; padding: calc(13px * var(--site-desktop-scale)) 16px; background: #efc15e; color: #1d2838; font-size: .875rem; font-weight: 750; line-height: 1.5; text-align: center; text-decoration: none; transition: background .2s, transform .2s; }
 .primaryButton svg { width: 20px; height: 20px; flex: 0 0 auto; }
 .primaryButton svg:last-child { margin-left: auto; transition: transform .2s; }
 .primaryButton span { flex: 1; }
@@ -67,7 +67,7 @@
 .appointment .reassurance { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 6px; margin: 13px 0 0; color: #ccd6e1; font-size: .75rem; font-weight: 400; line-height: 1.5; }
 .reassurance svg { width: 15px; height: 15px; color: #f0c974; }
 .reassurance > span { margin-inline: 3px; }
-.phoneLink { display: flex; align-items: center; gap: 13px; min-height: 66px; margin-top: 22px; padding-top: 22px; border-top: 1px solid #ffffff26; color: #fffaf0; text-decoration: none; }
+.phoneLink { display: flex; align-items: center; gap: 13px; min-height: 66px; margin-top: calc(22px * var(--site-desktop-scale)); padding-top: calc(22px * var(--site-desktop-scale)); border-top: 1px solid #ffffff26; color: #fffaf0; text-decoration: none; }
 .phoneIcon { display: grid; width: 40px; height: 40px; flex: 0 0 auto; place-items: center; border: 1px solid #ffffff30; border-radius: 50%; }
 .phoneIcon svg { width: 19px; height: 19px; }
 .phoneLink small { display: block; margin-bottom: 4px; color: #c8d2df; font-size: .75rem; line-height: 1.4; }
@@ -80,7 +80,7 @@
 
 @media (max-width: 1100px) {
   .layout { grid-template-columns: minmax(0, 1fr) minmax(340px, .9fr); gap: 32px; }
-  .title { font-size: clamp(2.25rem, 3.8vw, 3rem); }
+  .title { font-size: calc(clamp(2.25rem, 3.8vw, 3rem) * var(--site-desktop-scale)); }
   .person { gap: 16px; }
   .portraitFrame { flex-basis: 96px; width: 96px; height: 96px; }
   .talkingPoints { gap: 12px; }
