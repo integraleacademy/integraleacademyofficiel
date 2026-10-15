@@ -77,3 +77,17 @@
   .hero *, .hero *::after { transition: none !important; }
   .heroCopy h1 em { animation: none; transform: none; }
 }
+
+/* Shared responsive scale: readable at 100%, with natural content height. */
+.container { width: var(--site-content-width); min-width: 0; }
+
+/* Shared responsive scale: readable at 100%, with natural content height. */
+
+.heroCopy > p { max-width: 56ch; font-size: var(--site-body-size); }
+.primaryButton, .secondaryButton { font-size: .875rem; }
+.heroProofs, .assistantTrigger small { font-size: .8125rem; }
+.heroBadge { font-size: .75rem; }
+@media (min-width: 1024px) {
+  .heroCopy h1 { font-size: var(--site-title-size); }
+  .heroComposition { gap: clamp(32px, 4vw, 72px); }
+}

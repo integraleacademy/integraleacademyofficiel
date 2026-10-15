@@ -115,3 +115,12 @@
   .assistantDock { margin-top: 22px; }
 }
 .securityTrainingHeading h2 span{color:rgb(var(--accent-strong))}
+
+/* Shared responsive scale: readable at 100%, with natural content height. */
+.container { width: var(--site-content-width); min-width: 0; }
+
+/* Shared responsive scale: readable at 100%, with natural content height. */
+
+.home :global(.page-container) { width: var(--site-content-width); padding-inline: 0; }
+.primaryButton, .goldButton, .contactSecondary { min-height: 48px; font-size: .875rem; }
+.sectionHeading > p { font-size: var(--site-body-size); }

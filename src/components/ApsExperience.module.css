@@ -226,3 +226,12 @@
 .insertionPanel .statsScroll td { font-weight:700; font-size:14px; }
 @media(max-width:800px) { .referenceOverview { grid-template-columns:1fr; }.referencesHeading { align-items:start; }.referencesHeading > p { max-width:600px; }.insertionHeading { align-items:start; flex-direction:column; gap:14px; }.references { padding:48px 0; } }
 @media(max-width:400px) { .certificateHeading { gap:10px; }.certificateSeal,.certificateSeal svg { width:32px; height:38px; }.certificateHeading .kicker { font-size:8px; }.certificateHeading h3 { font-size:27px; }.level { font-size:10px; padding:8px; }.certificateCard,.professionCard { padding:22px; } }
+
+/* Reading copy and touch controls retain their size on small screens. */
+.admissionLead > p:not(.kicker), .requirement > p, .programOverview p, .programPanel > p,
+.remoteCopy > p:not(.kicker), .examTheory > p:not(.kicker), .examTheory li,
+.workplaces > div > p:last-child, .referencesHeading > p { font-size: var(--site-body-size); }
+.primaryLink, .remoteCopy ul, .examMore p, .workplaces li, .professionCard .conditions,
+.examValidation p:last-child, .referenceDetails summary, .slideCaption p { font-size: .875rem; }
+.programTabs strong, .programPanel li { font-size: .9375rem; }
+.programTabs > button, .panelNavigation button, .slideControls button { min-height: 44px; }

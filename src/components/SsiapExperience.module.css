@@ -300,3 +300,12 @@
   .booking [data-formulas] { grid-template-columns:1fr; }.booking [data-formula] { padding:27px; }.booking [data-formula]:first-of-type { border-right:0; border-bottom:1px solid var(--sx-line); }.bookingJourney { gap:12px; font-size:10px; }
 }
 @media (prefers-reduced-motion:reduce) { .missionPanel:not([hidden]),.programPanel:not([hidden]),.campusViews > figure:not([hidden]) { animation:none; }.manualPageButton,.missionChoices > button,.disclosureIcon,.hourRail button { transition:none; } }
+
+/* Reading copy and touch controls retain their size on small screens. */
+.journeyHeading > p, .missionDescription, .requirements article p, .programCopy > p:last-of-type,
+.pedagogyLead p:not(.eyebrow), .campusHeading > p, .manualCopy > p:not(.eyebrow),
+.practiceQuestion p:not(.eyebrow), .examTheory > p:not(.eyebrow),
+.examPractice > div:last-child > p:not(.eyebrow), .career p:not(.eyebrow) { font-size: var(--site-body-size); }
+.skills p, .pedagogyLead li, .practiceAnswers > button, .practiceFeedback,
+.examValidation p:last-child, .workplaces li, .renewal p:not(.eyebrow) { font-size: .875rem; }
+.programTabs > button, .panelNavigation button, .campusControls button { min-height: 44px; }

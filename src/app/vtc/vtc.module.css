@@ -32,3 +32,6 @@
   .cockpitStats > div { padding: 12px 15px; }
   .heroBottom { margin-top: 28px; padding-block: 16px; }
 }
+
+/* Shared responsive scale: readable at 100%, with natural content height. */
+.container { width: var(--site-content-width); min-width: 0; }

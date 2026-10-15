@@ -262,3 +262,19 @@
     transition: none;
   }
 }
+
+/* Shared responsive scale: readable at 100%, with natural content height. */
+
+.courseNav { top: var(--site-header-height); padding-inline: 0; }
+.courseNavLink, .courseNavCta { min-height: 44px; font-size: .8125rem; line-height: 1.25; }
+.courseNavKicker { font-size: .625rem; line-height: 1.3; }
+.courseNavTitle { font-size: .9375rem; }
+.courseNavIdentity, .courseNavIdentityCopy { min-width: 0; }
+.courseNavTitle { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+@media (max-width: 1180px) { .courseNavLinks { justify-content: flex-start; } }
+@media (max-width: 767px) {
+  .courseNav { padding-block: .5rem; }
+  .courseNavShell { gap: .4rem; }
+  .courseNavIdentity { padding-right: 0; }
+  .courseNavKicker { display: none; }
+}

@@ -1,6 +1,6 @@
 .journey { --accent: #e6530b; --accent-strong: #bc4109; --accent-soft: #fff1e9; --accent-hover: #963007; --accent-focus: #c74b0c; --accent-nav: #fff0e5; --accent-current: #ae3b0b; --journey-light: #ffc59f; --journey-solid: #b94713; --ink: #191b20; --muted: #61636e; background: #fff; color: var(--ink); scroll-margin-top: var(--site-header-height); }
 .continuationTarget { scroll-margin-top: var(--site-header-height); }
-.stage { max-width: 1920px; margin: 0 auto; padding-top: 64px; }
+.stage { width: var(--site-content-width); margin: 0 auto; padding-top: var(--site-section-space); }
 .intro { padding: 0 clamp(24px, 5vw, 88px) 36px; }
 .eyebrow { color: var(--accent-strong); font-size: 12px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
 .intro h2 { max-width: 780px; margin: 16px 0 0; font-size: clamp(32px, 3.1vw, 52px); font-weight: 900; letter-spacing: -.045em; line-height: 1.1; }
@@ -41,7 +41,7 @@
   /* Intrinsic rows keep all reading content in the layout. In a short window,
      the stage can be taller than the viewport and its bottom remains reachable
      through normal page scrolling. Neither card size nor zoom changes the mode. */
-  .journey[data-enhanced='true'] .stage { position: sticky; top: min(var(--site-header-height), calc(100svh - var(--journey-stage-height, calc(100svh - var(--site-header-height))))); display: grid; min-height: calc(100svh - var(--site-header-height)); grid-template-columns: minmax(0, 44fr) minmax(0, 56fr); grid-template-rows: auto 1fr; padding: 0; }
+  .journey[data-enhanced='true'] .stage { position: sticky; top: min(calc(var(--site-header-height) + var(--site-section-nav-height)), calc(100svh - var(--journey-stage-height, 800px))); display: grid; min-height: min(800px, calc(100svh - var(--site-header-height) - var(--site-section-nav-height))); grid-template-columns: minmax(0, 44fr) minmax(0, 56fr); grid-template-rows: auto 1fr; padding: 0; }
   .journey[data-enhanced='true'] .intro { grid-column: 1; grid-row: 1; align-self: end; padding: clamp(28px, 4vh, 52px) clamp(24px, 4.5vw, 88px) 0; }
   .journey[data-enhanced='true'] .intro h2 { font-size: clamp(30px, 2.8vw, 46px); }
   .journey[data-enhanced='true'] .navigation { display: flex; gap: 12px; align-items: center; margin-top: 20px; }
@@ -121,3 +121,21 @@
 .journey[data-theme='bts'] .visual[data-scene='2'] { background: radial-gradient(ellipse at 20% 80%, rgb(var(--bts-100)), transparent 70%), rgb(var(--bts-50)); }
 .journey[data-theme='bts'] .visual[data-scene='3'] { background: radial-gradient(ellipse at 85% 10%, rgb(var(--bts-200)), transparent 70%), rgb(var(--bts-50)); }
 .journey[data-theme='bts'] .visualCounter { color: var(--accent-strong); }
+
+/* Shared responsive scale: readable at 100%, with natural content height. */
+
+.description { font-size: var(--site-body-size); max-width: 56ch; }
+.journey { scroll-margin-top: calc(var(--site-header-height) + var(--site-section-nav-height)); }
+@media (min-width: 1024px) {
+  .journey[data-enhanced='true'] .intro { padding: 32px clamp(20px, 2.5vw, 48px) 0 0; align-self: start; }
+  .journey[data-enhanced='true'] .intro h2 { font-size: clamp(2rem, 1.3rem + 1.6vw, 3rem); }
+  .journey[data-enhanced='true'] .copy { align-self: start; margin: clamp(28px, 3vh, 42px) clamp(20px, 2.5vw, 48px) 32px 0; }
+  .journey[data-enhanced='true'] .copy h3 { font-size: clamp(1.5rem, 1rem + .9vw, 2rem); }
+  .journey[data-enhanced='true'] .visual { padding-inline: clamp(20px, 2vw, 40px); border-radius: 28px; }
+  .journey[data-enhanced='true'] .description { line-height: 1.65; }
+}
+@media (max-width: 1023px) {
+  .intro { padding-inline: 0; }
+  .copy { margin-inline: 0; }
+  .visual { margin-inline: 0; }
+}

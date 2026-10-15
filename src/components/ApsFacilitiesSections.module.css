@@ -48,3 +48,10 @@
 @media(max-width:800px) { .heading { grid-template-columns:1fr; }.heading { gap:23px; }.equipment { grid-template-columns:1fr 1fr; }.equipment article:nth-child(-n+3),.equipment article:nth-last-child(-n+3) { padding:14px 0; border-bottom:1px solid #d7e1eb; }.equipment article:nth-last-child(-n+2) { border-bottom:0; }.schoolFooter { align-items:start; flex-direction:column; }.schoolFooter dl { width:100%; justify-content:space-between; } }
 @media(max-width:700px) { .pcGallery { grid-template-columns:1fr 1fr; grid-template-rows:auto auto; gap:10px; }.pcMainPhoto { grid-column:span 2; grid-row:auto; aspect-ratio:3/2; }.pcPhoto:not(.pcMainPhoto) { aspect-ratio:4/3; }.pcPhoto figcaption { padding:35px 12px 12px; font-size:10px; }.pcMainPhoto figcaption { padding:45px 20px 20px; font-size:16px; }.pcMainPhoto small { font-size:10px; } }
 @media(max-width:550px) { .section { padding:48px 1rem; }.equipment { grid-template-columns:1fr; gap:0; }.equipment article:nth-child(2) { padding-top:14px; }.equipment article:nth-last-child(2) { border-bottom:1px solid #d7e1eb; }.equipment h3 { font-size:14px; }.equipment p { font-size:12px; }.gallery[data-count='3'] { grid-template-columns:1fr 1fr; grid-template-rows:260px 170px; gap:10px; }.gallery[data-count='3'] .photo:first-child { grid-column:span 2; grid-row:auto; }.photo { min-height:280px; }.gallery[data-count='2'] { grid-template-columns:1fr; }.gallery[data-count='3'] .photo:not(:first-child) figcaption { font-size:10px; padding:30px 12px 12px; }.schoolFooter dl { gap:16px; }.schoolFooter dd { font-size:20px; }.schoolFooter dt { font-size:9px; line-height:1.6; } }
+
+/* Reading copy and touch controls retain their size on small screens. */
+.section { padding-inline: 0; padding-block: var(--site-section-space); }
+.heading > p, .heading > div > p:not(.eyebrow) { font-size: var(--site-body-size); }
+.equipment h3 { font-size: 1rem; }
+.equipment p { font-size: .875rem; }
+@media (min-width: 1400px) { .pcGallery { grid-template-rows: repeat(2, clamp(220px, 15vw, 280px)); } }

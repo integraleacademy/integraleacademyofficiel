@@ -227,3 +227,12 @@
   .profileChoices button { min-height: 58px; padding-block: 9px; }
   .proofBar { padding-block: 16px; }
 }
+
+/* Shared responsive scale: readable at 100%, with natural content height. */
+.container { width: var(--site-content-width); min-width: 0; }
+
+/* Shared responsive scale: readable at 100%, with natural content height. */
+
+.heroCopy > p:not(.heroNote) { max-width: 58ch; font-size: var(--site-body-size); }
+.textLink { font-size: .875rem; min-height: 44px; }
+@media (min-width: 1024px) { .heroCopy h1 { font-size: var(--site-title-size); } }

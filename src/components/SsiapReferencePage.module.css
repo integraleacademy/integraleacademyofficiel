@@ -228,3 +228,21 @@
   .section,.booking,.terrain { scroll-margin-top:150px; }
 }
 @media (prefers-reduced-motion:reduce) { .page *, .page *::before, .page *::after { animation:none!important; transition:none!important; scroll-behavior:auto!important; } }
+
+/* Shared responsive scale: readable at 100%, with natural content height. */
+.container { width: var(--site-content-width); min-width: 0; }
+
+/* Shared responsive scale: readable at 100%, with natural content height. */
+
+.heroGrid { grid-template-columns: minmax(0, 1.02fr) minmax(0, 1fr); }
+.sectionHead { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); }
+.sectionTitle { font-size: var(--site-heading-size); }
+.intro, .heroDescription, .missionCopy > p { font-size: var(--site-body-size); }
+.small, .textLink, .contactCard > p, .contactCard small { font-size: .875rem; }
+.heroHighlights, .heroArtwork figcaption span:last-child { font-size: .8125rem; }
+@media (max-width: 1023px) {
+  .heroGrid { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .heroCopy { max-width: 720px; }
+  .heroArtwork { width: 100%; max-width: 680px; margin-inline: auto; }
+}
+@media (max-width: 700px) { .sectionHead { grid-template-columns: minmax(0, 1fr); } }
