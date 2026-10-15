@@ -120,7 +120,7 @@ export default function Page() {
             ['Sécurité privée', '/formations-securite', 'aps-atelier-radio.webp', 'Illustration d’un atelier de communication radio en formation à la sécurité privée'],
             ['Sécurité incendie', '/formations-securite/ssiap', 'ssiap-1-galerie-ssi.webp', 'Illustration d’un exercice sur un système de sécurité incendie en formation SSIAP'],
             ['Chauffeur VTC', '/vtc', 'vtc-parcours.webp', 'Illustration du parcours de formation au métier de chauffeur VTC'],
-            ['BTS en alternance', '/bts', 'bts-ndrc-parcours.webp', 'Illustration du parcours d’apprenants en BTS Négociation et Digitalisation de la Relation Client'],
+            ['BTS en alternance', '/bts', 'bts-campus-etudiante-chino-sauge.webp', 'Illustration du parcours d’apprenants en BTS Négociation et Digitalisation de la Relation Client'],
           ].map(([label, href, image, alt]) => <Link key={label} href={href} className={styles.domainCard}>
             <Image src={`/images/formation-scenes-manuel/${image}`} alt={alt} width={1536} height={1024} sizes="(max-width: 480px) 100vw, (max-width: 800px) 50vw, 25vw" />
             <span className={styles.domainCardBody}><span>{label}</span><Arrow diagonal /></span>

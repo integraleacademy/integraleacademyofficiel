@@ -12,7 +12,7 @@ export function BtsIllustratedBenefits({ courseName }: { courseName: string }) {
     <div className={styles.cards}>
       <article className={styles.card}>
         <figure className={styles.benefitScene}>
-          <Image src="/images/bts/experience/ipad-manuel.webp" alt="Illustration : une étudiante utilise sa tablette et un stylet pour travailler ses cours de BTS" width={1200} height={800} sizes="(max-width: 700px) 94vw, 46vw" />
+          <Image src="/images/bts/tenues-2026/ipad.webp" alt="Illustration : une étudiante utilise sa tablette et un stylet pour travailler ses cours de BTS" width={1200} height={800} sizes="(max-width: 700px) 94vw, 46vw" />
           <figcaption>Votre compagnon de formation.</figcaption>
         </figure>
         <div className={styles.copy}>
@@ -25,7 +25,7 @@ export function BtsIllustratedBenefits({ courseName }: { courseName: string }) {
       </article>
       <article className={styles.card}>
         <figure className={styles.benefitScene}>
-          <Image src="/images/bts/experience/voyage-londres-manuel.webp" alt="Illustration d’un groupe d’étudiants découvrant Londres, devant Big Ben et le palais de Westminster" width={1200} height={800} sizes="(max-width: 700px) 94vw, 46vw" />
+          <Image src="/images/bts/tenues-2026/londres.webp" alt="Illustration d’un groupe d’étudiants découvrant Londres, devant Big Ben et le palais de Westminster" width={1200} height={800} sizes="(max-width: 700px) 94vw, 46vw" />
           <figcaption>Votre promotion, à Londres.</figcaption>
         </figure>
         <div className={styles.copy}>

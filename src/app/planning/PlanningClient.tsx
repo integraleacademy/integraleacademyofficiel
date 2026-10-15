@@ -154,7 +154,7 @@ const formationFilters: {
   },
   {
     key: 'bts',
-    image: '/images/planning-metiers/bts.webp',
+    image: '/images/bts/tenues-2026/planning.webp',
     label: 'BTS',
     eyebrow: 'Alternance',
     description: 'MOS, MCO, NDRC, CI et PI',
