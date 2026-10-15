@@ -43,5 +43,14 @@
       "/images/aps/manuel/conflit.webp",
       "/images/aps/manuel/incendie.webp"
     ]
+  },
+  "elearning_slides": {
+    "captured": "2026-10-15",
+    "method": "Captures du navigateur sur la démonstration publique, sans compte ni données de stagiaire réel.",
+    "files": {
+      "elearning-cours.webp": "https://gestionstagiaires-test-v2.onrender.com/e-learning/demo/aps/cours — cours illustré",
+      "elearning-exercice.webp": "https://gestionstagiaires-test-v2.onrender.com/e-learning/demo/aps/cours — exercice interactif",
+      "elearning-parcours.webp": "https://gestionstagiaires-test-v2.onrender.com/e-learning/demo/aps — modules du parcours"
+    }
   }
 }
