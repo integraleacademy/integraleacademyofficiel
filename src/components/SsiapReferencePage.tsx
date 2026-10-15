@@ -45,15 +45,6 @@ const fallbackSessions = [
   { id: 'ssiap-1-novembre-2027', title: 'SSIAP 1 — Novembre 2027', startDate: '2027-11-08T00:00:00.000Z', endDate: '2027-11-22T00:00:00.000Z', examDate: '2027-11-23T00:00:00.000Z', status: 'OPEN', seatsTotal: 12, seatsLeft: null, location: 'Puget-sur-Argens', priceLabel: '980 €' },
 ];
 
-const heroFacts = [
-  ['Diplôme', 'SSIAP 1', 'Agent de sécurité incendie'],
-  ['Durée', '67 heures', 'Hors examen et déplacements'],
-  ['Effectif', '12 maximum', 'Suivi et pratique encadrée'],
-  ['École', 'Puget-sur-Argens', 'Formation en présentiel'],
-  ['Tarif', 'Dès 980 €', 'Option SSIAP 1 + SST'],
-  ['Agrément', 'SSIAP n°8323', 'Arrêté préfectoral n°26/099'],
-];
-
 const missions = [
   ['01', 'Prévenir les risques', 'Repérer les situations dangereuses et veiller au respect des règles de sécurité incendie.'],
   ['02', 'Surveiller les installations', 'Contrôler les équipements, réaliser les rondes et exploiter le poste de sécurité.'],
@@ -167,7 +158,6 @@ export function SsiapReferencePage({ sessions }: { sessions: any[] }) {
           </figure>
         </div>
         <div className={`${styles.heroBooking} ${mos.heroBooking}`}><TrainingHeroSessionCard session={next} theme="red" duration="67 heures" defaultPrice="980 €" priceNote="SSIAP 1 seul · +250 € avec SST" assistantKey="ssiap-1" registrationHref={sessionHref(next)} /></div>
-        <div className={`${styles.facts} ${mos.facts}`}>{heroFacts.map(([label, value, detail]) => <div key={label}><span>{label}</span><strong>{value}</strong><small>{detail}</small></div>)}</div>
       </div>
     </section>
 
