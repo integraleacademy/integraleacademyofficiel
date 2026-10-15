@@ -8,7 +8,7 @@ const pages = [
   ['/formations-securite/sst', 'green'], ['/formations-securite/ssiap-1', 'red'],
   ['/formations-securite/ssiap', 'red'], ['/vtc', 'violet'],
   ['/formations-securite/desp-initial', 'orange'], ['/formations-securite/desp-vae', 'orange'],
-  ...['mos', 'mco', 'ndrc', 'ci', 'pi', 'cg'].map(slug => [`/bts/${slug}`, 'bts']), ['/faq', 'gold'],
+  ...['mos', 'mco', 'ndrc', 'commerce-international', 'professions-immobilieres', 'comptabilite-gestion'].map(slug => [`/bts/${slug}`, 'bts']), ['/faq', 'gold'],
 ];
 const colors = { gold: 'rgb(139, 88, 18)', blue: 'rgb(37, 99, 235)', green: 'rgb(5, 150, 105)', red: 'rgb(220, 38, 38)', orange: 'rgb(234, 88, 12)', violet: 'rgb(124, 58, 237)' };
 const output = 'faq-color-artifacts';
