@@ -22,6 +22,8 @@ replace('src/app/formations-securite/[slug]/page.tsx', '<PremiumFAQSection badge
 replace('src/app/formations-securite/[slug]/page.tsx', '<PremiumFAQSection badge={`FAQ ${label}`}', '<PremiumFAQSection theme={slug.startsWith(\'ssiap\') ? \'red\' : slug.includes(\'desp\') ? \'orange\' : slug.includes(\'a3p\') || slug.includes(\'sst\') ? \'green\' : slug.includes(\'aps\') ? \'blue\' : \'gold\'} badge={`FAQ ${label}`}')
 
 # Keyboard focus follows the same palette, including standalone FAQ lists.
+# Higher specificity avoids inherited page-level focus rules overriding a FAQ's own theme.
+replace('src/components/FAQ.module.css', '.section a:focus-visible, .list summary:focus-visible', '.section.section a:focus-visible, .list.list summary:focus-visible')
 replace('src/components/FAQ.module.css', 'outline: 3px solid #2563eb;', 'outline: 3px solid var(--faq-focus, rgb(var(--accent-strong)));')
 p = Path('src/components/FAQ.module.css')
 p.write_text(p.read_text() + '''
