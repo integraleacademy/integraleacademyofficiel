@@ -1,0 +1,65 @@
+name: Verify page-specific FAQ colors
+on:
+  push:
+    branches: [codex/faq-page-colors-20261015]
+permissions:
+  contents: write
+concurrency:
+  group: faq-page-colors
+  cancel-in-progress: true
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Apply colour-only corrections
+        run: python3 .github/fix-faq-colors.py
+      - name: Install
+        run: npm ci && npx prisma generate
+      - name: Test source palettes and unchanged layout
+        run: |
+          node --test tests/faq-page-themes.test.mjs tests/site-ui-consistency.test.mjs
+          npm run test:home-cards
+          npm run test:a3p
+      - name: Build
+        run: |
+          set -o pipefail
+          npm run build 2>&1 | tee faq-build.log
+      - name: Browser setup
+        run: |
+          npm install --no-save --package-lock=false playwright
+          npx playwright install --with-deps chromium
+      - name: Verify colours on desktop and mobile
+        run: |
+          npm start > faq-server.log 2>&1 &
+          for i in $(seq 1 40); do curl -fsS http://127.0.0.1:3000/contact >/dev/null && break; sleep 2; done
+          node scripts/test-faq-colors.mjs
+      - name: Verification evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: faq-page-colors
+          retention-days: 3
+          path: |
+            faq-color-artifacts
+            faq-build.log
+            faq-server.log
+      - name: Commit tested colour corrections
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add src
+          git diff --cached --check
+          git commit -m 'fix: adapt FAQ accents to each page without changing their shared layout'
+          gh auth setup-git
+          git push origin HEAD:codex/faq-page-colors-20261015
+          git rev-parse HEAD
