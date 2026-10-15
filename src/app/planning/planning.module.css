@@ -233,8 +233,26 @@
   .previewChoices { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 @media (min-width: 1200px) {
+  /* Fit both rows below the header on laptop screens; keep natural page scrolling
+     when the viewport is shorter or a later step needs more room. */
+  .page .hero { padding-block: clamp(16px, 3svh, 32px); }
   .heroLayout { grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr); }
   .heroTitle { font-size: clamp(40px, 3.4vw, 50px); }
+  .preview { padding: 16px; }
+  .previewHeading h2 { margin-top: 6px; font-size: clamp(23px, 1.8vw, 26px); }
+  .previewTabs { margin-block: 14px 12px; }
+  .previewTabs button { padding-block: 6px; }
+  .previewPrompt { margin-bottom: 10px; }
+  .previewChoices button > span {
+    width: 100%;
+    height: clamp(80px, calc((100svh - var(--site-header-height) - 430px) / 2), 156px);
+    flex-shrink: 0;
+    aspect-ratio: auto;
+  }
+  .previewChoices strong { padding-block: 9px; }
+  .previewChoices strong small { margin-top: 4px; }
+  .previewSummaryImage { height: clamp(100px, 20svh, 180px); aspect-ratio: auto; }
+  .previewCaption { margin-top: 12px; }
 }
 @media (max-width: 1100px) {
   .filterBar { gap: 12px; }
