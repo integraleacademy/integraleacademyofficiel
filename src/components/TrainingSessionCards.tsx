@@ -62,6 +62,7 @@ type TrainingSessionCardsProps = {
   seatCapacity?: number;
   underlineDisclosure?: boolean;
   emptyAction?: Action;
+  compact?: boolean;
 };
 
 const actionStyles: Record<TrainingTheme | 'light', string> = {
@@ -146,6 +147,7 @@ function SessionCard({
   showSessionPrice,
   showOverallPeriodLabel,
   seatCapacity,
+  compact,
 }: {
   session: TrainingSessionCardItem;
   index: number;
@@ -160,6 +162,7 @@ function SessionCard({
   showSessionPrice: boolean;
   showOverallPeriodLabel: boolean;
   seatCapacity?: number;
+  compact?: boolean;
 }) {
   const full = isFull(session);
   const sessionTitle = String(session.title || '').trim();
@@ -171,6 +174,16 @@ function SessionCard({
     { label: 'En présentiel', value: formatPublicPeriod(session.inPersonStartDate, session.inPersonEndDate, inPersonPeriodFallback), icon: 'location' as const, confirmed: Boolean(session.inPersonStartDate && session.inPersonEndDate) },
   ];
   const [mainPeriod, ...detailPeriods] = deliveryPeriods;
+
+  if (compact) return <article className="rounded-[1.5rem] border border-academy-line bg-[#FFFDF8] p-6">
+    <div className="flex flex-wrap items-center justify-between gap-3"><p className={`text-[.65rem] font-black uppercase tracking-[.14em] ${sessionTheme.detailIcon}`}>{index === 0 ? 'Prochaine session' : 'Session suivante'}</p><span className={`rounded-full border px-3 py-1.5 text-xs font-bold ${seatAvailability.badgeClassName}`}>{seatAvailability.label}</span></div>
+    {showSessionTitle && sessionTitle ? <h3 className="mt-4 text-lg font-bold text-academy-ink">{sessionTitle}</h3> : null}
+    <p className="mt-4 text-xl font-black leading-snug tracking-tight text-academy-ink">{mainPeriod.value}</p>
+    <p className="mt-3 text-sm text-academy-muted">Examen : <strong>{formatDate(session.examDate)}</strong></p>
+    <p className="mt-2 text-xs text-academy-muted">{String(session.location || defaultLocation).replace(/\s*\/\s*(?=Côte d[’']Azur)/g, ' · ')}</p>
+    {showDeliveryPeriods && <details className="group/periods mt-5 border-t border-academy-line pt-4"><summary className={`flex min-h-10 cursor-pointer list-none items-center justify-between gap-4 text-xs font-bold ${sessionTheme.detailIcon} [&::-webkit-details-marker]:hidden`}><span>Calendrier à distance & en présentiel</span><span className="text-lg transition group-open/periods:rotate-45" aria-hidden="true">+</span></summary><dl className="mt-3 grid gap-4 sm:grid-cols-2">{detailPeriods.map(period => <div key={period.label}><dt className="text-[.65rem] font-bold uppercase tracking-wider text-academy-muted">{period.label}</dt><dd className="mt-1 text-sm font-bold leading-relaxed text-academy-ink">{period.value}</dd></div>)}</dl></details>}
+    <div className="mt-5 flex flex-wrap items-center justify-between gap-4">{showSessionPrice && <strong className="text-2xl">{formatTrainingPrice(session, defaultPrice)}</strong>}<ActionLink action={{ href: session.registrationHref, label: full ? 'Être alerté' : 'Choisir cette session →' }} variant={full ? 'light' : theme} /></div>
+  </article>;
 
   return <article className={`flex h-full flex-col rounded-[1.8rem] border p-5 shadow-soft ${index === 0 ? sessionTheme.featuredCard : 'border-academy-line bg-[#FFFDF8]'}`}>
     <div className="flex flex-wrap items-center justify-between gap-3">
@@ -226,6 +239,7 @@ export function TrainingSessionCards({
   seatCapacity,
   underlineDisclosure = true,
   emptyAction,
+  compact = false,
 }: TrainingSessionCardsProps) {
   const [locationFilter, setLocationFilter] = useState<SessionLocationFilterKey>('all');
   const filteredSessions = useMemo(
@@ -243,6 +257,7 @@ export function TrainingSessionCards({
   const selectedLocationLabel = sessionLocationFilters.find((filter) => filter.key === locationFilter)?.label ?? 'Tous';
 
   const cardProps = {
+    compact,
     theme,
     sessionTheme,
     showDeliveryPeriods,

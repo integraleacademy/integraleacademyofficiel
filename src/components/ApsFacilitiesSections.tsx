@@ -1,80 +1,62 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import type { ReactNode } from 'react';
 import { listApsPhotos } from '@/lib/aps-gallery-data';
 import type { ApsPhoto } from '@/lib/aps-gallery';
 import styles from './ApsFacilitiesSections.module.css';
 
 const equipment = [
-  ['01', 'Système de sécurité incendie', 'Notre SSI permet de repérer une alarme incendie et de travailler la mise en sécurité.'],
-  ['02', 'Alarme intrusion & détecteurs', 'Une centrale reliée à des détecteurs pour apprendre à identifier une alerte et effectuer une levée de doute.'],
-  ['03', 'Vidéosurveillance', 'Des caméras et un poste de visionnage pour surveiller les images depuis notre PC sécurité.'],
-  ['04', 'Radios & PTI / DATI', 'Des émetteurs-récepteurs et un dispositif de protection du travailleur isolé pour communiquer et donner l’alerte.'],
-  ['05', 'Matériel de contrôle d’accès', 'Une armoire à clés, des badges, des registres visiteurs et un détecteur de métaux portatif.'],
-  ['06', 'Rondes & main courante', 'Un parcours avec points de contrôle, des consignes et une main courante pour tracer les événements.'],
+  ['video', 'Vidéoprotection', 'Consulter les images et observer les accès.'],
+  ['alarm', 'SSI & alarme intrusion', 'Recevoir une alerte et appliquer la procédure.'],
+  ['radio', 'Radios & téléphone', 'Transmettre une consigne claire et coordonner.'],
+  ['screen', 'Main courante électronique', 'Tracer les événements et rendre compte.'],
+  ['shield', 'PTI / DATI', 'Prendre en main la protection du travailleur isolé.'],
+  ['route', 'Parcours de ronde', 'Contrôler les points sensibles et lever le doute.'],
 ] as const;
 
-function PhotoGallery({ photos, label }: { photos: ApsPhoto[]; label: string }) {
-  return <div className={styles.gallery} data-count={photos.length} role="group" aria-label={label}>
-    {photos.map((photo) => <figure key={photo.id} className={styles.photo}>
-      <a href={photo.src} target="_blank" rel="noopener noreferrer" aria-label={`Agrandir la photo : ${photo.caption} (nouvel onglet)`}>
-        <Image src={photo.src} alt={photo.caption} fill sizes="(max-width: 700px) 90vw, (max-width: 1100px) 60vw, 40vw" unoptimized={photo.src.startsWith('/api/')} />
-        <span className={styles.expand} aria-hidden="true">↗</span>
-      </a>
+function EquipmentIcon({ kind }: { kind: typeof equipment[number][0] }) {
+  return <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    {kind === 'video' ? <><rect x="5" y="7" width="30" height="23" rx="3"/><path d="M20 7v23M5 18h30M14 35h12M20 30v5"/></>
+      : kind === 'alarm' ? <><rect x="8" y="4" width="24" height="32" rx="3"/><path d="M13 10h14v8H13zM14 24h2m8 0h2m-12 5h2m8 0h2"/></>
+      : kind === 'radio' ? <><rect x="11" y="14" width="18" height="23" rx="3"/><path d="M14 14V3m10 11V9M16 20h8m-8 5h8m-8 5h4"/><path d="M21 3c5 0 9 4 9 8"/></>
+      : kind === 'screen' ? <><rect x="4" y="6" width="32" height="24" rx="3"/><path d="M14 36h12m-6-6v6M10 13h5m5 0h9M10 19h5m5 0h9M10 25h5m5 0h9"/></>
+      : kind === 'shield' ? <><path d="m20 3 14 6v10c0 9-14 18-14 18S6 28 6 19V9Z"/><path d="M20 12v9m0 5h.01"/></>
+      : <><circle cx="9" cy="9" r="4"/><circle cx="31" cy="31" r="4"/><path d="M13 9h12c12 0 12 13 0 13H15c-12 0-12 9 0 9h12"/></>}
+  </svg>;
+}
+
+function PhotoGallery({ photos }: { photos: ApsPhoto[] }) {
+  return <div className={styles.gallery} data-count={photos.length} role="group" aria-label="Photos de l’école Intégrale Academy">
+    {photos.map(photo => <figure key={photo.id} className={styles.photo}>
+      <Image src={photo.src} alt={photo.caption} fill sizes="(max-width: 700px) 90vw, (max-width: 1100px) 60vw, 700px" unoptimized={photo.src.startsWith('/api/')} />
       <figcaption>{photo.caption}</figcaption>
     </figure>)}
   </div>;
 }
 
-export async function ApsFacilitiesSections({ pcFallback }: { pcFallback: ReactNode }) {
+export async function ApsFacilitiesSections() {
   const { photos } = await listApsPhotos();
-  const pcPhotos = photos.filter((photo) => photo.gallery === 'pc-securite');
-  const uploadedSchoolPhotos = photos.filter((photo) => photo.gallery === 'ecole');
-  const schoolPhotos: ApsPhoto[] = uploadedSchoolPhotos.length ? uploadedSchoolPhotos : [{
-    id: 'accueil-ecole', gallery: 'ecole', slot: 1,
-    src: '/images/campus/campus-accueil.jpg', caption: 'L’accueil de notre école à Puget-sur-Argens',
-  }];
-
+  const uploadedSchoolPhotos = photos.filter(photo => photo.gallery === 'ecole');
+  const schoolPhotos: ApsPhoto[] = uploadedSchoolPhotos.length ? uploadedSchoolPhotos : [
+    { id: 'salle-aps', gallery: 'ecole', slot: 1, src: '/images/campus/salle-formation.webp', caption: 'Des espaces pour apprendre ensemble.' },
+    { id: 'accueil-aps', gallery: 'ecole', slot: 2, src: '/images/campus/accueil-centre.webp', caption: 'Un accueil, une équipe.' },
+    { id: 'pause-aps', gallery: 'ecole', slot: 3, src: '/images/campus/espace-detente.webp', caption: 'Une pause entre deux ateliers.' },
+  ];
   return <>
     <section id="pc-securite" aria-labelledby="pc-securite-title" className={`${styles.section} ${styles.security}`}>
       <div className="page-container">
-        <div className={styles.heading}>
-          <p className={styles.eyebrow}>Le PC sécurité & le matériel</p>
-          <h2 id="pc-securite-title">Un PC sécurité équipé.<br /><span>Du matériel à prendre en main.</span></h2>
-          <p>Notre centre de formation à Puget-sur-Argens dispose d’un poste central de sécurité dédié à la formation APS. SSI, alarme intrusion, vidéosurveillance, radios : vous utilisez sur place les équipements que vous retrouverez dans vos missions.</p>
-        </div>
+        <div className={styles.heading}><div><p className={styles.eyebrow}>Le PC sécurité & le matériel</p><h2 id="pc-securite-title">Un PC sécurité équipé.<br /><em>À vous de prendre le poste.</em></h2></div><p>Observer les écrans, recevoir une alarme, transmettre l’information : vous apprenez à utiliser les équipements de vos futures missions.</p></div>
         <div className={styles.securityLayout}>
-          <div>
-            {pcPhotos.length ? <PhotoGallery photos={pcPhotos} label="Photos du PC sécurité" /> : <div className={styles.pcIllustration}>
-              <div className={styles.pcIllustrationTitle}><span className={styles.dot} />Prendre en main le poste de sécurité</div>
-              <div className={styles.motion}>{pcFallback}</div>
-              <p>Observer · Alerter · Coordonner · Rendre compte</p>
-            </div>}
-            <p className={styles.trainingNote}>Dans notre PC sécurité, vous vous entraînez à recevoir une alarme, consulter les images, transmettre une consigne et renseigner la main courante.</p>
-          </div>
-          <div className={styles.equipment}>
-            {equipment.map(([number, title, description]) => <article key={title}>
-              <span className={styles.number}>{number}</span><h3>{title}</h3><p>{description}</p>
-            </article>)}
-          </div>
+          <figure className={styles.pcScene}><Image src="/images/aps/experience/pc-securite.webp" alt="Illustration d’un poste central de sécurité avec mur de vidéosurveillance, main courante, SSI, alarme intrusion et radios" width={1536} height={1024} sizes="(max-width: 900px) 92vw, 800px" /><figcaption><span>Observer · Alerter · Coordonner</span><small>Illustration pédagogique d’un PC sécurité</small></figcaption></figure>
+          <div className={styles.equipment}>{equipment.map(([kind, title, description]) => <article key={title}><span className={styles.equipmentIcon}><EquipmentIcon kind={kind} /></span><div><h3>{title}</h3><p>{description}</p></div></article>)}</div>
         </div>
-        <p className={styles.regulationNote}>Le PC sécurité et ces moyens de surveillance font partie des équipements pédagogiques prévus par l’<a href="https://www.legifrance.gouv.fr/loda/id/JORFTEXT000050398597" target="_blank" rel="noopener noreferrer">article 12 de l’arrêté du 23 octobre 2024 du ministère de l’Intérieur</a>.</p>
+        <details className={styles.regulationNote}><summary>Les équipements pédagogiques prévus pour la formation APS <span aria-hidden="true">+</span></summary><p>Le poste central de sécurité et les moyens de surveillance font partie des équipements prévus par l’<a href="https://www.legifrance.gouv.fr/loda/id/JORFTEXT000050398597" target="_blank" rel="noopener noreferrer">article 12 de l’arrêté du 23 octobre 2024</a>.</p></details>
       </div>
     </section>
     <section id="ecole-aps" aria-labelledby="ecole-aps-title" className={`${styles.section} ${styles.school}`}>
-      <div className={`page-container ${styles.schoolLayout}`}>
-        <div className={styles.schoolCopy}>
-          <p className={styles.eyebrow}>Votre école sur la Côte d’Azur</p>
-          <h2 id="ecole-aps-title">Bienvenue chez<br /><span>Intégrale Academy.</span></h2>
-          <p>Fondée en 2018, notre école vous accueille à Puget-sur-Argens (Var, Côte d'Azur), pour vous préparer aux métiers de la sécurité privée. Salles de cours, espace informatique et espaces de mise en situation. Vous alternez les apports théoriques et la pratique. Notre équipe vous accompagne dans votre projet, vos démarches et votre parcours de formation.</p>
-          <div className={styles.schoolFacts}>
-            <div><strong>400 m²</strong><span>dédiés à la formation</span></div>
-            <div><strong>4 salles</strong><span>pour apprendre et pratiquer</span></div>
-            <div><strong>12 maximum</strong><span>par session APS</span></div>
-          </div>
-          <Link href="/ecole" className={styles.schoolLink}>Découvrir l’école <span aria-hidden="true">↗</span></Link>
-        </div>
-        <PhotoGallery photos={schoolPhotos} label="Photos de l’école Intégrale Academy" />
+      <div className="page-container">
+        <div className={styles.heading}><div><p className={styles.eyebrow}>Votre école sur la Côte d’Azur</p><h2 id="ecole-aps-title">Bienvenue chez<br /><em>Intégrale Academy.</em></h2></div><div><p>Depuis 2018, notre équipe vous accueille à Puget-sur-Argens. Des salles de cours aux espaces de pratique, vous apprenez dans une école à taille humaine.</p><Link className={styles.schoolLink} href="/ecole">Entrez, on vous fait visiter <span aria-hidden="true">↗</span></Link></div></div>
+        <PhotoGallery photos={schoolPhotos} />
+        <div className={styles.schoolFooter}><dl><div><dt>Espaces de formation</dt><dd>400 m²</dd></div><div><dt>Pour apprendre & pratiquer</dt><dd>4 salles</dd></div><div><dt>Par session APS</dt><dd>12 maximum</dd></div></dl><Link href="/ecole#equipe">Rencontrer l’équipe <span aria-hidden="true">↗</span></Link></div>
       </div>
     </section>
   </>;

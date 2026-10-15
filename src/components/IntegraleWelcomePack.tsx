@@ -39,7 +39,7 @@ const manuals = {
   },
 } as const;
 
-export function IntegraleWelcomePack({ course }: { course: keyof typeof manuals }) {
+export function IntegraleWelcomePack({ course, title = 'Pack Intégrale.' }: { course: keyof typeof manuals; title?: string }) {
   const manual = manuals[course];
 
   return <section id="pack-integrale" className={styles.banner} aria-labelledby="pack-integrale-title">
@@ -47,7 +47,7 @@ export function IntegraleWelcomePack({ course }: { course: keyof typeof manuals 
       <div className={styles.heading}>
         <div>
           <p className={styles.eyebrow}>Les essentiels de votre formation</p>
-          <h2 id="pack-integrale-title">Votre <span>Pack Intégrale.</span></h2>
+          <h2 id="pack-integrale-title">Votre <span>{title}</span></h2>
         </div>
         <p className={styles.dayBadge}><span aria-hidden="true">✓</span> Remis le 1er jour de formation</p>
       </div>
