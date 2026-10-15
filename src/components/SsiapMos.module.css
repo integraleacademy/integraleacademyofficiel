@@ -75,6 +75,8 @@
 .dualFooter { margin-top: 1.4rem; }
 .dualFooter > span { display: block; margin-bottom: 1rem; font-size: .8rem; font-weight: 800; text-align: center; }
 .dualFooter b { color: #d6342a; padding: 0 .25rem; }
+.dualFooter > a { background: #172233; color: #fff; }
+.dualFooter > a:hover { background: #000; }
 .dualFooter > p { margin-top: .8rem; color: #697589; font-size: .73rem; line-height: 1.6; text-align: center; }
 
 @media (max-width: 767px) {
