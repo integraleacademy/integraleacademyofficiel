@@ -165,22 +165,22 @@ export default async function Home() {
         </section>
       </VisualSection>
 
-      <VisualSection tone="bts" className={btsGridStyles.section}>
-        <section id="bts" className="scroll-mt-28 page-container py-14 md:py-16">
-          <div data-training-heading className={styles.securityTrainingHeading}>
-            <div>
-              <span className={styles.securityTrainingEyebrow}>Enseignement supérieur</span>
-              <h2>BTS en alternance</h2>
-              <p>6 diplômes d’État · Bac +2 · 2 ans en alternance</p>
-            </div>
-            <div className={styles.securityTrainingActions}>
-              <BtsTrainingComparisonModal items={btsHighlights} className={styles.securityTrainingSecondary} />
-              <Link href="/planning" className={styles.securityTrainingPrimary}>Voir les rentrées <span aria-hidden="true">→</span></Link>
-            </div>
+      <section id="bts" aria-labelledby="bts-heading" className={`scroll-mt-28 ${btsGridStyles.section}`}>
+        <div className="page-container">
+          <div className={btsGridStyles.heading}>
+            <h2 id="bts-heading">BTS en alternance</h2>
+            <p>6 diplômes d’État · Bac +2 · 2 ans</p>
           </div>
           <BtsTrainingGrid items={btsHighlights} />
-        </section>
-      </VisualSection>
+          <div className={btsGridStyles.footer}>
+            <p className={btsGridStyles.formats}>Sur notre campus à <strong>{btsCommon.onsiteLocation}</strong> ou <strong>en visioconférence</strong>.</p>
+            <div className={btsGridStyles.actions}>
+              <BtsTrainingComparisonModal items={btsHighlights} className={btsGridStyles.secondary} />
+              <Link href="/planning" className={btsGridStyles.secondary}>Voir les rentrées <span aria-hidden="true">↗</span></Link>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <AcademyJourney />
       <AcademyLearningStudio />
