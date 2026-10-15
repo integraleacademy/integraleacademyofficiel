@@ -43,6 +43,51 @@
 .sectionHeading > div:nth-child(2) > p { margin-top: 0; }
 .accent { color: var(--sm-red); }
 
+/* The APS double-qualification card, paired with the existing SSIAP career path. */
+.careerColumn { display: grid; align-content: start; gap: 32px; min-width: 0; }
+.dualSkill {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-width: 0;
+  padding: clamp(1.25rem, 2.5vw, 2rem);
+  border: 1px solid #dbe3ee;
+  border-radius: 2rem;
+  background: linear-gradient(135deg, #f1f7ff, #fff 45%, #fff2ef);
+  box-shadow: 0 16px 55px #1722330a;
+  color: #172233;
+}
+.dualEyebrow { color: #526580; font-size: .65rem; font-weight: 900; text-transform: uppercase; letter-spacing: .22em; }
+.page .dualSkill > h3 { margin-top: 1rem; font-size: clamp(2rem, 3vw, 2.75rem); font-weight: 900; line-height: 1.03; letter-spacing: -.05em; }
+.dualSkill > h3 span { color: #c24135; }
+.dualIntro { margin-top: 1rem; max-width: 32rem; color: #5b6575; font-size: .95rem; line-height: 1.8; }
+.dualPanels { position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; margin-top: 1.5rem; }
+.dualPanels > div { min-width: 0; padding: 1rem .85rem; border: 1px solid; border-radius: 1.4rem; }
+.dualPanels .dualSecurity { background: #edf5ff; border-color: #c7dbf7; }
+.dualPanels .dualFire { background: #fff0ed; border-color: #facbc4; }
+.dualLabel { display: inline-flex; border-radius: 99px; padding: .4rem .65rem; background: #2563eb; color: #fff; font-size: .65rem; font-weight: 900; letter-spacing: .07em; }
+.dualFire .dualLabel { background: #d6342a; }
+.dualPanels .dualVisual { height: auto; min-height: 0; margin-block: 1rem; border-radius: .9rem; }
+.dualFire .dualVisual img { object-fit: contain; background: #fff; }
+.dualPlus { position: absolute; z-index: 1; left: 50%; top: 45%; transform: translate(-50%, -50%); display: grid; place-items: center; width: 2.5rem; height: 2.5rem; border-radius: 50%; background: #fff; border: 1px solid #e5e7eb; box-shadow: 0 6px 20px #17223315; font-size: 1.6rem; font-weight: 800; }
+.dualPanels h4 { font-size: .92rem; font-weight: 900; line-height: 1.3; }
+.dualPanels p { margin-top: .5rem; color: #526078; font-size: .8rem; line-height: 1.7; }
+.dualFooter { margin-top: 1.4rem; }
+.dualFooter > span { display: block; margin-bottom: 1rem; font-size: .8rem; font-weight: 800; text-align: center; }
+.dualFooter b { color: #d6342a; padding: 0 .25rem; }
+.dualFooter > p { margin-top: .8rem; color: #697589; font-size: .73rem; line-height: 1.6; text-align: center; }
+
+@media (max-width: 767px) {
+  .dualSkill { padding: 1.25rem; }
+  .dualPanels { gap: .6rem; }
+  .dualPanels > div { padding: .85rem .6rem; }
+  .dualPlus { width: 2rem; height: 2rem; font-size: 1.2rem; }
+}
+@media (max-width: 360px) {
+  .dualPanels { grid-template-columns: minmax(0, 1fr); gap: 1rem; }
+  .dualPlus { top: 50%; }
+}
+
 /* Hero: natural content height, no cropped illustration or viewport clipping. */
 .page .hero { padding: clamp(24px, 3.5vh, 40px) 0 22px; color: var(--sm-ink); background: radial-gradient(ellipse at 90% 10%, #dc817715, transparent 58%), var(--sm-bg); }
 .page .heroGrid { grid-template-columns: 1.05fr 1fr; align-items: center; gap: 48px; }

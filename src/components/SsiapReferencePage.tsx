@@ -228,7 +228,37 @@ export function SsiapReferencePage({ sessions }: { sessions: any[] }) {
     </SsiapBooking>
 
     <Section enhanced id="debouches" eyebrow="08 / Après le SSIAP 1" title={<>Travaillez, évoluez, maintenez vos compétences.</>} intro={<>Le SSIAP 1 ouvre l’accès aux fonctions d’agent de sécurité incendie. L’expérience permet ensuite d’envisager le SSIAP 2 et la responsabilité d’une équipe.</>}>
-      <div className={experience.outcomes}><article><p className={experience.eyebrow}>Débouchés</p><h3>Les postes accessibles</h3><ul className={experience.jobs}>{jobs.map(item => <li key={item}>{item}<span aria-hidden="true">↗</span></li>)}</ul></article><article className={experience.career}><p className={experience.eyebrow}>Évolution</p><h3>Objectif SSIAP 2</h3><div className={experience.careerLadder} aria-hidden="true"><strong><small>Agent</small>SSIAP 1</strong><span>→</span><strong><small>Chef d’équipe</small>SSIAP 2</strong></div><p>Après l’expérience réglementaire requise, vous pouvez préparer le SSIAP 2 et évoluer vers le métier de chef d’équipe de sécurité incendie.</p><CTA href={contactHref('évolution SSIAP 2')} variant="outline" className="mt-5">Préparer mon évolution</CTA></article></div>
+      <div className={experience.outcomes}>
+        <div className={mos.careerColumn}>
+          <article><p className={experience.eyebrow}>Débouchés</p><h3>Les postes accessibles</h3><ul className={experience.jobs}>{jobs.map(item => <li key={item}>{item}<span aria-hidden="true">↗</span></li>)}</ul></article>
+          <article className={experience.career}><p className={experience.eyebrow}>Évolution</p><h3>Objectif SSIAP 2</h3><div className={experience.careerLadder} aria-hidden="true"><strong><small>Agent</small>SSIAP 1</strong><span>→</span><strong><small>Chef d’équipe</small>SSIAP 2</strong></div><p>Après l’expérience réglementaire requise, vous pouvez préparer le SSIAP 2 et évoluer vers le métier de chef d’équipe de sécurité incendie.</p><CTA href={contactHref('évolution SSIAP 2')} variant="outline" className="mt-5">Préparer mon évolution</CTA></article>
+        </div>
+        <article className={mos.dualSkill} aria-labelledby="ssiap-dual-title">
+          <p className={mos.dualEyebrow}>Double compétence</p>
+          <h3 id="ssiap-dual-title">Deux expertises.<br /><span>Plus de possibilités.</span></h3>
+          <p className={mos.dualIntro}>Associez le SSIAP 1 et le TFP APS pour élargir vos missions dans la sécurité incendie et la surveillance humaine.</p>
+          <div className={mos.dualPanels}>
+            <div className={mos.dualSecurity}>
+              <span className={mos.dualLabel}>TFP APS</span>
+              <ManualArtwork illustration={originalArtwork['aps-metier-site']} natural className={mos.dualVisual} sizes="(max-width: 360px) 85vw, (max-width: 900px) 42vw, 230px" />
+              <h4>Prévenir & surveiller</h4>
+              <p>Rondes, contrôle d’accès, protection des personnes et des biens.</p>
+            </div>
+            <span className={mos.dualPlus} aria-hidden="true">+</span>
+            <div className={mos.dualFire}>
+              <span className={mos.dualLabel}>SSIAP 1</span>
+              <ManualArtwork illustration={{ src: '/images/aps/manuel/extincteurs.webp', alt: 'Trois extincteurs présentés dans le manuel APS' }} natural className={mos.dualVisual} sizes="(max-width: 360px) 85vw, (max-width: 900px) 42vw, 230px" />
+              <h4>Alerter & protéger</h4>
+              <p>Prévention incendie, évacuation et assistance aux personnes.</p>
+            </div>
+          </div>
+          <div className={mos.dualFooter}>
+            <span>Surveillance humaine <b>+</b> Sécurité incendie</span>
+            <CTA href="/formations-securite/aps" variant="dark" className="w-full">Découvrir le TFP APS →</CTA>
+            <p>Deux qualifications complémentaires, chacune avec ses prérequis et son examen.</p>
+          </div>
+        </article>
+      </div>
       <div className={experience.workplaces}><article><p className={experience.eyebrow}>Où exercer ?</p><ul>{workplaces.map(item => <li key={item}>{item}</li>)}</ul></article><article className={experience.renewal}><strong aria-hidden="true">3<span>ans</span></strong><div><p className={experience.eyebrow}>Maintien des acquis</p><h3>Recyclage tous les 3 ans</h3><p>Le secourisme doit rester à jour. Une remise à niveau peut être nécessaire selon la date d’expiration et l’activité exercée.</p></div></article></div>
       <dl className={experience.credentials}>{[['Centre agréé', 'SSIAP n°8323'], ['Cadre officiel', 'Arrêté n°26/099 du 29 mai 2026'], ['Formation suivie', '12 stagiaires maximum']].map(([title, text]) => <div key={title}><dt>{title}</dt><dd>{text}</dd></div>)}</dl>
       <a className={styles.accreditation} href="https://www.integraleacademy.com/_files/ugd/008e7b_cc8ed006f785482f9eee3f22e08c323c.pdf" target="_blank" rel="noopener noreferrer"><Image src="/images/certifications/ssiap-apercu.webp" alt="Aperçu de l’agrément SSIAP d’Intégrale Academy" width={130} height={180} /><div><p className={styles.eyebrow}>Un cadre vérifiable</p><h3>Consultez notre agrément SSIAP.</h3><p>Agrément n°8323 · arrêté préfectoral n°26/099 du 29 mai 2026</p><strong>Télécharger l’agrément (PDF) ↗</strong></div></a>
