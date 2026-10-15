@@ -199,3 +199,19 @@
 @container (min-width: 391px) and (max-width: 649px) {
   .card { width: min(100%, 420px); min-height: 630px; margin-inline: auto; border-radius: 36px; }
 }
+
+/* A short desktop uses the full column width instead of a tall 420px poster. */
+@media (min-width: 1024px) and (max-height: 850px) {
+  .card { width: 100%; min-height: var(--journey-card-height); aspect-ratio: auto; padding: 18px 22px; }
+  .openingBody { padding-block: 14px; }
+  .openingTitle { font-size: clamp(32px, 6.2cqi, 48px); }
+  .subtitle { margin-top: 12px; line-height: 1.5; }
+  .metricHeadline, .studyPanels { margin-block: 12px; }
+  .skills { margin-block: 8px 12px; }
+  .practiceTitle, .practiceSheet { margin-block: 12px; }
+  .practiceNote { margin-bottom: 12px; }
+  .futureHeading { margin-top: 12px; }
+  .milestones { margin-block: 12px; }
+  .milestones > a { padding: 10px 14px; }
+  .validationNote { margin-block: 8px; }
+}
