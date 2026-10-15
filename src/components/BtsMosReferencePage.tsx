@@ -49,7 +49,7 @@ const faq = [
   { q: 'Puis-je m’inscrire juste après le bac ?', a: 'Oui. Le BTS MOS est accessible après un baccalauréat ou un titre équivalent, sous réserve de l’étude de votre dossier. Aurélie vous accompagne pour vérifier les prérequis et préparer votre inscription.' },
   { q: 'Puis-je m’inscrire sans avoir trouvé d’entreprise ?', a: 'Oui, vous pouvez commencer par votre candidature. L’équipe vous accompagne dans la préparation de votre recherche d’entreprise et vous explique les étapes du contrat d’apprentissage.' },
   { q: 'Comment m’inscrire en BTS MOS ?', a: 'Vous avez deux possibilités : remplir notre dossier de pré-inscription en ligne ou candidater directement sur Parcoursup en choisissant la fiche présentiel ou 100 % à distance. Les candidatures sur Parcoursup suivent le calendrier de la plateforme. Pour une candidature en cours d’année, utilisez le dossier en ligne et échangez avec Aurélie.' },
-  { q: 'Faut-il une carte professionnelle CNAPS pour intégrer le BTS MOS ?', a: 'Pour intégrer notre parcours BTS MOS en alternance dans la sécurité privée, vous devrez être titulaire de la carte professionnelle CNAPS correspondant aux missions de surveillance humaine et de gardiennage avant votre entrée en formation. Si vous possédez déjà cette carte en cours de validité, vous êtes dispensé de la formation APS préalable. Sinon, notre équipe vous accompagne dans les démarches et vous oriente vers une session APS. Le tarif spécial futurs étudiants BTS MOS est de 950 €, à la charge de l’apprenti et distinct du financement du BTS. Vous pouvez commencer votre dossier de pré-inscription pour préparer ces étapes avec nous.' },
+  { q: 'Faut-il une carte professionnelle CNAPS pour intégrer le BTS MOS ?', a: 'Pour intégrer notre parcours BTS MOS en alternance dans la sécurité privée, vous devrez être titulaire de la carte professionnelle CNAPS correspondant aux missions de surveillance humaine et de gardiennage avant votre entrée en formation. Si vous possédez déjà cette carte en cours de validité, vous êtes dispensé de la formation APS préalable. Si vous avez obtenu le bac pro « Métiers de la sécurité », vous pouvez demander cette carte au CNAPS sans suivre de formation APS supplémentaire. Notre équipe vous accompagne pour préparer votre demande, dont la validation reste soumise au CNAPS. Si vous ne disposez ni de la carte ni d’un diplôme reconnu pour la demander, notre équipe vérifie votre situation et vous oriente vers une session APS. Lorsqu’elle est nécessaire, cette formation APS est proposée au tarif spécial futurs étudiants BTS MOS de 950 €, à la charge de l’apprenti et distinct du financement du BTS. Vous pouvez commencer votre dossier de pré-inscription pour préparer ces étapes avec nous.' },
   { q: 'Combien coûte le BTS en alternance ?', a: 'La formation est sans frais de scolarité pour l’apprenti lorsque le contrat d’alternance et sa prise en charge sont validés. Le financement s’organise avec l’entreprise et son OPCO.' },
   { q: 'Comment se déroulent les cours à distance ?', a: 'Ce sont des cours en live, 100 % à distance en visioconférence ZOOM. Vous vous connectez aux horaires prévus à l’emploi du temps et suivez les cours en direct avec vos formateurs et votre promotion. Vous pouvez poser vos questions et participer aux échanges. Les épreuves finales sont organisées en présentiel par l’Académie de Nice, dans le centre indiqué sur votre convocation.' },
   { q: 'Le diplôme est-il le même dans les deux formats ?', a: 'Oui. En présentiel comme en live à distance sur ZOOM, vous préparez le BTS Management Opérationnel de la Sécurité, diplôme national de niveau 5 enregistré au RNCP sous le numéro 41000.' },
@@ -231,19 +231,26 @@ export function BtsMosReferencePage() {
           </div>
           <div className={styles.cnapsContent}>
             <div className={styles.cnapsCases}>
+              <article className={styles.cnapsDiploma}>
+                <div>
+                  <div className={styles.cnapsCaseLabel}><span className={styles.cnapsCaseIcon} aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="m2 8 10-5 10 5-10 5L2 8Z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" /><path d="M6 10v6c3 3 9 3 12 0v-6M22 8v8" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg></span><p className={styles.eyebrow}>Bac pro « Métiers de la sécurité »</p></div>
+                  <h4>Votre bac pro ouvre l’accès<br />à la carte professionnelle.</h4>
+                </div>
+                <p>Une fois votre bac pro « Métiers de la sécurité » obtenu, vous pourrez demander la carte professionnelle « surveillance humaine et gardiennage » au CNAPS, <strong>sans suivre de formation APS supplémentaire.</strong> Notre équipe vous accompagne pour déposer votre demande. La carte vous sera délivrée après validation de votre dossier par le CNAPS.</p>
+              </article>
               <article className={styles.cnapsReady}>
                 <div className={styles.cnapsCaseLabel}><span className={styles.cnapsCaseIcon} aria-hidden="true">✓</span><p className={styles.eyebrow}>Vous avez déjà votre carte</p></div>
                 <h4>Vous êtes dispensé<br />de la formation APS.</h4>
                 <p>Vous êtes dispensé de la formation APS si votre carte professionnelle « surveillance humaine et gardiennage » est en cours de validité. Notre équipe vérifiera avec vous les activités autorisées et sa date d’expiration.</p>
               </article>
               <article className={styles.cnapsPrepare}>
-                <div className={styles.cnapsCaseLabel}><span className={styles.cnapsCaseIcon}><Arrow /></span><p className={styles.eyebrow}>Vous n’avez pas encore votre carte</p></div>
+                <div className={styles.cnapsCaseLabel}><span className={styles.cnapsCaseIcon}><Arrow /></span><p className={styles.eyebrow}>Vous avez besoin de la formation APS</p></div>
                 <h4>Nous préparons<br />votre parcours APS.</h4>
-                <p>Intégrale Academy organise la formation Agent de prévention et de sécurité (TFP APS). Contactez notre équipe dès votre pré-inscription pour choisir une session et anticiper les démarches avant votre entrée en BTS.</p>
+                <p>Si vous n’avez ni carte valide ni diplôme reconnu pour la demander, notre équipe vérifie votre situation et vous oriente vers la formation Agent de prévention et de sécurité (TFP APS). Contactez-nous dès votre pré-inscription pour préparer les démarches et choisir une session.</p>
               </article>
             </div>
             <div className={styles.cnapsJourney}>
-              <div className={styles.cnapsJourneyHeading}><p className={styles.eyebrow}>Si vous préparez votre carte</p><h4>Trois étapes, avec notre équipe.</h4></div>
+              <div className={styles.cnapsJourneyHeading}><p className={styles.eyebrow}>Si une formation APS est nécessaire</p><h4>Trois étapes, avec notre équipe.</h4></div>
               <ol className={styles.cnapsSteps}>{course.specificPanel?.items.map((item, index) => {
                 const separator = item.indexOf(' : ');
                 const description = item.slice(separator + 3);
@@ -251,7 +258,7 @@ export function BtsMosReferencePage() {
               })}</ol>
             </div>
             <div className={styles.cnapsFooter}>
-              <div><p className={styles.eyebrow}>Tarif spécial futurs étudiants BTS MOS</p><p className={styles.cnapsPrice}>950 € <span>pour la formation APS</span></p><p>À la charge de l’apprenti, en complément du BTS en alternance. Notre équipe vous communiquera les prochaines sessions disponibles.</p></div>
+              <div><p className={styles.eyebrow}>Tarif spécial futurs étudiants BTS MOS</p><p className={styles.cnapsPrice}>950 € <span>pour la formation APS</span></p><p>Ce tarif concerne uniquement les étudiants ayant besoin de la formation APS. Elle est à la charge de l’apprenti, en complément du BTS en alternance. Notre équipe vous communiquera les prochaines sessions disponibles.</p></div>
               <div className={styles.cnapsActions}><Link className={styles.button} href="/formations-securite/aps">Découvrir la formation APS <Arrow /></Link><a className={styles.textLink} href="#contact-mos">Préparer mes démarches avec Aurélie <Arrow /></a></div>
             </div>
             <p className={styles.cnapsNote}>L’autorisation préalable permet d’entrer en formation APS ; elle ne permet pas d’exercer une activité de sécurité privée en entreprise. La délivrance de la carte professionnelle reste soumise à l’examen de votre dossier par le CNAPS. <a href="https://www.cnaps.interieur.gouv.fr/Demarches-en-ligne/Vous-etes-un-particulier/Se-former-aux-metiers-de-la-securite-privee/Se-former-aux-metiers-de-la-securite-privee" target="_blank" rel="noopener noreferrer">Consulter les démarches officielles.</a></p>
