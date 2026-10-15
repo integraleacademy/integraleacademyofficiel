@@ -8,6 +8,7 @@ import { ThemeToggle } from '@/components/ThemeToggle';
 import { MobileHeaderMenu } from '@/components/MobileHeaderMenu';
 import { DesktopTrainingDropdown } from '@/components/DesktopTrainingDropdown';
 import compactHeroStyles from '@/components/CompactHero.module.css';
+import footerStyles from '@/components/Footer.module.css';
 
 export type UiAccent = 'gold' | 'blue' | 'green' | 'orange' | 'red' | 'violet';
 
@@ -203,7 +204,7 @@ function AppointmentButton(){
 function BrandSigle({ placement }: { placement: 'header' | 'footer' }){
   const size = placement === 'header'
     ? 'h-[var(--site-header-logo-height)] w-[calc(var(--site-header-logo-height)*1.05)]'
-    : 'h-[130px] w-[137px]';
+    : 'h-[68px] w-[72px]';
 
   return <span className={`relative block shrink-0 overflow-hidden ${size}`} aria-hidden="true">
     <Image src="/images/logo.png" alt="" width={5906} height={1772} priority={placement === 'header'} className="absolute left-0 top-0 h-full w-auto max-w-none object-contain"/>
@@ -221,54 +222,75 @@ export function Header(){
 }
 export function Footer(){
   const footerLinks=[
-    {title:'Formations',links:[['APS','/formations-securite/aps'],['SSIAP','/formations-securite/ssiap'],['A3P','/formations-securite/a3p-apr'],['BTS en alternance','/bts'],['Chauffeur VTC','/vtc']]},
+    {title:'Formations',links:[['Agent de sécurité','/formations-securite/aps'],['Sécurité incendie','/formations-securite/ssiap'],['Protection rapprochée','/formations-securite/a3p-apr'],['Dirigeant de sécurité','/despvaeouinitial'],['Chauffeur VTC','/vtc'],['BTS en alternance','/bts']]},
     {title:'Financements',links:[['CPF','/financements/cpf'],['France Travail','/financements/france-travail'],['Alternance','/financements/alternance'],['Toutes les solutions','/financements']]},
-    {title:'Ressources',links:[['Planning','/planning'],['Dossiers formations','/dossiersfc'],['Dossiers BTS','/dossiersbts'],['Nos centres','/centres'],['Entreprises','/entreprises'],['Contact','/contact']]},
+    {title:'L’école',links:[['Notre école','/ecole'],['Nos centres','/centres'],['Planning','/planning'],['Dossiers formations','/dossiersfc'],['Dossiers BTS','/dossiersbts'],['Entreprises','/entreprises']]},
   ];
-  const trustItems=['Qualiopi','CNAPS','France Travail','OPCO AKTO'];
 
-  return <footer className="relative mt-[calc(5rem*var(--site-desktop-scale))] overflow-hidden border-t border-white/10 bg-[linear-gradient(135deg,#2a394d_0%,#202c3d_100%)] px-4 pb-8 pt-12 text-white">
-    <div className="pointer-events-none absolute inset-0 opacity-70" aria-hidden="true">
-      <div className="absolute -left-32 top-0 h-80 w-80 rounded-full bg-academy-gold/15 blur-3xl"/>
-      <div className="absolute -right-24 bottom-0 h-80 w-80 rounded-full bg-academy-gold/10 blur-3xl"/>
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-academy-gold/70 to-transparent"/>
-    </div>
-    <div className="relative page-container">
-      <div className="grid gap-10 pb-10 lg:grid-cols-[1.05fr_1.65fr_.9fr] lg:gap-14">
-        <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
-          <Link href="/" aria-label="Retour à l’accueil Intégrale Academy" className="inline-flex flex-col items-center rounded-xl focus:outline-none focus:ring-2 focus:ring-academy-gold">
+  return <footer className={footerStyles.footer} data-site-footer>
+    <div className="page-container">
+      <div className={footerStyles.main}>
+        <div className={footerStyles.identity}>
+          <Link href="/" aria-label="Retour à l’accueil Intégrale Academy" className={footerStyles.brand}>
             <BrandSigle placement="footer"/>
-            <span className="mt-3 whitespace-nowrap text-[18px] font-black tracking-[.1em]"><span className="text-white">INTÉGRALE</span><span className="ml-2 text-academy-gold">ACADEMY</span></span>
+            <span className={footerStyles.wordmark}><span>INTÉGRALE</span><span>ACADEMY</span></span>
           </Link>
-          <p className="mt-5 max-w-sm text-sm font-medium leading-7 text-white/65">Centre de formation professionnelle spécialisé en sécurité privée, sécurité incendie, VTC et BTS en alternance.</p>
+          <p className={footerStyles.description}>Des formations, des compétences, un métier.</p>
+          <p className={footerStyles.expertise}>Sécurité privée et incendie, chauffeur VTC et BTS en alternance.</p>
           <SocialLinks tone="dark"/>
         </div>
 
-        <nav className="grid gap-8 sm:grid-cols-3" aria-label="Navigation du pied de page">
-          {footerLinks.map(group=><div key={group.title}>
-            <h3 className="text-xs font-black uppercase tracking-[.2em] text-academy-gold">{group.title}</h3>
-            <ul className="mt-5 space-y-3 text-sm font-semibold text-white/65">{group.links.map(([label,href])=><li key={href}><Link href={href} className="transition hover:text-academy-gold">{label}</Link></li>)}</ul>
+        <nav className={footerStyles.navigation} aria-label="Navigation du pied de page">
+          {footerLinks.map(group=><div className={footerStyles.navGroup} key={group.title}>
+            <h2 className={footerStyles.heading}>{group.title}</h2>
+            <ul>{group.links.map(([label,href])=><li key={href}><Link href={href}>{label}</Link></li>)}</ul>
           </div>)}
         </nav>
 
-        <aside className="rounded-[1.75rem] border border-white/10 bg-white/5 p-6 shadow-[0_20px_60px_rgba(0,0,0,.24)]">
-          <span className="text-xs font-black uppercase tracking-[.2em] text-academy-gold">Une question ?</span>
-          <h3 className="mt-3 text-xl font-black tracking-tight">Parlons de votre projet.</h3>
-          <p className="mt-3 text-sm font-medium leading-6 text-white/65">{contact.hours}</p>
-          <div className="mt-5 grid gap-2">
-            <Link href="tel:0422470768" className="inline-flex items-center justify-center rounded-full bg-academy-gold px-4 py-3 text-sm font-black text-academy-gold-text transition hover:-translate-y-0.5">{contact.phone}</Link>
-            <Link href="/contact" className="inline-flex items-center justify-center rounded-full border border-white/15 bg-white/5 px-4 py-3 text-sm font-black text-white transition hover:-translate-y-0.5 hover:border-academy-gold hover:text-academy-gold">Nous contacter</Link>
-          </div>
+        <aside className={footerStyles.contact} aria-labelledby="footer-contact-title">
+          <h2 id="footer-contact-title" className={footerStyles.heading}>Parlons de votre projet</h2>
+          <a href="tel:0422470768" className={footerStyles.phone}>{contact.phone}</a>
+          <p className={footerStyles.hours}>{contact.hours}</p>
+          <Link href="/contact" className={footerStyles.contactLink}>Nous contacter <span aria-hidden="true">↗</span></Link>
         </aside>
       </div>
 
-      <div className="grid gap-3 border-y border-white/10 py-5 sm:grid-cols-2 lg:grid-cols-4">
-        {trustItems.map(item=><span key={item} className="flex items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-xs font-black uppercase tracking-[.1em] text-white/65"><i className="h-2 w-2 shrink-0 rounded-full bg-academy-gold" aria-hidden="true"/><span className="text-center">{item}{item === 'CNAPS' && <small className="block text-[10px] font-medium normal-case tracking-normal"> (ministère de l’Intérieur)</small>}</span></span>)}
-      </div>
+      <section className={footerStyles.credentials} aria-label="Certification, autorisation et financements">
+        <div className={footerStyles.credential}>
+          <h2 className={footerStyles.credentialHeading}>Certification qualité</h2>
+          <div className={footerStyles.logoArea}>
+            <Image src="/images/certifications/qualiopi.png" alt="Qualiopi — processus certifié, République française" width={633} height={338} className={footerStyles.qualiopiLogo}/>
+          </div>
+          <p className={footerStyles.certificationText}>La certification qualité a été délivrée au titre de la ou des catégories d’actions suivantes : actions de formation, actions de formation en apprentissage, les actions permettant de faire valider les acquis de l'expérience (VAE)</p>
+          <Link href="/ecole#agrements" className={footerStyles.proofLink}>Consulter le certificat <span aria-hidden="true">↗</span></Link>
+        </div>
+        <div className={footerStyles.credential}>
+          <h2 className={footerStyles.credentialHeading}>Autorisation d’exercice</h2>
+          <div className={footerStyles.logoArea}>
+            <Image src="/images/certifications/cnaps.jpg" alt="CNAPS — Conseil national des activités privées de sécurité" width={338} height={215} className={footerStyles.cnapsLogo}/>
+          </div>
+          <p className={footerStyles.authorization}>FOR-083-2027-02-08-20200755135</p>
+          <p className={footerStyles.certificationText}>Conseil national des activités privées de sécurité<br/>Ministère de l’Intérieur</p>
+          <Link href="/ecole#references" className={footerStyles.proofLink}>Nos agréments et références <span aria-hidden="true">↗</span></Link>
+        </div>
+        <div className={footerStyles.credential}>
+          <h2 className={footerStyles.credentialHeading}>Financer votre formation</h2>
+          <div className={footerStyles.fundingLogos}>
+            <Link href="/financements/france-travail" aria-label="Financer sa formation avec France Travail"><Image src="/images/financements/france-travail.svg" alt="France Travail" width={386} height={358} className={footerStyles.franceTravailLogo}/></Link>
+            <Link href="/entreprises" aria-label="Financement entreprise et OPCO AKTO"><Image src="/images/financements/akto.svg" alt="AKTO" width={179} height={46} className={footerStyles.aktoLogo}/></Link>
+          </div>
+          <p className={footerStyles.certificationText}>Un accompagnement pour identifier les financements adaptés à votre situation.</p>
+          <Link href="/financements" className={footerStyles.proofLink}>Découvrir les solutions <span aria-hidden="true">↗</span></Link>
+        </div>
+      </section>
 
-      <div className="flex flex-col gap-4 pt-6 text-xs font-medium text-white/55 md:flex-row md:items-end md:justify-between">
-        <div className="max-w-4xl space-y-2"><p>{legalRefs.join(' · ')}</p><p>Site créé par SAS Intégrale Group — Clément Vaillant.</p></div>
-        <div className="flex flex-wrap gap-4"><Link href="/mentions-legales" className="hover:text-academy-gold">Mentions légales</Link><Link href="/politique-confidentialite" className="hover:text-academy-gold">Confidentialité</Link><Link href="/admin/ia" className="hover:text-academy-gold">Administration</Link></div>
+      <details className={footerStyles.references}>
+        <summary>Références de l’organisme <span aria-hidden="true">+</span></summary>
+        <ul>{legalRefs.map(reference=><li key={reference}>{reference}</li>)}</ul>
+      </details>
+      <div className={footerStyles.bottom}>
+        <p>Site créé par SAS Intégrale Group — Clément Vaillant.</p>
+        <nav aria-label="Informations légales"><Link href="/mentions-legales">Mentions légales</Link><Link href="/politique-confidentialite">Confidentialité</Link><Link href="/admin/ia">Administration</Link></nav>
       </div>
     </div>
   </footer>
