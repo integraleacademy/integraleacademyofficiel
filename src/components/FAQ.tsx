@@ -17,9 +17,9 @@ export const premiumFaqThemes: Record<FAQTheme, { shell:string; glow:string; bad
 
 
 /** Numbered accordion cards from the APS page. Native details retain keyboard support. */
-export function FAQ({ items, theme = 'blue' }: { items: readonly FAQItem[]; theme?: FAQTheme }) {
+export function FAQ({ items, theme = 'gold' }: { items: readonly FAQItem[]; theme?: FAQTheme }) {
   const styles = premiumFaqThemes[theme];
-  return <div className={`${layout.list} grid gap-3 md:grid-cols-2 lg:gap-4`} data-faq-list>
+  return <div className={`${layout.list} grid gap-3 md:grid-cols-2 lg:gap-4`} data-faq-list data-faq-theme={theme}>
     {items.map((item, index) => <details key={item.q} data-faq-item className={`${layout.item} group overflow-hidden rounded-[1.35rem] border bg-white/92 shadow-[0_14px_42px_rgba(54,43,24,.075)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_20px_60px_rgba(54,43,24,.11)] open:shadow-[0_24px_70px_rgba(54,43,24,.14)] md:open:col-span-2 ${styles.item}`}>
       <summary className={`${layout.summary} relative flex cursor-pointer list-none items-center justify-between gap-3 p-4 text-[0.95rem] font-black leading-6 text-academy-ink transition sm:px-5 sm:py-4 sm:text-base`}>
         <span className={`absolute inset-y-4 left-0 w-1 rounded-r-full opacity-0 transition group-open:opacity-100 ${styles.bar}`} aria-hidden="true" />
@@ -69,7 +69,7 @@ type PremiumFAQProps = {
 };
 
 /** One APS-reference layout for all site FAQs; only content and course accents vary. */
-export function PremiumFAQSection({ id, badge, title, description, items, contactHref = '/contact', contactLabel = 'Je souhaite en savoir plus', callHref = 'tel:0422470768', callLabel = 'Être rappelé', theme = 'blue', contactContent, contained = false }: PremiumFAQProps) {
+export function PremiumFAQSection({ id, badge, title, description, items, contactHref = '/contact', contactLabel = 'Je souhaite en savoir plus', callHref = 'tel:0422470768', callLabel = 'Être rappelé', theme = 'gold', contactContent, contained = false }: PremiumFAQProps) {
   const styles = premiumFaqThemes[theme];
   return <section id={id} aria-label={badge} data-faq-design="aps" data-faq-theme={theme} className={`${layout.section} relative isolate overflow-hidden py-14 lg:py-16 ${styles.shell} ${contained ? layout.contained : ''}`}>
     <div className={`absolute left-0 top-0 -z-10 h-72 w-72 -translate-x-1/3 rounded-full blur-3xl ${styles.glow}`} aria-hidden="true" />

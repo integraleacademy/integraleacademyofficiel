@@ -461,7 +461,7 @@ export default async function Page({
           ))}
         </div>
       </BtsSection>
-      <PremiumFAQSection
+      <PremiumFAQSection theme="gold"
         badge={`FAQ BTS ${label}`}
         title={`Vos questions sur le BTS ${label}`}
         description="Retrouvez les réponses fréquentes sur le déroulement, la candidature, l’alternance, le financement et l’examen."

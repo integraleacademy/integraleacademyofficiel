@@ -131,7 +131,7 @@ export default function FinancementsPage() {
       </div>
     </section>
 
-    <PremiumFAQSection
+    <PremiumFAQSection theme="gold"
       id="questions-frequentes" badge="Les réponses utiles" title={<>Encore une question ?</>}
       description="Quelques repères avant de vous lancer."
       items={faqItems.map(({ question, answer }) => ({ q: question, a: answer }))}
