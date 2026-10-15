@@ -15,8 +15,9 @@ replace('src/app/financements/page.tsx', '<PremiumFAQSection\n', '<PremiumFAQSec
 replace('src/app/entreprises/page.tsx', '<PremiumFAQSection\n', '<PremiumFAQSection theme="gold"\n')
 replace('src/app/planning/PlanningHelp.tsx', '<PremiumFAQSection\n', '<PremiumFAQSection theme="gold"\n')
 replace('src/components/SstReferencePage.tsx', '<PremiumFAQSection badge="FAQ SST"', '<PremiumFAQSection theme="green" badge="FAQ SST"')
-replace('src/app/faq/page.tsx', '<PremiumFAQSection theme="blue"', '<PremiumFAQSection theme="bts"')
-replace('src/app/bts/[slug]/page.tsx', '<PremiumFAQSection\n', '<PremiumFAQSection theme="bts"\n')
+# These two general/legacy pages use the corporate gold palette, not a specific BTS identity.
+replace('src/app/faq/page.tsx', '<PremiumFAQSection theme="blue"', '<PremiumFAQSection theme="gold"')
+replace('src/app/bts/[slug]/page.tsx', '<PremiumFAQSection\n', '<PremiumFAQSection theme="gold"\n')
 replace('src/app/formations-securite/[slug]/page.tsx', '<PremiumFAQSection badge="FAQ APS"', '<PremiumFAQSection theme="blue" badge="FAQ APS"')
 replace('src/app/formations-securite/[slug]/page.tsx', '<PremiumFAQSection badge={`FAQ ${label}`}', '<PremiumFAQSection theme={slug.startsWith(\'ssiap\') ? \'red\' : slug.includes(\'desp\') ? \'orange\' : slug.includes(\'a3p\') || slug.includes(\'sst\') ? \'green\' : slug.includes(\'aps\') ? \'blue\' : \'gold\'} badge={`FAQ ${label}`}')
 
