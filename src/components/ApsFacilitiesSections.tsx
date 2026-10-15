@@ -59,10 +59,7 @@ export async function ApsFacilitiesSections() {
             <figcaption>Du matériel pour pratiquer.</figcaption>
           </figure>
         </div>
-        <div className={styles.securityLayout}>
-          <figure className={styles.pcScene}><Image src="/images/aps/experience/pc-securite.webp" alt="Illustration d’un poste central de sécurité avec mur de vidéosurveillance, main courante, SSI, alarme intrusion et radios" width={1536} height={1024} sizes="(max-width: 800px) 92vw, 400px" /><figcaption><span>Observer · Alerter · Coordonner</span><small>Illustration pédagogique d’un PC sécurité</small></figcaption></figure>
-          <div className={styles.equipment}>{equipment.map(([kind, title, description]) => <article key={title}><span className={styles.equipmentIcon}><EquipmentIcon kind={kind} /></span><div><h3>{title}</h3><p>{description}</p></div></article>)}</div>
-        </div>
+        <div className={styles.equipment}>{equipment.map(([kind, title, description]) => <article key={title}><span className={styles.equipmentIcon}><EquipmentIcon kind={kind} /></span><div><h3>{title}</h3><p>{description}</p></div></article>)}</div>
         <details className={styles.regulationNote}><summary>Les équipements pédagogiques prévus pour la formation APS <span aria-hidden="true">+</span></summary><p>Le poste central de sécurité et les moyens de surveillance font partie des équipements prévus par l’<a href="https://www.legifrance.gouv.fr/loda/id/JORFTEXT000050398597" target="_blank" rel="noopener noreferrer">article 12 de l’arrêté du 23 octobre 2024</a>.</p></details>
       </div>
     </section>

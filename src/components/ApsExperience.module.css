@@ -80,6 +80,15 @@
 .hybridSteps strong { font-size:12px; font-weight:700; }
 .hybridSteps small { display:block; margin-top:6px; font-size:10px; color:#657080; }
 .exam { display:grid; grid-template-columns:.85fr 1.15fr; border:1px solid #ffffff25; border-radius:24px; overflow:hidden; }
+/* Academy success rate, separate from the national insertion statistics. */
+.examSuccess { display:flex; align-items:center; gap:28px; padding:25px 32px; margin-bottom:24px; border:1px solid #b5d8ff40; border-radius:18px; background:#1c3046; color:#fff; }
+.successRate { color:#b5d8ff; font-size:clamp(56px,6vw,78px); font-weight:750; letter-spacing:-.06em; line-height:1; white-space:nowrap; }
+.successRate > span { font-size:.5em; letter-spacing:-.03em; }
+.examSuccess > div > p { font-size:clamp(17px,2vw,23px); font-weight:750; line-height:1.35; }
+.examSuccess > div > span { display:block; margin-top:7px; color:#b5c8da; font-size:13px; }
+.successSeal { margin-left:auto; color:#b5d8ff; width:54px; flex-shrink:0; }
+.successSeal svg { display:block; width:100%; height:auto; }
+@media(max-width:550px) { .examSuccess { padding:23px 20px; gap:18px; }.examSuccess > div > span { font-size:11px; }.successSeal { display:none; } }
 .exam .kicker,.examMore a { color:#b5d8ff; }
 .examTheory { padding:clamp(25px,4vw,45px); background:#1c2c38; }
 .examTheory h3 { margin-top:30px; font-size:clamp(65px,7vw,96px); letter-spacing:-.065em; line-height:1; font-weight:750; }
