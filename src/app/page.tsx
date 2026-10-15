@@ -128,12 +128,7 @@ export default async function Home() {
           </div>
 
           <div id="assistant-orientation" data-home-assistant className={heroStyles.assistantDock}>
-            <OrientationAssistant
-              variant="modalTrigger"
-              triggerLabel="Vous hésitez sur votre formation ?"
-              triggerDescription="Ouvrez l’assistant pour faire le point sur votre projet, les financements et les prochaines étapes."
-              triggerClassName={heroStyles.assistantTrigger}
-            />
+            <OrientationAssistant variant="homeDock" />
           </div>
         </div>
       </section>
