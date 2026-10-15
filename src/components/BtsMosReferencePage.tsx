@@ -95,8 +95,10 @@ export function BtsMosReferencePage() {
             <p className={styles.intro}>Organiser les missions, encadrer une équipe, accompagner un client. Construisez votre avenir dans la sécurité avec l’expérience de l’alternance.</p>
             <p className={styles.applicationPrompt}>Deux façons de candidater au BTS MOS</p>
             <div className={styles.actions}><Apply href={applicationUrl}>Candidater en ligne</Apply><a href="#candidature-parcoursup" className={styles.parcoursupButton}><span>Candidater sur</span><ParcoursupLogo /><Arrow /></a></div>
-            <div className={styles.heroFunding}><strong>0 €<sup>*</sup></strong><span>de frais de scolarité<br />pour l’apprenti</span></div>
-            <ul className={styles.heroFacts} aria-label="L’essentiel du BTS MOS"><li><strong>2 ans</strong>de formation</li><li><strong>Alternance</strong>école + entreprise</li><li><strong>Présentiel ou ZOOM</strong>cours en live</li></ul>
+            <div className={styles.heroEssentials}>
+              <div className={styles.heroFunding}><strong>0 €<sup>*</sup></strong><span>de frais de scolarité<br />pour l’apprenti</span></div>
+              <ul className={styles.heroFacts} aria-label="L’essentiel du BTS MOS"><li><strong>2 ans</strong>de formation</li><li><strong>Alternance</strong>école + entreprise</li><li><strong>Présentiel ou ZOOM</strong>cours en live</li></ul>
+            </div>
             <p className={styles.heroNote}>* Sous réserve de la conclusion et de la prise en charge du contrat d’apprentissage.</p>
             <a href="#contact-mos" className={styles.textLink}>Une question ? Parler à Aurélie <Arrow /></a>
           </div>
