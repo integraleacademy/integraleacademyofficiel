@@ -1,0 +1,42 @@
+name: UI consistency review
+on:
+  push:
+    branches: [codex/harmonisation-menus-faq-20261015]
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Inventory FAQ implementations
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          for p in sorted(Path('src').rglob('*')):
+              if p.suffix not in ('.tsx', '.css'):
+                  continue
+              matches = [(n, s) for n, s in enumerate(p.read_text().splitlines(), 1) if re.search(r'faq|FAQ|questions-frequentes', s)]
+              if matches:
+                  print('\nFILE', p)
+                  for n, s in matches:
+                      print(f'{n}: {s[:1600]}')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ui-review-source
+          retention-days: 1
+          path: |
+            src
+            tests
+            scripts
+            package.json
+            package-lock.json
+            tsconfig.json
+            tailwind.config.ts
+            postcss.config.js
+            next.config.ts
+            prisma/schema.prisma
