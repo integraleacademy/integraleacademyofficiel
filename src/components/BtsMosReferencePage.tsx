@@ -163,7 +163,7 @@ export function BtsMosReferencePage() {
           </article>
           <div className={styles.formatOr} aria-label="ou : choisissez l’un des deux parcours"><span>OU</span></div>
           <article className={`${styles.formatCard} ${styles.remoteFormat}`}>
-            <div className={styles.formatPhoto}><Image src="/images/bts/tenues-2026/cours-visio.webp" alt="Illustration : une étudiante participe depuis chez elle à un cours en visioconférence avec son formateur et sa promotion" width={1200} height={800} sizes="(max-width: 850px) 94vw, 43vw" /><span className={`${styles.formatBadge} ${styles.zoomBadge}`}><i aria-hidden="true" />En ligne, à distance</span></div>
+            <div className={styles.formatPhoto}><Image src="/images/bts/mixite-2026/cours-visio.webp" alt="Illustration : un étudiant participe depuis chez lui à un cours en visioconférence avec son formateur et sa promotion" width={1200} height={800} sizes="(max-width: 850px) 94vw, 43vw" /><span className={`${styles.formatBadge} ${styles.zoomBadge}`}><i aria-hidden="true" />En ligne, à distance</span></div>
             <div className={styles.formatCopy}>
               <p className={styles.eyebrow}>Intégrale Academy Paris · Online</p><h3>Vos cours en live.<br />100 % à distance.</h3>
               <p>Connectez-vous en visioconférence ZOOM : votre formateur anime le cours en direct, avec toute votre promotion.</p>
@@ -199,7 +199,7 @@ export function BtsMosReferencePage() {
       </div>
       <BtsStudentBenefits courseName="BTS MOS" variant="illustrated" />
       <div className={styles.container}>
-        <div className={styles.schoolResources}><div><p className={styles.eyebrow}>Apprendre par la pratique</p><h3>Des situations de métier.<br />Des équipements pour s’entraîner.</h3><p>{course.campusEquipment?.intro}</p><Disclosure title="Découvrir les équipements pédagogiques"><List items={course.campusEquipment?.items ?? []} /></Disclosure></div><figure><Image src="/images/bts/tenues-2026/mos-carte.webp" alt="Une responsable prépare les missions avec son équipe au poste de sécurité" width={1536} height={1024} sizes="(max-width: 800px) 94vw, 45vw" /><figcaption>Préparer une mission en équipe.</figcaption></figure></div>
+        <div className={styles.schoolResources}><div><p className={styles.eyebrow}>Apprendre par la pratique</p><h3>Des situations de métier.<br />Des équipements pour s’entraîner.</h3><p>{course.campusEquipment?.intro}</p><Disclosure title="Découvrir les équipements pédagogiques"><List items={course.campusEquipment?.items ?? []} /></Disclosure></div><figure><Image src="/images/bts/mixite-2026/mos-carte.webp" alt="Un étudiant en BTS MOS prépare les missions avec une équipe au poste de sécurité" width={1536} height={1024} sizes="(max-width: 800px) 94vw, 45vw" /><figcaption>Préparer une mission en équipe.</figcaption></figure></div>
       </div>
     </section>
 

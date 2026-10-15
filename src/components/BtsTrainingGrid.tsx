@@ -45,15 +45,6 @@ export function BtsIcon({ type }: { type: BtsVisual }) {
   return <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="3.5" width="14" height="17" rx="2" stroke="currentColor" strokeWidth="1.8"/><path d="M8 7h8v3H8V7ZM8 13h1m3 0h1m3 0h.1M8 16.5h1m3 0h1m3 0h.1" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/></svg>;
 }
 
-const illustrationDescriptions: Record<BtsVisual, string> = {
-  mos: 'Une responsable coordonne une équipe de sécurité dans un poste de contrôle.',
-  mco: 'Les métiers du management et du commerce en situation professionnelle.',
-  ndrc: 'Les métiers de la négociation et de la relation client.',
-  ci: 'Les métiers du commerce et des échanges internationaux.',
-  pi: 'Les métiers de la transaction et de la gestion immobilière.',
-  cg: 'Les métiers de la comptabilité et de la gestion.',
-};
-
 export function BtsTrainingGrid({ items }: { items: BtsTrainingHighlight[] }) {
   return <TrainingCarousel
     label="Découvrir nos BTS"
@@ -64,7 +55,7 @@ export function BtsTrainingGrid({ items }: { items: BtsTrainingHighlight[] }) {
       ...item,
       ctaLabel: `Découvrir le ${item.shortTitle}`,
       imageSrc: btsArtwork[item.visual].src,
-      imageAlt: illustrationDescriptions[item.visual],
+      imageAlt: btsArtwork[item.visual].alt,
       tabPrefix: 'BTS ',
       tabLabel: item.shortTitle.replace(/^BTS\s+/, ''),
     }))}
