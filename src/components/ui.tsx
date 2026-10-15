@@ -204,7 +204,7 @@ function AppointmentButton(){
 function BrandSigle({ placement }: { placement: 'header' | 'footer' }){
   const size = placement === 'header'
     ? 'h-[var(--site-header-logo-height)] w-[calc(var(--site-header-logo-height)*1.05)]'
-    : 'h-[68px] w-[72px]';
+    : 'h-[48px] w-[51px]';
 
   return <span className={`relative block shrink-0 overflow-hidden ${size}`} aria-hidden="true">
     <Image src="/images/logo.png" alt="" width={5906} height={1772} priority={placement === 'header'} className="absolute left-0 top-0 h-full w-auto max-w-none object-contain"/>
@@ -235,7 +235,6 @@ export function Footer(){
             <BrandSigle placement="footer"/>
             <span className={footerStyles.wordmark}><span>INTÉGRALE</span><span>ACADEMY</span></span>
           </Link>
-          <p className={footerStyles.description}>Des formations, des compétences, un métier.</p>
           <p className={footerStyles.expertise}>Sécurité privée et incendie, chauffeur VTC et BTS en alternance.</p>
           <SocialLinks tone="dark"/>
         </div>
@@ -257,7 +256,6 @@ export function Footer(){
 
       <section className={footerStyles.credentials} aria-label="Certification, autorisation et financements">
         <div className={footerStyles.credential}>
-          <h2 className={footerStyles.credentialHeading}>Certification qualité</h2>
           <div className={footerStyles.logoArea}>
             <Image src="/images/certifications/qualiopi.png" alt="Qualiopi — processus certifié, République française" width={633} height={338} className={footerStyles.qualiopiLogo}/>
           </div>
@@ -265,21 +263,17 @@ export function Footer(){
           <Link href="/ecole#agrements" className={footerStyles.proofLink}>Consulter le certificat <span aria-hidden="true">↗</span></Link>
         </div>
         <div className={footerStyles.credential}>
-          <h2 className={footerStyles.credentialHeading}>Autorisation d’exercice</h2>
           <div className={footerStyles.logoArea}>
             <Image src="/images/certifications/cnaps.jpg" alt="CNAPS — Conseil national des activités privées de sécurité" width={338} height={215} className={footerStyles.cnapsLogo}/>
           </div>
           <p className={footerStyles.authorization}>FOR-083-2027-02-08-20200755135</p>
-          <p className={footerStyles.certificationText}>Conseil national des activités privées de sécurité<br/>Ministère de l’Intérieur</p>
           <Link href="/ecole#references" className={footerStyles.proofLink}>Nos agréments et références <span aria-hidden="true">↗</span></Link>
         </div>
         <div className={footerStyles.credential}>
-          <h2 className={footerStyles.credentialHeading}>Financer votre formation</h2>
           <div className={footerStyles.fundingLogos}>
             <Link href="/financements/france-travail" aria-label="Financer sa formation avec France Travail"><Image src="/images/financements/france-travail.svg" alt="France Travail" width={386} height={358} className={footerStyles.franceTravailLogo}/></Link>
             <Link href="/entreprises" aria-label="Financement entreprise et OPCO AKTO"><Image src="/images/financements/akto.svg" alt="AKTO" width={179} height={46} className={footerStyles.aktoLogo}/></Link>
           </div>
-          <p className={footerStyles.certificationText}>Un accompagnement pour identifier les financements adaptés à votre situation.</p>
           <Link href="/financements" className={footerStyles.proofLink}>Découvrir les solutions <span aria-hidden="true">↗</span></Link>
         </div>
       </section>
