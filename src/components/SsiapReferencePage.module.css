@@ -146,7 +146,7 @@
 /* Fit the complete desktop introduction without a fixed height or clipped content. */
 @media (min-width:1024px) {
   .hero { padding:clamp(18px,3svh,28px) 0 14px; }
-  .heroArtwork { width:min(100%,clamp(340px,53svh,480px)); justify-self:end; }
+  .heroArtwork { width:min(100%,clamp(20rem,56svh,46rem)); justify-self:end; }
   .heroArtwork img { height:auto; aspect-ratio:3 / 2; object-fit:contain; }
   .heroArtwork figcaption { gap:3px; padding:12px 20px; }
   .heroArtwork figcaption span { line-height:1.4; }

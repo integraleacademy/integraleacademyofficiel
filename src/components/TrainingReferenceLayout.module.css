@@ -102,9 +102,9 @@
 .hero :global([class*='heroGrid']) { gap: clamp(28px, 4vw, 64px); }
 .page :global([id]) { scroll-margin-top: calc(var(--site-header-height) + var(--site-section-nav-height) + 24px); }
 @media (min-width: 1024px) {
-  .hero h1 { font-size: var(--site-title-size); }
-  .hero[data-extended-copy] h1 { font-size: clamp(2.5rem, 1.7rem + 2.4vw, 4.5rem); }
+  .page .hero h1 { font-size: var(--site-title-size); }
+  .page .hero[data-extended-copy] h1 { font-size: clamp(2.5rem, 1.7rem + 2.4vw, 4.5rem); }
 }
 @media (min-width: 1024px) and (max-height: 760px) {
-  .hero h1 { font-size: clamp(2.5rem, 1.5rem + 2.2vw, 3.5rem); }
+  .page .hero h1 { font-size: clamp(2.5rem, 1.5rem + 2.2vw, 3.5rem); }
 }
