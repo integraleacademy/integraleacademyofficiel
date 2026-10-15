@@ -31,6 +31,11 @@
   .scene img { aspect-ratio: 1; }
   .sceneContent { padding-inline: 22px; }
 }
+@media (min-width: 1024px) {
+  .scene img { height: var(--home-scene-height, auto); aspect-ratio: auto; object-position: center 40%; }
+  .sceneContent { padding: 60px 24px 22px; }
+  .sceneContent h2 { font-size: clamp(24px, 2vw, 30px); }
+}
 @media (max-width: 700px) {
   .stage { border-radius: 20px; }
   .sceneContent { position: static; flex: 1; padding: 22px; background: #0c1624; }

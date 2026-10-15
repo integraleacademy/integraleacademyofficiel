@@ -190,10 +190,10 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
   const homeDockPanel = <aside className="relative overflow-hidden rounded-[1.8rem] border border-white/10 bg-[#081626] p-5 text-white shadow-[0_32px_90px_rgba(8,22,38,.22)] sm:p-6 lg:p-7" aria-label="Assistant d’orientation formation">
     <div className="pointer-events-none absolute -right-20 -top-24 h-64 w-64 rounded-full border border-academy-gold/15 shadow-[0_0_0_52px_rgba(242,187,49,.025),0_0_0_104px_rgba(242,187,49,.018)]" aria-hidden="true" />
     <div className="relative grid gap-6 lg:grid-cols-[220px_minmax(0,1fr)] lg:items-start" data-home-dock-layout>
-      <div>
+      <div data-home-dock-intro>
         <p className="text-[10px] font-black uppercase tracking-[.2em] text-academy-gold">Assistant d’orientation</p>
         <h2 className="mt-3 text-3xl font-black leading-[.95] tracking-[-.045em] sm:text-4xl">Quelle formation vous intéresse&nbsp;?</h2>
-        <p className="mt-4 inline-flex items-center gap-2 text-xs font-bold text-white/60"><span className="status-dot" aria-hidden="true" /> Disponible maintenant</p>
+        <p className="mt-4 inline-flex items-center gap-2 text-xs font-bold text-white/60" data-home-dock-status><span className="status-dot" aria-hidden="true" /> Disponible maintenant</p>
       </div>
       <div>
         <div className="grid grid-cols-2 gap-2.5 xl:grid-cols-5" data-home-formation-options>
@@ -203,7 +203,7 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
             <span className="mt-1 flex w-full items-center justify-between gap-2 text-[10px] font-bold text-white/55"><span>{formation.homeSubtitle}</span><span className="text-academy-gold transition group-hover:translate-x-1" aria-hidden="true">→</span></span>
           </button>)}
         </div>
-        <div className="mt-4 flex flex-col gap-3 text-[10px] font-semibold text-white/50 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-4 flex flex-col gap-3 text-[10px] font-semibold text-white/50 sm:flex-row sm:items-center sm:justify-between" data-home-dock-footer>
           <span>L’assistant conserve votre parcours : formation, situation, financement, dates et prise de rendez-vous.</span>
           <button type="button" aria-haspopup="dialog" aria-expanded={isExpanded && selectedKey === null} aria-controls={dialogId} onClick={(event) => { triggerRef.current = event.currentTarget; setSelectedKey(null); setStep('formations'); setIsExpanded(true); }} className="shrink-0 font-black text-white underline decoration-academy-gold/50 underline-offset-4 transition hover:text-academy-gold">Je ne sais pas encore →</button>
         </div>

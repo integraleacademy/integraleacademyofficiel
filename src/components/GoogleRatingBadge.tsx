@@ -1,6 +1,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 function GoogleIcon(){
   return <svg viewBox="0 0 48 48" className="h-6 w-6" aria-hidden="true">
@@ -13,8 +14,21 @@ function GoogleIcon(){
 
 export function GoogleRatingBadge(){
   const pathname = usePathname();
+  const [homeHeroVisible, setHomeHeroVisible] = useState(pathname === '/');
 
-  if (pathname === '/ecole' || pathname?.replace(/\/+$/, '') === '/financements') {
+  useEffect(() => {
+    const hero = pathname === '/' ? document.getElementById('home-hero-title')?.closest('section') : null;
+    if (!hero) {
+      setHomeHeroVisible(false);
+      return;
+    }
+    // Keep every orientation choice accessible in the first screen, even on short windows.
+    const observer = new IntersectionObserver(([entry]) => setHomeHeroVisible(entry.isIntersecting));
+    observer.observe(hero);
+    return () => observer.disconnect();
+  }, [pathname]);
+
+  if ((pathname === '/' && homeHeroVisible) || pathname === '/ecole' || pathname?.replace(/\/+$/, '') === '/financements') {
     return null;
   }
 
