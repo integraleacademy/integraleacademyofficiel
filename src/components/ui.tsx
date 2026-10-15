@@ -263,7 +263,7 @@ export function Footer(){
       </div>
 
       <div className="grid gap-3 border-y border-white/10 py-5 sm:grid-cols-2 lg:grid-cols-4">
-        {trustItems.map(item=><span key={item} className="flex items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-xs font-black uppercase tracking-[.1em] text-white/65"><i className="h-2 w-2 rounded-full bg-academy-gold" aria-hidden="true"/>{item}</span>)}
+        {trustItems.map(item=><span key={item} className="flex items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-xs font-black uppercase tracking-[.1em] text-white/65"><i className="h-2 w-2 shrink-0 rounded-full bg-academy-gold" aria-hidden="true"/><span className="text-center">{item}{item === 'CNAPS' && <small className="block text-[10px] font-medium normal-case tracking-normal"> (ministère de l’Intérieur)</small>}</span></span>)}
       </div>
 
       <div className="flex flex-col gap-4 pt-6 text-xs font-medium text-white/55 md:flex-row md:items-end md:justify-between">
