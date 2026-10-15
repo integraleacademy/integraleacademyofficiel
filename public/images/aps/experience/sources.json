@@ -52,5 +52,15 @@
       "elearning-exercice.webp": "https://gestionstagiaires-test-v2.onrender.com/e-learning/demo/aps/cours — exercice interactif",
       "elearning-parcours.webp": "https://gestionstagiaires-test-v2.onrender.com/e-learning/demo/aps — modules du parcours"
     }
+  },
+  "centre_photographs": {
+    "source_page": "https://www.integraleacademy.com/btsmos",
+    "retrieved": "2026-10-15",
+    "description": "Photographies authentiques du centre Intégrale Academy provenant de son ancien site, redimensionnées et encodées en WebP sans modification de leur contenu.",
+    "files": {
+      "pc-centre.webp": "https://static.wixstatic.com/media/008e7b_ec97221993754a5b99fee2b2d06a61ce~mv2.jpg",
+      "pc-alarme.webp": "https://static.wixstatic.com/media/008e7b_b3fd7ad924564c4b9c6aebfd6f0c6d93~mv2.jpg",
+      "pc-extincteurs.webp": "https://static.wixstatic.com/media/008e7b_288c71ca4cd84f358dc9cd8551747d0c~mv2.jpg"
+    }
   }
 }

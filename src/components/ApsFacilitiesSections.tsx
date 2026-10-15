@@ -44,9 +44,23 @@ export async function ApsFacilitiesSections() {
   return <>
     <section id="pc-securite" aria-labelledby="pc-securite-title" className={`${styles.section} ${styles.security}`}>
       <div className="page-container">
-        <div className={styles.heading}><div><p className={styles.eyebrow}>Le PC sécurité & le matériel</p><h2 id="pc-securite-title">Un PC sécurité équipé.<br /><em>À vous de prendre le poste.</em></h2></div><p>Observer les écrans, recevoir une alarme, transmettre l’information : vous apprenez à utiliser les équipements de vos futures missions.</p></div>
+        <div className={styles.heading}><div><p className={styles.eyebrow}>Au cœur de votre centre de formation</p><h2 id="pc-securite-title">Un PC sécurité équipé.<br /><em>Chez Intégrale Academy.</em></h2></div><p>À Puget-sur-Argens, notre centre dispose de son propre poste central de sécurité et de matériel pédagogique dédié. Vous vous entraînerez à observer, donner l’alerte et coordonner une intervention, avec les outils de vos futures missions.</p></div>
+        <div className={styles.pcGallery} role="group" aria-label="Photos du PC sécurité et du matériel Intégrale Academy">
+          <figure className={`${styles.pcPhoto} ${styles.pcMainPhoto}`}>
+            <Image src="/images/aps/experience/pc-centre.webp" alt="Le véritable poste central de sécurité d’Intégrale Academy : poste informatique, écran de surveillance, SSI, alarme et moyens de communication" fill sizes="(max-width: 700px) 92vw, 65vw" />
+            <figcaption><span>Votre PC sécurité, au centre.</span><small>Intégrale Academy · Puget-sur-Argens</small></figcaption>
+          </figure>
+          <figure className={styles.pcPhoto}>
+            <Image src="/images/aps/experience/pc-alarme.webp" alt="Déclencheur manuel d’alarme incendie dans le centre Intégrale Academy" fill sizes="(max-width: 700px) 44vw, 35vw" />
+            <figcaption>Des équipements à manipuler.</figcaption>
+          </figure>
+          <figure className={styles.pcPhoto}>
+            <Image src="/images/aps/experience/pc-extincteurs.webp" alt="Extincteurs pédagogiques du centre de formation Intégrale Academy" fill sizes="(max-width: 700px) 44vw, 35vw" />
+            <figcaption>Du matériel pour pratiquer.</figcaption>
+          </figure>
+        </div>
         <div className={styles.securityLayout}>
-          <figure className={styles.pcScene}><Image src="/images/aps/experience/pc-securite.webp" alt="Illustration d’un poste central de sécurité avec mur de vidéosurveillance, main courante, SSI, alarme intrusion et radios" width={1536} height={1024} sizes="(max-width: 900px) 92vw, 800px" /><figcaption><span>Observer · Alerter · Coordonner</span><small>Illustration pédagogique d’un PC sécurité</small></figcaption></figure>
+          <figure className={styles.pcScene}><Image src="/images/aps/experience/pc-securite.webp" alt="Illustration d’un poste central de sécurité avec mur de vidéosurveillance, main courante, SSI, alarme intrusion et radios" width={1536} height={1024} sizes="(max-width: 800px) 92vw, 400px" /><figcaption><span>Observer · Alerter · Coordonner</span><small>Illustration pédagogique d’un PC sécurité</small></figcaption></figure>
           <div className={styles.equipment}>{equipment.map(([kind, title, description]) => <article key={title}><span className={styles.equipmentIcon}><EquipmentIcon kind={kind} /></span><div><h3>{title}</h3><p>{description}</p></div></article>)}</div>
         </div>
         <details className={styles.regulationNote}><summary>Les équipements pédagogiques prévus pour la formation APS <span aria-hidden="true">+</span></summary><p>Le poste central de sécurité et les moyens de surveillance font partie des équipements prévus par l’<a href="https://www.legifrance.gouv.fr/loda/id/JORFTEXT000050398597" target="_blank" rel="noopener noreferrer">article 12 de l’arrêté du 23 octobre 2024</a>.</p></details>
