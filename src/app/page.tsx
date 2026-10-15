@@ -13,7 +13,6 @@ import { SecurityTrainingComparisonModal } from '@/components/SecurityTrainingCo
 import { SecurityTrainingGrid } from '@/components/SecurityTrainingGrid';
 import { VtcTrainingCard } from '@/components/VtcTrainingCard';
 import { PremiumFAQSection } from '@/components/ui';
-import { VisualSection } from '@/components/visuals';
 import { globalFaq } from '@/data/faq';
 import { createHomeSecurityHighlights } from '@/lib/home-security-trainings';
 import { listPublicSessions as listSessions } from '@/lib/training-data';
@@ -153,17 +152,20 @@ export default async function Home() {
         </div>
       </section>
 
-      <VisualSection tone="vtc">
-        <section id="formation-vtc" aria-labelledby="formation-vtc-title" className="scroll-mt-28 page-container py-14 md:py-16">
+      <section id="formation-vtc" aria-labelledby="formation-vtc-title" className={`scroll-mt-28 ${carouselStyles.section}`}>
+        <div className="page-container">
+          <div className={carouselStyles.heading}>
+            <h2 id="formation-vtc-title">{vtcFormation.title}</h2>
+            <p>Théorie, pratique et examen · Une formule tout inclus</p>
+          </div>
           <VtcTrainingCard
-            title={vtcFormation.title}
             description="Apprenez la théorie à votre rythme, entraînez-vous au volant et préparez l’examen avec une formule tout inclus."
             duration={vtcFormation.duration}
             price={vtcFormation.price ?? '1 500 € tout inclus'}
             href={vtcFormation.slug}
           />
-        </section>
-      </VisualSection>
+        </div>
+      </section>
 
       <section id="bts" aria-labelledby="bts-heading" className={`scroll-mt-28 ${carouselStyles.section}`}>
         <div className="page-container">

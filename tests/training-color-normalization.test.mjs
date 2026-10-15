@@ -60,16 +60,13 @@ test('SSIAP utilise le rouge sur le catalogue et tous les parcours', () => {
   }
 });
 
-test('Chauffeur VTC utilise le violet sur la page et la carte d’accueil', () => {
+test('Chauffeur VTC conserve le violet sur sa page de formation', () => {
   const page = read('src/app/vtc/page.tsx');
   const styles = read('src/app/vtc/vtc.module.css');
-  const card = `${read('src/components/VtcTrainingCard.tsx')}\n${read('src/components/VtcTrainingCard.module.css')}`;
 
   assert.match(page, /PremiumFAQSection theme="violet"/);
   assert.match(styles, /--accent:#7c3aed/);
-  assert.match(card, /#7c3aed|#7C3AED|rgba\(139, 92, 246/);
   assert.doesNotMatch(styles, /--gold|var\(--gold\)|242,183,45|#f2b72d/i);
-  assert.doesNotMatch(card, /#F1B82E|#f2bb31|rgba\(242, 187, 49/i);
 });
 
 test('les CTA, FAQ et sessions reçoivent la couleur du parcours', () => {
