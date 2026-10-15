@@ -1,0 +1,27 @@
+/* Light reference panels stay legible independently of the parent page's theme. */
+.section, .list { --text-main: 23 19 13; --text-muted: 70 58 42; --border: 214 199 174; --background: 246 240 228; --surface: 255 251 243; --accent-strong: 139 88 18; --accent-text: 31 22 10; color: rgb(var(--text-main)); color-scheme: light; }
+.list { align-self: start; align-content: start; }
+.section { scroll-margin-top: calc(var(--site-header-height, 80px) + var(--section-nav-height, 0px) + 24px); }
+.section .grid, .section .intro, .list .item { min-width: 0; }
+.section .title { margin: 16px 0 0; font-size: 30px; font-weight: 900; line-height: 1.2; letter-spacing: -.025em; }
+.section .description { margin: 16px 0 0; font-size: 16px; font-weight: 600; line-height: 28px; }
+.section .contactTitle { margin: 0; font-size: 16px; font-weight: 900; line-height: 24px; }
+.section .contactDescription { margin: 4px 0 0; font-size: 14px; font-weight: 600; line-height: 24px; }
+.list .summary { padding: 16px; gap: 12px; font-size: .95rem; font-weight: 900; line-height: 24px; }
+.list .summary::-webkit-details-marker { display: none; }
+.list .answer { margin: 0; padding: 12px 0 0; font-size: .95rem; font-weight: 500; line-height: 28px; }
+.section a:focus-visible, .list summary:focus-visible { outline: 3px solid #2563eb; outline-offset: -3px; }
+.context { margin-top: 24px; }
+.contained { margin-top: 54px; border-radius: 24px; }
+.containedInner { padding-inline: 24px; }
+@media (min-width: 640px) {
+  .section .title { font-size: 36px; line-height: 40px; }
+  .list .summary { padding: 16px 20px; font-size: 16px; }
+  .list .answer { font-size: 16px; line-height: 32px; }
+}
+@media (min-width: 1024px) { .section .title { font-size: 2.7rem; line-height: 1.05; } }
+@media (max-width: 639px) { .containedInner { padding-inline: 16px; } }
+@media (prefers-reduced-motion: reduce) {
+  .section *, .list * { transition: none !important; animation: none !important; }
+  .list .item:hover { transform: none; }
+}
