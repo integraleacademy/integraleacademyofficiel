@@ -2,7 +2,7 @@
 .page[data-course-theme='blue'] { --course-accent:#285e99; --course-pale:#b5d8ff; --course-rgb:40,94,153; }
 .page[data-course-theme='green'] { --course-accent:#17694f; --course-pale:#afe4cb; --course-rgb:23,105,79; }
 .page[data-course-theme='orange'] { --course-accent:#ac4b23; --course-pale:#ffd0ad; --course-rgb:172,75,35; }
-.page { --ssiap-red:var(--course-accent); }
+.page[data-course-theme] { --ssiap-red:var(--course-accent); }
 .hero.hero { background:radial-gradient(ellipse at 90% 5%,rgba(var(--course-rgb,182,56,61),.35),transparent 55%),#111c28; }
 .page .hero h1 em,.hero :global([class*='heroBadge']) { color:var(--course-pale,#ffc0b6); }
 .hero h1 { text-wrap:balance; }
@@ -45,7 +45,7 @@
 /* Retain the complete specialised course cards while matching the new rhythm. */
 .page > section:global(.page-container) { padding-block:54px; }
 .page > section:global(.page-container) > h2 { font-size:clamp(30px,3.5vw,46px); letter-spacing:-.045em; line-height:1.15; }
-:global(html.dark) .page { --ssiap-red:var(--course-pale); }
+:global(html.dark) .page[data-course-theme] { --ssiap-red:var(--course-pale); }
 :global(html.dark) .paper { background:#14202c; }
 :global(html.dark) .stone { background:#18232f; }
 :global(html.dark) .eyebrow { color:var(--course-pale); }
@@ -89,3 +89,7 @@
 @media (prefers-reduced-motion:reduce) { .action { transition:none; } }
 
 .portraitMedallion { padding:12px; border:1px solid #bfd3e7; box-shadow:0 0 0 9px #edf3f8; margin:10px 0 14px; animation:none; transform:none; }
+.page .contact { background:radial-gradient(ellipse at 85% 50%,rgba(var(--course-rgb),.1),transparent 60%),#faf7f0; }
+.page .contact :global([class*='eyebrow']),.page .contact h2 em { color:var(--course-accent); }
+:global(html.dark) .page .contact { background:#111c28; }
+:global(html.dark) .page .contact :global([class*='eyebrow']),:global(html.dark) .page .contact h2 em { color:var(--course-pale); }

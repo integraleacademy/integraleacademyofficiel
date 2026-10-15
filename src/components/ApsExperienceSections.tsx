@@ -34,6 +34,11 @@ export function ApsHybridExperience() {
 
 export function ApsExamExperience({ steps }: { steps: string[][] }) {
   return <>
+    <div className={styles.examSuccess} aria-label="Taux de réussite APS chez Intégrale Academy : 95 %">
+      <strong className={styles.successRate}>95<span> %</span></strong>
+      <div><p>Taux de réussite APS</p><span>Chez Intégrale Academy</span></div>
+      <span className={styles.successSeal} aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="1.7"><circle cx="24" cy="18" r="12"/><path d="m18 29-3 15 9-5 9 5-3-15M18 18l4 4 8-8" strokeLinecap="round" strokeLinejoin="round"/></svg></span>
+    </div>
     <div className={styles.exam}>
       <article className={styles.examTheory}><p className={styles.kicker}>01 · Les connaissances</p><h3>QCU<span>Questionnaires à choix unique</span></h3><p>Comprendre une situation professionnelle et choisir la bonne réponse sur support électronique.</p><ul><li>Cadre juridique et limites d’intervention</li><li>Consignes et prévention des risques</li><li>Réactions adaptées aux situations du métier</li></ul><p className={styles.examNote}>Des entraînements réguliers tout au long du parcours.</p></article>
       <article className={styles.examPractice}><Image src="/images/aps/experience/examen.webp" alt="Une candidate APS signale une anomalie pendant une ronde, sous l’observation d’une examinatrice" width={1536} height={1024} sizes="(max-width: 800px) 92vw, 740px" /><div><p className={styles.kicker}>02 · La pratique</p><h3>Deux mises en situation.<br />Vos réflexes, en action.</h3><div className={styles.examSituations}><p><strong>En ronde</strong><span>Observer, détecter une anomalie et rendre compte.</span></p><p><strong>Au poste de sécurité</strong><span>Traiter une alerte, communiquer et appliquer les consignes.</span></p></div></div></article>
