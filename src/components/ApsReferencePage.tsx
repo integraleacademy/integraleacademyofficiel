@@ -9,6 +9,7 @@ import { serializeCourseJsonLd } from '@/lib/seo';
 import Link from 'next/link';
 
 import { ApsSectionNavigation } from '@/components/ApsSectionNavigation';
+import { ApsTrainingSummary } from '@/components/ApsTrainingSummary';
 import { ApsFacilitiesSections } from '@/components/ApsFacilitiesSections';
 import { ApsJourney } from '@/components/ApsJourney';
 import { IntegraleWelcomePack } from '@/components/IntegraleWelcomePack';
@@ -28,15 +29,6 @@ const apsContact = (subject = 'inscription') => `/contact?formation=aps&objet=${
 const fallbackSessions = [
   { id: 'aps-septembre-2026', startDate: '2026-09-07T00:00:00.000Z', endDate: '2026-10-09T00:00:00.000Z', examDate: '2026-10-12T00:00:00.000Z', status: 'OPEN', seatsLeft: 3, showSeatsLeft: true, location: 'Puget-sur-Argens', priceLabel: '1 650 €' },
   { id: 'aps-novembre-2026', startDate: '2026-11-03T00:00:00.000Z', endDate: '2026-12-08T00:00:00.000Z', examDate: '2026-12-09T00:00:00.000Z', status: 'OPEN', seatsLeft: 6, showSeatsLeft: true, location: 'Puget-sur-Argens', priceLabel: '1 650 €' },
-];
-
-const heroFacts = [
-  ['Certification', 'TFP APS', 'Titre à finalité professionnelle'],
-  ['Niveau', 'Niveau 3', 'RNCP 36648'],
-  ['Format', '51 h', 'à distance'],
-  ['École', '124 h', 'en présentiel à Puget'],
-  ['Secourisme', 'SST inclus', 'dans le parcours'],
-  ['Agrément', 'ADEF', '8320032701'],
 ];
 
 const missions = [
@@ -251,7 +243,7 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
     ] }, "/formations-securite/aps") }} />
 
     <TrainingReferenceHero
-      id="aps" badge="TFP APS · RNCP 36648 · niveau 3"
+      id="aps" badge="Formation TFP APS"
       heading="Devenez agent de" accent="prévention et sécurité."
       title="Formation agent de prévention et de sécurité"
       tagline="Apprenez le métier sur le terrain."
@@ -259,10 +251,11 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
       illustration={{ src: '/images/aps/manuel/equipe.webp', alt: 'Deux agents de sécurité préparent leur ronde, illustration du manuel APS Intégrale Academy' }}
       caption="Observer. Prévenir. Protéger."
       primaryAction={{ href: apsContact('démarrer mon projet'), label: 'Je démarre mon projet' }}
-      facts={heroFacts}
     ><HeroSession session={next} /></TrainingReferenceHero>
 
     <ApsSectionNavigation registrationHref="#dates-tarifs" />
+
+    <ApsTrainingSummary />
 
     <ApsJourney />
 

@@ -22,11 +22,11 @@ export function TrainingReferenceAction({ href, children, outline = false }: { h
   return <Link href={href} className={`${styles.action} ${outline ? styles.outline : styles.primary}`}>{children}</Link>;
 }
 
-export function TrainingReferenceHero({ id, badge, heading, accent, title, tagline, description, illustration, caption, primaryAction, additionalAction, highlights = [], facts, children, extendedCopy = false }: {
+export function TrainingReferenceHero({ id, badge, heading, accent, title, tagline, description, illustration, caption, primaryAction, additionalAction, highlights = [], facts = [], children, extendedCopy = false }: {
   id: string; badge: string; heading: string; accent: string; title: string;
   tagline: string; description: ReactNode; illustration: ManualIllustration; caption: string;
   primaryAction: Action; additionalAction?: ReactNode; highlights?: readonly string[];
-  facts: ReadonlyArray<ReadonlyArray<string | undefined>>; children: ReactNode; extendedCopy?: boolean;
+  facts?: ReadonlyArray<ReadonlyArray<string | undefined>>; children: ReactNode; extendedCopy?: boolean;
 }) {
   return <section className={`${reference.hero} ${styles.hero}`} aria-labelledby={`${id}-title`} data-extended-copy={extendedCopy || undefined}>
     <div className={reference.container}>
@@ -45,7 +45,7 @@ export function TrainingReferenceHero({ id, badge, heading, accent, title, tagli
         </figure>
       </div>
       <div className={`${reference.heroBooking} ${styles.booking}`}>{children}</div>
-      <div className={reference.facts}>{facts.map(([label, value, detail]) => <div key={label}><span>{label}</span><strong>{value}</strong>{detail && <small>{detail}</small>}</div>)}</div>
+      {facts.length > 0 && <div className={reference.facts}>{facts.map(([label, value, detail]) => <div key={label}><span>{label}</span><strong>{value}</strong>{detail && <small>{detail}</small>}</div>)}</div>}
     </div>
   </section>;
 }
