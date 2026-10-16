@@ -109,7 +109,7 @@ const faq = [
   },
   {
     q: 'Qui contacter pour parler du BTS ?',
-    a: 'Aurélie CHAUSSEZ, chargée des relations clients Intégrale Academy et responsable des BTS, répond à vos questions au 04 87 83 06 15, au 07 69 39 04 57 ou par e-mail à aurelie@integraleacademy.com.',
+    a: 'Aurélie BAYARD-CHAUSSEZ, chargée des relations clients Intégrale Academy et responsable des BTS, répond à vos questions au 04 87 83 06 15, au 07 69 39 04 57 ou par e-mail à aurelie@integraleacademy.com.',
   },
 ];
 

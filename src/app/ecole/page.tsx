@@ -14,7 +14,7 @@ export const metadata = createPageMetadata('/ecole');
 
 const team = [
   { portrait: 'cassandre' as const, name: 'Cassandre Menard', role: 'Responsable commerciale', mission: 'Votre interlocutrice pour choisir votre formation, préparer votre admission et trouver le financement adapté.', specialty: 'Pour choisir votre formation' },
-  { portrait: 'aurelie' as const, name: 'Aurélie Chaussez', role: 'Relations clients · Responsable BTS', mission: 'Le lien entre les apprenants, les entreprises et l’école, pour un parcours bien accompagné.', specialty: 'Pour votre BTS et votre alternance' },
+  { portrait: 'aurelie' as const, name: 'Aurélie BAYARD-CHAUSSEZ', role: 'Relations clients · Responsable BTS', mission: 'Le lien entre les apprenants, les entreprises et l’école, pour un parcours bien accompagné.', specialty: 'Pour votre BTS et votre alternance' },
   { portrait: 'elsa' as const, name: 'Elsa Duquesne', role: 'Assistante de direction', mission: 'Un suivi administratif attentif et une organisation quotidienne au service de votre formation.', specialty: 'Pour préparer et suivre votre dossier' },
   { portrait: 'yannice' as const, name: 'Yannice Libault', role: 'Coordinateur pédagogique · Azzera Academy', mission: 'La coordination des programmes et des intervenants, avec une attention portée au suivi pédagogique.', specialty: 'Pour votre suivi pédagogique' },
 ];

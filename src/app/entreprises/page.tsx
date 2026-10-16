@@ -115,7 +115,7 @@ const siteSkills = [
 
 const contacts = [
   { portrait: 'cassandre' as const, firstName: 'Cassandre', name: 'Cassandre MENARD', role: 'Responsable commerciale', email: 'cassandre@integraleacademy.com', phone: '04 87 83 06 16', phoneHref: '+33487830616', mobile: '07 43 58 22 64', mobileHref: '+33743582264' },
-  { portrait: 'aurelie' as const, firstName: 'Aurélie', name: 'Aurélie CHAUSSEZ', role: 'Chargée des relations clients', email: 'aurelie@integraleacademy.com', phone: '04 87 83 06 15', phoneHref: '+33487830615', mobile: '07 69 39 04 57', mobileHref: '+33769390457' },
+  { portrait: 'aurelie' as const, firstName: 'Aurélie', name: 'Aurélie BAYARD-CHAUSSEZ', role: 'Chargée des relations clients', email: 'aurelie@integraleacademy.com', phone: '04 87 83 06 15', phoneHref: '+33487830615', mobile: '07 69 39 04 57', mobileHref: '+33769390457' },
   { portrait: 'clement' as const, firstName: 'Clément', name: 'Clément VAILLANT', role: 'Directeur général', email: 'clement@integraleacademy.com', phone: '04 87 83 06 14', phoneHref: '+33487830614', mobile: '06 65 24 52 71', mobileHref: '+33665245271' },
 ];
 

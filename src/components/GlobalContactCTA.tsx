@@ -34,7 +34,7 @@ export function GlobalContactCTA() {
   const isFinancingPage = pathname?.replace(/\/+$/, '') === '/financements';
   const isBts = pathname?.startsWith('/bts') || pathname === '/dossiersbts';
   const contactName = isBts ? 'Aurélie' : 'Cassandre';
-  const contactFullName = isBts ? 'Aurélie CHAUSSEZ' : 'Cassandre';
+  const contactFullName = isBts ? 'Aurélie BAYARD-CHAUSSEZ' : 'Cassandre';
   const contactRole = isBts
     ? 'Chargée des relations clients — Responsable des BTS'
     : 'Responsable commerciale — Intégrale Academy';

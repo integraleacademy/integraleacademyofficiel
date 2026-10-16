@@ -56,7 +56,7 @@ export function ProjectTrainingPopup() {
         <div className="flex items-start gap-4 pr-10">
           <div
             className="relative grid h-16 w-16 shrink-0 place-items-center overflow-hidden rounded-full bg-gradient-to-br from-academy-gold via-yellow-200 to-white text-xl font-black text-academy-gold-text shadow-gold ring-4 ring-white"
-            aria-label={isBts ? 'Aurélie CHAUSSEZ, responsable des BTS' : 'Cassandre M., responsable commerciale Intégrale Academy'}
+            aria-label={isBts ? 'Aurélie BAYARD-CHAUSSEZ, responsable des BTS' : 'Cassandre M., responsable commerciale Intégrale Academy'}
           >
             <TeamPortrait person={isBts ? 'aurelie' : 'cassandre'} size={64} className="h-full w-full" />
           </div>
@@ -72,7 +72,7 @@ export function ProjectTrainingPopup() {
 
         <p className="mt-4 text-sm leading-6 text-stone-600">
           {isBts
-            ? 'Aurélie CHAUSSEZ, chargée des relations clients et responsable des BTS, répond à vos questions sur la candidature et l’alternance.'
+            ? 'Aurélie BAYARD-CHAUSSEZ, chargée des relations clients et responsable des BTS, répond à vos questions sur la candidature et l’alternance.'
             : 'Réservez un RDV téléphone avec Cassandre, responsable commerciale Intégrale Academy.'}
         </p>
 
