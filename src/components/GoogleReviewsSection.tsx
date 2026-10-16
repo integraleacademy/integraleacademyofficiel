@@ -4,12 +4,19 @@ import { useMemo, useState } from 'react';
 import styles from './GoogleReviewsSection.module.css';
 import { GOOGLE_REVIEWS_URL, REVIEW_CATEGORIES, type PublicGoogleReview } from '@/lib/google-reviews';
 
+function formatTeamSurnames(text: string) {
+  return text.replace(
+    /\b((?:Cl[eé]ment|Cassandre|Aur[eé]lie|Elsa|Yannice)\s+)(Vaillant|M[eé]nard|(?:Bayard-)?Chaussez|Duquesne|Libault)\b/gi,
+    (_, firstName: string, surname: string) => firstName + surname.toLocaleUpperCase('fr-FR'),
+  );
+}
+
 function ReviewHeader({ review, featured }: { review: PublicGoogleReview; featured: boolean }) {
   return <div className={styles.header}>
     <div className="flex min-w-0 items-center gap-3">
       <div aria-hidden="true" className={styles.avatar}>{review.author.trim().charAt(0).toUpperCase() || 'A'}</div>
       <div className="min-w-0">
-        <h3 className={styles.author}>{review.author}</h3>
+        <h3 className={styles.author}>{formatTeamSurnames(review.author)}</h3>
         <div className="mt-1 flex items-center gap-2"><span className={styles.stars} aria-label="5 étoiles sur 5">★★★★★</span><span aria-hidden="true" className={styles.score}>5/5</span></div>
       </div>
     </div>
@@ -18,10 +25,7 @@ function ReviewHeader({ review, featured }: { review: PublicGoogleReview; featur
 }
 
 function ReviewText({ text, featured }: { text: string; featured: boolean }) {
-  const displayText = text.replace(
-    /\b((?:Cl[eé]ment|Cassandre|Aur[eé]lie|Elsa|Yannice)\s+)(Vaillant|M[eé]nard|(?:Bayard-)?Chaussez|Duquesne|Libault)\b/gi,
-    (_, firstName: string, surname: string) => firstName + surname.toLocaleUpperCase('fr-FR'),
-  );
+  const displayText = formatTeamSurnames(text);
   const limit = featured ? 188 : 152;
   const className = `${styles.quote} ${featured ? styles.largeQuote : ''}`;
   if (!displayText) return <p className={styles.quote}><em>Avis 5 étoiles sans commentaire.</em></p>;
