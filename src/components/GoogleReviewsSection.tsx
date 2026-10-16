@@ -18,17 +18,21 @@ function ReviewHeader({ review, featured }: { review: PublicGoogleReview; featur
 }
 
 function ReviewText({ text, featured }: { text: string; featured: boolean }) {
+  const displayText = text.replace(
+    /\b((?:Cl[eé]ment|Cassandre|Aur[eé]lie|Elsa|Yannice)\s+)(Vaillant|M[eé]nard|(?:Bayard-)?Chaussez|Duquesne|Libault)\b/gi,
+    (_, firstName: string, surname: string) => firstName + surname.toLocaleUpperCase('fr-FR'),
+  );
   const limit = featured ? 188 : 152;
   const className = `${styles.quote} ${featured ? styles.largeQuote : ''}`;
-  if (!text) return <p className={styles.quote}><em>Avis 5 étoiles sans commentaire.</em></p>;
-  if (text.length <= limit) return <blockquote className={className}>« {text} »</blockquote>;
+  if (!displayText) return <p className={styles.quote}><em>Avis 5 étoiles sans commentaire.</em></p>;
+  if (displayText.length <= limit) return <blockquote className={className}>« {displayText} »</blockquote>;
 
-  const cut = text.lastIndexOf(' ', limit);
-  const shortText = `${text.slice(0, cut > 90 ? cut : limit).trim()}…`;
+  const cut = displayText.lastIndexOf(' ', limit);
+  const shortText = `${displayText.slice(0, cut > 90 ? cut : limit).trim()}…`;
   return <details className={`${className} group/text`}>
     <summary className="cursor-pointer list-none [&::-webkit-details-marker]:hidden">
       <span className="group-open/text:hidden">« {shortText} »</span>
-      <span className="hidden group-open/text:inline">« {text} »</span>
+      <span className="hidden group-open/text:inline">« {displayText} »</span>
       <span className="mt-3 block w-fit rounded-full bg-academy-ink/[.06] px-3 py-1.5 text-xs font-black text-academy-ink transition hover:bg-academy-gold/20 dark:bg-white/10 dark:text-white">
         <span className="group-open/text:hidden">Lire la suite</span>
         <span className="hidden group-open/text:inline">Réduire</span>

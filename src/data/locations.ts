@@ -16,7 +16,7 @@ export const contactInfo = {
 
 export const socialLinks = [
   { label: 'Facebook', href: 'https://www.facebook.com/integraleacademy', handle: '@integraleacademy' },
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/vaillantclement/', handle: 'Clément Vaillant' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/vaillantclement/', handle: 'Clément VAILLANT' },
   { label: 'Instagram', href: 'https://www.instagram.com/integraleacademy/', handle: '@integraleacademy' },
   { label: 'WhatsApp', href: contactInfo.whatsappHref, handle: contactInfo.whatsapp },
 ] as const;

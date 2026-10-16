@@ -215,7 +215,7 @@ export default function Page() {
                 <div className="rounded-[1.25rem] bg-academy-bg/75 p-5">
                   <p className="text-[10px] font-black uppercase tracking-[.14em] text-academy-gold-strong">Conception du site</p>
                   <p className="mt-3 text-lg font-black text-academy-ink dark:text-white">SAS Intégrale Group</p>
-                  <p className="mt-1 text-xs font-semibold text-academy-muted">Direction du projet · Clément Vaillant</p>
+                  <p className="mt-1 text-xs font-semibold text-academy-muted">Direction du projet · Clément VAILLANT</p>
                 </div>
               </div>
               <p className="mt-5">Le directeur de la publication est responsable du contenu éditorial mis à disposition sur le site.</p>

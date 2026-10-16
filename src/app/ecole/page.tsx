@@ -13,10 +13,10 @@ import { SchoolGallery } from './SchoolGallery';
 export const metadata = createPageMetadata('/ecole');
 
 const team = [
-  { portrait: 'cassandre' as const, name: 'Cassandre Menard', role: 'Responsable commerciale', mission: 'Votre interlocutrice pour choisir votre formation, préparer votre admission et trouver le financement adapté.', specialty: 'Pour choisir votre formation' },
+  { portrait: 'cassandre' as const, name: 'Cassandre MENARD', role: 'Responsable commerciale', mission: 'Votre interlocutrice pour choisir votre formation, préparer votre admission et trouver le financement adapté.', specialty: 'Pour choisir votre formation' },
   { portrait: 'aurelie' as const, name: 'Aurélie BAYARD-CHAUSSEZ', role: 'Relations clients · Responsable BTS', mission: 'Le lien entre les apprenants, les entreprises et l’école, pour un parcours bien accompagné.', specialty: 'Pour votre BTS et votre alternance' },
-  { portrait: 'elsa' as const, name: 'Elsa Duquesne', role: 'Assistante de direction', mission: 'Un suivi administratif attentif et une organisation quotidienne au service de votre formation.', specialty: 'Pour préparer et suivre votre dossier' },
-  { portrait: 'yannice' as const, name: 'Yannice Libault', role: 'Coordinateur pédagogique · Azzera Academy', mission: 'La coordination des programmes et des intervenants, avec une attention portée au suivi pédagogique.', specialty: 'Pour votre suivi pédagogique' },
+  { portrait: 'elsa' as const, name: 'Elsa DUQUESNE', role: 'Assistante de direction', mission: 'Un suivi administratif attentif et une organisation quotidienne au service de votre formation.', specialty: 'Pour préparer et suivre votre dossier' },
+  { portrait: 'yannice' as const, name: 'Yannice LIBAULT', role: 'Coordinateur pédagogique · Azzera Academy', mission: 'La coordination des programmes et des intervenants, avec une attention portée au suivi pédagogique.', specialty: 'Pour votre suivi pédagogique' },
 ];
 function Arrow({ diagonal = false }: { diagonal?: boolean }) {
   return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={diagonal ? 'M6 18 18 6M6 6h12v12' : 'M4 12h16m-6-6 6 6-6 6'} /></svg>;
@@ -84,7 +84,7 @@ export default function Page() {
               <p className={experience.directorLabel}>La direction de l’école</p>
               <div className={experience.directorIdentity}>
                 <div aria-hidden="true"><TeamPortrait person="clement" size={92} /></div>
-                <div><h3>Clément Vaillant</h3><p>Fondateur & directeur général</p></div>
+                <div><h3>Clément VAILLANT</h3><p>Fondateur & directeur général</p></div>
               </div>
               <p className={experience.directorMission}>Il pilote le développement de l’école avec l’équipe, en portant une même exigence : la qualité des parcours et la proximité avec chaque apprenant.</p>
               <a href="#clement-vaillant" className={styles.textLink}>Découvrir son parcours <Arrow diagonal /></a>
@@ -135,16 +135,16 @@ export default function Page() {
           <p className={styles.eyebrow}>04 / Notre histoire · Depuis 2018</p>
           <h2 id="founder-title">Le terrain comme point de départ.<br /><em>L’humain comme fil conducteur.</em></h2>
           <blockquote className={experience.welcomeQuote}>« Osez poser vos questions, essayer et progresser. Toute l’équipe est à vos côtés pour vous accompagner. »</blockquote>
-          <div className={experience.founderSignature}><TeamPortrait person="clement" size={72} /><div><p>Clément Vaillant</p><span>Fondateur & directeur général</span></div></div>
+          <div className={experience.founderSignature}><TeamPortrait person="clement" size={72} /><div><p>Clément VAILLANT</p><span>Fondateur & directeur général</span></div></div>
           <details className={experience.biography}><summary>Découvrir le parcours du fondateur <span className={styles.plus} aria-hidden="true">+</span></summary>
-          <p>Entrepreneur engagé dans la formation professionnelle, Clément Vaillant a construit son parcours au croisement de la sécurité privée, de la gestion d’équipes, de la communication et de la formation. Son expérience, acquise dans des environnements exigeants et réglementés, l’a conduit des fonctions opérationnelles à la coordination puis à la direction de projets et d’équipes.</p>
+          <p>Entrepreneur engagé dans la formation professionnelle, Clément VAILLANT a construit son parcours au croisement de la sécurité privée, de la gestion d’équipes, de la communication et de la formation. Son expérience, acquise dans des environnements exigeants et réglementés, l’a conduit des fonctions opérationnelles à la coordination puis à la direction de projets et d’équipes.</p>
           <p>Titulaire d’un Master 2 en communication et stratégies d’image, il associe culture du terrain, pilotage d’entreprise et amélioration continue des parcours proposés par Intégrale Academy. Sa conviction : faire grandir l’école en conservant l’exigence, la proximité et un cadre clair pour chaque apprenant.</p>
             <a href="https://fr.linkedin.com/in/vaillantclement" target="_blank" rel="noopener noreferrer" className={styles.textLink}>Découvrir son parcours sur LinkedIn <Arrow diagonal /></a>
           </details>
         </div>
         <figure className={styles.packPhoto}>
-          <Image src="/images/welcome-pack/carnet-bienvenue.webp" alt="La page de bienvenue du carnet Intégrale Academy, signée Clément Vaillant" width={1092} height={1531} sizes="(max-width: 340px) calc(100vw - 64px), 280px" />
-          <figcaption>Le mot de bienvenue de Clément Vaillant · Carnet Intégrale Academy</figcaption>
+          <Image src="/images/welcome-pack/carnet-bienvenue.webp" alt="La page de bienvenue du carnet Intégrale Academy, signée Clément VAILLANT" width={1092} height={1531} sizes="(max-width: 340px) calc(100vw - 64px), 280px" />
+          <figcaption>Le mot de bienvenue de Clément VAILLANT · Carnet Intégrale Academy</figcaption>
         </figure>
       </div>
       <div id="histoire" className={`${styles.container} ${experience.history}`}>

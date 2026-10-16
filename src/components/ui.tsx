@@ -283,7 +283,7 @@ export function Footer(){
         <ul>{legalRefs.map(reference=><li key={reference}>{reference}</li>)}</ul>
       </details>
       <div className={footerStyles.bottom}>
-        <p>Site créé par SAS Intégrale Group — Clément Vaillant.</p>
+        <p>Site créé par SAS Intégrale Group — Clément VAILLANT.</p>
         <nav aria-label="Informations légales"><Link href="/mentions-legales">Mentions légales</Link><Link href="/politique-confidentialite">Confidentialité</Link><Link href="/admin/ia">Administration</Link></nav>
       </div>
     </div>

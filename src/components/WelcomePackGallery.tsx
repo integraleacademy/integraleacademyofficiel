@@ -7,7 +7,7 @@ import styles from './ApsWelcomePack.module.css';
 const views = [
   { image: 'carnet-ferme-ouvert', label: 'Fermé & ouvert', caption: 'Le carnet, sous toutes ses coutures.', alt: 'Carnet Intégrale Academy noir et doré, fermé et ouvert sur le mot de bienvenue et une page de notes', width: 1536, height: 1024 },
   { image: 'carnet-couverture', label: 'La couverture', caption: 'Faites le premier pas vers votre futur métier.', alt: 'Couverture originale du carnet : logo Intégrale Academy, grand A doré et texte « Faites le premier pas vers votre futur métier. »', width: 1092, height: 1531 },
-  { image: 'carnet-bienvenue', label: 'Le mot d’accueil', caption: 'Un mot de bienvenue pour commencer.', alt: 'Page originale de bienvenue du carnet, avec le message de Clément Vaillant, directeur Intégrale Academy', width: 1092, height: 1531 },
+  { image: 'carnet-bienvenue', label: 'Le mot d’accueil', caption: 'Un mot de bienvenue pour commencer.', alt: 'Page originale de bienvenue du carnet, avec le message de Clément VAILLANT, directeur Intégrale Academy', width: 1092, height: 1531 },
   { image: 'carnet-notes', label: 'Les pages de notes', caption: 'De la place pour vos idées et les points à retenir.', alt: 'Page originale Mes notes : date, thème ou séquence, lignes pour écrire et encadré À retenir', width: 1092, height: 1531 },
 ] as const;
 
