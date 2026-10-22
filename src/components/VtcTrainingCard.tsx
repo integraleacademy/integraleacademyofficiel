@@ -22,15 +22,17 @@ export function VtcTrainingCard({ description, duration, price, href }: VtcTrain
         <article className={`${styles.slide} ${styles.visualFirst}`} data-active="true" aria-labelledby="vtc-course-title">
           <div className={styles.visual}>
             <figure className={styles.artwork}>
-              <img
-                src={vtcArtwork.accueil.src}
-                alt={vtcArtwork.accueil.alt}
-                width={1200}
-                height={800}
-                loading="lazy"
-                decoding="async"
-                draggable={false}
-              />
+              <Link href={href} className={styles.artworkLink} aria-label="Découvrir la formation chauffeur VTC">
+                <img
+                  src={vtcArtwork.accueil.src}
+                  alt={vtcArtwork.accueil.alt}
+                  width={1200}
+                  height={800}
+                  loading="lazy"
+                  decoding="async"
+                  draggable={false}
+                />
+              </Link>
             </figure>
             <div className={styles.caption}>
               <strong>{price}</strong>
@@ -40,8 +42,10 @@ export function VtcTrainingCard({ description, duration, price, href }: VtcTrain
           <div className={styles.copy}>
             <p className={styles.category}>Transport de personnes</p>
             <h3 id="vtc-course-title" className={styles.title}>
-              <strong>VTC</strong>
-              <em>Chauffeur professionnel</em>
+              <Link href={href} className={styles.titleLink}>
+                <strong>VTC</strong>
+                <em>Chauffeur professionnel</em>
+              </Link>
             </h3>
             <p className={styles.description}>{description}</p>
             <dl className={styles.courseFacts}>

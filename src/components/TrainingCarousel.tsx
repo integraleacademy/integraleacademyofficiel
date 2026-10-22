@@ -97,8 +97,10 @@ export function TrainingCarousel({ items, label, tabListLabel, previousLabel, ne
             <div className={styles.copy}>
               <p className={styles.category}>{item.category}</p>
               <h3 className={styles.title}>
-                <strong>{item.shortTitle}</strong>
-                <em>{item.title}</em>
+                <Link href={item.slug} className={styles.titleLink}>
+                  <strong>{item.shortTitle}</strong>
+                  <em>{item.title}</em>
+                </Link>
               </h3>
               <p className={styles.description}>{item.description}</p>
               {item.details}
@@ -108,15 +110,17 @@ export function TrainingCarousel({ items, label, tabListLabel, previousLabel, ne
             </div>
             <div className={styles.visual}>
               <figure className={styles.artwork}>
-                <img
-                  src={item.imageSrc}
-                  alt={item.imageAlt}
-                  width={1200}
-                  height={800}
-                  loading="lazy"
-                  decoding="async"
-                  draggable={false}
-                />
+                <Link href={item.slug} className={styles.artworkLink} aria-label={item.ctaLabel}>
+                  <img
+                    src={item.imageSrc}
+                    alt={item.imageAlt}
+                    width={1200}
+                    height={800}
+                    loading="lazy"
+                    decoding="async"
+                    draggable={false}
+                  />
+                </Link>
               </figure>
               {item.caption && <div className={styles.caption}>{item.caption}</div>}
             </div>

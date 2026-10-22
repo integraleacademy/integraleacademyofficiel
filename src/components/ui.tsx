@@ -255,12 +255,15 @@ export function Footer(){
       </div>
 
       <section className={footerStyles.credentials} aria-label="Certification, autorisation et financements">
-        <div className={footerStyles.credential}>
+        <div className={`${footerStyles.credential} ${footerStyles.qualityCredential}`}>
           <div className={footerStyles.logoArea}>
             <Image src="/images/certifications/qualiopi.png" alt="Qualiopi — processus certifié, République française" width={633} height={338} className={footerStyles.qualiopiLogo}/>
           </div>
-          <p className={footerStyles.certificationText}>La certification qualité a été délivrée au titre de la ou des catégories d’actions suivantes : actions de formation, actions de formation en apprentissage, les actions permettant de faire valider les acquis de l'expérience (VAE)</p>
-          <Link href="/ecole#agrements" className={footerStyles.proofLink}>Consulter le certificat <span aria-hidden="true">↗</span></Link>
+          <div>
+            <p className={footerStyles.authorization}>Certificat Qualiopi n°03169 du 21/10/2024</p>
+            <p className={footerStyles.certificationText}>La certification qualité a été délivrée au titre de la ou des catégories d’actions suivantes : actions de formation, actions de formation en apprentissage, les actions permettant de faire valider les acquis de l'expérience (VAE)</p>
+            <Link href="/ecole#agrements" className={footerStyles.proofLink}>Consulter le certificat <span aria-hidden="true">↗</span></Link>
+          </div>
         </div>
         <div className={footerStyles.credential}>
           <div className={footerStyles.logoArea}>
@@ -278,10 +281,10 @@ export function Footer(){
         </div>
       </section>
 
-      <details className={footerStyles.references}>
-        <summary>Références de l’organisme <span aria-hidden="true">+</span></summary>
-        <ul>{legalRefs.map(reference=><li key={reference}>{reference}</li>)}</ul>
-      </details>
+      <section className={footerStyles.references} aria-labelledby="footer-references-title">
+        <h2 id="footer-references-title">Références de l’organisme</h2>
+        <ul>{legalRefs.filter(reference=>!reference.startsWith('Qualiopi')&&!reference.startsWith('CNAPS')).map(reference=><li key={reference}>{reference}</li>)}</ul>
+      </section>
       <div className={footerStyles.bottom}>
         <p>Site créé par SAS Intégrale Group — Clément VAILLANT.</p>
         <nav aria-label="Informations légales"><Link href="/mentions-legales">Mentions légales</Link><Link href="/politique-confidentialite">Confidentialité</Link><Link href="/admin/ia">Administration</Link></nav>
