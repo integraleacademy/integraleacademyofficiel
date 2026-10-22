@@ -5,11 +5,12 @@ import Image from 'next/image';
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import { formatSessionDate, formatSessionPeriod, hasDetailedDeliveryPeriods } from '@/lib/public-sessions';
 import { getSessionSeatAvailability, resolveSessionSeatCapacity } from '@/lib/session-seat-availability';
-import { sessionLocationFilters, sessionMatchesLocation, type SessionLocationFilterKey } from '@/lib/session-location-filter';
+import { directorPlanningLocations, sessionLocationFilters, sessionMatchesLocation, type DirectorLocationFilterKey, type SessionLocationFilterKey } from '@/lib/session-location-filter';
 import { formatTrainingPrice } from '@/lib/training-price';
 import { planningFormationHref } from '@/lib/planning-data';
 import { planningSsiapCourse, ssiapPlanningCourses, ssiapPlanningGroups, ssiapPlanningContactHref, type SsiapPlanningCourse } from '@/lib/planning-ssiap';
 import { SsiapCourseChoices } from './SsiapCourseChoices';
+import { DirectorLocationChoices } from './DirectorLocationChoices';
 import { vtcCourse } from '@/data/vtc';
 import styles from './planning.module.css';
 import { PlanningHelp } from './PlanningHelp';
@@ -116,7 +117,7 @@ const formationFilters: {
     image: '/images/planning-metiers/a3p.webp',
     label: 'A3P',
     eyebrow: 'Protection rapprochée',
-    description: 'Agent privé de protection de personnes',
+    description: 'Agent de protection physique des personnes',
     category: 'security',
     slugs: ['a3p', 'a3p-apr'],
     accent: 'green',
@@ -622,15 +623,19 @@ export function PlanningClient({ initialSessions, btsIntakeYear, initialLocation
   const activePlanningTheme = planningThemeClass(selectedFormationDetails?.accent || 'gold');
   const selectedSsiapCourse = activeFormation === 'ssiap' ? ssiapPlanningCourses.find(course => course.key === activeSsiapCourse) : undefined;
   const isChoosingSsiap = activeFormation === 'ssiap' && !selectedSsiapCourse;
+  const selectedDirectorLocation = activeFormation === 'director' ? directorPlanningLocations.find(location => location.key === locationFilter) : undefined;
+  const isChoosingDirector = activeFormation === 'director' && !selectedDirectorLocation;
+  const isChoosingDetails = isChoosingSsiap || isChoosingDirector;
 
   const filteredSessions = useMemo(() => {
     const selectedFormation = activeFormation === 'all' ? null : formationFilters.find((formation) => formation.key === activeFormation);
+    if (isChoosingDirector) return [];
     return sortedSessions.filter((session) => {
       if (activeFormation === 'ssiap' && (!activeSsiapCourse || planningSsiapCourse(session) !== activeSsiapCourse)) return false;
       if (selectedFormation && !formationMatchesSlug(selectedFormation, session.training?.slug)) return false;
       return sessionMatchesLocation(session, locationFilter);
     });
-  }, [activeFormation, activeSsiapCourse, locationFilter, sortedSessions]);
+  }, [activeFormation, activeSsiapCourse, isChoosingDirector, locationFilter, sortedSessions]);
 
   const visibleSessions = showAll ? filteredSessions : filteredSessions.slice(0, 6);
   const selectedSession = filteredSessions.find(session => session.id === selectedSessionId) || null;
@@ -666,16 +671,16 @@ export function PlanningClient({ initialSessions, btsIntakeYear, initialLocation
   function chooseFormation(formation: FormationFilterKey) {
     setActiveFormation(formation);
     setActiveSsiapCourse(null);
-    if (formation === 'ssiap') setLocationFilter('all');
+    if (formation === 'ssiap' || formation === 'director') setLocationFilter('all');
     setShowAll(false);
     setSelectedSessionId(null);
     scrollToSessions();
   }
 
-  function showFormationDates(formation: FormationFilterKey, course: SsiapPlanningCourse | null = null) {
+  function showFormationDates(formation: FormationFilterKey, course: SsiapPlanningCourse | null = null, location: DirectorLocationFilterKey | null = null) {
     setActiveFormation(formation);
     setActiveSsiapCourse(formation === 'ssiap' ? course : null);
-    setLocationFilter('all');
+    setLocationFilter(formation === 'director' && location ? location : 'all');
     setView('list');
     setShowAll(true);
     setSelectedSessionId(null);
@@ -684,6 +689,10 @@ export function PlanningClient({ initialSessions, btsIntakeYear, initialLocation
 
   function chooseSsiapCourse(course: SsiapPlanningCourse) {
     showFormationDates('ssiap', course);
+  }
+
+  function chooseDirectorLocation(location: DirectorLocationFilterKey) {
+    showFormationDates('director', null, location);
   }
 
   function showCalendar() {
@@ -722,7 +731,7 @@ export function PlanningClient({ initialSessions, btsIntakeYear, initialLocation
             </div>
           </div>
 
-          <PlanningPreview key={`${activeFormation}-${activeSsiapCourse}`} formations={previewFormations} initialFormation={activeFormation} initialSsiapCourse={activeSsiapCourse} btsIntakeYear={btsIntakeYear} onChoose={(key, course) => showFormationDates(key as FormationFilterKey, course)} />
+          <PlanningPreview key={`${activeFormation}-${activeSsiapCourse}-${selectedDirectorLocation?.key}`} formations={previewFormations} initialFormation={activeFormation} initialSsiapCourse={activeSsiapCourse} initialDirectorLocation={selectedDirectorLocation?.key} btsIntakeYear={btsIntakeYear} onChoose={(key, course, location) => showFormationDates(key as FormationFilterKey, course, location)} />
         </div>
       </section>
 
@@ -760,7 +769,7 @@ export function PlanningClient({ initialSessions, btsIntakeYear, initialLocation
                   <span className="mt-5 block text-xl font-black tracking-tight">{formation.label}</span>
                   <span className="mt-2 block text-xs font-semibold leading-5 text-white/48">{formation.description}</span>
                   <span className="mt-auto flex items-center justify-between border-t border-white/10 pt-4 text-[10px] font-black uppercase tracking-[.08em]">
-                    {formation.key === 'ssiap' ? 'Choisir mon parcours' : formation.key === 'bts' ? `Rentrées ${btsIntakeYear} et ${btsIntakeYear + 1}` : count ? count + (count > 1 ? ' sessions' : ' session') : 'Créer une alerte'}
+                    {formation.key === 'director' ? 'Choisir mon centre' : formation.key === 'ssiap' ? 'Choisir mon parcours' : formation.key === 'bts' ? `Rentrées ${btsIntakeYear} et ${btsIntakeYear + 1}` : count ? count + (count > 1 ? ' sessions' : ' session') : 'Créer une alerte'}
                     <span className={'grid h-7 w-7 place-items-center rounded-full transition group-hover:translate-x-1 ' + (selected ? 'bg-academy-gold text-academy-gold-text' : 'bg-white/10 text-white')}>
                       <Icon name="arrow" className="h-3.5 w-3.5" />
                     </span>
@@ -773,8 +782,12 @@ export function PlanningClient({ initialSessions, btsIntakeYear, initialLocation
       </section>
 
       <section id="sessions" className={activePlanningTheme + ' page-container py-14 sm:py-20'}>
-        <div className={isChoosingSsiap ? styles.ssiapPickerHeading : styles.filterBar}>
-          {isChoosingSsiap ? <div>
+        <div className={isChoosingDetails ? styles.ssiapPickerHeading : styles.filterBar}>
+          {isChoosingDirector ? <div>
+            <p className={styles.ssiapPickerEyebrow}>Formation DIRIGEANT · DESP / DSSP</p>
+            <h2 tabIndex={-1} data-planning-focus>Où souhaitez-vous vous former ?</h2>
+            <p>Choisissez Paris ou la Côte d’Azur pour consulter les dates de votre centre.</p>
+          </div> : isChoosingSsiap ? <div>
             <p className={styles.ssiapPickerEyebrow}>Votre parcours SSIAP</p>
             <h2 tabIndex={-1} data-planning-focus>Sécurité incendie</h2>
             <p>Choisissez votre niveau, puis le type de formation qui vous concerne.</p>
@@ -788,15 +801,15 @@ export function PlanningClient({ initialSessions, btsIntakeYear, initialLocation
           </div>}
 
           <div className={styles.filterControls}>
-            {isChoosingSsiap ? <button type="button" className={styles.ssiapBack} onClick={() => chooseFormation('all')}><span aria-hidden="true">←</span> Toutes les formations</button> : <label className={styles.formationSelect}><span className="sr-only">Filtrer par formation</span><select value={activeSsiapCourse || activeFormation} onChange={event => {
+            {isChoosingDetails ? <button type="button" className={styles.ssiapBack} onClick={() => chooseFormation('all')}><span aria-hidden="true">←</span> Toutes les formations</button> : <label className={styles.formationSelect}><span className="sr-only">Filtrer par formation</span><select value={activeSsiapCourse || activeFormation} onChange={event => {
               const course = ssiapPlanningCourses.find(item => item.key === event.target.value);
               if (course) chooseSsiapCourse(course.key);
               else chooseFormation(event.target.value as FormationFilterKey);
             }}><option value="all">Toutes les formations</option>{formationFilters.map(formation => <option key={formation.key} value={formation.key}>{formation.key === 'ssiap' ? 'Sécurité incendie — Choisir un parcours' : formation.label}</option>)}{ssiapPlanningGroups.map(group => <optgroup key={group.key} label={`Sécurité incendie · ${group.label}`}>{ssiapPlanningCourses.filter(course => course.group === group.key).map(course => <option key={course.key} value={course.key}>{course.label}</option>)}</optgroup>)}</select></label>}
-          {activeFormation !== 'bts' && !isChoosingSsiap ? <>
+          {activeFormation !== 'bts' && !isChoosingDetails ? <>
             <div className={styles.centreFilters} aria-label="Filtrer les sessions par centre">
               <span className="hidden px-3 text-[9px] font-black uppercase tracking-[.12em] text-academy-muted sm:inline">Centre</span>
-              {sessionLocationFilters.map((filter) => {
+              {(activeFormation === 'director' ? directorPlanningLocations : sessionLocationFilters).map((filter) => {
                 const selected = locationFilter === filter.key;
                 return (
                   <button
@@ -825,8 +838,9 @@ export function PlanningClient({ initialSessions, btsIntakeYear, initialLocation
         </div>
 
         {selectedSsiapCourse && <div className={styles.ssiapSelected}><div><p>Sécurité incendie · {ssiapPlanningGroups.find(group => group.key === selectedSsiapCourse.group)?.label}</p><strong>{selectedSsiapCourse.label}</strong></div><button type="button" onClick={() => chooseFormation('ssiap')}>Changer de parcours</button></div>}
+        {selectedDirectorLocation && <div className={styles.ssiapSelected}><div><p>Formation DIRIGEANT · DESP / DSSP</p><strong>{selectedDirectorLocation.label}</strong></div><button type="button" onClick={() => chooseFormation('director')}>Changer de lieu</button></div>}
         <div key={resultKey} className={styles.resultEnter}>
-        {isChoosingSsiap ? <SsiapCourseChoices sessions={sortedSessions} onChoose={chooseSsiapCourse} /> : activeFormation === 'bts' ? <BtsIntakes year={btsIntakeYear} /> : filteredSessions.length ? (
+        {isChoosingDirector ? <DirectorLocationChoices sessions={previewFormations.find(formation => formation.key === 'director')!.sessions} onChoose={chooseDirectorLocation} /> : isChoosingSsiap ? <SsiapCourseChoices sessions={sortedSessions} onChoose={chooseSsiapCourse} /> : activeFormation === 'bts' ? <BtsIntakes year={btsIntakeYear} /> : filteredSessions.length ? (
           view === 'list' ? (
             <>
               <div className="mt-6 grid gap-4">
