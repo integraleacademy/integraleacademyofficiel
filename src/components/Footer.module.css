@@ -46,9 +46,14 @@
 .franceTravailLogo { width: 4.75rem; max-width: 100%; height: auto; }
 .aktoLogo { width: 5.5rem; max-width: 100%; height: auto; }
 
-.references { margin-top: .75rem; border-bottom: 1px solid #ffffff20; color: #c2ccd9; font-size: .75rem; line-height: 1.6; }
-.references h2 { color: #f2c460; font-weight: 750; }
-.references ul { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .25rem 2rem; padding: .4rem 0 .75rem; overflow-wrap: anywhere; }
+.organization { margin-top: .75rem; padding-bottom: .75rem; border-bottom: 1px solid #ffffff20; color: #c2ccd9; font-size: .8125rem; line-height: 1.6; }
+.company { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem 1.5rem; }
+.company strong { color: #fff; font-weight: 750; }
+.siren { white-space: nowrap; }
+.verifyCompany { display: inline-flex; align-items: center; justify-content: center; gap: .65rem; min-height: 40px; padding: .35rem .8rem; border: 1px solid #f2c46080; border-radius: .5rem; color: #f2c460; font-weight: 750; }
+.verifyCompany:hover { background: #f2c46012; border-color: #f2c460; }
+.locations { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .4rem 2rem; margin-top: .5rem; overflow-wrap: anywhere; }
+.locations strong { color: #e3e9f1; font-weight: 700; }
 .bottom { display: flex; align-items: center; justify-content: space-between; gap: .25rem 1.5rem; padding-top: .35rem; color: #aebacb; font-size: .75rem; line-height: 1.6; }
 .bottom nav { display: flex; flex-wrap: wrap; gap: .1rem 1.25rem; }
 .bottom a { display: inline-flex; align-items: center; min-height: 32px; }
@@ -89,7 +94,9 @@
   .qualiopiLogo { width: 10.75rem; }
   .cnapsLogo { width: 6rem; }
   .proofLink { min-height: 40px; }
-  .references ul { grid-template-columns: 1fr; }
+  .company { align-items: flex-start; flex-direction: column; }
+  .verifyCompany { min-height: 44px; }
+  .locations { grid-template-columns: 1fr; gap: .6rem; margin-top: .75rem; }
   .bottom { align-items: flex-start; flex-direction: column; gap: .25rem; padding-top: .75rem; }
   .bottom nav { gap: 0 1rem; }
   .bottom a { min-height: 40px; }

@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ManualArtwork } from '@/components/ManualArtwork';
 import type { ManualIllustration } from '@/data/manualIllustrations';
-import { contact, legalRefs } from '@/data/site';
+import { contact } from '@/data/site';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { MobileHeaderMenu } from '@/components/MobileHeaderMenu';
 import { DesktopTrainingDropdown } from '@/components/DesktopTrainingDropdown';
@@ -235,7 +235,7 @@ export function Footer(){
             <BrandSigle placement="footer"/>
             <span className={footerStyles.wordmark}><span>INTÉGRALE</span><span>ACADEMY</span></span>
           </Link>
-          <p className={footerStyles.expertise}>Sécurité privée et incendie, chauffeur VTC et BTS en alternance.</p>
+          <p className={footerStyles.expertise}>Centre de formation agréé Métiers de la sécurité privée, Formations professionnelles et BTS en alternance.</p>
           <SocialLinks tone="dark"/>
         </div>
 
@@ -249,7 +249,7 @@ export function Footer(){
         <aside className={footerStyles.contact} aria-labelledby="footer-contact-title">
           <h2 id="footer-contact-title" className={footerStyles.heading}>Parlons de votre projet</h2>
           <a href="tel:0422470768" className={footerStyles.phone}>{contact.phone}</a>
-          <p className={footerStyles.hours}>{contact.hours}</p>
+          <p className={footerStyles.hours}>Standard téléphonique ouvert du lundi au vendredi de 09h00 à 17h00.</p>
           <Link href="/contact" className={footerStyles.contactLink}>Nous contacter <span aria-hidden="true">↗</span></Link>
         </aside>
       </div>
@@ -281,9 +281,15 @@ export function Footer(){
         </div>
       </section>
 
-      <section className={footerStyles.references} aria-labelledby="footer-references-title">
-        <h2 id="footer-references-title">Références de l’organisme</h2>
-        <ul>{legalRefs.filter(reference=>!reference.startsWith('Qualiopi')&&!reference.startsWith('CNAPS')).map(reference=><li key={reference}>{reference}</li>)}</ul>
+      <section className={footerStyles.organization} aria-label="Identité et adresses de l’organisme">
+        <div className={footerStyles.company}>
+          <p><strong>Intégrale Sécurité Formations (SASU)</strong> - <span className={footerStyles.siren}>SIREN 840 899 884</span></p>
+          <a href="https://annuaire-entreprises.data.gouv.fr/etablissement/84089988400026" target="_blank" rel="noopener noreferrer" className={footerStyles.verifyCompany}>Vérifier l’entreprise <span aria-hidden="true">↗</span></a>
+        </div>
+        <ul className={footerStyles.locations}>
+          <li><strong>Intégrale Academy Côte d'Azur :</strong> 54 chemin du Carreou 83480 PUGET SUR ARGENS</li>
+          <li><strong>Intégrale Academy Paris :</strong> 142 rue de Rivoli 75001 PARIS</li>
+        </ul>
       </section>
       <div className={footerStyles.bottom}>
         <p>Site créé par SAS Intégrale Group — Clément VAILLANT.</p>
