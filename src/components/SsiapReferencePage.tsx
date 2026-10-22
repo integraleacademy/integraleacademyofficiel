@@ -2,6 +2,7 @@ import { TeamPortrait } from '@/components/TeamPortrait';
 import { CourseJourney } from '@/components/CourseJourney';
 import { SsiapExamExperience } from './SsiapExperienceSections';
 import { SsiapProgramExplorer } from './SsiapExperienceInteractions';
+import { TrainingProgramDownload } from '@/components/TrainingProgramDownload';
 import experience from './SsiapExperience.module.css';
 import { serializeCourseJsonLd } from '@/lib/seo';
 import Link from 'next/link';
@@ -191,8 +192,8 @@ export function SsiapReferencePage({ sessions }: { sessions: any[] }) {
     </Section>
 
     <Section enhanced id="programme" eyebrow="03 / Programme" title={<>67 heures pour devenir opérationnel.</>} intro={<>Un programme réglementaire complet qui progresse des fondamentaux du feu jusqu’aux rondes et mises en situation professionnelles.</>}>
+      <TrainingProgramDownload href="/documents/programme-ssiap-1.pdf" course="SSIAP 1" theme="red" className="mb-6 w-full sm:w-auto" />
       <SsiapProgramExplorer parts={program} />
-      <div className={styles.admissionLinks}><a href="/documents/programme-ssiap-1.pdf" target="_blank" rel="noopener noreferrer">Télécharger le programme SSIAP 1 (PDF) ↗</a></div>
     </Section>
 
     <section id="pedagogie" className={`${styles.terrain} ${experience.retained} ${experience.terrain} ${mos.section}`} aria-labelledby="terrain-title"><div className={mos.container}>

@@ -10,7 +10,7 @@ import reference from './SsiapReferencePage.module.css';
 import styles from './TrainingReferenceLayout.module.css';
 
 type CourseTheme = 'red' | 'blue' | 'green' | 'orange';
-type Action = { href: string; label: string };
+type Action = { href: string; label: string; download?: string };
 
 /** The SSIAP 1 visual language, with each course's own content and accent. */
 export function TrainingReferencePage({ children, theme, enabled = true }: { children: ReactNode; theme: CourseTheme; enabled?: boolean }) {
@@ -18,8 +18,10 @@ export function TrainingReferencePage({ children, theme, enabled = true }: { chi
   return <div className={`${reference.page} ${styles.page}`} data-course-design="ssiap-reference" data-course-theme={theme}>{children}</div>;
 }
 
-export function TrainingReferenceAction({ href, children, outline = false }: { href: string; children: ReactNode; outline?: boolean }) {
-  return <Link href={href} className={`${styles.action} ${outline ? styles.outline : styles.primary}`}>{children}</Link>;
+export function TrainingReferenceAction({ href, children, outline = false, download }: { href: string; children: ReactNode; outline?: boolean; download?: string }) {
+  const className = `${styles.action} ${outline ? styles.outline : styles.primary}`;
+  if (download) return <a href={href} download={download} className={className}>{children}</a>;
+  return <Link href={href} className={className}>{children}</Link>;
 }
 
 export function TrainingReferenceHero({ id, badge, heading, accent, title, tagline, description, illustration, caption, primaryAction, additionalAction, highlights = [], facts = [], children, extendedCopy = false }: {
@@ -36,7 +38,7 @@ export function TrainingReferenceHero({ id, badge, heading, accent, title, tagli
           <h1 id={`${id}-title`}>{heading}<br /><em>{accent}</em></h1>
           <p className={reference.heroTagline}>{tagline}</p>
           <div className={`${reference.heroDescription} ${styles.description}`}>{description}</div>
-          <div className={reference.actions}><TrainingReferenceAction href={primaryAction.href}>{primaryAction.label}</TrainingReferenceAction><TrainingReferenceAction href="tel:0422470768" outline>Parler à un conseiller</TrainingReferenceAction>{additionalAction}</div>
+          <div className={reference.actions}><TrainingReferenceAction href={primaryAction.href} download={primaryAction.download}>{primaryAction.label}</TrainingReferenceAction><TrainingReferenceAction href="tel:0422470768" outline>Parler à un conseiller</TrainingReferenceAction>{additionalAction}</div>
           {highlights.length > 0 && <div className={reference.heroHighlights}>{highlights.map(item => <span key={item}>✓ {item}</span>)}</div>}
         </div>
         <figure className={reference.heroArtwork}>

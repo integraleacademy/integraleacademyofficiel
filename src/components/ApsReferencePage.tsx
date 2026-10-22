@@ -12,6 +12,7 @@ import { ApsSectionNavigation } from '@/components/ApsSectionNavigation';
 import { ApsTrainingSummary } from '@/components/ApsTrainingSummary';
 import { ApsFacilitiesSections } from '@/components/ApsFacilitiesSections';
 import { ApsProgramExplorer } from '@/components/ApsProgramExplorer';
+import { TrainingProgramDownload } from '@/components/TrainingProgramDownload';
 import { ApsAdmission, ApsHybridExperience, ApsExamExperience, ApsFundingLogo, ApsWorkplaces, ApsOfficialReferences } from '@/components/ApsExperienceSections';
 import { ApsJourney } from '@/components/ApsJourney';
 import { IntegraleWelcomePack } from '@/components/IntegraleWelcomePack';
@@ -303,6 +304,7 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
     <ApsFacilitiesSections />
 
     <Section id="programme" eyebrow="04 — Programme" title={<>Les 14 UV du programme officiel, sans raccourci.</>} intro={<>Programme CPNEFP version V3.2 mis à jour le 23 juillet 2026 : 41 heures de socle de base et 134 heures de spécialité APS, soit 175 heures au total.</>}>
+      <TrainingProgramDownload href="/documents/programme-aps.pdf" course="APS" theme="blue" className="mb-6 w-full sm:w-auto" />
       <ApsProgramExplorer units={program} />
     </Section>
 

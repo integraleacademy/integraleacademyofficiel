@@ -11,7 +11,7 @@ const metadataPage = read('src/app/formations-securite/[slug]/page.tsx');
 const { formatTrainingPrice } = await tsImport('../src/lib/training-price.ts', import.meta.url);
 const { getSessionSeatAvailability } = await tsImport('../src/lib/session-seat-availability.ts', import.meta.url);
 const planning = read('src/app/planning/PlanningClient.tsx');
-const programPdf = readFileSync(new URL('../public/documents/programme-tfp-a3p-2023.pdf', import.meta.url));
+const programPdf = readFileSync(new URL('../public/documents/programme-a3p.pdf', import.meta.url));
 
 test('le programme officiel contient 9 UV et totalise 328 heures hors examen', () => {
   const uvCodes = [...data.matchAll(/code: '(UV\d)'/g)].map((match) => match[1]);
@@ -28,8 +28,8 @@ test('le programme officiel contient 9 UV et totalise 328 heures hors examen', (
 });
 
 test('le PDF téléchargeable est exactement le programme transmis', () => {
-  assert.match(data, /programPdfUrl: '\/documents\/programme-tfp-a3p-2023\.pdf'/);
-  assert.equal(createHash('sha256').update(programPdf).digest('hex'), '75e357b46887e804d0458041df4c21b1c319dc07949c7b71ccdcd92afc5ca554');
+  assert.match(data, /programPdfUrl: '\/documents\/programme-a3p\.pdf'/);
+  assert.equal(createHash('sha256').update(programPdf).digest('hex'), '29fcbd897b800edb6f29e4277a396feedc22404fe3df34fb5ea8a22a7fe155e5');
   assert.match(component, /href=\{a3pConfig\.programPdfUrl\} download/);
 });
 

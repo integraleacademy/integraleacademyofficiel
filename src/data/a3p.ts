@@ -28,7 +28,7 @@ export const a3pConfig = {
   accommodationLabel: 'Possible sur place',
   accommodationPriceLabel: '350 € TTC',
   accommodationNote: 'Tarif 2027 pour la totalité de la formation, sur réservation et sous réserve de disponibilité.',
-  programPdfUrl: '/documents/programme-tfp-a3p-2023.pdf',
+  programPdfUrl: '/documents/programme-a3p.pdf',
   videoUrl: '',
   heroImage: '/images/campus/campus-pratique.jpg',
   gallery: ['/images/campus/campus-pratique.jpg', '/images/campus/campus-salle-cours.jpg', '/images/campus/campus-principal.jpg'],

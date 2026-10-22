@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { TrainingReferencePage, TrainingReferenceHero, TrainingReferenceSection, TrainingReferenceMissions, TrainingReferenceCampus, TrainingReferenceContact, TrainingReferenceMobileBar } from '@/components/TrainingReferenceLayout';
 import { TrainingCourseTestimonials } from '@/components/TrainingCourseTestimonials';
+import { TrainingProgramDownload } from '@/components/TrainingProgramDownload';
 import compactHeroStyles from '@/components/CompactHero.module.css';
 import { CourseJourney } from '@/components/CourseJourney';
 import { IntegraleWelcomePack } from '@/components/IntegraleWelcomePack';
@@ -296,6 +297,7 @@ export function SsiapCoursePage({ config, sessions = [] }: { config: SsiapCourse
       </Section>
 
       <Section id="programme" eyebrow="Programme réglementaire" title={`${config.duration} pour maîtriser votre fonction.`} intro={config.durationDetail}>
+        {heroKey && <TrainingProgramDownload href={`/documents/programme-${heroKey}.pdf`} course={config.label} theme="red" className="mb-6 w-full sm:w-auto" />}
         <div className="space-y-3">
           {config.program.map((item, index) => (
             <details key={item.title} open={index === 0} className="group rounded-[1.6rem] border border-academy-line bg-[#FFFDF8] p-5 shadow-soft">
