@@ -132,7 +132,7 @@ export function SstReferencePage({ sessions }: { sessions: TrainingDatesPricingS
       title="Formation sauveteur secouriste du travail"
       tagline="Les bons gestes, au bon moment."
       description={<p>En 2 jours, apprenez à prévenir les risques, réagir face à un accident et porter les premiers secours.</p>}
-      primaryAction={{ href: '/documents/programme-sst.pdf', label: 'Télécharger le programme ↓', download: 'Programme-SST-Integrale-Academy.pdf' }}
+      primaryAction={{ href: '/documents/programme-sst.pdf', label: 'Consulter le programme ↗', newTab: true }}
     >
       <TrainingHeroSessionCard
         session={next} theme="green" defaultPrice="Sur devis" capacity={10}
