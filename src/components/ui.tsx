@@ -262,7 +262,7 @@ export function Footer(){
           <div>
             <p className={footerStyles.authorization}>Certificat Qualiopi n°03169 du 21/10/2024</p>
             <p className={footerStyles.certificationText}>La certification qualité a été délivrée au titre de la ou des catégories d’actions suivantes : actions de formation, actions de formation en apprentissage, les actions permettant de faire valider les acquis de l'expérience (VAE)</p>
-            <Link href="/ecole#agrements" className={footerStyles.proofLink}>Consulter le certificat <span aria-hidden="true">↗</span></Link>
+            <Link href="/ecole#agrements" className={footerStyles.proofLink}>Nos certifications <span aria-hidden="true">↗</span></Link>
           </div>
         </div>
         <div className={footerStyles.credential}>
@@ -277,7 +277,7 @@ export function Footer(){
             <Link href="/financements/france-travail" aria-label="Financer sa formation avec France Travail"><Image src="/images/financements/france-travail.svg" alt="France Travail" width={386} height={358} className={footerStyles.franceTravailLogo}/></Link>
             <Link href="/entreprises" aria-label="Financement entreprise et OPCO AKTO"><Image src="/images/financements/akto.svg" alt="AKTO" width={179} height={46} className={footerStyles.aktoLogo}/></Link>
           </div>
-          <Link href="/financements" className={footerStyles.proofLink}>Découvrir les solutions <span aria-hidden="true">↗</span></Link>
+          <Link href="/financements" className={footerStyles.proofLink}>Les financements <span aria-hidden="true">↗</span></Link>
         </div>
       </section>
 
