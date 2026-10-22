@@ -22,11 +22,28 @@
   <path d="M636 220v-24h12v24m58 0v-18h12v18" fill="#4D6172"/>
   <path d="M628 279h111M628 318h111M628 357h111" stroke="#D6C5A8" stroke-width="3"/>
   <path d="M637 287h14v23h-14zm31 0h14v23h-14zm31 0h14v23h-14zM637 327h14v23h-14zm31 0h14v23h-14zm31 0h14v23h-14zM637 367h14v23h-14zm31 0h14v23h-14zm31 0h14v23h-14z" fill="#81919A"/>
-  <path d="M405 54v35" stroke="#344D61" stroke-width="4" stroke-linecap="round"/>
-  <path d="m405 82 9 85 17 63 22 59 40 111h-40c-9-35-22-62-48-62s-39 27-48 62h-40l40-111 22-59 17-63Z" fill="#344D61"/>
-  <path d="m402 112 6 49m-14 12 23 48m-1-48-23 48m-6 15 47 47m-11-47-47 47m-11 13 18 38m62-38-18 38m-52-36 60 27m-58 31-37 41m95-41 37 41m-128-4 26-12m76 0 26 12" stroke="#A9BBC0" stroke-width="3" stroke-linecap="round"/>
-  <path d="M388 166h34v9h-34zM371 226h68v11h-68zM349 285h112v13H349zM311 396h54v9h-54zM445 396h54v9h-54z" fill="#243F55"/>
-  <path d="M351 291h108M374 232h62M390 171h30" stroke="#DCC18D" stroke-width="2"/>
+  <g transform="translate(0 -6)">
+    <!-- Curved legs, open ironwork and three observation levels. -->
+    <path d="M405 68v29" stroke="#344D61" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="m405 94 6 12h-12Z" fill="#344D61"/>
+    <path d="M398 106h14v16h-14z" fill="#344D61"/>
+    <path d="M402 109v9m6-9v9" stroke="#B9CBCB" stroke-width="1.5"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M398 123h14c1 61 6 109 13 154 6 32 24 83 48 119h-23c-6-20-16-41-30-48-8-4-22-4-30 0-14 7-24 28-30 48h-23c24-36 42-87 48-119 7-45 12-93 13-154Zm4 12h6c1 49 4 97 11 139h-28c7-42 10-90 11-139Zm-11 150h28c3 15 9 31 15 45h-58c6-14 12-30 15-45Z" fill="#344D61"/>
+    <g stroke="#4B6678" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m402 139 7 26m-1-26-7 26m0 1 10 27m-2-27-10 27m0 1 15 34m-3-34-15 34m0 1 23 41m-5-41-23 41"/>
+      <path d="M400 166h10m-12 28h14m-17 34h20m-23 24h26"/>
+      <path d="m391 286 37 25m-9-25-37 25m0 0 51 19m-5-19-51 19m5-19h46"/>
+    </g>
+    <path d="M397 133c-1 57-6 101-12 142m28-142c1 57 6 101 12 142M383 286c-9 38-26 77-45 108m89-108c9 38 26 77 45 108" stroke="#6C8490" stroke-width="1.5"/>
+    <g stroke="#A8BCBD" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m365 343 13 15m6-11-29 23m1-2 11 12m6-14-28 25m0-1 16 3"/>
+      <path d="m445 343-13 15m-6-11 29 23m-1-2-11 12m-6-14 28 25m0-1-16 3"/>
+      <path d="M359 394c8-24 19-43 33-49 8-3 18-3 26 0 14 6 25 25 33 49"/>
+    </g>
+    <path d="M394 120h22v5h-22zM378 274h54v9h-54zM356 330h98v10h-98zM332 394h31v5h-31zM447 394h31v5h-31z" fill="#243F55"/>
+    <path d="M395 121h20M379 275h52M357 331h96" stroke="#DCC18D" stroke-width="1.8"/>
+    <path d="M382 278h46M360 335h90" stroke="#8DA4AC" stroke-width="1.2" stroke-dasharray="2 4"/>
+  </g>
   <g fill="#668A7E"><path d="M0 341c17-28 49-22 57 2 15-16 45-9 48 12 19-18 44-7 48 11v35H0zM663 368c3-26 30-40 48-27 5-34 46-44 66-13 20-8 36 8 36 28v48H663Z"/></g>
   <g fill="#94A892"><circle cx="255" cy="372" r="25"/><circle cx="290" cy="378" r="20"/><circle cx="558" cy="373" r="23"/><circle cx="589" cy="381" r="17"/></g>
   <path d="M0 399h800v101H0z" fill="url(#water)"/>
