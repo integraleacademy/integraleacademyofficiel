@@ -1,5 +1,17 @@
 import { normalizeSeatCount, resolveSessionSeatCapacity } from '@/lib/session-capacity';
 
+// Reuse ICU formatters across requests: constructing one per date allocates
+// native memory repeatedly when rendering session lists and availability.
+const parisDateKeyFormatter = new Intl.DateTimeFormat('en-CA', {
+  timeZone: 'Europe/Paris', year: 'numeric', month: '2-digit', day: '2-digit',
+});
+const sessionDateFormatter = new Intl.DateTimeFormat('fr-FR', {
+  timeZone: 'Europe/Paris', day: 'numeric', month: 'long', year: 'numeric',
+});
+const sessionNumericDateFormatter = new Intl.DateTimeFormat('fr-FR', {
+  timeZone: 'Europe/Paris', day: '2-digit', month: '2-digit', year: 'numeric',
+});
+
 export type PublicSessionLike = {
   id?: string;
   startDate?: string | Date;
@@ -16,7 +28,7 @@ export type PublicSessionLike = {
 };
 
 export function parisDateKey(date = new Date()) {
-  return new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Paris', year: 'numeric', month: '2-digit', day: '2-digit' }).format(date);
+  return parisDateKeyFormatter.format(date);
 }
 
 export function daysUntilParis(value: string | Date, referenceDate = new Date()) {
@@ -48,19 +60,14 @@ export function computedSeats(session: PublicSessionLike, referenceDate = new Da
 
 export function formatSessionDate(value?: string | Date) {
   if (!value) return '';
-  return new Intl.DateTimeFormat('fr-FR', { timeZone: 'Europe/Paris', day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(value));
+  return sessionDateFormatter.format(new Date(value));
 }
 
 export function formatSessionNumericDate(value?: string | Date | null) {
   if (!value) return '';
   const date = value instanceof Date ? value : new Date(value);
   if (Number.isNaN(date.getTime())) return '';
-  return new Intl.DateTimeFormat('fr-FR', {
-    timeZone: 'Europe/Paris',
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric',
-  }).format(date);
+  return sessionNumericDateFormatter.format(date);
 }
 
 export function formatSessionPeriod(startDate?: string | Date | null, endDate?: string | Date | null) {
