@@ -4,7 +4,7 @@ Les scènes répétées sur une même page ont été remplacées par des scènes
 
 ## Modifications
 
-- Accueil : scènes différentes pour le carrousel sécurité, la mise en pratique du parcours et l’accompagnement au campus. L’atelier radio reste réservé au volet pratique des méthodes pédagogiques.
+- Accueil : scènes différentes pour le carrousel sécurité, la mise en pratique du parcours et l’accompagnement au campus. À la demande de Clément, l’atelier radio d’origine est conservé dans le carrousel du bandeau d’accueil ; la nouvelle scène de coordination sécurité illustre le volet pratique des méthodes pédagogiques. Chaque scène apparaît une seule fois sur la page.
 - SSIAP 1 : cinq illustrations de programme distinctes, une scène d’assistance et une scène d’examen, pour supprimer les répétitions avec les missions et la galerie pédagogique.
 - SST : deux nouvelles scènes pour le rôle du sauveteur et la prévention, distinctes de la galerie.
 - Planning : une image différente pour chaque aperçu et chaque filtre ; nouveaux paysages Paris et Côte d’Azur dans le même style que les personnages.

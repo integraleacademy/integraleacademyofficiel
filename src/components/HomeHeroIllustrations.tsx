@@ -1,7 +1,6 @@
 'use client';
 
 import Image from 'next/image';
-import { homeEditorialArtwork } from '@/data/siteIllustrations';
 import { useEffect, useRef, useState } from 'react';
 import styles from './HomeHeroIllustrations.module.css';
 
@@ -11,7 +10,7 @@ const scenes = [
     title: 'Protéger. Intervenir. Évoluer.',
     description: 'Sécurité privée, sécurité incendie, protection rapprochée, direction d’une entreprise de sécurité.',
     action: 'Découvrez nos formations métiers de la sécurité privée',
-    image: homeEditorialArtwork.security.src, alt: homeEditorialArtwork.security.alt,
+    image: '/images/formation-scenes-manuel/aps-atelier-radio.webp', alt: 'Des stagiaires en sécurité privée s’entraînent à communiquer par radio.',
   },
   {
     label: 'Chauffeur VTC', href: '#formation-vtc',
