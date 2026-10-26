@@ -25,7 +25,7 @@
 .program { background:#fffdf8; color:#17212b; border:1px solid #d6dfe8; border-radius:25px; padding:clamp(20px,3vw,38px); }
 .programOverview { display:flex; justify-content:space-between; gap:25px; align-items:center; padding-bottom:28px; border-bottom:1px solid #d6dfe8; margin-bottom:30px; }
 .programOverview > div { display:flex; align-items:center; gap:20px; }
-.programOverview > div > strong { color:#285e99; font-size:clamp(52px,6vw,80px); letter-spacing:-.07em; line-height:1; }
+.programOverview > div > strong { flex-shrink:0; white-space:nowrap; color:#285e99; font-size:clamp(52px,6vw,80px); letter-spacing:-.07em; line-height:1; }
 .programOverview > div > strong > span { font-size:28px; margin-left:5px; font-weight:500; }
 .programOverview p { font-size:14px; line-height:1.7; font-weight:650; }
 .programOverview p span { font-size:11px; color:#657080; font-weight:400; }
@@ -52,6 +52,9 @@
 .unitHeading > span { font-size:13px; font-weight:800; color:#285e99; white-space:nowrap; }
 .programPanel h3 { margin-top:12px; font-size:clamp(21px,2.4vw,28px); letter-spacing:-.03em; line-height:1.2; font-weight:750; }
 .programPanel > p { margin-top:15px; font-size:14px; line-height:1.8; color:#4c5e70; }
+.programTopics { display:grid; gap:10px; margin-top:18px; color:#4c5e70; font-size:14px; line-height:1.7; }
+.programTopics li { display:flex; align-items:baseline; gap:10px; }
+.programTopics li > span { flex-shrink:0; color:#285e99; font-weight:750; }
 .delivery { margin-top:18px; color:#285e99; font-size:11px; font-weight:700; }
 .panelNavigation { display:flex; align-items:center; justify-content:space-between; gap:15px; border-top:1px solid #cedce9; padding-top:20px; margin-top:22px; font-size:12px; }
 .panelNavigation > span { color:#657080; }

@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import type { ReactNode } from 'react';
 import { listApsPhotos } from '@/lib/aps-gallery-data';
 import type { ApsPhoto } from '@/lib/aps-gallery';
 import styles from './ApsFacilitiesSections.module.css';
@@ -33,18 +34,28 @@ function PhotoGallery({ photos }: { photos: ApsPhoto[] }) {
   </div>;
 }
 
-export async function ApsFacilitiesSections() {
+export async function ApsFacilitiesSections({ course = 'aps', children }: { course?: 'aps' | 'bts-mos'; children?: ReactNode } = {}) {
+  const isMos = course === 'bts-mos';
+  const schoolId = isMos ? 'ecole-mos' : 'ecole-aps';
+  const mosEquipmentDescriptions = [
+    'Analyser une situation et organiser la surveillance des accès.',
+    'Préparer les consignes et coordonner la réponse à une alerte.',
+    'Transmettre les consignes et accompagner les équipes sur le terrain.',
+    'Exploiter les événements pour suivre la qualité d’une prestation.',
+    'Intégrer la protection des agents dans l’organisation du service.',
+    'Préparer les contrôles, analyser les anomalies et proposer des améliorations.',
+  ];
   const { photos } = await listApsPhotos();
   const uploadedSchoolPhotos = photos.filter(photo => photo.gallery === 'ecole');
   const schoolPhotos: ApsPhoto[] = uploadedSchoolPhotos.length ? uploadedSchoolPhotos : [
-    { id: 'salle-aps', gallery: 'ecole', slot: 1, src: '/images/campus/salle-formation.webp', caption: 'Des espaces pour apprendre ensemble.' },
+    { id: 'salle-aps', gallery: 'ecole', slot: 1, src: isMos ? '/images/campus/salle-lumineuse.webp' : '/images/campus/salle-formation.webp', caption: 'Des espaces pour apprendre ensemble.' },
     { id: 'accueil-aps', gallery: 'ecole', slot: 2, src: '/images/campus/accueil-centre.webp', caption: 'Un accueil, une équipe.' },
     { id: 'pause-aps', gallery: 'ecole', slot: 3, src: '/images/campus/espace-detente.webp', caption: 'Une pause entre deux ateliers.' },
   ];
   return <>
     <section id="pc-securite" aria-labelledby="pc-securite-title" className={`${styles.section} ${styles.security}`}>
       <div className="page-container">
-        <div className={styles.heading}><div><p className={styles.eyebrow}>Au cœur de votre centre de formation</p><h2 id="pc-securite-title">Un PC sécurité équipé.<br /><em>Chez Intégrale Academy.</em></h2></div><p>À Puget-sur-Argens, notre centre dispose de son propre poste central de sécurité et de matériel pédagogique dédié. Vous vous entraînerez à observer, donner l’alerte et coordonner une intervention, avec les outils de vos futures missions.</p></div>
+        <div className={styles.heading}><div><p className={styles.eyebrow}>Au cœur de votre centre de formation</p><h2 id="pc-securite-title">Un PC sécurité équipé.<br /><em>Chez Intégrale Academy.</em></h2></div><p>{isMos ? 'Sur le campus de Puget-sur-Argens, le poste central de sécurité permet de relier les outils du terrain au management : préparer les consignes, organiser les moyens, coordonner les agents et analyser les événements. Ces équipements accompagnent les mises en situation du parcours en présentiel.' : 'À Puget-sur-Argens, notre centre dispose de son propre poste central de sécurité et de matériel pédagogique dédié. Vous vous entraînerez à observer, donner l’alerte et coordonner une intervention, avec les outils de vos futures missions.'}</p></div>
         <div className={styles.pcGallery} role="group" aria-label="Photos du PC sécurité et du matériel Intégrale Academy">
           <figure className={`${styles.pcPhoto} ${styles.pcMainPhoto}`}>
             <Image src="/images/aps/experience/pc-centre.webp" alt="Le véritable poste central de sécurité d’Intégrale Academy : poste informatique, écran de surveillance, SSI, alarme et moyens de communication" fill sizes="(max-width: 700px) 92vw, 65vw" />
@@ -59,15 +70,16 @@ export async function ApsFacilitiesSections() {
             <figcaption>Du matériel pour pratiquer.</figcaption>
           </figure>
         </div>
-        <div className={styles.equipment}>{equipment.map(([kind, title, description]) => <article key={title}><span className={styles.equipmentIcon}><EquipmentIcon kind={kind} /></span><div><h3>{title}</h3><p>{description}</p></div></article>)}</div>
-        <details className={styles.regulationNote}><summary>Les équipements pédagogiques prévus pour la formation APS <span aria-hidden="true">+</span></summary><p>Le poste central de sécurité et les moyens de surveillance font partie des équipements prévus par l’<a href="https://www.legifrance.gouv.fr/loda/id/JORFTEXT000050398597" target="_blank" rel="noopener noreferrer">article 12 de l’arrêté du 23 octobre 2024</a>.</p></details>
+        <div className={styles.equipment}>{equipment.map(([kind, title, description], index) => <article key={title}><span className={styles.equipmentIcon}><EquipmentIcon kind={kind} /></span><div><h3>{title}</h3><p>{isMos ? mosEquipmentDescriptions[index] : description}</p></div></article>)}</div>
+        {!isMos && <details className={styles.regulationNote}><summary>Les équipements pédagogiques prévus pour la formation APS <span aria-hidden="true">+</span></summary><p>Le poste central de sécurité et les moyens de surveillance font partie des équipements prévus par l’<a href="https://www.legifrance.gouv.fr/loda/id/JORFTEXT000050398597" target="_blank" rel="noopener noreferrer">article 12 de l’arrêté du 23 octobre 2024</a>.</p></details>}
+        {children}
       </div>
     </section>
-    <section id="ecole-aps" aria-labelledby="ecole-aps-title" className={`${styles.section} ${styles.school}`}>
+    <section id={schoolId} aria-labelledby={`${schoolId}-title`} className={`${styles.section} ${styles.school}`}>
       <div className="page-container">
-        <div className={styles.heading}><div><p className={styles.eyebrow}>Votre école sur la Côte d’Azur</p><h2 id="ecole-aps-title">Bienvenue chez<br /><em>Intégrale Academy.</em></h2></div><div><p>Depuis 2018, notre équipe vous accueille à Puget-sur-Argens. Des salles de cours aux espaces de pratique, vous apprenez dans une école à taille humaine.</p><Link className={styles.schoolLink} href="/ecole">Entrez, on vous fait visiter <span aria-hidden="true">↗</span></Link></div></div>
+        <div className={styles.heading}><div><p className={styles.eyebrow}>Votre école sur la Côte d’Azur</p><h2 id={`${schoolId}-title`}>Bienvenue chez<br /><em>Intégrale Academy.</em></h2></div><div><p>{isMos ? 'Depuis 2018, notre équipe vous accueille à Puget-sur-Argens. En BTS MOS, vous retrouvez votre promotion dans une école à taille humaine : des salles de cours, des espaces pour travailler ensemble et une équipe qui suit votre projet pendant les deux années. Le parcours 100 % en ligne conserve ses cours en direct en visioconférence.' : 'Depuis 2018, notre équipe vous accueille à Puget-sur-Argens. Des salles de cours aux espaces de pratique, vous apprenez dans une école à taille humaine.'}</p><Link className={styles.schoolLink} href="/ecole">Entrez, on vous fait visiter <span aria-hidden="true">↗</span></Link></div></div>
         <PhotoGallery photos={schoolPhotos} />
-        <div className={styles.schoolFooter}><dl><div><dt>Espaces de formation</dt><dd>400 m²</dd></div><div><dt>Pour apprendre & pratiquer</dt><dd>4 salles</dd></div><div><dt>Par session APS</dt><dd>12 maximum</dd></div></dl><Link href="/ecole#equipe">Rencontrer l’équipe <span aria-hidden="true">↗</span></Link></div>
+        <div className={styles.schoolFooter}><dl><div><dt>Espaces de formation</dt><dd>400 m²</dd></div><div><dt>Pour apprendre & pratiquer</dt><dd>4 salles</dd></div><div><dt>{isMos ? 'Votre parcours BTS' : 'Par session APS'}</dt><dd>{isMos ? '2 ans' : '12 maximum'}</dd></div></dl><Link href="/ecole#equipe">Rencontrer l’équipe <span aria-hidden="true">↗</span></Link>{isMos && <a href="#experience">L’iPad et Londres <span aria-hidden="true">↓</span></a>}</div>
       </div>
     </section>
   </>;

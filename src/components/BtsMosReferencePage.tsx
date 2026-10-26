@@ -1,6 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
+import { ApsFacilitiesSections } from '@/components/ApsFacilitiesSections';
+import { TrainingProgramExplorer } from '@/components/TrainingProgramExplorer';
+import { TrainingCourseTestimonials } from '@/components/TrainingCourseTestimonials';
 import { BtsStudentBenefits } from '@/components/BtsExpandedContent';
 import { BtsMosMission, BtsMosCalendar } from '@/components/BtsMosExperience';
 import { CourseJourney } from '@/components/CourseJourney';
@@ -29,9 +32,11 @@ const navigation = [
   { label: 'Le métier', href: '#metier' },
   { label: 'Alternance', href: '#alternance' },
   { label: 'Formats', href: '#formats' },
+  { label: 'Le campus', href: '#pc-securite' },
   { label: 'Programme', href: '#programme' },
   { label: 'À l’école', href: '#experience' },
   { label: 'S’inscrire', href: '#admission' },
+  { label: 'Avis', href: '#avis-google' },
   { label: 'FAQ', href: '#faq-mos' },
 ] as const;
 const generalSubjects = [
@@ -108,7 +113,7 @@ export function BtsMosReferencePage() {
         <div className={styles.summaryFact}><span>La durée</span><strong>2 ans</strong><small>de formation</small></div>
         <div className={styles.summaryFact}><span>Le rythme</span><strong>Alternance</strong><small>école + entreprise</small></div>
         <div className={styles.summaryFact}><span>Votre format</span><strong>Présentiel ou 100 % en ligne</strong><small>à distance, en visioconférence</small></div>
-        <div className={styles.summaryFooter}><p>* Sous réserve de la conclusion et de la prise en charge du contrat d’apprentissage.</p><a className={styles.summaryReview} href="/#avis-google">Avis Google · 4,8 / 5 <span aria-hidden="true">↗</span></a><a href="#metier">Découvrir le BTS <span aria-hidden="true">↓</span></a></div>
+        <div className={styles.summaryFooter}><p>* Sous réserve de la conclusion et de la prise en charge du contrat d’apprentissage.</p><a className={styles.summaryReview} href="#avis-google">Avis Google · 4,8 / 5 <span aria-hidden="true">↗</span></a><a href="#metier">Découvrir le BTS <span aria-hidden="true">↓</span></a></div>
       </aside>
     </TrainingReferenceHero>
 
@@ -179,16 +184,42 @@ export function BtsMosReferencePage() {
       </div>
     </section>
 
+    <ApsFacilitiesSections course="bts-mos">
+      <div className={styles.campusResourceSummary}>
+        <div><p className={styles.eyebrow}>Apprendre par la pratique</p><h3>Des situations de métier.<br />Des équipements pour s’entraîner.</h3><p>{course.campusEquipment?.intro}</p><p className={styles.small}>Préparer une mission en équipe.</p></div>
+        <Disclosure title="Découvrir les équipements pédagogiques"><List items={course.campusEquipment?.items ?? []} /></Disclosure>
+      </div>
+    </ApsFacilitiesSections>
+
     <section id="programme" className={`${styles.section} ${styles.program}`}>
       <div id="guide-complet" className={styles.container}>
         <Heading label="04 / Le programme complet" title={<>Comprendre. Organiser.<br /><span>Manager.</span></>} text="1 350 heures sur deux ans. Quatre blocs professionnels, des enseignements généraux et des situations issues de votre alternance." />
-        <div className={styles.programGrid}>
-          <div><p className={styles.programLabel}>Les 4 blocs professionnels</p><div className={styles.programRows}>{course.competencyBlocks.map((block, index) => <details key={block.title} className={styles.programRow} open={index === 0}><summary><span className={styles.blockNumber}>0{index + 1}</span><strong>{block.title}</strong><span className={styles.plus} aria-hidden="true">+</span></summary><div className={styles.programBody}><List items={block.items} /></div></details>)}</div></div>
-          <aside className={styles.generalSubjects}><p className={styles.programLabel}>Les enseignements généraux</p>{generalSubjects.map(subject => <Disclosure key={subject.title} title={subject.title}><List items={subject.items} /></Disclosure>)}<a href={course.rncpUrl} target="_blank" rel="noopener noreferrer" className={styles.textLink}>Fiche officielle RNCP {course.rncp} <Arrow /></a></aside>
-        </div>
+        <div className={styles.programLinks}><a href={course.rncpUrl} target="_blank" rel="noopener noreferrer" className={styles.textLink}>Fiche officielle RNCP {course.rncp} <Arrow /></a><a href="#examens" className={styles.textLink}>Découvrir les épreuves <Arrow /></a></div>
+        <TrainingProgramExplorer
+          idPrefix="mos-program" hours="1 350" overview="Les 4 blocs professionnels" subtitle="Les enseignements généraux"
+          facts={[["Votre diplôme", "Bac+2"], ["La durée", "2 ans"], ["Les enseignements", "4 blocs + 3 matières"]]}
+          menuTitle="Explorez le programme" tabListLabel="Les enseignements du programme BTS MOS"
+          illustration={btsMosArtwork.equipment}
+          units={[
+            ...course.competencyBlocks.map((block, index) => ({ number: `Bloc ${index + 1}`, title: block.title, items: block.items, delivery: 'Enseignement professionnel · cours, cas pratiques et expérience en entreprise' })),
+            ...generalSubjects.map((subject, index) => ({ number: `Gén. ${index + 1}`, title: subject.title, items: subject.items, delivery: 'Enseignement général · en présentiel ou en live à distance' })),
+          ]}
+          nextLabel="Enseignement suivant" restartLabel="Revenir au premier bloc"
+        />
         <a className={styles.textLink} href={brochureUrl} target="_blank" rel="noopener noreferrer">Recevoir le dossier de présentation du BTS MOS <Arrow /></a>
         <Disclosure title="Les objectifs de la formation"><List items={course.objective} /></Disclosure>
-        <Disclosure id="examens" title="Les épreuves, les coefficients et la validation du diplôme"><p>{course.examLocation} Les épreuves se tiennent en fin de deuxième année, généralement entre avril et juin. Vous devrez vous rendre dans le centre indiqué sur la convocation de l’Éducation nationale, y compris si vous suivez les cours à distance.</p><div className={styles.examTable}><table><caption>Épreuves du BTS Management Opérationnel de la Sécurité</caption><thead><tr><th scope="col">Épreuve</th><th scope="col">Coefficient</th><th scope="col">Épreuve ponctuelle · format et durée</th></tr></thead><tbody>{course.examUnits.map(unit => <tr key={unit.title}><th scope="row">{unit.title}</th><td>{unit.coefficient}</td><td>{unit.format}</td></tr>)}</tbody></table></div><p>La forme exacte, contrôle en cours de formation ou épreuve ponctuelle, dépend du statut du candidat et de l’habilitation du CFA. L’équipe pédagogique confirme les modalités applicables à votre promotion.</p></Disclosure>
+      </div>
+    </section>
+
+    <section id="examens" className={`${styles.section} ${styles.examSection}`}>
+      <div className={styles.container}>
+        <Heading label="Le diplôme & les épreuves" title={<>Deux ans pour se préparer.<br /><span>Un diplôme d’État à la clé.</span></>} text="Des épreuves écrites et orales pour mobiliser vos connaissances, présenter votre travail et expliquer vos décisions professionnelles." />
+        <div className={styles.examHighlights}>
+          <article><span>01</span><h3>7 épreuves</h3><p>Des enseignements généraux et quatre domaines professionnels, avec leurs coefficients et leurs formats.</p></article>
+          <article><span>02</span><h3>En présentiel</h3><p>Les épreuves finales se déroulent dans le centre indiqué sur votre convocation de l’Académie de Nice, même pour le parcours en ligne.</p></article>
+          <article><span>03</span><h3>En deuxième année</h3><p>Vous préparez progressivement les épreuves pendant les deux années de formation, avec vos cours et vos situations en entreprise.</p></article>
+        </div>
+        <Disclosure id="details-examens" title="Les épreuves, les coefficients et la validation du diplôme"><p>{course.examLocation} Les épreuves se tiennent en fin de deuxième année, généralement entre avril et juin. Vous devrez vous rendre dans le centre indiqué sur la convocation de l’Éducation nationale, y compris si vous suivez les cours à distance.</p><div className={styles.examTable}><table><caption>Épreuves du BTS Management Opérationnel de la Sécurité</caption><thead><tr><th scope="col">Épreuve</th><th scope="col">Coefficient</th><th scope="col">Épreuve ponctuelle · format et durée</th></tr></thead><tbody>{course.examUnits.map(unit => <tr key={unit.title}><th scope="row">{unit.title}</th><td>{unit.coefficient}</td><td>{unit.format}</td></tr>)}</tbody></table></div><p>La forme exacte, contrôle en cours de formation ou épreuve ponctuelle, dépend du statut du candidat et de l’habilitation du CFA. L’équipe pédagogique confirme les modalités applicables à votre promotion.</p></Disclosure>
       </div>
     </section>
 
@@ -197,9 +228,6 @@ export function BtsMosReferencePage() {
         <Heading label="05 / Votre vie à l’école" title={<>Votre BTS MOS,<br /><span>avec l’iPad et Londres.</span></>} text="iPad offert dès la signature du contrat d’apprentissage. Londres en 2ᵉ année · 100 % pris en charge. Ces deux avantages sont proposés sous réserve de signature d’un contrat d’apprentissage." />
       </div>
       <BtsStudentBenefits courseName="BTS MOS" variant="illustrated" artwork={{ ipad: btsMosArtwork.ipad, london: btsMosArtwork.london }} />
-      <div className={styles.container}>
-        <div className={styles.schoolResources}><div><p className={styles.eyebrow}>Apprendre par la pratique</p><h3>Des situations de métier.<br />Des équipements pour s’entraîner.</h3><p>{course.campusEquipment?.intro}</p><Disclosure title="Découvrir les équipements pédagogiques"><List items={course.campusEquipment?.items ?? []} /></Disclosure></div><figure><Image src={btsMosArtwork.equipment.src} alt={btsMosArtwork.equipment.alt} width={1536} height={1024} sizes="(max-width: 800px) 94vw, 45vw" /><figcaption>Préparer une mission en équipe.</figcaption></figure></div>
-      </div>
     </section>
 
     <section id="admission" className={`${styles.section} ${styles.admission}`}>
@@ -274,6 +302,8 @@ export function BtsMosReferencePage() {
         </div>
       </div>
     </section>
+
+    <TrainingCourseTestimonials category="BTS MOS" layout="home" audience="étudiants" />
 
     <div id="faq-mos" className={styles.faq}>
       <PremiumFAQSection theme="bts" badge="FAQ BTS MOS" title="Tout comprendre avant de vous lancer" description="Admission, alternance, entreprise, visioconférence, coût ou diplôme : Aurélie répond à vos questions et à celles de votre famille." items={faq} contactHref={email} contactLabel="Écrire à Aurélie" callHref={phone} callLabel="Appeler Aurélie" />

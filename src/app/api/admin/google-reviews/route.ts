@@ -28,6 +28,7 @@ async function readInput(request: NextRequest) {
 
 function refresh() {
   revalidatePath('/');
+  revalidatePath('/bts/mos');
   revalidatePath('/admin/ia/avis-google');
 }
 

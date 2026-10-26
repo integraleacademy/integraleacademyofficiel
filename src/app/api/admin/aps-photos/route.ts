@@ -19,6 +19,7 @@ async function guard(request: NextRequest) {
 
 function refreshPhotos() {
   revalidatePath('/formations-securite/aps');
+  revalidatePath('/bts/mos');
   revalidatePath('/admin/ia/photos-aps');
 }
 
