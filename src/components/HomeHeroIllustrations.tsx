@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { homeEditorialArtwork } from '@/data/siteIllustrations';
 import { useEffect, useRef, useState } from 'react';
 import styles from './HomeHeroIllustrations.module.css';
 
@@ -10,21 +11,21 @@ const scenes = [
     title: 'Protéger. Intervenir. Évoluer.',
     description: 'Sécurité privée, sécurité incendie, protection rapprochée, direction d’une entreprise de sécurité.',
     action: 'Découvrez nos formations métiers de la sécurité privée',
-    image: 'aps-atelier-radio', alt: 'Des stagiaires en sécurité privée s’entraînent à communiquer par radio.',
+    image: homeEditorialArtwork.security.src, alt: homeEditorialArtwork.security.alt,
   },
   {
     label: 'Chauffeur VTC', href: '#formation-vtc',
     title: 'Prenez le volant de votre avenir.',
     description: 'De la théorie à la conduite, préparez votre examen VTC avec notre formation tout inclus.',
     action: 'Découvrir la formation chauffeur VTC',
-    image: 'vtc-parcours', alt: 'Une stagiaire prépare son véhicule avec son formateur VTC.',
+    image: '/images/formation-scenes-manuel/vtc-parcours.webp', alt: 'Une stagiaire prépare son véhicule avec son formateur VTC.',
   },
   {
     label: 'BTS en alternance', href: '#bts',
     title: 'Un diplôme officiel. De l’expérience.',
     description: 'Découvrez nos six BTS en alternance et construisez votre avenir.',
     action: 'Découvrir nos BTS en alternance',
-    image: 'bts-campus-mixte', alt: 'Une étudiante et un étudiant en BTS préparent ensemble un projet en classe.',
+    image: '/images/formation-scenes-manuel/bts-campus-mixte.webp', alt: 'Une étudiante et un étudiant en BTS préparent ensemble un projet en classe.',
   },
 ];
 
@@ -98,7 +99,7 @@ export function HomeHeroIllustrations() {
             >
               <a href={scene.href} className={styles.sceneLink} aria-label={scene.action} onClick={() => setPaused(true)}>
                 <Image
-                  src={`/images/formation-scenes-manuel/${scene.image}.webp`}
+                  src={scene.image}
                   alt={scene.alt}
                   width={1536}
                   height={1024}

@@ -11,7 +11,7 @@ export type DespIllustratedCard = TrainingIllustratedCard;
 
 // Landscape scenes keep the APS card proportions without cropping portrait artwork.
 const initialMissionArtwork: Partial<Record<SceneKind, { illustration: ManualIllustration; imagePosition?: string }>> = {
-  business: { illustration: originalArtwork['desp-initial-parcours'], imagePosition: 'right center' },
+  business: { illustration: despArtwork.projet },
   finance: { illustration: originalArtwork['bts-cg-budget'] },
   compliance: { illustration: despArtwork.conformite },
   team: { illustration: despArtwork.management, imagePosition: 'left center' },

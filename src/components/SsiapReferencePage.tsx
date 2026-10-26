@@ -25,6 +25,7 @@ import { IntegraleWelcomePack } from '@/components/IntegraleWelcomePack';
 import { ManualArtwork } from '@/components/ManualArtwork';
 import { ssiapArtwork, ssiapPracticeArtwork } from '@/data/manualIllustrations';
 import { originalArtwork } from '@/data/originalArtwork';
+import { ssiapEditorialArtwork } from '@/data/siteIllustrations';
 
 const contactHref = (subject = 'inscription') => `/contact?formation=ssiap-1&objet=${encodeURIComponent(subject)}`;
 
@@ -252,7 +253,7 @@ export function SsiapReferencePage({ sessions }: { sessions: any[] }) {
             <span className={mos.dualPlus} aria-hidden="true">+</span>
             <div className={mos.dualFire}>
               <span className={mos.dualLabel}>SSIAP 1</span>
-              <ManualArtwork illustration={ssiapArtwork.evacuation} natural className={mos.dualVisual} sizes="(max-width: 360px) 85vw, (max-width: 900px) 42vw, 230px" />
+              <ManualArtwork illustration={ssiapEditorialArtwork.assistance} natural className={mos.dualVisual} sizes="(max-width: 360px) 85vw, (max-width: 900px) 42vw, 230px" />
               <h4>Alerter & protéger</h4>
               <p>Prévention incendie, évacuation et assistance aux personnes.</p>
             </div>

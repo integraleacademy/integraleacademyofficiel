@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
 import { ManualArtwork } from './ManualArtwork';
 import { ssiapArtwork } from '@/data/manualIllustrations';
-import { originalArtwork } from '@/data/originalArtwork';
+import { ssiapEditorialArtwork } from '@/data/siteIllustrations';
 import styles from './SsiapExperience.module.css';
 
 export function SsiapJourneyDisclosure({ labels, children }: { labels: string[]; children: ReactNode[] }) {
@@ -56,7 +56,7 @@ export function SsiapMissionShowcase({ missions }: { missions: string[][] }) {
 
 export function SsiapProgramExplorer({ parts }: { parts: string[][] }) {
   const tabs = useTabs(parts.length);
-  const scenes = [ssiapArtwork.prevention, ssiapArtwork.evacuation, ssiapArtwork.pc, ssiapArtwork.ronde, originalArtwork['ssiap-1-mission-ensemble']];
+  const scenes = [ssiapEditorialArtwork.fire, ssiapEditorialArtwork.building, ssiapEditorialArtwork.systems, ssiapEditorialArtwork.reporting, ssiapEditorialArtwork.exercise];
   return <div className={styles.programExplorer}>
     <div className={styles.programOverview}><div><strong>67<span>h</span></strong><p>5 parties complémentaires<br /><span>Hors examen et déplacements</span></p></div><p>Des fondamentaux<br /><strong>aux situations de terrain.</strong></p></div>
     <div className={styles.hourRail} aria-label="Répartition des 67 heures">{parts.map(([number, title, hours], index) => <button type="button" key={number} style={{ flex: parseInt(hours, 10) }} data-active={tabs.active === index} onClick={() => { tabs.setActive(index); tabs.buttons.current[index]?.focus({ preventScroll: true }); }} aria-label={`Explorer ${title}, ${hours}`}><span>{hours}</span></button>)}</div>

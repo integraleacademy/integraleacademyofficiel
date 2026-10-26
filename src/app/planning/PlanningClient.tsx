@@ -101,10 +101,12 @@ const formationFilters: {
   slugs: string[];
   accent: PlanningAccent;
   image: string;
+  filterImage: string;
 }[] = [
   {
     key: 'aps',
     image: '/images/planning-metiers/aps.webp',
+    filterImage: '/images/formation-scenes-manuel/aps-mission-ronde.webp',
     label: 'APS',
     eyebrow: 'Surveillance humaine',
     description: 'Agent de prévention et de sécurité',
@@ -115,6 +117,7 @@ const formationFilters: {
   {
     key: 'a3p',
     image: '/images/planning-metiers/a3p.webp',
+    filterImage: '/images/formation-scenes-manuel/a3p-mission-trajets.webp',
     label: 'A3P',
     eyebrow: 'Protection rapprochée',
     description: 'Agent de protection physique des personnes',
@@ -125,6 +128,7 @@ const formationFilters: {
   {
     key: 'director',
     image: '/images/planning-metiers/dirigeant.webp',
+    filterImage: '/images/formation-scenes-manuel/desp-initial-appel-offres.webp',
     label: 'DIRIGEANT',
     eyebrow: 'DESP / DSSP',
     description: 'Diriger une entreprise de sécurité privée',
@@ -134,7 +138,8 @@ const formationFilters: {
   },
   {
     key: 'ssiap',
-    image: '/images/planning-metiers/ssiap.webp',
+    image: '/images/ssiap-1/manuel/recyclage.webp',
+    filterImage: '/images/formation-scenes-manuel/ssiap-1-mission-ensemble.webp',
     label: 'Sécurité incendie',
     previewDetail: 'SSIAP 1, 2 et 3',
     eyebrow: 'SSIAP 1, 2 et 3',
@@ -146,6 +151,7 @@ const formationFilters: {
   {
     key: 'vtc',
     image: '/images/planning-metiers/vtc.webp',
+    filterImage: '/images/formation-scenes-manuel/vtc-parcours.webp',
     label: 'VTC',
     eyebrow: 'Transport de personnes',
     description: 'Préparer le métier et l’examen VTC',
@@ -156,6 +162,7 @@ const formationFilters: {
   {
     key: 'bts',
     image: '/images/bts/tenues-2026/planning.webp',
+    filterImage: '/images/formation-scenes-manuel/bts-campus-mixte.webp',
     label: 'BTS',
     eyebrow: 'Alternance',
     description: 'MOS, MCO, NDRC, CI et PI',
@@ -761,7 +768,7 @@ export function PlanningClient({ initialSessions, btsIntakeYear, initialLocation
                   onClick={() => chooseFormation(formation.key)}
                   className={styles.formationCard + ' ' + planningThemeClass(formation.accent) + ' planning-formation-card group flex min-h-[13.5rem] flex-col rounded-[1.45rem] border p-5 text-left transition duration-300 hover:-translate-y-1 ' + (selected ? 'planning-formation-card-selected' : '')}
                 >
-                  <span className={styles.formationImage}><Image src={formation.image} alt="" width={300} height={190} sizes="(max-width: 640px) 90vw, (max-width: 1280px) 33vw, 200px" /><span className={styles.formationCheck} aria-hidden="true"><Icon name="check" className="h-4 w-4" /></span></span>
+                  <span className={styles.formationImage}><Image src={formation.filterImage} alt="" width={300} height={190} sizes="(max-width: 640px) 90vw, (max-width: 1280px) 33vw, 200px" /><span className={styles.formationCheck} aria-hidden="true"><Icon name="check" className="h-4 w-4" /></span></span>
                   <span className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[.14em] text-white/55">
                     <span aria-hidden="true" className="planning-accent-indicator h-2 w-2 shrink-0 rounded-full" />
                     0{index + 1} · {formation.eyebrow}
