@@ -10,7 +10,7 @@ import reference from './SsiapReferencePage.module.css';
 import styles from './TrainingReferenceLayout.module.css';
 
 type CourseTheme = 'red' | 'blue' | 'green' | 'orange';
-type Action = { href: string; label: string; newTab?: boolean };
+type Action = { href: string; label: ReactNode; newTab?: boolean };
 
 /** The SSIAP 1 visual language, with each course's own content and accent. */
 export function TrainingReferencePage({ children, theme, enabled = true }: { children: ReactNode; theme: CourseTheme; enabled?: boolean }) {
@@ -24,13 +24,13 @@ export function TrainingReferenceAction({ href, children, outline = false, newTa
   return <Link href={href} className={className}>{children}</Link>;
 }
 
-export function TrainingReferenceHero({ id, badge, heading, accent, title, tagline, description, illustration, caption, primaryAction, secondaryAction = { href: 'tel:0422470768', label: 'Parler à un conseiller' }, additionalAction, highlights = [], facts = [], children, extendedCopy = false }: {
+export function TrainingReferenceHero({ id, badge, heading, accent, title, tagline, description, illustration, caption, primaryAction, secondaryAction = { href: 'tel:0422470768', label: 'Parler à un conseiller' }, additionalAction, highlights = [], facts = [], children, extendedCopy = false, className = '' }: {
   id: string; badge: string; heading: string; accent: string; title: string;
   tagline: string; description: ReactNode; illustration: ManualIllustration; caption: string;
   primaryAction: Action; secondaryAction?: Action; additionalAction?: ReactNode; highlights?: readonly string[];
-  facts?: ReadonlyArray<ReadonlyArray<string | undefined>>; children: ReactNode; extendedCopy?: boolean;
+  facts?: ReadonlyArray<ReadonlyArray<string | undefined>>; children: ReactNode; extendedCopy?: boolean; className?: string;
 }) {
-  return <section className={`${reference.hero} ${styles.hero}`} aria-labelledby={`${id}-title`} data-extended-copy={extendedCopy || undefined}>
+  return <section className={`${reference.hero} ${styles.hero} ${className}`} aria-labelledby={`${id}-title`} data-extended-copy={extendedCopy || undefined}>
     <div className={reference.container}>
       <div className={reference.heroGrid}>
         <div className={reference.heroCopy}>

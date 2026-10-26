@@ -14,11 +14,12 @@ function GoogleIcon(){
 
 export function GoogleRatingBadge(){
   const pathname = usePathname();
-  const [contentNeedsClearSpace, setContentNeedsClearSpace] = useState(pathname === '/');
+  const [contentNeedsClearSpace, setContentNeedsClearSpace] = useState(pathname === '/' || pathname?.replace(/\/+$/, '') === '/bts/mos');
 
   useEffect(() => {
     const selectors = ['[data-site-footer]'];
     if (pathname === '/') selectors.push('[data-home-page] > section:is([aria-labelledby="home-hero-title"], #formations-securite, #formation-vtc, #bts)');
+    if (pathname?.replace(/\/+$/, '') === '/bts/mos') selectors.push('section[aria-labelledby="mos-title"]');
     const sections = document.querySelectorAll(selectors.join(', '));
     if (!sections.length) {
       setContentNeedsClearSpace(false);

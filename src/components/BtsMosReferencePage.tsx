@@ -91,6 +91,7 @@ export function BtsMosReferencePage() {
     }, '/bts/mos') }} />
 
     <TrainingReferenceHero
+      className={styles.mosHero}
       id="mos" badge={`Diplôme d’État · Bac+2 · RNCP ${course.rncp}`}
       heading="BTS MOS." accent="Management opérationnel de la sécurité."
       title="Votre prochain chapitre commence ici."
@@ -98,8 +99,8 @@ export function BtsMosReferencePage() {
       description={<><p>Organiser les missions, encadrer une équipe, accompagner un client. Construisez votre avenir dans la sécurité avec l’expérience de l’alternance.</p><p>Deux façons de s’inscrire en BTS MOS : en ligne ou sur Parcoursup.</p></>}
       illustration={btsHeroArtwork.mos} caption="Du terrain au management."
       primaryAction={{ href: applicationUrl, label: 'S’inscrire en ligne', newTab: true }}
-      secondaryAction={{ href: '#contact-mos', label: 'Une question ? Parler à Aurélie' }}
-      additionalAction={<a href="#candidature-parcoursup" className={styles.parcoursupButton}><span>S’inscrire sur</span><ParcoursupLogo /><Arrow /></a>}
+      secondaryAction={{ href: '#candidature-parcoursup', label: <span className={styles.heroParcoursup}><span>S’inscrire sur</span><ParcoursupLogo /><Arrow /></span> }}
+      additionalAction={<a href="#contact-mos" className={styles.heroAdviser}>Une question ? Parler à Aurélie <Arrow /></a>}
       highlights={['Après le bac', '1 350 heures de formation', 'Puget-sur-Argens ou à distance']}
     >
       <aside className={styles.studySummary} aria-label="L’essentiel du BTS MOS">
