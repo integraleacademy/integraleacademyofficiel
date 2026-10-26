@@ -2,7 +2,7 @@ import {
   btsExpandedCourses,
   type BtsExpandedCourseKey,
 } from '@/data/btsExpanded';
-import { BtsIllustratedBenefits } from './BtsIllustratedBenefits';
+import { BtsIllustratedBenefits, type BtsBenefitsArtwork } from './BtsIllustratedBenefits';
 
 function TabletIcon() {
   return (
@@ -41,8 +41,8 @@ function CheckList({ items, dark = false }: { items: string[]; dark?: boolean })
   );
 }
 
-export function BtsStudentBenefits({ courseName, variant = 'default' }: { courseName: string; variant?: 'default' | 'illustrated' }) {
-  if (variant === 'illustrated') return <BtsIllustratedBenefits courseName={courseName} />;
+export function BtsStudentBenefits({ courseName, variant = 'default', artwork }: { courseName: string; variant?: 'default' | 'illustrated'; artwork?: BtsBenefitsArtwork }) {
+  if (variant === 'illustrated') return <BtsIllustratedBenefits courseName={courseName} artwork={artwork} />;
   return (
     <section id="avantages-bts" className="scroll-mt-24 bg-[#081522] px-4 py-14 text-white sm:py-16 lg:py-20">
       <div className="page-container">

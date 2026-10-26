@@ -423,7 +423,7 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
     <TrainingReferenceContact
       portraitMedallion
       description="Cassandre vérifie votre éligibilité, votre dossier CNAPS (ministère de l’Intérieur) et votre financement. Vous repartez avec des réponses claires et les prochaines étapes adaptées à votre situation."
-      href={apsContact('rendez-vous avec Cassandre')}
+      href={apsRegistrationFormUrl}
       assurances={['Sans engagement', 'Étude personnalisée', 'Réponse sur le CNAPS (ministère de l’Intérieur) et le financement']}
     />
     <TrainingReferenceMobileBar label="Réserver ma place" />

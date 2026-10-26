@@ -24,10 +24,10 @@ export function TrainingReferenceAction({ href, children, outline = false, newTa
   return <Link href={href} className={className}>{children}</Link>;
 }
 
-export function TrainingReferenceHero({ id, badge, heading, accent, title, tagline, description, illustration, caption, primaryAction, additionalAction, highlights = [], facts = [], children, extendedCopy = false }: {
+export function TrainingReferenceHero({ id, badge, heading, accent, title, tagline, description, illustration, caption, primaryAction, secondaryAction = { href: 'tel:0422470768', label: 'Parler à un conseiller' }, additionalAction, highlights = [], facts = [], children, extendedCopy = false }: {
   id: string; badge: string; heading: string; accent: string; title: string;
   tagline: string; description: ReactNode; illustration: ManualIllustration; caption: string;
-  primaryAction: Action; additionalAction?: ReactNode; highlights?: readonly string[];
+  primaryAction: Action; secondaryAction?: Action; additionalAction?: ReactNode; highlights?: readonly string[];
   facts?: ReadonlyArray<ReadonlyArray<string | undefined>>; children: ReactNode; extendedCopy?: boolean;
 }) {
   return <section className={`${reference.hero} ${styles.hero}`} aria-labelledby={`${id}-title`} data-extended-copy={extendedCopy || undefined}>
@@ -38,7 +38,7 @@ export function TrainingReferenceHero({ id, badge, heading, accent, title, tagli
           <h1 id={`${id}-title`}>{heading}<br /><em>{accent}</em></h1>
           <p className={reference.heroTagline}>{tagline}</p>
           <div className={`${reference.heroDescription} ${styles.description}`}>{description}</div>
-          <div className={reference.actions}><TrainingReferenceAction href={primaryAction.href} newTab={primaryAction.newTab}>{primaryAction.label}</TrainingReferenceAction><TrainingReferenceAction href="tel:0422470768" outline>Parler à un conseiller</TrainingReferenceAction>{additionalAction}</div>
+          <div className={reference.actions}><TrainingReferenceAction href={primaryAction.href} newTab={primaryAction.newTab}>{primaryAction.label}</TrainingReferenceAction><TrainingReferenceAction href={secondaryAction.href} newTab={secondaryAction.newTab} outline>{secondaryAction.label}</TrainingReferenceAction>{additionalAction}</div>
           {highlights.length > 0 && <div className={reference.heroHighlights}>{highlights.map(item => <span key={item}>✓ {item}</span>)}</div>}
         </div>
         <figure className={reference.heroArtwork}>

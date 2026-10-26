@@ -6,8 +6,10 @@ import { BtsMosMission, BtsMosCalendar } from '@/components/BtsMosExperience';
 import { CourseJourney } from '@/components/CourseJourney';
 import { TeamPortrait } from '@/components/TeamPortrait';
 import { TrainingSectionNavigation } from '@/components/TrainingSectionNavigation';
+import { TrainingReferencePage, TrainingReferenceHero } from '@/components/TrainingReferenceLayout';
 import { PremiumFAQSection } from '@/components/ui';
 import { btsHeroArtwork } from '@/data/btsIllustrations';
+import { btsMosArtwork } from '@/data/btsMosArtwork';
 import { btsExpandedCourses } from '@/data/btsExpanded';
 import { serializeCourseJsonLd } from '@/lib/seo';
 import identity from './BtsIdentity.module.css';
@@ -80,6 +82,7 @@ function Heading({ label, title, text }: { label: string; title: ReactNode; text
 
 export function BtsMosReferencePage() {
   return <main data-bts="mos" className={`${identity.page} ${styles.page}`}>
+    <TrainingReferencePage theme="blue">
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeCourseJsonLd({
       '@context': 'https://schema.org', '@graph': [
         { '@type': 'Course', name: course.fullName, description: course.summary, educationalCredentialAwarded: 'BTS - diplôme national de niveau 5', provider: { '@type': 'EducationalOrganization', name: 'Intégrale Academy', telephone: '04 87 83 06 15', email: 'aurelie@integraleacademy.com' } },
@@ -87,31 +90,26 @@ export function BtsMosReferencePage() {
       ],
     }, '/bts/mos') }} />
 
-    <section className={styles.hero} aria-labelledby="mos-title">
-      <div className={styles.container}>
-        <div className={styles.heroGrid}>
-          <div className={styles.heroCopy}>
-            <p className={styles.eyebrow}>Diplôme d’État · Bac+2 · RNCP {course.rncp}</p>
-            <h1 id="mos-title"><span>BTS MOS</span>Management opérationnel<br className={styles.desktopBreak} /> de la sécurité.</h1>
-            <p className={styles.heroPromise}>Apprenez à <strong>prendre les commandes.</strong></p>
-            <p className={styles.intro}>Organiser les missions, encadrer une équipe, accompagner un client. Construisez votre avenir dans la sécurité avec l’expérience de l’alternance.</p>
-            <p className={styles.applicationPrompt}>Deux façons de s’inscrire en BTS MOS</p>
-            <div className={styles.actions}><Apply href={applicationUrl}>Candidater en ligne</Apply><a href="#candidature-parcoursup" className={styles.parcoursupButton}><span>Candidater sur</span><ParcoursupLogo /><Arrow /></a></div>
-            <div className={styles.heroEssentials}>
-              <div className={styles.heroFunding}><strong>0 €<sup>*</sup></strong><span>de frais de scolarité<br />pour l’apprenti</span></div>
-              <ul className={styles.heroFacts} aria-label="L’essentiel du BTS MOS"><li><strong>2 ans</strong>de formation</li><li><strong>Alternance</strong>école + entreprise</li><li><strong>Présentiel ou 100 % en ligne</strong>à distance, en visioconférence</li></ul>
-            </div>
-            <p className={styles.heroNote}>* Sous réserve de la conclusion et de la prise en charge du contrat d’apprentissage.</p>
-            <a href="#contact-mos" className={styles.textLink}>Une question ? Parler à Aurélie <Arrow /></a>
-          </div>
-          <figure className={styles.heroVisual}>
-            <div className={styles.heroImage}><Image src={btsHeroArtwork.mos.src} alt={btsHeroArtwork.mos.alt} width={1536} height={1024} priority sizes="(max-width: 650px) 94vw, (max-width: 1023px) 600px, (max-width: 1504px) 46vw, 650px" /></div>
-            <figcaption><span className={styles.visualNumber}>01</span><div><strong>Du terrain au management.</strong><span>Votre prochain chapitre commence ici.</span></div><span className={styles.visualArrow} aria-hidden="true">↗</span></figcaption>
-          </figure>
-        </div>
-        <div className={styles.heroBottom}><span>Après le bac</span><span>1 350 heures de formation</span><span>Puget-sur-Argens ou à distance</span><a href="#metier">Découvrir le BTS <span aria-hidden="true">↓</span></a></div>
-      </div>
-    </section>
+    <TrainingReferenceHero
+      id="mos" badge={`Diplôme d’État · Bac+2 · RNCP ${course.rncp}`}
+      heading="BTS MOS." accent="Management opérationnel de la sécurité."
+      title="Votre prochain chapitre commence ici."
+      tagline="Apprenez à prendre les commandes."
+      description={<><p>Organiser les missions, encadrer une équipe, accompagner un client. Construisez votre avenir dans la sécurité avec l’expérience de l’alternance.</p><p>Deux façons de s’inscrire en BTS MOS : en ligne ou sur Parcoursup.</p></>}
+      illustration={btsHeroArtwork.mos} caption="Du terrain au management."
+      primaryAction={{ href: applicationUrl, label: 'S’inscrire en ligne', newTab: true }}
+      secondaryAction={{ href: '#contact-mos', label: 'Une question ? Parler à Aurélie' }}
+      additionalAction={<a href="#candidature-parcoursup" className={styles.parcoursupButton}><span>S’inscrire sur</span><ParcoursupLogo /><Arrow /></a>}
+      highlights={['Après le bac', '1 350 heures de formation', 'Puget-sur-Argens ou à distance']}
+    >
+      <aside className={styles.studySummary} aria-label="L’essentiel du BTS MOS">
+        <div className={styles.summaryFunding}><strong>0 €<sup>*</sup></strong><span>de frais de scolarité<br />pour l’apprenti</span></div>
+        <div className={styles.summaryFact}><span>La durée</span><strong>2 ans</strong><small>de formation</small></div>
+        <div className={styles.summaryFact}><span>Le rythme</span><strong>Alternance</strong><small>école + entreprise</small></div>
+        <div className={styles.summaryFact}><span>Votre format</span><strong>Présentiel ou 100 % en ligne</strong><small>à distance, en visioconférence</small></div>
+        <div className={styles.summaryFooter}><p>* Sous réserve de la conclusion et de la prise en charge du contrat d’apprentissage.</p><a className={styles.summaryReview} href="/#avis-google">Avis Google · 4,8 / 5 <span aria-hidden="true">↗</span></a><a href="#metier">Découvrir le BTS <span aria-hidden="true">↓</span></a></div>
+      </aside>
+    </TrainingReferenceHero>
 
     <div className={styles.navigation}><TrainingSectionNavigation mark="MOS" title="BTS MOS" items={navigation} registrationHref="#admission" registrationLabel="Je m’inscris" theme="bts" ariaLabel="Sommaire du BTS MOS" /></div>
 
@@ -163,7 +161,7 @@ export function BtsMosReferencePage() {
           </article>
           <div className={styles.formatOr} aria-label="ou : choisissez l’un des deux parcours"><span>OU</span></div>
           <article className={`${styles.formatCard} ${styles.remoteFormat}`}>
-            <div className={styles.formatPhoto}><Image src="/images/bts/mixite-2026/cours-visio.webp" alt="Illustration : un étudiant participe depuis chez lui à un cours en visioconférence avec son formateur et sa promotion" width={1200} height={800} sizes="(max-width: 850px) 94vw, 43vw" /><span className={`${styles.formatBadge} ${styles.zoomBadge}`}><i aria-hidden="true" />En ligne, à distance</span></div>
+            <div className={styles.formatPhoto}><Image src={btsMosArtwork.remote.src} alt={btsMosArtwork.remote.alt} width={1536} height={1024} sizes="(max-width: 850px) 94vw, 43vw" /><span className={`${styles.formatBadge} ${styles.zoomBadge}`}><i aria-hidden="true" />En ligne, à distance</span></div>
             <div className={styles.formatCopy}>
               <p className={styles.eyebrow}>Intégrale Academy Paris · Online</p><h3>Vos cours en live.<br />100 % à distance.</h3>
               <p>Connectez-vous en visioconférence ZOOM : votre formateur anime le cours en direct, avec toute votre promotion.</p>
@@ -197,17 +195,18 @@ export function BtsMosReferencePage() {
       <div className={styles.container}>
         <Heading label="05 / Votre vie à l’école" title={<>Votre BTS MOS,<br /><span>avec l’iPad et Londres.</span></>} text="iPad offert dès la signature du contrat d’apprentissage. Londres en 2ᵉ année · 100 % pris en charge. Ces deux avantages sont proposés sous réserve de signature d’un contrat d’apprentissage." />
       </div>
-      <BtsStudentBenefits courseName="BTS MOS" variant="illustrated" />
+      <BtsStudentBenefits courseName="BTS MOS" variant="illustrated" artwork={{ ipad: btsMosArtwork.ipad, london: btsMosArtwork.london }} />
       <div className={styles.container}>
-        <div className={styles.schoolResources}><div><p className={styles.eyebrow}>Apprendre par la pratique</p><h3>Des situations de métier.<br />Des équipements pour s’entraîner.</h3><p>{course.campusEquipment?.intro}</p><Disclosure title="Découvrir les équipements pédagogiques"><List items={course.campusEquipment?.items ?? []} /></Disclosure></div><figure><Image src="/images/bts/mixite-2026/mos-carte.webp" alt="Un étudiant en BTS MOS prépare les missions avec une équipe au poste de sécurité" width={1536} height={1024} sizes="(max-width: 800px) 94vw, 45vw" /><figcaption>Préparer une mission en équipe.</figcaption></figure></div>
+        <div className={styles.schoolResources}><div><p className={styles.eyebrow}>Apprendre par la pratique</p><h3>Des situations de métier.<br />Des équipements pour s’entraîner.</h3><p>{course.campusEquipment?.intro}</p><Disclosure title="Découvrir les équipements pédagogiques"><List items={course.campusEquipment?.items ?? []} /></Disclosure></div><figure><Image src={btsMosArtwork.equipment.src} alt={btsMosArtwork.equipment.alt} width={1536} height={1024} sizes="(max-width: 800px) 94vw, 45vw" /><figcaption>Préparer une mission en équipe.</figcaption></figure></div>
       </div>
     </section>
 
     <section id="admission" className={`${styles.section} ${styles.admission}`}>
       <div className={styles.container}>
         <Heading label="06 / Candidature et admission" title={<>Votre inscription en BTS MOS.<br /><span>Deux possibilités.</span></>} text="Remplissez votre dossier de pré-inscription en ligne ou candidatez directement sur Parcoursup. L’équipe vous accompagne ensuite jusqu’à l’inscription et au contrat d’apprentissage." />
+        <div className={styles.enrollmentSupport}><div><p className={styles.eyebrow}>Inscription & financement</p><h3>Nous vous accompagnons de A à Z.</h3><p>Du choix de votre parcours à votre rentrée, Aurélie vous guide dans vos démarches.</p></div><a href="#contact-mos" className={styles.button}>Préparer mon projet avec Aurélie <Arrow /></a></div>
         <div className={styles.applicationChoices}>
-          <article className={styles.applicationCard}><p className={styles.eyebrow}>Option 01 · Auprès de l’école</p><h3>Votre dossier<br />de pré-inscription en ligne.</h3><p>Présentez votre parcours et votre projet directement à Intégrale Academy. Vous pouvez candidater avant d’avoir trouvé votre entreprise.</p><Apply href={applicationUrl}>Candidater en ligne</Apply><p className={styles.small}>L’équipe admissions vous accompagne pour la suite.</p></article>
+          <article className={styles.applicationCard}><p className={styles.eyebrow}>Option 01 · Auprès de l’école</p><h3>Votre dossier<br />de pré-inscription en ligne.</h3><p>Présentez votre parcours et votre projet directement à Intégrale Academy. Vous pouvez candidater avant d’avoir trouvé votre entreprise.</p><Apply href={applicationUrl}>S’inscrire en ligne</Apply><p className={styles.small}>L’équipe admissions vous accompagne pour la suite.</p></article>
           <article id="candidature-parcoursup" className={`${styles.applicationCard} ${styles.parcoursupCard}`}><p className={styles.eyebrow}>Option 02 · Sur Parcoursup</p><ParcoursupLogo /><h3>Choisissez votre format<br />et formulez votre vœu.</h3><div className={styles.parcoursupLinks}><a href={parcoursup.campus} target="_blank" rel="noopener noreferrer"><span><strong>BTS MOS en présentiel</strong><small>Intégrale Academy · Puget-sur-Argens</small></span><Arrow /></a><a href={parcoursup.remote} target="_blank" rel="noopener noreferrer"><span><strong>BTS MOS 100 % à distance</strong><small>Intégrale Academy Paris · Cours en live sur ZOOM</small></span><Arrow /></a></div><p className={styles.small}>Selon le calendrier Parcoursup. Pour une candidature en cours d’année, utilisez le dossier en ligne ou contactez Aurélie.</p></article>
         </div>
         <div className={styles.admissionIntro}><p className={styles.eyebrow}>Et ensuite ?</p><h3>De votre candidature à votre rentrée.</h3></div>
@@ -279,5 +278,6 @@ export function BtsMosReferencePage() {
       <PremiumFAQSection theme="bts" badge="FAQ BTS MOS" title="Tout comprendre avant de vous lancer" description="Admission, alternance, entreprise, visioconférence, coût ou diplôme : Aurélie répond à vos questions et à celles de votre famille." items={faq} contactHref={email} contactLabel="Écrire à Aurélie" callHref={phone} callLabel="Appeler Aurélie" />
     </div>
     <div className={styles.mobileActions}><a href={phone}>Appeler Aurélie</a><Apply>Je m’inscris</Apply></div>
+    </TrainingReferencePage>
   </main>;
 }

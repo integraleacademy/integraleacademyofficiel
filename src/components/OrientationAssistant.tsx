@@ -32,7 +32,7 @@ const apsFormation = securityFormations.find(formation => formation.slug === '/f
 const informationLoadingDelayMs = 900;
 
 const formations: AssistantFormation[] = [
-  { key: 'aps', label: 'Agent de sécurité privée (APS)', icon: '👮', infoUrl: '/formations-securite/aps', rdvUrl: '/contact?formation=aps&type=rdv', homeTitle: 'Agent de sécurité', homeSubtitle: 'APS · surveillance' },
+  { key: 'aps', label: 'Agent de sécurité privée (APS)', icon: '👮', infoUrl: '/formations-securite/aps', rdvUrl: 'https://assistance-alw9.onrender.com/demande-informations-formations', homeTitle: 'Agent de sécurité', homeSubtitle: 'APS · surveillance' },
   { key: 'a3p', label: 'Agent de protection physique des personnes (A3P)', icon: '◆', infoUrl: '/formations-securite/a3p-apr', rdvUrl: '/contact?formation=a3p&type=rdv', homeTitle: 'Agent de protection', homeSubtitle: 'A3P · APR' },
   { key: 'desp', label: 'Dirigeant d’entreprise de sécurité (DESP)', icon: '▣', infoUrl: '/despvaeouinitial', rdvUrl: '/contact?formation=desp&type=rdv', homeTitle: 'Dirigeant sécurité', homeSubtitle: 'Initial · VAE' },
   { key: 'vtc', label: 'Chauffeur VTC', icon: '🚗', infoUrl: '/vtc', rdvUrl: '/contact?formation=vtc&type=rdv', homeTitle: 'Chauffeur VTC', homeSubtitle: 'Théorie · pratique' },

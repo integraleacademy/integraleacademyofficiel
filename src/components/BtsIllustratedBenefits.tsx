@@ -1,5 +1,8 @@
 import Image from 'next/image';
+import type { ManualIllustration } from '@/data/manualIllustrations';
 import styles from './BtsIllustratedBenefits.module.css';
+
+export type BtsBenefitsArtwork = { ipad: ManualIllustration; london: ManualIllustration };
 
 const extras = [
   ['01', 'Votre carte étudiante', 'Votre statut étudiant et les avantages associés.'],
@@ -7,12 +10,12 @@ const extras = [
   ['03', '3 € par jour à l’école', 'Un crédit boissons et snacks pour les étudiants en présentiel.'],
 ];
 
-export function BtsIllustratedBenefits({ courseName }: { courseName: string }) {
+export function BtsIllustratedBenefits({ courseName, artwork }: { courseName: string; artwork?: BtsBenefitsArtwork }) {
   return <section id="avantages-bts" aria-label={`Les avantages de votre ${courseName}`} className={styles.benefits}>
     <div className={styles.cards}>
       <article className={styles.card}>
         <figure className={styles.benefitScene}>
-          <Image src="/images/illustrations-2026/bts-tablette.webp" alt="Illustration : une étudiante utilise sa tablette et un stylet pour travailler ses cours de BTS" width={1200} height={800} sizes="(max-width: 700px) 94vw, 46vw" />
+          <Image src={artwork?.ipad.src ?? '/images/illustrations-2026/bts-tablette.webp'} alt={artwork?.ipad.alt ?? 'Illustration : une étudiante utilise sa tablette et un stylet pour travailler ses cours de BTS'} width={1536} height={1024} sizes="(max-width: 700px) 94vw, 46vw" />
           <figcaption>Votre compagnon de formation.</figcaption>
         </figure>
         <div className={styles.copy}>
@@ -25,7 +28,7 @@ export function BtsIllustratedBenefits({ courseName }: { courseName: string }) {
       </article>
       <article className={styles.card}>
         <figure className={styles.benefitScene}>
-          <Image src="/images/illustrations-2026/bts-londres.webp" alt="Illustration d’un groupe d’étudiants découvrant Londres, devant Big Ben et le palais de Westminster" width={1200} height={800} sizes="(max-width: 700px) 94vw, 46vw" />
+          <Image src={artwork?.london.src ?? '/images/illustrations-2026/bts-londres.webp'} alt={artwork?.london.alt ?? 'Illustration d’un groupe d’étudiants découvrant Londres, devant Big Ben et le palais de Westminster'} width={1536} height={1024} sizes="(max-width: 700px) 94vw, 46vw" />
           <figcaption>Votre promotion, à Londres.</figcaption>
         </figure>
         <div className={styles.copy}>
