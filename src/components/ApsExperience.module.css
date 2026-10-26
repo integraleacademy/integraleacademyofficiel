@@ -23,31 +23,35 @@
 .admissionSteps { margin-top:25px; font-size:11px; line-height:2; color:#5a6570; }
 .admissionSteps span { color:#285e99; margin:0 6px; }
 .program { background:#fffdf8; color:#17212b; border:1px solid #d6dfe8; border-radius:25px; padding:clamp(20px,3vw,38px); }
-.programOverview { display:flex; justify-content:space-between; gap:25px; align-items:center; padding-bottom:28px; border-bottom:1px solid #d6dfe8; margin-bottom:30px; }
-.programOverview > div { display:flex; align-items:center; gap:20px; }
-.programOverview > div > strong { flex-shrink:0; white-space:nowrap; color:#285e99; font-size:clamp(52px,6vw,80px); letter-spacing:-.07em; line-height:1; }
-.programOverview > div > strong > span { font-size:28px; margin-left:5px; font-weight:500; }
+.programOverview { display:grid; grid-template-columns:minmax(0,1fr) clamp(180px,22vw,260px); gap:32px; align-items:center; padding-bottom:28px; border-bottom:1px solid #d6dfe8; margin-bottom:24px; }
+.programSummary { display:grid; gap:24px; min-width:0; }
+.programHours { display:flex; align-items:center; gap:20px; }
+.programHours > strong { flex-shrink:0; white-space:nowrap; color:#285e99; font-size:clamp(52px,6vw,80px); letter-spacing:-.07em; line-height:1; }
+.programHours > strong > span { font-size:28px; margin-left:5px; font-weight:500; }
 .programOverview p { font-size:14px; line-height:1.7; font-weight:650; }
 .programOverview p span { font-size:11px; color:#657080; font-weight:400; }
-.programOverview dl { display:flex; gap:25px; }
+.programOverview dl { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px; max-width:650px; }
 .programOverview dt { font-size:10px; color:#657080; margin-bottom:5px; }
 .programOverview dd { font-size:19px; font-weight:750; }
-.programBody { display:grid; grid-template-columns:.85fr 1.2fr; gap:30px; align-items:start; }
+.programBody { display:grid; grid-template-columns:.85fr 1.2fr; gap:24px; align-items:stretch; }
 .programMenu,.programDetail { min-width:0; }
-.programMenu > p { display:flex; justify-content:space-between; gap:15px; margin:0 10px 15px; }
+.programMenu { display:flex; flex-direction:column; min-height:0; padding:24px 0; }
+.programMenu > p { display:flex; justify-content:space-between; gap:15px; margin:0 12px 12px; }
 .programMenu > p span { font-size:9px; color:#657080; letter-spacing:0; text-transform:none; }
-.programTabs { max-height:620px; overflow-y:auto; scrollbar-width:thin; scrollbar-color:#99b5d3 transparent; padding-right:8px; overscroll-behavior:contain; }
+.programTabs { max-height:440px; overflow-y:auto; scrollbar-width:thin; scrollbar-color:#99b5d3 transparent; padding:3px 8px 3px 3px; overscroll-behavior:contain; }
 .programTabs > button { display:grid; grid-template-columns:36px minmax(0,1fr) 28px 12px; gap:10px; align-items:center; min-height:62px; padding:15px 12px; width:100%; text-align:left; border-bottom:1px solid #dce2e8; border-radius:8px; }
-.programTabs > button > span:first-child { color:#285e99; font-size:10px; font-weight:800; }
+.programTabs > button > span:first-child { color:#285e99; font-size:10px; font-weight:800; white-space:nowrap; }
 .programTabs strong { font-size:14px; font-weight:650; line-height:1.35; }
 .programTabs small { font-size:10px; color:#657080; white-space:nowrap; }
 .programTabs > button > span:last-child { opacity:0; }
 .programTabs > button[aria-selected='true'] { background:#e6eff8; border-bottom-color:transparent; }
 .programTabs > button[aria-selected='true'] > span:last-child { opacity:1; }
-.programDetail { overflow:hidden; border-radius:18px; background:#eef3f8; }
-.programImage { display:block; width:100%; height:auto; aspect-ratio:3/2; object-fit:contain; }
-.programPanel { padding:25px 28px; }
-.programPanel[hidden] { display:none; }
+.programDetail { display:grid; overflow:hidden; border-radius:18px; background:#eef3f8; }
+.programImage { display:block; width:100%; height:auto; aspect-ratio:3/2; object-fit:contain; border-radius:14px; }
+.programPanel { grid-area:1/1; display:flex; flex-direction:column; min-width:0; padding:24px; }
+/* Reserve the tallest panel so selecting a shorter unit never shifts the page.
+   Inactive panels remain invisible, aria-hidden and inert. */
+.programPanel[hidden] { display:flex; visibility:hidden; pointer-events:none; }
 .unitHeading { display:flex; justify-content:space-between; align-items:center; gap:12px; }
 .unitHeading > span { font-size:13px; font-weight:800; color:#285e99; white-space:nowrap; }
 .programPanel h3 { margin-top:12px; font-size:clamp(21px,2.4vw,28px); letter-spacing:-.03em; line-height:1.2; font-weight:750; }
@@ -55,8 +59,8 @@
 .programTopics { display:grid; gap:10px; margin-top:18px; color:#4c5e70; font-size:14px; line-height:1.7; }
 .programTopics li { display:flex; align-items:baseline; gap:10px; }
 .programTopics li > span { flex-shrink:0; color:#285e99; font-weight:750; }
-.delivery { margin-top:18px; color:#285e99; font-size:11px; font-weight:700; }
-.panelNavigation { display:flex; align-items:center; justify-content:space-between; gap:15px; border-top:1px solid #cedce9; padding-top:20px; margin-top:22px; font-size:12px; }
+.delivery { margin-top:18px; margin-bottom:22px; color:#285e99; font-size:11px; font-weight:700; }
+.panelNavigation { display:flex; align-items:center; justify-content:space-between; gap:15px; border-top:1px solid #cedce9; padding-top:20px; margin-top:auto; font-size:12px; }
 .panelNavigation > span { color:#657080; }
 .panelNavigation button { font-weight:750; color:#285e99; min-height:36px; }
 .hybrid { display:grid; grid-template-columns:.72fr 1.28fr; gap:clamp(24px,4vw,55px); align-items:center; }
@@ -126,20 +130,22 @@
 :global(html.dark) .requirements,:global(html.dark) .remoteCopy,:global(html.dark) .hybridSteps { color:#eef2f6; }
 :global(html.dark) .requirements .kicker,:global(html.dark) .requirements summary > span:first-child,:global(html.dark) .remoteCopy .kicker,:global(html.dark) .remoteCopy h3 > strong,:global(html.dark) .hybridSteps li > span { color:#b5d8ff; }
 :global(html.dark) .requirement > p,:global(html.dark) .admissionSteps,:global(html.dark) .remoteCopy > p:not(.kicker),:global(html.dark) .hybridSteps small { color:#c2cbd4; }
-@media(max-width:1000px) { .programOverview { align-items:start; }.programOverview dl { gap:15px; }.programBody { gap:20px; }.programPanel { padding:22px; }.inPerson { grid-template-columns:1fr 1fr; }.hybridSteps { gap:15px; } }
+@media(max-width:1000px) { .programOverview { gap:24px; }.programOverview dl { gap:15px; }.programBody { gap:20px; }.programPanel { padding:22px; }.programMenu { padding-block:22px; }.inPerson { grid-template-columns:1fr 1fr; }.hybridSteps { gap:15px; } }
 @media(max-width:800px) {
   .admission,.hybrid,.exam { grid-template-columns:1fr; }
   .admissionLead { padding:25px; }.admissionLead h3 br:first-child { display:none; }.admissionLead h3 br:first-child::after { content:' '; }
-  .programOverview { flex-wrap:wrap; }.programOverview dl { width:100%; justify-content:space-between; }.programBody { grid-template-columns:1fr; }
+  .programOverview { grid-template-columns:minmax(0,1fr) 160px; }.programHours { flex-wrap:wrap; gap:12px; }.programBody { grid-template-columns:1fr; }.programMenu { padding:0; }
   .programTabs { display:flex; gap:8px; overflow-x:auto; overflow-y:hidden; max-height:none; padding:3px 3px 12px; scroll-snap-type:x proximity; }
-  .programTabs > button { min-width:210px; width:210px; grid-template-columns:30px 1fr 25px; flex-shrink:0; border:1px solid #dce2e8; scroll-snap-align:start; }
+  .programTabs > button { min-width:240px; width:240px; grid-template-columns:1fr auto; align-content:start; gap:8px; flex-shrink:0; border:1px solid #dce2e8; scroll-snap-align:start; }
+  .programTabs strong { grid-column:1/-1; grid-row:2; }.programTabs small { grid-column:2; grid-row:1; }
+  .programPanel[hidden] { display:none; }
   .programTabs > button > span:last-child { display:none; }.programMenu > p span { font-size:0; }.programMenu > p span::after { content:'Faites défiler →'; font-size:9px; }
   .remoteCopy h3 br { display:none; }.remoteCopy h3 strong { margin-right:10px; }.hybrid { gap:28px; }.demoPreview { width:100%; }
   .examValidation { flex-wrap:wrap; }.examValidation > strong { margin-left:67px; }.examTheory h3 { margin-top:22px; }
 }
 @media(max-width:550px) {
   .requirement h3 { font-size:14px; }.requirement summary { gap:10px; }.requirement > p { padding-left:22px; padding-right:10px; }
-  .program { padding:18px; }.programOverview > div { gap:15px; }.programOverview dl { gap:10px; }.programOverview dd { font-size:17px; }.programPanel { padding:20px; }.unitHeading { align-items:start; }.unitHeading .kicker { font-size:9px; }
+  .program { padding:18px; }.programOverview { grid-template-columns:1fr; gap:20px; }.programSummary { gap:20px; }.programHours { gap:15px; }.programImage { width:min(100%,300px); justify-self:center; }.programOverview dl { gap:10px; }.programOverview dd { font-size:17px; }.programPanel { padding:20px; }.unitHeading { align-items:start; }.unitHeading .kicker { font-size:9px; }
   .browserBar { padding:13px; gap:9px; }.browserBar > span:first-child { display:none; }.inPerson { padding:24px; gap:23px; }.inPerson > div { grid-column:1/-1; }.inPerson h3 strong { font-size:40px; }.inPerson a { grid-column:1/-1; }
   .hybridSteps { grid-template-columns:1fr 1fr; gap:18px; }.hybridSteps strong { font-size:11px; }.hybridSteps small { line-height:1.6; }
   .examPractice > div { padding:24px; }.examValidation { padding:24px; gap:14px; }.examValidation > div { flex:1; }.examValidation > strong { margin-left:59px; }.examMoreGrid { grid-template-columns:1fr; }.examSituations { gap:15px; }
