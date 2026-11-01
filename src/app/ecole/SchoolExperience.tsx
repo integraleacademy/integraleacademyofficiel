@@ -17,7 +17,7 @@ function Arrow({ diagonal = false }: { diagonal?: boolean }) {
 
 const chapters = [
   ['campus', 'Les lieux'], ['equipe', 'L’équipe'], ['pedagogie', 'La pédagogie'],
-  ['clement-vaillant', 'Notre histoire'], ['agrements', 'Nos engagements'],
+  ['clement-vaillant', 'Notre histoire'], ['agrements', 'Nos agréments'],
 ] as const;
 
 export function SchoolNavigation() {

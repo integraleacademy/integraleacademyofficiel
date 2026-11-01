@@ -9,8 +9,11 @@ import experience from './school-experience.module.css';
 import { SchoolNavigation, SchoolCampuses, SchoolPedagogy, SchoolVisitButton, SchoolVisitAdviser } from './SchoolExperience';
 import { SchoolCommitments } from './SchoolCommitments';
 import { SchoolGallery } from './SchoolGallery';
+import { GoogleReviewsSection } from '@/components/GoogleReviewsSection';
+import { listPublicGoogleReviews } from '@/lib/google-reviews-data';
 
 export const metadata = createPageMetadata('/ecole');
+export const dynamic = 'force-dynamic';
 
 const team = [
   { portrait: 'cassandre' as const, name: 'Cassandre MENARD', role: 'Responsable commerciale', mission: 'Votre interlocutrice pour choisir votre formation, préparer votre admission et trouver le financement adapté.', specialty: 'Pour choisir votre formation' },
@@ -22,8 +25,11 @@ function Arrow({ diagonal = false }: { diagonal?: boolean }) {
   return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={diagonal ? 'M6 18 18 6M6 6h12v12' : 'M4 12h16m-6-6 6 6-6 6'} /></svg>;
 }
 
-export default function Page() {
-  return <div className={`${styles.page} ${experience.guidedPage} ${navigation.scope}`}>
+export default async function Page() {
+  const googleReviews = await listPublicGoogleReviews();
+
+  return <div className={`${experience.guidedPage} ${navigation.scope}`}>
+    <div className={styles.page}>
     <section className={`${styles.hero} ${experience.guidedHero}`} aria-labelledby="school-title">
       <div className={`${styles.container} ${styles.heroGrid}`}>
         <div className={styles.heroCopy}>
@@ -44,8 +50,11 @@ export default function Page() {
       </div>
     </section>
 
+    </div>
+
     <SchoolNavigation />
 
+    <div className={styles.page}>
     <section className={styles.stats} aria-label="L’école en quelques repères">
       <div className={`${styles.container} ${styles.statsGrid}`}>
         <div><strong>2018</strong><span>Le début de l’aventure</span></div><div><strong>400 <small>m²</small></strong><span>Pour apprendre à Puget-sur-Argens</span></div><div><strong>4 <small>salles</small></strong><span>Théorie & mise en pratique</span></div><div><strong>3 <small>implantations</small></strong><span>Puget, Paris · Aurillac selon les sessions</span></div>
@@ -155,17 +164,12 @@ export default function Page() {
       </div>
     </section>
 
-    <section className={`${styles.section} ${styles.reviewsSection}`} aria-labelledby="reviews-title">
-      <div className={styles.container}>
-        <div className={styles.sectionHeading}><div><p className={styles.eyebrow}>Leur expérience de l’école</p><h2 id="reviews-title">Ils en parlent<br /><em>avec leurs mots.</em></h2></div><Link href="/#avis-google" className={styles.textLink}>Retrouver les avis des apprenants <Arrow diagonal /></Link></div>
-        <div className={styles.reviewsGrid}>
-          <figure><span className={styles.quoteMark} aria-hidden="true">“</span><blockquote>Les locaux sont propres, bien équipés et agréables. L’ambiance est sérieuse mais conviviale. La formation est complète, bien organisée, avec un bon équilibre entre théorie et pratique.</blockquote><figcaption><strong>Mathys C.</strong><span>Agent de sécurité</span></figcaption></figure>
-          <figure><span className={styles.quoteMark} aria-hidden="true">“</span><blockquote>L’équipe est professionnelle, à l’écoute et très investie dans la réussite des stagiaires. Les formations sont claires, dynamiques et parfaitement adaptées aux exigences du terrain.</blockquote><figcaption><strong>Nelson D.</strong><span>Sécurité privée</span></figcaption></figure>
-        </div>
-        <p className={styles.reviewSource}>Témoignages issus de la sélection d’avis publiée sur notre site.</p>
-      </div>
-    </section>
+    </div>
 
+    {/* Keep the shared reviews outside the school's typography overrides. */}
+    <GoogleReviewsSection reviews={googleReviews} />
+
+    <div className={styles.page}>
     <SchoolCommitments />
 
     <section id="visite" className={styles.visit} aria-labelledby="visit-title">
@@ -174,5 +178,6 @@ export default function Page() {
         <div className={styles.visitActions}><SchoolVisitAdviser /><SchoolVisitButton className={styles.button} /><a href="tel:+33422470768" className={styles.visitPhone}>{contact.phone}</a><p>Un premier échange gratuit et sans engagement.</p><Link href="/planning" className={styles.textLink}>Voir les prochaines sessions <Arrow diagonal /></Link></div>
       </div>
     </section>
+    </div>
   </div>;
 }

@@ -31,7 +31,7 @@ export function SchoolCommitments() {
   return <section id="agrements" className={`${school.section} ${styles.commitments}`} aria-labelledby="certifications-title">
     <div className={school.container}>
       <div className={school.sectionHeading}>
-        <div><p className={school.eyebrow}>05 / Nos engagements</p><h2 id="certifications-title">La confiance se construit.<br /><em>Elle se vérifie aussi.</em></h2></div>
+        <div><p className={school.eyebrow}>05 / Nos agréments</p><h2 id="certifications-title">La confiance se construit.<br /><em>Elle se vérifie aussi.</em></h2></div>
         <p>Certifications, agréments et habilitations : retrouvez les références de l’école et les documents qui les accompagnent.</p>
       </div>
 

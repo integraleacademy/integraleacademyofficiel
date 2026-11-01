@@ -157,14 +157,6 @@
 .timeline li > span { color: var(--gold); font-size: 12px; font-weight: 800; }
 .timeline h3 { margin-top: 13px; font-size: 19px; }
 .timeline p { max-width: 300px; margin-top: 10px; color: var(--muted); font-size: 14px; }
-.reviewsSection { background: rgb(var(--surface)); border-block: 1px solid rgb(var(--border) / .6); }
-.reviewsGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
-.reviewsGrid > figure { padding: 30px; border: 1px solid var(--line); border-radius: 24px; background: var(--paper); }
-.quoteMark { display: block; height: 36px; color: var(--gold); font-size: 65px; font-weight: 900; line-height: 1; }
-.reviewsGrid blockquote { margin: 16px 0 25px; font-size: 18px; font-weight: 550; line-height: 1.7; }
-.reviewsGrid figcaption { display: flex; flex-direction: column; gap: 2px; font-size: 13px; }
-.reviewsGrid figcaption span { color: var(--muted); font-size: 12px; }
-.reviewsSection .reviewSource { margin-top: 28px; color: var(--muted); font-size: 11px; }
 .certifications { padding-block: 65px; }
 .certificationIntro { display: flex; align-items: baseline; justify-content: space-between; gap: 25px; }
 .certificationIntro h2 { font-size: 25px; letter-spacing: -.025em; }
@@ -224,7 +216,6 @@
   .approachCopy { order: -1; }
   .domains { margin-top: 40px; } .domainGrid { grid-template-columns: 1fr 1fr; gap: 18px; } .domainCardBody { padding: 20px; font-size: 16px; }
   .timeline { gap: 24px; } .timeline li { padding-right: 0; } .timeline h3 { font-size: 17px; }
-  .reviewsGrid { gap: 20px; } .reviewsGrid > figure { padding: 23px; } .reviewsGrid blockquote { font-size: 16px; }
   .certifications { padding-block: 50px; } .certificationIntro h2 { font-size: 26px; }
   .visit { padding-block: 60px; } .visitGrid { grid-template-columns: 1fr; gap: 35px; } .visit h2 { font-size: 43px; }
   .visitActions { padding: 28px 0 0; border-left: 0; border-top: 1px solid #40505f; }
@@ -247,7 +238,6 @@
   .campusAddresses .addressPanel { padding: 24px; }
   .domainGrid { grid-template-columns: 1fr; } .domainCardBody { padding: 20px; }
   .timeline { grid-template-columns: 1fr; gap: 0; padding-left: 5px; } .timeline li { padding: 0 0 30px 25px; border-top: 0; border-left: 1px solid var(--line); } .timeline li::before { top: 7px; left: -5px; } .timeline li:last-child { padding-bottom: 0; } .timeline p { max-width: none; }
-  .reviewsGrid { grid-template-columns: 1fr; } .reviewsGrid blockquote { font-size: 18px; }
   .certificationStrip { grid-template-columns: 1fr; gap: 20px; } .certificationStrip > span { font-size: 24px; }
   .references summary { font-size: 13px; } .visit h2 { font-size: 39px; } .visitActions .button { max-width: none; }
 }
