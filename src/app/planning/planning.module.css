@@ -153,7 +153,11 @@
 .previewChoices i { position: absolute; bottom: 12px; right: 10px; color: #806124; }
 .preview svg { width: 17px; height: 17px; flex-shrink: 0; }
 .previewChoices i svg { width: 15px; height: 15px; }
-.miniOverview { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 10px; color: #736344; }
+.miniOverview { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 10px; color: #736344; }
+.miniOverviewActions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+.miniAllDates { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 10px 14px; border: 1px solid #d9ac42; border-radius: 999px; background: #e6ba5b; color: #172233; font-size: 12px; font-weight: 800; }
+.miniAllDates:hover { background: #f0ca77; }
+.miniAllDates svg { width: 18px; height: 18px; flex-shrink: 0; }
 .miniMonthHeading { display: grid; grid-template-columns: 34px minmax(0, 1fr) 34px; align-items: center; gap: 7px; font-size: 16px; font-weight: 800; text-transform: capitalize; text-align: center; }
 .miniMonthHeading button { display: grid; place-items: center; width: 34px; height: 34px; border: 1px solid #d9cdb7; border-radius: 50%; }
 .miniMonthHeading button:hover:enabled { background: #ede3cc; border-color: #bf9238; }

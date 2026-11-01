@@ -119,7 +119,15 @@ export function PlanningPreview({ formations, initialFormation, initialSsiapCour
           <button type="button" onClick={() => onChoose(formation.key, activeSsiapCourse, activeDirectorLocation)}>Me renseigner sur ce parcours <Arrow /></button>
           <button type="button" onClick={() => goToStep(0)}>{formation.key === 'director' ? 'Changer de lieu' : 'Changer de parcours'}</button>
         </div> : step === 1 ? <>
-          <div className={styles.miniOverview}><span className={styles.miniBadge}>{formationLabel}</span><span>{sessions.length} session{sessions.length > 1 ? 's' : ''} à venir</span></div>
+          <div className={styles.miniOverview}>
+            <span className={styles.miniBadge}>{formationLabel}</span>
+            <div className={styles.miniOverviewActions}>
+              <span>{sessions.length} session{sessions.length > 1 ? 's' : ''} à venir</span>
+              <button type="button" className={styles.miniAllDates} onClick={() => onChoose(formation.key, activeSsiapCourse, activeDirectorLocation)}>
+                Voir toutes les dates <Arrow />
+              </button>
+            </div>
+          </div>
           {formation.key === 'ssiap' && <button type="button" className={styles.previewCoursesLink} onClick={() => goToStep(0)}>Changer de parcours incendie</button>}
           {formation.key === 'director' && <button type="button" className={styles.previewCoursesLink} onClick={() => goToStep(0)}>Changer de lieu</button>}
           <div className={styles.miniMonthHeading}>

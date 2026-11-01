@@ -702,11 +702,6 @@ export function PlanningClient({ initialSessions, btsIntakeYear, initialLocation
     showFormationDates('director', null, location);
   }
 
-  function showCalendar() {
-    setView('calendar');
-    scrollToSessions();
-  }
-
   return (
     <main className={`${styles.page} pb-24`}>
       <section className={`${styles.hero} relative isolate overflow-hidden border-b border-academy-line/70 bg-[#f7f1e7] px-4 py-14 text-[#141820] sm:py-16 lg:py-20`}>
@@ -731,8 +726,8 @@ export function PlanningClient({ initialSessions, btsIntakeYear, initialLocation
                 Choisir ma formation
                 <Icon name="arrow" className="h-4 w-4 text-academy-gold" />
               </a>
-              <button type="button" onClick={showCalendar} className="inline-flex items-center justify-center gap-2 rounded-full border border-[#cfc3ae] bg-white/70 px-6 py-4 text-sm font-black text-[#141820] transition hover:-translate-y-0.5 hover:border-academy-gold">
-                Voir le calendrier
+              <button type="button" onClick={() => showFormationDates('all')} className="inline-flex items-center justify-center gap-2 rounded-full border border-[#cfc3ae] bg-white/70 px-6 py-4 text-sm font-black text-[#141820] transition hover:-translate-y-0.5 hover:border-academy-gold">
+                Voir toutes les dates
                 <Icon name="calendar" className="h-4 w-4 text-[#b9820a]" />
               </button>
             </div>
