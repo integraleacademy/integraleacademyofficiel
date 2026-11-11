@@ -30,10 +30,12 @@
 .requirementList { padding:0 28px 25px 30px; list-style:disc; color:#5a6570; font-size:14px; line-height:1.8; }
 .requirementList li + li { margin-top:8px; }
 .program :global([class*='programHours']) > strong,.program :global([class*='kicker']),.program :global([class*='programTabs']) > button > span:first-child { color:var(--course-accent); }
+.program :global([class*='programHours']) > strong { display:flex; align-items:baseline; gap:8px; }
+.program :global([class*='programHours']) > strong > span { margin-left:0; letter-spacing:-.02em; }
 .program :global([class*='programTabs']) > button[aria-selected='true'] { background:rgba(var(--course-rgb),.1); }
 .program :global([class*='programDetail']) { background:rgba(var(--course-rgb),.065); }
 .program :global([class*='programImage']) { aspect-ratio:1; width:190px; justify-self:center; background:white; padding:12px; }
-.program :global([class*='panelNavigation']) button { background:var(--course-accent); color:#fff; }
+.program :global([class*='panelNavigation']) button { background:var(--course-accent); color:#fff; padding:11px 17px; border-radius:999px; font-size:12px; }
 .program :global([class*='programTabs']) { max-height:none; }
 .evaluation h2 em { color:var(--course-pale); }
 .examGrid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:16px; }
