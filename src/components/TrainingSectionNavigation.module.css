@@ -20,6 +20,13 @@
   --nav-accent-shadow: rgba(5, 150, 105, .2);
 }
 
+.courseNav[data-theme='turquoise'] {
+  --nav-accent: #007484;
+  --nav-accent-soft: #ecfeff;
+  --nav-accent-border: #a5e5ec;
+  --nav-accent-shadow: rgba(0, 116, 132, .2);
+}
+
 .courseNav[data-theme='violet'] {
   --nav-accent: #7c3aed;
   --nav-accent-soft: #f5f3ff;
