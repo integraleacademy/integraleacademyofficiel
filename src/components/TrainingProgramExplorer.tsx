@@ -10,8 +10,8 @@ export type TrainingProgramUnit = {
   description?: string; items?: readonly string[];
 };
 
-export function TrainingProgramExplorer({ units, idPrefix, hours, overview, subtitle, facts, menuTitle, tabListLabel, illustration, nextLabel, restartLabel }: {
-  units: readonly TrainingProgramUnit[]; idPrefix: string; hours: string; overview: string;
+export function TrainingProgramExplorer({ units, idPrefix, hours, unitLabel = 'h', overview, subtitle, facts, menuTitle, tabListLabel, illustration, nextLabel, restartLabel }: {
+  units: readonly TrainingProgramUnit[]; idPrefix: string; hours: string; unitLabel?: string; overview: string;
   subtitle: string; facts: ReadonlyArray<readonly [string, string]>; menuTitle: string;
   tabListLabel: string; illustration: ManualIllustration; nextLabel: string; restartLabel: string;
 }) {
@@ -45,7 +45,7 @@ export function TrainingProgramExplorer({ units, idPrefix, hours, overview, subt
   return <div className={styles.program} data-program-explorer={idPrefix}>
     <div className={styles.programOverview}>
       <div className={styles.programSummary}>
-        <div className={styles.programHours}><strong>{hours}<span>h</span></strong><p>{overview}<br /><span>{subtitle}</span></p></div>
+        <div className={styles.programHours}><strong>{hours}<span>{unitLabel}</span></strong><p>{overview}<br /><span>{subtitle}</span></p></div>
         <dl>{facts.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>
       </div>
       <Image className={styles.programImage} src={illustration.src} alt={illustration.alt} width={1536} height={1024} sizes="(max-width: 550px) 90vw, 260px" />

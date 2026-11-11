@@ -14,7 +14,8 @@ type TrainingSectionNavigationProps = {
   items: readonly TrainingSectionNavigationItem[];
   registrationHref: string;
   registrationLabel?: string;
-  theme?: 'blue' | 'green' | 'violet' | 'orange' | 'red' | 'bts';
+  eyebrowLabel?: string;
+  theme?: 'blue' | 'green' | 'violet' | 'orange' | 'red' | 'bts' | 'turquoise';
   externalRegistration?: boolean;
   ariaLabel?: string;
 };
@@ -25,6 +26,7 @@ export function TrainingSectionNavigation({
   items,
   registrationHref,
   registrationLabel = 'Je m’inscris',
+  eyebrowLabel = 'Votre formation',
   theme = 'blue',
   externalRegistration = false,
   ariaLabel = `Sommaire de la formation ${title}`,
@@ -167,7 +169,7 @@ export function TrainingSectionNavigation({
         <a href={firstHref} className={styles.courseNavIdentity} onClick={() => setActiveHref(firstHref)}>
           <span className={styles.courseNavMark}>{mark}</span>
           <span className={styles.courseNavIdentityCopy}>
-            <span className={styles.courseNavKicker}>Votre formation</span>
+            <span className={styles.courseNavKicker}>{eyebrowLabel}</span>
             <strong className={styles.courseNavTitle}>{title}</strong>
           </span>
         </a>

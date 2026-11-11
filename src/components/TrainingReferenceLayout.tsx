@@ -9,7 +9,7 @@ import { TeamPortrait } from '@/components/TeamPortrait';
 import reference from './SsiapReferencePage.module.css';
 import styles from './TrainingReferenceLayout.module.css';
 
-type CourseTheme = 'red' | 'blue' | 'green' | 'orange';
+type CourseTheme = 'red' | 'blue' | 'green' | 'orange' | 'turquoise' | 'violet';
 type Action = { href: string; label: ReactNode; newTab?: boolean };
 
 /** The SSIAP 1 visual language, with each course's own content and accent. */
