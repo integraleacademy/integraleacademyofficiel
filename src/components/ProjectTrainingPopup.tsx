@@ -1,5 +1,7 @@
 'use client';
 
+import { isCertificationProjectPath } from '@/lib/certification-project-paths';
+
 import { TeamPortrait } from '@/components/TeamPortrait';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -15,7 +17,7 @@ export function ProjectTrainingPopup() {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    if (pathname === '/bts/mos' || pathname === '/' || pathname === '/ecole' || pathname === '/entreprises' || pathname === '/contact' || pathname === '/planning' || isFinancingPage) {
+    if (isCertificationProjectPath(pathname) || pathname === '/bts/mos' || pathname === '/' || pathname === '/ecole' || pathname === '/entreprises' || pathname === '/contact' || pathname === '/planning' || isFinancingPage) {
       return;
     }
 
@@ -32,7 +34,7 @@ export function ProjectTrainingPopup() {
     setIsOpen(false);
   }
 
-  if (pathname === '/bts/mos' || pathname === '/' || pathname === '/ecole' || pathname === '/entreprises' || pathname === '/contact' || pathname === '/planning' || isFinancingPage || !isOpen) {
+  if (isCertificationProjectPath(pathname) || pathname === '/bts/mos' || pathname === '/' || pathname === '/ecole' || pathname === '/entreprises' || pathname === '/contact' || pathname === '/planning' || isFinancingPage || !isOpen) {
     return null;
   }
 

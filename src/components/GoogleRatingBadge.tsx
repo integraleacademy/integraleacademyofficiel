@@ -1,5 +1,7 @@
 'use client';
 
+import { isCertificationProjectPath } from '@/lib/certification-project-paths';
+
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -29,7 +31,7 @@ export function GoogleRatingBadge(){
     return () => observer.disconnect();
   }, [pathname]);
 
-  if (footerIsVisible) {
+  if (isCertificationProjectPath(pathname) || footerIsVisible) {
     return null;
   }
 

@@ -1,5 +1,7 @@
 'use client';
 
+import { isCertificationProjectPath } from '@/lib/certification-project-paths';
+
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -27,7 +29,7 @@ export function hasDedicatedMobileCta(pathname: string) {
 export function GlobalMobileCTA() {
   const pathname = usePathname() || '/';
 
-  if (hasDedicatedMobileCta(pathname)) {
+  if (isCertificationProjectPath(pathname) || hasDedicatedMobileCta(pathname)) {
     return null;
   }
 
