@@ -27,9 +27,10 @@ export function TrainingProgramExplorer({ units, idPrefix, hours, overview, subt
     if (button && list) {
       const item = button.getBoundingClientRect();
       const viewport = list.getBoundingClientRect();
+      const displayScale = parseFloat(getComputedStyle(document.documentElement).zoom) || 1;
       list.scrollBy({
-        top: item.top < viewport.top ? item.top - viewport.top : Math.max(0, item.bottom - viewport.bottom),
-        left: item.left < viewport.left ? item.left - viewport.left : Math.max(0, item.right - viewport.right),
+        top: (item.top < viewport.top ? item.top - viewport.top : Math.max(0, item.bottom - viewport.bottom)) / displayScale,
+        left: (item.left < viewport.left ? item.left - viewport.left : Math.max(0, item.right - viewport.right)) / displayScale,
         behavior: 'instant',
       });
     }

@@ -42,9 +42,10 @@ export function TrainingJourney({ id, name, eyebrow, title, steps, continuationH
     const stage = stageRef.current;
     if (!section || !stage) return null;
     const rect = section.getBoundingClientRect();
+    const displayScale = parseFloat(getComputedStyle(document.documentElement).zoom) || 1;
     const top = parseFloat(getComputedStyle(stage).top) || 0;
-    const start = window.scrollY + rect.top - top;
-    return { start, end: start + rect.height - stage.offsetHeight };
+    const start = window.scrollY + rect.top - top * displayScale;
+    return { start, end: start + rect.height - stage.getBoundingClientRect().height };
   }, []);
 
   const scrollToStep = useCallback((index: number) => {

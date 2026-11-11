@@ -22,7 +22,7 @@ export function PageSectionNavigation({ chapters, label, ariaLabel }: {
     const previousHeight = parent?.style.getPropertyValue('--section-nav-height') ?? '';
     let frame = 0;
     const update = () => {
-      const threshold = (header?.getBoundingClientRect().height || 80) + node.offsetHeight + 70;
+      const threshold = (header?.getBoundingClientRect().height || 80) + node.getBoundingClientRect().height + 70;
       let current = chapters[0][0];
       for (const [id] of chapters) {
         const section = document.getElementById(id);
@@ -59,8 +59,9 @@ export function PageSectionNavigation({ chapters, label, ariaLabel }: {
     if (!inner || !link || inner.scrollWidth <= inner.clientWidth) return;
     const bounds = inner.getBoundingClientRect();
     const target = link.getBoundingClientRect();
-    if (target.left < bounds.left + 16) inner.scrollLeft += target.left - bounds.left - 16;
-    else if (target.right > bounds.right - 16) inner.scrollLeft += target.right - bounds.right + 16;
+    const displayScale = parseFloat(getComputedStyle(document.documentElement).zoom) || 1;
+    if (target.left < bounds.left + 16) inner.scrollLeft += (target.left - bounds.left - 16) / displayScale;
+    else if (target.right > bounds.right - 16) inner.scrollLeft += (target.right - bounds.right + 16) / displayScale;
   }, [active]);
 
   return <nav ref={nav} className={styles.navigation} aria-label={ariaLabel} data-page-section-navigation>

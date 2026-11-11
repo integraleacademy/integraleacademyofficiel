@@ -69,7 +69,9 @@ export function TrainingSectionNavigation({
       const target = sections.find((section) => `#${section.id}` === initialHash);
       if (!target) return;
 
-      const expectedTop = getAnchorOffset();
+      // CSS anchor margins use layout pixels; viewport coordinates include zoom.
+      const displayScale = Number.parseFloat(window.getComputedStyle(document.documentElement).zoom) || 1;
+      const expectedTop = getAnchorOffset() * displayScale;
       const currentTop = target.getBoundingClientRect().top;
       if (Math.abs(currentTop - expectedTop) < 2) return;
 

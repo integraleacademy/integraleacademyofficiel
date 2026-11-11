@@ -11,7 +11,7 @@ export function HomePageAnimations() {
     if (!root || !header) return;
 
     // Anchor offsets must follow the real menu height, including enlarged text.
-    const measure = () => root.style.setProperty('--home-header-height', `${header.getBoundingClientRect().height}px`);
+    const measure = () => root.style.setProperty('--home-header-height', `${header.offsetHeight}px`);
     measure();
     const observer = new ResizeObserver(measure);
     observer.observe(header);
