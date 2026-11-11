@@ -81,6 +81,7 @@
 .employmentNote { margin-top:20px; font-size:12px; line-height:1.7; color:#606b75; }
 .emailLink { display:block; color:var(--course-accent); font-size:13px; font-weight:750; margin:8px 0; }
 .legal { text-align:center; padding:24px max(24px,var(--site-gutter)); font-size:11px; line-height:1.8; border-top:1px solid #dfd9cd; background:#f0ebe2; color:#606b75; }
+:global(html.dark) .project :global([data-course-theme]) h2 em { color:var(--course-pale); }
 :global(html.dark) .missionCard,:global(html.dark) .pathways article,:global(html.dark) .jobs li { background:#18232f; border-color:#3a4959; color:#eef2f6; }
 :global(html.dark) :is(.role,.missionCard p,.audience > p,.pathways article > p:not(.kicker),.note,.accessibility p,.employmentNote,.requirementList,.identity p:not(.kicker),.status > p) { color:#c2cbd4; }
 :global(html.dark) :is(.kicker,.number,.audience span,.facts dd,.emailLink,.accessibility a) { color:var(--course-pale); }
