@@ -246,3 +246,18 @@
   .heroArtwork { width: 100%; max-width: 680px; margin-inline: auto; }
 }
 @media (max-width: 700px) { .sectionHead { grid-template-columns: minmax(0, 1fr); } }
+
+/* Shared by the course contact sections. Let the content grow naturally while
+   reducing the portrait and empty space on shorter desktop windows. */
+@media (min-width: 1024px) {
+  .contact { padding-block: var(--site-section-space); }
+  .contactGrid { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: clamp(32px, 4vw, 64px); }
+  .contactGrid > * { min-width: 0; }
+  .contactCard { width: 100%; max-width: 30rem; justify-self: end; gap: 8px; padding: clamp(20px, 3svh, 28px); border-radius: 24px; }
+  .contactCard .portrait { width: clamp(96px, 14svh, 128px); height: clamp(96px, 14svh, 128px); flex-shrink: 0; }
+  .contactCard .eyebrow { font-size: .6875rem; }
+  .contactCard h3 { font-size: clamp(1.75rem, 3.5svh, 2rem); line-height: 1.2; }
+  .contactCard .phone { padding-block: 6px; }
+  .contactCard .textLink { min-height: 44px; padding-block: 8px; }
+  .contact .supportPills { margin-top: 20px; }
+}

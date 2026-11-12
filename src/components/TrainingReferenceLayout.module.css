@@ -91,6 +91,9 @@
 @media (prefers-reduced-motion:reduce) { .action { transition:none; } }
 
 .portraitMedallion { padding:12px; border:1px solid #bfd3e7; box-shadow:0 0 0 9px #edf3f8; margin:10px 0 14px; animation:none; transform:none; }
+@media (min-width: 1024px) {
+  .portraitMedallion { padding: 9px; margin-block: 8px; box-shadow: 0 0 0 6px #edf3f8; }
+}
 .page .contact { background:radial-gradient(ellipse at 85% 50%,rgba(var(--course-rgb),.1),transparent 60%),#faf7f0; }
 .page .contact :global([class*='eyebrow']),.page .contact h2 em { color:var(--course-accent); }
 :global(html.dark) .page .contact { background:#111c28; }

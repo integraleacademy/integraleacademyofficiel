@@ -25,4 +25,9 @@
 .inner { width: var(--site-content-width); }
 .inner a { min-height: 44px; font-size: .875rem; }
 .inner > span { font-size: .75rem; }
+@media (min-width: 1024px) {
+  .scope { --section-nav-height: 58px; }
+  .inner { min-height: 56px; }
+  .inner a { padding-block: 10px; }
+}
 @media (max-width: 800px) { .inner { width: 100%; padding-inline: var(--site-gutter); } }
