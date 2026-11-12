@@ -7,6 +7,7 @@ const results=[];const errors=[];
 await mkdir('assistant-ui-artifacts',{recursive:true});
 const browser=await chromium.launch();
 let currentPage;
+async function watchPopup(page){await page.addLocatorHandler(page.locator('body:not(:has(dialog[open]))').getByRole('button',{name:'Fermer la fenêtre',exact:true}),async button=>{await button.click();});}
 async function dismiss(page){const close=page.getByRole('button',{name:'Fermer la fenêtre',exact:true});if(await close.isVisible())await close.click();}
 async function bounds(dialog,page,label){
  const m=await dialog.evaluate(el=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,right:r.right,bottom:r.bottom,width:r.width,height:r.height,viewport:[innerWidth,innerHeight],overflow:el.scrollWidth-el.clientWidth};});
@@ -42,7 +43,7 @@ async function course(page,key,path,viewport){
 }
 try{
  for(const viewport of [{width:1440,height:900},{width:390,height:844}]){
-  const context=await browser.newContext({viewport,colorScheme:'light'});const page=await context.newPage();page.on('pageerror',e=>errors.push({url:page.url(),message:e.message}));
+  const context=await browser.newContext({viewport,colorScheme:'light'});const page=await context.newPage();await watchPopup(page);page.on('pageerror',e=>errors.push({url:page.url(),message:e.message}));
   for(const [key,path]of courses)await course(page,key,path,viewport);
   await page.goto(base+'/',{waitUntil:'load',timeout:60000});await dismiss(page);
   await page.getByRole('button',{name:'Être conseillé',exact:true}).click();const dialog=page.locator('dialog[open]');
@@ -58,10 +59,11 @@ try{
   await context.close();
  }
  for(const viewport of [{width:320,height:740},{width:768,height:1024},{width:1280,height:600},{width:844,height:390}]){
-  const context=await browser.newContext({viewport,colorScheme:'light'});const page=await context.newPage();page.on('pageerror',e=>errors.push({url:page.url(),message:e.message}));await course(page,'aps','/formations-securite/aps',viewport);await context.close();
+  const context=await browser.newContext({viewport,colorScheme:'light'});const page=await context.newPage();await watchPopup(page);page.on('pageerror',e=>errors.push({url:page.url(),message:e.message}));await course(page,'aps','/formations-securite/aps',viewport);await context.close();
  }
- const context=await browser.newContext({viewport:{width:1440,height:900},colorScheme:'dark'});const page=await context.newPage();await course(page,'aps-dark','/formations-securite/aps',{width:1440,height:900});await context.close();
+ const context=await browser.newContext({viewport:{width:1440,height:900},colorScheme:'dark'});const page=await context.newPage();await watchPopup(page);await course(page,'aps-dark','/formations-securite/aps',{width:1440,height:900});await context.close();
  assert.deepEqual(errors,[],'Browser JavaScript errors');
  console.log(JSON.stringify({status:'passed',scenarios:results.length,errors}));
 }catch(error){if(currentPage&&!currentPage.isClosed()){await currentPage.screenshot({path:'assistant-ui-artifacts/failure.png'});console.error('PAGE STATE',await currentPage.locator('body').innerText().then(x=>x.slice(-5500)));}console.error(error);await writeFile('assistant-ui-artifacts/failure.txt',error.stack||String(error));throw error;}
 finally{await writeFile('assistant-ui-artifacts/report.json',JSON.stringify({results,errors},null,2));await browser.close();}
+
