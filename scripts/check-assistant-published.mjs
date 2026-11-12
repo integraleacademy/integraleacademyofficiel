@@ -7,7 +7,8 @@ const results=[];const errors=[];
 await mkdir('assistant-ui-artifacts',{recursive:true});
 const browser=await chromium.launch();
 let currentPage;
-async function watchPopup(page){await page.addLocatorHandler(page.locator('body:not(:has(dialog[open]))').getByRole('button',{name:'Fermer la fenêtre',exact:true}),async button=>{await button.click();});}
+const handledPopups=new WeakSet();
+async function watchPopup(page){await page.addLocatorHandler(page.locator('body:not(:has(dialog[open]))').getByRole('button',{name:'Fermer la fenêtre',exact:true}),async button=>{await button.click();handledPopups.add(page);});}
 async function bounds(dialog,page,label){
  const m=await dialog.evaluate(el=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,right:r.right,bottom:r.bottom,width:r.width,height:r.height,viewport:[innerWidth,innerHeight],overflow:el.scrollWidth-el.clientWidth};});
  assert.ok(m.x>=-1&&m.y>=-1&&m.right<=m.viewport[0]+1&&m.bottom<=m.viewport[1]+1,label+' out of viewport: '+JSON.stringify(m));
@@ -20,6 +21,7 @@ async function course(page,key,path,viewport){
  currentPage=page;
  const response=await page.goto(base+path,{waitUntil:'networkidle',timeout:60000});assert.ok(response.status()<400,path+' HTTP '+response.status());
  
+ if(!handledPopups.has(page))await page.waitForFunction(()=>document.querySelector('[aria-label="Fermer la fenêtre"]'),null,{timeout:5000});
  const trigger=page.getByRole('button',{name:/^Notre assistant va vous aider/}).first();await trigger.click();
  const dialog=page.locator('dialog[open]');await dialog.getByRole('heading',{name:'Comment pouvons-nous vous aider ?',exact:true}).waitFor();
  assert.equal(await dialog.locator('[data-assistant-design="compact"]').count(),1);
@@ -35,13 +37,13 @@ async function course(page,key,path,viewport){
  await enroll.click();await dialog.getByRole('heading',{name:'Préparons votre inscription',exact:true}).waitFor();
  const rdv=dialog.getByRole('link',{name:/Réserver un rendez-vous téléphonique/});assert.ok(await rdv.getAttribute('href'));
  await dialog.getByRole('button',{name:'Fermer l’assistant'}).click();await dialog.waitFor({state:'detached'});
- assert.ok(await trigger.evaluate(el=>el===document.activeElement),'focus restoration');
+ await page.waitForFunction(el=>el===document.activeElement,await trigger.elementHandle(),{timeout:2500}).catch(async error=>{console.error('FOCUS',await page.evaluate(()=>({active:document.activeElement?.outerHTML.slice(0,400),popup:Boolean(document.querySelector('[aria-label="Fermer la fenêtre"]')),dialog:Boolean(document.querySelector('dialog[open]'))})));throw error;});
  assert.notEqual(await page.evaluate(()=>document.body.style.overflow),'hidden');
  await trigger.click();await page.keyboard.press('Escape');await dialog.waitFor({state:'detached'});
  results.push({path,key,viewport,dimensions,status:'passed'});console.log('PASS',path,viewport.width,viewport.height);
 }
 try{
- for(const viewport of [{width:1440,height:900},{width:390,height:844}]){
+ for(const viewport of (process.env.ASSISTANT_BOUNDARIES_ONLY==='true'?[]:[{width:1440,height:900},{width:390,height:844}])){
   const context=await browser.newContext({viewport,colorScheme:'light'});const page=await context.newPage();await watchPopup(page);page.on('pageerror',e=>errors.push({url:page.url(),message:e.message}));
   for(const [key,path]of courses)await course(page,key,path,viewport);
   await page.goto(base+'/',{waitUntil:'load',timeout:60000});
