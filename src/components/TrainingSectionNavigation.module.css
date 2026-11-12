@@ -280,6 +280,9 @@
 .courseNavTitle { font-size: .9375rem; }
 .courseNavIdentity, .courseNavIdentityCopy { min-width: 0; }
 .courseNavTitle { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+@media (min-width: 1024px) {
+  .courseNav { padding-block: .35rem; }
+}
 @media (max-width: 1180px) { .courseNavLinks { justify-content: flex-start; } }
 @media (max-width: 767px) {
   .courseNav { padding-block: .5rem; }

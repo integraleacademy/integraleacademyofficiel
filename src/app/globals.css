@@ -67,14 +67,16 @@
     :root { --site-header-logo-height: 50px; }
   }
 
-  @media (min-width: 1280px) {
-    :root { --site-header-logo-height: calc(64px * var(--site-desktop-scale)); }
-  }
-
-  /* Keep the reference desktop proportions at every window height.
-     Scale display elements once; reading text and controls retain their native size. */
+  /* Keep reading text and content width stable. Display sizes and whitespace
+     also follow the window height, so a wide laptop is not treated as a tall monitor. */
   @media (min-width: 1024px) {
-    :root { --site-desktop-scale: .9; }
+    :root {
+      --site-desktop-scale: .9;
+      --site-header-logo-height: clamp(48px, 6svh, 54px);
+      --site-section-space: calc(clamp(2.5rem, min(4.5vw, 6svh), 5rem) * var(--site-desktop-scale));
+      --site-title-size: calc(clamp(2.75rem, min(1.7rem + 2.8vw, 7svh), 5rem) * var(--site-desktop-scale));
+      --site-heading-size: calc(clamp(2.25rem, min(1.3rem + 2vw, 5.4svh), 3.5rem) * var(--site-desktop-scale));
+    }
   }
 
   html { font-size: 100%; scroll-behavior: smooth; background: rgb(var(--background)); color: rgb(var(--text-main)); }
