@@ -44,7 +44,7 @@ try{
  for(const viewport of [{width:1440,height:900},{width:390,height:844}]){
   const context=await browser.newContext({viewport,colorScheme:'light'});const page=await context.newPage();page.on('pageerror',e=>errors.push({url:page.url(),message:e.message}));
   for(const [key,path]of courses)await course(page,key,path,viewport);
-  await page.goto(base+'/',{waitUntil:'networkidle'});await dismiss(page);
+  await page.goto(base+'/',{waitUntil:'load',timeout:60000});await dismiss(page);
   await page.getByRole('button',{name:'Être conseillé',exact:true}).click();const dialog=page.locator('dialog[open]');
   for(const label of ['Agent de sécurité privée (APS)','Agent de protection physique des personnes (A3P)','Dirigeant d’entreprise de sécurité (DESP)','Chauffeur VTC','Un BTS en alternance']){
    await dialog.getByRole('button',{name:label,exact:true}).click();await dialog.getByRole('heading',{name:'Les informations essentielles',exact:true}).waitFor();await bounds(dialog,page,label);
