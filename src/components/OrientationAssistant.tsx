@@ -11,6 +11,7 @@ import { securityFormations } from '@/data/formations';
 import { ssiap2Config, ssiap3Config } from '@/data/ssiap-catalogue';
 import { despVaeAdmin } from '@/data/despVae';
 import { createPortal } from 'react-dom';
+import styles from './OrientationAssistant.module.css';
 
 export type FormationKey = 'aps' | 'a3p' | 'desp' | 'desp-vae' | 'sst' | 'ssiap-1' | 'ssiap-2' | 'ssiap-3' | 'vtc' | 'bts';
 type Step = 'formations' | 'loading' | 'formation-result' | 2 | 3 | 4;
@@ -49,6 +50,17 @@ const contextualFormations: AssistantFormation[] = [
 ];
 const allFormations = [...formations, ...contextualFormations];
 
+function AssistantIcon({name}:{name:'assistant' | 'book' | 'calendar' | 'arrow' | 'close' | 'check'}) {
+  return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    {name === 'assistant' && <><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8v.5Z"/><path d="M8 10h8M8 14h5"/></>}
+    {name === 'book' && <><path d="M12 5v15M12 5C8 3 5 3 2 4v15c3-1 6-1 10 1 4-2 7-2 10-1V4c-3-1-6-1-10 1Z"/></>}
+    {name === 'calendar' && <><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18m-13 5 3 3 5-5"/></>}
+    {name === 'arrow' && <path d="M5 12h14m-6-6 6 6-6 6"/>}
+    {name === 'close' && <path d="m6 6 12 12M6 18 18 6"/>}
+    {name === 'check' && <><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></>}
+  </svg>;
+}
+
 type AssistantFormationDetails = { title: string; shortLabel: string; sessionSlugs: string[]; price: string; keyPoints: string[]; capacity?: number };
 
 const formationDetails: Record<FormationKey, AssistantFormationDetails> = {
@@ -78,6 +90,7 @@ type OrientationAssistantProps = {
 export function OrientationAssistant({initialFormationKey, initialStep, hideInfoAction = false, variant = 'default', triggerLabel = 'Notre assistant va vous aider', triggerDescription: customTriggerDescription, triggerAppearance = 'card', triggerClassName}: OrientationAssistantProps = {}){
   const pathname = usePathname();
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const inlinePanelRef = useRef<HTMLElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const dialogId = useId();
   const [isOpen, setIsOpen] = useState(true);
@@ -122,7 +135,7 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
   }, []);
 
   useEffect(() => {
-    if (!isModalVariant || !isExpanded || !isMounted) return;
+    if (!isExpanded || !isMounted) return;
     const dialog = dialogRef.current;
     if (!dialog) return;
     const previousOverflow = document.body.style.overflow;
@@ -131,9 +144,10 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
     return () => {
       dialog.close();
       document.body.style.overflow = previousOverflow;
-      triggerRef.current?.focus();
+      const focusTarget = triggerRef.current?.isConnected ? triggerRef.current : inlinePanelRef.current?.querySelector<HTMLButtonElement>('button:not([aria-label])');
+      focusTarget?.focus();
     };
-  }, [isModalVariant, isExpanded, isMounted]);
+  }, [isExpanded, isMounted]);
 
   function chooseFormation(key: FormationKey){
     if (loadingTimeoutRef.current) window.clearTimeout(loadingTimeoutRef.current);
@@ -165,8 +179,8 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
       setDespExperience(null);
       return;
     }
-    setSelectedKey(null);
-    setStep('formations');
+    setSelectedKey(initialFormationKey ?? null);
+    setStep(initialFormationKey ? 2 : 'formations');
   }
 
   function minimizeAssistant(){
@@ -211,40 +225,54 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
     </div>
   </aside>;
 
-  const assistantPanel = <aside className={`orientation-assistant relative mx-auto w-full overflow-hidden rounded-[1.5rem] border border-white/70 bg-white/95 p-4 text-academy-ink shadow-[0_28px_90px_rgba(17,17,17,.16)] ring-1 ring-academy-line backdrop-blur reveal sm:rounded-[2rem] sm:p-5 ${isExpanded ? 'flex max-h-[90vh] w-[calc(100vw-24px)] flex-col sm:p-6 md:max-h-[88vh] md:w-[min(1120px,calc(100vw-96px))] md:max-w-none' : 'max-w-xl'}`} aria-label="Assistant d’orientation formation">
-    <div className="absolute -right-16 -top-16 h-40 w-40 rounded-full bg-academy-gold/30 blur-3xl" aria-hidden="true"/>
-    <div className={isExpanded ? 'relative flex min-h-0 flex-1 flex-col' : 'relative'}>
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <p className="inline-flex items-center gap-2 rounded-full border border-academy-gold/30 bg-academy-gold/10 px-3 py-1.5 text-xs font-black uppercase tracking-[.18em] text-yellow-700"><span className="status-dot" aria-hidden="true" />Notre assistant est disponible</p>
-          <h2 className="mt-2 text-2xl font-black tracking-tight sm:text-3xl">Notre assistant va vous aider</h2>
-          <p className="mt-2 text-sm font-medium leading-6 text-stone-600">{step === 'formations' ? 'Je souhaite des renseignements concernant la formation :' : selectedFormation?.label}</p>
+  const assistantTitle = step === 'formations' ? 'Quelle formation vous intéresse ?'
+    : step === 2 ? 'Comment pouvons-nous vous aider ?'
+    : step === 3 ? 'Préparons votre inscription'
+    : step === 4 ? 'Trouvons le bon parcours'
+    : step === 'loading' ? 'Votre projet de formation' : 'Les informations essentielles';
+
+  const assistantPanel = <aside ref={isExpanded ? undefined : inlinePanelRef} className={`orientation-assistant ${styles.panel} ${isExpanded ? styles.expanded : styles.embedded}`} aria-label="Assistant d’orientation formation" data-assistant-design="compact">
+      <div className={styles.topline}>
+        <div className={styles.identity}>
+          <span className={styles.assistantIcon}><AssistantIcon name="assistant" /></span>
+          <div><p className={styles.brand}>Intégrale Academy</p><p className={styles.assistantName}>Votre assistant formation</p></div>
         </div>
-        <button type="button" onClick={minimizeAssistant} className={isExpanded ? 'shrink-0 rounded-full border border-academy-line bg-white px-4 py-2 text-sm font-black text-stone-600 transition hover:bg-stone-50 hover:text-academy-ink' : 'grid h-10 w-10 shrink-0 place-items-center rounded-full border border-academy-line bg-white text-lg font-black text-stone-500 transition hover:bg-stone-50 hover:text-academy-ink'} aria-label={isModalVariant ? 'Fermer l’assistant' : 'Réduire l’assistant'}>{isModalVariant ? 'Fermer ×' : isExpanded ? 'Réduire' : '×'}</button>
+        <button type="button" onClick={minimizeAssistant} className={styles.close} aria-label={isExpanded || isModalVariant ? 'Fermer l’assistant' : 'Réduire l’assistant'}><AssistantIcon name="close" /></button>
       </div>
 
+      <div className={styles.content}>
+        <div className={styles.heading}>
+          {selectedFormation && <p className={styles.course}><span aria-hidden="true" />{selectedFormation.label}</p>}
+          <h2 id={`${dialogId}-title`}>{assistantTitle}</h2>
+          {(step === 'formations' || step === 2) && <p className={styles.intro}>Les bonnes informations pour avancer dans votre projet.</p>}
+        </div>
 
-      <div className={isExpanded ? 'mt-5 min-h-0 min-w-0 flex-1 overflow-x-hidden overflow-y-auto px-1 pb-1 transition-all duration-300' : 'mt-6 transition-all duration-300'}>
-        {step === 'formations' && <div className="grid gap-3">
-          {formations.map((formation) => <button key={formation.key} type="button" onClick={() => chooseFormation(formation.key)} className="group flex w-full items-center gap-3 rounded-2xl border border-academy-line bg-white p-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-academy-gold hover:shadow-gold active:translate-y-0">
-            <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-academy-bg text-lg font-black text-yellow-700 transition group-hover:bg-academy-ink group-hover:text-academy-gold" aria-hidden="true">{formation.icon}</span>
-            <span className="flex-1 text-sm font-black leading-5 sm:text-base">{formation.label}</span>
-            <span className="text-yellow-700 transition group-hover:translate-x-1" aria-hidden="true">→</span>
+        {step === 'formations' && <div className={styles.formationList}>
+          {formations.map((formation) => <button key={formation.key} type="button" onClick={() => chooseFormation(formation.key)} className={styles.formationOption}>
+            <span className={styles.optionIcon}><AssistantIcon name="book" /></span>
+            <span>{formation.label}</span>
+            <AssistantIcon name="arrow" />
           </button>)}
         </div>}
 
 
         {step === 'loading' && selectedFormation && <FormationAssistantLoading formation={selectedFormation} />}
 
-        {step === 'formation-result' && selectedFormation && <FormationAssistantResult formation={selectedFormation} sessions={sessions} onBack={() => { setSelectedKey(null); setStep('formations'); }} hideInfoAction={shouldHideInfoAction} isExpanded={isExpanded} />}
+        {step === 'formation-result' && selectedFormation && <FormationAssistantResult formation={selectedFormation} sessions={sessions} hideInfoAction={shouldHideInfoAction} isExpanded={isExpanded} />}
 
-        {step === 2 && selectedFormation && <div className="space-y-4">
-          <h3 className="text-xl font-black">Que souhaitez-vous faire&nbsp;?</h3>
-          <div className={`grid gap-3 ${shouldHideInfoAction ? '' : 'sm:grid-cols-2'}`}>
-            {shouldHideInfoAction && <button type="button" onClick={() => startFormationInformation()} className={`group relative flex min-h-24 flex-col justify-between overflow-hidden rounded-2xl bg-gradient-to-r from-academy-gold via-yellow-300 to-academy-gold p-5 text-left font-black text-academy-gold-text shadow-gold ring-2 ring-academy-gold/45 transition hover:-translate-y-1 hover:shadow-[0_22px_55px_rgba(180,124,31,.38)] focus:outline-none focus:ring-4 focus:ring-academy-gold/35 ${variant === 'modalTrigger' ? '' : 'motion-safe:animate-[rdvButtonPulse_2.4s_ease-in-out_infinite]'}`}><span className="relative z-10">Je souhaite connaître les informations essentielles</span><span className="relative z-10 text-sm text-academy-ink/75">Tarif, prochaine date, durée et financement →</span><span className="absolute inset-y-0 -left-1/2 w-1/2 skew-x-[-18deg] bg-white/35 motion-safe:animate-[rdvButtonShine_2.4s_ease-in-out_infinite]" aria-hidden="true" /></button>}
-            {!shouldHideInfoAction && <button type="button" onClick={() => startFormationInformation()} className="flex min-h-24 flex-col justify-between rounded-2xl border border-academy-line bg-white p-5 text-left font-black shadow-sm transition hover:-translate-y-0.5 hover:border-academy-gold hover:shadow-gold"><span>Je veux en savoir plus</span><span className="text-sm text-yellow-700">Voir la réponse assistant →</span></button>}
-            <button type="button" onClick={() => { setIsExpanded(true); setStep(3); }} className="flex min-h-24 flex-col justify-between rounded-2xl bg-academy-ink p-5 text-left font-black text-white shadow-soft transition hover:-translate-y-0.5 hover:bg-black active:translate-y-0"><span>Je souhaite m’inscrire</span><span className="text-sm text-academy-gold">Préparer mon rendez-vous →</span></button>
-          </div>
+        {step === 2 && selectedFormation && <div className={styles.choices}>
+          <button type="button" onClick={() => startFormationInformation()} className={styles.choice}>
+            <span className={styles.optionIcon}><AssistantIcon name="book" /></span>
+            <span className={styles.choiceTitle}>Me renseigner</span>
+            <span className={styles.choiceDescription}>Tarifs, prochaines dates,<br />durée et financements.</span>
+            <span className={styles.choiceAction}>Voir les informations <AssistantIcon name="arrow" /></span>
+          </button>
+          <button type="button" onClick={() => { setIsExpanded(true); setStep(3); }} className={`${styles.choice} ${styles.enroll}`}>
+            <span className={styles.optionIcon}><AssistantIcon name="calendar" /></span>
+            <span className={styles.choiceTitle}>Préparer mon inscription</span>
+            <span className={styles.choiceDescription}>Être accompagné pour<br />rejoindre la formation.</span>
+            <span className={styles.choiceAction}>Préparer mon rendez-vous <AssistantIcon name="arrow" /></span>
+          </button>
         </div>}
 
 
@@ -264,19 +292,27 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
           {despExperience === false && <DespActionGrid />}
         </div>}
 
-        {step === 3 && selectedFormation && <div className="rounded-[1.35rem] bg-academy-bg p-5">
-          <h3 className="text-xl font-black">Parfait, nous pouvons vous rappeler</h3>
-          <p className="mt-3 text-sm leading-7 text-stone-600">Nous vérifierons votre projet, vos financements possibles et les prochaines dates disponibles.</p>
-          <div className="mt-5 grid gap-3"><Link href={selectedFormation.rdvUrl} className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-academy-gold via-yellow-300 to-academy-gold px-5 py-3 text-sm font-black text-academy-ink shadow-gold transition hover:-translate-y-0.5">Réserver un rendez-vous téléphonique</Link>{!shouldHideInfoAction && <Link href={selectedFormation.infoUrl} className="inline-flex items-center justify-center rounded-full bg-white px-5 py-3 text-sm font-black text-academy-ink ring-1 ring-academy-line transition hover:-translate-y-0.5 hover:bg-stone-50">Voir d’abord les informations</Link>}</div>
+        {step === 3 && selectedFormation && <div className={styles.nextStep}>
+          <span className={styles.optionIcon}><AssistantIcon name="calendar" /></span>
+          <h3>Faisons le point ensemble</h3>
+          <p>Notre équipe vous accompagne pour vérifier votre projet, vos financements possibles et les prochaines dates disponibles.</p>
+          <div className={styles.actions}><Link href={selectedFormation.rdvUrl} className={styles.primaryAction}>Réserver un rendez-vous téléphonique <AssistantIcon name="arrow" /></Link>{!shouldHideInfoAction && <Link href={selectedFormation.infoUrl} className={styles.secondaryAction}>Voir d’abord les informations</Link>}</div>
         </div>}
 
-        <div className={isExpanded ? 'pb-1 pt-4' : ''}>
-          {step !== 'formations' && step !== 2 && <button type="button" onClick={goBack} className="inline-flex items-center gap-2 rounded-full px-1 py-2 text-sm font-black text-stone-600 transition hover:text-yellow-700"><span aria-hidden="true">←</span> Retour</button>}
-          <p className={`${step !== 'formations' && step !== 2 ? 'mt-3' : ''} rounded-2xl bg-green-50 px-4 py-3 text-center text-xs font-black text-green-800`}>Réponse rapide • Conseils personnalisés • Financements possibles</p>
-        </div>
+        {step !== 'formations' && step !== 2 && <button type="button" onClick={goBack} className={styles.back}><span aria-hidden="true">←</span> {initialFormationKey ? 'Retour aux choix' : 'Retour aux formations'}</button>}
+        <p className={styles.footer}><AssistantIcon name="check" /><span>Un accompagnement à chaque étape de votre projet.</span></p>
       </div>
-    </div>
   </aside>;
+
+  const assistantDialog = isExpanded && isMounted ? createPortal(
+    <dialog ref={dialogRef} id={dialogId} aria-labelledby={`${dialogId}-title`} data-wide={step === 'formation-result'} onCancel={() => resetAssistantState()} onClick={(event) => {
+      if (event.target !== event.currentTarget) return;
+      const rect = event.currentTarget.getBoundingClientRect();
+      if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) resetAssistantState();
+    }} className={styles.dialog}>
+      {assistantPanel}
+    </dialog>, document.body
+  ) : null;
 
   if (isModalVariant) {
     const triggerTheme = !initialFormationKey ? 'gold' : initialFormationKey === 'a3p' || initialFormationKey === 'sst' ? 'green' : initialFormationKey?.startsWith('desp') ? 'orange' : initialFormationKey?.startsWith('ssiap') ? 'red' : 'blue';
@@ -296,21 +332,12 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
         <svg className={`h-5 w-5 shrink-0 ${triggerStyles.arrow}`} viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
         </>}
       </button>}
-      {isExpanded && isMounted && createPortal(
-        <dialog ref={dialogRef} id={dialogId} aria-label="Notre assistant va vous aider" onCancel={() => resetAssistantState()} onClick={(event) => {
-          if (event.target !== event.currentTarget) return;
-          const rect = event.currentTarget.getBoundingClientRect();
-          if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) resetAssistantState();
-        }} className="m-auto max-h-[calc(100dvh-24px)] max-w-[calc(100vw-24px)] overflow-visible rounded-[2rem] border-0 bg-transparent p-0 backdrop:bg-slate-950/60 backdrop:backdrop-blur-sm">
-          {assistantPanel}
-        </dialog>, document.body
-      )}
+      {assistantDialog}
     </>;
   }
 
   if (isExpanded) {
-    const expandedPanel = <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-academy-ink/45 p-3 backdrop-blur-sm sm:p-6" role="presentation">{assistantPanel}</div>;
-    return isMounted && typeof document !== 'undefined' ? createPortal(expandedPanel, document.body) : expandedPanel;
+    return assistantDialog;
   }
 
   return assistantPanel;
@@ -318,7 +345,7 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
 
 
 function FormationAssistantLoading({formation}:{formation:AssistantFormation}){
-  return <div className="overflow-hidden rounded-[1.35rem] border border-academy-gold/25 bg-gradient-to-br from-white via-[#FFFBF2] to-academy-bg p-5 shadow-soft" role="status" aria-live="polite">
+  return <div className={styles.loading} role="status" aria-live="polite">
     <div className="flex items-center gap-3">
       <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-academy-gold/15 text-xl" aria-hidden="true">{formation.icon}</span>
       <div><h3 className="text-lg font-black">Je recherche les informations sur la formation {formationDetails[formation.key].shortLabel}</h3><div className="mt-2 flex gap-1" aria-hidden="true">{[0,1,2].map(index => <span key={index} className="h-2 w-2 rounded-full bg-academy-gold motion-safe:animate-pulse" style={{ animationDelay: `${index * 160}ms` }} />)}</div></div>
@@ -327,19 +354,19 @@ function FormationAssistantLoading({formation}:{formation:AssistantFormation}){
   </div>;
 }
 
-function FormationAssistantResult({formation,sessions,onBack,hideInfoAction=false,isExpanded=false}:{formation:AssistantFormation;sessions:AssistantSession[];onBack:()=>void;hideInfoAction?:boolean;isExpanded?:boolean}){
+function FormationAssistantResult({formation,sessions,hideInfoAction=false,isExpanded=false}:{formation:AssistantFormation;sessions:AssistantSession[];hideInfoAction?:boolean;isExpanded?:boolean}){
   const details = formationDetails[formation.key];
   const upcomingSessions = sessions.filter(session => Boolean(session.training?.slug && details.sessionSlugs.includes(session.training.slug))).sort((a,b) => +new Date(a.startDate) - +new Date(b.startDate)).slice(0, 1);
-  return <div className="space-y-3 rounded-[1.35rem] border border-academy-gold/25 bg-gradient-to-br from-white via-[#FFFBF2] to-academy-bg p-4 shadow-soft sm:p-5">
-    <div><p className="text-xs font-black uppercase tracking-[.22em] text-academy-gold">Réponse assistant IA</p><h3 className="mt-1 text-xl font-black tracking-tight sm:text-2xl">{details.title}</h3><p className="mt-2 text-sm font-semibold leading-6 text-stone-600">Voici les informations clés concernant cette formation chez Intégrale Academy.</p></div>
-    <div className={`grid gap-2 ${isExpanded ? 'lg:grid-cols-[minmax(0,1fr)_280px]' : ''}`}>
-      <div className="rounded-2xl border border-academy-line bg-white/85 p-3"><p className="text-sm font-black">Informations clés</p><ul className="mt-2 space-y-1 text-xs font-semibold leading-5 text-stone-600 sm:text-sm">{details.keyPoints.map(point => <li key={point} className="flex gap-2"><span className="text-academy-gold" aria-hidden="true">✓</span><span>{point}</span></li>)}</ul></div>
-      <div className={`rounded-2xl border border-academy-line bg-white/85 p-3 ${isExpanded ? 'lg:flex lg:flex-col lg:justify-center' : ''}`}><span className="block text-[10px] font-black uppercase tracking-[.15em] text-academy-muted/70">{['aps', 'a3p', 'desp', 'desp-initial', 'desp-vae'].includes(formation.key) ? 'Tarif 2027' : 'Tarif'}</span><span className="text-lg font-black text-academy-ink">{details.price}</span></div>
+  return <div className={styles.result}>
+    <div className={styles.resultIntro}><h3>{details.title}</h3><p>Voici les informations clés concernant cette formation chez Intégrale Academy.</p></div>
+    <div className={styles.resultGrid} data-expanded={isExpanded}>
+      <div className={styles.keyPoints}><h4>Informations clés</h4><ul>{details.keyPoints.map(point => <li key={point}><span aria-hidden="true">✓</span><span>{point}</span></li>)}</ul></div>
+      <div className={styles.price}><span>{['aps', 'a3p', 'desp', 'desp-initial', 'desp-vae'].includes(formation.key) ? 'Tarif 2027' : 'Tarif'}</span><strong>{details.price}</strong></div>
     </div>
     <div><p className="font-black">Prochaine formation</p>{upcomingSessions.length ? <div className="mt-3 grid gap-3">{upcomingSessions.map(session => { const seatAvailability = getSessionSeatAvailability(session, details.capacity ?? 12); return <div key={session.id} className="rounded-2xl border border-academy-line bg-white p-3 shadow-sm"><div className="grid gap-3 sm:grid-cols-3"><p><span className="block text-[10px] font-black uppercase tracking-[.15em] text-academy-muted/70">Début</span><span className="font-black">{formatSessionDate(session.startDate)}</span></p><p><span className="block text-[10px] font-black uppercase tracking-[.15em] text-academy-muted/70">Fin</span><span className="font-black">{formatSessionDate(session.endDate)}</span></p><p><span className="block text-[10px] font-black uppercase tracking-[.15em] text-academy-muted/70">Examen</span><span className="font-black">{session.examDate ? formatSessionDate(session.examDate) : 'À confirmer'}</span></p></div><p className={`mt-3 inline-flex rounded-full px-3 py-1 text-xs font-black ${seatAvailability.badgeClassName}`}>{seatAvailability.label}</p></div>; })}</div> : <p className="mt-3 rounded-2xl border border-dashed border-academy-line bg-white/70 p-4 text-sm font-bold text-academy-muted">La prochaine date est à confirmer avec notre équipe.</p>}
       <p className="mt-2 text-xs font-bold leading-5 text-stone-600">Consultez toutes les dates en <Link href={`/planning?formation=${formation.key}`} className="font-black text-yellow-700 underline decoration-academy-gold/50 underline-offset-4 hover:text-academy-ink">cliquant ici</Link>.</p>
     </div>
-    <div className="grid gap-3"><Link href={`/contact?formation=${formation.key}&type=inscription`} className="group relative inline-flex min-h-14 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-r from-academy-gold via-yellow-300 to-academy-gold px-5 py-3 text-center text-sm font-black text-academy-gold-text shadow-gold ring-2 ring-academy-gold/45 transition hover:-translate-y-1"><span className="relative z-10">Je souhaite m’inscrire</span></Link><div className={`grid gap-3 ${hideInfoAction ? '' : 'sm:grid-cols-2'}`}>{!hideInfoAction && <Link href={formation.infoUrl} className="inline-flex min-h-12 items-center justify-center rounded-full bg-academy-ink px-5 py-3 text-center text-sm font-black text-white shadow-soft transition hover:-translate-y-0.5 hover:bg-black">Je souhaite en savoir plus</Link>}<button type="button" onClick={onBack} className="inline-flex min-h-12 items-center justify-center rounded-full border border-academy-line bg-white px-5 py-3 text-sm font-black text-academy-ink transition hover:-translate-y-0.5 hover:border-academy-gold">Retour aux formations</button></div></div>
+    <div className={styles.actions}><Link href={`/contact?formation=${formation.key}&type=inscription`} className={styles.primaryAction}>Préparer mon inscription <AssistantIcon name="arrow" /></Link>{!hideInfoAction && <Link href={formation.infoUrl} className={styles.secondaryAction}>Découvrir la formation</Link>}</div>
   </div>;
 }
 
