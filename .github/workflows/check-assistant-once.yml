@@ -1,0 +1,29 @@
+name: Contrôle ponctuel de l’assistant publié
+on:
+  push:
+    branches: [codex/verify-assistant-20261112]
+permissions:
+  contents: read
+jobs:
+  browser-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Installer le navigateur de contrôle
+        run: |
+          mkdir -p .ui-check
+          npm install --prefix .ui-check --no-save playwright
+          .ui-check/node_modules/.bin/playwright install --with-deps chromium
+          cp scripts/check-assistant-published.mjs .ui-check/check.mjs
+      - name: Vérifier les parcours sur ordinateur et mobile
+        run: node .ui-check/check.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: assistant-ui-verification
+          path: assistant-ui-artifacts
+          retention-days: 7
