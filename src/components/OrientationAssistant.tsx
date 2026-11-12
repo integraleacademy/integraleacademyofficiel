@@ -264,13 +264,13 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
           <button type="button" onClick={() => startFormationInformation()} className={styles.choice}>
             <span className={styles.optionIcon}><AssistantIcon name="book" /></span>
             <span className={styles.choiceTitle}>Me renseigner</span>
-            <span className={styles.choiceDescription}>Tarifs, prochaines dates,<br />durée et financements.</span>
+            <span className={styles.choiceDescription}>Tarifs, prochaines dates, <br />durée et financements.</span>
             <span className={styles.choiceAction}>Voir les informations <AssistantIcon name="arrow" /></span>
           </button>
           <button type="button" onClick={() => { setIsExpanded(true); setStep(3); }} className={`${styles.choice} ${styles.enroll}`}>
             <span className={styles.optionIcon}><AssistantIcon name="calendar" /></span>
             <span className={styles.choiceTitle}>Préparer mon inscription</span>
-            <span className={styles.choiceDescription}>Être accompagné pour<br />rejoindre la formation.</span>
+            <span className={styles.choiceDescription}>Être accompagné pour <br />rejoindre la formation.</span>
             <span className={styles.choiceAction}>Préparer mon rendez-vous <AssistantIcon name="arrow" /></span>
           </button>
         </div>}
