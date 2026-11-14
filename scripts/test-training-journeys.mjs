@@ -42,6 +42,15 @@ try {
       });
       assert.ok(Math.abs(layout.top - positions.top) < 3, route + ' étape ' + step + ' hors du point d’arrêt');
       assert.ok(layout.gap >= -1 && layout.gap <= 48, route + ' espace sous le bloc ' + layout.gap);
+      if (step === 3) {
+        const offset = await journey.evaluate(section => {
+          const visual = section.querySelector('li[data-current="true"] [data-scene]');
+          const title = visual.querySelector('[data-practice-title]');
+          const sheet = visual.querySelector('[data-practice-sheet]');
+          return title && sheet ? Math.abs(title.getBoundingClientRect().top - sheet.getBoundingClientRect().top) : 0;
+        });
+        assert.ok(offset <= 24, route + ' alignement du titre et des exercices ' + offset);
+      }
     }
     const exit = positions.start + positions.travel + 120;
     await page.mouse.wheel(0, exit - await page.evaluate(() => scrollY));

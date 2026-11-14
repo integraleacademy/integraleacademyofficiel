@@ -68,8 +68,8 @@ function JourneyCard({ config, index, onNext }: { config: CourseJourneyConfig; i
     const card = config.practice;
     return <div className={`${styles.card} ${styles.practiceCard}`}>
       <CardHeader label={step.label} />
-      <p className={styles.practiceTitle}>{card.heading[0]}<br /><span>{card.heading[1]}</span></p>
-      <div className={styles.practiceSheet}>
+      <p data-practice-title className={styles.practiceTitle}>{card.heading[0]}<br /><span>{card.heading[1]}</span></p>
+      <div data-practice-sheet className={styles.practiceSheet}>
         <div className={styles.sheetHeader}><p className={styles.eyebrow}>{card.eyebrow}</p><Arrow rise /></div>
         <ol>{card.rows.map((row, i) => <li key={row.title}><span className={styles.rowNumber}>0{i + 1}</span><div><strong>{row.title}</strong><p>{row.text}</p></div></li>)}</ol>
       </div>

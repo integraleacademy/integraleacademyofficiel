@@ -179,10 +179,15 @@
   .panelMetric { gap: 6px; }
   .panelMetric > strong { font-size: clamp(30px, 4.6cqi, 40px); }
   .skills { margin: 0 0 22px; }
-  .practiceCard { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); grid-template-rows: auto 1fr auto auto; column-gap: 24px; }
+  .practiceCard {
+    display: grid;
+    grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+    grid-template-rows: auto auto 1fr auto;
+    column-gap: 24px;
+  }
   .practiceCard .cardHeader, .practiceCard .cardAction { grid-column: 1 / -1; }
-  .practiceTitle { grid-column: 1; align-self: end; margin: 20px 0; font-size: clamp(30px, 4.6cqi, 40px); }
-  .practiceSheet { grid-column: 2; grid-row: 2 / 4; align-self: center; margin: 20px 0; padding: 16px; }
+  .practiceTitle { grid-column: 1; align-self: start; margin: 20px 0 10px; font-size: clamp(30px, 4.6cqi, 40px); }
+  .practiceSheet { grid-column: 2; grid-row: 2 / 4; align-self: start; margin: 20px 0; padding: 16px; }
   .practiceNote { grid-column: 1; align-self: start; margin: 0 0 24px; }
   .outcomeCard { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: auto auto 1fr auto auto; column-gap: 24px; }
   .outcomeCard .cardHeader, .outcomeCard .validationNote, .outcomeCard .cardAction { grid-column: 1 / -1; }
