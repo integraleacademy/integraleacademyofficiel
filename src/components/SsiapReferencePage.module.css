@@ -48,7 +48,7 @@
 .missionImage img { display:block; width:100%; height:100%; min-height:310px; object-fit:cover; }
 .missionCopy { padding:35px 42px; display:flex; flex-direction:column; align-items:flex-start; justify-content:center; }
 .missionNumber { color:#bc4146; font-size:12px; letter-spacing:.17em; font-weight:800; padding-bottom:13px; }
-.mission:nth-child(2) .missionNumber { color:#fbb8ad; }
+.mission:nth-child(2) .missionNumber { color:var(--course-pale, #fbb8ad); }
 .missionCopy h3 { font-size:clamp(24px,2.7vw,36px); letter-spacing:-.04em; line-height:1.13; font-weight:800; }
 .missionCopy > p { margin-top:18px; font-size:16px; line-height:1.8; color:#62656c; }
 .missionCopy > a { margin-top:16px; }
