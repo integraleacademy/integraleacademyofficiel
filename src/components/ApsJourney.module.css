@@ -183,13 +183,13 @@
 }
 
 /* Spread the content across wide rectangles; narrow screens keep portrait cards. */
-@container (min-width: 650px) {
+@container (width >= 560px) {
   .card { aspect-ratio: 3 / 2; min-height: 0; padding: 26px 30px; border-radius: 36px; }
   .ambitionTitle { font-size: clamp(40px, 6.7cqi, 58px); }
   .ambitionBody { padding: 20px 0; }
-  .trainingCard { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); grid-template-rows: auto 1fr auto auto; column-gap: 24px; }
+  .trainingCard { display: grid; aspect-ratio: auto; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); column-gap: 24px; }
   .trainingCard .cardHeader, .trainingCard .learningSkills, .trainingCard .cardAction { grid-column: 1 / -1; }
-  .durationHeadline { align-self: center; flex-wrap: wrap; gap: 16px; margin: 20px 0; }
+  .durationHeadline { align-self: center; gap: 16px; margin: 20px 0; }
   .durationHeadline > strong { font-size: clamp(80px, 12cqi, 104px); }
   .studyPlan { align-self: center; gap: 10px; margin: 20px 0; }
   .studyPlan > div { padding: 16px 12px; }
@@ -197,13 +197,20 @@
   .studyPlan p { gap: 10px; }
   .studyPlan p > strong { font-size: 48px; }
   .learningSkills { margin: 0 0 22px; }
-  .practiceCard { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); grid-template-rows: auto 1fr auto auto auto; column-gap: 24px; }
-  .practiceCard .cardHeader, .practiceCard .practiceNote, .practiceCard .cardAction { grid-column: 1 / -1; }
-  .practiceTitle { grid-column: 1; align-self: end; margin: 20px 0; font-size: clamp(30px, 4.6cqi, 40px); }
-  .practicePhoto { grid-column: 2; grid-row: 2 / 4; align-self: center; margin: 20px 0; }
+  .practiceBody {
+    display: grid;
+    flex: 1;
+    grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+    grid-template-areas: 'title photo' 'skills photo' 'note photo';
+    align-content: center;
+    gap: 12px 24px;
+    padding-block: 18px;
+  }
+  .practiceTitle { grid-area: title; margin: 0; font-size: clamp(30px, 4.6cqi, 40px); }
+  .practicePhoto { grid-area: photo; align-self: center; }
   .practicePhoto figcaption { left: 16px; right: 16px; gap: 5px; }
-  .practiceSkills { grid-column: 1; align-self: start; margin: 0; }
-  .practiceNote { margin: 8px 0 16px; }
+  .practiceSkills { grid-area: skills; align-items: start; margin: 0; }
+  .practiceNote { grid-area: note; margin: 0; }
   .futureCard { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: auto auto 1fr auto auto; column-gap: 24px; }
   .futureCard .cardHeader, .futureCard .validationNote, .futureCard .cardAction { grid-column: 1 / -1; }
   .futureHeading { grid-column: 1; margin: 24px 0 8px; font-size: 25px; }
@@ -215,10 +222,20 @@
   .futureSteps small { margin-top: 4px; }
   .validationNote { margin: 6px 0 14px; }
 }
-@container (min-width: 391px) and (max-width: 649px) {
+@container (390px < width < 560px) {
   .card { width: min(100%, 420px); min-height: 630px; margin-inline: auto; border-radius: 36px; }
 }
 
+@media (min-width: 1024px) {
+  .card { width: 100%; min-height: 0; }
+}
+@media (max-width: 1023px) {
+  .card { aspect-ratio: auto; }
+}
+@container (560px <= width < 650px) {
+  .card { aspect-ratio: auto; }
+}
 @media (min-width: 1024px) and (max-height: 850px) {
-  .card { width: 100%; min-height: var(--journey-card-height); aspect-ratio: auto; padding: 18px 22px; }
+  .card { padding: 18px 22px; }
+  .practiceCard { aspect-ratio: auto; }
 }

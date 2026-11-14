@@ -82,14 +82,16 @@ function JourneyVisual({ index, onNext }: { index: number; onNext: () => void })
 
   if (index === 2) return <div className={`${styles.card} ${styles.practiceCard}`}>
     <CardHeader label="Immersion terrain" />
-    <p className={styles.practiceTitle}>Les bons gestes.<br /><span>Les bons réflexes.</span></p>
-    <figure className={styles.practicePhoto}>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={originalArtwork['aps-atelier-radio'].src} alt={originalArtwork['aps-atelier-radio'].alt} width="1536" height="1024" loading="lazy" decoding="async" />
-      <figcaption><strong>63,5 h</strong><span>de pratique dans le parcours</span></figcaption>
-    </figure>
-    <div className={styles.practiceSkills}><span>Rondes de sécurité</span><span>Contrôle d’accès</span><span>Gestion d’incidents</span></div>
-    <p className={styles.practiceNote}>Des exercices expliqués, répétés et débriefés.</p>
+    <div className={styles.practiceBody}>
+      <p className={styles.practiceTitle}>Les bons gestes.<br /><span>Les bons réflexes.</span></p>
+      <figure className={styles.practicePhoto}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={originalArtwork['aps-atelier-radio'].src} alt={originalArtwork['aps-atelier-radio'].alt} width="1536" height="1024" loading="lazy" decoding="async" />
+        <figcaption><strong>63,5 h</strong><span>de pratique dans le parcours</span></figcaption>
+      </figure>
+      <div className={styles.practiceSkills}><span>Rondes de sécurité</span><span>Contrôle d’accès</span><span>Gestion d’incidents</span></div>
+      <p className={styles.practiceNote}>Des exercices expliqués, répétés et débriefés.</p>
+    </div>
     <CardNextAction onNext={onNext} label={steps[3].label} />
   </div>;
 
@@ -110,6 +112,7 @@ function JourneyVisual({ index, onNext }: { index: number; onNext: () => void })
 export function ApsJourney() {
   return <TrainingJourney
     id="parcours-aps"
+    compactVisual
     name="APS"
     theme="blue"
     eyebrow="DEVENIR AGENT DE SÉCURITÉ · APS"

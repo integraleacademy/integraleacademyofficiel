@@ -16,6 +16,7 @@ export type TrainingJourneyTheme = 'orange' | 'blue' | 'green' | 'red' | 'violet
 
 type TrainingJourneyProps = {
   id: string;
+  compactVisual?: boolean;
   name: string;
   eyebrow: string;
   title: ReactNode;
@@ -28,7 +29,7 @@ function Arrow({ down = false }: { down?: boolean }) {
   return <svg className={down ? styles.downArrow : undefined} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d={down ? 'M12 4v15m-6-6 6 6 6-6' : 'M4 12h15m-6-6 6 6-6 6'} strokeLinecap="round" strokeLinejoin="round" /></svg>;
 }
 
-export function TrainingJourney({ id, name, eyebrow, title, steps, continuationHref, theme = 'orange' }: TrainingJourneyProps) {
+export function TrainingJourney({ id, name, eyebrow, title, steps, continuationHref, theme = 'orange', compactVisual = false }: TrainingJourneyProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef<HTMLSpanElement>(null);
@@ -137,7 +138,7 @@ export function TrainingJourney({ id, name, eyebrow, title, steps, continuationH
   }
 
   return (
-    <><section id={id} ref={sectionRef} className={styles.journey} data-enhanced={enhanced} data-theme={theme} data-navigation-only="true" data-visual-format="landscape" aria-labelledby={`${id}-title`}>
+    <><section id={id} ref={sectionRef} className={styles.journey} data-enhanced={enhanced} data-theme={theme} data-navigation-only="true" data-visual-format="landscape" data-compact-visual={compactVisual || undefined} aria-labelledby={`${id}-title`}>
       <div ref={stageRef} className={styles.stage}>
         <header className={styles.intro}>
           <p className={styles.eyebrow}>{eyebrow}</p>
