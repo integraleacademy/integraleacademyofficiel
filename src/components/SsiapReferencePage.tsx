@@ -137,7 +137,7 @@ export function SsiapReferencePage({ sessions }: { sessions: any[] }) {
   const next = visibleSessions[0];
   const faqSchema = faq.map(item => ({ '@type': 'Question', name: item.q, acceptedAnswer: { '@type': 'Answer', text: item.a } }));
 
-  return <div className={`${styles.page} ${mos.page} relative overflow-x-clip pb-24 lg:pb-0`} data-ssiap-experience="mos-v4">
+  return <div className={`${styles.page} ${mos.page} relative overflow-x-clip`} data-ssiap-experience="mos-v4">
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeCourseJsonLd({ '@context': 'https://schema.org', '@graph': [
       { '@type': 'Course', name: 'Formation SSIAP 1 – Agent de sécurité incendie', description: 'Formation réglementaire SSIAP 1 de 67 heures à Puget-sur-Argens.', provider: { '@type': 'Organization', name: 'Intégrale Academy', telephone: '04 22 47 07 68' } },
       { '@type': 'FAQPage', mainEntity: faqSchema },
@@ -277,6 +277,6 @@ export function SsiapReferencePage({ sessions }: { sessions: any[] }) {
 
 
 
-    <div className="fixed inset-x-0 bottom-0 z-40 border-t border-academy-line bg-[#FFFDF8]/96 dark:bg-[#18232f]/96 p-3 pb-[calc(.75rem+env(safe-area-inset-bottom))] shadow-[0_-12px_40px_rgba(0,0,0,.12)] backdrop-blur lg:hidden"><div className="mx-auto flex max-w-lg gap-2"><CTA href="tel:0422470768" variant="light" className="min-w-0 flex-1 px-3">Appeler</CTA><CTA href="#dates-tarifs" variant="red" className="min-w-0 flex-[1.4] px-3">Réserver ma place</CTA></div></div>
+    <div data-fixed-actions="course" className="fixed inset-x-0 bottom-0 z-40 border-t border-academy-line bg-[#FFFDF8]/96 dark:bg-[#18232f]/96 p-3 pb-[calc(.75rem+env(safe-area-inset-bottom))] shadow-[0_-12px_40px_rgba(0,0,0,.12)] backdrop-blur lg:hidden"><div className="mx-auto flex max-w-lg gap-2"><CTA href="tel:0422470768" variant="light" className="min-w-0 flex-1 px-3">Appeler</CTA><CTA href="#dates-tarifs" variant="red" className="min-w-0 flex-[1.4] px-3">Réserver ma place</CTA></div></div>
   </div>;
 }

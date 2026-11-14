@@ -14,7 +14,7 @@ type Action = { href: string; label: ReactNode; newTab?: boolean };
 
 /** The SSIAP 1 visual language, with each course's own content and accent. */
 export function TrainingReferencePage({ children, theme, enabled = true }: { children: ReactNode; theme: CourseTheme; enabled?: boolean }) {
-  if (!enabled) return <div className="relative overflow-hidden pb-24 lg:pb-0">{children}</div>;
+  if (!enabled) return <div className="relative overflow-hidden">{children}</div>;
   return <div className={`${reference.page} ${styles.page}`} data-course-design="ssiap-reference" data-course-theme={theme}>{children}</div>;
 }
 
@@ -91,5 +91,5 @@ export function TrainingReferenceContact({ description, title, href, additionalA
 }
 
 export function TrainingReferenceMobileBar({ href = '#dates-tarifs', label = 'Voir les dates & tarifs' }: { href?: string; label?: string }) {
-  return <div className={styles.mobileBar}><a href="tel:0422470768" className={styles.action}>Appeler</a><TrainingReferenceAction href={href}>{label}</TrainingReferenceAction></div>;
+  return <div data-fixed-actions="course" className={styles.mobileBar}><a href="tel:0422470768" className={styles.action}>Appeler</a><TrainingReferenceAction href={href}>{label}</TrainingReferenceAction></div>;
 }
