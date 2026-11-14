@@ -2,12 +2,15 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import course from '../../public/images/aps/experience/elearning-cours.webp';
+import exercise from '../../public/images/aps/experience/elearning-exercice.webp';
+import progress from '../../public/images/aps/experience/elearning-parcours.webp';
 import styles from './ApsExperience.module.css';
 
 const slides = [
-  { src: '/images/aps/experience/elearning-cours.webp', label: 'Le cours', title: 'Comprendre avec des cours illustrés', description: 'Des situations concrètes pour découvrir les notions et les gestes du métier.', alt: 'Extrait réel du cours APS : comprendre sa mission, avec une illustration et les limites d’intervention' },
-  { src: '/images/aps/experience/elearning-exercice.webp', label: 'Les exercices', title: 'Tester vos réflexes, puis comprendre', description: 'Vous choisissez une réponse et retrouvez le corrigé expliqué pour progresser.', alt: 'Exercice de la plateforme APS : choisir la bonne réaction face à une demande qui dépasse la mission' },
-  { src: '/images/aps/experience/elearning-parcours.webp', label: 'Votre progression', title: 'Retrouver chaque étape du parcours', description: 'Les modules et leur avancement restent visibles dans votre espace de formation.', alt: 'Aperçu réel des modules e-learning APS avec leurs titres et leurs indicateurs de progression' },
+  { src: course, label: 'Le cours', title: 'Comprendre avec des cours illustrés', description: 'Des situations concrètes pour découvrir les notions et les gestes du métier.', alt: 'Extrait réel du cours APS : comprendre sa mission, avec une illustration et les limites d’intervention' },
+  { src: exercise, label: 'Les exercices', title: 'Tester vos réflexes, puis comprendre', description: 'Vous choisissez une réponse et retrouvez le corrigé expliqué pour progresser.', alt: 'Exercice de la plateforme APS : choisir la bonne réaction face à une demande qui dépasse la mission' },
+  { src: progress, label: 'Votre progression', title: 'Retrouver chaque étape du parcours', description: 'Les modules et leur avancement restent visibles dans votre espace de formation.', alt: 'Aperçu réel des modules e-learning APS avec leurs titres et leurs indicateurs de progression' },
 ];
 
 export function ApsElearningPreview() {
@@ -22,6 +25,6 @@ export function ApsElearningPreview() {
       <div className={styles.slideScreen}><Image src={slide.src} alt={slide.alt} width={1120} height={750} sizes="(max-width: 800px) 92vw, 800px" /></div>
       <div className={styles.slideCaption} aria-live="polite" aria-atomic="true"><h4>{slide.title}</h4><p>{slide.description}</p></div>
     </div>
-    <div className={styles.slideControls}><span>Captures de notre espace de démonstration</span><div><button type="button" onClick={() => go(-1)} aria-label="Aperçu précédent">←</button><span aria-hidden="true">0{active + 1} / 03</span><button type="button" onClick={() => go(1)} aria-label="Aperçu suivant">→</button></div></div>
+    <div className={styles.slideControls}><span>Captures de notre espace e-learning</span><div><button type="button" onClick={() => go(-1)} aria-label="Aperçu précédent">←</button><span aria-hidden="true">0{active + 1} / 03</span><button type="button" onClick={() => go(1)} aria-label="Aperçu suivant">→</button></div></div>
   </div>;
 }

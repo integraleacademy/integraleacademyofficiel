@@ -45,8 +45,8 @@
     ]
   },
   "elearning_slides": {
-    "captured": "2026-10-15",
-    "method": "Captures du navigateur sur la démonstration publique, sans compte ni données de stagiaire réel.",
+    "captured": "2026-11-14",
+    "method": "Captures de l’interface publique dans leur cadrage d’origine, avec le filigrane et les mentions de démonstration retirés pour ces trois aperçus. Le parcours présenté utilise des données fictives.",
     "files": {
       "elearning-cours.webp": "https://gestionstagiaires-test-v2.onrender.com/e-learning/demo/aps/cours — cours illustré",
       "elearning-exercice.webp": "https://gestionstagiaires-test-v2.onrender.com/e-learning/demo/aps/cours — exercice interactif",
