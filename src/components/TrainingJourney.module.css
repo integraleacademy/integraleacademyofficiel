@@ -1,4 +1,7 @@
 .journey { --accent: #e6530b; --accent-strong: #bc4109; --accent-soft: #fff1e9; --accent-hover: #963007; --accent-focus: #c74b0c; --accent-nav: #fff0e5; --accent-current: #ae3b0b; --journey-light: #ffc59f; --journey-solid: #b94713; --ink: #191b20; --muted: #61636e; background: #fff; color: var(--ink); scroll-margin-top: var(--site-header-height); }
+/* The continuation keeps the course page's text color, including in dark mode. */
+.journey[data-with-continuation] { color: inherit; }
+.journey[data-with-continuation] .stage { color: var(--ink); }
 .continuationTarget { scroll-margin-top: var(--site-header-height); }
 .stage { width: var(--site-content-width); margin: 0 auto; padding-top: var(--site-section-space); }
 .intro { padding: 0 clamp(24px, 5vw, 88px) 36px; }
