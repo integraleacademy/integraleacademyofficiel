@@ -16,7 +16,7 @@ export type TrainingJourneyTheme = 'orange' | 'blue' | 'green' | 'red' | 'violet
 
 type TrainingJourneyProps = {
   id: string;
-  children?: ReactNode;
+  children: ReactNode;
   name: string;
   eyebrow: string;
   title: ReactNode;
@@ -32,6 +32,7 @@ function Arrow({ down = false }: { down?: boolean }) {
 export function TrainingJourney({ id, name, eyebrow, title, steps, continuationHref, theme = 'orange', children }: TrainingJourneyProps) {
   const trackRef = useRef<HTMLElement>(null);
   const pinnedRef = useRef<HTMLDivElement>(null);
+  const continuationRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef<HTMLSpanElement>(null);
   const headingRefs = useRef<(HTMLHeadingElement | null)[]>([]);
   const pendingFocusRef = useRef<number | null>(null);
@@ -117,19 +118,22 @@ export function TrainingJourney({ id, name, eyebrow, title, steps, continuationH
   }, [enhanced, getBounds, steps.length]);
 
   useEffect(() => {
-    if (!enhanced || !children || !continuationHref) return;
-    const target = document.getElementById(continuationHref.slice(1));
-    if (!target || !pinnedRef.current?.contains(target)) return;
+    if (!enhanced) return;
+    const findContinuation = (hash: string) => {
+      if (!hash.startsWith('#')) return null;
+      const target = document.getElementById(hash.slice(1));
+      return target && continuationRef.current?.contains(target) ? target : null;
+    };
 
     // A native fragment scroll only accounts for the target's current position.
     // Include the remaining sticky travel so the heading clears both menus.
-    const alignContinuation = (instant = false) => {
+    const alignContinuation = (target: HTMLElement, instant = false) => {
       const bounds = getBounds();
       const group = pinnedRef.current;
       if (!bounds || !group) return;
       const scale = parseFloat(getComputedStyle(document.documentElement).zoom) || 1;
       const inset = parseFloat(getComputedStyle(group).top) || 0;
-      const margin = parseFloat(getComputedStyle(target).scrollMarginTop) || 0;
+      const margin = Math.max(inset, parseFloat(getComputedStyle(target).scrollMarginTop) || 0);
       const offset = target.getBoundingClientRect().top - group.getBoundingClientRect().top;
       window.scrollTo({
         top: bounds.end + offset + (inset - margin) * scale,
@@ -139,25 +143,28 @@ export function TrainingJourney({ id, name, eyebrow, title, steps, continuationH
     const onClick = (event: MouseEvent) => {
       if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.altKey || event.shiftKey) return;
       const link = event.target instanceof Element ? event.target.closest('a') : null;
-      if (link?.getAttribute('href') !== continuationHref) return;
+      const hash = link?.getAttribute('href') ?? '';
+      const target = findContinuation(hash);
+      if (!target || link?.target === '_blank') return;
       event.preventDefault();
-      if (window.location.hash !== continuationHref) window.history.pushState(null, '', continuationHref);
-      alignContinuation();
+      if (window.location.hash !== hash) window.history.pushState(null, '', hash);
+      alignContinuation(target);
       if (!target.hasAttribute('tabindex')) target.tabIndex = -1;
       target.focus({ preventScroll: true });
     };
     const onHashChange = () => {
-      if (window.location.hash === continuationHref) alignContinuation(true);
+      const target = findContinuation(window.location.hash);
+      if (target) alignContinuation(target, true);
     };
     const frame = window.requestAnimationFrame(onHashChange);
-    document.addEventListener('click', onClick);
+    document.addEventListener('click', onClick, true);
     window.addEventListener('hashchange', onHashChange);
     return () => {
       window.cancelAnimationFrame(frame);
-      document.removeEventListener('click', onClick);
+      document.removeEventListener('click', onClick, true);
       window.removeEventListener('hashchange', onHashChange);
     };
-  }, [enhanced, children, continuationHref, getBounds]);
+  }, [enhanced, getBounds]);
 
   useEffect(() => {
     if (pendingFocusRef.current !== active) return;
@@ -179,7 +186,7 @@ export function TrainingJourney({ id, name, eyebrow, title, steps, continuationH
   }
 
   const stage = (
-    <div className={styles.stage} ref={children ? undefined : pinnedRef}>
+    <div className={styles.stage}>
       <header className={styles.intro}>
         <p className={styles.eyebrow}>{eyebrow}</p>
         <h2 id={`${id}-title`}>{title}</h2>
@@ -214,10 +221,13 @@ export function TrainingJourney({ id, name, eyebrow, title, steps, continuationH
   );
 
   return (
-    <><section id={id} ref={trackRef} className={styles.journey} data-enhanced={enhanced} data-theme={theme} data-navigation-only="true" data-visual-format="landscape" data-with-continuation={children ? true : undefined} aria-labelledby={`${id}-title`}>
-      {children ? <div ref={pinnedRef} className={styles.trackContent}>{stage}{children}</div> : stage}
+    <section id={id} ref={trackRef} className={styles.journey} data-enhanced={enhanced} data-theme={theme} data-navigation-only="true" data-visual-format="landscape" aria-labelledby={`${id}-title`}>
+      <div ref={pinnedRef} className={styles.trackContent}>
+        <div className={styles.surface}>{stage}</div>
+        <div ref={continuationRef} className={styles.continuationTarget} data-journey-continuation id={continuationHref ? undefined : `${id}-suite`}>
+          {children}
+        </div>
+      </div>
     </section>
-    {!continuationHref && <div id={`${id}-suite`} className={styles.continuationTarget} />}
-    </>
   );
 }

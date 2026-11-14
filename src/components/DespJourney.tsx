@@ -109,7 +109,7 @@ function JourneyVisual({ index, onNext }: { index: number; onNext: () => void })
   );
 }
 
-export function DespJourney() {
+export function DespJourney({ children }: { children: ReactNode }) {
   return <TrainingJourney
     id="parcours-desp"
     name="DESP"
@@ -117,5 +117,5 @@ export function DespJourney() {
     title={<>De votre ambition au titre DESP,<br /><span>trouvez votre chemin.</span></>}
     steps={steps.map((step, index) => ({ ...step, visual: (onNext: () => void) => <JourneyVisual index={index} onNext={onNext} /> }))}
     continuationHref="#choisir-desp"
-  />;
+  >{children}</TrainingJourney>;
 }

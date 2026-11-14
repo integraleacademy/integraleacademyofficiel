@@ -336,9 +336,9 @@ export function BtsNdrcReferencePage() {
 
       <BtsSectionNavigation code="NDRC" competencyHref="#competences" competencyLabel="Compétences" faqHref="#faq-ndrc" registrationHref={applicationUrl} />
 
-      <CourseJourney course="bts-ndrc" />
-
-      <BtsStudentBenefits courseName="BTS NDRC" />
+      <CourseJourney course="bts-ndrc">
+        <BtsStudentBenefits courseName="BTS NDRC" />
+      </CourseJourney>
 
       <Section
         id="pour-qui"

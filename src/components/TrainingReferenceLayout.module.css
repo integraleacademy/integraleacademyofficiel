@@ -45,8 +45,10 @@
 .page :global([id]) { scroll-margin-top:155px; }
 .page :global([id^='faq-']) { --text-main:23 19 13; --text-muted:70 58 42; --border:214 199 174; color:#17212b; color-scheme:light; }
 /* Retain the complete specialised course cards while matching the new rhythm. */
-.page > section:global(.page-container) { padding-block:54px; }
-.page > section:global(.page-container) > h2 { font-size:clamp(30px,3.5vw,46px); letter-spacing:-.045em; line-height:1.15; }
+.page > section:global(.page-container),
+.page :where(:global([data-journey-continuation])) > section:global(.page-container) { padding-block:54px; }
+.page > section:global(.page-container) > h2,
+.page :where(:global([data-journey-continuation])) > section:global(.page-container) > h2 { font-size:clamp(30px,3.5vw,46px); letter-spacing:-.045em; line-height:1.15; }
 :global(html.dark) .page[data-course-theme] { --ssiap-red:var(--course-pale); }
 :global(html.dark) .paper { background:#14202c; }
 :global(html.dark) .stone { background:#18232f; }
@@ -86,7 +88,8 @@
   .section { padding:48px 0; }
   .booking [data-city-sessions] { grid-template-columns:1fr; }
   .mission:nth-child(2n) .missionImage { order:0; }
-  .page > section:global(.page-container) { padding-block:36px; }
+  .page > section:global(.page-container),
+  .page :where(:global([data-journey-continuation])) > section:global(.page-container) { padding-block:36px; }
 }
 @media (prefers-reduced-motion:reduce) { .action { transition:none; } }
 

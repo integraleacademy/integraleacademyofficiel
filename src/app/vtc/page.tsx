@@ -180,25 +180,25 @@ export default function VtcPage() {
 
     <TrainingWelcomePack course="vtc" />
 
-    <CourseJourney course="vtc" />
-
-    <section className={styles.accreditations}>
-      <div className={styles.container}>
-        <div className={styles.accreditationGrid}>
-          <div><span>Certification</span><strong>RS 5637</strong><small>Enregistrée jusqu’au 31/12/2026</small></div>
-          <div><span>Agrément préfectoral</span><strong>VTC-26-001</strong><small>Délivré le 02/12/2025</small></div>
-          <div><span>Qualité</span><strong>Qualiopi n°03169</strong><small>Processus de formation certifié</small></div>
-          <div><span>Déclaration d’activité</span><strong>NDA 93830600283</strong><small>Intégrale Sécurité Formations</small></div>
+    <CourseJourney course="vtc">
+      <section className={styles.accreditations}>
+        <div className={styles.container}>
+          <div className={styles.accreditationGrid}>
+            <div><span>Certification</span><strong>RS 5637</strong><small>Enregistrée jusqu’au 31/12/2026</small></div>
+            <div><span>Agrément préfectoral</span><strong>VTC-26-001</strong><small>Délivré le 02/12/2025</small></div>
+            <div><span>Qualité</span><strong>Qualiopi n°03169</strong><small>Processus de formation certifié</small></div>
+            <div><span>Déclaration d’activité</span><strong>NDA 93830600283</strong><small>Intégrale Sécurité Formations</small></div>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section id="formule" className={styles.promise}>
-      <div className={styles.container}>
-        <div className={styles.sectionHead}><div><span>01 — Une formule vraiment complète</span><h2>Tout ce qu’il vous faut.<br/><em>Rien à ajouter.</em></h2></div><p>Chaque élément du parcours est pensé pour vous rapprocher concrètement de la réussite, de votre première connexion à votre passage devant le jury.</p></div>
-        <div className={styles.includedGrid}>{included.map(([n,title,text])=><article key={n}><span className={styles.number}>{n}</span><div className={styles.miniIcon}><Icon name={n==='03'||n==='04'?'car':'check'}/></div><h3>{title}</h3><p>{text}</p></article>)}</div>
-      </div>
-    </section>
+      <section id="formule" className={styles.promise}>
+        <div className={styles.container}>
+          <div className={styles.sectionHead}><div><span>01 — Une formule vraiment complète</span><h2>Tout ce qu’il vous faut.<br/><em>Rien à ajouter.</em></h2></div><p>Chaque élément du parcours est pensé pour vous rapprocher concrètement de la réussite, de votre première connexion à votre passage devant le jury.</p></div>
+          <div className={styles.includedGrid}>{included.map(([n,title,text])=><article key={n}><span className={styles.number}>{n}</span><div className={styles.miniIcon}><Icon name={n==='03'||n==='04'?'car':'check'}/></div><h3>{title}</h3><p>{text}</p></article>)}</div>
+        </div>
+      </section>
+    </CourseJourney>
 
     <section id="formation" className={styles.elearning}>
       <div className={styles.container}>

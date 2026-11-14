@@ -119,19 +119,19 @@ export function BtsMosReferencePage() {
 
     <div className={styles.navigation}><TrainingSectionNavigation mark="MOS" title="BTS MOS" items={navigation} registrationHref="#admission" registrationLabel="Je m’inscris" theme="bts" ariaLabel="Sommaire du BTS MOS" /></div>
 
-    <CourseJourney course="bts-mos" />
-
-    <section id="metier" className={styles.section} aria-labelledby="mos-mission-title">
-      <div className={styles.container}>
-        <div className={styles.sectionHeading}><div><p className={styles.eyebrow}>01 / Votre futur métier</p><h2 id="mos-mission-title">Un site à sécuriser.<br /><span>Une équipe à guider.</span></h2></div><p>Découvrez une mise en situation : quatre décisions qui relient le terrain, l’organisation et la relation client. À vous de faire avancer la mission.</p></div>
-        <BtsMosMission />
-        <div id="pour-qui" className={styles.profile}>
-          <div><p className={styles.eyebrow}>Ce BTS est-il fait pour vous ?</p><h3>Le sens du terrain.<br />L’envie de manager.</h3></div>
-          <div><p>Vous aimez le travail en équipe, vous êtes rigoureux et vous voulez prendre des responsabilités ? Le BTS MOS vous apprend à organiser une prestation et à faire progresser un collectif.</p><Disclosure title="Voir le profil et les qualités attendues"><List items={course.profile} /></Disclosure></div>
+    <CourseJourney course="bts-mos">
+      <section id="metier" className={styles.section} aria-labelledby="mos-mission-title">
+        <div className={styles.container}>
+          <div className={styles.sectionHeading}><div><p className={styles.eyebrow}>01 / Votre futur métier</p><h2 id="mos-mission-title">Un site à sécuriser.<br /><span>Une équipe à guider.</span></h2></div><p>Découvrez une mise en situation : quatre décisions qui relient le terrain, l’organisation et la relation client. À vous de faire avancer la mission.</p></div>
+          <BtsMosMission />
+          <div id="pour-qui" className={styles.profile}>
+            <div><p className={styles.eyebrow}>Ce BTS est-il fait pour vous ?</p><h3>Le sens du terrain.<br />L’envie de manager.</h3></div>
+            <div><p>Vous aimez le travail en équipe, vous êtes rigoureux et vous voulez prendre des responsabilités ? Le BTS MOS vous apprend à organiser une prestation et à faire progresser un collectif.</p><Disclosure title="Voir le profil et les qualités attendues"><List items={course.profile} /></Disclosure></div>
+          </div>
+          <div className={styles.careers}><p className={styles.eyebrow}>Après le diplôme</p><h3>Des responsabilités qui se construisent.</h3><p>Chef de poste, chef d’équipe, assistant d’exploitation ou coordinateur : votre évolution dépend aussi de vos missions et de votre expérience.</p><div className={styles.twoColumns}><Disclosure title="Les métiers et les perspectives d’évolution"><List items={course.jobs} /></Disclosure><Disclosure title="Poursuivre ses études après le BTS"><List items={course.furtherStudies} /></Disclosure></div></div>
         </div>
-        <div className={styles.careers}><p className={styles.eyebrow}>Après le diplôme</p><h3>Des responsabilités qui se construisent.</h3><p>Chef de poste, chef d’équipe, assistant d’exploitation ou coordinateur : votre évolution dépend aussi de vos missions et de votre expérience.</p><div className={styles.twoColumns}><Disclosure title="Les métiers et les perspectives d’évolution"><List items={course.jobs} /></Disclosure><Disclosure title="Poursuivre ses études après le BTS"><List items={course.furtherStudies} /></Disclosure></div></div>
-      </div>
-    </section>
+      </section>
+    </CourseJourney>
 
     <section id="alternance" className={`${styles.section} ${styles.tinted}`}>
       <div className={styles.container}>

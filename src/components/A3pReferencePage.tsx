@@ -152,16 +152,16 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
       theme="green"
     />
 
-    <CourseJourney course="a3p" />
-
-    <Section id="metier" label="01 — Le métier" title={<>Protéger, anticiper, <span className="decoration-emerald-500 decoration-[.16em] underline underline-offset-[-.03em]">décider.</span></>} intro="L’agent de protection physique des personnes assure la sécurité de dirigeants, personnalités, artistes ou toute personne exposée. Son rôle : préparer la mission, analyser les risques et protéger avec efficacité, proportionnalité et discrétion.">
-      <TrainingReferenceMissions items={métierCards.map(([, title, description], index) => ({ title, description, illustration: [originalArtwork['a3p-mission-preparation'], originalArtwork['a3p-mission-trajets'], a3pArtwork.discretion][index] }))} />
-      <MissionAnimation variant="a3p" className="mt-5" illustration={originalArtwork['a3p-mission-ensemble']} />
-      <div className="mt-5 grid items-center gap-6 rounded-[2rem] bg-[#0D1725] p-6 text-white shadow-card lg:grid-cols-[.8fr_1.2fr]">
-        <div><Label light>Une mission, cinq temps forts</Label><h3 className="mt-3 text-2xl font-black">De la préparation au débriefing.</h3><p className="mt-2 text-sm text-white/60">Une lecture concrète du métier avant le détail du programme.</p></div>
-        <div className="flex items-start justify-between gap-2 overflow-x-auto">{['Briefing', 'Reconnaissance', 'Dispositif', 'Déplacement', 'Débriefing'].map((step, index) => <div key={step} className="flex min-w-[5.5rem] flex-1 items-center gap-2"><div className="text-center"><span className="mx-auto grid h-9 w-9 place-items-center rounded-full border border-emerald-300/35 bg-white/[.07] text-xs font-black text-emerald-300">0{index + 1}</span><p className="mt-2 text-[.65rem] font-black">{step}</p></div>{index < 4 && <span className="mb-5 text-emerald-300">→</span>}</div>)}</div>
-      </div>
-    </Section>
+    <CourseJourney course="a3p">
+      <Section id="metier" label="01 — Le métier" title={<>Protéger, anticiper, <span className="decoration-emerald-500 decoration-[.16em] underline underline-offset-[-.03em]">décider.</span></>} intro="L’agent de protection physique des personnes assure la sécurité de dirigeants, personnalités, artistes ou toute personne exposée. Son rôle : préparer la mission, analyser les risques et protéger avec efficacité, proportionnalité et discrétion.">
+        <TrainingReferenceMissions items={métierCards.map(([, title, description], index) => ({ title, description, illustration: [originalArtwork['a3p-mission-preparation'], originalArtwork['a3p-mission-trajets'], a3pArtwork.discretion][index] }))} />
+        <MissionAnimation variant="a3p" className="mt-5" illustration={originalArtwork['a3p-mission-ensemble']} />
+        <div className="mt-5 grid items-center gap-6 rounded-[2rem] bg-[#0D1725] p-6 text-white shadow-card lg:grid-cols-[.8fr_1.2fr]">
+          <div><Label light>Une mission, cinq temps forts</Label><h3 className="mt-3 text-2xl font-black">De la préparation au débriefing.</h3><p className="mt-2 text-sm text-white/60">Une lecture concrète du métier avant le détail du programme.</p></div>
+          <div className="flex items-start justify-between gap-2 overflow-x-auto">{['Briefing', 'Reconnaissance', 'Dispositif', 'Déplacement', 'Débriefing'].map((step, index) => <div key={step} className="flex min-w-[5.5rem] flex-1 items-center gap-2"><div className="text-center"><span className="mx-auto grid h-9 w-9 place-items-center rounded-full border border-emerald-300/35 bg-white/[.07] text-xs font-black text-emerald-300">0{index + 1}</span><p className="mt-2 text-[.65rem] font-black">{step}</p></div>{index < 4 && <span className="mb-5 text-emerald-300">→</span>}</div>)}</div>
+        </div>
+      </Section>
+    </CourseJourney>
 
     <section className="bg-academy-bg px-4 pb-16"><div className="page-container grid gap-5 lg:grid-cols-[1.2fr_.8fr]">
       <div className="rounded-[2rem] border border-academy-line bg-[#FFFDF8] p-6 shadow-soft sm:p-8"><Label>À qui s’adresse la formation ?</Label><h2 className="mt-3 text-2xl font-black tracking-[-.04em] sm:text-3xl">Un parcours ouvert à plusieurs profils.</h2><div className="mt-6 flex flex-wrap gap-2.5">{audiences.map((item) => <span key={item} className="rounded-full border border-[#E4DAC9] bg-[#F3EEE5] px-4 py-2.5 text-xs font-black before:mr-2 before:text-emerald-600 before:content-['✓']">{item}</span>)}</div></div>

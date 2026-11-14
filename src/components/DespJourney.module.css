@@ -243,6 +243,11 @@
   .card { width: min(100%, 420px); min-height: 630px; margin-inline: auto; }
 }
 
+@media (min-width: 1024px) {
+  .card { width: 100%; min-height: 0; }
+  .trainingCard, .experienceCard { aspect-ratio: auto; }
+}
+
 @media (min-width: 1024px) and (max-height: 850px) {
-  .card { width: 100%; min-height: var(--journey-card-height); aspect-ratio: auto; padding: 18px 22px; }
+  .card { aspect-ratio: auto; padding: 18px 22px; }
 }
