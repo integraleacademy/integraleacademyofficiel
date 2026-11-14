@@ -78,7 +78,7 @@ const presentation = {
 export function CertificationProjectPage({ project }: { project: CertificationProject }) {
   const copy = presentation[project.slug];
   const theme = project.slug === 'cpiaa' ? 'turquoise' : 'violet';
-  const illustration = { src: `/images/certifications/${project.slug}-hero.webp`, alt: copy.heroAlt };
+  const illustration = { src: `/images/certifications/${project.slug}-hero.webp?v=manuel-aps-2`, alt: copy.heroAlt };
   const emailHref = `mailto:ecole@integraleacademy.com?subject=${encodeURIComponent(`Information sur le projet ${project.acronym}`)}`;
   const units = project.blocks.map((block, index) => ({
     number: block.code,
@@ -116,7 +116,7 @@ export function CertificationProjectPage({ project }: { project: CertificationPr
       <TrainingSectionNavigation mark={project.acronym} title={project.acronym} eyebrowLabel="Projet de certification" theme={theme} items={chapters} registrationHref="#contact" registrationLabel="Nous contacter" ariaLabel={`Sommaire du projet ${project.acronym}`} />
 
       <Section id="metier" eyebrow="Le métier, concrètement" title={<>Des idées aux <em>réalisations.</em></>} intro={project.objective}>
-        <TrainingReferenceMissions label="Votre métier" items={[{ title: copy.missionTitle, description: copy.missionDescription, illustration: { src: `/images/certifications/${project.slug}-mission.webp`, alt: copy.missionAlt }, body: <p className={styles.role}>{project.role}</p> }]} />
+        <TrainingReferenceMissions label="Votre métier" items={[{ title: copy.missionTitle, description: copy.missionDescription, illustration: { src: `/images/certifications/${project.slug}-mission.webp?v=manuel-aps-2`, alt: copy.missionAlt }, body: <p className={styles.role}>{project.role}</p> }]} />
         <div className={styles.missionGrid}>{copy.missions.map(([title, text], index) => <article key={title} className={styles.missionCard}><span className={styles.number}>0{index + 1}</span><h3>{title}</h3><p>{text}</p></article>)}</div>
         <div className={styles.audience}><strong>À qui s’adresse le projet ?</strong><div>{copy.audiences.map(audience => <span key={audience}>{audience}</span>)}</div><p>Sous réserve de satisfaire les prérequis et le positionnement prévus.</p></div>
       </Section>
