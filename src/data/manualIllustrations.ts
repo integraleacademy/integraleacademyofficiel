@@ -16,7 +16,7 @@ export const a3pArtwork = {
   deplacement: artwork('a3p', 'deplacement', 'Illustration du manuel A3P : une équipe de protection accompagne un déplacement pédestre.'),
   vehicule: artwork('a3p', 'vehicule', 'Illustration du manuel A3P : arrivée de la personne protégée auprès du véhicule.'),
   techniques: artwork('a3p', 'techniques', 'Illustration du manuel A3P : entraînement encadré aux techniques professionnelles.'),
-  reconnaissance: artwork('a3p', 'reconnaissance', 'Illustration du manuel A3P : reconnaissance d’un site et vérification des itinéraires.'),
+  reconnaissance: { src: '/images/a3p/manuel/reconnaissance.webp?v=manuel-aps-2', alt: 'Illustration du manuel A3P : reconnaissance d’un site et vérification des itinéraires.' },
   secours: artwork('a3p', 'secours', 'Illustration du manuel A3P : préparation et coordination d’une intervention de secours.'),
 };
 

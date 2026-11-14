@@ -10,7 +10,8 @@ export function ManualArtwork({ illustration, priority = false, natural = false,
   className?: string;
   sizes?: string;
 }) {
-  const dimensions = illustrationSizes[illustration.src as keyof typeof illustrationSizes];
+  const imagePath = illustration.src.split('?')[0];
+  const dimensions = illustrationSizes[imagePath as keyof typeof illustrationSizes];
   if (natural && dimensions) {
     return <div className={`${styles.artwork} ${styles.natural} ${className}`}>
       <Image src={illustration.src} alt={illustration.alt} width={dimensions[0]} height={dimensions[1]}
