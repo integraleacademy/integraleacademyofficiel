@@ -109,14 +109,14 @@ function JourneyVisual({ index, onNext }: { index: number; onNext: () => void })
   </div>;
 }
 
-export function ApsJourney() {
+export function ApsJourney({ children }: { children: ReactNode }) {
   return <TrainingJourney
     id="parcours-aps"
-    desktopNavigation="buttons"
+    continuationHref="#metier"
     name="APS"
     theme="blue"
     eyebrow="DEVENIR AGENT DE SÉCURITÉ · APS"
     title={<>De votre projet au métier d’APS,<br /><span>passez à l’action.</span></>}
     steps={steps.map((step, index) => ({ ...step, visual: (onNext: () => void) => <JourneyVisual index={index} onNext={onNext} /> }))}
-  />;
+  >{children}</TrainingJourney>;
 }
