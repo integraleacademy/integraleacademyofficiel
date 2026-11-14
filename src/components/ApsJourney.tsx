@@ -112,7 +112,7 @@ function JourneyVisual({ index, onNext }: { index: number; onNext: () => void })
 export function ApsJourney() {
   return <TrainingJourney
     id="parcours-aps"
-    compactVisual
+    desktopNavigation="buttons"
     name="APS"
     theme="blue"
     eyebrow="DEVENIR AGENT DE SÉCURITÉ · APS"
