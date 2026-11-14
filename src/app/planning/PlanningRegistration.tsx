@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { formatSessionDate, formatSessionPeriod } from '@/lib/public-sessions';
+import { formatVtcDeadline, formatVtcExamDate } from '@/data/vtc';
 import { planningRegistrationAction } from '@/lib/planning-registration';
 
 export function PlanningRegistration({ session, onClose }: { session: any; onClose: () => void }) {
@@ -43,7 +44,7 @@ export function PlanningRegistration({ session, onClose }: { session: any; onClo
     <div className="my-5 rounded-2xl border border-academy-line bg-academy-bg p-4 text-sm leading-6">
       <p className="font-black">{session.title || session.training?.name}</p>
       <p>{session.location}</p>
-      {session.scheduleKind === 'vtc-exam' ? <><p>Inscription avant le {formatSessionDate(session.startDate)}</p><p>Examen théorique le {formatSessionDate(session.endDate)}</p><p>Examen pratique : {session.examDate ? formatSessionDate(session.examDate) : 'à confirmer'}</p></> : <><p>{formatSessionPeriod(session.startDate, session.endDate)}</p>{session.examDate ? <p>Examen le {formatSessionDate(session.examDate)}</p> : null}</>}
+      {session.scheduleKind === 'vtc-exam' ? <><p>Date limite d’inscription · {formatVtcDeadline(session.startDate)}</p><p>Examen théorique · {formatVtcExamDate(session.endDate)}</p><p>Examen pratique · {formatVtcExamDate(session.examDate)}</p></> : <><p>{formatSessionPeriod(session.startDate, session.endDate)}</p>{session.examDate ? <p>Examen le {formatSessionDate(session.examDate)}</p> : null}</>}
     </div>
     {success ? <div role="status"><p className="leading-7">Votre choix et vos coordonnées ont été transmis à notre équipe. Un conseiller vous recontactera pour vérifier les disponibilités, les prérequis et votre financement.</p><p className="mt-3 text-sm text-academy-muted">Votre inscription sera confirmée avec le centre de formation.</p><button type="button" onClick={onClose} className="mt-6 w-full rounded-full bg-academy-ink px-5 py-3 font-bold text-white">Revenir au planning</button></div> : <form onSubmit={submit} className="grid gap-4">
       <p className="text-sm leading-6 text-academy-muted">Indiquez vos coordonnées pour être recontacté au sujet de cette session. Cette demande est sans engagement.</p>

@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useRef, useState, type KeyboardEvent } from 'react';
 import { calendarMonth, planningDay } from '@/lib/planning-calendar';
 import { formatSessionDate, formatSessionPeriod } from '@/lib/public-sessions';
+import { formatVtcDeadline } from '@/data/vtc';
 import styles from './planning.module.css';
 import { planningSsiapCourse, ssiapPlanningCourses, type SsiapPlanningCourse } from '@/lib/planning-ssiap';
 import { SsiapCourseChoices } from './SsiapCourseChoices';
@@ -142,20 +143,20 @@ export function PlanningPreview({ formations, initialFormation, initialSsiapCour
             {Array.from({ length: dayCount }, (_, index) => {
               const day = month! + index * 86_400_000;
               const starts = monthSessions.filter(item => planningDay(item.startDate) === day);
-              return starts.length ? <button key={day} type="button" className={day === selectedDay ? styles.miniSelectedDay : styles.miniAvailableDay} aria-pressed={day === selectedDay} aria-label={`${isVtc ? 'Inscription avant le ' : ''}${formatSessionDate(starts[0].startDate)} : ${starts.length} session${starts.length > 1 ? 's' : ''}`} onClick={() => setSelectedSessionId(starts[0].id)}>{index + 1}<i aria-hidden="true" /></button> : <span key={day} aria-hidden="true">{index + 1}</span>;
+              return starts.length ? <button key={day} type="button" className={day === selectedDay ? styles.miniSelectedDay : styles.miniAvailableDay} aria-pressed={day === selectedDay} aria-label={`${isVtc ? 'Date limite d’inscription : ' + formatVtcDeadline(starts[0].startDate) : formatSessionDate(starts[0].startDate)} : ${starts.length} session${starts.length > 1 ? 's' : ''}`} onClick={() => setSelectedSessionId(starts[0].id)}>{index + 1}<i aria-hidden="true" /></button> : <span key={day} aria-hidden="true">{index + 1}</span>;
             })}
           </div>
           <p className={styles.miniMonthCount} aria-live="polite">{monthSessions.length} session{monthSessions.length > 1 ? 's' : ''} ce mois-ci{monthSessions.length ? ' · Dates proposées en doré' : ''}</p>
           {daySessions.length ? <div className={styles.miniDateChoices}>
             {daySessions.length > 1 && <p className={styles.miniHint}>Plusieurs sessions à cette date : choisissez votre centre.</p>}
-            {daySessions.map(item => <button key={item.id} type="button" className={styles.miniDateAction} aria-label={`Choisir la session ${item.title || formation.label}, ${formatSessionDate(item.startDate)}, ${item.location || 'centre à confirmer'}`} onClick={() => { setSelectedSessionId(item.id); goToStep(2); }}><span><small>{isVtc ? 'Inscription avant le' : 'Début de formation le'}</small><strong>{formatSessionDate(item.startDate)}</strong><small>{item.title || item.training?.name}</small><small>{item.location || 'Centre à confirmer'}</small></span><Arrow /></button>)}
+            {daySessions.map(item => <button key={item.id} type="button" className={styles.miniDateAction} aria-label={`Choisir la session ${item.title || formation.label}, ${formatSessionDate(item.startDate)}, ${item.location || 'centre à confirmer'}`} onClick={() => { setSelectedSessionId(item.id); goToStep(2); }}><span><small>{isVtc ? 'Date limite d’inscription' : 'Début de formation le'}</small><strong>{isVtc ? formatVtcDeadline(item.startDate) : formatSessionDate(item.startDate)}</strong><small>{item.title || item.training?.name}</small><small>{item.location || 'Centre à confirmer'}</small></span><Arrow /></button>)}
           </div> : <div className={styles.miniEmptyMonth}><p>{isVtc ? 'Aucune date limite d’inscription publiée ce mois-ci.' : 'Aucun début de formation publié ce mois-ci.'}</p>{nextSession && <button type="button" onClick={() => setVisibleMonth(calendarMonth(planningDay(nextSession.startDate)!))}>Prochaines dates <Arrow /></button>}</div>}
         </> : session ? <div className={styles.previewSummary}>
           <div className={styles.previewSummaryImage}><Image src={formation.image} alt="" fill sizes="(max-width: 640px) 90vw, 400px" /></div>
           <span className={styles.previewSummaryLabel}>Votre prochaine étape</span>
           <h3>{session.title || session.training?.name}</h3>
-          {isVtc && <p>Inscription avant le {formatSessionDate(session.startDate)}</p>}
-          <p>{isVtc ? 'Examen théorique le ' + formatSessionDate(session.endDate) : formatSessionPeriod(session.startDate, session.endDate)}</p>
+          {isVtc && <p>Date limite d’inscription : {formatVtcDeadline(session.startDate)}</p>}
+          <p>{isVtc ? 'Examen théorique à partir du ' + formatSessionDate(session.endDate) : formatSessionPeriod(session.startDate, session.endDate)}</p>
           <p>{session.location || 'Centre à confirmer'}</p>
           <button type="button" onClick={() => onChoose(formation.key, activeSsiapCourse, activeDirectorLocation)}>Voir toutes les dates <Arrow /></button>
         </div> : <div className={styles.previewEmpty}><strong>Choisissez votre date.</strong><p>Parcourez les mois pour trouver la session qui vous convient.</p><button type="button" onClick={() => goToStep(1)}>Voir les dates <Arrow /></button></div>}

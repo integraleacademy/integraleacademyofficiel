@@ -10,8 +10,7 @@ import { VtcAutonomousEnrollmentBanner } from '@/components/VtcAutonomousEnrollm
 import { TrainingIllustratedCards, type TrainingIllustratedCard } from '@/components/TrainingIllustratedCards';
 import { TrainingSectionNavigation } from '@/components/TrainingSectionNavigation';
 import { PremiumFAQSection } from '@/components/ui';
-import { getUpcomingVtcExamSessions, vtcCourse } from '@/data/vtc';
-import { formatSessionDate } from '@/lib/public-sessions';
+import { formatVtcDeadline, formatVtcExamDate, getUpcomingVtcExamSessions, vtcCourse } from '@/data/vtc';
 import styles from './vtc.module.css';
 
 export const dynamic = 'force-dynamic';
@@ -224,10 +223,10 @@ export default function VtcPage() {
         <div className={styles.datesHeading}><div><span>04 — Prochaines échéances</span><h2>Votre calendrier<br/><em>jusqu’à l’examen.</em></h2></div><p>La théorie démarre dès la finalisation de votre inscription. Ces échéances vous permettent ensuite d’organiser votre passage aux épreuves.</p></div>
         <div className={styles.dateTable}>
           <div className={styles.dateHeader}><span>Date limite d’inscription</span><span>Examen théorique</span><span>Examen pratique</span></div>
-          {examDates.map(({deadline,theory,practical},index)=><div className={styles.dateRow} key={deadline}><span><small>Session {index+1}</small><strong>{formatSessionDate(deadline)}</strong></span><span><small>Admissibilité</small><strong>{formatSessionDate(theory)}</strong></span><span><small>Admission</small><strong>{formatSessionDate(practical)}</strong></span></div>)}
+          {examDates.map(({deadline,theory,practical},index)=><div className={styles.dateRow} key={deadline}><span><small>Session {index+1} · Date limite d’inscription</small><strong>{formatVtcDeadline(deadline)}</strong></span><span><small>Admissibilité</small><strong>{formatVtcExamDate(theory)}</strong></span><span><small>Admission</small><strong>{formatVtcExamDate(practical)}</strong></span></div>)}
           {!examDates.length ? <p>Les prochaines dates d’examen seront communiquées prochainement.</p> : null}
         </div>
-        <p className={styles.dateNote}>Dates communiquées à titre indicatif et susceptibles d’être ajustées par l’organisateur de l’examen.</p>
+        <p className={styles.dateNote}>{vtcCourse.examNotice} <a className="underline" href="https://www.cmar-paca.fr/galerie/1/0a500ccd55a994cd8ef5b03c77af67b9.pdf">Calendrier officiel CMA PACA 2027 (PDF)</a></p>
       </div>
     </section>
 
