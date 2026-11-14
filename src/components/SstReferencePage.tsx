@@ -156,19 +156,19 @@ export function SstReferencePage({ sessions }: { sessions: TrainingDatesPricingS
       theme="green"
     />
 
-    <CourseJourney course="sst" />
-
-    <Section id="role-sst" eyebrow="01 — Le rôle du SST" title={<>Bien plus que des gestes de secours.</>} intro={<>Le SST intervient face à un accident et contribue chaque jour à prévenir les risques dans son entreprise.</>}>
-      <TrainingReferenceMissions label="Votre rôle" items={[
-        { title: 'Face à un accident', description: 'Une méthode claire pour agir sans perdre de temps.', illustration: sstEditorialArtwork.situation,
-          body: <div className="grid gap-3 sm:grid-cols-2">{emergencySteps.map(([number, title, text]) => <div key={number} className="rounded-2xl border border-academy-line p-4"><span className="text-xs font-black text-emerald-700">{number}</span><h4 className="mt-2 font-black">{title}</h4><p className="mt-2 text-sm leading-6">{text}</p></div>)}</div> },
-        { title: 'Prévenir au quotidien', description: '', illustration: sstEditorialArtwork.prevention,
-          body: <div className="space-y-4">{preventionActions.map(item => <p key={item} className="flex gap-3 font-bold"><span className="text-emerald-300">✓</span>{item}</p>)}</div> },
-      ]} />
-      <article className="mt-6 rounded-[2rem] border border-academy-line bg-[#FFFDF8] p-6"><h3 className="text-2xl font-black">Pour qui ?</h3><div className="mt-4 flex flex-wrap gap-2">{['Salariés', 'Candidats sécurité', 'Entreprises'].map(item => <span key={item} className="rounded-full border border-academy-line bg-white px-3 py-2 text-xs font-black">{item}</span>)}</div><span className="mt-4 inline-flex rounded-full bg-[#F04C3A] px-4 py-2 text-xs font-black text-white">✓ Aucun prérequis</span></article>
-      <TrainingMotionGallery variant="sst" illustrations={sstPracticeArtwork} />
-      <div className="mt-5 rounded-[1.8rem] bg-[#0D1725] p-5 text-white"><h3 className="text-xl font-black">Une compétence utile dans tous les secteurs</h3><div className="mt-4 flex flex-wrap gap-2">{sectors.map(item => <span key={item} className="rounded-full border border-emerald-400/35 bg-emerald-400/7 px-4 py-2 text-xs font-black text-emerald-200">{item}</span>)}</div></div>
-    </Section>
+    <CourseJourney course="sst">
+      <Section id="role-sst" eyebrow="01 — Le rôle du SST" title={<>Bien plus que des gestes de secours.</>} intro={<>Le SST intervient face à un accident et contribue chaque jour à prévenir les risques dans son entreprise.</>}>
+        <TrainingReferenceMissions label="Votre rôle" items={[
+          { title: 'Face à un accident', description: 'Une méthode claire pour agir sans perdre de temps.', illustration: sstEditorialArtwork.situation,
+            body: <div className="grid gap-3 sm:grid-cols-2">{emergencySteps.map(([number, title, text]) => <div key={number} className="rounded-2xl border border-academy-line p-4"><span className="text-xs font-black text-emerald-700">{number}</span><h4 className="mt-2 font-black">{title}</h4><p className="mt-2 text-sm leading-6">{text}</p></div>)}</div> },
+          { title: 'Prévenir au quotidien', description: '', illustration: sstEditorialArtwork.prevention,
+            body: <div className="space-y-4">{preventionActions.map(item => <p key={item} className="flex gap-3 font-bold"><span className="text-emerald-300">✓</span>{item}</p>)}</div> },
+        ]} />
+        <article className="mt-6 rounded-[2rem] border border-academy-line bg-[#FFFDF8] p-6"><h3 className="text-2xl font-black">Pour qui ?</h3><div className="mt-4 flex flex-wrap gap-2">{['Salariés', 'Candidats sécurité', 'Entreprises'].map(item => <span key={item} className="rounded-full border border-academy-line bg-white px-3 py-2 text-xs font-black">{item}</span>)}</div><span className="mt-4 inline-flex rounded-full bg-[#F04C3A] px-4 py-2 text-xs font-black text-white">✓ Aucun prérequis</span></article>
+        <TrainingMotionGallery variant="sst" illustrations={sstPracticeArtwork} />
+        <div className="mt-5 rounded-[1.8rem] bg-[#0D1725] p-5 text-white"><h3 className="text-xl font-black">Une compétence utile dans tous les secteurs</h3><div className="mt-4 flex flex-wrap gap-2">{sectors.map(item => <span key={item} className="rounded-full border border-emerald-400/35 bg-emerald-400/7 px-4 py-2 text-xs font-black text-emerald-200">{item}</span>)}</div></div>
+      </Section>
+    </CourseJourney>
 
     <Section id="programme-sst" eyebrow="02 — Programme · 2 jours" title={<>14 heures pour savoir quoi faire — vraiment.</>} intro={<>Un parcours rythmé par la pratique, les démonstrations et les mises en situation.</>} tone="paper">
       <div className="grid gap-5 lg:grid-cols-[.92fr_1.08fr]"><div className="grid gap-4">{days.map(day => <article key={day.number} className={`rounded-[1.8rem] border bg-white p-5 shadow-soft ${day.tone === 'green' ? 'border-emerald-300' : 'border-[#FF9A8F]'}`}><div className="flex items-center gap-4"><span className={`grid h-11 w-11 shrink-0 place-items-center rounded-full text-sm font-black text-white ${day.tone === 'green' ? 'bg-emerald-600' : 'bg-[#F04C3A]'}`}>{day.number}</span><h3 className="text-xl font-black uppercase tracking-[-.02em]">{day.title}</h3></div><ul className="mt-5 space-y-3">{day.items.map(item => <li key={item} className="flex gap-3 border-t border-academy-line/60 pt-3 font-semibold text-academy-muted first:border-0 first:pt-0"><span className={day.tone === 'green' ? 'text-emerald-600' : 'text-[#F04C3A]'}>✓</span>{item}</li>)}</ul></article>)}</div><article className="rounded-[2rem] bg-[#0D1725] p-6 text-white shadow-card lg:p-8"><div className="mb-6 overflow-hidden rounded-2xl"><ManualArtwork illustration={originalArtwork['sst-pedagogie']} natural /></div><h3 className="text-3xl font-black">Les situations travaillées</h3><div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">{scenarios.map(([icon, title], index) => <div key={title} className="rounded-2xl border border-white/20 bg-white/5 p-4 text-center"><span className={`mx-auto grid h-10 w-10 place-items-center text-2xl font-black ${index % 3 === 0 ? 'text-[#FF6958]' : 'text-emerald-400'}`}>{icon}</span><p className="mt-3 text-sm font-black">{title}</p></div>)}</div><div className="mt-5 rounded-2xl bg-emerald-50 p-5 text-emerald-950"><h4 className="text-xl font-black">Une pédagogie très concrète</h4><p className="mt-2 font-semibold leading-7 text-emerald-900/70">Démonstrations, entraînements guidés et scénarios proches de votre environnement de travail.</p></div></article></div>

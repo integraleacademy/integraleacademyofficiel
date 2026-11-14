@@ -1,8 +1,5 @@
-.journey { --accent: #e6530b; --accent-strong: #bc4109; --accent-soft: #fff1e9; --accent-hover: #963007; --accent-focus: #c74b0c; --accent-nav: #fff0e5; --accent-current: #ae3b0b; --journey-light: #ffc59f; --journey-solid: #b94713; --ink: #191b20; --muted: #61636e; background: #fff; color: var(--ink); scroll-margin-top: var(--site-header-height); }
-/* The continuation keeps the course page's text color, including in dark mode. */
-.journey[data-with-continuation] { color: inherit; }
-.journey[data-with-continuation] .stage { color: var(--ink); }
-.continuationTarget { scroll-margin-top: var(--site-header-height); }
+.surface { --accent: #e6530b; --accent-strong: #bc4109; --accent-soft: #fff1e9; --accent-hover: #963007; --accent-focus: #c74b0c; --accent-nav: #fff0e5; --accent-current: #ae3b0b; --journey-light: #ffc59f; --journey-solid: #b94713; --ink: #191b20; --muted: #61636e; background: #fff; color: var(--ink); }
+.continuationTarget { display: flow-root; scroll-margin-top: calc(var(--site-header-height) + var(--site-section-nav-height) + 20px); }
 .stage { width: var(--site-content-width); margin: 0 auto; padding-top: var(--site-section-space); }
 .intro { padding: 0 clamp(24px, 5vw, 88px) 36px; }
 .eyebrow { color: var(--accent-strong); font-size: 12px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
@@ -26,7 +23,7 @@
 .continueButton:hover .downArrow { transform: translateY(4px); }
 .journey[data-navigation-only='true'] .step { scroll-margin-top: calc(var(--site-header-height) + var(--site-section-nav-height) + 24px); }
 .journey[data-navigation-only='true'] .copy h3:focus-visible { outline: 2px solid var(--accent-focus); outline-offset: 6px; border-radius: 4px; }
-.journey button:focus-visible, .journey a:focus-visible { outline: 3px solid var(--accent-focus); outline-offset: 5px; border-radius: 4px; }
+.stage button:focus-visible, .stage a:focus-visible { outline: 3px solid var(--accent-focus); outline-offset: 5px; border-radius: 4px; }
 .visual { position: relative; display: flex; min-width: 0; align-items: center; justify-content: center; padding: 40px clamp(22px, 2.5vw, 44px); border-radius: 36px 0 0 36px; background: radial-gradient(ellipse at 90% 5%, #fff 0, transparent 60%), #eeeae5; overflow: clip; }
 .visual[data-scene='0'] { background: radial-gradient(ellipse at 90% 5%, #fff 0, transparent 65%), #e3e5e7; }
 .visual[data-scene='2'] { background: radial-gradient(ellipse at 20% 80%, #f4d8c4 0, transparent 70%), #eee9e2; }
@@ -40,15 +37,12 @@
 @media (min-width: 1024px) {
   .journey[data-visual-format='landscape'] .step,
   .journey[data-visual-format='landscape'][data-enhanced='true'] .stage { grid-template-columns: minmax(0, 40fr) minmax(0, 60fr); }
-  .journey[data-enhanced='true'] {
-    --journey-stage-height: min(800px, max(0px, calc(100svh - var(--site-header-height) - var(--site-section-nav-height))));
-    --journey-card-height: min(660px, max(0px, calc(var(--journey-stage-height) - 48px)));
-    height: calc(var(--journey-stage-height) + 160svh);
-    overflow-anchor: none;
-  }
-  /* Pin every desktop journey below both menus. Its available height is the
-     viewport, not the intrinsic height of the largest hidden card. */
-  .journey[data-enhanced='true'] .stage { position: sticky; top: calc(var(--site-header-height) + var(--site-section-nav-height)); display: grid; height: var(--journey-stage-height); grid-template-columns: minmax(0, 44fr) minmax(0, 56fr); grid-template-rows: auto minmax(0, 1fr); padding: 0; }
+  .journey[data-enhanced='true'] { overflow-anchor: none; }
+  /* The distance needed for the four steps is reserved after the sticky group.
+     The next section stays directly below the cards during the full sequence. */
+  .journey[data-enhanced='true']::after { content: ''; display: block; height: 160svh; }
+  .journey[data-enhanced='true'] .trackContent { position: sticky; top: calc(var(--site-header-height) + var(--site-section-nav-height)); }
+  .journey[data-enhanced='true'] .stage { display: grid; grid-template-rows: auto 1fr; padding: 0; }
   .journey[data-enhanced='true'] .intro { grid-column: 1; grid-row: 1; align-self: end; padding: clamp(28px, 4vh, 52px) clamp(24px, 4.5vw, 88px) 0; }
   .journey[data-enhanced='true'] .intro h2 { font-size: clamp(30px, 2.8vw, 46px); }
   .journey[data-enhanced='true'] .navigation { display: flex; gap: 12px; align-items: center; margin-top: 20px; }
@@ -57,55 +51,22 @@
   .journey[data-enhanced='true'] .scrollProgress { display: block; height: 3px; margin-top: 8px; overflow: hidden; border-radius: 3px; background: #e9e6e3; }
   .scrollProgress > span { display: block; height: 100%; background: var(--accent); transform: scaleX(0); transform-origin: left; }
   .journey[data-enhanced='true'] .steps, .journey[data-enhanced='true'] .step { display: contents; }
-  /* All four layouts stay measurable and reserve a stable amount of room. */
-  .journey[data-enhanced='true'] .step[data-current='false'] > * { visibility: hidden; pointer-events: none; }
-  .journey[data-enhanced='true'] .copy { grid-column: 1; grid-row: 2; align-self: center; min-height: 0; max-height: calc(100% - var(--journey-copy-top) - var(--journey-copy-bottom)); margin: var(--journey-copy-top) clamp(24px, 4.5vw, 88px) var(--journey-copy-bottom); overflow-y: auto; scrollbar-width: thin; }
+  .journey[data-enhanced='true'] .step[data-current='false'] { display: none; }
+  .journey[data-enhanced='true'] .copy { grid-column: 1; grid-row: 2; min-height: 0; margin-top: var(--journey-copy-top); margin-bottom: 16px; }
   .journey[data-enhanced='true'] .copy h3 { margin-top: 13px; }
   .journey[data-enhanced='true'] .description { margin-top: 15px; }
-  /* At extreme window heights, keep every detail reachable without hiding the
-     title or disabling the scroll sequence. Normal laptop layouts fit in full. */
-  .journey[data-enhanced='true'] .visual { grid-column: 2; grid-row: 1 / 3; align-self: stretch; min-height: 0; align-items: safe center; margin: 8px 0; padding-top: 12px; padding-bottom: 20px; overflow-y: auto; scrollbar-width: thin; }
-  .journey[data-enhanced='true'][data-with-continuation] {
-    --journey-scroll-travel: 160svh;
-    height: auto;
+  .journey[data-enhanced='true'] .visual {
+    display: block; grid-column: 2; grid-row: 1 / 3; align-self: start;
+    margin-block: 8px; padding-block: 12px 8px; overflow: clip;
   }
-  /* The distance for the four steps follows the whole sticky group. The next
-     section stays directly beneath the cards throughout entry, hold and exit. */
-  .journey[data-enhanced='true'][data-with-continuation]::after {
-    content: '';
-    display: block;
-    height: var(--journey-scroll-travel);
-  }
-  .journey[data-enhanced='true'][data-with-continuation] .trackContent {
-    position: sticky;
-    top: calc(var(--site-header-height) + var(--site-section-nav-height));
-  }
-  .journey[data-enhanced='true'][data-with-continuation] .stage {
-    position: static;
-    height: auto;
-    grid-template-rows: auto 1fr;
-  }
-  .journey[data-enhanced='true'][data-with-continuation] .step[data-current='false'] { display: none; }
-  .journey[data-enhanced='true'][data-with-continuation] .copy {
-    max-height: none;
-    overflow: visible;
-    margin-bottom: 16px;
-  }
-  .journey[data-enhanced='true'][data-with-continuation] .visual {
-    display: block;
-    align-self: start;
-    max-height: none;
-    overflow: clip;
-    padding-bottom: 8px;
-  }
-  .journey[data-with-continuation] .visualInner { margin-inline: auto; }
-  .journey[data-with-continuation] .visualCounter {
+  .journey[data-enhanced='true'] .visualInner { margin-inline: auto; }
+  .journey[data-enhanced='true'] .visualCounter {
     position: static;
     display: block;
     margin-top: 6px;
     text-align: right;
   }
-  .journey[data-enhanced='true'][data-with-continuation] .copy::before { left: 0; width: 8px; height: 8px; box-shadow: none; }
+  .journey[data-enhanced='true'] .copy::before { left: 0; width: 8px; height: 8px; box-shadow: none; }
   .journey[data-enhanced='true'] .step[data-current='true'] .copy { animation: reveal .28s ease both; }
   .journey[data-enhanced='true'] .step[data-current='true'] .visualInner { animation: reveal .32s ease both; }
 }
@@ -127,25 +88,25 @@
   .visual { margin: 0 10px; padding: 20px 12px 34px; border-radius: 24px; }
 }
 @keyframes reveal { from { opacity: .25; } to { opacity: 1; } }
-@media (prefers-reduced-motion: reduce) { .journey *, .journey *::before, .journey *::after { animation: none !important; transition: none !important; } }
+@media (prefers-reduced-motion: reduce) { .stage *, .stage *::before, .stage *::after { animation: none !important; transition: none !important; } }
 
-.journey[data-theme='blue'] { --accent: #2864e8; --accent-strong: #1d4ed8; --accent-soft: #eaf2ff; --accent-hover: #173c9c; --accent-focus: #2563eb; --accent-nav: #eaf2ff; --accent-current: #1e40af; --journey-light: #acd5ff; --journey-solid: #245ac5; }
+.journey[data-theme='blue'] .surface { --accent: #2864e8; --accent-strong: #1d4ed8; --accent-soft: #eaf2ff; --accent-hover: #173c9c; --accent-focus: #2563eb; --accent-nav: #eaf2ff; --accent-current: #1e40af; --journey-light: #acd5ff; --journey-solid: #245ac5; }
 .journey[data-theme='blue'] .visual { background: radial-gradient(ellipse at 90% 5%, #fff 0, transparent 60%), #e9eff8; }
 .journey[data-theme='blue'] .visual[data-scene='0'] { background: radial-gradient(ellipse at 80% 10%, #fff 0, transparent 60%), #e0e8f2; }
 .journey[data-theme='blue'] .visual[data-scene='2'] { background: radial-gradient(ellipse at 20% 80%, #d2e9ff 0, transparent 70%), #eaf1f9; }
 .journey[data-theme='blue'] .visual[data-scene='3'] { background: radial-gradient(ellipse at 85% 10%, #cfe5ff 0, transparent 70%), #e3ecf8; }
 .journey[data-theme='blue'] .visualCounter { color: #3e5576; }
 
-.journey[data-theme='green'] { --accent: #08825d; --accent-strong: #066549; --accent-soft: #e6f6ee; --accent-hover: #064e3b; --accent-focus: #047857; --accent-nav: #e6f6ee; --accent-current: #065f46; --journey-light: #a5f0cd; --journey-solid: #087452; }
-.journey[data-theme='red'] { --accent: #da333d; --accent-strong: #b62331; --accent-soft: #fff0f0; --accent-hover: #8f1d28; --accent-focus: #c72b37; --accent-nav: #fff0f0; --accent-current: #a42130; --journey-light: #ffbeb8; --journey-solid: #bb2936; }
-.journey[data-theme='violet'] { --accent: #7c3aed; --accent-strong: #6d28d9; --accent-soft: #f2edff; --accent-hover: #5b21b6; --accent-focus: #7c3aed; --accent-nav: #f2edff; --accent-current: #5b21b6; --journey-light: #d8c4ff; --journey-solid: #7133c8; }
+.journey[data-theme='green'] .surface { --accent: #08825d; --accent-strong: #066549; --accent-soft: #e6f6ee; --accent-hover: #064e3b; --accent-focus: #047857; --accent-nav: #e6f6ee; --accent-current: #065f46; --journey-light: #a5f0cd; --journey-solid: #087452; }
+.journey[data-theme='red'] .surface { --accent: #da333d; --accent-strong: #b62331; --accent-soft: #fff0f0; --accent-hover: #8f1d28; --accent-focus: #c72b37; --accent-nav: #fff0f0; --accent-current: #a42130; --journey-light: #ffbeb8; --journey-solid: #bb2936; }
+.journey[data-theme='violet'] .surface { --accent: #7c3aed; --accent-strong: #6d28d9; --accent-soft: #f2edff; --accent-hover: #5b21b6; --accent-focus: #7c3aed; --accent-nav: #f2edff; --accent-current: #5b21b6; --journey-light: #d8c4ff; --journey-solid: #7133c8; }
 .journey:is([data-theme='green'], [data-theme='red'], [data-theme='violet']) .visual { background: radial-gradient(ellipse at 90% 5%, #fff, transparent 65%), var(--accent-soft); }
 .journey:is([data-theme='green'], [data-theme='red'], [data-theme='violet']) .visual[data-scene='0'] { background: radial-gradient(ellipse at 80% 10%, #fff, transparent 65%), #e6e9eb; }
 .journey:is([data-theme='green'], [data-theme='red'], [data-theme='violet']) .visual[data-scene='3'] { background: radial-gradient(ellipse at 85% 10%, var(--journey-light), transparent 70%), var(--accent-soft); }
 .journey:is([data-theme='green'], [data-theme='red'], [data-theme='violet']) .visualCounter { color: var(--accent-strong); }
 
 /* Inherit the individual BTS page identity without changing scroll behavior. */
-.journey[data-theme='bts'] {
+.journey[data-theme='bts'] .surface {
   --accent: rgb(var(--bts-600));
   --accent-strong: rgb(var(--bts-700));
   --accent-soft: rgb(var(--bts-50));
@@ -167,7 +128,7 @@
 .description { font-size: var(--site-body-size); max-width: 56ch; }
 .journey { scroll-margin-top: calc(var(--site-header-height) + var(--site-section-nav-height)); }
 @media (min-width: 1024px) {
-  .journey[data-enhanced='true'] { --journey-copy-top: clamp(28px, 3vh, 42px); --journey-copy-bottom: 32px; }
+  .journey[data-enhanced='true'] { --journey-copy-top: clamp(28px, 3vh, 42px); }
   .journey[data-enhanced='true'] .intro { padding: 32px clamp(20px, 2.5vw, 48px) 0 0; align-self: start; }
   .journey[data-enhanced='true'] .intro h2 { font-size: clamp(2rem, 1.3rem + 1.6vw, 3rem); }
   .journey[data-enhanced='true'] .copy { align-self: start; margin-inline: 0 clamp(20px, 2.5vw, 48px); }
@@ -176,7 +137,7 @@
   .journey[data-enhanced='true'] .description { line-height: 1.65; }
 }
 @media (min-width: 1024px) and (max-height: 850px) {
-  .journey[data-enhanced='true'] { --journey-copy-top: 12px; --journey-copy-bottom: 16px; }
+  .journey[data-enhanced='true'] { --journey-copy-top: 12px; }
   .journey[data-enhanced='true'] .intro { padding-top: 16px; }
   .journey[data-enhanced='true'] .intro h2 { margin-top: 10px; font-size: clamp(28px, 2.35vw, 36px); }
   .journey[data-enhanced='true'] .navigation { gap: 8px; margin-top: 12px; }

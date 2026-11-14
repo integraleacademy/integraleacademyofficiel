@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import type { ReactNode } from 'react';
 import { courseJourneys, type CourseJourneyConfig, type CourseJourneyKey } from '@/data/courseJourneys';
 import { TrainingJourney } from './TrainingJourney';
 import styles from './CourseJourney.module.css';
@@ -88,7 +89,7 @@ function JourneyCard({ config, index, onNext }: { config: CourseJourneyConfig; i
   </div>;
 }
 
-export function CourseJourney({ course }: { course: CourseJourneyKey }) {
+export function CourseJourney({ course, children }: { course: CourseJourneyKey; children: ReactNode }) {
   const config: CourseJourneyConfig = courseJourneys[course];
   return <TrainingJourney
     id={config.id}
@@ -97,5 +98,5 @@ export function CourseJourney({ course }: { course: CourseJourneyKey }) {
     eyebrow={config.eyebrow}
     title={<>{config.heading[0]}<br /><span>{config.heading[1]}</span></>}
     steps={config.steps.map((step, index) => ({ ...step, visual: (onNext: () => void) => <JourneyCard config={config} index={index} onNext={onNext} /> }))}
-  />;
+  >{children}</TrainingJourney>;
 }

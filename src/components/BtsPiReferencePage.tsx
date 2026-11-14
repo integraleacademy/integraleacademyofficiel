@@ -333,9 +333,9 @@ export function BtsPiReferencePage() {
 
       <BtsSectionNavigation code="PI" competencyHref="#competences" competencyLabel="Compétences" faqHref="#faq-pi" registrationHref={applicationUrl} />
 
-      <CourseJourney course="bts-pi" />
-
-      <BtsStudentBenefits courseName="BTS Professions Immobilières" />
+      <CourseJourney course="bts-pi">
+        <BtsStudentBenefits courseName="BTS Professions Immobilières" />
+      </CourseJourney>
 
       <Section
         id="pour-qui"

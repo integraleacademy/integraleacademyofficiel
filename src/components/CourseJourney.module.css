@@ -201,8 +201,13 @@
 }
 
 /* A short desktop uses the full column width instead of a tall 420px poster. */
+@media (min-width: 1024px) {
+  .card { width: 100%; min-height: 0; }
+  .studyCard, .practiceCard { aspect-ratio: auto; }
+}
+
 @media (min-width: 1024px) and (max-height: 850px) {
-  .card { width: 100%; min-height: var(--journey-card-height); aspect-ratio: auto; padding: 18px 22px; }
+  .card { aspect-ratio: auto; padding: 18px 22px; }
   .openingBody { padding-block: 14px; }
   .openingTitle { font-size: clamp(32px, 6.2cqi, 48px); }
   .subtitle { margin-top: 12px; line-height: 1.5; }

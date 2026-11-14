@@ -151,6 +151,23 @@ export function SsiapCoursePage({ config, sessions = [] }: { config: SsiapCourse
     },
   };
 
+  const missions = (
+    <Section id="missions" eyebrow="Le parcours" title="Des compétences directement liées à votre fonction." intro={config.audience}>
+      {visuals ? <TrainingReferenceMissions items={config.missions.map((mission, index) => ({ title: mission.title, description: mission.text, illustration: visuals.missions[index] }))} /> : (
+        <div className="grid gap-4 lg:grid-cols-3">
+          {config.missions.map((mission, index) => (
+            <article key={mission.title} className={`rounded-[1.8rem] border p-6 shadow-soft ${index === 1 ? 'border-[#26384F] bg-[#0D1725] text-white' : 'border-academy-line bg-[#FFFDF8]'}`}>
+              <span className={`text-5xl font-black ${index === 1 ? 'text-red-300' : 'text-red-600'}`}>0{index + 1}</span>
+              <h3 className="mt-9 text-2xl font-black">{mission.title}</h3>
+              <p className={`mt-3 leading-7 ${index === 1 ? 'text-white/65' : 'text-academy-muted'}`}>{mission.text}</p>
+            </article>
+          ))}
+        </div>
+      )}
+      {heroKey && <SsiapLeadershipGallery level={heroKey} />}
+    </Section>
+  );
+
   return (
     <TrainingReferencePage theme="red" enabled={Boolean(heroKey)}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeCourseJsonLd(courseSchema, `/formations-securite/${config.slug}`) }} />
@@ -262,22 +279,7 @@ export function SsiapCoursePage({ config, sessions = [] }: { config: SsiapCourse
         </div>
       </nav>}
 
-      {heroKey && <CourseJourney course={heroKey} />}
-
-      <Section id="missions" eyebrow="Le parcours" title="Des compétences directement liées à votre fonction." intro={config.audience}>
-        {visuals ? <TrainingReferenceMissions items={config.missions.map((mission, index) => ({ title: mission.title, description: mission.text, illustration: visuals.missions[index] }))} /> : (
-        <div className="grid gap-4 lg:grid-cols-3">
-          {config.missions.map((mission, index) => (
-            <article key={mission.title} className={`rounded-[1.8rem] border p-6 shadow-soft ${index === 1 ? 'border-[#26384F] bg-[#0D1725] text-white' : 'border-academy-line bg-[#FFFDF8]'}`}>
-              <span className={`text-5xl font-black ${index === 1 ? 'text-red-300' : 'text-red-600'}`}>0{index + 1}</span>
-              <h3 className="mt-9 text-2xl font-black">{mission.title}</h3>
-              <p className={`mt-3 leading-7 ${index === 1 ? 'text-white/65' : 'text-academy-muted'}`}>{mission.text}</p>
-            </article>
-          ))}
-        </div>
-        )}
-        {heroKey && <SsiapLeadershipGallery level={heroKey} />}
-      </Section>
+      {heroKey ? <CourseJourney course={heroKey}>{missions}</CourseJourney> : missions}
 
       <Section id="admission" eyebrow="Admission" title="Les conditions d’accès, vérifiées avant l’inscription." intro="Chaque justificatif est contrôlé pour vous orienter vers le bon parcours et sécuriser votre entrée en formation." tone="paper">
         <div className="grid gap-4 md:grid-cols-2">

@@ -40,31 +40,32 @@ export default function Page() {
         }
         visual={<ArtDirectionVisual world="bts" illustration={originalArtwork['bts-ndrc-parcours']} />}
       />
-      <CourseJourney course="bts-overview" />
-      <ChatGptAgentBanner />
-      <VisualSection tone="bts">
-        <section id="alternance-bts" className="page-container scroll-mt-36 py-12">
-          <div className="grid gap-5 md:grid-cols-3">
-            <FeatureCard title="Rythme">
-              BTS MOS : {btsRhythms.MOS.description}<br />
-              BTS MCO, NDRC, CI, PI et CG : {btsRhythms.MCO.description}<br />
-              Les cours sont proposés en présentiel ou en visioconférence,
-              selon les modalités du parcours.
-            </FeatureCard>
-            <FeatureCard title="Accompagnement admissions">
-              Candidature et pré-inscription sur la plateforme BTS dédiée, étude
-              du dossier, puis accompagnement vers l’entreprise et le contrat
-              d’apprentissage.
-            </FeatureCard>
-            <FeatureCard title="Processus 2026">
-              Dossier de pré-inscription, étude de candidature, dossier
-              d’inscription, confirmation officielle puis signature du contrat
-              d’apprentissage.
-            </FeatureCard>
-          </div>
-          <VisualTimeline tone="bts" />
-        </section>
-      </VisualSection>
+      <CourseJourney course="bts-overview">
+        <ChatGptAgentBanner />
+        <VisualSection tone="bts">
+          <section id="alternance-bts" className="page-container scroll-mt-36 py-12">
+            <div className="grid gap-5 md:grid-cols-3">
+              <FeatureCard title="Rythme">
+                BTS MOS : {btsRhythms.MOS.description}<br />
+                BTS MCO, NDRC, CI, PI et CG : {btsRhythms.MCO.description}<br />
+                Les cours sont proposés en présentiel ou en visioconférence,
+                selon les modalités du parcours.
+              </FeatureCard>
+              <FeatureCard title="Accompagnement admissions">
+                Candidature et pré-inscription sur la plateforme BTS dédiée, étude
+                du dossier, puis accompagnement vers l’entreprise et le contrat
+                d’apprentissage.
+              </FeatureCard>
+              <FeatureCard title="Processus 2026">
+                Dossier de pré-inscription, étude de candidature, dossier
+                d’inscription, confirmation officielle puis signature du contrat
+                d’apprentissage.
+              </FeatureCard>
+            </div>
+            <VisualTimeline tone="bts" />
+          </section>
+        </VisualSection>
+      </CourseJourney>
       <VisualSection tone="bts">
         <section id="formations-bts" className="page-container scroll-mt-36 py-12">
           <SectionTitle

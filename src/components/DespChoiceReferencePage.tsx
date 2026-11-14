@@ -161,60 +161,60 @@ export function DespChoiceReferencePage({ sessions }: { sessions: TrainingDatesP
 
       <section className="bg-orange-50/60 px-4 py-10"><div className="page-container max-w-4xl"><OrientationAssistant initialFormationKey="desp" /></div></section>
 
-      <DespJourney />
+      <DespJourney>
+        <section id="choisir-desp" className="scroll-mt-[120px] bg-gradient-to-b from-orange-50 via-white to-orange-50/60 px-4 py-16 sm:py-20">
+          <div className="page-container">
+            <div className="mx-auto max-w-3xl text-center">
+              <p className="text-xs font-black uppercase tracking-[.28em] text-orange-700">Bien choisir</p>
+              <h2 className="mt-4 text-3xl font-black tracking-tight text-[#111827] sm:text-4xl lg:text-5xl">
+                Choisissez le parcours DESP adapté à votre <OrangeHighlight>inscription</OrangeHighlight>
+              </h2>
+              <p className="mt-5 text-base leading-7 text-academy-muted sm:text-lg">Formation initiale ou VAE : deux chemins différents pour atteindre le même objectif.</p>
+            </div>
 
-      <section id="choisir-desp" className="scroll-mt-[120px] bg-gradient-to-b from-orange-50 via-white to-orange-50/60 px-4 py-16 sm:py-20">
-        <div className="page-container">
-          <div className="mx-auto max-w-3xl text-center">
-            <p className="text-xs font-black uppercase tracking-[.28em] text-orange-700">Bien choisir</p>
-            <h2 className="mt-4 text-3xl font-black tracking-tight text-[#111827] sm:text-4xl lg:text-5xl">
-              Choisissez le parcours DESP adapté à votre <OrangeHighlight>inscription</OrangeHighlight>
-            </h2>
-            <p className="mt-5 text-base leading-7 text-academy-muted sm:text-lg">Formation initiale ou VAE : deux chemins différents pour atteindre le même objectif.</p>
+            <div className="mt-10 grid items-stretch gap-6 lg:grid-cols-2 lg:gap-8">
+              <DespPathCard
+                tone="light"
+                label="FORMATION INITIALE"
+                title="DESP en initial"
+                subtitle="J’apprends et je me prépare étape par étape"
+                description="Le parcours idéal si vous souhaitez acquérir les bases solides pour créer, reprendre ou diriger une entreprise de sécurité privée."
+                bullets={[
+                  'Cadre juridique de la sécurité privée',
+                  'Management, gestion et organisation d’une entreprise',
+                  'Cours, supports, entraînements et évaluations',
+                  'Idéal si vous devez acquérir ou consolider vos compétences',
+                  'Durée indicative : 7 semaines · 245 heures',
+                ]}
+                audience="Candidats qui veulent apprendre le métier de dirigeant étape par étape."
+                cta="Voir les infos DESP initial"
+                href="/dirigeant"
+              />
+              <DespPathCard
+                tone="dark"
+                label="VAE"
+                highlight="Pour profils expérimentés"
+                title="DESP en VAE"
+                subtitle="Je transforme mon expérience en certification"
+                description="La VAE permet de faire reconnaître officiellement les compétences déjà acquises grâce à votre expérience professionnelle."
+                bullets={[
+                  'Analyse de votre expérience et de vos missions',
+                  'Constitution du dossier de preuves',
+                  'Accompagnement à la rédaction du livret VAE',
+                  'Préparation au passage devant le jury',
+                  'Adapté aux profils expérimentés en sécurité, encadrement, gestion ou direction',
+                  'Calendrier personnalisé selon votre expérience et votre dossier',
+                ]}
+                audience="Expérience justifiée en management, création, gestion d’entreprise."
+                audienceTitle="Conditions :"
+                cta="Voir les infos DESP VAE"
+                href="/vaedirigeant"
+                secondaryCta="Tester mon éligibilité à la VAE"
+              />
+            </div>
           </div>
-
-          <div className="mt-10 grid items-stretch gap-6 lg:grid-cols-2 lg:gap-8">
-            <DespPathCard
-              tone="light"
-              label="FORMATION INITIALE"
-              title="DESP en initial"
-              subtitle="J’apprends et je me prépare étape par étape"
-              description="Le parcours idéal si vous souhaitez acquérir les bases solides pour créer, reprendre ou diriger une entreprise de sécurité privée."
-              bullets={[
-                'Cadre juridique de la sécurité privée',
-                'Management, gestion et organisation d’une entreprise',
-                'Cours, supports, entraînements et évaluations',
-                'Idéal si vous devez acquérir ou consolider vos compétences',
-                'Durée indicative : 7 semaines · 245 heures',
-              ]}
-              audience="Candidats qui veulent apprendre le métier de dirigeant étape par étape."
-              cta="Voir les infos DESP initial"
-              href="/dirigeant"
-            />
-            <DespPathCard
-              tone="dark"
-              label="VAE"
-              highlight="Pour profils expérimentés"
-              title="DESP en VAE"
-              subtitle="Je transforme mon expérience en certification"
-              description="La VAE permet de faire reconnaître officiellement les compétences déjà acquises grâce à votre expérience professionnelle."
-              bullets={[
-                'Analyse de votre expérience et de vos missions',
-                'Constitution du dossier de preuves',
-                'Accompagnement à la rédaction du livret VAE',
-                'Préparation au passage devant le jury',
-                'Adapté aux profils expérimentés en sécurité, encadrement, gestion ou direction',
-                'Calendrier personnalisé selon votre expérience et votre dossier',
-              ]}
-              audience="Expérience justifiée en management, création, gestion d’entreprise."
-              audienceTitle="Conditions :"
-              cta="Voir les infos DESP VAE"
-              href="/vaedirigeant"
-              secondaryCta="Tester mon éligibilité à la VAE"
-            />
-          </div>
-        </div>
-      </section>
+        </section>
+      </DespJourney>
 
       <DespLocationsNotice />
       <TrainingDatesPricingSection
