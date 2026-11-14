@@ -4,12 +4,12 @@ import { originalArtwork } from './originalArtwork';
 export type BtsArtworkCode = 'mos' | 'mco' | 'ndrc' | 'ci' | 'pi' | 'cg';
 
 export const btsArtwork: Record<BtsArtworkCode, ManualIllustration> = {
-  mos: { src: '/images/bts/mixite-2026/mos-carte.webp', alt: 'Illustration du BTS MOS : un étudiant prépare un briefing avec une équipe au poste de sécurité.' },
+  mos: { src: '/images/bts/mixite-2026/mos-carte.webp?v=manuel-aps-3', alt: 'Illustration du BTS MOS : un étudiant prépare un briefing avec une équipe au poste de sécurité.' },
   mco: { src: '/images/bts/tenues-2026/mco-carte.webp?v=manuel-aps-2', alt: 'Illustration du BTS MCO : une alternante participe à la vie du magasin et au conseil client.' },
-  ndrc: { src: '/images/bts/mixite-2026/ndrc-carte.webp', alt: 'Illustration du BTS NDRC : un alternant échange avec un client en visioconférence.' },
-  ci: { src: '/images/bts/tenues-2026/ci-carte.webp', alt: 'Illustration du BTS Commerce International : deux étudiants préparent des opérations commerciales et logistiques.' },
+  ndrc: { src: '/images/bts/mixite-2026/ndrc-carte.webp?v=manuel-aps-3', alt: 'Illustration du BTS NDRC : un alternant échange avec un client en visioconférence.' },
+  ci: { src: '/images/bts/tenues-2026/ci-carte.webp?v=manuel-aps-3', alt: 'Illustration du BTS Commerce International : deux étudiants préparent des opérations commerciales et logistiques.' },
   pi: { src: '/images/bts/tenues-2026/pi-carte.webp?v=manuel-aps-2', alt: 'Illustration du BTS Professions Immobilières : une alternante accompagne un couple pendant la visite d’un appartement.' },
-  cg: { src: '/images/bts/tenues-2026/cg-carte.webp', alt: 'Illustration du BTS Comptabilité et Gestion : un étudiant analyse des factures avec sa tutrice.' },
+  cg: { src: '/images/bts/tenues-2026/cg-carte.webp?v=manuel-aps-3', alt: 'Illustration du BTS Comptabilité et Gestion : un étudiant analyse des factures avec sa tutrice.' },
 };
 
 export const btsHeroArtwork: Record<BtsArtworkCode, ManualIllustration> = {
@@ -23,12 +23,12 @@ export const btsHeroArtwork: Record<BtsArtworkCode, ManualIllustration> = {
 
 // BTS-specific variants keep the original DESP illustrations unchanged.
 export const btsLearningArtwork = {
-  client: { src: '/images/bts/tenues-2026/atelier-client.webp', alt: 'Un apprenti en BTS analyse un plan avec sa tutrice.' },
+  client: { src: '/images/bts/tenues-2026/atelier-client.webp?v=manuel-aps-3', alt: 'Un apprenti en BTS analyse un plan avec sa tutrice.' },
   conformite: { src: '/images/bts/tenues-2026/atelier-conformite.webp', alt: 'Une apprentie en BTS vérifie un dossier avec sa tutrice.' },
   direction: { src: '/images/bts/tenues-2026/atelier-equipe.webp', alt: 'Un étudiant en BTS prépare un dossier avec les professionnels qui l’accompagnent.' },
-  finances: { src: '/images/bts/tenues-2026/atelier-finances.webp', alt: 'Une étudiante en BTS analyse des données financières avec son formateur.' },
+  finances: { src: '/images/bts/tenues-2026/atelier-finances.webp?v=manuel-aps-3', alt: 'Une étudiante en BTS analyse des données financières avec son formateur.' },
   pilotage: { src: '/images/bts/tenues-2026/atelier-pilotage.webp', alt: 'Un étudiant en BTS prépare les prochaines échéances avec sa tutrice.' },
-  projet: { src: '/images/bts/tenues-2026/atelier-projet.webp', alt: 'Un apprenti en BTS étudie un projet avec son équipe.' },
+  projet: { src: '/images/bts/tenues-2026/atelier-projet.webp?v=manuel-aps-3', alt: 'Un apprenti en BTS étudie un projet avec son équipe.' },
   supervision: { src: '/images/bts/tenues-2026/atelier-supervision.webp', alt: 'Une apprentie en BTS MOS repère les risques d’un site avec un professionnel de sécurité.' },
   management: { src: '/images/bts/tenues-2026/atelier-management.webp', alt: 'Un apprenti en BTS MOS participe à un briefing avec son équipe.' },
 } satisfies Record<string, ManualIllustration>;
