@@ -16,7 +16,7 @@ export type TrainingJourneyTheme = 'orange' | 'blue' | 'green' | 'red' | 'violet
 
 type TrainingJourneyProps = {
   id: string;
-  desktopNavigation?: 'scroll' | 'buttons';
+  children?: ReactNode;
   name: string;
   eyebrow: string;
   title: ReactNode;
@@ -29,9 +29,9 @@ function Arrow({ down = false }: { down?: boolean }) {
   return <svg className={down ? styles.downArrow : undefined} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d={down ? 'M12 4v15m-6-6 6 6 6-6' : 'M4 12h15m-6-6 6 6-6 6'} strokeLinecap="round" strokeLinejoin="round" /></svg>;
 }
 
-export function TrainingJourney({ id, name, eyebrow, title, steps, continuationHref, theme = 'orange', desktopNavigation = 'scroll' }: TrainingJourneyProps) {
-  const sectionRef = useRef<HTMLElement>(null);
-  const stageRef = useRef<HTMLDivElement>(null);
+export function TrainingJourney({ id, name, eyebrow, title, steps, continuationHref, theme = 'orange', children }: TrainingJourneyProps) {
+  const trackRef = useRef<HTMLElement>(null);
+  const pinnedRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef<HTMLSpanElement>(null);
   const headingRefs = useRef<(HTMLHeadingElement | null)[]>([]);
   const pendingFocusRef = useRef<number | null>(null);
@@ -39,14 +39,14 @@ export function TrainingJourney({ id, name, eyebrow, title, steps, continuationH
   const [active, setActive] = useState(0);
 
   const getBounds = useCallback(() => {
-    const section = sectionRef.current;
-    const stage = stageRef.current;
-    if (!section || !stage) return null;
-    const rect = section.getBoundingClientRect();
+    const track = trackRef.current;
+    const pinned = pinnedRef.current;
+    if (!track || !pinned) return null;
+    const rect = track.getBoundingClientRect();
     const displayScale = parseFloat(getComputedStyle(document.documentElement).zoom) || 1;
-    const top = parseFloat(getComputedStyle(stage).top) || 0;
+    const top = parseFloat(getComputedStyle(pinned).top) || 0;
     const start = window.scrollY + rect.top - top * displayScale;
-    return { start, end: start + rect.height - stage.getBoundingClientRect().height };
+    return { start, end: start + rect.height - pinned.getBoundingClientRect().height };
   }, []);
 
   const scrollToStep = useCallback((index: number) => {
@@ -70,12 +70,12 @@ export function TrainingJourney({ id, name, eyebrow, title, steps, continuationH
   }, []);
 
   useEffect(() => {
-    if (!enhanced || desktopNavigation === 'buttons') return;
+    if (!enhanced) return;
     let frame = 0;
     let bounds = getBounds();
     let measureNeeded = true;
-    const section = sectionRef.current;
-    const stage = stageRef.current;
+    const section = trackRef.current;
+    const stage = pinnedRef.current;
     if (!section || !stage) return;
 
     const update = () => {
@@ -114,7 +114,50 @@ export function TrainingJourney({ id, name, eyebrow, title, steps, continuationH
       window.removeEventListener('scroll', schedule);
       window.removeEventListener('resize', measure);
     };
-  }, [enhanced, desktopNavigation, getBounds, steps.length]);
+  }, [enhanced, getBounds, steps.length]);
+
+  useEffect(() => {
+    if (!enhanced || !children || !continuationHref) return;
+    const target = document.getElementById(continuationHref.slice(1));
+    if (!target || !pinnedRef.current?.contains(target)) return;
+
+    // A native fragment scroll only accounts for the target's current position.
+    // Include the remaining sticky travel so the heading clears both menus.
+    const alignContinuation = (instant = false) => {
+      const bounds = getBounds();
+      const group = pinnedRef.current;
+      if (!bounds || !group) return;
+      const scale = parseFloat(getComputedStyle(document.documentElement).zoom) || 1;
+      const inset = parseFloat(getComputedStyle(group).top) || 0;
+      const margin = parseFloat(getComputedStyle(target).scrollMarginTop) || 0;
+      const offset = target.getBoundingClientRect().top - group.getBoundingClientRect().top;
+      window.scrollTo({
+        top: bounds.end + offset + (inset - margin) * scale,
+        behavior: instant || window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
+      });
+    };
+    const onClick = (event: MouseEvent) => {
+      if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.altKey || event.shiftKey) return;
+      const link = event.target instanceof Element ? event.target.closest('a') : null;
+      if (link?.getAttribute('href') !== continuationHref) return;
+      event.preventDefault();
+      if (window.location.hash !== continuationHref) window.history.pushState(null, '', continuationHref);
+      alignContinuation();
+      if (!target.hasAttribute('tabindex')) target.tabIndex = -1;
+      target.focus({ preventScroll: true });
+    };
+    const onHashChange = () => {
+      if (window.location.hash === continuationHref) alignContinuation(true);
+    };
+    const frame = window.requestAnimationFrame(onHashChange);
+    document.addEventListener('click', onClick);
+    window.addEventListener('hashchange', onHashChange);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      document.removeEventListener('click', onClick);
+      window.removeEventListener('hashchange', onHashChange);
+    };
+  }, [enhanced, children, continuationHref, getBounds]);
 
   useEffect(() => {
     if (pendingFocusRef.current !== active) return;
@@ -132,48 +175,49 @@ export function TrainingJourney({ id, name, eyebrow, title, steps, continuationH
       return;
     }
     if (index !== active) pendingFocusRef.current = index;
-    if (desktopNavigation === 'buttons') {
-      setActive(index);
-    } else {
-      scrollToStep(index);
-    }
+    scrollToStep(index);
   }
 
+  const stage = (
+    <div className={styles.stage} ref={children ? undefined : pinnedRef}>
+      <header className={styles.intro}>
+        <p className={styles.eyebrow}>{eyebrow}</p>
+        <h2 id={`${id}-title`}>{title}</h2>
+        <nav className={styles.navigation} aria-label={`Étapes du parcours ${name}`}>
+          {steps.map((step, index) => <button key={step.label} type="button" aria-label={`Étape ${index + 1} : ${step.label}`} aria-current={index === active ? 'step' : undefined} onClick={() => goTo(index)}><span>0{index + 1}</span></button>)}
+        </nav>
+        <div className={styles.scrollProgress} aria-hidden="true">
+          <span ref={progressRef} />
+        </div>
+      </header>
+      <ol className={styles.steps}>
+        {steps.map((step, index) => (
+          <li key={step.label} className={styles.step} data-current={index === active} inert={enhanced && index !== active ? true : undefined}>
+            <div className={styles.copy}>
+              <div className={styles.stepHeading}><span className={styles.stepNumber}>0{index + 1}</span><span>{step.label}</span></div>
+              <h3 ref={element => { headingRefs.current[index] = element; }} tabIndex={-1}>{step.title}</h3>
+              <p className={styles.description}>{step.description}</p>
+              {index < steps.length - 1 ? (
+                <button type="button" className={`${styles.link} ${styles.continueButton}`} onClick={() => goTo(index + 1)} aria-label={`Étape suivante : ${steps[index + 1].label}`}>
+                  Étape suivante<Arrow />
+                </button>
+              ) : <a href={continuationHref ?? `#${id}-suite`} className={`${styles.link} ${styles.continueButton}`}>Découvrir la suite<Arrow down /></a>}
+            </div>
+            <div className={styles.visual} data-scene={index}>
+              <div className={styles.visualInner}>{step.visual(() => goTo(Math.min(index + 1, steps.length - 1)))}</div>
+              <span className={styles.visualCounter} aria-hidden="true">0{index + 1} / {String(steps.length).padStart(2, '0')}</span>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+
   return (
-    <><section id={id} ref={sectionRef} className={styles.journey} data-enhanced={enhanced} data-theme={theme} data-navigation-only="true" data-visual-format="landscape" data-desktop-navigation={desktopNavigation} aria-labelledby={`${id}-title`}>
-      <div ref={stageRef} className={styles.stage}>
-        <header className={styles.intro}>
-          <p className={styles.eyebrow}>{eyebrow}</p>
-          <h2 id={`${id}-title`}>{title}</h2>
-          <nav className={styles.navigation} aria-label={`Étapes du parcours ${name}`}>
-            {steps.map((step, index) => <button key={step.label} type="button" aria-label={`Étape ${index + 1} : ${step.label}`} aria-current={index === active ? 'step' : undefined} onClick={() => goTo(index)}><span>0{index + 1}</span></button>)}
-          </nav>
-          <div className={styles.scrollProgress} aria-hidden="true">
-            <span ref={progressRef} style={desktopNavigation === 'buttons' ? { transform: `scaleX(${(active + 1) / steps.length})` } : undefined} />
-          </div>
-        </header>
-        <ol className={styles.steps}>
-          {steps.map((step, index) => (
-            <li key={step.label} className={styles.step} data-current={index === active} inert={enhanced && index !== active ? true : undefined}>
-              <div className={styles.copy}>
-                <div className={styles.stepHeading}><span className={styles.stepNumber}>0{index + 1}</span><span>{step.label}</span></div>
-                <h3 ref={element => { headingRefs.current[index] = element; }} tabIndex={-1}>{step.title}</h3>
-                <p className={styles.description}>{step.description}</p>
-                {index < steps.length - 1 ? (
-                  <button type="button" className={`${styles.link} ${styles.continueButton}`} onClick={() => goTo(index + 1)} aria-label={`Étape suivante : ${steps[index + 1].label}`}>
-                    Étape suivante<Arrow />
-                  </button>
-                ) : <a href={continuationHref ?? `#${id}-suite`} className={`${styles.link} ${styles.continueButton}`}>Découvrir la suite<Arrow down /></a>}
-              </div>
-              <div className={styles.visual} data-scene={index}>
-                <div className={styles.visualInner}>{step.visual(() => goTo(Math.min(index + 1, steps.length - 1)))}</div>
-                <span className={styles.visualCounter} aria-hidden="true">0{index + 1} / {String(steps.length).padStart(2, '0')}</span>
-              </div>
-            </li>
-          ))}
-        </ol>
-      </div>
+    <><section id={id} ref={trackRef} className={styles.journey} data-enhanced={enhanced} data-theme={theme} data-navigation-only="true" data-visual-format="landscape" data-with-continuation={children ? true : undefined} aria-labelledby={`${id}-title`}>
+      {children ? <div ref={pinnedRef} className={styles.trackContent}>{stage}{children}</div> : stage}
     </section>
-    {!continuationHref && <div id={`${id}-suite`} className={styles.continuationTarget} />}</>
+    {!continuationHref && <div id={`${id}-suite`} className={styles.continuationTarget} />}
+    </>
   );
 }

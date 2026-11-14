@@ -62,33 +62,47 @@
   /* At extreme window heights, keep every detail reachable without hiding the
      title or disabling the scroll sequence. Normal laptop layouts fit in full. */
   .journey[data-enhanced='true'] .visual { grid-column: 2; grid-row: 1 / 3; align-self: stretch; min-height: 0; align-items: safe center; margin: 8px 0; padding-top: 12px; padding-bottom: 20px; overflow-y: auto; scrollbar-width: thin; }
-  .journey[data-enhanced='true'][data-desktop-navigation='buttons'] { height: auto; }
-  .journey[data-enhanced='true'][data-desktop-navigation='buttons'] .stage {
+  .journey[data-enhanced='true'][data-with-continuation] {
+    --journey-scroll-travel: 160svh;
+    height: auto;
+  }
+  /* The distance for the four steps follows the whole sticky group. The next
+     section stays directly beneath the cards throughout entry, hold and exit. */
+  .journey[data-enhanced='true'][data-with-continuation]::after {
+    content: '';
+    display: block;
+    height: var(--journey-scroll-travel);
+  }
+  .journey[data-enhanced='true'][data-with-continuation] .trackContent {
+    position: sticky;
+    top: calc(var(--site-header-height) + var(--site-section-nav-height));
+  }
+  .journey[data-enhanced='true'][data-with-continuation] .stage {
     position: static;
     height: auto;
     grid-template-rows: auto 1fr;
   }
-  .journey[data-enhanced='true'][data-desktop-navigation='buttons'] .step[data-current='false'] { display: none; }
-  .journey[data-enhanced='true'][data-desktop-navigation='buttons'] .copy {
+  .journey[data-enhanced='true'][data-with-continuation] .step[data-current='false'] { display: none; }
+  .journey[data-enhanced='true'][data-with-continuation] .copy {
     max-height: none;
     overflow: visible;
     margin-bottom: 16px;
   }
-  .journey[data-enhanced='true'][data-desktop-navigation='buttons'] .visual {
+  .journey[data-enhanced='true'][data-with-continuation] .visual {
     display: block;
     align-self: start;
     max-height: none;
     overflow: clip;
     padding-bottom: 8px;
   }
-  .journey[data-desktop-navigation='buttons'] .visualInner { margin-inline: auto; }
-  .journey[data-desktop-navigation='buttons'] .visualCounter {
+  .journey[data-with-continuation] .visualInner { margin-inline: auto; }
+  .journey[data-with-continuation] .visualCounter {
     position: static;
     display: block;
     margin-top: 6px;
     text-align: right;
   }
-  .journey[data-enhanced='true'][data-desktop-navigation='buttons'] .copy::before { left: 0; width: 8px; height: 8px; box-shadow: none; }
+  .journey[data-enhanced='true'][data-with-continuation] .copy::before { left: 0; width: 8px; height: 8px; box-shadow: none; }
   .journey[data-enhanced='true'] .step[data-current='true'] .copy { animation: reveal .28s ease both; }
   .journey[data-enhanced='true'] .step[data-current='true'] .visualInner { animation: reveal .32s ease both; }
 }
