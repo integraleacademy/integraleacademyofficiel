@@ -80,8 +80,6 @@
   .booking [data-city-sessions] > section > p:first-of-type { font-size:18px; }
 }
 @media (max-width:1023px) {
-  /* Keep the last footer links above the fixed course actions. */
-  :global(body):has(.mobileBar) :global([data-site-footer]) { padding-bottom:calc(84px + env(safe-area-inset-bottom)); }
   .booking [data-layout='cities'] { grid-template-columns:1fr; }
   .booking [data-city-summary] { max-width:600px; }
 }

@@ -58,6 +58,8 @@
 .bottom a { display: inline-flex; align-items: center; min-height: 32px; }
 
 @media (max-width: 1023px) {
+  /* Keep the last links above course actions, including two-line buttons. */
+  :global(body:has([data-fixed-actions="course"])) .footer { padding-bottom: calc(6.5rem + env(safe-area-inset-bottom)); }
   .main { grid-template-columns: 1fr 1fr; gap: 1.5rem 2rem; }
   .identity { order: 1; }
   .contact { order: 2; }
@@ -68,6 +70,10 @@
   .credential:last-child { grid-column: 1 / -1; flex-direction: row; align-items: center; justify-content: space-between; gap: 1rem; margin-top: .75rem; padding-top: .5rem; border-left: 0; border-top: 1px solid #e4e7eb; }
   .fundingLogos { width: auto; min-height: 4rem; }
   .credential:last-child .proofLink { margin-top: 0; }
+}
+
+@media (max-width: 767px) {
+  :global(body:has([data-fixed-actions="planning"])) .footer { padding-bottom: calc(6rem + env(safe-area-inset-bottom)); }
 }
 
 @media (max-width: 639px) {

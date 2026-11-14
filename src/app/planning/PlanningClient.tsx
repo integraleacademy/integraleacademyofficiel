@@ -703,7 +703,7 @@ export function PlanningClient({ initialSessions, btsIntakeYear, initialLocation
   }
 
   return (
-    <main className={`${styles.page} pb-24`}>
+    <main className={styles.page}>
       <section className={`${styles.hero} relative isolate overflow-hidden border-b border-academy-line/70 bg-[#f7f1e7] px-4 py-14 text-[#141820] sm:py-16 lg:py-20`}>
         <div className="absolute -right-40 -top-48 -z-10 h-[34rem] w-[34rem] rounded-full bg-academy-gold/20" />
         <div className="absolute -bottom-48 left-[38%] -z-10 h-[28rem] w-[28rem] rounded-full border border-academy-gold/20" />
@@ -893,7 +893,7 @@ export function PlanningClient({ initialSessions, btsIntakeYear, initialLocation
       {detailSession ? <SessionDetails session={detailSession} onClose={closeSessionDialog} onRequest={() => openRegistration(detailSession, true)} /> : null}
       {registrationSession ? <PlanningRegistration session={registrationSession} onClose={closeSessionDialog} /> : null}
 
-      <div className="fixed inset-x-3 bottom-[calc(.75rem+env(safe-area-inset-bottom))] z-40 grid grid-cols-3 gap-2 rounded-[1.5rem] border border-white/70 bg-white/92 p-2 shadow-[0_18px_60px_rgba(17,17,17,.18)] backdrop-blur md:hidden">
+      <div data-fixed-actions="planning" className="fixed inset-x-3 bottom-[calc(.75rem+env(safe-area-inset-bottom))] z-40 grid grid-cols-3 gap-2 rounded-[1.5rem] border border-white/70 bg-white/92 p-2 shadow-[0_18px_60px_rgba(17,17,17,.18)] backdrop-blur md:hidden">
         <Link href="tel:0422470768" className="rounded-2xl bg-[#101a29] px-3 py-3 text-center text-xs font-black text-white">Appeler</Link>
         <Link href="/contact?motif=alerte-planning" className="rounded-2xl border border-academy-line bg-white px-3 py-3 text-center text-xs font-black text-academy-ink">Alerte</Link>
         <button type="button" onClick={() => selectedSession ? openRegistration(selectedSession) : document.getElementById('planning-advice-title')?.scrollIntoView({ behavior: 'auto', block: 'center' })} className="planning-neutral-action rounded-2xl px-3 py-3 text-center text-xs font-black">{selectedSession ? 'Ma session' : 'Mon projet'}</button>
