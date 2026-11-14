@@ -86,3 +86,29 @@ test('managed VTC dates override the legacy fallback and hidden sessions stay hi
   assert.equal(rows[0].showSeatsLeft, false);
   assert.deepEqual(getVtcPlanningSessions(new Date(), [{ ...session, status: 'HIDDEN' }]), []);
 });
+
+test('the planning publishes all six CMA PACA 2027 sessions alongside December 2026', () => {
+  const rows = getVtcPlanningSessions(new Date('2026-11-14T10:00:00Z'));
+  assert.deepEqual(rows.map(({ vtcDates }) => [vtcDates.deadline, vtcDates.theory, vtcDates.practical]), [
+    ['2026-11-20', '2026-12-08', '2027-01-04'],
+    ['2027-01-08', '2027-01-26', '2027-02-22'],
+    ['2027-03-05', '2027-03-30', '2027-04-26'],
+    ['2027-05-04', '2027-05-25', '2027-06-23'],
+    ['2027-07-02', '2027-07-20', '2027-08-23'],
+    ['2027-09-10', '2027-09-28', '2027-10-25'],
+    ['2027-11-19', '2027-12-07', '2028-01-03'],
+  ]);
+});
+
+test('VTC registration closes at Paris noon in winter and summer on both planning sources', () => {
+  for (const [deadline, lastMinute, noon] of [
+    ['2027-01-08', '2027-01-08T10:59:59Z', '2027-01-08T11:00:00Z'],
+    ['2027-07-02', '2027-07-02T09:59:59Z', '2027-07-02T10:00:00Z'],
+  ]) {
+    const session = { startDate: new Date(deadline), status: 'OPEN', training: { isActive: true } };
+    assert.ok(getVtcPlanningSessions(new Date(lastMinute)).some(row => row.startDate === deadline));
+    assert.ok(!getVtcPlanningSessions(new Date(noon)).some(row => row.startDate === deadline));
+    assert.equal(getVtcPlanningSessions(new Date(lastMinute), [session]).length, 1);
+    assert.equal(getVtcPlanningSessions(new Date(noon), [session]).length, 0);
+  }
+});

@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { calendarExtent, calendarMonth, calendarPosition, sessionCalendarPosition, sessionInCalendarWindow } from '@/lib/planning-calendar';
 import { formatSessionDate, formatSessionPeriod } from '@/lib/public-sessions';
+import { formatVtcDeadline, formatVtcExamDate } from '@/data/vtc';
 import styles from './planning.module.css';
 
 export function PlanningCalendar({ sessions, onSelect, selectedId, themeForSession }: {
@@ -49,7 +50,7 @@ export function PlanningCalendar({ sessions, onSelect, selectedId, themeForSessi
           { label: 'En présentiel', from: session.inPersonStartDate, to: session.inPersonEndDate, className: styles.inPersonPhase },
         ].filter(phase => phase.from && phase.to);
         const exam = calendarPosition(session.examDate, session.examDate, start, end);
-        return <button key={session.id} type="button" onClick={() => onSelect(session)} className={`${styles.calendarRow} ${themeForSession(session)}`} data-selected={selectedId === session.id || undefined} aria-label={`Voir la session ${title}, ${isVtc ? 'inscription avant le ' + formatSessionDate(session.startDate) : formatSessionPeriod(session.startDate, session.endDate)}`} aria-haspopup="dialog">
+        return <button key={session.id} type="button" onClick={() => onSelect(session)} className={`${styles.calendarRow} ${themeForSession(session)}`} data-selected={selectedId === session.id || undefined} aria-label={`Voir la session ${title}, ${isVtc ? 'date limite d’inscription : ' + formatVtcDeadline(session.startDate) : formatSessionPeriod(session.startDate, session.endDate)}`} aria-haspopup="dialog">
           <span className={styles.calendarLabel}><strong><i />{title}</strong><small>{isVtc ? 'Inscription → examens' : formatSessionPeriod(session.startDate, session.endDate)}</small></span>
           <span className={styles.calendarTrack}>
             {months.map(month => <i key={month.date} className={styles.monthLine} style={{ left: month.left + '%' }} />)}
@@ -58,7 +59,7 @@ export function PlanningCalendar({ sessions, onSelect, selectedId, themeForSessi
               const position = calendarPosition(phase.from, phase.to, start, end);
               return position ? <span key={phase.label} title={`${phase.label} · ${formatSessionPeriod(phase.from, phase.to)}`} className={`${styles.phase} ${phase.className}`} style={positionStyle(position)} /> : null;
             })}
-            {exam ? <span className={styles.examMarker} style={{ left: `clamp(14px, ${exam.left + exam.width / 2}%, calc(100% - 14px))` }} title={'Examen le ' + formatSessionDate(session.examDate)}>E</span> : null}
+            {exam ? <span className={styles.examMarker} style={{ left: `clamp(14px, ${exam.left + exam.width / 2}%, calc(100% - 14px))` }} title={isVtc ? 'Examen pratique · ' + formatVtcExamDate(session.examDate) : 'Examen le ' + formatSessionDate(session.examDate)}>E</span> : null}
           </span>
           <span className={styles.calendarRowArrow}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12" /></svg></span>
         </button>;

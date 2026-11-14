@@ -1,5 +1,5 @@
-import { getUpcomingVtcExamSessions, vtcCourse } from '@/data/vtc';
-import { formatSessionDate, isPublicUpcomingSession } from '@/lib/public-sessions';
+import { getUpcomingVtcExamSessions, isVtcRegistrationOpen, vtcCourse } from '@/data/vtc';
+import { formatSessionDate } from '@/lib/public-sessions';
 import { canonicalSiteHref } from '@/lib/site-urls';
 
 export function isBtsTraining(slug = '') {
@@ -25,7 +25,7 @@ export function getVtcPlanningSessions(referenceDate = new Date(), managedSessio
   // VTC admin fields: start = registration deadline, end = theory, exam = practical.
   // An existing hidden/expired row must not revive a legacy hard-coded session.
   if (managedSessions.length) return managedSessions
-    .filter((session) => isPublicUpcomingSession(session))
+    .filter((session) => session.training?.isActive && session.status !== 'HIDDEN' && session.startDate && isVtcRegistrationOpen(session.startDate, referenceDate))
     .map((session) => ({
       ...session,
       scheduleKind: 'vtc-exam',
@@ -35,7 +35,7 @@ export function getVtcPlanningSessions(referenceDate = new Date(), managedSessio
     }));
   return getUpcomingVtcExamSessions(referenceDate).map((dates) => ({
     id: 'vtc-exam-' + dates.theory,
-    title: 'Chauffeur VTC — examen théorique du ' + formatSessionDate(dates.theory),
+    title: 'Chauffeur VTC — examen théorique à partir du ' + formatSessionDate(dates.theory),
     scheduleKind: 'vtc-exam',
     startDate: dates.deadline,
     endDate: dates.theory,

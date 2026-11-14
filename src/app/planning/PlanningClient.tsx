@@ -11,7 +11,7 @@ import { planningFormationHref } from '@/lib/planning-data';
 import { planningSsiapCourse, ssiapPlanningCourses, ssiapPlanningGroups, ssiapPlanningContactHref, type SsiapPlanningCourse } from '@/lib/planning-ssiap';
 import { SsiapCourseChoices } from './SsiapCourseChoices';
 import { DirectorLocationChoices } from './DirectorLocationChoices';
-import { vtcCourse } from '@/data/vtc';
+import { formatVtcDeadline, formatVtcExamDate, vtcCourse } from '@/data/vtc';
 import styles from './planning.module.css';
 import { PlanningHelp } from './PlanningHelp';
 import { PlanningPreview } from './PlanningPreview';
@@ -427,12 +427,12 @@ function SessionCard({
             <p className="text-sm font-semibold leading-6 text-academy-muted">{vtcCourse.startDescription}</p>
             <dl className="mt-3 grid gap-2 sm:grid-cols-3">
               {[
-                ['Date limite d’inscription', session.vtcDates.deadline],
-                ['Examen théorique', session.vtcDates.theory],
-                ['Examen pratique', session.vtcDates.practical],
+                ['Date limite d’inscription', formatVtcDeadline(session.vtcDates.deadline)],
+                ['Examen théorique', formatVtcExamDate(session.vtcDates.theory)],
+                ['Examen pratique', formatVtcExamDate(session.vtcDates.practical)],
               ].map(([label, value]) => <div key={label} className="rounded-2xl border border-academy-line/60 bg-academy-bg/55 px-3 py-3 dark:border-white/10 dark:bg-white/5">
                 <dt className="text-[9px] font-black uppercase tracking-[.1em] text-academy-muted">{label}</dt>
-                <dd className="mt-1 text-sm font-black text-academy-ink dark:text-white">{formatSessionDate(value)}</dd>
+                <dd className="mt-1 text-sm font-black text-academy-ink dark:text-white">{value}</dd>
               </div>)}
             </dl>
             <p className="mt-3 text-xs font-semibold leading-5 text-academy-muted">Hybride : théorie en ligne et pratique en présentiel. Frais d’examen et véhicule double commande inclus.</p>
@@ -505,7 +505,7 @@ function SessionDetails({ session, onClose, onRequest }: { session: Session; onC
     <h2 id="planning-session-title">{sessionTitle(session)}</h2>
     {!isVtc ? <span className={'session-seats-badge mt-4 inline-block rounded-full border px-3 py-1 text-xs font-bold ' + availability.badgeClassName}>{availability.label}</span> : null}
     <div className={styles.dialogDates}>
-      {isVtc ? <><p>{vtcCourse.startDescription}</p><dl>{[['Date limite d’inscription', session.startDate], ['Examen théorique', session.endDate], ['Examen pratique', session.examDate]].map(([label, date]) => <div key={label}><dt>{label}</dt><dd>{date ? formatSessionDate(date) : 'À confirmer'}</dd></div>)}</dl><p className={styles.examNotice}>{vtcCourse.examNotice}</p></> : <><p className={styles.dialogPeriod}>{formatSessionPeriod(session.startDate, session.endDate)}</p>{hasDetailedDeliveryPeriods(session) ? <dl>{deliveryPeriodRows(session).slice(1).map(period => <div key={period.label}><dt>{period.label}</dt><dd>{period.value}</dd></div>)}</dl> : null}{session.examDate ? <p>Examen le <strong>{formatSessionDate(session.examDate)}</strong></p> : null}</>}
+      {isVtc ? <><p>{vtcCourse.startDescription}</p><dl>{[['Date limite d’inscription', formatVtcDeadline(session.startDate)], ['Examen théorique', formatVtcExamDate(session.endDate)], ['Examen pratique', formatVtcExamDate(session.examDate)]].map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl><p className={styles.examNotice}>{vtcCourse.examNotice}</p></> : <><p className={styles.dialogPeriod}>{formatSessionPeriod(session.startDate, session.endDate)}</p>{hasDetailedDeliveryPeriods(session) ? <dl>{deliveryPeriodRows(session).slice(1).map(period => <div key={period.label}><dt>{period.label}</dt><dd>{period.value}</dd></div>)}</dl> : null}{session.examDate ? <p>Examen le <strong>{formatSessionDate(session.examDate)}</strong></p> : null}</>}
     </div>
     <p className={styles.dialogLocation}><Icon name="location" />{session.location || 'Centre à confirmer'}</p>
     <dl className={styles.dialogFacts}><div><dt>Tarif</dt><dd>{displayPrice(session)}</dd></div><div><dt>Durée</dt><dd>{displayDuration(session)}</dd></div></dl>
@@ -888,7 +888,7 @@ export function PlanningClient({ initialSessions, btsIntakeYear, initialLocation
 
       <MissingDates sessions={sortedSessions} activeFormation={activeFormation} />
 
-      <PlanningHelp selectedSession={selectedSession ? { title: sessionTitle(selectedSession), dates: selectedSession.scheduleKind === 'vtc-exam' ? 'Inscription avant le ' + formatSessionDate(selectedSession.startDate) + ' · Examen théorique le ' + formatSessionDate(selectedSession.endDate) : formatSessionPeriod(selectedSession.startDate, selectedSession.endDate), location: selectedSession.location } : undefined} formation={selectedSsiapCourse?.label || selectedFormationDetails?.label} formationSlug={selectedSsiapCourse?.key || (activeFormation === 'ssiap' ? undefined : selectedFormationDetails?.slugs[0])} onRequest={() => selectedSession && openRegistration(selectedSession)} onClear={() => setSelectedSessionId(null)} />
+      <PlanningHelp selectedSession={selectedSession ? { title: sessionTitle(selectedSession), dates: selectedSession.scheduleKind === 'vtc-exam' ? 'Date limite d’inscription · ' + formatVtcDeadline(selectedSession.startDate) + ' · Théorie à partir du ' + formatSessionDate(selectedSession.endDate) : formatSessionPeriod(selectedSession.startDate, selectedSession.endDate), location: selectedSession.location } : undefined} formation={selectedSsiapCourse?.label || selectedFormationDetails?.label} formationSlug={selectedSsiapCourse?.key || (activeFormation === 'ssiap' ? undefined : selectedFormationDetails?.slugs[0])} onRequest={() => selectedSession && openRegistration(selectedSession)} onClear={() => setSelectedSessionId(null)} />
 
       {detailSession ? <SessionDetails session={detailSession} onClose={closeSessionDialog} onRequest={() => openRegistration(detailSession, true)} /> : null}
       {registrationSession ? <PlanningRegistration session={registrationSession} onClose={closeSessionDialog} /> : null}
