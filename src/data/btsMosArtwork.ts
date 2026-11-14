@@ -10,5 +10,5 @@ export const btsMosArtwork = {
   remote: { src: '/images/bts/mos-unifie-2026/cours-distance.webp', alt: 'Un étudiant participe de chez lui à un cours en direct avec sa formatrice et sa promotion.' },
   equipment: { src: '/images/bts/mos-unifie-2026/atelier-pedagogique.webp', alt: 'Une formatrice accompagne deux étudiants dans un exercice avec une centrale pédagogique et des radios.' },
   ipad: { src: '/images/bts/mos-unifie-2026/ipad.webp', alt: 'Une étudiante travaille ses cours sur une tablette avec un stylet.' },
-  london: { src: '/images/bts/mos-unifie-2026/londres.webp', alt: 'Quatre étudiants découvrent Londres ensemble au bord de la Tamise, face à Big Ben.' },
+  london: { src: '/images/bts/mos-unifie-2026/londres.webp?v=manuel-aps-4', alt: 'Quatre étudiants découvrent Londres ensemble au bord de la Tamise, face à Big Ben.' },
 } satisfies Record<string, ManualIllustration>;

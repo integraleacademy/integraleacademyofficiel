@@ -33,7 +33,7 @@ const presentations: Record<TrainingVisual, { category: string; image: string; a
   },
   sst: {
     category: 'Secourisme',
-    image: 'sst/manuel/formation.webp',
+    image: 'sst/manuel/formation.webp?v=manuel-aps-4',
     alt: 'Des stagiaires apprennent les gestes de premiers secours avec leur formateur.',
   },
   a3p: {
