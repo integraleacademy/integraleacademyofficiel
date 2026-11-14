@@ -3,10 +3,10 @@ import styles from './TrainingIllustration.module.css';
 const pictures: Record<string, string> = {
   aps: 'formation-scenes-manuel/aps-mission-acces.webp',
   ssiap: 'formation-scenes-manuel/ssiap-1-galerie-ssi.webp',
-  sst: 'sst/manuel/formation.webp',
+  sst: 'sst/manuel/formation.webp?v=manuel-aps-4',
   a3p: 'a3p/manuel/protection.webp',
   desp: 'desp/manuel/direction.webp',
-  vtc: 'vtc/manuel/accueil.webp',
+  vtc: 'vtc/manuel/accueil.webp?v=manuel-aps-4',
   mos: 'bts/manuel/mos.webp',
   mco: 'bts/manuel/mco.webp',
   ndrc: 'bts/manuel/ndrc.webp',

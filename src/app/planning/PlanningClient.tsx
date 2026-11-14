@@ -116,7 +116,7 @@ const formationFilters: {
   },
   {
     key: 'a3p',
-    image: '/images/planning-metiers/a3p.webp',
+    image: '/images/planning-metiers/a3p.webp?v=manuel-aps-4',
     filterImage: '/images/formation-scenes-manuel/a3p-mission-trajets.webp',
     label: 'A3P',
     eyebrow: 'Protection rapprochée',
@@ -162,7 +162,7 @@ const formationFilters: {
   {
     key: 'bts',
     image: '/images/bts/tenues-2026/planning.webp',
-    filterImage: '/images/formation-scenes-manuel/bts-campus-mixte.webp',
+    filterImage: '/images/formation-scenes-manuel/bts-campus-mixte.webp?v=manuel-aps-4',
     label: 'BTS',
     eyebrow: 'Alternance',
     description: 'MOS, MCO, NDRC, CI et PI',

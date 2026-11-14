@@ -24,7 +24,7 @@ const scenes = [
     title: 'Un diplôme officiel. De l’expérience.',
     description: 'Découvrez nos six BTS en alternance et construisez votre avenir.',
     action: 'Découvrir nos BTS en alternance',
-    image: '/images/formation-scenes-manuel/bts-campus-mixte.webp', alt: 'Une étudiante et un étudiant en BTS préparent ensemble un projet en classe.',
+    image: '/images/formation-scenes-manuel/bts-campus-mixte.webp?v=manuel-aps-4', alt: 'Une étudiante et un étudiant en BTS préparent ensemble un projet en classe.',
   },
 ];
 

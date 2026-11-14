@@ -4,20 +4,23 @@ import { originalArtwork } from './originalArtwork';
 export type ManualIllustration = { src: string; alt: string };
 export type ManualIllustrationMap = Partial<Record<SceneKind, ManualIllustration>>;
 
-function artwork(course: string, name: string, alt: string): ManualIllustration {
-  return { src: `/images/${course}/manuel/${name}.webp`, alt };
+const manualRevision = 'manuel-aps-4';
+
+function artwork(course: string, name: string, alt: string, version?: string): ManualIllustration {
+  const path = `/images/${course}/manuel/${name}.webp`;
+  return { src: version ? `${path}?v=${version}` : path, alt };
 }
 
 export const a3pArtwork = {
   protection: artwork('a3p', 'protection', 'Illustration du manuel A3P : une équipe accompagne une personne protégée à la sortie d’un hôtel.'),
-  briefing: artwork('a3p', 'briefing', 'Illustration du manuel A3P : préparation d’une mission en équipe autour des plans.'),
-  discretion: artwork('a3p', 'discretion', 'Illustration du manuel A3P : un agent échange avec la personne protégée.'),
-  preparation: artwork('a3p', 'preparation', 'Illustration du manuel A3P : étude des informations et préparation du dispositif.'),
-  deplacement: artwork('a3p', 'deplacement', 'Illustration du manuel A3P : une équipe de protection accompagne un déplacement pédestre.'),
-  vehicule: artwork('a3p', 'vehicule', 'Illustration du manuel A3P : arrivée de la personne protégée auprès du véhicule.'),
-  techniques: artwork('a3p', 'techniques', 'Illustration du manuel A3P : entraînement encadré aux techniques professionnelles.'),
+  briefing: artwork('a3p', 'briefing', 'Illustration du manuel A3P : préparation d’une mission en équipe autour des plans.', manualRevision),
+  discretion: artwork('a3p', 'discretion', 'Illustration du manuel A3P : un agent échange avec la personne protégée.', manualRevision),
+  preparation: artwork('a3p', 'preparation', 'Illustration du manuel A3P : étude des informations et préparation du dispositif.', manualRevision),
+  deplacement: artwork('a3p', 'deplacement', 'Illustration du manuel A3P : une équipe de protection accompagne un déplacement pédestre.', manualRevision),
+  vehicule: artwork('a3p', 'vehicule', 'Illustration du manuel A3P : arrivée de la personne protégée auprès du véhicule.', manualRevision),
+  techniques: artwork('a3p', 'techniques', 'Illustration du manuel A3P : entraînement encadré aux techniques professionnelles.', manualRevision),
   reconnaissance: { src: '/images/a3p/manuel/reconnaissance.webp?v=manuel-aps-2', alt: 'Illustration du manuel A3P : reconnaissance d’un site et vérification des itinéraires.' },
-  secours: artwork('a3p', 'secours', 'Illustration du manuel A3P : préparation et coordination d’une intervention de secours.'),
+  secours: artwork('a3p', 'secours', 'Illustration du manuel A3P : préparation et coordination d’une intervention de secours.', manualRevision),
 };
 
 export const a3pPracticeArtwork: ManualIllustrationMap = {
@@ -35,7 +38,7 @@ export const ssiapArtwork = {
   prevention: artwork('ssiap-1', 'prevention', 'Illustration du manuel SSIAP 1 : un agent explique le plan de sécurité incendie.'),
   ronde: artwork('ssiap-1', 'ronde', 'Illustration du manuel SSIAP 1 : vérification d’un dégagement lors d’une ronde.'),
   pc: artwork('ssiap-1', 'pc-securite', 'Illustration du manuel SSIAP 1 : exploitation du système de sécurité incendie au poste de sécurité.'),
-  secours: artwork('ssiap-1', 'secours', 'Illustration du manuel SSIAP 1 : un agent accueille les sapeurs-pompiers.'),
+  secours: artwork('ssiap-1', 'secours', 'Illustration du manuel SSIAP 1 : un agent accueille les sapeurs-pompiers.', manualRevision),
   assistance: artwork('ssiap-1', 'assistance', 'Illustration du manuel SSIAP 1 : un agent porte assistance à une personne en fauteuil roulant.'),
   verification: artwork('ssiap-1', 'verification', 'Illustration du manuel SSIAP 1 : contrôle du matériel et des équipements de sécurité.'),
   alerte: artwork('ssiap-1', 'levee-doute', 'Illustration du manuel SSIAP 1 : contrôle des accès lors d’une levée de doute.'),
@@ -64,13 +67,13 @@ export const ssiapLeadershipArtwork = {
 
 export const despArtwork = {
   direction: artwork('desp', 'direction', 'Illustration du manuel du dirigeant : travail en équipe sur les dossiers de l’entreprise.'),
-  projet: artwork('desp', 'projet', 'Illustration du manuel du dirigeant : étude d’un projet d’entreprise et de ses documents.'),
+  projet: artwork('desp', 'projet', 'Illustration du manuel du dirigeant : étude d’un projet d’entreprise et de ses documents.', manualRevision),
   conformite: artwork('desp', 'conformite', 'Illustration du manuel du dirigeant : vérification des documents et des obligations de sécurité privée.'),
   finances: artwork('desp', 'finances', 'Illustration du manuel du dirigeant : analyse des budgets et des prévisions financières.'),
   pilotage: artwork('desp', 'pilotage', 'Illustration du manuel du dirigeant : présentation des indicateurs et du calendrier de l’entreprise.'),
-  client: artwork('desp', 'client', 'Illustration du manuel du dirigeant : échange professionnel sur les besoins du client.'),
+  client: artwork('desp', 'client', 'Illustration du manuel du dirigeant : échange professionnel sur les besoins du client.', manualRevision),
   management: artwork('desp', 'management', 'Illustration du manuel du dirigeant : coordination d’une équipe de sécurité sur un site.'),
-  organisation: artwork('desp', 'organisation', 'Illustration du manuel du dirigeant : briefing d’équipe et organisation des missions sur plan.'),
+  organisation: artwork('desp', 'organisation', 'Illustration du manuel du dirigeant : briefing d’équipe et organisation des missions sur plan.', manualRevision),
   supervision: artwork('desp', 'supervision', 'Illustration du manuel du dirigeant : contrôle des consignes et de la prestation sur un site client.'),
 };
 
@@ -92,15 +95,15 @@ export const despPracticeArtwork: ManualIllustrationMap = {
 };
 
 export const vtcArtwork = {
-  accueil: artwork('vtc', 'accueil', 'Illustration du manuel VTC : préparation de l’itinéraire auprès du véhicule.'),
-  reglementation: artwork('vtc', 'reglementation', 'Illustration du manuel VTC : un chauffeur vérifie ses documents professionnels.'),
+  accueil: artwork('vtc', 'accueil', 'Illustration du manuel VTC : préparation de l’itinéraire auprès du véhicule.', manualRevision),
+  reglementation: artwork('vtc', 'reglementation', 'Illustration du manuel VTC : un chauffeur vérifie ses documents professionnels.', manualRevision),
   gestion: artwork('vtc', 'gestion', 'Illustration du manuel VTC : suivi des comptes et des indicateurs de l’activité.'),
   conduite: artwork('vtc', 'conduite', 'Illustration du manuel VTC : une chauffeuse attentive au volant de son véhicule.'),
-  communication: artwork('vtc', 'communication', 'Illustration du manuel VTC : un chauffeur échange avec la réception d’un hôtel.'),
-  commercial: artwork('vtc', 'commercial', 'Illustration du manuel VTC : échange sur une proposition commerciale.'),
-  profession: artwork('vtc', 'profession', 'Illustration du manuel VTC : contrôle des documents avant une prise en charge.'),
+  communication: artwork('vtc', 'communication', 'Illustration du manuel VTC : un chauffeur échange avec la réception d’un hôtel.', manualRevision),
+  commercial: artwork('vtc', 'commercial', 'Illustration du manuel VTC : échange sur une proposition commerciale.', manualRevision),
+  profession: artwork('vtc', 'profession', 'Illustration du manuel VTC : contrôle des documents avant une prise en charge.', manualRevision),
   pratique: artwork('vtc', 'pratique', 'Illustration du manuel VTC : accueil d’une famille et de ses bagages.'),
-  apprentissage: artwork('vtc', 'apprentissage', 'Illustration du manuel VTC : travail sur ordinateur et supports de formation.'),
+  apprentissage: artwork('vtc', 'apprentissage', 'Illustration du manuel VTC : travail sur ordinateur et supports de formation.', manualRevision),
 };
 
 export const vtcPracticeArtwork: ManualIllustrationMap = {
@@ -115,14 +118,14 @@ export const vtcPracticeArtwork: ManualIllustrationMap = {
 };
 
 export const sstArtwork = {
-  formation: artwork('sst', 'formation', 'Illustration du manuel SST : présentation du défibrillateur et du mannequin de formation.'),
-  prevention: artwork('sst', 'prevention', 'Illustration du manuel SST : repérage des équipements de secours dans l’entreprise.'),
-  examen: artwork('sst', 'examen', 'Illustration du manuel SST : une secouriste prend en charge un salarié assis au sol.'),
-  alerte: artwork('sst', 'alerte', 'Illustration du manuel SST : un salarié donne l’alerte pendant la prise en charge d’une brûlure.'),
-  secours: artwork('sst', 'secours', 'Illustration du manuel SST : préparation de la trousse et du matériel de premiers secours.'),
-  reanimation: artwork('sst', 'reanimation', 'Illustration du manuel SST : entraînement aux compressions thoraciques sur un mannequin.'),
-  defibrillateur: artwork('sst', 'defibrillateur', 'Illustration du manuel SST : exercice de réanimation et de défibrillation encadré par le formateur.'),
-  evaluation: artwork('sst', 'evaluation', 'Illustration du manuel SST : travail sur un support pédagogique avec le formateur.'),
+  formation: artwork('sst', 'formation', 'Illustration du manuel SST : présentation du défibrillateur et du mannequin de formation.', manualRevision),
+  prevention: artwork('sst', 'prevention', 'Illustration du manuel SST : repérage des équipements de secours dans l’entreprise.', manualRevision),
+  examen: artwork('sst', 'examen', 'Illustration du manuel SST : une secouriste prend en charge un salarié assis au sol.', manualRevision),
+  alerte: artwork('sst', 'alerte', 'Illustration du manuel SST : un salarié donne l’alerte pendant la prise en charge d’une brûlure.', manualRevision),
+  secours: artwork('sst', 'secours', 'Illustration du manuel SST : préparation de la trousse et du matériel de premiers secours.', manualRevision),
+  reanimation: artwork('sst', 'reanimation', 'Illustration du manuel SST : entraînement aux compressions thoraciques sur un mannequin.', manualRevision),
+  defibrillateur: artwork('sst', 'defibrillateur', 'Illustration du manuel SST : exercice de réanimation et de défibrillation encadré par le formateur.', manualRevision),
+  evaluation: artwork('sst', 'evaluation', 'Illustration du manuel SST : travail sur un support pédagogique avec le formateur.', manualRevision),
 };
 
 export const sstPracticeArtwork: ManualIllustrationMap = {
