@@ -1,5 +1,4 @@
 .footer {
-  margin-top: calc(2.5rem * var(--site-desktop-scale));
   padding: 1.5rem 0 .75rem;
   border-top: 2px solid #e7bc54;
   background: #1d2c40;

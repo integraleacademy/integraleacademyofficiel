@@ -1,4 +1,4 @@
-.page { --course-accent:#b6383d; --course-pale:#ffc0b6; --course-rgb:182,56,61; padding-bottom:84px; overflow-x:clip; }
+.page { --course-accent:#b6383d; --course-pale:#ffc0b6; --course-rgb:182,56,61; overflow-x:clip; }
 .page[data-course-theme='blue'] { --course-accent:#285e99; --course-pale:#b5d8ff; --course-rgb:40,94,153; }
 .page[data-course-theme='green'] { --course-accent:#17694f; --course-pale:#afe4cb; --course-rgb:23,105,79; }
 .page[data-course-theme='orange'] { --course-accent:#ac4b23; --course-pale:#ffd0ad; --course-rgb:172,75,35; }
@@ -64,7 +64,6 @@
 :global(html.dark) .page .mission :global([class*='missionNumber']) { color:var(--course-pale); }
 :global(html.dark) .section h2 :global(span[class*='decoration-']) { color:var(--course-pale); }
 @media (min-width:1024px) {
-  .page { padding-bottom:0; }
   .mobileBar { display:none; }
   .hero h1 { font-size:clamp(42px,4.1vw,60px); }
   .hero :global([class*='heroGrid']) { gap:36px; }
@@ -81,6 +80,8 @@
   .booking [data-city-sessions] > section > p:first-of-type { font-size:18px; }
 }
 @media (max-width:1023px) {
+  /* Keep the last footer links above the fixed course actions. */
+  :global(body):has(.mobileBar) :global([data-site-footer]) { padding-bottom:calc(84px + env(safe-area-inset-bottom)); }
   .booking [data-layout='cities'] { grid-template-columns:1fr; }
   .booking [data-city-summary] { max-width:600px; }
 }
