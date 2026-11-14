@@ -16,7 +16,7 @@ export type TrainingJourneyTheme = 'orange' | 'blue' | 'green' | 'red' | 'violet
 
 type TrainingJourneyProps = {
   id: string;
-  compactVisual?: boolean;
+  desktopNavigation?: 'scroll' | 'buttons';
   name: string;
   eyebrow: string;
   title: ReactNode;
@@ -29,7 +29,7 @@ function Arrow({ down = false }: { down?: boolean }) {
   return <svg className={down ? styles.downArrow : undefined} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d={down ? 'M12 4v15m-6-6 6 6 6-6' : 'M4 12h15m-6-6 6 6-6 6'} strokeLinecap="round" strokeLinejoin="round" /></svg>;
 }
 
-export function TrainingJourney({ id, name, eyebrow, title, steps, continuationHref, theme = 'orange', compactVisual = false }: TrainingJourneyProps) {
+export function TrainingJourney({ id, name, eyebrow, title, steps, continuationHref, theme = 'orange', desktopNavigation = 'scroll' }: TrainingJourneyProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef<HTMLSpanElement>(null);
@@ -60,8 +60,6 @@ export function TrainingJourney({ id, name, eyebrow, title, steps, continuationH
   }, [getBounds, steps.length]);
 
   useEffect(() => {
-    // Desktop always keeps the pinned, scroll-driven sequence. CSS fits the
-    // stage below both menus, including on shorter windows.
     const media = window.matchMedia('(min-width: 1024px)');
     const sync = () => setEnhanced(media.matches);
     sync();
@@ -72,7 +70,7 @@ export function TrainingJourney({ id, name, eyebrow, title, steps, continuationH
   }, []);
 
   useEffect(() => {
-    if (!enhanced) return;
+    if (!enhanced || desktopNavigation === 'buttons') return;
     let frame = 0;
     let bounds = getBounds();
     let measureNeeded = true;
@@ -116,7 +114,7 @@ export function TrainingJourney({ id, name, eyebrow, title, steps, continuationH
       window.removeEventListener('scroll', schedule);
       window.removeEventListener('resize', measure);
     };
-  }, [enhanced, getBounds, steps.length]);
+  }, [enhanced, desktopNavigation, getBounds, steps.length]);
 
   useEffect(() => {
     if (pendingFocusRef.current !== active) return;
@@ -134,11 +132,15 @@ export function TrainingJourney({ id, name, eyebrow, title, steps, continuationH
       return;
     }
     if (index !== active) pendingFocusRef.current = index;
-    scrollToStep(index);
+    if (desktopNavigation === 'buttons') {
+      setActive(index);
+    } else {
+      scrollToStep(index);
+    }
   }
 
   return (
-    <><section id={id} ref={sectionRef} className={styles.journey} data-enhanced={enhanced} data-theme={theme} data-navigation-only="true" data-visual-format="landscape" data-compact-visual={compactVisual || undefined} aria-labelledby={`${id}-title`}>
+    <><section id={id} ref={sectionRef} className={styles.journey} data-enhanced={enhanced} data-theme={theme} data-navigation-only="true" data-visual-format="landscape" data-desktop-navigation={desktopNavigation} aria-labelledby={`${id}-title`}>
       <div ref={stageRef} className={styles.stage}>
         <header className={styles.intro}>
           <p className={styles.eyebrow}>{eyebrow}</p>
@@ -146,7 +148,9 @@ export function TrainingJourney({ id, name, eyebrow, title, steps, continuationH
           <nav className={styles.navigation} aria-label={`Étapes du parcours ${name}`}>
             {steps.map((step, index) => <button key={step.label} type="button" aria-label={`Étape ${index + 1} : ${step.label}`} aria-current={index === active ? 'step' : undefined} onClick={() => goTo(index)}><span>0{index + 1}</span></button>)}
           </nav>
-          <div className={styles.scrollProgress} aria-hidden="true"><span ref={progressRef} /></div>
+          <div className={styles.scrollProgress} aria-hidden="true">
+            <span ref={progressRef} style={desktopNavigation === 'buttons' ? { transform: `scaleX(${(active + 1) / steps.length})` } : undefined} />
+          </div>
         </header>
         <ol className={styles.steps}>
           {steps.map((step, index) => (
