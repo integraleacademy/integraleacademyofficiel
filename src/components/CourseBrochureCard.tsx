@@ -12,8 +12,9 @@ export function CourseBrochureCard({ course }: { course: string }) {
       <div className={styles.band}>
         <div className={styles.copy}>
           <p className={styles.category}>{brochure.category}</p>
-          <h2 id="brochure-title">La brochure <em>de la formation</em></h2>
+          <h2 id="brochure-title">La brochure <em>détaillée</em></h2>
           <p className={styles.course}>{brochure.title}</p>
+          <p className={styles.details}>Dates, informations pratiques, programme et financement… Toutes les informations utiles pour préparer votre formation.</p>
           <a href={INFORMATION_REQUEST_URL} className={styles.button}>
             <svg aria-hidden="true" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
               <path d="M12 3v12m-5-5 5 5 5-5M4 16v4h16v-4" />

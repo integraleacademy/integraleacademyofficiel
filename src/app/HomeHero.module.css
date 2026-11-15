@@ -7,11 +7,14 @@
 .container { width: min(1240px, calc(100% - 64px)); min-width: 0; margin-inline: auto; }
 .heroComposition { display: grid; grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); align-items: center; gap: 48px; }
 .heroCopy { min-width: 0; padding: 8px 0 20px; }
-.heroCentres { display: flex; flex-wrap: wrap; align-items: baseline; gap: .2rem .6rem; color: rgb(var(--text-main)); }
-.heroCentres span { padding-inline-start: .65rem; border-inline-start: 3px solid rgb(var(--accent)); color: rgb(var(--text-muted)); font-size: .82rem; font-weight: 650; }
-.heroCentres a { color: inherit; font-size: clamp(1.05rem, 1.7vw, 1.38rem); font-weight: 780; letter-spacing: -.035em; text-decoration: underline; text-decoration-color: rgb(var(--accent) / .52); text-underline-offset: .2em; }
-.heroCentres a:hover, .heroCentres a:focus-visible { text-decoration-color: currentColor; }
-.heroCentres i { color: rgb(var(--accent-strong)); font-style: normal; }
+.heroCentres { display: grid; grid-template-columns: minmax(0, 2.25fr) minmax(7rem, 1fr); gap: .25rem .9rem; max-width: 38rem; color: rgb(var(--text-main)); }
+.centreLabel { grid-column: 1 / -1; margin: 0; font-size: .78rem; font-weight: 700; color: rgb(var(--text-muted)); }
+.centre { min-width: 0; }
+.centre + .centre { padding-inline-start: .85rem; border-inline-start: 1px solid rgb(var(--border)); }
+.centre a { display: inline-block; color: inherit; font-size: clamp(1.05rem, 1.7vw, 1.38rem); font-weight: 780; letter-spacing: -.035em; text-decoration: underline; text-decoration-color: rgb(var(--accent) / .6); text-underline-offset: .2em; }
+.centre a:hover, .centre a:focus-visible { text-decoration-color: currentColor; }
+.centre > span { gap: .2rem; margin-block: .35rem 0; }
+.centre > span > span { padding: .1rem .4rem; font-size: .7rem; }
 .heroCopy h1 { margin: 24px 0 0; font-size: clamp(40px, 4.2vw, 62px); font-weight: 900; letter-spacing: -.055em; line-height: 1.06; text-wrap: balance; }
 .heroCopy h1 em { position: relative; z-index: 1; display: block; width: fit-content; margin-top: 8px; color: rgb(var(--accent-strong)); font-family: Georgia, 'Times New Roman', serif; font-style: italic; font-weight: 400; letter-spacing: -.045em; transform-origin: left center; animation: homeHeightZoom 1.6s .72s both; }
 @keyframes homeHeightZoom {

@@ -546,6 +546,9 @@ export function PlanningClient({ initialSessions, initialLocation = 'all' }: { i
   const isChoosingDirector = activeFormation === 'director' && !selectedDirectorLocation;
   const isChoosingDetails = isChoosingSsiap || isChoosingDirector;
 
+  const availableLocations = activeFormation === 'director' ? directorPlanningLocations
+    : activeFormation === 'all' ? sessionLocationFilters : sessionLocationFilters.filter(location => location.key !== 'paris');
+
   const filteredSessions = useMemo(() => {
     const selectedFormation = activeFormation === 'all' ? null : formationFilters.find((formation) => formation.key === activeFormation);
     if (isChoosingDirector) return [];
@@ -590,7 +593,7 @@ export function PlanningClient({ initialSessions, initialLocation = 'all' }: { i
   function chooseFormation(formation: FormationFilterKey) {
     setActiveFormation(formation);
     setActiveSsiapCourse(null);
-    if (formation === 'ssiap' || formation === 'director') setLocationFilter('all');
+    if (formation === 'ssiap' || formation === 'director' || (formation !== 'all' && locationFilter === 'paris')) setLocationFilter('all');
     setShowAll(false);
     setSelectedSessionId(null);
     scrollToSessions();
@@ -723,7 +726,7 @@ export function PlanningClient({ initialSessions, initialLocation = 'all' }: { i
           {!isChoosingDetails ? <>
             <div className={styles.centreFilters} aria-label="Filtrer les sessions par centre">
               <span className="hidden px-3 text-[9px] font-black uppercase tracking-[.12em] text-academy-muted sm:inline">Centre</span>
-              {(activeFormation === 'director' ? directorPlanningLocations : sessionLocationFilters).map((filter) => {
+              {availableLocations.map((filter) => {
                 const selected = locationFilter === filter.key;
                 return (
                   <button
@@ -737,7 +740,7 @@ export function PlanningClient({ initialSessions, initialLocation = 'all' }: { i
                     }}
                     className={'rounded-full px-3.5 py-2.5 text-xs font-black transition sm:px-4 ' + (selected ? 'planning-neutral-action' : 'text-academy-muted hover:text-academy-ink')}
                   >
-                    {filter.label}
+                    {filter.key === 'paris' && activeFormation === 'all' ? 'Paris · DESP uniquement' : filter.label}
                   </button>
                 );
               })}

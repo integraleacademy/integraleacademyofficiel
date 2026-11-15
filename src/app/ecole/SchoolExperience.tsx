@@ -69,7 +69,7 @@ export function SchoolCampuses() {
           <Image src="/images/campus/france-implantations.svg" alt="" width={400} height={400} aria-hidden="true" />
           {(['paris', 'puget'] as const).map(id => <button key={id} id={`campus-${id}`} type="button" onClick={() => setSelected(id)} aria-pressed={selected === id} aria-controls="school-campus-detail" aria-label={`Découvrir ${schoolVisitCampuses[id]}`} className={`${school.mapPin} ${id === 'paris' ? school.parisPin : school.pugetPin} ${styles.mapButton}`}>
             <svg viewBox="0 0 28 36" aria-hidden="true"><path d="M14 1C6.8 1 1 6.8 1 14c0 9.1 13 21 13 21s13-11.9 13-21C27 6.8 21.2 1 14 1Z" /><circle cx="14" cy="14" r="4.5" /></svg>
-            <span className={school.mapLabel}>{schoolVisitCampuses[id]}<small>{id === 'paris' ? 'Île-de-France' : 'Notre siège · Côte d’Azur'}</small></span>
+            <span className={school.mapLabel}>{schoolVisitCampuses[id]}<small>{id === 'paris' ? 'DESP uniquement' : 'Notre siège · Côte d’Azur'}</small></span>
           </button>)}
         </div>
         <p className={styles.mapHint}>Cliquez sur un repère pour découvrir le lieu.</p>
@@ -81,10 +81,10 @@ export function SchoolCampuses() {
         <article id="school-campus-detail" className={`${school.addressPanel} ${styles.campusDetail}`} aria-live="polite" aria-atomic="true">
           <p className={school.eyebrow}>{isPuget ? 'Notre siège · Côte d’Azur' : 'Notre implantation · Île-de-France'}</p>
           <h3>{schoolVisitCampuses[selected]}<span>{isPuget ? 'Var · 83' : 'Paris · 75'}</span></h3>
-          <address>{location.address}</address>
           <div className={styles.campusTags}>{location.tags.map(tag => <span key={tag}>{tag}</span>)}</div>
+          <address>{location.address}</address>
           <p className={styles.campusDescription}>{isPuget ? '400 m² pour apprendre, pratiquer et échanger avec l’équipe.' : location.detail}</p>
-          <Link href={`/planning?lieu=${isPuget ? 'cote-azur' : 'paris'}#sessions`} className={`${school.button} ${styles.campusDates}`}>Voir les dates dans ce centre <Arrow /></Link>
+          <Link href={`/planning?lieu=${isPuget ? 'cote-azur' : 'paris'}#sessions`} className={`${school.button} ${styles.campusDates}`}>{isPuget ? 'Voir les dates dans ce centre' : 'Voir les dates du DESP à Paris'} <Arrow /></Link>
           <SchoolVisitButton campus={selected} className={school.textLink} label={isPuget ? 'Organiser ma visite' : 'Préparer ma venue'} />
           <div className={school.access}>{(isPuget ? ['À 500 m de l’A8', 'Parking gratuit', 'Bus 4 · Général de Gaulle'] : ['Accueil selon les sessions', 'Venue à convenir avec l’équipe']).map(item => <span key={item}>{item}</span>)}</div>
         </article>
@@ -131,7 +131,7 @@ function VisitDialog({ campus, onClose }: { campus: SchoolVisitCampus; onClose: 
     <div className={styles.dialogHeading}><div><p className={school.eyebrow}>Faisons connaissance</p><h2 id="school-visit-title">{success ? 'Votre demande est enregistrée.' : 'Préparons votre visite.'}</h2></div><button type="button" onClick={onClose} aria-label="Fermer la demande de visite">×</button></div>
     <div className={styles.requestSummary}><strong>Motif : visite de l’école</strong><span>Lieu : {schoolVisitCampuses[campus]}</span></div>
     {success ? <div role="status"><p id="school-visit-intro">Notre équipe dispose de votre demande et de vos coordonnées. Nous vous recontacterons pour convenir par téléphone de la date de votre visite.</p><p className={styles.formHint}>Votre visite sera confirmée avec l’équipe.</p><button type="button" className={school.button} onClick={onClose}>Revenir à la découverte de l’école</button></div> : <form onSubmit={submit} className={styles.visitForm}>
-      <p id="school-visit-intro">Indiquez vos coordonnées et, si vous le souhaitez, vos disponibilités. {campus === 'paris' ? 'L’accueil à Paris s’organise selon les sessions.' : 'Nous préparerons votre venue à Puget-sur-Argens.'}</p>
+      <p id="school-visit-intro">Indiquez vos coordonnées et, si vous le souhaitez, vos disponibilités. {campus === 'paris' ? 'Le centre parisien accueille les sessions du DESP uniquement.' : 'Nous préparerons votre venue à Puget-sur-Argens.'}</p>
       <div className={styles.fieldPair}><label>Prénom<input name="firstName" autoComplete="given-name" required maxLength={80} /></label><label>Nom<input name="lastName" autoComplete="family-name" required maxLength={80} /></label></div>
       <div className={styles.fieldPair}><label>Adresse e-mail<input name="email" type="email" autoComplete="email" required maxLength={120} /></label><label>Téléphone<input name="phone" type="tel" autoComplete="tel" required maxLength={40} minLength={8} /></label></div>
       <label>Votre projet ou vos disponibilités <span className={styles.optional}>(facultatif)</span><textarea name="message" rows={3} maxLength={800} placeholder="La formation qui vous intéresse, les jours où vous pouvez venir…" /></label>

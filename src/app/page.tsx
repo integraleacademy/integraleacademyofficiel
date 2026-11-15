@@ -5,6 +5,8 @@ import { HomeHeroIllustrations } from '@/components/HomeHeroIllustrations';
 import { AcademyJourney } from '@/components/AcademyExperience';
 import { BtsTrainingGrid, type BtsTrainingHighlight } from '@/components/BtsTrainingGrid';
 import { BtsTrainingComparisonModal } from '@/components/BtsTrainingComparisonModal';
+import { CampusFormationTags } from '@/components/CampusFormationTags';
+import { locations } from '@/data/locations';
 import { CampusSection } from '@/components/CampusSection';
 import { GoogleReviewsSection } from '@/components/GoogleReviewsSection';
 import { listPublicGoogleReviews } from '@/lib/google-reviews-data';
@@ -97,7 +99,7 @@ const proofItems = [
   ['400 m²', 'École principale'],
   ['Qualiopi', 'Certification qualité'],
   ['CNAPS · ADEF', 'Agréments métiers'],
-  ['2 centres', 'Côte d’Azur et Paris'],
+  ['2 centres', 'Côte d’Azur · Paris pour le DESP'],
 ] as const;
 
 export default async function Home() {
@@ -112,10 +114,13 @@ export default async function Home() {
           <div className={heroStyles.heroComposition}>
             <div className={heroStyles.heroCopy}>
               <div className={heroStyles.heroCentres} data-home-hero-item>
-                <span>Nos deux centres</span>
-                <a href="#centre-cote-azur">Côte d’Azur</a>
-                <i aria-hidden="true">·</i>
-                <a href="#centre-paris">Paris</a>
+                <p className={heroStyles.centreLabel}>Nos deux centres</p>
+                {locations.map(centre => (
+                  <div key={centre.id} className={heroStyles.centre}>
+                    <a href={`#centre-${centre.planningKey}`}>{centre.shortName}</a>
+                    <CampusFormationTags tags={centre.tags} />
+                  </div>
+                ))}
               </div>
               <h1 id="home-hero-title" data-home-hero-item>Votre futur métier mérite une formation <em>à la hauteur.</em></h1>
               <p data-home-hero-item>Des formations en sécurité, VTC et BTS, et une équipe à vos côtés pour construire la suite.</p>

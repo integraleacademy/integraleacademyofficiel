@@ -64,7 +64,7 @@
 .sectionHeading h2, .approachCopy h2 { margin-top: 16px; }
 .sectionHeading > p { max-width: 410px; color: var(--muted); font-size: 15px; line-height: 1.8; }
 .founderSection { background: rgb(var(--surface)); border-bottom: 1px solid rgb(var(--border) / .6); }
-.founderGrid { display: grid; grid-template-columns: 1.2fr .85fr; align-items: center; gap: 80px; }
+.founderGrid { display: grid; grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); align-items: center; gap: 80px; }
 .founderCopy h2 { margin-top: 18px; }
 .founderCopy .founderRole { margin-top: 10px; color: var(--gold); font-size: 14px; font-weight: 800; }
 .founderCopy .founderLead { margin-block: 26px 20px; font-size: 24px; font-weight: 800; line-height: 1.35; letter-spacing: -.025em; }
@@ -72,9 +72,6 @@
 .founderCopy > p:not(.eyebrow):not(.founderRole):not(.founderLead) { margin-top: 16px; color: var(--muted); font-size: 15px; }
 .founderValues { display: flex; flex-wrap: wrap; gap: 10px; margin-block: 23px; }
 .founderValues span { padding: 6px 12px; background: rgb(var(--accent) / .1); border: 1px solid rgb(var(--accent) / .25); border-radius: 999px; color: var(--gold); font-size: 11px; font-weight: 800; }
-.page .packPhoto { width: 100%; max-width: 360px; margin-inline: auto; background: #fffdfa; border: 1px solid #ded6c9; border-radius: 18px; overflow: hidden; box-shadow: 0 20px 50px rgb(8 22 38 / .1); transform: rotate(2deg); }
-.packPhoto img { display: block; width: 100%; height: auto; }
-.packPhoto figcaption { padding: 15px 18px; border-top: 1px solid #eee7dc; color: #463a2a; font-size: 11px; font-weight: 600; }
 .teamLayout { display: grid; grid-template-columns: .85fr 1.15fr; align-items: center; gap: 40px; }
 .teamIllustration, .approachIllustration { min-width: 0; overflow: hidden; background: rgb(var(--surface)); border: 1px solid var(--line); border-radius: 28px; }
 .teamIllustration img, .approachIllustration img { display: block; width: 100%; height: auto; }
@@ -185,7 +182,7 @@
   .chapterNav > span { display: none; }
   .section { padding-block: 72px; }
   .founderGrid, .campusLayout, .approachGrid, .sectionHeading, .visitGrid { gap: 40px; }
-  .founderGrid { grid-template-columns: 1.15fr .85fr; }
+  .founderGrid { grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); }
   .teamLayout { grid-template-columns: 1fr; gap: 30px; }
   .teamIllustration { max-width: 650px; justify-self: center; }
   .teamGrid { grid-template-columns: repeat(4, 1fr); gap: 14px; }
@@ -206,7 +203,6 @@
   .page h2 { font-size: 38px; }
   .sectionHeading { align-items: flex-start; flex-direction: column; gap: 22px; margin-bottom: 30px; } .sectionHeading > p { max-width: 100%; }
   .founderGrid, .campusLayout, .approachGrid { grid-template-columns: 1fr; gap: 38px; }
-  .page .packPhoto { max-width: 330px; transform: none; }
   .teamGrid { grid-template-columns: repeat(2, 1fr); gap: 18px; } .person { padding: 22px; }
   .teamBottom { align-items: flex-start; flex-direction: column; gap: 18px; }
   .addressPanel { padding: 28px; }

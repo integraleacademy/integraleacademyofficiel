@@ -302,7 +302,7 @@ export default function EntreprisesPage() {
         <div className={styles.partnerCard}><div><span className={styles.ribbon}>Notre engagement</span><h3>Un partenaire.<br />Toute la filière sécurité.</h3></div><ul>{heroBenefits.map((benefit) => <li key={benefit}><Icon name="check" />{benefit}</li>)}</ul></div>
         <div className={styles.catalogHeading}><span className={styles.sectionEyebrow}>Au-delà du recrutement</span><h3>Maintenir et développer les compétences.</h3></div>
         <div className={styles.catalogGrid}>{catalog.map((item) => <article key={item.title}><Icon name={item.icon} /><h4>{item.title}</h4><p>{item.text}</p></article>)}</div>
-        <div className={styles.proofBar}><span><Icon name="check" />Qualiopi</span><span><Icon name="shield" />Autorisation CNAPS</span><span>France Travail</span><span>OPCO AKTO</span><span>Côte d’Azur · Paris</span></div>
+        <div className={styles.proofBar}><span><Icon name="check" />Qualiopi</span><span><Icon name="shield" />Autorisation CNAPS</span><span>France Travail</span><span>OPCO AKTO</span><span>Côte d’Azur · Paris pour le DESP</span></div>
       </div>
     </section>
 

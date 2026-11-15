@@ -12,7 +12,7 @@
   position: relative;
   isolation: isolate;
   display: grid;
-  grid-template-columns: minmax(0, 47fr) minmax(0, 53fr);
+  grid-template-columns: minmax(0, 40fr) minmax(0, 60fr);
 }
 
 .copy {
@@ -69,8 +69,6 @@
   font-weight: 730;
   text-decoration: none;
 }
-/* The photographs and the visible control share a single keyboard stop. */
-.watch::after { position: absolute; inset: 0; z-index: 2; content: ''; }
 .play {
   display: grid;
   place-items: center;
@@ -95,11 +93,11 @@
 
 .photos {
   display: grid;
-  grid-template-columns: minmax(0, 62fr) minmax(0, 38fr);
+  grid-template-columns: minmax(0, 1.4fr) clamp(200px, min(20vw, 40svh), 22rem) minmax(0, 1fr);
   gap: 3px;
-  min-height: clamp(24rem, 31vw, 40rem);
   background: var(--report-paper);
 }
+.photos .video { align-self: center; width: 100%; height: auto; min-height: 0; aspect-ratio: 9 / 16; }
 .portrait, .terrain { position: relative; min-width: 0; overflow: hidden; }
 .photos img { object-fit: cover; }
 .portrait img { object-position: 51% 30%; }
@@ -107,7 +105,10 @@
 
 @media (max-width: 760px) {
   .spread { grid-template-columns: minmax(0, 1fr); }
-  .photos { grid-row: 1; min-height: 0; height: clamp(12rem, 59vw, 21rem); gap: 2px; }
+  .photos { grid-row: 1; grid-template-columns: clamp(200px, 64vw, 22rem) minmax(0, 1fr); grid-template-rows: 1fr 1fr; gap: 2px; }
+  .photos .video { grid-area: 1 / 1 / 3 / 2; }
+  .photos .portrait { grid-area: 1 / 2; }
+  .photos .terrain { grid-area: 2 / 2; }
   .copy { padding: clamp(1.6rem, 5vw, 2.25rem) clamp(1.25rem, 5vw, 2.5rem) 2.25rem; }
   .headline { margin-block-start: 1.1rem; font-size: clamp(2.15rem, 7.7vw, 3.5rem); }
   .description { margin-block-start: 1rem; }
