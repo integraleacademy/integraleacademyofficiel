@@ -35,7 +35,6 @@ test('Institutional pages use gold; each training retains its own colour', () =>
     'src/app/page.tsx': 'gold',
     'src/app/financements/page.tsx': 'gold',
     'src/app/entreprises/page.tsx': 'gold',
-    'src/app/planning/PlanningHelp.tsx': 'gold',
     'src/components/SstReferencePage.tsx': 'green',
     'src/components/A3pReferencePage.tsx': 'green',
     'src/components/ApsReferencePage.tsx': 'blue',

@@ -85,10 +85,51 @@ export function TrainingReferenceCampus({ title = 'Découvrez votre cadre de for
 }
 
 export function TrainingReferenceContact({ description, title, href, additionalActions, assurances = [], portraitMedallion = false, schoolStyle = false }: { description: ReactNode; title?: string; href: string; additionalActions?: ReactNode; assurances?: readonly string[]; portraitMedallion?: boolean; schoolStyle?: boolean }) {
-  return <section className={schoolStyle ? editorial.schoolContact : `${reference.contact} ${styles.contact}`} aria-labelledby="course-contact-title"><div className={schoolStyle ? editorial.schoolInner : `${reference.container} ${reference.contactGrid}`}>
-    <div><p className={reference.eyebrow}>Une question sur votre projet ?</p><h2 id="course-contact-title" className={reference.sectionTitle}>Faites le premier pas<br /><em>vers votre futur métier.</em></h2><div className={reference.intro}>{title && <p className="mb-3 font-bold">{title}</p>}{description}</div><p className={reference.small}>Notre équipe vous accompagne pour choisir la formation adaptée à votre projet et vous aider à concrétiser votre avenir professionnel.</p><div className={reference.supportPills}>{['Choisir son parcours', 'Préparer son dossier', 'Étudier son financement', ...assurances].map(item => <span key={item}>{item}</span>)}</div><Link href="/ecole#equipe" className={reference.textLink}>Rencontrer les personnes qui vous accompagnent ↗</Link></div>
-    <div className={schoolStyle ? editorial.adviser : reference.contactCard}><TeamPortrait person="cassandre" size={240} alt="Memoji de Cassandre, responsable commerciale Intégrale Academy" className={`${reference.portrait} ${portraitMedallion ? styles.portraitMedallion : ''}`} /><p className={reference.eyebrow}>Votre conseillère · Contactez Cassandre</p><h3>Cassandre</h3><p>Responsable commerciale — Intégrale Academy</p><a className={reference.phone} href="tel:0422470768">04 22 47 07 68</a><TrainingReferenceAction href={href}>Réserver un rendez-vous téléphonique →</TrainingReferenceAction>{additionalActions}<a className={reference.textLink} href="tel:0422470768">Appeler Cassandre</a><small>Échange gratuit et sans engagement</small></div>
-  </div></section>;
+  const heading = <>
+    <p className={schoolStyle ? editorial.schoolLabel : reference.eyebrow}>Une question sur votre projet ?</p>
+    <h2 id="course-contact-title" className={schoolStyle ? editorial.schoolTitle : reference.sectionTitle}>
+      Faites le premier pas<br /><em>vers votre futur métier.</em>
+    </h2>
+  </>;
+  const intro = <>
+    <div className={schoolStyle ? editorial.description : reference.intro}>{title && <p className="mb-3 font-bold">{title}</p>}{description}</div>
+    <p className={schoolStyle ? editorial.support : reference.small}>Notre équipe vous accompagne pour choisir la formation adaptée à votre projet et vous aider à concrétiser votre avenir professionnel.</p>
+    <div className={schoolStyle ? editorial.assurances : reference.supportPills}>
+      {['Choisir son parcours', 'Préparer son dossier', 'Étudier son financement', ...assurances].map(item => <span key={item}>{item}</span>)}
+    </div>
+    <Link href="/ecole#equipe" className={schoolStyle ? editorial.teamLink : reference.textLink}>Rencontrer les personnes qui vous accompagnent <span aria-hidden="true">↗︎</span></Link>
+  </>;
+  const portrait = <TeamPortrait person="cassandre" size={240} alt="Memoji de Cassandre, responsable commerciale Intégrale Academy" className={schoolStyle ? editorial.adviserPortrait : `${reference.portrait} ${portraitMedallion ? styles.portraitMedallion : ''}`} />;
+  const identity = <>
+    <p className={schoolStyle ? editorial.adviserLabel : reference.eyebrow}>Votre conseillère · Contactez Cassandre</p>
+    <h3>Cassandre</h3>
+    <p className={schoolStyle ? editorial.adviserRole : undefined}>Responsable commerciale — Intégrale Academy</p>
+  </>;
+  const appointment = <TrainingReferenceAction href={href}>Réserver un rendez-vous téléphonique →</TrainingReferenceAction>;
+  const reassurance = <small>Échange gratuit et sans engagement</small>;
+
+  if (schoolStyle) return (
+    <section className={editorial.schoolContact} aria-labelledby="course-contact-title">
+      <div className={editorial.schoolInner}>
+        <div className={editorial.schoolIntro}>
+          <header>{heading}</header>
+          <div>{intro}</div>
+        </div>
+        <div className={editorial.adviser}>
+          <div className={editorial.person}>{portrait}{identity}</div>
+          <a className={editorial.call} href="tel:0422470768"><span>Appeler Cassandre</span><strong>04 22 47 07 68</strong></a>
+          <div className={editorial.appointment}>{appointment}{additionalActions}{reassurance}</div>
+        </div>
+      </div>
+    </section>
+  );
+
+  return <section className={`${reference.contact} ${styles.contact}`} aria-labelledby="course-contact-title">
+    <div className={`${reference.container} ${reference.contactGrid}`}>
+      <div>{heading}{intro}</div>
+      <div className={reference.contactCard}>{portrait}{identity}<a className={reference.phone} href="tel:0422470768">04 22 47 07 68</a>{appointment}{additionalActions}<a className={reference.textLink} href="tel:0422470768">Appeler Cassandre</a>{reassurance}</div>
+    </div>
+  </section>;
 }
 
 export function TrainingReferenceMobileBar({ href = '#dates-tarifs', label = 'Voir les dates & tarifs' }: { href?: string; label?: string }) {

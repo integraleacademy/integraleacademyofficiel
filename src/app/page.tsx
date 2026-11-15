@@ -97,7 +97,7 @@ const proofItems = [
   ['400 m²', 'École principale'],
   ['Qualiopi', 'Certification qualité'],
   ['CNAPS · ADEF', 'Agréments métiers'],
-  ['2 centres', 'Selon les sessions'],
+  ['2 centres', 'Côte d’Azur et Paris'],
 ] as const;
 
 export default async function Home() {
@@ -111,7 +111,12 @@ export default async function Home() {
         <div className={heroStyles.container}>
           <div className={heroStyles.heroComposition}>
             <div className={heroStyles.heroCopy}>
-              <span className={heroStyles.heroBadge} data-home-hero-item><i aria-hidden="true" /> Intégrale Academy · fondée en 2018</span>
+              <div className={heroStyles.heroCentres} data-home-hero-item>
+                <span>Nos deux centres</span>
+                <a href="#centre-cote-azur">Côte d’Azur</a>
+                <i aria-hidden="true">·</i>
+                <a href="#centre-paris">Paris</a>
+              </div>
               <h1 id="home-hero-title" data-home-hero-item>Votre futur métier mérite une formation <em>à la hauteur.</em></h1>
               <p data-home-hero-item>Des formations en sécurité, VTC et BTS, et une équipe à vos côtés pour construire la suite.</p>
               <div className={heroStyles.heroActions} data-home-hero-item>
@@ -123,7 +128,7 @@ export default async function Home() {
               <div className={heroStyles.heroProofs} data-home-hero-item aria-label="Points forts d’Intégrale Academy">
                 <span>Formations réglementées</span>
                 <span>Financements possibles</span>
-                <span>Côte d’Azur · Paris</span>
+                <span>École fondée en 2018</span>
               </div>
             </div>
             <HomeHeroIllustrations />
@@ -178,7 +183,7 @@ export default async function Home() {
             <p className={carouselStyles.formats}>Sur notre campus à <strong>{btsCommon.onsiteLocation}</strong> ou <strong>en visioconférence</strong>.</p>
             <div className={carouselStyles.actions}>
               <BtsTrainingComparisonModal items={btsHighlights} className={carouselStyles.secondary} />
-              <Link href="/planning" className={carouselStyles.secondary}>Voir les rentrées <span aria-hidden="true">→</span></Link>
+              <Link href="/bts#formations-bts" className={carouselStyles.secondary}>Découvrir les six BTS <span aria-hidden="true">→</span></Link>
             </div>
           </div>
         </div>

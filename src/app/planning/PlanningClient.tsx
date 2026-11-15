@@ -13,14 +13,13 @@ import { SsiapCourseChoices } from './SsiapCourseChoices';
 import { DirectorLocationChoices } from './DirectorLocationChoices';
 import { formatVtcDeadline, formatVtcExamDate, vtcCourse } from '@/data/vtc';
 import styles from './planning.module.css';
-import { PlanningHelp } from './PlanningHelp';
 import { PlanningPreview } from './PlanningPreview';
 import { PlanningCalendar } from './PlanningCalendar';
 import { PlanningRegistration } from './PlanningRegistration';
 
 type Session = any;
-type CategoryKey = 'security' | 'fire' | 'vtc' | 'bts';
-type FormationFilterKey = 'all' | 'aps' | 'a3p' | 'director' | 'ssiap' | 'vtc' | 'bts';
+type CategoryKey = 'security' | 'fire' | 'vtc';
+type FormationFilterKey = 'all' | 'aps' | 'a3p' | 'director' | 'ssiap' | 'vtc';
 type ViewMode = 'list' | 'calendar';
 type PlanningAccent = 'blue' | 'green' | 'orange' | 'red' | 'violet' | 'gold';
 
@@ -43,53 +42,6 @@ type IconName =
   | 'search'
   | 'screen'
   | 'sparkles';
-
-const categorySections: {
-  key: CategoryKey;
-  title: string;
-  shortTitle: string;
-  intro: string;
-  slugs: string[];
-}[] = [
-  {
-    key: 'security',
-    title: 'Formations sécurité privée',
-    shortTitle: 'Sécurité privée',
-    intro: 'APS, A3P et direction d’entreprise de sécurité privée.',
-    slugs: ['aps', 'a3p', 'a3p-apr', 'desp', 'desp-dssp', 'desp-initial', 'desp-vae'],
-  },
-  {
-    key: 'fire',
-    title: 'Formations sécurité incendie',
-    shortTitle: 'Sécurité incendie',
-    intro: 'SSIAP 1, SSIAP 2, SSIAP 3, recyclages et remises à niveau.',
-    slugs: ['ssiap-1', 'ssiap1', 'ssiap-2', 'ssiap2', 'ssiap-3', 'ssiap3', 'recyclage-remise-a-niveau-ssiap'],
-  },
-  {
-    key: 'vtc',
-    title: 'Formation Chauffeur VTC',
-    shortTitle: 'VTC',
-    intro: 'Préparation complète au métier et à l’examen VTC.',
-    slugs: ['vtc'],
-  },
-  {
-    key: 'bts',
-    title: 'BTS en alternance',
-    shortTitle: 'BTS',
-    intro: 'Diplômes d’État préparés en alternance avec l’entreprise.',
-    slugs: [
-      'bts',
-      'bts-mos',
-      'bts-mco',
-      'bts-ndrc',
-      'bts-ci',
-      'commerce-international',
-      'bts-professions-immobilieres',
-      'bts-pi',
-      'comptabilite-gestion',
-    ],
-  },
-];
 
 const formationFilters: {
   key: Exclude<FormationFilterKey, 'all'>;
@@ -158,27 +110,6 @@ const formationFilters: {
     category: 'vtc',
     slugs: ['vtc'],
     accent: 'violet',
-  },
-  {
-    key: 'bts',
-    image: '/images/bts/tenues-2026/planning.webp',
-    filterImage: '/images/formation-scenes-manuel/bts-campus-mixte.webp?v=manuel-aps-4',
-    label: 'BTS',
-    eyebrow: 'Alternance',
-    description: 'MOS, MCO, NDRC, CI, PI et CG',
-    category: 'bts',
-    slugs: [
-      'bts',
-      'bts-mos',
-      'bts-mco',
-      'bts-ndrc',
-      'bts-ci',
-      'commerce-international',
-      'bts-professions-immobilieres',
-      'bts-pi',
-      'comptabilite-gestion',
-    ],
-    accent: 'gold',
   },
 ];
 
@@ -270,7 +201,6 @@ function formationMatchesSlug(formation: (typeof formationFilters)[number], slug
   if (formation.slugs.includes(slug)) return true;
   if (formation.key === 'director') return slug.startsWith('desp') || slug.startsWith('dssp');
   if (formation.key === 'ssiap') return slug.includes('ssiap');
-  if (formation.key === 'bts') return slug.startsWith('bts-');
   return false;
 }
 
@@ -517,27 +447,6 @@ function SessionDetails({ session, onClose, onRequest }: { session: Session; onC
   </dialog>;
 }
 
-function BtsIntakes({ year }: { year: number }) {
-  return <article className="planning-theme-gold mt-6 rounded-[1.6rem] border border-academy-line/70 bg-white p-5 shadow-soft dark:border-white/10 dark:bg-white/5 sm:p-7">
-    <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
-      <div>
-        <h3 className="text-2xl font-black text-academy-ink dark:text-white">BTS en alternance</h3>
-        <div className="mt-4 grid gap-3 sm:grid-cols-2">
-          <p className="rounded-2xl border border-academy-line/60 bg-academy-bg/55 p-4 text-sm font-semibold text-academy-muted dark:border-white/10 dark:bg-white/5">
-            Prochaine rentrée : <strong className="text-academy-ink dark:text-white">septembre {year}</strong>
-          </p>
-          <p className="rounded-2xl border border-academy-line/60 bg-academy-bg/55 p-4 text-sm font-semibold text-academy-muted dark:border-white/10 dark:bg-white/5">
-            Rentrée suivante : <strong className="text-academy-ink dark:text-white">septembre {year + 1}</strong>
-          </p>
-        </div>
-      </div>
-      <Link href="/bts" className="planning-neutral-action inline-flex items-center justify-center gap-2 rounded-full px-5 py-3.5 text-sm font-black transition hover:-translate-y-0.5">
-        En savoir plus <Icon name="arrow" className="h-4 w-4" />
-      </Link>
-    </div>
-  </article>;
-}
-
 function MissingDates({
   sessions,
   activeFormation,
@@ -610,7 +519,7 @@ function MissingDates({
   );
 }
 
-export function PlanningClient({ initialSessions, btsIntakeYear, initialLocation = 'all' }: { initialSessions: Session[]; btsIntakeYear: number; initialLocation?: SessionLocationFilterKey }) {
+export function PlanningClient({ initialSessions, initialLocation = 'all' }: { initialSessions: Session[]; initialLocation?: SessionLocationFilterKey }) {
   const sortedSessions = useMemo(
     () => [...initialSessions].sort((a, b) => +new Date(a.startDate) - +new Date(b.startDate)),
     [initialSessions],
@@ -718,11 +627,11 @@ export function PlanningClient({ initialSessions, btsIntakeYear, initialLocation
               Planning des formations
             </span>
             <h1 className={`mt-6 font-black tracking-[-.045em] ${styles.heroTitle}`}>
-              Trouvez votre formation.<br />
-              <em className="text-[#b9820a]">Choisissez votre date.</em>
+              Consultez les dates,<br />{' '}
+              <em className="text-[#b9820a]">trouvez votre formation.</em>
             </h1>
             <p className="mt-6 max-w-2xl text-base font-semibold leading-8 text-[#5f625f] sm:text-lg">
-              APS, A3P, Dirigeant, Sécurité incendie, VTC ou BTS : accédez directement au bon parcours, comparez les rentrées et vérifiez les places disponibles.
+              Consultez les prochaines sessions en sécurité privée, en sécurité incendie et en VTC. Choisissez votre centre et vérifiez les places disponibles.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <a href="#choisir-formation" className="inline-flex items-center justify-center gap-2 rounded-full bg-[#111b2a] px-6 py-4 text-sm font-black text-white transition hover:-translate-y-0.5">
@@ -736,7 +645,7 @@ export function PlanningClient({ initialSessions, btsIntakeYear, initialLocation
             </div>
           </div>
 
-          <PlanningPreview key={`${activeFormation}-${activeSsiapCourse}-${selectedDirectorLocation?.key}`} formations={previewFormations} initialFormation={activeFormation} initialSsiapCourse={activeSsiapCourse} initialDirectorLocation={selectedDirectorLocation?.key} btsIntakeYear={btsIntakeYear} onChoose={(key, course, location) => showFormationDates(key as FormationFilterKey, course, location)} />
+          <PlanningPreview key={`${activeFormation}-${activeSsiapCourse}-${selectedDirectorLocation?.key}`} formations={previewFormations} initialFormation={activeFormation} initialSsiapCourse={activeSsiapCourse} initialDirectorLocation={selectedDirectorLocation?.key} onChoose={(key, course, location) => showFormationDates(key as FormationFilterKey, course, location)} />
         </div>
       </section>
 
@@ -754,7 +663,7 @@ export function PlanningClient({ initialSessions, btsIntakeYear, initialLocation
             </button>
           </div>
 
-          <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+          <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
             {formationFilters.map((formation, index) => {
               const count = formationSessionCounts[formation.key];
               const selected = activeFormation === formation.key;
@@ -774,7 +683,7 @@ export function PlanningClient({ initialSessions, btsIntakeYear, initialLocation
                   <span className="mt-5 block text-xl font-black tracking-tight">{formation.label}</span>
                   <span className="mt-2 block text-xs font-semibold leading-5 text-white/48">{formation.description}</span>
                   <span className="mt-auto flex items-center justify-between border-t border-white/10 pt-4 text-[10px] font-black uppercase tracking-[.08em]">
-                    {formation.key === 'director' ? 'Choisir mon centre' : formation.key === 'ssiap' ? 'Choisir mon parcours' : formation.key === 'bts' ? `Rentrées ${btsIntakeYear} et ${btsIntakeYear + 1}` : count ? count + (count > 1 ? ' sessions' : ' session') : 'Créer une alerte'}
+                    {formation.key === 'director' ? 'Choisir mon centre' : formation.key === 'ssiap' ? 'Choisir mon parcours' : count ? count + (count > 1 ? ' sessions' : ' session') : 'Créer une alerte'}
                     <span className={'grid h-7 w-7 place-items-center rounded-full transition group-hover:translate-x-1 ' + (selected ? 'bg-academy-gold text-academy-gold-text' : 'bg-white/10 text-white')}>
                       <Icon name="arrow" className="h-3.5 w-3.5" />
                     </span>
@@ -798,10 +707,10 @@ export function PlanningClient({ initialSessions, btsIntakeYear, initialLocation
             <p>Choisissez votre niveau, puis le type de formation qui vous concerne.</p>
           </div> : <div>
             <p role="status" aria-live="polite" aria-atomic="true" className="text-2xl font-black text-academy-ink dark:text-white"><span key={`${activeFormation}-${activeSsiapCourse}-${locationFilter}`} className={styles.countEnter}>
-              {activeFormation === 'bts' ? 'Rentrées BTS' : filteredSessions.length + (filteredSessions.length > 1 ? ' sessions disponibles' : ' session disponible')}
+              {filteredSessions.length + (filteredSessions.length > 1 ? ' sessions disponibles' : ' session disponible')}
             </span></p>
             <p className="mt-1 text-sm font-semibold text-academy-muted">
-              {activeFormation === 'bts' ? 'BTS en alternance' : view === 'list' ? 'Triées par prochaine date de rentrée ou échéance d’inscription' : 'Affichées dans le calendrier'}
+              {view === 'list' ? 'Triées par prochaine date de rentrée ou échéance d’inscription' : 'Affichées dans le calendrier'}
             </p>
           </div>}
 
@@ -811,7 +720,7 @@ export function PlanningClient({ initialSessions, btsIntakeYear, initialLocation
               if (course) chooseSsiapCourse(course.key);
               else chooseFormation(event.target.value as FormationFilterKey);
             }}><option value="all">Toutes les formations</option>{formationFilters.map(formation => <option key={formation.key} value={formation.key}>{formation.key === 'ssiap' ? 'Sécurité incendie — Choisir un parcours' : formation.label}</option>)}{ssiapPlanningGroups.map(group => <optgroup key={group.key} label={`Sécurité incendie · ${group.label}`}>{ssiapPlanningCourses.filter(course => course.group === group.key).map(course => <option key={course.key} value={course.key}>{course.label}</option>)}</optgroup>)}</select></label>}
-          {activeFormation !== 'bts' && !isChoosingDetails ? <>
+          {!isChoosingDetails ? <>
             <div className={styles.centreFilters} aria-label="Filtrer les sessions par centre">
               <span className="hidden px-3 text-[9px] font-black uppercase tracking-[.12em] text-academy-muted sm:inline">Centre</span>
               {(activeFormation === 'director' ? directorPlanningLocations : sessionLocationFilters).map((filter) => {
@@ -845,7 +754,7 @@ export function PlanningClient({ initialSessions, btsIntakeYear, initialLocation
         {selectedSsiapCourse && <div className={styles.ssiapSelected}><div><p>Sécurité incendie · {ssiapPlanningGroups.find(group => group.key === selectedSsiapCourse.group)?.label}</p><strong>{selectedSsiapCourse.label}</strong></div><button type="button" onClick={() => chooseFormation('ssiap')}>Changer de parcours</button></div>}
         {selectedDirectorLocation && <div className={styles.ssiapSelected}><div><p>Formation DIRIGEANT · DESP / DSSP</p><strong>{selectedDirectorLocation.label}</strong></div><button type="button" onClick={() => chooseFormation('director')}>Changer de lieu</button></div>}
         <div key={resultKey} className={styles.resultEnter}>
-        {isChoosingDirector ? <DirectorLocationChoices sessions={previewFormations.find(formation => formation.key === 'director')!.sessions} onChoose={chooseDirectorLocation} /> : isChoosingSsiap ? <SsiapCourseChoices sessions={sortedSessions} onChoose={chooseSsiapCourse} /> : activeFormation === 'bts' ? <BtsIntakes year={btsIntakeYear} /> : filteredSessions.length ? (
+        {isChoosingDirector ? <DirectorLocationChoices sessions={previewFormations.find(formation => formation.key === 'director')!.sessions} onChoose={chooseDirectorLocation} /> : isChoosingSsiap ? <SsiapCourseChoices sessions={sortedSessions} onChoose={chooseSsiapCourse} /> : filteredSessions.length ? (
           view === 'list' ? (
             <>
               <div className="mt-6 grid gap-4">
@@ -885,13 +794,10 @@ export function PlanningClient({ initialSessions, btsIntakeYear, initialLocation
             </div>
           </div>
         )}
-        {activeFormation === 'all' && (locationFilter === 'all' || locationFilter === 'cote-azur') ? <BtsIntakes year={btsIntakeYear} /> : null}
         </div>
       </section>
 
       <MissingDates sessions={sortedSessions} activeFormation={activeFormation} />
-
-      <PlanningHelp selectedSession={selectedSession ? { title: sessionTitle(selectedSession), dates: selectedSession.scheduleKind === 'vtc-exam' ? 'Date limite d’inscription · ' + formatVtcDeadline(selectedSession.startDate) + ' · Théorie à partir du ' + formatSessionDate(selectedSession.endDate) : formatSessionPeriod(selectedSession.startDate, selectedSession.endDate), location: selectedSession.location } : undefined} formation={selectedSsiapCourse?.label || selectedFormationDetails?.label} formationSlug={selectedSsiapCourse?.key || (activeFormation === 'ssiap' ? undefined : selectedFormationDetails?.slugs[0])} onRequest={() => selectedSession && openRegistration(selectedSession)} onClear={() => setSelectedSessionId(null)} />
 
       {detailSession ? <SessionDetails session={detailSession} onClose={closeSessionDialog} onRequest={() => openRegistration(detailSession, true)} /> : null}
       {registrationSession ? <PlanningRegistration session={registrationSession} onClose={closeSessionDialog} /> : null}
@@ -899,7 +805,7 @@ export function PlanningClient({ initialSessions, btsIntakeYear, initialLocation
       <div data-fixed-actions="planning" className="fixed inset-x-3 bottom-[calc(.75rem+env(safe-area-inset-bottom))] z-40 grid grid-cols-3 gap-2 rounded-[1.5rem] border border-white/70 bg-white/92 p-2 shadow-[0_18px_60px_rgba(17,17,17,.18)] backdrop-blur md:hidden">
         <Link href="tel:0422470768" className="rounded-2xl bg-[#101a29] px-3 py-3 text-center text-xs font-black text-white">Appeler</Link>
         <Link href="/contact?motif=alerte-planning" className="rounded-2xl border border-academy-line bg-white px-3 py-3 text-center text-xs font-black text-academy-ink">Alerte</Link>
-        <button type="button" onClick={() => selectedSession ? openRegistration(selectedSession) : document.getElementById('planning-advice-title')?.scrollIntoView({ behavior: 'auto', block: 'center' })} className="planning-neutral-action rounded-2xl px-3 py-3 text-center text-xs font-black">{selectedSession ? 'Ma session' : 'Mon projet'}</button>
+        <button type="button" onClick={() => selectedSession ? openRegistration(selectedSession) : showFormationDates('all')} className="planning-neutral-action rounded-2xl px-3 py-3 text-center text-xs font-black">{selectedSession ? 'Ma session' : 'Les dates'}</button>
       </div>
     </main>
   );

@@ -29,12 +29,11 @@ function Arrow({ diagonal = false }: { diagonal?: boolean }) {
 
 const formatMonthYearUtc = new Intl.DateTimeFormat('fr-FR', { month: 'long', year: 'numeric', timeZone: 'UTC' });
 
-export function PlanningPreview({ formations, initialFormation, initialSsiapCourse = null, initialDirectorLocation = null, btsIntakeYear, onChoose }: {
+export function PlanningPreview({ formations, initialFormation, initialSsiapCourse = null, initialDirectorLocation = null, onChoose }: {
   formations: PreviewFormation[];
   initialFormation: string;
   initialSsiapCourse?: SsiapPlanningCourse | null;
   initialDirectorLocation?: DirectorLocationFilterKey | null;
-  btsIntakeYear: number;
   onChoose: (key: string, course?: SsiapPlanningCourse | null, location?: DirectorLocationFilterKey | null) => void;
 }) {
   const [step, setStep] = useState(initialSsiapCourse || initialDirectorLocation ? 1 : 0);
@@ -47,7 +46,7 @@ export function PlanningPreview({ formations, initialFormation, initialSsiapCour
   const available = formations.map(item => ({ ...item, sessions: item.sessions
     .filter(session => planningDay(session.startDate) !== null)
     .sort((a, b) => planningDay(a.startDate)! - planningDay(b.startDate)!)
-  })).filter(formation => formation.key === 'bts' || formation.key === 'ssiap' || formation.key === 'director' || formation.sessions.length > 0);
+  })).filter(formation => formation.key === 'ssiap' || formation.key === 'director' || formation.sessions.length > 0);
   const formation = available.find(item => item.key === formationKey) || available[0];
   const selectedSsiapCourse = formation?.key === 'ssiap' ? ssiapPlanningCourses.find(course => course.key === activeSsiapCourse) : undefined;
   const needsSsiapCourse = formationKey === 'ssiap' && !selectedSsiapCourse;
@@ -60,7 +59,6 @@ export function PlanningPreview({ formations, initialFormation, initialSsiapCour
     ? formation.sessions.filter(session => activeDirectorLocation !== null && sessionMatchesLocation(session, activeDirectorLocation))
     : formation?.sessions || [];
   const formationLabel = selectedDirectorLocation ? `${formation?.label} · ${selectedDirectorLocation.label}` : selectedSsiapCourse?.label || formation?.label;
-  const isBts = formation?.key === 'bts';
   const firstMonth = sessions.length ? calendarMonth(planningDay(sessions[0].startDate)!) : null;
   const lastMonth = sessions.length ? calendarMonth(planningDay(sessions[sessions.length - 1].startDate)!) : null;
   const month = visibleMonth ?? firstMonth;
@@ -109,14 +107,7 @@ export function PlanningPreview({ formations, initialFormation, initialSsiapCour
         </> : step === 0 ? <>
           <p className={styles.previewPrompt}>Quel métier vous attire ?</p>
           <div className={styles.previewChoices}>{available.map(item => <button key={item.key} type="button" onClick={() => { setFormationKey(item.key); setActiveSsiapCourse(null); setActiveDirectorLocation(null); setVisibleMonth(null); setSelectedSessionId(null); goToStep(item.key === 'ssiap' || item.key === 'director' ? 0 : 1); }} aria-label={item.key === 'director' ? 'Choisir le lieu de formation DIRIGEANT' : item.key === 'ssiap' ? 'Choisir un parcours en sécurité incendie' : `Voir les prochaines dates ${item.label}`}><span><Image src={item.image} alt="" width={600} height={400} style={{ objectPosition: item.key === 'director' ? 'right center' : undefined }} sizes="(min-width: 1440px) 210px, (min-width: 1200px) 18vw, (min-width: 700px) 210px, (min-width: 600px) 27vw, 45vw" priority /></span><strong>{item.label}{item.previewDetail && <small>{item.previewDetail}</small>}</strong><i><Arrow diagonal /></i></button>)}</div>
-        </> : isBts ? <div className={styles.previewSummary}>
-          <div className={styles.previewSummaryImage}><Image src={formation.image} alt="" fill sizes="(max-width: 640px) 90vw, 400px" /></div>
-          <span className={styles.previewSummaryLabel}>BTS en alternance</span>
-          <h3>{step === 1 ? 'Votre prochaine rentrée' : 'Préparons votre candidature.'}</h3>
-          <p className={styles.btsPreviewDate}>Septembre <strong>{btsIntakeYear}</strong></p>
-          <p>{step === 1 ? `Rentrée suivante : septembre ${btsIntakeYear + 1}.` : 'Choix du BTS et recherche d’entreprise : Aurélie vous accompagne.'}</p>
-          <button type="button" onClick={() => step === 1 ? goToStep(2) : onChoose('bts')}>{step === 1 ? 'Préparer ma rentrée' : 'Voir toutes les dates'} <Arrow /></button>
-        </div> : !sessions.length ? <div className={styles.previewEmpty}>
+        </> : !sessions.length ? <div className={styles.previewEmpty}>
           <strong>{formationLabel}</strong>
           <p>Aucune date publiée pour ce parcours pour le moment.</p>
           <button type="button" onClick={() => onChoose(formation.key, activeSsiapCourse, activeDirectorLocation)}>Me renseigner sur ce parcours <Arrow /></button>

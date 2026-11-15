@@ -25,7 +25,7 @@ test('All FAQ entry points share the APS section and native numbered accordion c
   const source = read('src/components/FAQ.tsx');
   for (const value of ['data-faq-design="aps"', 'data-faq-list', '<details', '<summary', "padStart(2, '0')", 'md:open:col-span-2', '<FAQ items={items}']) assert.ok(source.includes(value), value);
   assert.match(read('src/components/ui.tsx'), /export \{ FAQ, PremiumFAQSection \} from '@\/components\/FAQ'/);
-  for (const file of ['src/app/financements/page.tsx', 'src/app/entreprises/page.tsx', 'src/app/planning/PlanningHelp.tsx', 'src/components/DespChoiceReferencePage.tsx']) {
+  for (const file of ['src/app/financements/page.tsx', 'src/app/entreprises/page.tsx', 'src/components/DespChoiceReferencePage.tsx']) {
     const page = read(file);
     assert.match(page, /<PremiumFAQSection\b/);
     assert.doesNotMatch(page, /styles\.(faqList|questions|question)\b/);
@@ -37,10 +37,10 @@ test('Company brochure, contact form and contextual planning actions are retaine
   const companies = read('src/app/entreprises/page.tsx');
   assert.match(companies, /id="brochure-entreprises"/);
   assert.match(companies, /href=\{INFORMATION_REQUEST_URL\}[^>]*>Télécharger la brochure/);
-  const planning = read('src/app/planning/PlanningHelp.tsx');
-  assert.match(planning, /onClick=\{onClear\}/);
-  assert.match(planning, /onClick=\{onRequest\}/);
-  assert.match(planning, /id="planning-advice"/);
+  const planning = read('src/app/planning/PlanningClient.tsx');
+  assert.doesNotMatch(planning, /PlanningHelp|PremiumFAQSection|BtsIntakes|planning-advice/);
+  assert.match(planning, /<SessionDetails /);
+  assert.match(planning, /<PlanningRegistration /);
   assert.match(read('src/app/contact/page.tsx'), /<ContactExperience/);
 });
 

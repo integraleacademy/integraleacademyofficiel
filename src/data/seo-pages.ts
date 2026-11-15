@@ -135,7 +135,7 @@ export const seoPages: Record<string, SeoPage> = {
     label: 'BTS Comptabilité et gestion', parent: '/bts',
   },
   '/planning': {
-    title: 'Dates des formations sécurité, VTC et BTS',
+    title: 'Dates des formations en sécurité et VTC',
     description: 'Consultez les prochaines dates de formation Intégrale Academy. Filtrez par parcours et lieu pour préparer votre inscription et anticiper votre financement.',
     label: 'Planning des formations', type: 'CollectionPage',
   },

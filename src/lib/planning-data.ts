@@ -2,8 +2,9 @@ import { getUpcomingVtcExamSessions, isVtcRegistrationOpen, vtcCourse } from '@/
 import { formatSessionDate } from '@/lib/public-sessions';
 import { canonicalSiteHref } from '@/lib/site-urls';
 
-export function isBtsTraining(slug = '') {
-  return slug === 'bts' || slug.startsWith('bts-') || ['commerce-international', 'comptabilite-gestion'].includes(slug);
+export function isBtsTraining(slug = '', category?: string | null) {
+  return category?.toLowerCase() === 'bts' || slug === 'bts' || slug.startsWith('bts-')
+    || ['mos', 'mco', 'ndrc', 'commerce-international', 'professions-immobilieres', 'comptabilite-gestion'].includes(slug);
 }
 
 export { planningSsiapCourse, type SsiapPlanningCourse } from '@/lib/planning-ssiap';
