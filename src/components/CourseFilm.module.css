@@ -10,7 +10,6 @@
 
 .section[data-film='a3p'] { --ink: #173c31; --accent: #18644b; --paper: #edf5ee; }
 .section[data-film='desp'] { --ink: #442b1a; --accent: #96431b; --paper: #fbf2e9; }
-.section[data-film='neo'] { --ink: #fffaf1; --accent: #a9e1c7; --paper: #16352d; width: 100%; margin: 2rem auto 0; }
 
 .card {
   display: grid;
@@ -80,11 +79,6 @@
 .poster:hover .play, .poster:focus-visible .play { background: var(--ink); color: var(--paper); }
 .poster:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
 
-.section[data-film='neo'] .card { grid-template-columns: minmax(12rem, 15.5rem) minmax(0, 33rem); justify-content: center; }
-.section[data-film='neo'] .poster { grid-column: 1; grid-row: 1; aspect-ratio: 9 / 16; }
-.section[data-film='neo'] .copy { grid-column: 2; grid-row: 1; }
-.section[data-film='neo'] .title { font-size: clamp(1.85rem, 3.25vw, 3.15rem); }
-
 .dialog {
   position: fixed;
   inset: 0;
@@ -100,18 +94,16 @@
 }
 .dialog::backdrop { background: #080d10db; }
 :global(html):has(.dialog[open]) { overflow: hidden; }
-.section[data-film='neo'] .dialog { width: min(28rem, calc(100vw - 1rem), calc((100dvh - 4.5rem) * 9 / 16)); }
+.dialog[data-portrait] { width: min(28rem, calc(100vw - 1rem), calc((100dvh - 4.5rem) * 9 / 16)); }
 .bar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .3rem; padding: .3rem .75rem; }
 .bar a, .bar button { min-height: 2.75rem; display: inline-flex; align-items: center; gap: .4rem; color: white; font-size: .83rem; font-weight: 700; }
 .bar a { text-decoration: underline; text-underline-offset: .2rem; }
 .bar button span { font-size: 1.4rem; }
 .player { display: block; width: 100%; aspect-ratio: 16 / 9; border: 0; background: #000; }
-.section[data-film='neo'] .player { aspect-ratio: 9 / 16; }
+.dialog[data-portrait] .player { aspect-ratio: 9 / 16; }
 
 @media (max-width: 720px) {
-  .card, .section[data-film='neo'] .card { grid-template-columns: minmax(0, 1fr); gap: 1rem; }
+  .card { grid-template-columns: minmax(0, 1fr); gap: 1rem; }
   .copy { padding: .5rem .35rem .25rem; }
   .title { max-width: 25ch; }
-  .section[data-film='neo'] .copy, .section[data-film='neo'] .poster { grid-column: 1; grid-row: auto; }
-  .section[data-film='neo'] .poster { width: min(100%, 16rem); justify-self: center; }
 }
