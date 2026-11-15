@@ -53,15 +53,16 @@ export function TrainingReferenceHero({ id, badge, heading, accent, title, tagli
   </section>;
 }
 
-export function TrainingReferenceSection({ id, eyebrow, label, title, intro, tone = 'cream', children, className = '' }: {
+export function TrainingReferenceSection({ id, eyebrow, label, title, intro, tone = 'cream', children, fullWidthFooter, className = '' }: {
   id?: string; eyebrow?: string; label?: string; title: ReactNode; intro?: ReactNode;
-  tone?: 'cream' | 'paper' | 'stone' | 'dark'; children?: ReactNode; className?: string;
+  tone?: 'cream' | 'paper' | 'stone' | 'dark'; children?: ReactNode; fullWidthFooter?: ReactNode; className?: string;
 }) {
   return <section id={id} className={`${styles.section} ${styles[tone]} ${className}`}>
     <div className={reference.container}>
       <div className={reference.sectionHead}><div>{(eyebrow || label) && <p className={styles.eyebrow}>{eyebrow || label}</p>}<h2 className={reference.sectionTitle}>{title}</h2></div>{intro && <div className={styles.intro}>{intro}</div>}</div>
       {children}
     </div>
+    {fullWidthFooter}
   </section>;
 }
 

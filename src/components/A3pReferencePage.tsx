@@ -158,7 +158,11 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
       description="Découvrez la formation A3P d’Intégrale Academy à Puget-sur-Argens, sur la Côte d’Azur." />
 
     <CourseJourney course="a3p">
-      <Section id="metier" label="01 — Le métier" title={<>Protéger, anticiper, <span className="decoration-emerald-500 decoration-[.16em] underline underline-offset-[-.03em]">décider.</span></>} intro="L’agent de protection physique des personnes assure la sécurité de dirigeants, personnalités, artistes ou toute personne exposée. Son rôle : préparer la mission, analyser les risques et protéger avec efficacité, proportionnalité et discrétion.">
+      <Section id="metier" label="01 — Le métier" title={<>Protéger, anticiper, <span className="decoration-emerald-500 decoration-[.16em] underline underline-offset-[-.03em]">décider.</span></>} intro="L’agent de protection physique des personnes assure la sécurité de dirigeants, personnalités, artistes ou toute personne exposée. Son rôle : préparer la mission, analyser les risques et protéger avec efficacité, proportionnalité et discrétion."
+        fullWidthFooter={
+          <CourseFilm film="neo" title="C’est quoi, le métier" titleAccent="de garde du corps ?"
+            description="Après vingt ans en protection rapprochée, Véronique forme les futurs gardes du corps chez Intégrale Academy. Au micro de Néo, elle raconte son métier." />
+        }>
         <TrainingReferenceMissions items={métierCards.map(([, title, description], index) => ({ title, description, illustration: [originalArtwork['a3p-mission-preparation'], originalArtwork['a3p-mission-trajets'], a3pArtwork.discretion][index] }))} />
         <MissionAnimation variant="a3p" className="mt-5" illustration={originalArtwork['a3p-mission-ensemble']} />
         <div className="mt-5 grid items-center gap-6 rounded-[2rem] bg-[#0D1725] p-6 text-white shadow-card lg:grid-cols-[.8fr_1.2fr]">
@@ -167,9 +171,6 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
         </div>
       </Section>
     </CourseJourney>
-
-    <CourseFilm film="neo" title="C’est quoi, le métier de garde du corps ?"
-      description="Après vingt ans en protection rapprochée, Véronique forme les futurs gardes du corps chez Intégrale Academy. Au micro de Néo, elle raconte son métier." />
 
     <section className="bg-academy-bg px-4 pb-16"><div className="page-container grid gap-5 lg:grid-cols-[1.2fr_.8fr]">
       <div className="rounded-[2rem] border border-academy-line bg-[#FFFDF8] p-6 shadow-soft sm:p-8"><Label>À qui s’adresse la formation ?</Label><h2 className="mt-3 text-2xl font-black tracking-[-.04em] sm:text-3xl">Un parcours ouvert à plusieurs profils.</h2><div className="mt-6 flex flex-wrap gap-2.5">{audiences.map((item) => <span key={item} className="rounded-full border border-[#E4DAC9] bg-[#F3EEE5] px-4 py-2.5 text-xs font-black before:mr-2 before:text-emerald-600 before:content-['✓']">{item}</span>)}</div></div>
