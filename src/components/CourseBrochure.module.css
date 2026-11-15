@@ -1,0 +1,23 @@
+.section { background:#fbfaf6; padding:clamp(1.75rem,4vw,3.4rem) 1rem; scroll-margin-top:6rem; }
+.card { display:grid; grid-template-columns:auto minmax(0,1fr) auto; align-items:center; gap:clamp(1rem,3vw,2.6rem); position:relative; isolation:isolate; overflow:hidden; width:min(100%,67rem); margin:auto; border:1px solid #ddd8c8; border-radius:1.45rem; padding:1.35rem clamp(1.35rem,4vw,3rem); color:#162e3e; background:linear-gradient(110deg,#eadebf 0%,#f6efdf 28%,#fffdf8 74%); box-shadow:0 12px 36px #302d2010; }
+.book { position:relative; width:clamp(4.5rem,8vw,6.5rem); aspect-ratio:.76; transform:rotate(-7deg); border-radius:3px 6px 6px 3px; border:1px solid #615d5038; box-shadow:3px 2px 0 #f8f5ec,5px 3px 0 #c6bda6,7px 9px 14px #3c352838; background:white; overflow:hidden; }
+.book img { width:100%; height:100%; object-fit:cover; display:block; }
+.book::after { position:absolute; content:''; inset:0; pointer-events:none; box-shadow:inset 5px 0 5px #17263542; }
+.category { margin:0 0 .4rem; font-size:.72rem; font-weight:750; letter-spacing:.12em; color:#67502a; text-transform:uppercase; }
+.copy { min-width:0; }
+.copy h2 { color:#182f40; font-family:Georgia,serif; font-size:clamp(1.65rem,3.2vw,2.65rem); font-weight:400; line-height:1.12; letter-spacing:-.04em; }
+.copy > p:last-child { color:#435563; font-size:1rem; margin:.4rem 0 0; line-height:1.45; }
+.button { display:inline-flex; align-items:center; justify-content:center; gap:.65rem; padding:.85rem 1.3rem; min-height:46px; border-radius:999px; background:#193546; color:white; font-size:.94rem; font-weight:750; text-align:center; line-height:1.3; text-decoration:none; transition:background .15s; }
+.button svg { flex-shrink:0; }
+.button:hover { background:#284d62; }
+.button:focus-visible { outline:3px solid #3c77a3; outline-offset:3px; }
+@media(max-width:740px) {
+  .card { grid-template-columns:auto minmax(0,1fr); gap:.9rem 1.1rem; }
+  .card > .button { grid-column:2; justify-self:start; }
+  .book { grid-row:span 2; }
+}
+@media(max-width:450px) {
+  .card { padding:1.2rem; }
+  .book { grid-row:auto; }
+  .card > .button { grid-column:1/-1; justify-self:stretch; margin-top:.2rem; }
+}

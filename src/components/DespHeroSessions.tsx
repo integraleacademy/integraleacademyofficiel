@@ -10,7 +10,6 @@ import styles from './TrainingHero.module.css';
 const locations = [
   { key: 'cote-azur', label: 'Côte d’Azur', fallback: 'Puget-sur-Argens / Côte d’Azur' },
   { key: 'paris', label: 'Paris', fallback: 'Paris' },
-  { key: 'auvergne', label: 'Aurillac', fallback: 'Aurillac / Auvergne' },
 ] as const;
 
 export function DespHeroSessions({ sessions, defaultPrice, rncp }: {

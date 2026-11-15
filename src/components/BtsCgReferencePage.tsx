@@ -1,3 +1,4 @@
+import { CourseBrochureCard } from '@/components/CourseBrochureCard';
 import { ManualArtwork } from '@/components/ManualArtwork';
 import { btsHeroArtwork, btsPracticeArtwork, btsMissionArtwork } from '@/data/btsIllustrations';
 import btsStyles from './BtsIdentity.module.css';
@@ -270,6 +271,7 @@ export function BtsCgReferencePage() {
         <div className="mt-7 grid gap-5 rounded-[2rem] bg-[#0D1725] p-6 text-white lg:grid-cols-[.72fr_1.28fr] lg:p-8"><div><Eyebrow light>Validation</Eyebrow><h3 className="mt-4 text-3xl font-black">Un diplôme national de niveau 5.</h3><p className="mt-4 leading-7 text-white/62">Le diplôme est obtenu selon les épreuves et modalités prévues par le référentiel national en vigueur.</p></div><div className="grid gap-3 sm:grid-cols-3">{[['01', 'Épreuves nationales', 'Selon le référentiel de l’Éducation nationale'], ['02', 'Situations professionnelles', 'Travaux comptables, fiscaux, sociaux et numériques'], ['03', 'Expérience en entreprise', 'Compétences développées en alternance']].map(([number, title, text]) => <article key={number} className="rounded-2xl border border-white/10 bg-white/7 p-4"><span className="grid h-9 w-9 place-items-center rounded-full bg-bts-200 text-xs font-black text-bts-950">{number}</span><h4 className="mt-5 font-black">{title}</h4><p className="mt-2 text-xs leading-5 text-white/50">{text}</p></article>)}</div></div>
       </Section>
 
+      <CourseBrochureCard course="comptabilite-gestion" />
       <section id="admission" className="relative isolate overflow-hidden bg-[#0A1725] px-4 py-14 text-white sm:py-16 lg:py-20">
         <div className={`absolute inset-0 -z-10 ${btsStyles.admissionGlow}`} />
         <div className="page-container"><Eyebrow light>06 — Admissions 2027</Eyebrow><div className="mt-3 flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-end"><div><h2 className="max-w-4xl text-3xl font-black tracking-[-.05em] sm:text-4xl lg:text-5xl">Votre candidature en cinq étapes. <span className="text-bts-200">Simple, claire, accompagnée.</span></h2><p className="mt-5 max-w-3xl text-base font-medium leading-8 text-white/62">Vous ne savez pas encore comment trouver une entreprise ? C’est normal. Commencez par votre candidature : notre équipe vous guide ensuite.</p></div><CTA href={applicationUrl} variant="gold" external>Admissions 2027 →</CTA></div>

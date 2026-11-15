@@ -1,4 +1,6 @@
+import { CourseBrochureCard } from '@/components/CourseBrochureCard';
 import type { ReactNode } from 'react';
+import editorial from './ApsEditorial.module.css';
 import { TrainingReferencePage, TrainingReferenceHero, TrainingReferenceSection as Section, TrainingReferenceContact, TrainingReferenceMobileBar } from '@/components/TrainingReferenceLayout';
 import { TrainingCourseTestimonials } from '@/components/TrainingCourseTestimonials';
 
@@ -107,7 +109,7 @@ const practicalExercises = [
 ] as const satisfies ReadonlyArray<readonly [string, string, string, readonly ApsPracticalVisualKind[]]>;
 
 const enrollmentSteps = [
-  ['01', 'Planifiez votre premier rendez-vous', 'Appelez-nous au 04 22 47 07 68 pour convenir d’un rendez-vous téléphonique. Lors de ce RDV, nous prendrons le temps de comprendre votre projet de formation et de vous guider dans les démarches à accomplir.'],
+  ['01', 'Planifiez votre premier rendez-vous téléphonique', 'Appelez-nous au 04 22 47 07 68 pour convenir d’un rendez-vous téléphonique. Lors de ce rendez-vous téléphonique, nous prendrons le temps de comprendre votre projet de formation et de vous guider dans les démarches à accomplir.'],
   ['02', 'Échangeons sur votre projet', 'Lors de ce premier entretien, nous abordons ensemble tous les détails pratiques, le calendrier, l’organisation de la formation et les prérequis liés à votre situation.'],
   ['03', 'Créez votre Identité Numérique', 'Si vous souhaitez utiliser votre compte CPF ou demandez un financement à France Travail, vous devez créer votre Identité Numérique La Poste afin de sécuriser et valider vos démarches en ligne.'],
   ['04', 'Finalisons votre inscription', 'Lors d’un second entretien téléphonique, nous finalisons ensemble votre inscription : mise en place du financement et démarches administratives.'],
@@ -127,7 +129,7 @@ const jobs = [
   ['◆', 'Agent de sécurité privée'],
   ['↻', 'Agent rondier en sécurité privée'],
   ['⌖', 'Agent d’intervention mobile en sécurité privée'],
-  ['✈', 'Agent de sécurité pré-vol'],
+  ['pré-vol', 'Agent de sécurité pré-vol'],
   ['★', 'Agent de sécurité événementielle'],
   ['▣', 'Agent de sécurité arrière-caisse'],
   ['⇥', 'Agent de contrôle d’accès'],
@@ -344,67 +346,61 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
       priceAction={{ href: apsCpfUrl, label: 'S’inscrire avec mon CPF 🔐', external: true }}
     />
 
-    <section id="inscription-financement" className={`${styles.enrollmentSection} relative isolate overflow-hidden bg-[#0A1725] px-4 py-14 text-white sm:py-16 lg:py-20`}>
-      <div className="page-container">
-        <Eyebrow light>08 — Inscriptions & financement</Eyebrow>
-        <div className={`${styles.enrollmentHeader} mt-3 grid gap-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-12`}>
-          <div className="min-w-0">
-            <h2 className="max-w-5xl text-3xl font-black tracking-[-.05em] sm:text-4xl lg:text-5xl">
-              <span className="block">Du premier appel à votre entrée en formation.</span>
-              <span className={`${styles.enrollmentPromise} mt-2 block`}>Nous vous accompagnons de A à Z</span>
+    <CourseBrochureCard course="aps" />
+    <section id="inscription-financement" className={editorial.enrollment}>
+      <div className={editorial.wrap}>
+        <p className={editorial.kicker}>08 — Inscriptions &amp; financement</p>
+        <header className={editorial.intro}>
+          <div>
+            <h2>
+              <span>Du premier appel à votre entrée en formation.</span>
+              <span>Nous vous accompagnons de A à Z</span>
             </h2>
-            <p className={`${styles.enrollmentIntro} mt-6 max-w-4xl text-base font-medium leading-8 text-white/70`}>Tout commence par un rendez-vous téléphonique avec un membre de notre équipe. Contactez-nous au 04 22 47 07 68 pour réserver votre RDV téléphonique. Nous étudions votre projet en détails et nous vous accompagnons dans toutes vos démarches du financement, l’inscription, jusqu’à votre formation et l’obtention de votre diplôme.</p>
+            <p>Tout commence par un rendez-vous téléphonique avec un membre de notre équipe. Contactez-nous au 04 22 47 07 68 pour réserver votre rendez-vous téléphonique. Nous étudions votre projet en détails et nous vous accompagnons dans toutes vos démarches du financement, l’inscription, jusqu’à votre formation et l’obtention de votre diplôme.</p>
           </div>
-          <div className={`${styles.enrollmentCtaWrap} relative flex w-full items-center justify-center lg:w-auto`}>
-            <CTA href={apsRegistrationFormUrl} variant="gold" className={`${styles.enrollmentPrimaryCta} w-full lg:w-auto`}>Commencer mon inscription →</CTA>
-          </div>
-        </div>
-
-        <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+          <CTA href={apsRegistrationFormUrl} variant="gold">Commencer mon inscription →</CTA>
+        </header>
+        <ol className={editorial.steps}>
           {enrollmentSteps.map(([number, title, text]) => (
-            <article key={number} className={`${styles.enrollmentCard} rounded-[1.5rem] border border-white/10 bg-white/7 p-5`}>
-              <span className={styles.enrollmentNumber}>{number}</span>
-              <h3 className={`${styles.enrollmentCardTitle} mt-6 text-lg font-black`}>{title}</h3>
-              <p className={`${styles.enrollmentCardText} mt-3 text-sm leading-6 text-white/62`}>{text}</p>
-              {number === '01' && <a href="tel:0422470768" className={`${styles.enrollmentCardLink} mt-5 inline-flex text-sm font-black text-blue-200 transition hover:text-white`}>Appeler le 04 22 47 07 68 →</a>}
-              {number === '03' && <a href={identityNumeriqueUrl} target="_blank" rel="noopener noreferrer" className={`${styles.enrollmentCardLink} mt-5 inline-flex text-sm font-black text-blue-200 transition hover:text-white`}>Créer mon Identité Numérique →</a>}
-            </article>
+            <li key={number}><span className={editorial.stepNumber}>{number}</span>
+              <div><h3>{title}</h3><p>{text}</p>
+                {number === '01' && <a href="tel:0422470768">Appeler le 04 22 47 07 68 →</a>}
+                {number === '03' && <a href={identityNumeriqueUrl} target="_blank" rel="noopener noreferrer">Créer mon Identité Numérique →</a>}
+              </div>
+            </li>
           ))}
-        </div>
-
-        <div className={`${styles.enrollmentFinanceGrid} mt-6 grid gap-5 lg:grid-cols-[.78fr_1.22fr]`}>
-          <article className={`${styles.enrollmentFinancePrimary} rounded-[2rem] bg-[#FFFDF8] p-6 text-academy-ink shadow-card lg:p-8`}>
-            <Eyebrow>Votre financement</Eyebrow>
-            <h3 className="mt-3 text-3xl font-black tracking-[-.04em]">Préparez votre financement.</h3>
-            <div className={`${styles.identityCallout} mt-5 rounded-2xl border border-blue-200 bg-blue-50 p-4`}>
-              <p className="font-black text-blue-950">CPF ou France Travail ? Anticipez votre Identité Numérique.</p>
-              <p className="mt-2 text-sm font-semibold leading-6 text-blue-950/70">Créez votre Identité Numérique La Poste avant votre second rendez-vous afin de pouvoir valider vos droits CPF ou votre demande de financement.</p>
-              <a href={identityNumeriqueUrl} target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex text-sm font-black text-blue-700 transition hover:text-blue-950">En savoir plus sur l’Identité Numérique →</a>
-            </div>
-            <div className="mt-6 flex flex-col gap-3">
+        </ol>
+        <article className={editorial.funding}>
+          <div className={editorial.fundingTitle}><p className={editorial.kicker}>Votre financement</p>
+            <h3>Préparez votre financement.</h3>
+          </div>
+          <div className={editorial.identity}>
+              <p>CPF ou France Travail ? Anticipez votre Identité Numérique.</p>
+              <p>Créez votre Identité Numérique La Poste avant votre second rendez-vous téléphonique afin de pouvoir valider vos droits CPF ou votre demande de financement.</p>
+              <a href={identityNumeriqueUrl} target="_blank" rel="noopener noreferrer">En savoir plus sur l’Identité Numérique →</a>
+          </div>
+          <div className={editorial.fundingActions}>
               <CTA href={apsCpfUrl} variant="blue" external>Consulter la formation sur Mon Compte Formation →</CTA>
               <CTA href={apsContact('étude de financement APS')} variant="light">Faire étudier mon financement</CTA>
-            </div>
-          </article>
-
-          <article className={`${styles.enrollmentFinanceOptions} rounded-[2rem] border border-blue-300/25 bg-blue-400/10 p-6 shadow-card lg:p-8`}>
-            <Eyebrow light>Solutions possibles</Eyebrow>
-            <h3 className="mt-3 text-3xl font-black tracking-[-.04em]">Quatre voies, un accompagnement personnalisé.</h3>
-            <div className="mt-6 grid gap-3 sm:grid-cols-2">
-              {financingOptions.map(([title, text]) => (
-                <article key={title} className={`${styles.financeCard} rounded-2xl border border-white/10 bg-white/7 p-5`}>
-                  <ApsFundingLogo title={title} />
-                  <h4 className="text-lg font-black text-blue-200">{title}</h4>
-                  <p className="mt-2 text-sm leading-6 text-white/60">{text}</p>
-                </article>
-              ))}
-            </div>
-          </article>
-        </div>
+          </div>
+        </article>
+        <article className={editorial.options}>
+          <header><p className={editorial.kicker}>Solutions possibles</p>
+            <h3>Quatre voies, un accompagnement personnalisé.</h3>
+          </header>
+          <div className={editorial.optionGrid}>
+            {financingOptions.map(([title, text]) => (
+              <div className={editorial.option} key={title}>
+                <div className={editorial.logo}><ApsFundingLogo title={title} /></div>
+                <div><h4>{title}</h4><p>{text}</p></div>
+              </div>
+            ))}
+          </div>
+        </article>
       </div>
     </section>
 
-    <Section id="debouches" eyebrow="09 — Débouchés & emploi" title={<>Un vrai diplôme dans un secteur qui recrute.</>} intro={<>Les besoins sont réguliers dans de nombreux environnements : commerce, industrie, logistique, santé, bureaux, événementiel et sites sensibles. Le TFP APS ouvre l’accès à des missions variées, sous réserve d’obtenir la carte professionnelle CNAPS (ministère de l’Intérieur).</>} tone="paper"><div className="mb-8 grid gap-4 md:grid-cols-3"><article className={`${styles.outcomeCard} rounded-[1.7rem] border border-blue-200 bg-blue-50 p-6`}><p className="text-sm font-black uppercase tracking-[.16em] text-blue-700">Un besoin permanent</p><h3 className="mt-3 text-2xl font-black">Des recrutements toute l’année</h3><p className="mt-3 leading-7 text-blue-950/70">Les entreprises de sécurité doivent couvrir des prestations de jour, de nuit, en semaine, le week-end et lors de grands événements.</p></article><article className={`${styles.outcomeCard} rounded-[1.7rem] border border-sky-200 bg-sky-50 p-6`}><p className="text-sm font-black uppercase tracking-[.16em] text-sky-700">Des missions variées</p><h3 className="mt-3 text-2xl font-black">De nombreux sites à sécuriser</h3><p className="mt-3 leading-7 text-sky-950/70">Vous pouvez travailler sur un site fixe, effectuer des rondes, contrôler des accès, sécuriser un événement ou intervenir sur plusieurs sites.</p></article><article className={`${styles.outcomeCard} rounded-[1.7rem] border border-yellow-300 bg-yellow-50 p-6`}><p className="text-sm font-black uppercase tracking-[.16em] text-yellow-800">Des évolutions possibles</p><h3 className="mt-3 text-2xl font-black">Construire un parcours</h3><p className="mt-3 leading-7 text-yellow-950/70">Avec l’expérience et des qualifications complémentaires, vous pouvez viser des fonctions de chef de poste, de sécurité incendie, de télésurveillance ou d’encadrement.</p></article></div><div className="grid gap-4 md:grid-cols-4">{[['Réussir le TFP APS','Valider les épreuves'],['Recevoir le titre niveau 3','Obtenir la certification'],['Demander la carte CNAPS (ministère de l’Intérieur)','Constituer le dossier'],['Commencer à exercer','Après délivrance de la carte']].map(([title,text],index) => <article key={title} className={`${styles.examCard} rounded-[1.7rem] border border-academy-line bg-white p-5 text-center`}><span className="mx-auto grid h-11 w-11 place-items-center rounded-full bg-academy-gold font-black">0{index+1}</span><h3 className="mt-6 text-lg font-black">{title}</h3><p className="mt-2 text-sm text-academy-muted">{text}</p></article>)}</div><div className="mt-5 rounded-[1.4rem] border border-yellow-300 bg-yellow-50 p-4 font-bold text-yellow-900">Important : le TFP APS ne déclenche pas automatiquement la carte professionnelle.</div><div className="mt-8 grid gap-5 lg:grid-cols-2"><article className="rounded-[2rem] border border-academy-line bg-white p-6"><Eyebrow>Débouchés</Eyebrow><h3 className="mt-3 text-3xl font-black">Les métiers accessibles</h3><div className="mt-5 grid gap-3 sm:grid-cols-2">{jobs.map(([icon,title]) => <div key={title} className={styles.jobCard}><span className={styles.jobIcon}>{icon}</span><span className="text-sm font-black leading-5">{title}</span></div>)}</div></article><article className={styles.dualSkill}>
+    <Section id="debouches" eyebrow="09 — Débouchés & emploi" title={<>Un vrai diplôme dans un secteur qui recrute.</>} intro={<>Les besoins sont réguliers dans de nombreux environnements : commerce, industrie, logistique, santé, bureaux, événementiel et sites sensibles. Le TFP APS ouvre l’accès à des missions variées, sous réserve d’obtenir la carte professionnelle CNAPS (ministère de l’Intérieur).</>} tone="paper"><div className="mb-8 grid gap-4 md:grid-cols-3"><article className={`${styles.outcomeCard} rounded-[1.7rem] border border-blue-200 bg-blue-50 p-6`}><p className="text-sm font-black uppercase tracking-[.16em] text-blue-700">Un besoin permanent</p><h3 className="mt-3 text-2xl font-black">Des recrutements toute l’année</h3><p className="mt-3 leading-7 text-blue-950/70">Les entreprises de sécurité doivent couvrir des prestations de jour, de nuit, en semaine, le week-end et lors de grands événements.</p></article><article className={`${styles.outcomeCard} rounded-[1.7rem] border border-sky-200 bg-sky-50 p-6`}><p className="text-sm font-black uppercase tracking-[.16em] text-sky-700">Des missions variées</p><h3 className="mt-3 text-2xl font-black">De nombreux sites à sécuriser</h3><p className="mt-3 leading-7 text-sky-950/70">Vous pouvez travailler sur un site fixe, effectuer des rondes, contrôler des accès, sécuriser un événement ou intervenir sur plusieurs sites.</p></article><article className={`${styles.outcomeCard} rounded-[1.7rem] border border-yellow-300 bg-yellow-50 p-6`}><p className="text-sm font-black uppercase tracking-[.16em] text-yellow-800">Des évolutions possibles</p><h3 className="mt-3 text-2xl font-black">Construire un parcours</h3><p className="mt-3 leading-7 text-yellow-950/70">Avec l’expérience et des qualifications complémentaires, vous pouvez viser des fonctions de chef de poste, de sécurité incendie, de télésurveillance ou d’encadrement.</p></article></div><div className="grid gap-4 md:grid-cols-4">{[['Réussir le TFP APS','Valider les épreuves'],['Recevoir le titre niveau 3','Obtenir la certification'],['Demander la carte CNAPS (ministère de l’Intérieur)','Constituer le dossier'],['Commencer à exercer','Après délivrance de la carte']].map(([title,text],index) => <article key={title} className={`${styles.examCard} rounded-[1.7rem] border border-academy-line bg-white p-5 text-center`}><span className="mx-auto grid h-11 w-11 place-items-center rounded-full bg-academy-gold font-black">0{index+1}</span><h3 className="mt-6 text-lg font-black">{title}</h3><p className="mt-2 text-sm text-academy-muted">{text}</p></article>)}</div><div className="mt-5 rounded-[1.4rem] border border-yellow-300 bg-yellow-50 p-4 font-bold text-yellow-900">Important : le TFP APS ne déclenche pas automatiquement la carte professionnelle.</div><div className="mt-8 grid gap-5 lg:grid-cols-2"><article className="rounded-[2rem] border border-academy-line bg-white p-6"><Eyebrow>Débouchés</Eyebrow><h3 className="mt-3 text-3xl font-black">Les métiers accessibles</h3><div className="mt-5 grid gap-3 sm:grid-cols-2">{jobs.map(([icon,title]) => <div key={title} className={styles.jobCard}><span className={styles.jobIcon} aria-hidden="true">{icon === 'pré-vol' ? <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M3 10h18l-2-6H5l-2 6Zm1 0v10h16V10M8 20v-6h5v6M3 10c0 3 4 3 4 0 0 3 5 3 5 0 0 3 5 3 5 0 0 3 4 3 4 0"/></svg> : icon}</span><span className="text-sm font-black leading-5">{title}</span></div>)}</div></article><article className={styles.dualSkill}>
         <p className={styles.dualEyebrow}>Double compétence</p>
         <h3>Deux expertises.<br /><span>Plus de possibilités.</span></h3>
         <p className={styles.dualIntro}>Associez le TFP APS et le SSIAP 1 pour élargir vos missions dans la surveillance humaine et la sécurité incendie.</p>
@@ -423,7 +419,7 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
     <div id="faq-aps"><PremiumFAQSection theme="blue" badge="FAQ APS" title="Les réponses avant de vous lancer" description="CNAPS (ministère de l’Intérieur), e-learning, examen, carte professionnelle et financement : retrouvez les informations indispensables avant votre inscription." items={faq} contactHref={apsContact('question APS')} /></div>
 
     <TrainingReferenceContact
-      portraitMedallion
+      schoolStyle
       description="Cassandre vérifie votre éligibilité, votre dossier CNAPS (ministère de l’Intérieur) et votre financement. Vous repartez avec des réponses claires et les prochaines étapes adaptées à votre situation."
       href={apsRegistrationFormUrl}
       assurances={['Sans engagement', 'Étude personnalisée', 'Réponse sur le CNAPS (ministère de l’Intérieur) et le financement']}

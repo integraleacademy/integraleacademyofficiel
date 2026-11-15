@@ -5,7 +5,6 @@ import Image from 'next/image';
 import { ManualArtwork } from '@/components/ManualArtwork';
 import type { ManualIllustration } from '@/data/manualIllustrations';
 import { contact } from '@/data/site';
-import { ThemeToggle } from '@/components/ThemeToggle';
 import { MobileHeaderMenu } from '@/components/MobileHeaderMenu';
 import { DesktopTrainingDropdown } from '@/components/DesktopTrainingDropdown';
 import compactHeroStyles from '@/components/CompactHero.module.css';
@@ -143,7 +142,7 @@ const artDirectionCopy: Record<ArtDirectionWorld, { label: string; title: string
     label: 'Préparation VTC',
     title: 'Formation, examen et projet chauffeur encadrés',
     chips: ['Examen', 'Carte pro', 'Projet', 'Financement'],
-    stats: [['140h', 'parcours'], ['CPF', 'possible'], ['RDV', 'conseil']],
+    stats: [['140h', 'parcours'], ['CPF', 'possible'], ['Rendez-vous', 'téléphonique']],
     glyphs: ['⌁', '◉', '→'],
   },
   financement: {
@@ -156,8 +155,8 @@ const artDirectionCopy: Record<ArtDirectionWorld, { label: string; title: string
   contact: {
     label: 'Contact conseiller',
     title: 'Une réponse claire pour lancer votre dossier',
-    chips: ['Téléphone', 'Email', 'WhatsApp', 'RDV'],
-    stats: [['04', 'appel'], ['24h', 'rappel'], ['3', 'lieux']],
+    chips: ['Téléphone', 'Email', 'WhatsApp', 'Rendez-vous téléphonique'],
+    stats: [['04', 'appel'], ['24h', 'rappel'], ['2', 'lieux']],
     glyphs: ['✉', '✓', '●'],
   },
 };
@@ -199,7 +198,7 @@ export function Hero({badge,title,subtitle,actions,visual,theme='gold'}:{badge?:
 export const appointmentFormUrl = 'https://assistance-alw9.onrender.com/demande-informations-formations';
 
 function AppointmentButton(){
-  return <Link className="group inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-academy-gold via-academy-gold to-academy-gold px-5 py-3 text-sm font-black text-academy-gold-text shadow-gold ring-1 ring-academy-gold/70 transition hover:-translate-y-0.5 hover:brightness-105 focus:outline-none focus:ring-2 focus:ring-academy-gold focus:ring-offset-2" href={appointmentFormUrl}><span>Prendre RDV</span><span className="transition group-hover:translate-x-0.5" aria-hidden="true">→</span></Link>
+  return <Link className="group inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-academy-gold via-academy-gold to-academy-gold px-5 py-3 text-sm font-black text-academy-gold-text shadow-gold ring-1 ring-academy-gold/70 transition hover:-translate-y-0.5 hover:brightness-105 focus:outline-none focus:ring-2 focus:ring-academy-gold focus:ring-offset-2" href={appointmentFormUrl}><span>Prendre un rendez-vous téléphonique</span><span className="transition group-hover:translate-x-0.5" aria-hidden="true">→</span></Link>
 }
 
 function BrandSigle({ placement }: { placement: 'header' | 'footer' }){
@@ -219,13 +218,13 @@ export function Header(){
     ['Chauffeur VTC','/vtc','Formation Théorique et Formation Pratique VTC.','🚘'],
   ] as const;
   const nav=[['Nos formations',trainingNav],['Notre école','/ecole'],['Financements','/financements'],['Entreprises','/entreprises'],['Planning','/planning'],['Contact','/contact']] as const;
-  return <header className="site-header sticky top-0 z-50 border-b border-white/15 bg-[linear-gradient(90deg,#40506a_0%,#344259_48%,#2b384d_100%)] text-white shadow-[0_16px_42px_rgba(31,42,58,.24)]"><div className="page-container flex items-center justify-between gap-2 px-0 py-1.5"><Link href="/" aria-label="Retour à l’accueil Intégrale Academy" className="group flex min-w-0 shrink items-center gap-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-academy-gold sm:gap-3"><BrandSigle placement="header"/><span className="min-w-0 whitespace-nowrap text-[11px] font-black tracking-[.06em] sm:text-[15px] sm:tracking-[.08em] xl:text-[calc(20px*var(--site-desktop-scale))]"><span className="text-white">INTÉGRALE</span><span className="ml-1 text-academy-gold sm:ml-1.5">ACADEMY</span></span></Link><nav className="hidden items-center gap-1 text-sm font-bold xl:flex" aria-label="Navigation principale">{nav.map(([n,h])=>typeof h!=='string'?<DesktopTrainingDropdown key={n} label={n} items={h}/>:<Link key={h} href={h} className="rounded-full px-3 py-2 text-white/80 transition hover:bg-white/10 hover:text-academy-gold focus:bg-white/10 focus:text-academy-gold">{n}</Link>)}</nav><div className="hidden items-center gap-2 xl:flex"><ThemeToggle/><div className="hidden items-center gap-2 min-[1440px]:flex"><Button href="tel:0422470768" variant="ghost">Appeler</Button><AppointmentButton/></div></div><div className="flex shrink-0 items-center gap-2 xl:hidden"><span className="hidden sm:block"><ThemeToggle/></span><MobileHeaderMenu nav={nav} appointmentFormUrl={appointmentFormUrl}/></div></div></header>
+  return <header className="site-header sticky top-0 z-50 border-b border-white/15 bg-[linear-gradient(90deg,#40506a_0%,#344259_48%,#2b384d_100%)] text-white shadow-[0_16px_42px_rgba(31,42,58,.24)]"><div className="page-container flex items-center justify-between gap-2 px-0 py-1.5"><Link href="/" aria-label="Retour à l’accueil Intégrale Academy" className="group flex min-w-0 shrink items-center gap-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-academy-gold sm:gap-3"><BrandSigle placement="header"/><span className="min-w-0 whitespace-nowrap text-[11px] font-black tracking-[.06em] sm:text-[15px] sm:tracking-[.08em] xl:text-[calc(20px*var(--site-desktop-scale))]"><span className="text-white">INTÉGRALE</span><span className="ml-1 text-academy-gold sm:ml-1.5">ACADEMY</span></span></Link><nav className="hidden items-center gap-1 text-sm font-bold xl:flex" aria-label="Navigation principale">{nav.map(([n,h])=>typeof h!=='string'?<DesktopTrainingDropdown key={n} label={n} items={h}/>:<Link key={h} href={h} className="rounded-full px-3 py-2 text-white/80 transition hover:bg-white/10 hover:text-academy-gold focus:bg-white/10 focus:text-academy-gold">{n}</Link>)}</nav><div className="hidden items-center gap-2 xl:flex"><div className="hidden items-center gap-2 min-[1440px]:flex"><Button href="tel:0422470768" variant="ghost">Appeler</Button><AppointmentButton/></div></div><div className="flex shrink-0 items-center gap-2 xl:hidden"><MobileHeaderMenu nav={nav} appointmentFormUrl={appointmentFormUrl}/></div></div></header>
 }
 export function Footer(){
   const footerLinks=[
     {title:'Formations',links:[['Agent de sécurité','/formations-securite/aps'],['Sécurité incendie','/formations-securite/ssiap'],['Protection rapprochée','/formations-securite/a3p-apr'],['Dirigeant de sécurité','/despvaeouinitial'],['Chauffeur VTC','/vtc'],['BTS en alternance','/bts']]},
     {title:'Financements',links:[['CPF','/financements/cpf'],['France Travail','/financements/france-travail'],['Alternance','/financements/alternance'],['Toutes les solutions','/financements']]},
-    {title:'L’école',links:[['Notre école','/ecole'],['Nos centres','/centres'],['Planning','/planning'],['Dossiers formations','/dossiersfc'],['Dossiers BTS','/dossiersbts'],['Entreprises','/entreprises']]},
+    {title:'L’école',links:[['Notre école','/ecole'],['Nos centres','/centres'],['Planning','/planning'],['Entreprises','/entreprises']]},
   ];
 
   return <footer className={footerStyles.footer} data-site-footer>
@@ -333,7 +332,7 @@ const packCards = [
     title: 'Créer mon projet formation',
     subtitle: 'Lancez votre parcours de A à Z',
     theme: 'violet',
-    steps: ['Projet', 'Financement', 'Dossier', 'RDV'],
+    steps: ['Projet', 'Financement', 'Dossier', 'Rendez-vous téléphonique'],
   },
   {
     title: 'Accéder au financement',

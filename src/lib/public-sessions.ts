@@ -1,3 +1,4 @@
+import { isPublishedCampus } from '@/lib/session-location-filter';
 import { normalizeSeatCount, resolveSessionSeatCapacity } from '@/lib/session-capacity';
 
 // Reuse ICU formatters across requests: constructing one per date allocates
@@ -21,6 +22,7 @@ export type PublicSessionLike = {
   remoteStartDate?: string | Date | null;
   remoteEndDate?: string | Date | null;
   status?: string;
+  location?: string | null;
   seatsLeft?: number | string | null;
   seatsTotal?: number | string | null;
   showSeatsLeft?: boolean | null;
@@ -37,7 +39,7 @@ export function daysUntilParis(value: string | Date, referenceDate = new Date())
 }
 
 export function isPublicUpcomingSession(session: PublicSessionLike) {
-  if (!session?.training?.isActive || session.status === 'HIDDEN' || !session.startDate) return false;
+  if (!session?.training?.isActive || session.status === 'HIDDEN' || !isPublishedCampus(session) || !session.startDate) return false;
   return parisDateKey(new Date(session.startDate)) >= parisDateKey();
 }
 

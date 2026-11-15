@@ -1,3 +1,4 @@
+import { CourseBrochureCard } from '@/components/CourseBrochureCard';
 import { TrainingReferencePage, TrainingReferenceHero, TrainingReferenceSection as Section, TrainingReferenceMissions, TrainingReferenceCampus, TrainingReferenceContact, TrainingReferenceMobileBar } from '@/components/TrainingReferenceLayout';
 import { TrainingCourseTestimonials } from '@/components/TrainingCourseTestimonials';
 
@@ -189,6 +190,7 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
       </div>
     </Section>
 
+    <CourseBrochureCard course="a3p-apr" />
     <Section id="programme" label="04 — Programme" title={<>328 heures pour devenir <span className="decoration-emerald-500 decoration-[.16em] underline underline-offset-[-.03em]">opérationnel.</span></>} intro="Le programme réglementaire comporte neuf unités de valeur : 41 heures de socle de base et 287 heures de spécialité A3P, soit 328 heures hors examen dont 92 heures et 50 minutes de pratique." tone="stone">
       <div className="grid items-start gap-5 lg:grid-cols-[.62fr_1.38fr]">
         <aside className="rounded-[2rem] bg-emerald-600 p-7 text-white shadow-[0_24px_65px_rgba(5,150,105,.22)] lg:sticky lg:top-5"><span className="rounded-full bg-white px-3 py-1.5 text-[.62rem] font-black uppercase tracking-[.14em] text-emerald-800">Formation réglementée</span><p className="mt-8 text-6xl font-black tracking-[-.06em]">328 h</p><p className="mt-3 font-black text-white/85">Hors examen<br />100 % en présentiel</p><ul className="mt-8 space-y-2 text-sm font-bold text-white/85"><li>✓ 41 h de socle de base</li><li>✓ 287 h de spécialité A3P</li><li>✓ 92 h 50 de pratique</li><li>✓ 9 unités de valeur</li><li>✓ Mission complète et jury</li></ul><a href={a3pConfig.programPdfUrl} target="_blank" rel="noopener noreferrer" aria-label="Consulter le programme de formation A3P (PDF, nouvel onglet)" className="mt-8 inline-flex min-h-12 w-full items-center justify-center rounded-full bg-[#11100D] px-5 py-3 text-center text-sm font-black text-white shadow-soft transition hover:-translate-y-0.5 hover:bg-black focus:outline-none focus:ring-4 focus:ring-white/30">Consulter le programme de formation (PDF) ↗</a></aside>

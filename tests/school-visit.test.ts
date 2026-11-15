@@ -21,11 +21,11 @@ test('le message libre reste facultatif', () => {
   const { message, ...withoutMessage } = request;
   assert.equal(validateSchoolVisit(withoutMessage)?.message, '');
 });
-test('les liens des trois campus sélectionnent uniquement les sessions du lieu attendu', () => {
+test('les liens des deux campus sélectionnent uniquement les sessions du lieu attendu', () => {
   const sessions = [{ location: 'Paris' }, { location: 'Puget-sur-Argens / Côte d’Azur' }, { location: 'Aurillac / Centre France' }];
-  for (const [index, key] of ['paris', 'cote-azur', 'auvergne'].entries()) {
+  for (const [index, key] of ['paris', 'cote-azur'].entries()) {
     assert.deepEqual(sessions.filter(session => sessionMatchesLocation(session, parseSessionLocationFilter(key))), [sessions[index]]);
   }
   assert.equal(parseSessionLocationFilter(['paris', 'cote-azur']), 'paris');
-  for (const input of [undefined, '', 'inconnu', '__proto__']) assert.equal(parseSessionLocationFilter(input), 'all');
+  for (const input of [undefined, '', 'inconnu', 'auvergne', '__proto__']) assert.equal(parseSessionLocationFilter(input), 'all');
 });

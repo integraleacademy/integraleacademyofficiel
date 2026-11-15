@@ -102,7 +102,7 @@ export function PresentationDossiersPage({ variant, dossiers }: PresentationDoss
             <Button href="#dossiers" variant={isBts ? 'blue' : 'primary'}>Voir les dossiers</Button>
             <Button href={isBts ? '/dossiersfc' : '/dossiersbts'} variant="ghost">{isBts ? 'Formations professionnelles' : 'Voir les dossiers BTS'}</Button>
           </div>
-          <p className="mt-5 flex items-center gap-2 text-sm font-bold text-academy-muted"><span className="grid h-6 w-6 place-items-center rounded-full bg-academy-green/15 text-xs text-academy-green" aria-hidden="true">✓</span> Consultation gratuite, sans formulaire</p>
+          <p className="mt-5 flex items-center gap-2 text-sm font-bold text-academy-muted"><span className="grid h-6 w-6 place-items-center rounded-full bg-academy-green/15 text-xs text-academy-green" aria-hidden="true">✓</span> Consultation gratuite</p>
         </div>
         <DossierStack dossiers={dossiers} isBts={isBts} />
       </div>

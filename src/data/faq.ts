@@ -58,7 +58,7 @@ export const globalFaq = [
   },
   {
     q: 'Où se déroulent les formations ?',
-    a: 'Notre école principale se situe à Puget-sur-Argens, dans le Var. Certaines formations et sessions sont également proposées à Paris ou à Aurillac. Pour le VTC, la théorie se suit en ligne et la pratique est organisée dans les secteurs de Nice, Cannes, Toulon ou Fréjus. Le lieu exact est indiqué sur la session choisie.',
+    a: 'Notre école principale se situe à Puget-sur-Argens, dans le Var. Certaines formations et sessions sont également proposées à Paris. Pour le VTC, la théorie se suit en ligne et la pratique est organisée dans les secteurs de Nice, Cannes, Toulon ou Fréjus. Le lieu exact est indiqué sur la session choisie.',
     links: [
       { href: '/ecole', label: 'Découvrir notre école et nos implantations' },
       { href: '/planning', label: 'Voir les lieux des prochaines sessions' },
@@ -109,6 +109,6 @@ export const globalFaq = [
 
 export const formationFaq = [
   { q: 'Comment s’inscrire ?', a: 'Utilisez le formulaire de contact ou le bouton “Demander des informations”. Un conseiller vous recontacte pour valider le projet, les prérequis et le financement.' },
-  { q: 'Où se déroulent les formations ?', a: 'Les lieux principaux sont Puget-sur-Argens, Paris et Aurillac selon les formations. Certaines modalités sont à distance.' },
+  { q: 'Où se déroulent les formations ?', a: 'Les lieux principaux sont Puget-sur-Argens et Paris selon les formations. Certaines modalités sont à distance.' },
   { q: 'Comment sont validés les prérequis ?', a: 'Les prérequis sont étudiés avec l’équipe admissions avant l’entrée en formation afin de sécuriser le dossier candidat.' },
 ];

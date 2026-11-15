@@ -5,12 +5,13 @@ import { planningMonths, sessionMatchesMonth, nextBtsIntakeYear } from '../src/l
 import { planningRegistrationAction, validatePlanningRequest } from '../src/lib/planning-registration';
 import { getVtcPlanningSessions, planningSsiapCourse } from '../src/lib/planning-data';
 import { ssiapPlanningCourses, ssiapPlanningContactHref } from '../src/lib/planning-ssiap';
-import { sessionMatchesLocation } from '../src/lib/session-location-filter';
+import { directorPlanningLocations, sessionMatchesLocation } from '../src/lib/session-location-filter';
 
-test('the Auvergne centre can be selected independently of the other centres', () => {
-  assert.equal(sessionMatchesLocation({ location: 'Aurillac · 14 avenue du Garric' }, 'auvergne'), true);
-  assert.equal(sessionMatchesLocation({ location: 'Terres d’Auvergne' }, 'auvergne'), true);
-  assert.equal(sessionMatchesLocation({ location: 'Puget-sur-Argens' }, 'auvergne'), false);
+test('le planning public propose Paris et la Côte d’Azur et masque les anciennes sessions', () => {
+  assert.deepEqual(directorPlanningLocations.map(item => item.key), ['paris', 'cote-azur']);
+  for (const location of ['Aurillac · 14 avenue du Garric', 'Terres d’Auvergne']) {
+    assert.equal(sessionMatchesLocation({ location }, 'all'), false);
+  }
 });
 
 test('each SSIAP level keeps initial, refresher and reinstatement sessions separate', () => {

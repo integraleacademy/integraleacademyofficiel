@@ -1,3 +1,4 @@
+import { CourseBrochureCard } from '@/components/CourseBrochureCard';
 import type { ReactNode } from 'react';
 import { TrainingReferencePage, TrainingReferenceHero, TrainingReferenceSection as Section, TrainingReferenceMissions, TrainingReferenceCampus, TrainingReferenceContact, TrainingReferenceMobileBar } from '@/components/TrainingReferenceLayout';
 import { TrainingCourseTestimonials } from '@/components/TrainingCourseTestimonials';
@@ -189,13 +190,14 @@ export function SstReferencePage({ sessions }: { sessions: TrainingDatesPricingS
 
     <Section eyebrow="05 — Intégrale Academy" title={<>Un cadre sérieux pour apprendre à agir.</>} intro={<>Une formation courte ne doit pas être une formation superficielle : chaque compétence est démontrée, pratiquée et évaluée.</>}><div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{trustCards.map(([title, text], index) => <article key={title} className="rounded-[1.7rem] border border-academy-line bg-[#FFFDF8] p-5 shadow-soft"><span className={`grid h-11 w-11 place-items-center rounded-2xl font-black ${index === 0 ? 'bg-emerald-100 text-emerald-800' : index === 1 ? 'bg-[#FFE7E3] text-[#D73F30]' : 'bg-academy-gold-soft text-yellow-800'}`}>✓</span><h3 className="mt-4 text-lg font-black">{title}</h3><p className="mt-2 text-sm font-semibold leading-6 text-academy-muted">{text}</p></article>)}</div></Section>
 
+    <CourseBrochureCard course="sst" />
     <TrainingCourseTestimonials category="SST" />
 
     <div id="faq-sst"><PremiumFAQSection theme="green" badge="FAQ SST" title="Vos questions sur la formation SST" description="Public, durée, certificat, maintien des compétences, financement et organisation en entreprise : retrouvez les réponses essentielles." items={faq} contactHref={contactHref('question SST')} /></div>
 
     <TrainingReferenceContact
       description="Cassandre vous aide à choisir la bonne session, étudier l’organisation pour votre entreprise et préparer votre inscription."
-      href={contactHref('rendez-vous avec Cassandre')}
+      href={contactHref('rendez-vous téléphonique avec Cassandre')}
     />
     <TrainingReferenceMobileBar href={sessionHref(next)} label="Demander un devis" />
   </TrainingReferencePage>;

@@ -23,7 +23,7 @@ export const seoPages: Record<string, SeoPage> = {
   },
   '/centres': {
     title: 'Nos écoles et lieux de formation',
-    description: 'Retrouvez les adresses et accès aux lieux de formation Intégrale Academy à Puget-sur-Argens, Paris et Aurillac. Consultez les parcours et sessions proposés.',
+    description: 'Retrouvez les adresses et accès aux lieux de formation Intégrale Academy à Puget-sur-Argens et Paris. Consultez les parcours et sessions proposés.',
     label: 'Lieux de formation', type: 'CollectionPage',
   },
   '/formations-securite': {
@@ -175,11 +175,13 @@ export const seoPages: Record<string, SeoPage> = {
     label: 'Questions sur les BTS', parent: '/bts',
   },
   '/dossiersfc': {
+    noindex: true,
     title: 'Brochures des formations sécurité et VTC',
     description: 'Consultez les brochures APS, A3P, SSIAP 1, DESP initial, VAE DESP et VTC pour découvrir les programmes, modalités et informations utiles à votre projet.',
     label: 'Brochures des formations', type: 'CollectionPage',
   },
   '/dossiersbts': {
+    noindex: true,
     title: 'Brochures des BTS en alternance',
     description: 'Consultez les dossiers de présentation de nos BTS en alternance : métiers visés, programmes, modalités et accompagnement pour préparer votre candidature.',
     label: 'Brochures des BTS', parent: '/bts', type: 'CollectionPage',

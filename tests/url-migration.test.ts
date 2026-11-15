@@ -17,7 +17,7 @@ test('les liens déjà enregistrés gardent session, suivi publicitaire et ancre
   const href = 'https://integraleacademyofficiel-1.onrender.com/formations-securite/desp-initial/?session=abc&utm_source=google&gclid=123#dates-tarifs';
   assert.equal(canonicalSiteHref(href), '/dirigeant?session=abc&utm_source=google&gclid=123#dates-tarifs');
   assert.equal(canonicalSiteHref('/mentions-l%C3%A9gales'), '/mentions-legales');
-  assert.equal(canonicalSiteHref('/dossiervtc?utm_source=email'), '/dossiersfc?utm_source=email#vtc');
+  assert.equal(canonicalSiteHref('/dossiervtc?utm_source=email'), `${INFORMATION_REQUEST_URL}?utm_source=email`);
   assert.equal(canonicalSiteHref('/formations-vtc'), '/vtc');
 });
 

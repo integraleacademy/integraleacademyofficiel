@@ -244,3 +244,10 @@
 .examValidation p:last-child, .referenceDetails summary, .slideCaption p { font-size: .875rem; }
 .programTabs strong, .programPanel li { font-size: .9375rem; }
 .programTabs > button, .panelNavigation button, .slideControls button { min-height: 44px; }
+
+/* Each APS unit grows with its own text. The list scrolls independently. */
+.program[data-program-explorer='aps-uv'] .programBody { align-items:start; }
+.program[data-program-explorer='aps-uv'] .programDetail { display:block; align-self:start; }
+.program[data-program-explorer='aps-uv'] .programPanel[hidden] { display:none; }
+.program[data-program-explorer='aps-uv'] .panelNavigation { margin-top:0; }
+.unitArt { display:block; width:100%; height:clamp(120px,15vw,185px); object-fit:contain; background:#fff; border-radius:12px; margin-bottom:18px; }

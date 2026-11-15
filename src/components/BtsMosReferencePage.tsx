@@ -1,3 +1,4 @@
+import { CourseBrochureCard } from '@/components/CourseBrochureCard';
 import Image from 'next/image';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
@@ -23,7 +24,6 @@ const parcoursup = {
   campus: 'https://dossier.parcoursup.fr/Candidats/public/fiches/afficherFicheFormation?g_ta_cod=34004',
   remote: 'https://dossier.parcoursup.fr/Candidats/public/fiches/afficherFicheFormation?g_ta_cod=46600&typeBac=0',
 };
-const brochureUrl = 'https://57256b2f.sibforms.com/serve/MUIFAFEpeLidk8sqo9gYowYZHk-4EKC2_tLhM60baTLIu9CRfzbdr8iFEvM_A-bGvLzdCrcPvhCOkaRJ-KsO8DPTS4BwR_duqew_4BvUdjTKZNXP4-m-Hhxmr8LDnm5vKNULRUiOm4Fis816EzjRST6Utd8yRdDG-7oNjZAyVxtauUlT1bcOTVk05EmsisMk0A-yN_DR41V2tysE';
 const phone = 'tel:+33487830615';
 const email = 'mailto:aurelie@integraleacademy.com?subject=Mon%20projet%20BTS%20MOS';
 const course = btsExpandedCourses.mos;
@@ -206,7 +206,6 @@ export function BtsMosReferencePage() {
           ]}
           nextLabel="Enseignement suivant" restartLabel="Revenir au premier bloc"
         />
-        <a className={styles.textLink} href={brochureUrl} target="_blank" rel="noopener noreferrer">Recevoir le dossier de présentation du BTS MOS <Arrow /></a>
         <Disclosure title="Les objectifs de la formation"><List items={course.objective} /></Disclosure>
       </div>
     </section>
@@ -230,6 +229,7 @@ export function BtsMosReferencePage() {
       <BtsStudentBenefits courseName="BTS MOS" variant="illustrated" artwork={{ ipad: btsMosArtwork.ipad, london: btsMosArtwork.london }} />
     </section>
 
+    <CourseBrochureCard course="mos" />
     <section id="admission" className={`${styles.section} ${styles.admission}`}>
       <div className={styles.container}>
         <Heading label="06 / Candidature et admission" title={<>Votre inscription en BTS MOS.<br /><span>Deux possibilités.</span></>} text="Remplissez votre dossier de pré-inscription en ligne ou candidatez directement sur Parcoursup. L’équipe vous accompagne ensuite jusqu’à l’inscription et au contrat d’apprentissage." />

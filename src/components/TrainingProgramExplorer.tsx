@@ -7,7 +7,7 @@ import styles from './ApsExperience.module.css';
 
 export type TrainingProgramUnit = {
   number: string; title: string; duration?: string; delivery: string;
-  description?: string; items?: readonly string[];
+  description?: string; items?: readonly string[]; illustration?: ManualIllustration;
 };
 
 export function TrainingProgramExplorer({ units, idPrefix, hours, unitLabel = 'h', overview, subtitle, facts, menuTitle, tabListLabel, illustration, nextLabel, restartLabel }: {
@@ -58,7 +58,8 @@ export function TrainingProgramExplorer({ units, idPrefix, hours, unitLabel = 'h
         </div>
       </div>
       <div className={styles.programDetail}>
-        {units.map(({ number, title, duration, delivery, description, items }, index) => <article key={number} id={`${idPrefix}-panel-${index}`} role="tabpanel" aria-labelledby={`${idPrefix}-tab-${index}`} hidden={active !== index} aria-hidden={active !== index} inert={active !== index} tabIndex={0} className={styles.programPanel}>
+        {units.map(({ number, title, duration, delivery, description, items, illustration: unitArt }, index) => <article key={number} id={`${idPrefix}-panel-${index}`} role="tabpanel" aria-labelledby={`${idPrefix}-tab-${index}`} hidden={active !== index} aria-hidden={active !== index} inert={active !== index} tabIndex={0} className={styles.programPanel}>
+          {unitArt && active === index && <Image className={styles.unitArt} src={unitArt.src} alt={unitArt.alt} width={750} height={430} sizes="(max-width: 720px) 90vw, 540px" />}
           <div className={styles.unitHeading}><p className={styles.kicker}>{number} · Ce que vous allez apprendre</p>{duration && <span>{duration}</span>}</div>
           <h3>{title}</h3>{description && <p>{description}</p>}
           {items && <ul className={styles.programTopics}>{items.map(item => <li key={item}><span aria-hidden="true">✓</span>{item}</li>)}</ul>}

@@ -40,8 +40,12 @@ test('la galerie est accessible, responsive et ouvre les documents dans un nouve
   assert.match(component, /https:\/\/admissions\.integraleconnect\.com\//);
 });
 
-test('les pages sont accessibles depuis le pied de page et le contact BTS reste attribué à Aurélie', () => {
-  assert.match(footer, /\['Dossiers formations','\/dossiersfc'\]/);
-  assert.match(footer, /\['Dossiers BTS','\/dossiersbts'\]/);
+test('les boutons brochure ouvrent le formulaire CRM et les dossiers sont retirés du pied de page', () => {
+  assert.doesNotMatch(footer, /\['Dossiers formations','\/dossiersfc'\]/);
+  assert.doesNotMatch(footer, /\['Dossiers BTS','\/dossiersbts'\]/);
+  const brochureCard = readFileSync('src/components/CourseBrochureCard.tsx', 'utf8');
+  const contact = readFileSync('src/lib/contact-request.ts', 'utf8');
+  assert.ok(contact.includes("INFORMATION_REQUEST_URL = 'https://assistance-alw9.onrender.com/demande-informations-formations'"));
+  assert.match(brochureCard, /<a href=\{INFORMATION_REQUEST_URL\}/);
   assert.match(contactCta, /pathname === '\/dossiersbts'/);
 });

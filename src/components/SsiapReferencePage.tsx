@@ -1,3 +1,4 @@
+import { CourseBrochureCard } from '@/components/CourseBrochureCard';
 import { TeamPortrait } from '@/components/TeamPortrait';
 import { CourseJourney } from '@/components/CourseJourney';
 import { SsiapExamExperience } from './SsiapExperienceSections';
@@ -182,6 +183,7 @@ export function SsiapReferencePage({ sessions }: { sessions: any[] }) {
       <div className={mos.enrollment}><Eyebrow>Inscription</Eyebrow><h3 className="mt-3 text-3xl font-black">Cinq étapes, un dossier maîtrisé.</h3><ol>{enrollment.map((item, index) => <li key={item}><span>0{index + 1}</span><p>{item}</p></li>)}</ol></div>
     </Section>
 
+    <CourseBrochureCard course="ssiap-1" />
     <Section enhanced id="programme" eyebrow="03 / Programme" title={<>67 heures pour devenir opérationnel.</>} intro={<>Un programme réglementaire complet qui progresse des fondamentaux du feu jusqu’aux rondes et mises en situation professionnelles.</>}>
       <TrainingProgramDownload href="/documents/programme-ssiap-1.pdf" course="SSIAP 1" theme="red" className="mb-6 w-full sm:w-auto" />
       <SsiapProgramExplorer parts={program} />
@@ -219,7 +221,7 @@ export function SsiapReferencePage({ sessions }: { sessions: any[] }) {
     }))}>
     <section id="contact-ssiap" className={`${styles.contact} ${mos.adviser}`} aria-labelledby="ssiap-contact-title"><div className={`${mos.container} ${styles.contactGrid} ${mos.adviserGrid}`}>
       <div><p className={styles.eyebrow}>Une question sur votre projet ?</p><h2 id="ssiap-contact-title" className={styles.sectionTitle}>Faites le premier pas<br /><em>vers votre futur métier.</em></h2><p className={styles.intro}>Cassandre vous aide à vérifier vos prérequis, choisir votre session et trouver la solution de financement adaptée.</p><p className={styles.small}>Notre équipe vous accompagne pour choisir la formation adaptée à votre projet et vous aider à concrétiser votre avenir professionnel.</p><div className={styles.supportPills}><span>Choisir son parcours</span><span>Préparer son dossier</span><span>Étudier son financement</span></div><Link href="/ecole#equipe" className={styles.textLink}>Rencontrer les personnes qui vous accompagnent ↗</Link></div>
-      <div className={`${styles.contactCard} ${mos.adviserCard}`}><TeamPortrait person="cassandre" size={240} alt="Memoji de Cassandre, responsable commerciale Intégrale Academy" className={styles.portrait} /><p className={styles.eyebrow}>Votre conseillère · Contactez Cassandre</p><h3>Cassandre</h3><p>Responsable commerciale — Intégrale Academy</p><a className={styles.phone} href="tel:0422470768">04 22 47 07 68</a><CTA href={contactHref('rendez-vous avec Cassandre')}>Réserver un rendez-vous téléphonique →</CTA><a className={styles.textLink} href="tel:0422470768">Appeler Cassandre</a><small>Échange gratuit et sans engagement</small></div>
+      <div className={`${styles.contactCard} ${mos.adviserCard}`}><TeamPortrait person="cassandre" size={240} alt="Memoji de Cassandre, responsable commerciale Intégrale Academy" className={styles.portrait} /><p className={styles.eyebrow}>Votre conseillère · Contactez Cassandre</p><h3>Cassandre</h3><p>Responsable commerciale — Intégrale Academy</p><a className={styles.phone} href="tel:0422470768">04 22 47 07 68</a><CTA href={contactHref('rendez-vous téléphonique avec Cassandre')}>Réserver un rendez-vous téléphonique →</CTA><a className={styles.textLink} href="tel:0422470768">Appeler Cassandre</a><small>Échange gratuit et sans engagement</small></div>
     </div></section>
     </SsiapBooking>
 
