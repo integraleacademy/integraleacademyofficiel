@@ -23,7 +23,7 @@ export const seoPages: Record<string, SeoPage> = {
   },
   '/centres': {
     title: 'Nos écoles et lieux de formation',
-    description: 'Retrouvez les adresses et accès aux lieux de formation Intégrale Academy à Puget-sur-Argens et Paris. Consultez les parcours et sessions proposés.',
+    description: 'Retrouvez les formations de la Côte d’Azur à Puget-sur-Argens et notre centre de Paris, réservé au DESP. Consultez les adresses et les dates.',
     label: 'Lieux de formation', type: 'CollectionPage',
   },
   '/formations-securite': {

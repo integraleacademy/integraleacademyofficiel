@@ -65,7 +65,7 @@ export default async function Page() {
       <div className={styles.container}>
         <div className={styles.sectionHeading}>
           <div><p className={styles.eyebrow}>01 / Les lieux pour apprendre</p><h2 id="campus-title">De la Côte d’Azur<br /><em>à Paris.</em></h2></div>
-          <p>Notre siège à Puget-sur-Argens et notre implantation à Paris vous accueillent selon les formations et les sessions.</p>
+          <p>Les formations de l’école se déroulent à Puget-sur-Argens. Vous pouvez aussi préparer le DESP dans notre centre de Paris, dédié à cette formation.</p>
         </div>
         <SchoolCampuses />
         <div className={styles.campusFacilities}>
@@ -143,7 +143,6 @@ export default async function Page() {
         <div className={styles.founderCopy}>
           <p className={styles.eyebrow}>04 / Notre histoire · Depuis 2018</p>
           <h2 id="founder-title">Le terrain comme point de départ.<br /><em>L’humain comme fil conducteur.</em></h2>
-          <blockquote className={experience.welcomeQuote}>« Osez poser vos questions, essayer et progresser. Toute l’équipe est à vos côtés pour vous accompagner. »</blockquote>
           <div className={experience.founderSignature}><TeamPortrait person="clement" size={72} /><div><p>Clément VAILLANT</p><span>Fondateur & directeur général</span></div></div>
           <details className={experience.biography}><summary>Découvrir le parcours du fondateur <span className={styles.plus} aria-hidden="true">+</span></summary>
           <p>Entrepreneur engagé dans la formation professionnelle, Clément VAILLANT a construit son parcours au croisement de la sécurité privée, de la gestion d’équipes, de la communication et de la formation. Son expérience, acquise dans des environnements exigeants et réglementés, l’a conduit des fonctions opérationnelles à la coordination puis à la direction de projets et d’équipes.</p>
@@ -151,14 +150,21 @@ export default async function Page() {
             <a href="https://fr.linkedin.com/in/vaillantclement" target="_blank" rel="noopener noreferrer" className={styles.textLink}>Découvrir son parcours sur LinkedIn <Arrow diagonal /></a>
           </details>
         </div>
-        <figure className={styles.packPhoto}>
-          <Image src="/images/welcome-pack/carnet-bienvenue.webp" alt="La page de bienvenue du carnet Intégrale Academy, signée Clément VAILLANT" width={1092} height={1531} sizes="(max-width: 340px) calc(100vw - 64px), 280px" />
-        </figure>
+        <article id="mot-du-directeur" className={experience.welcomeLetter} aria-labelledby="welcome-title">
+          <p className={experience.letterLabel}>Le mot du directeur</p>
+          <h3 id="welcome-title">Bienvenue !</h3>
+          <blockquote>
+            <p>Je vous souhaite une très belle formation au sein d’Intégrale Academy, riche en découvertes, en échanges et en réussites.</p>
+            <p>Osez poser vos questions, essayer et progresser. Toute l’équipe est à vos côtés pour vous accompagner.</p>
+            <p>Que ce carnet accueille vos idées et garde la trace de vos progrès.</p>
+          </blockquote>
+          <p className={experience.letterSignature}>Clément Vaillant<span>Directeur Intégrale Academy</span></p>
+        </article>
       </div>
       <div id="histoire" className={`${styles.container} ${experience.history}`}>
         <p className={styles.eyebrow}>Une école qui grandit. Une conviction qui reste.</p>
         <ol className={styles.timeline}>
-          <li><span>2018</span><h3>Le début de l’aventure</h3><p>La création d’une école de formation professionnelle issue du terrain.</p></li><li><span>Au fil des années</span><h3>De nouvelles perspectives</h3><p>Sécurité, incendie, VTC et alternance enrichissent les parcours proposés.</p></li><li><span>Aujourd’hui</span><h3>La même proximité</h3><p>Puget-sur-Argens et Paris, selon les formations et les sessions.</p></li>
+          <li><span>2018</span><h3>Le début de l’aventure</h3><p>La création d’une école de formation professionnelle issue du terrain.</p></li><li><span>Au fil des années</span><h3>De nouvelles perspectives</h3><p>Sécurité, incendie, VTC et alternance enrichissent les parcours proposés.</p></li><li><span>Aujourd’hui</span><h3>La même proximité</h3><p>L’école vous accueille à Puget-sur-Argens et propose aussi le DESP à Paris.</p></li>
         </ol>
       </div>
     </section>

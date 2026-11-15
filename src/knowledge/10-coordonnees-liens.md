@@ -15,7 +15,7 @@ Horaires : du lundi au vendredi de 9 h à 17 h.
 
 Détail de l’école : 400 m² dédiés aux enseignements pratiques et théoriques, à 500 m de l’A8, stationnement gratuit, bus ligne 4 arrêt Général de Gaulle.
 
-Centre Paris : 34 rue Poissonnière, 75002 Paris, mobilisé notamment pour les sessions dirigeant DESP selon le planning.
+Centre Paris : 34 rue Poissonnière, 75002 Paris, réservé aux sessions en présentiel du DESP (dirigeant d’entreprise de sécurité privée). L’APS et l’A3P se suivent à Puget-sur-Argens.
 
 
 Liens utiles internes : /formations-securite, /bts, /vtc, /financements, /planning, /contact.

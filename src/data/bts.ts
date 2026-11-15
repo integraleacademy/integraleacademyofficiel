@@ -20,6 +20,7 @@ export type BtsFormation = {
 };
 
 const commonFaq = [
+  { q: 'Où peut-on suivre les cours du BTS ?', a: 'Les cours ont lieu à Puget-sur-Argens, sur la Côte d’Azur, ou en visioconférence. Le centre de Paris est réservé au DESP.' },
   { q: 'Le BTS est-il en alternance ?', a: 'Oui. Les BTS sont proposés en alternance, avec une organisation entre centre de formation et entreprise.' },
   { q: 'La formation est-elle finançable ?', a: 'En contrat d’apprentissage ou de professionnalisation, la prise en charge est étudiée avec l’entreprise et l’OPCO.' },
   { q: 'Comment candidater ?', a: 'Vous pouvez contacter Intégrale Academy, demander un rappel ou compléter une demande d’informations afin d’être accompagné dans votre dossier.' },

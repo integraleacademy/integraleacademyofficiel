@@ -1,3 +1,4 @@
+import { CampusFormationTags } from '@/components/CampusFormationTags';
 import { PageSectionNavigation } from '@/components/PageSectionNavigation';
 import navigation from '@/components/PageSectionNavigation.module.css';
 import Image from 'next/image';
@@ -111,7 +112,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<Rec
             {mainLocation && <article className={styles.campusCard} data-contact-reveal>
               <div className={styles.campusImage}><Image src="/images/campus/campus-accueil.jpg" alt="Le véritable accueil d’Intégrale Academy à Puget-sur-Argens" width={1600} height={1200} sizes="(max-width: 800px) 100vw, 60vw" /><span className={styles.campusPill}><span aria-hidden="true">✦</span> Bienvenue chez vous.</span></div>
               <div className={styles.addressFloating}>
-                <div><p>L’école principale · Côte d’Azur</p><h3>Puget-sur-Argens</h3><address>{mainLocation.address}</address></div>
+                <div><p>L’école principale · Côte d’Azur</p><h3>Puget-sur-Argens</h3><CampusFormationTags tags={mainLocation.tags} /><address>{mainLocation.address}</address></div>
                 <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mainLocation.address)}`} target="_blank" rel="noopener noreferrer" aria-label="Ouvrir l’itinéraire vers Intégrale Academy à Puget-sur-Argens"><Arrow diagonal /></a>
               </div>
               <div className={styles.campusAccess}><span>À 500 m de l’A8</span><span>Parking gratuit</span><span>Bus 4 · Général de Gaulle</span></div>
@@ -123,10 +124,10 @@ export default async function Page({ searchParams }: { searchParams: Promise<Rec
             </div>
           </div>
           <div className={styles.otherLocations}>
-            <p>Et aussi, selon votre formation et les sessions programmées.</p>
+            <p>Pour suivre le DESP, vous pouvez également choisir Paris.</p>
             <div className={school.locationGrid}>
               {otherLocations.map(location => <article key={location.id}>
-                <p className={styles.locationLabel}>Selon les sessions</p><h3>{location.name}</h3><address>{location.address}</address><p>{location.detail}</p>
+                <p className={styles.locationLabel}>Centre de formation</p><h3>{location.name}</h3><CampusFormationTags tags={location.tags} /><address>{location.address}</address><p>{location.detail}</p>
                 <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location.address)}`} target="_blank" rel="noopener noreferrer" className={school.textLink}>Voir sur la carte <Arrow diagonal /></a>
               </article>)}
             </div>

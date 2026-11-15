@@ -1,11 +1,11 @@
 export const PARIS_ADDRESS = '34 rue Poissonnière, 75002 Paris';
 export const PARIS_SESSION_LOCATION = `Paris · ${PARIS_ADDRESS}`;
 
-export type Location = { id: 'puget' | 'paris'; name: string; address: string; detail: string; tags: string[] };
+export type Location = { id: 'puget' | 'paris'; shortName: string; planningKey: 'cote-azur' | 'paris'; name: string; address: string; detail: string; tags: string[] };
 
 export const locations: Location[] = [
-  { id: 'puget', name: 'Puget-sur-Argens / Côte d’Azur', address: '54 chemin du Carreou - ZI du Carreou, 83480 Puget-sur-Argens', detail: 'École principale, 400 m² dédiés aux enseignements pratiques et théoriques. À 500 m de l’A8, stationnement gratuit, bus ligne 4 arrêt Général de Gaulle.', tags: ['Sécurité', 'BTS', 'VTC pratique'] },
-  { id: 'paris', name: 'Paris', address: PARIS_ADDRESS, detail: 'Centre de formation parisien pour les sessions DESP en présentiel.', tags: ['DESP', 'Présentiel'] },
+  { id: 'puget', shortName: 'Côte d’Azur', planningKey: 'cote-azur', name: 'Puget-sur-Argens / Côte d’Azur', address: '54 chemin du Carreou - ZI du Carreou, 83480 Puget-sur-Argens', detail: 'École principale, 400 m² dédiés aux enseignements pratiques et théoriques. À 500 m de l’A8, stationnement gratuit, bus ligne 4 arrêt Général de Gaulle.', tags: ['APS', 'A3P', 'DESP', 'CPSP', 'SSIAP 1 à 3', 'SST', 'VTC pratique', 'BTS en alternance'] },
+  { id: 'paris', shortName: 'Paris', planningKey: 'paris', name: 'Paris', address: PARIS_ADDRESS, detail: 'Ce centre accueille exclusivement les sessions en présentiel du DESP, la formation de dirigeant d’entreprise de sécurité privée.', tags: ['DESP uniquement'] },
 ];
 
 export const contactInfo = {
