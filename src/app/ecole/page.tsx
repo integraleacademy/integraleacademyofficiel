@@ -153,7 +153,6 @@ export default async function Page() {
         </div>
         <figure className={styles.packPhoto}>
           <Image src="/images/welcome-pack/carnet-bienvenue.webp" alt="La page de bienvenue du carnet Intégrale Academy, signée Clément VAILLANT" width={1092} height={1531} sizes="(max-width: 340px) calc(100vw - 64px), 280px" />
-          <figcaption>Le mot de bienvenue de Clément VAILLANT · Carnet Intégrale Academy</figcaption>
         </figure>
       </div>
       <div id="histoire" className={`${styles.container} ${experience.history}`}>

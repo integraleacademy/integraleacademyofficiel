@@ -9,7 +9,6 @@ const manuals = {
   'ssiap-1': { theme: 'red', title: 'Le manuel de formation SSIAP 1', name: 'un manuel de formation SSIAP 1', image: '/images/ssiap-1/manuel/couverture-ssiap-1.webp' },
   'desp-initial': { theme: 'orange', title: 'Le manuel du dirigeant', name: 'un manuel de formation du dirigeant', image: '/images/desp/manuel/couverture-dssp.webp' },
   'desp-vae': { theme: 'orange', title: 'Le manuel du dirigeant', name: 'un manuel de formation du dirigeant', image: '/images/desp/manuel/couverture-dssp.webp' },
-  vtc: { theme: 'violet', title: 'Le manuel de formation VTC', name: 'un manuel de formation VTC', image: '/images/vtc/manuel/couverture-vtc.webp' },
   sst: { theme: 'green', title: 'Le manuel de formation SST', name: 'un manuel de formation SST', image: '/images/sst/manuel/couverture-sst.webp' },
 } as const;
 

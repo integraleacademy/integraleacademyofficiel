@@ -5,7 +5,6 @@ import { createPageMetadata } from '@/lib/seo';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ManualArtwork } from '@/components/ManualArtwork';
-import { TrainingWelcomePack } from '@/components/TrainingWelcomePack';
 import { vtcArtwork, vtcPracticeArtwork } from '@/data/manualIllustrations';
 import { VtcAutonomousEnrollmentBanner } from '@/components/VtcAutonomousEnrollmentBanner';
 import { TrainingIllustratedCards, type TrainingIllustratedCard } from '@/components/TrainingIllustratedCards';
@@ -179,7 +178,6 @@ export default function VtcPage() {
       theme="violet"
     />
 
-    <TrainingWelcomePack course="vtc" />
 
     <CourseJourney course="vtc">
       <section className={styles.accreditations}>

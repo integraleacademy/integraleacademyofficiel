@@ -1,9 +1,9 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { toPublicSession } from '../src/lib/public-session-data';
-import { planningMonths, sessionMatchesMonth, nextBtsIntakeYear } from '../src/lib/planning-filters';
+import { planningMonths, sessionMatchesMonth } from '../src/lib/planning-filters';
 import { planningRegistrationAction, validatePlanningRequest } from '../src/lib/planning-registration';
-import { getVtcPlanningSessions, planningSsiapCourse } from '../src/lib/planning-data';
+import { getVtcPlanningSessions, isBtsTraining, planningSsiapCourse } from '../src/lib/planning-data';
 import { ssiapPlanningCourses, ssiapPlanningContactHref } from '../src/lib/planning-ssiap';
 import { directorPlanningLocations, sessionMatchesLocation } from '../src/lib/session-location-filter';
 
@@ -55,10 +55,12 @@ test('month filtering includes every month of a course and its separate exam', (
   assert.equal(sessionMatchesMonth(session, 'all'), true);
 });
 
-test('BTS no longer advertises a past September as its next intake', () => {
-  assert.equal(nextBtsIntakeYear(new Date('2026-08-31T12:00:00Z')), 2026);
-  assert.equal(nextBtsIntakeYear(new Date('2026-10-10T12:00:00Z')), 2027);
-  assert.equal(nextBtsIntakeYear(new Date('2027-10-10T12:00:00Z')), 2028);
+test('recognises BTS sessions from the catalogue, historic slugs and managed categories', () => {
+  for (const slug of ['bts', 'bts-pi', 'mco', 'commerce-international', 'comptabilite-gestion', 'professions-immobilieres']) {
+    assert.equal(isBtsTraining(slug), true, slug);
+  }
+  assert.equal(isBtsTraining('nouveau-parcours', 'BTS'), true);
+  for (const slug of ['aps', 'ssiap-3', 'desp-initial', 'vtc']) assert.equal(isBtsTraining(slug), false, slug);
 });
 
 test('full and upcoming sessions cannot be counted as registrations', () => {

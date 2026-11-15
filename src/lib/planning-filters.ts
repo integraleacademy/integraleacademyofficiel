@@ -1,7 +1,6 @@
 type DatedSession = { startDate?: string | Date; endDate?: string | Date; examDate?: string | Date | null };
 
 const formatMonthYearParis = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Paris', year: 'numeric', month: '2-digit' });
-const formatMonthDayYearParis = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Paris', year: 'numeric', month: '2-digit', day: '2-digit' });
 
 export function planningMonth(value: string | Date) {
   return formatMonthYearParis.format(new Date(value));
@@ -28,10 +27,4 @@ export function planningMonths(sessions: DatedSession[]) {
     }
   }
   return [...months].sort();
-}
-
-export function nextBtsIntakeYear(referenceDate = new Date()) {
-  const key = formatMonthDayYearParis.format(referenceDate);
-  const year = Number(key.slice(0, 4));
-  return key.slice(5) < '09-01' ? year : year + 1;
 }
