@@ -10,6 +10,7 @@ import { serializeCourseJsonLd } from '@/lib/seo';
 
 import Link from 'next/link';
 
+import { CourseFilm } from '@/components/CourseFilm';
 import { ApsSectionNavigation } from '@/components/ApsSectionNavigation';
 import { ApsTrainingSummary } from '@/components/ApsTrainingSummary';
 import { ApsFacilitiesSections } from '@/components/ApsFacilitiesSections';
@@ -279,6 +280,9 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
     ><HeroSession session={next} /></TrainingReferenceHero>
 
     <ApsSectionNavigation registrationHref="#dates-tarifs" />
+
+    <CourseFilm film="aps" title="Devenir agent de sécurité"
+      description="Surveiller un site, contrôler les accès, prévenir les incidents… Découvrez le métier auquel prépare notre formation APS." />
 
     <ApsJourney>
       <Section id="metier" eyebrow="01 — Le métier" title={<>Un métier de terrain, de vigilance et de sang-froid.</>} intro={<>L’agent APS prévient les risques, protège les personnes et les biens, applique les consignes et rend compte de chaque événement.</>}>

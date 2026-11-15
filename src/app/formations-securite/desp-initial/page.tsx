@@ -1,3 +1,4 @@
+import { CourseFilm } from '@/components/CourseFilm';
 import { CourseBrochureCard } from '@/components/CourseBrochureCard';
 import { TrainingReferencePage, TrainingReferenceSection, TrainingReferenceCampus, TrainingReferenceContact, TrainingReferenceMobileBar } from '@/components/TrainingReferenceLayout';
 import { TrainingCourseTestimonials } from '@/components/TrainingCourseTestimonials';
@@ -107,6 +108,9 @@ export default async function DespInitialPage(){
       registrationHref="#dates-tarifs"
       theme="orange"
     />
+
+    <CourseFilm film="desp" title="Préparer son projet d’entreprise"
+      description="Créer sa société de sécurité privée, la gérer et encadrer son équipe. Découvrez ce que vous préparez en formation DESP." />
 
     <CourseJourney course="desp-initial">
       <section className="page-container py-10"><MissionAnimation variant="despInitial" className="mb-8" illustration={originalArtwork['desp-initial-mission']} /><div className="grid gap-4 md:grid-cols-3"><FeatureCard title="Durée">7 semaines · 245 heures</FeatureCard><FeatureCard title="Public concerné">Candidats souhaitant acquérir ou consolider les compétences de dirigeant en sécurité privée.</FeatureCard><FeatureCard title="Prérequis">Niveau 4 ou expérience à valider avec l’équipe admissions ; conditions CNAPS et honorabilité à vérifier.</FeatureCard><FeatureCard title="Lieux">Distanciel + présentiel à Paris ou Puget-sur-Argens selon les sessions.</FeatureCard><FeatureCard title="Financement">CPF, France Travail, entreprise ou facilités de paiement selon dossier.</FeatureCard><FeatureCard title="Certification / examen"><strong>Titre RNCP Dirigeant d’entreprise de sécurité privée – niveau 5</strong><br/>Titre : Dirigeant d’entreprise de sécurité privée · Sigle : DESP · Code : {despInitialAdminData.rncpCode} · Certificateur : Scotia Formation · Échéance actuelle : 28 mars 2027 · Durée : {despInitialAdminData.duration.total} · Tarif actuel : {despInitialAdminData.priceLabel}<br/><span className="mt-2 block">Cette certification permet de justifier de l’aptitude professionnelle nécessaire à la demande d’agrément dirigeant auprès du CNAPS. L’agrément reste délivré séparément par le CNAPS après étude du dossier.</span></FeatureCard></div></section>
