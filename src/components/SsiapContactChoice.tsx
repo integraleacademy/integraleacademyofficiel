@@ -1,4 +1,4 @@
-import { INFORMATION_REQUEST_URL } from '@/lib/contact-request';
+import { informationRequestHref } from '@/lib/contact-request';
 
 type Params = Record<string, string | string[] | undefined>;
 
@@ -18,8 +18,8 @@ export function SsiapContactChoice({ params }: { params: Params }) {
       <h2 id="choix-ssiap-title" className="mt-3 text-2xl font-black">{formulaLabel}</h2>
       {safePeriod && <p className="mt-2 font-bold">{safePeriod}</p>}
       <p className="mt-3 max-w-3xl text-sm leading-7 text-academy-muted">Votre choix est rappelé ici pour préparer votre échange avec Cassandre. L’équipe vérifie les prérequis, les dates de présence et le financement avant de confirmer l’inscription.</p>
-      <div className="mt-5 flex flex-wrap gap-3"><a href={email} className="inline-flex min-h-12 items-center justify-center rounded-full bg-red-700 px-5 py-3 text-center text-sm font-bold text-white">Transmettre ce choix par e-mail →</a><a href={`${INFORMATION_REQUEST_URL}?formation=SSIAP`} className="inline-flex min-h-12 items-center justify-center rounded-full border border-academy-line px-5 py-3 text-center text-sm font-bold">Compléter ma demande d’informations →</a></div>
-      <p className="mt-3 text-xs leading-6 text-academy-muted">Le courriel reprend votre sélection. Pour un premier échange général, vous pouvez aussi compléter la demande d’informations SSIAP.</p>
+      <div className="mt-5 flex flex-wrap gap-3"><a href={email} className="inline-flex min-h-12 items-center justify-center rounded-full bg-red-700 px-5 py-3 text-center text-sm font-bold text-white">Transmettre ce choix par e-mail →</a><a href={informationRequestHref(params)} className="inline-flex min-h-12 items-center justify-center rounded-full border border-academy-line px-5 py-3 text-center text-sm font-bold">Compléter ma demande d’informations →</a></div>
+      <p className="mt-3 text-xs leading-6 text-academy-muted">Votre session et votre formule sont reprises dans la demande.</p>
     </div>
   </section>;
 }

@@ -27,6 +27,8 @@ function Arrow({ diagonal = false }: { diagonal?: boolean }) {
   return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={diagonal ? 'M6 18 18 6M6 6h12v12' : 'M5 12h14m-6-6 6 6-6 6'} /></svg>;
 }
 
+const formatMonthYearUtc = new Intl.DateTimeFormat('fr-FR', { month: 'long', year: 'numeric', timeZone: 'UTC' });
+
 export function PlanningPreview({ formations, initialFormation, initialSsiapCourse = null, initialDirectorLocation = null, btsIntakeYear, onChoose }: {
   formations: PreviewFormation[];
   initialFormation: string;
@@ -69,7 +71,7 @@ export function PlanningPreview({ formations, initialFormation, initialSsiapCour
   const daySessions = monthSessions.filter(item => planningDay(item.startDate) === selectedDay);
   const nextSession = sessions.find(item => monthEnd !== null && planningDay(item.startDate)! >= monthEnd);
   const monthDate = month !== null ? new Date(month) : null;
-  const monthLabel = monthDate ? new Intl.DateTimeFormat('fr-FR', { month: 'long', year: 'numeric', timeZone: 'UTC' }).format(monthDate) : '';
+  const monthLabel = monthDate ? formatMonthYearUtc.format(monthDate) : '';
   const dayCount = monthEnd !== null ? new Date(monthEnd - 1).getUTCDate() : 0;
   const firstWeekday = monthDate ? (monthDate.getUTCDay() + 6) % 7 : 0;
   const isVtc = formation?.key === 'vtc';

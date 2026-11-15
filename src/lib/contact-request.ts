@@ -28,6 +28,14 @@ export function informationRequestHref(params: SearchParams = {}): string {
   const target = new URL(INFORMATION_REQUEST_URL);
   const formation = formationCodes[(first(params.formation) || '').toLowerCase()];
   if (formation) target.searchParams.set('formation', formation);
+  if (formation === 'SSIAP') {
+    const session = first(params.session) || '';
+    const period = first(params.periode) || '';
+    const formula = first(params.formule);
+    if (/^[\w-]{1,128}$/.test(session)) target.searchParams.set('session', session);
+    if (/^Du \d{2}\/\d{2}\/\d{4} au \d{2}\/\d{2}\/\d{4}$/.test(period)) target.searchParams.set('periode', period);
+    if (formula === 'ssiap-1' || formula === 'ssiap-1-sst') target.searchParams.set('formule', formula);
+  }
   for (const key of campaignKeys) {
     const value = first(params[key]);
     if (value) target.searchParams.set(key, value);

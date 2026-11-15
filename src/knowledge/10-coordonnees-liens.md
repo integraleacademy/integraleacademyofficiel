@@ -9,13 +9,13 @@ Téléphone : 04 22 47 07 68.
 
 Email : contact par formulaire.
 
-Horaires : lundi-vendredi 08h00-19h00 ; samedi 08h00-12h00.
+Horaires : du lundi au vendredi de 9 h à 17 h.
 
 École principale : Puget-sur-Argens / Côte d’Azur, 54 chemin du Carreou - ZI du Carreou, 83480 Puget-sur-Argens.
 
 Détail de l’école : 400 m² dédiés aux enseignements pratiques et théoriques, à 500 m de l’A8, stationnement gratuit, bus ligne 4 arrêt Général de Gaulle.
 
-Centre Paris : Atelier Modulable, 53 rue des Vinaigriers, 75010 PARIS, mobilisé notamment pour les sessions dirigeant DESP selon le planning.
+Centre Paris : 34 rue Poissonnière, 75002 Paris, mobilisé notamment pour les sessions dirigeant DESP selon le planning.
 
 Centre Aurillac / Centre France : Village d’entreprises - 14 avenue du Garric, 15000 Aurillac, mobilisé selon les sessions DESP.
 

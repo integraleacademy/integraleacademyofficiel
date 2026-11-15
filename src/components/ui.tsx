@@ -1,3 +1,4 @@
+import { PARIS_ADDRESS } from '@/data/locations';
 import { premiumFaqThemes } from '@/components/FAQ';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -207,7 +208,7 @@ function BrandSigle({ placement }: { placement: 'header' | 'footer' }){
     : 'h-[48px] w-[51px]';
 
   return <span className={`relative block shrink-0 overflow-hidden ${size}`} aria-hidden="true">
-    <Image src="/images/logo.png" alt="" width={5906} height={1772} priority={placement === 'header'} className="absolute left-0 top-0 h-full w-auto max-w-none object-contain"/>
+    <Image src="/images/logo.png" alt="" width={5906} height={1772} sizes="(max-width: 767px) 144px, 192px" priority={placement === 'header'} className="absolute left-0 top-0 h-full w-auto max-w-none object-contain"/>
   </span>
 }
 
@@ -249,7 +250,7 @@ export function Footer(){
         <aside className={footerStyles.contact} aria-labelledby="footer-contact-title">
           <h2 id="footer-contact-title" className={footerStyles.heading}>Parlons de votre projet</h2>
           <a href="tel:0422470768" className={footerStyles.phone}>{contact.phone}</a>
-          <p className={footerStyles.hours}>Standard téléphonique ouvert du lundi au vendredi de 09h00 à 17h00.</p>
+          <p className={footerStyles.hours}>Standard téléphonique · {contact.hours}</p>
           <Link href="/contact" className={footerStyles.contactLink}>Nous contacter <span aria-hidden="true">↗</span></Link>
         </aside>
       </div>
@@ -288,7 +289,7 @@ export function Footer(){
         </div>
         <ul className={footerStyles.locations}>
           <li><strong>Intégrale Academy Côte d'Azur :</strong> 54 chemin du Carreou 83480 PUGET SUR ARGENS</li>
-          <li><strong>Intégrale Academy Paris :</strong> 142 rue de Rivoli 75001 PARIS</li>
+          <li><strong>Intégrale Academy Paris :</strong> {PARIS_ADDRESS}</li>
         </ul>
       </section>
       <div className={footerStyles.bottom}>
@@ -305,7 +306,7 @@ export function StatCard({value,label}:{value:string;label:string}){return <div 
 // All FAQ variants use the APS reference component.
 export { FAQ, PremiumFAQSection } from '@/components/FAQ';
 
-export function LocationCard({name,address,detail}:{name:string;address:string;detail:string}){return <FeatureCard title={name}>{address}<br/>{detail}</FeatureCard>}
+export function LocationCard({name,address,detail}:{name:string;address:string;detail:string}){return <FeatureCard title={name}><a className="underline underline-offset-2" href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`} target="_blank" rel="noopener noreferrer">{address}</a><br/>{detail}</FeatureCard>}
 export function FinancingCard({title,children,href}:{title:string;children:React.ReactNode;href:string}){return <FeatureCard title={title}>{children}<br/><Link className="mt-4 inline-block font-bold text-academy-gold-strong" href={href}>En savoir plus →</Link></FeatureCard>}
 export function ProofBar(){const items=['Qualiopi','CNAPS','ADEF','SSIAP','INRS SST','UAI'];return <section className="border-y border-academy-line bg-academy-surface/70 px-4 py-4"><div className="page-container flex flex-wrap items-center justify-center gap-3 text-xs font-black uppercase tracking-[.18em] text-academy-muted">{items.map(item=><span key={item} className="rounded-full bg-academy-bg px-4 py-2">{item}</span>)}</div></section>}
 export function ConversionStrip({theme='gold'}:{theme?:UiAccent}){const styles=premiumFaqThemes[theme];const actionVariant:ButtonVariant=theme==='gold'?'primary':theme;const callbackVariant:ButtonVariant=theme==='gold'?'secondary':theme;return <section className="page-container py-8"><div className="grid gap-4 rounded-[2rem] bg-academy-surface p-5 shadow-soft ring-1 ring-academy-line md:grid-cols-3"><div><b className="text-academy-ink">Un doute sur la bonne formation ?</b><p className="mt-1 text-sm text-academy-muted">Un conseiller vérifie avec vous les prérequis, lieux, dates et financements.</p></div><div className="flex items-center gap-3"><span className={`grid h-11 w-11 place-items-center rounded-2xl font-black ${styles.check}`}>✓</span><p className="text-sm font-semibold text-academy-muted">Réponse orientée inscription, sans engagement.</p></div><div className="flex flex-wrap items-center justify-start gap-2 md:justify-end"><Button href="/contact" variant={actionVariant}>Demander des informations</Button><Button href="tel:0422470768" variant={callbackVariant}>Être rappelé</Button></div></div></section>}

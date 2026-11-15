@@ -34,7 +34,7 @@ export function VtcAutonomousEnrollmentBanner() {
                 <Image src="/images/mon-compte-formation.svg" alt="Mon Compte Formation" width={144} height={72} />
               </span>
             </div>
-            <h3>Plus de <span className={styles.amount}>1 500 €</span> sur votre CPF ?</h3>
+            <h3>Au moins <span className={styles.amount}>1 500 €</span> sur votre CPF ?</h3>
             <p>Disponibles sur votre Compte Personnel de Formation (CPF).</p>
           </div>
           <div className={styles.condition}>
@@ -55,7 +55,7 @@ export function VtcAutonomousEnrollmentBanner() {
         <div className={styles.action}>
           <p className={styles.actionPrompt}>À vous de jouer !</p>
           <a className={styles.cta} href={enrollmentUrl}>
-            <span>Je m’inscris en formation VTC</span>
+            <span>M’inscrire avec le CPF</span>
             <span className={styles.ctaArrow} aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14m-6-6 6 6-6 6" /></svg>
             </span>
@@ -65,7 +65,7 @@ export function VtcAutonomousEnrollmentBanner() {
         <div className={styles.advisor}>
           <div className={styles.advisorCopy}>
             <h3>Vous préférez vous inscrire avec un de nos conseillers ?</h3>
-            <p>Contactez-nous : notre équipe vous accompagne dans votre inscription.</p>
+            <p>Pour un financement personnel ou France Travail, <a href="/contact?formation=vtc"><u>contactez notre équipe VTC</u></a>.</p>
           </div>
           <a className={styles.advisorPhone} href="tel:+33422470768" aria-label="Appeler un conseiller au 04 22 47 07 68">
             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">

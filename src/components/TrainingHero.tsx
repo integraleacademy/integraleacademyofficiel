@@ -15,6 +15,8 @@ type HeroFacts = ReadonlyArray<ReadonlyArray<string>>;
 
 export const trainingRegistrationUrl = 'https://assistance-alw9.onrender.com/demande-informations-formations';
 
+const formatMonthDayYearParis = new Intl.DateTimeFormat('fr-FR', { timeZone: 'Europe/Paris', day: '2-digit', month: 'short', year: 'numeric' });
+
 export function TrainingHero({
   theme, imageSrc, badge, title, tagline, taglineAccent, description,
   primaryAction, highlights = [], facts, children, additionalAction, illustrationAlt, compact = false, factsWithArtwork = false,
@@ -74,7 +76,7 @@ function formatDate(value?: string | Date | null) {
   if (!value) return 'À confirmer';
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return 'À confirmer';
-  return new Intl.DateTimeFormat('fr-FR', { timeZone: 'Europe/Paris', day: '2-digit', month: 'short', year: 'numeric' }).format(date);
+  return formatMonthDayYearParis.format(date);
 }
 
 export function TrainingHeroSessionCard({

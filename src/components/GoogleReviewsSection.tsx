@@ -45,13 +45,15 @@ function ReviewText({ text, featured }: { text: string; featured: boolean }) {
   </details>;
 }
 
+const reviewDate = new Intl.DateTimeFormat('fr-FR', { month: 'long', year: 'numeric', timeZone: 'UTC' });
+
 function ReviewCard({ review, featured = false }: { review: PublicGoogleReview; featured?: boolean }) {
   return <article className={`${styles.card} ${featured ? styles.featured : ''}`}>
     <div className={styles.source}><span aria-hidden="true">G</span> Avis Google {featured && <i aria-hidden="true">“</i>}</div>
     <ReviewHeader review={review} featured={featured} />
     <div className="flex-1"><ReviewText text={review.excerpt} featured={featured} /></div>
     {featured && <p className={styles.selected}>Avis Google sélectionné</p>}
-    <div className={styles.footer}>{review.reviewedAt && <time dateTime={review.reviewedAt}>{new Date(review.reviewedAt).toLocaleDateString('fr-FR', { month: 'long', year: 'numeric', timeZone: 'UTC' })}</time>}<a className={styles.sourceLink} href={review.sourceUrl} target="_blank" rel="noopener noreferrer">Voir sur Google ↗︎</a></div>
+    <div className={styles.footer}>{review.reviewedAt && <time dateTime={review.reviewedAt}>{reviewDate.format(new Date(review.reviewedAt))}</time>}<a className={styles.sourceLink} href={review.sourceUrl} target="_blank" rel="noopener noreferrer">Voir sur Google ↗︎</a></div>
   </article>;
 }
 

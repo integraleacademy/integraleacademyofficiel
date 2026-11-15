@@ -218,7 +218,7 @@ export function SsiapReferencePage({ sessions }: { sessions: any[] }) {
 
     <Section enhanced id="examen" eyebrow="06 / Certification" title={<>Un examen officiel, préparé sans zone d’ombre.</>} intro={<>Vous connaissez les attendus, vous vous entraînez dans les conditions les plus proches de l’épreuve et vous recevez un retour précis sur votre progression.</>} tone="dark">
       <SsiapExamExperience steps={examSteps} />
-      <div className="mt-8 flex flex-wrap items-center justify-between gap-5 rounded-[1.7rem] border border-white/10 bg-white/6 p-5"><div><p className="font-black">Une préparation exigeante, un effectif maîtrisé.</p><p className="mt-1 text-sm text-white/55">12 stagiaires maximum · diplôme SSIAP 1 · RS5641</p></div><CTA href={contactHref('conditions examen')} variant="outline">Poser une question</CTA></div>
+      <div className="mt-8 flex flex-wrap items-center justify-between gap-5 rounded-[1.7rem] border border-white/10 bg-white/6 p-5"><div><p className="font-black">Une préparation exigeante, un effectif maîtrisé.</p><p className="mt-1 text-sm text-white/55">12 stagiaires maximum · diplôme SSIAP 1 · <a href="https://www.francecompetences.fr/recherche/rs/7845/" target="_blank" rel="noopener noreferrer">RS7845 pour les parcours 2027</a></p></div><CTA href={contactHref('conditions examen')} variant="outline">Poser une question</CTA></div>
     </Section>
 
     <SsiapBooking sessions={visibleSessions.map(session => ({

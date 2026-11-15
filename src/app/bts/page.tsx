@@ -30,7 +30,7 @@ export default function Page() {
         subtitle="BTS MOS, MCO, NDRC, Commerce International, Professions Immobilières et Comptabilité et Gestion."
         actions={
           <>
-            <Button href="https://inscriptionsbts.onrender.com/">
+            <Button href="https://admissions.integraleconnect.com/">
               Candidature / pré-inscription
             </Button>
             <Button href="/financements/alternance" variant="secondary">
@@ -56,7 +56,7 @@ export default function Page() {
                 du dossier, puis accompagnement vers l’entreprise et le contrat
                 d’apprentissage.
               </FeatureCard>
-              <FeatureCard title="Processus 2026">
+              <FeatureCard title="Candidature en BTS">
                 Dossier de pré-inscription, étude de candidature, dossier
                 d’inscription, confirmation officielle puis signature du contrat
                 d’apprentissage.

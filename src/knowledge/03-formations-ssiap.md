@@ -7,13 +7,13 @@ updated: 2026-06-19
 
 La formation SSIAP 1 prépare au métier d’agent de sécurité incendie en ERP et IGH.
 
-Durée : 2 semaines, soit 70 heures.
+Durée : 67 heures minimum hors examen et déplacements.
 
 Lieu : Puget-sur-Argens / Côte d’Azur.
 
 Tarif indiqué : 980 € ou 1230 € avec SST.
 
-Certification : SSIAP 1, RS n°5641, agrément SSIAP n°8323.
+Certification : SSIAP 1, RS7845 pour les parcours débutant en 2027 (RS5641 pour les parcours débutant en 2026), agrément SSIAP n°8323.
 
 Prérequis : aptitude médicale de moins de 3 mois, secourisme valide, capacité à retranscrire des anomalies.
 

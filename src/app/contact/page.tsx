@@ -58,7 +58,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<Rec
         <div className={`${school.container} ${school.heroGrid} ${styles.heroGrid}`}>
           <div className={school.heroCopy} data-contact-reveal>
             <p className={school.eyebrow}><span className={school.smallLine} /> Contact & admissions</p>
-            <h1 id="contact-title">Une question ?<br /><em>Parlons de<br />votre avenir.</em></h1>
+            <h1 id="contact-title">Une question ?<br /><em>Parlons de<br /> votre avenir.</em></h1>
             <p className={school.intro}>Choisir une formation, préparer votre financement ou venir découvrir l’école : notre équipe vous accompagne dès le premier échange.</p>
             <div className={school.heroActions}>
               <a href="#demande" className={school.button}>Parler de mon projet <Arrow /></a>

@@ -115,8 +115,10 @@ export default async function Home() {
               <h1 id="home-hero-title" data-home-hero-item>Votre futur métier mérite une formation <em>à la hauteur.</em></h1>
               <p data-home-hero-item>Des formations en sécurité, VTC et BTS, et une équipe à vos côtés pour construire la suite.</p>
               <div className={heroStyles.heroActions} data-home-hero-item>
-                <Link href="#formations-securite" className={heroStyles.primaryButton}>Découvrir les formations <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg></Link>
-                <OrientationAssistant variant="modalTrigger" triggerLabel="Être conseillé" triggerAppearance="button" triggerClassName={heroStyles.secondaryButton} />
+                <Link href="/formations-securite" className={heroStyles.primaryButton}>Sécurité</Link>
+                <Link href="/vtc" className={heroStyles.secondaryButton}>Chauffeur VTC</Link>
+                <Link href="/bts" className={heroStyles.secondaryButton}>BTS en alternance</Link>
+
               </div>
               <div className={heroStyles.heroProofs} data-home-hero-item aria-label="Points forts d’Intégrale Academy">
                 <span>Formations réglementées</span>

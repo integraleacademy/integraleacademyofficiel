@@ -72,7 +72,7 @@ type PremiumFAQProps = {
 };
 
 /** One APS-reference layout for all site FAQs; only content and course accents vary. */
-export function PremiumFAQSection({ id, badge, title, description, items, contactHref = '/contact', contactLabel = 'Je souhaite en savoir plus', callHref = 'tel:0422470768', callLabel = 'Être rappelé', theme = 'gold', contactContent, contained = false }: PremiumFAQProps) {
+export function PremiumFAQSection({ id, badge, title, description, items, contactHref = '/contact', contactLabel = 'Je souhaite en savoir plus', callHref = 'tel:0422470768', callLabel = 'Appeler l’école', theme = 'gold', contactContent, contained = false }: PremiumFAQProps) {
   const styles = premiumFaqThemes[theme];
   return <section id={id} aria-label={badge} data-faq-design="aps" data-faq-theme={theme} className={`${layout.section} relative isolate overflow-hidden py-14 lg:py-16 ${styles.shell} ${contained ? layout.contained : ''}`}>
     <div className={`absolute left-0 top-0 -z-10 h-72 w-72 -translate-x-1/3 rounded-full blur-3xl ${styles.glow}`} aria-hidden="true" />

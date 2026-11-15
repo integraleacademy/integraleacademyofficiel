@@ -1,3 +1,4 @@
+import { PARIS_ADDRESS } from '@/data/locations';
 import { OrientationAssistant } from '@/components/OrientationAssistant';
 import { DespJourney } from '@/components/DespJourney';
 import { TrainingDatesPricingSection, type TrainingDatesPricingSession } from '@/components/TrainingDatesPricingSection';
@@ -116,7 +117,7 @@ function DespPathCard({
 
 function DespLocationsNotice() {
   const locations = [
-    ['Paris', 'Centre Paris · Atelier Modulable, 53 rue des Vinaigriers, 75010 PARIS'],
+    ['Paris', PARIS_ADDRESS],
     ['Côte d’Azur', 'Puget-sur-Argens · 54 chemin du Carreou, 83480 Puget-sur-Argens'],
     ['Aurillac', 'Village d’entreprises · 14 avenue du Garric, 15000 Aurillac'],
   ];

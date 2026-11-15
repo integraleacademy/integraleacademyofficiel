@@ -2,12 +2,16 @@
 
 import { useState, type ReactNode } from 'react';
 import { TrainingDatesPricingSection, type TrainingDatesPricingSession } from './TrainingDatesPricingSection';
-import { ssiapRegistrationHref, type SsiapFormula } from '@/lib/ssiap-registration';
+import { ssiapRegistrationHref, ssiapSessionFormula, type SsiapFormula } from '@/lib/ssiap-registration';
 import styles from './SsiapReferencePage.module.css';
 import mos from './SsiapMos.module.css';
 
 export function SsiapBooking({ sessions, children }: { sessions: TrainingDatesPricingSession[]; children?: ReactNode }) {
   const [formula, setFormula] = useState<SsiapFormula>('ssiap-1');
+  const matchingSessions = sessions.filter(session => {
+    const scheduled = ssiapSessionFormula(session.title);
+    return !scheduled || scheduled === formula;
+  });
   return <div id="dates-tarifs" className={`${styles.booking} ${mos.booking}`}>
     <div className={mos.container}>
       <div className={mos.sectionHeading}><div><p className={styles.eyebrow}>07 / Votre inscription · 01 / La formule</p>
@@ -29,11 +33,11 @@ export function SsiapBooking({ sessions, children }: { sessions: TrainingDatesPr
         </label>
       </fieldset>
       <div className={mos.selectionRow}><p className={styles.selection} aria-live="polite"><span aria-hidden="true">✓</span> Votre choix : <strong>{formula === 'ssiap-1' ? 'SSIAP 1 · 980 €' : 'SSIAP 1 + SST · 1 230 €'}</strong></p><a href="#sessions-ssiap">Choisir ma session <span aria-hidden="true">↓</span></a></div>
-      <p className={`${styles.small} ${mos.bookingNote}`}>Les sessions intitulées « avec SST » incluent une période de secourisme dans leur calendrier. Si vous choisissez le SSIAP 1 seul, votre conseiller vous précise les dates de présence correspondant à votre parcours.</p>
+      <p className={`${styles.small} ${mos.bookingNote}`}>Les dates ci-dessous correspondent à votre formule. Avec le SST, la formation commence plus tôt pour inclure les journées de secourisme.</p>
     </div>
     <div className={`${mos.container} ${mos.datesPanel}`}>
     <TrainingDatesPricingSection
-      id="sessions-ssiap" eyebrow="02 / Les dates" sessions={sessions}
+      id="sessions-ssiap" eyebrow="02 / Les dates" sessions={matchingSessions}
       theme="red" seatCapacity={12} defaultPrice="980 €" summaryPrice={formula === 'ssiap-1' ? '980 €' : '1 230 €'} defaultLocation="Puget-sur-Argens"
       showSessionPrice={false}
       intro="Retrouvez les dates de formation, l’examen et les disponibilités. Votre choix de formule accompagne la session sélectionnée sur la page de contact."

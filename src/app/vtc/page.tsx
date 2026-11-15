@@ -139,7 +139,7 @@ export default function VtcPage() {
         <div className={styles.heroLayout}>
           <div className={styles.heroCopy}>
             <span className={styles.pill}><span/> Formation VTC · Côte d’Azur</span>
-            <h1>Prenez le volant.<br/><em>Créez votre avenir.</em></h1>
+            <h1>Formation chauffeur VTC<br/><em>Prenez le volant.</em></h1>
             <p>Une préparation complète pour réussir l’examen VTC et démarrer votre activité avec les bons réflexes — pas seulement une plateforme de cours.</p>
             <div className={styles.heroActions}>
               <CTA href={contactHref('Je souhaite m’inscrire à la formation VTC')}>Je démarre mon projet</CTA>
@@ -282,6 +282,7 @@ export default function VtcPage() {
           </div>
         </div>
         <div className={styles.fundingGrid}>
+          <article><span>Pratique seule</span><h3>Vous avez déjà la théorie ?</h3><p><a href="https://admissions.integraleconnect.com/vtc"><u>Réserver le véhicule pour l’examen (150 €) ou la préparation pratique avec véhicule (600 €).</u></a></p></article>
           <article><span>CPF</span><h3>Mobilisez vos droits</h3><p>Financement possible selon votre éligibilité et les règles applicables à votre dossier.</p></article>
           <article><span>FRANCE TRAVAIL</span><h3>Présentez votre projet</h3><p>Nous préparons avec vous les éléments utiles à transmettre à votre conseiller.</p></article>
           <article><span>PAIEMENT PERSONNEL</span><h3>Échelonnez votre règlement</h3><p>Des solutions en 3, 4 ou 10 fois peuvent être étudiées selon votre situation.</p></article>
