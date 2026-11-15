@@ -4,6 +4,22 @@ import redirects from '../src/data/url-redirects.json';
 import { canonicalSiteHref, SITE_ORIGIN } from '../src/lib/site-urls';
 import sitemap from '../src/app/sitemap';
 import { informationRequestHref, INFORMATION_REQUEST_URL } from '../src/lib/contact-request';
+import config from '../next.config';
+
+test('les liens directs aux dossiers de la préversion ouvrent le formulaire CRM', async () => {
+  const rules = await config.redirects!();
+  for (const source of ['/dossiersfc', '/dossiersbts']) {
+    const rule = rules.find(entry => entry.source === source);
+    assert.ok(rule);
+    assert.equal(rule.destination, INFORMATION_REQUEST_URL);
+    assert.equal(rule.permanent, false);
+    const host = rule.has?.find(condition => condition.type === 'host')?.value;
+    assert.ok(host);
+    const matches = new RegExp(`^(?:${host})$`);
+    assert.ok(matches.test('integraleacademyofficiel-1.onrender.com'));
+    assert.ok(!matches.test('www.integraleacademy.com'));
+  }
+});
 
 test('les trois pages DESP conservent les adresses historiques demandées', () => {
   assert.equal(canonicalSiteHref('/formations-securite/desp-initial'), '/dirigeant');
