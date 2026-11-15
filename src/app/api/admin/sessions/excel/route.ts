@@ -1,3 +1,4 @@
+import { importedSessionPrice } from '@/lib/ssiap-registration';
 import { PARIS_SESSION_LOCATION } from '@/data/locations';
 import { NextRequest, NextResponse } from 'next/server';
 import { requireAdmin } from '@/lib/admin/guard';
@@ -129,10 +130,11 @@ function rowsToSessions(rowsBySheet: Map<string, string[][]>) {
       if (!startDate || !endDate) return;
       const statusIndex = 4 + trailingOffset;
       const status = statuses.has((cells[statusIndex] || '').trim()) ? (cells[statusIndex] || '').trim() : 'OPEN';
+      const title = cells[0] || `${sheet.name} ${cells[1]}`;
       sessions.push({
         sheet,
         data: {
-          title: cells[0] || `${sheet.name} ${cells[1]}`,
+          title,
           startDate,
           endDate,
           inPersonStartDate: hasDeliveryPeriods ? safeDate(cells[3] || '') : null,
@@ -141,8 +143,8 @@ function rowsToSessions(rowsBySheet: Map<string, string[][]>) {
           remoteEndDate: hasDeliveryPeriods ? safeDate(cells[6] || '') : null,
           examDate: safeDate(cells[3 + trailingOffset] || ''),
           status,
-          priceCents: nullableNumber(cells[5 + trailingOffset] || ''),
-          priceLabel: cells[6 + trailingOffset] || sheet.priceLabel || '',
+          ...importedSessionPrice(sheet.slug, title, startDate,
+            nullableNumber(cells[5 + trailingOffset] || ''), cells[6 + trailingOffset] || sheet.priceLabel || ''),
           location: cells[7 + trailingOffset] || sheet.location,
           seatsTotal: nullableNumber(cells[8 + trailingOffset] || ''),
           seatsLeft: nullableNumber(cells[9 + trailingOffset] || ''),

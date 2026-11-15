@@ -27,7 +27,10 @@ const btsPages = [
 test('le nouveau sommaire reprend le comportement lisible et fixe de la page APS', () => {
   assert.match(navigation, /^'use client';/);
   assert.match(navigation, /IntersectionObserver/);
-  assert.match(navigation, /getComputedStyle\(nav\)\.top/);
+  assert.match(navigation, /const navStyle = window\.getComputedStyle\(nav\)/);
+  assert.match(navigation, /parseFloat\(navStyle\.top\)/);
+  assert.match(navigation, /navStyle\.position !== 'sticky'/);
+  assert.match(navigationStyles, /max-height: 480px[\s\S]*?\.courseNav \{\s*position: relative/);
   assert.match(navigation, /nav\.offsetHeight \+ 20/);
   assert.match(navigation, /section\.style\.scrollMarginTop = scrollMarginTop/);
   assert.match(navigation, /new ResizeObserver/);

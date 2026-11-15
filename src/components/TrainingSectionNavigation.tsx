@@ -55,12 +55,18 @@ export function TrainingSectionNavigation({
       sections.map((section) => [section, section.style.scrollMarginTop]),
     );
     const getAnchorOffset = () => {
-      const parsedTop = Number.parseFloat(window.getComputedStyle(nav).top);
+      const navStyle = window.getComputedStyle(nav);
+      if (navStyle.position !== 'sticky') {
+        const header = document.querySelector<HTMLElement>('.site-header');
+        return (header?.offsetHeight ?? 0) + 12;
+      }
+      const parsedTop = Number.parseFloat(navStyle.top);
       const stickyTop = Number.isFinite(parsedTop) ? parsedTop : 0;
       return Math.ceil(stickyTop + nav.offsetHeight + 20);
     };
     const updateAnchorOffsets = () => {
-      document.documentElement.style.setProperty('--site-section-nav-height', `${nav.offsetHeight}px`);
+      const stickyHeight = window.getComputedStyle(nav).position === 'sticky' ? nav.offsetHeight : 0;
+      document.documentElement.style.setProperty('--site-section-nav-height', `${stickyHeight}px`);
       const scrollMarginTop = `${getAnchorOffset()}px`;
       sections.forEach((section) => {
         section.style.scrollMarginTop = scrollMarginTop;

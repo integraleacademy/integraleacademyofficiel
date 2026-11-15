@@ -417,3 +417,10 @@
     mask-image: none;
   }
 }
+
+@media (max-width: 1023px) and (max-height: 480px) {
+  body [data-fixed-actions="course"],
+  body [data-fixed-actions="global"] {
+    position: static;
+  }
+}
