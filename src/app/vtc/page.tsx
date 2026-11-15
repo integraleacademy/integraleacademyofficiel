@@ -1,3 +1,4 @@
+import { CourseBrochureCard } from '@/components/CourseBrochureCard';
 import { TeamPortrait } from '@/components/TeamPortrait';
 import { CourseJourney } from '@/components/CourseJourney';
 import { createPageMetadata } from '@/lib/seo';
@@ -254,6 +255,7 @@ export default function VtcPage() {
       </div>
     </section>
 
+    <CourseBrochureCard course="vtc" />
     <section id="examen" className={styles.exam}>
       <div className={styles.container}>
         <div className={styles.examHeading}><span>07 — L’examen VTC expliqué simplement</span><h2>Deux épreuves.<br/><em>Une préparation complète.</em></h2><p>L’examen est organisé par la Chambre de métiers et de l’artisanat. Nous vous préparons aux connaissances attendues comme aux conditions réelles de l’épreuve pratique.</p></div>

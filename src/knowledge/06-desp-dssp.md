@@ -9,7 +9,7 @@ La formation Dirigeant d’Entreprise de Sécurité Privée, aussi appelée DSSP
 
 Durée : initial 7 semaines, soit 245 heures. Parcours VAE : environ 1 mois.
 
-Modalités et lieux : distanciel avec présentiel à Paris, Puget-sur-Argens ou Aurillac selon les sessions. VAE possible en visioconférence.
+Modalités et lieux : distanciel avec présentiel à Paris ou Puget-sur-Argens selon les sessions. VAE possible en visioconférence.
 
 Tarifs indiqués : pour 2027, 4 350 € TTC en parcours initial, 3 850 € TTC en VAE.
 

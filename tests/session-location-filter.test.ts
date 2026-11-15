@@ -15,8 +15,8 @@ test('le filtre Côte d’Azur reconnaît aussi Puget-sur-Argens', () => {
   assert.equal(sessionMatchesLocation({ location: 'Paris · 75001' }, 'cote-azur'), false);
 });
 
-test('le filtre Tous conserve les autres centres comme Aurillac', () => {
-  assert.equal(sessionMatchesLocation({ location: 'Aurillac · Centre France' }, 'all'), true);
+test('le filtre Tous exclut les sessions des anciens centres', () => {
+  assert.equal(sessionMatchesLocation({ location: 'Aurillac · Centre France' }, 'all'), false);
   assert.equal(sessionMatchesLocation({ location: null }, 'all'), true);
 });
 

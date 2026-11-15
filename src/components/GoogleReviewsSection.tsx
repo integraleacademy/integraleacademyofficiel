@@ -51,7 +51,7 @@ function ReviewCard({ review, featured = false }: { review: PublicGoogleReview; 
   return <article className={`${styles.card} ${featured ? styles.featured : ''}`}>
     <div className={styles.source}><span aria-hidden="true">G</span> Avis Google {featured && <i aria-hidden="true">“</i>}</div>
     <ReviewHeader review={review} featured={featured} />
-    <div className="flex-1"><ReviewText text={review.excerpt} featured={featured} /></div>
+    <ReviewText text={review.excerpt} featured={featured} />
     {featured && <p className={styles.selected}>Avis Google sélectionné</p>}
     <div className={styles.footer}>{review.reviewedAt && <time dateTime={review.reviewedAt}>{reviewDate.format(new Date(review.reviewedAt))}</time>}<a className={styles.sourceLink} href={review.sourceUrl} target="_blank" rel="noopener noreferrer">Voir sur Google ↗︎</a></div>
   </article>;
@@ -75,9 +75,9 @@ export function GoogleReviewsSection({ reviews, audience = 'stagiaires' }: { rev
       {publicReviews.length > 0 && <div className="mt-7 flex flex-wrap justify-center gap-2" aria-label="Filtrer les avis par formation">{['Tous', ...categories].map(category => <button key={category} type="button" aria-pressed={activeFilter === category} onClick={() => setActiveFilter(category)} className={`rounded-full px-4 py-2 text-sm font-bold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-academy-gold ${activeFilter === category ? 'bg-academy-ink text-white dark:bg-white dark:text-academy-ink' : 'bg-white/70 text-academy-muted ring-1 ring-academy-ink/10 dark:bg-white/5 dark:ring-white/10'}`}>{category} <span className="ml-1 opacity-70">{category === 'Tous' ? publicReviews.length : publicReviews.filter(r => r.categories.includes(category)).length}</span></button>)}</div>}
     </div>
     <p className="mt-6 text-center text-sm text-academy-muted" role="status">{publicReviews.length > 0 && `${filtered.length} avis${activeFilter !== 'Tous' ? ` · ${activeFilter}` : ''}`}</p>
-    {featuredReview && <div className={`mt-10 grid gap-5 ${secondaryReviews.length > 0 ? 'lg:grid-cols-[1.18fr_.82fr] lg:items-stretch' : ''}`}>
+    {featuredReview && <div className={styles.reviewRow} data-count={secondaryReviews.length + 1}>
       <ReviewCard key={featuredReview.id} review={featuredReview} featured />
-      {secondaryReviews.length > 0 && <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-1">{secondaryReviews.map(review => <ReviewCard key={review.id} review={review} />)}</div>}
+      {secondaryReviews.map(review => <ReviewCard key={review.id} review={review} />)}
     </div>}
     {moreReviews.length > 0 && <details key={activeFilter} className="group/more mt-7">
       <summary className="mx-auto flex w-fit cursor-pointer list-none items-center gap-2 rounded-full bg-academy-ink px-5 py-3 text-sm font-black text-white shadow-[0_18px_45px_rgba(15,23,42,.14)] transition hover:-translate-y-0.5 hover:bg-black [&::-webkit-details-marker]:hidden">

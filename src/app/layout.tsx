@@ -24,19 +24,5 @@ export const metadata: Metadata = {
     apple: [{ url: '/images/favicon.png', type: 'image/png' }],
   },
 };
-const themeInitScript = `
-  (function () {
-    try {
-      var key = 'integrale-academy-theme';
-      var saved = window.localStorage.getItem(key);
-      var theme = saved === 'light' || saved === 'dark'
-        ? saved
-        : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-      document.documentElement.classList.toggle('dark', theme === 'dark');
-      document.documentElement.dataset.theme = theme;
-      document.documentElement.style.colorScheme = theme;
-    } catch (error) {}
-  })();
-`;
 
-export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="fr" suppressHydrationWarning><head><script dangerouslySetInnerHTML={{__html:themeInitScript}} /></head><body className="bg-academy-bg text-academy-ink"><OrganizationSeo/><Header/><main>{children}</main><PageSeo/><GlobalContactCTA/><GoogleRatingBadge/><Footer/><GlobalMobileCTA/></body></html>}
+export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="fr" style={{ colorScheme: 'light' }}><body className="bg-academy-bg text-academy-ink"><OrganizationSeo/><Header/><main>{children}</main><PageSeo/><GlobalContactCTA/><GoogleRatingBadge/><Footer/><GlobalMobileCTA/></body></html>}

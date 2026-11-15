@@ -1,0 +1,64 @@
+.enrollment { background:#f6f4ee; color:#192f41; padding:clamp(3.25rem,6vw,6rem) 1rem; scroll-margin-top:5rem; }
+.wrap,.schoolInner { width:min(100%,73rem); margin-inline:auto; }
+.kicker { color:#64502e; font-size:.72rem; font-weight:750; letter-spacing:.13em; text-transform:uppercase; }
+.intro { display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:end; gap:1.5rem 3rem; margin-top:.75rem; }
+.intro h2,.funding h3,.options h3 { font-size:clamp(1.8rem,3.5vw,3.35rem); font-weight:700; letter-spacing:-.047em; line-height:1.07; text-wrap:balance; }
+.intro h2 span { display:block; }
+.intro h2 span:last-child { color:#315b71; font-family:Georgia,serif; font-weight:400; font-style:italic; }
+.intro p { max-width:78ch; margin-top:1rem; color:#435666; line-height:1.7; }
+.steps { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,12rem),1fr)); gap:1.35rem; margin:clamp(2rem,4vw,3.5rem) 0; padding:0; list-style:none; }
+.steps li { display:flex; flex-direction:column; align-items:start; gap:.8rem; border-top:2px solid #c2c9c7; padding-top:.85rem; min-width:0; }
+.stepNumber { font-family:Georgia,serif; font-size:1.55rem; line-height:1; color:#526a78; }
+.steps h3,.option h4 { font-size:1.05rem; font-weight:750; line-height:1.28; }
+.steps p,.option p { color:#435667; margin-top:.45rem; font-size:.92rem; line-height:1.55; }
+.steps a,.identity a { display:inline-block; margin-top:.55rem; font-size:.86rem; font-weight:700; text-decoration:underline; text-underline-offset:.2em; }
+.funding { display:grid; grid-template-columns:minmax(0,.82fr) minmax(0,1.1fr) minmax(0,.88fr); align-items:center; gap:clamp(1rem,2.5vw,2.2rem); border-radius:1.5rem; background:#193547; color:#fffaf0; padding:clamp(1.3rem,3.5vw,2.6rem); }
+.funding .kicker { color:#f0cb83; margin-bottom:.55rem; }
+.funding h3,.options h3 { font-size:clamp(1.75rem,2.6vw,2.65rem); }
+.identity { border-inline-start:1px solid #ffffff38; padding-inline-start:clamp(1rem,2.3vw,2rem); }
+.identity p:first-child { font-weight:700; line-height:1.4; }
+.identity p+p { margin-top:.35rem; font-size:.9rem; line-height:1.55; color:#e3eaf0; }
+.identity a { color:#f4d08a; }
+.fundingActions { display:grid; gap:.55rem; }
+.fundingActions a { width:100%; min-height:44px; font-size:.88rem; white-space:normal; }
+.fundingActions a:first-child { background:#f1ce89; color:#192f41; }
+.fundingActions a:last-child { background:transparent; border:1px solid #b6c5cf; color:white; }
+.options { display:grid; grid-template-columns:minmax(13rem,.68fr) minmax(0,1.6fr); align-items:start; gap:2rem; margin-top:clamp(2rem,4.5vw,3.5rem); }
+.options header h3 { margin-top:.6rem; }
+.optionGrid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.8rem 1.5rem; }
+.option { display:grid; grid-template-columns:3.2rem minmax(0,1fr); gap:.85rem; padding-block:.8rem; border-top:1px solid #c2c9c7; }
+.logo { background:#fff; border:1px solid #deded7; border-radius:.7rem; width:3.2rem; height:3.2rem; display:grid; place-items:center; }
+.logo > div,.logo > span { margin:0; width:100%; min-width:0; height:auto; background:transparent; border:none; box-shadow:none; padding:3px; }
+.logo img,.logo svg { margin:auto; width:100%; height:auto; max-height:2.35rem; object-fit:contain; }
+.schoolContact { padding:clamp(3.5rem,7vw,7rem) max(1rem,4vw); background:#122637; color:#fff8ea; }
+.schoolInner { display:grid; grid-template-columns:minmax(0,1.55fr) minmax(16rem,.85fr); gap:clamp(1.6rem,6vw,6rem); align-items:center; }
+.schoolInner > div { min-width:0; }
+.schoolInner h2 { margin:.65rem 0 1.25rem; font-size:clamp(2.25rem,5.4vw,5rem); line-height:1.01; color:#fff8ea; font-weight:700; letter-spacing:-.052em; }
+.schoolInner h2 em { font-family:Georgia,serif; font-weight:400; color:#efca81; }
+.schoolInner > div > p:first-child,.adviser > p:first-of-type { color:#efca81; }
+.schoolInner > div:first-child > div:first-of-type,.schoolInner > div:first-child > p:not(:first-child) { color:#e1e9ee; }
+.schoolInner > div:first-child > div:nth-of-type(2) > span { background:#ffffff0b; border-color:#ffffff39; color:#e5edf1; }
+.schoolInner > div:first-child > a,.adviser a:not([href^='tel']):not([class*='action']),.adviser a[href^='tel'] { color:#f3d496; }
+.adviser { display:grid; justify-items:start; align-content:center; gap:.45rem; padding-inline-start:clamp(1.5rem,4vw,4rem); border-inline-start:1px solid #ffffff38; }
+.adviser > :first-child { display:block; width:5rem; height:5rem; margin:0 0 .65rem; border-radius:50%; background:#fff5df; padding:.2rem; object-fit:contain; }
+.adviser h3 { color:#fff8ea; font-size:1.8rem; font-weight:700; line-height:1.05; }
+.adviser > p,.adviser small { color:#d2dee6; }
+.adviser a { margin:0; }
+.adviser a[class*='action'] { margin:.3rem 0 .2rem; background:#edc779; color:#182c3b; }
+.schoolContact a:focus-visible,.enrollment a:focus-visible { outline:3px solid #538ace; outline-offset:4px; }
+@media(max-width:900px) {
+  .intro,.options { grid-template-columns:1fr; }
+  .intro > a { justify-self:start; }
+  .funding { grid-template-columns:1fr 1.2fr; }
+  .fundingActions { grid-column:1/-1; grid-template-columns:1fr 1fr; }
+  .schoolInner { grid-template-columns:1.3fr 1fr; gap:1.5rem; }
+}
+@media(max-width:640px) {
+  .steps { grid-template-columns:1fr; gap:.75rem; }
+  .steps li { display:grid; grid-template-columns:2rem minmax(0,1fr); gap:.7rem; }
+  .funding,.fundingActions,.optionGrid,.schoolInner { grid-template-columns:1fr; }
+  .fundingActions { grid-column:auto; }
+  .identity,.adviser { border-inline:0; border-top:1px solid #ffffff38; padding:1rem 0 0; }
+  .optionGrid { gap:0; }
+  .adviser { margin-top:.5rem; }
+}

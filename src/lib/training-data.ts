@@ -1,3 +1,4 @@
+import { isPublishedCampus } from '@/lib/session-location-filter';
 import { PARIS_SESSION_LOCATION } from '@/data/locations';
 import 'server-only';
 import { getSessionSeatAvailability, resolveSessionSeatCapacity } from '@/lib/session-seat-availability';
@@ -31,7 +32,6 @@ const despFallbackSessions = [
  ['seed-desp-paris-octobre-2026','DESP initial Paris · octobre 2026','2026-10-26','2026-12-10','2026-12-11',PARIS_SESSION_LOCATION,'OPEN',null,3,'Période complète : 26 octobre au 10 décembre 2026 · À distance : période administrée à confirmer · Présentiel : période administrée à confirmer.'],
  ['seed-desp-cote-azur-septembre-2026','DESP initial Côte d’Azur · septembre 2026','2026-09-07','2026-10-23','2026-10-26','Puget-sur-Argens / Côte d’Azur','OPEN',null,4,'Période complète : 7 septembre au 23 octobre 2026 · À distance : période administrée à confirmer · Présentiel : période administrée à confirmer.'],
  ['seed-desp-cote-azur-novembre-2026','DESP initial Côte d’Azur · novembre 2026','2026-11-02','2026-12-21','2026-12-22','Puget-sur-Argens / Côte d’Azur','OPEN',null,5,'Période complète : 2 novembre au 21 décembre 2026 · À distance : période administrée à confirmer · Présentiel : période administrée à confirmer.'],
- ['seed-desp-aurillac-octobre-2026','DESP initial Aurillac · octobre 2026','2026-10-05','2026-11-19','2026-11-20','Aurillac · 14 avenue du Garric, 15000 Aurillac','OPEN',null,6,'Période complète : 5 octobre au 19 novembre 2026 · À distance : période administrée à confirmer · Présentiel : période administrée à confirmer.'],
 ].map(([id,title,startDate,endDate,examDate,location,status,seatsLeft,sortOrder,publicNotes]:any)=>({id,trainingId:'seed-desp-initial',training:baseTrainings.find(t=>t.slug==='desp-initial'),title,startDate:new Date(startDate),endDate:new Date(endDate),examDate:new Date(examDate),priceCents:430000,priceLabel:'4 300 €',location,status,seatsTotal:null,seatsLeft,showSeatsLeft:true,durationLabel:'245 heures · 175 h à distance + 70 h en présentiel',registrationUrl:'/contact?formation=desp-initial',fundingNotes:'Financement à étudier selon votre situation : CPF si l’offre active est éligible, France Travail après accord du conseiller, employeur/OPCO, financement personnel ou paiement échelonné selon les solutions proposées.',publicNotes,internalNotes:'',sortOrder,isHighlighted:sortOrder===0,createdAt:new Date(),updatedAt:new Date()}));
 
 function norm(s:string){return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
@@ -56,11 +56,11 @@ export async function listSessions() {
   }));
 }
 export async function listLeads(){const p=await getPrisma(); return p? p.chatLead.findMany({orderBy:{createdAt:'desc'}}) : [];}
-export async function listPublicSessions() { return (await listSessions()).map(toPublicSession); }
+export async function listPublicSessions() { return (await listSessions()).filter(isPublishedCampus).map(toPublicSession); }
 export async function dashboardStats(){const [t,s,l]=await Promise.all([listTrainings(),listSessions(),listLeads()]); return {activeTrainings:t.filter((x:any)=>x.isActive).length,openSessions:s.filter((x:any)=>x.status==='OPEN').length,leadCount:l.length,lastLead:l[0]||null};}
 export async function getRelevantDynamicTrainingData(question:string){
   const slugs=detectTrainingSlugs(question);
-  const sessions=(await listSessions()).filter((s:any)=>s.status!=='HIDDEN' && (!slugs.length || slugs.includes(s.training?.slug))).sort((a:any,b:any)=> (a.status==='OPEN'?-2:a.status==='COMING_SOON'?-1:0) - (b.status==='OPEN'?-2:b.status==='COMING_SOON'?-1:0) || +new Date(a.startDate)- +new Date(b.startDate));
+  const sessions=(await listSessions()).filter((s:any)=>isPublishedCampus(s) && s.status!=='HIDDEN' && (!slugs.length || slugs.includes(s.training?.slug))).sort((a:any,b:any)=> (a.status==='OPEN'?-2:a.status==='COMING_SOON'?-1:0) - (b.status==='OPEN'?-2:b.status==='COMING_SOON'?-1:0) || +new Date(a.startDate)- +new Date(b.startDate));
   const trainings=(await listTrainings()).filter((t:any)=>!slugs.length || slugs.includes(t.slug));
   const formatDate=(value:any)=>value?new Date(value).toLocaleDateString('fr-FR'):'non précisée';
   const formatPeriod=(start:any,end:any)=>start&&end?`du ${formatDate(start)} au ${formatDate(end)}`:start?`à partir du ${formatDate(start)}`:end?`jusqu’au ${formatDate(end)}`:'non précisée';

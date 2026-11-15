@@ -17,7 +17,7 @@ export default async function Image() {
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 14, borderTop: '1px solid #40506a', paddingTop: 22 }}>
         <span style={{ fontSize: 27 }}>Sécurité privée · BTS en alternance · VTC</span>
-        <span style={{ fontSize: 22, color: '#b8c4d6' }}>Puget-sur-Argens · Paris · Aurillac</span>
+        <span style={{ fontSize: 22, color: '#b8c4d6' }}>Puget-sur-Argens · Paris</span>
       </div>
     </div>,
     size,

@@ -50,7 +50,6 @@ const sheets: ImportSheet[] = [
   { name: 'A3P', slug: 'a3p-apr', theme: 'a3p', location: 'Puget-sur-Argens / Côte d’Azur', registrationUrl: '/formations-securite/a3p-apr' },
   { name: 'DESP Côte d’Azur', slug: 'desp-dssp', theme: 'desp', hasDeliveryPeriods: true, location: 'Puget-sur-Argens / Côte d’Azur', registrationUrl: '/despvaeouinitial' },
   { name: 'DESP Paris', slug: 'desp-dssp', theme: 'desp', hasDeliveryPeriods: true, location: PARIS_SESSION_LOCATION, registrationUrl: '/despvaeouinitial' },
-  { name: 'DESP Aurillac', slug: 'desp-dssp', theme: 'desp', hasDeliveryPeriods: true, location: 'Aurillac · 14 avenue du Garric, 15000 Aurillac', registrationUrl: '/despvaeouinitial' },
   { name: 'SSIAP 1', slug: 'ssiap-1', theme: 'neutral', location: 'Puget-sur-Argens / Côte d’Azur', registrationUrl: '/formations-securite/ssiap-1' },
 ];
 

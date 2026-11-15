@@ -58,7 +58,7 @@ export function HomeContactCTA() {
               <span>Choisissez votre créneau, nous prenons le temps de vous conseiller.</span>
               <a href={appointmentFormUrl} className={styles.primaryButton}>
                 <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8 3v4m8-4v4M4 10h16M6 5h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /><path d="m9 15 2 2 4-4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                <span>Prendre un rendez-vous</span>
+                <span>Prendre un rendez-vous téléphonique</span>
                 <ArrowIcon />
               </a>
               <p className={styles.reassurance}><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m4.5 10.4 3.2 3.1 7.8-8" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" /></svg> Gratuit <span aria-hidden="true">·</span> Sans engagement</p>

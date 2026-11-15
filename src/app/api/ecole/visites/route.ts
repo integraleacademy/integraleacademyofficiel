@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
       create: {
         id: 'visite-' + data.requestId, firstName: data.firstName, lastName: data.lastName, email: data.email, phone: data.phone,
         trainingInterest: 'Visite de l’école · ' + schoolVisitCampuses[data.campus], source: 'ecole-visite',
-        message: ['Demande de visite de l’école', 'Lieu : ' + schoolVisitCampuses[data.campus], data.message, 'Rendez-vous à convenir et à confirmer avec l’équipe.'].filter(Boolean).join('\n'),
+        message: ['Demande de visite de l’école', 'Lieu : ' + schoolVisitCampuses[data.campus], data.message, 'Date de visite à convenir par téléphone avec l’équipe.'].filter(Boolean).join('\n'),
       },
     });
     return NextResponse.json({ ok: true });

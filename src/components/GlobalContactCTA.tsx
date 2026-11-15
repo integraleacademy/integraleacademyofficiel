@@ -148,7 +148,7 @@ export function GlobalContactCTA() {
                   <a href={primaryContactHref} className={`${styles.primaryButton} focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-academy-gold`}>
                     {isBts ? <EmailIcon /> : <CalendarIcon />}
                     <span className={styles.longLabel}>{isBts ? 'Écrire à Aurélie' : 'Réserver un rendez-vous téléphonique'}</span>
-                    <span className={styles.shortLabel}>{isBts ? 'Écrire à Aurélie' : 'Réserver un rendez-vous'}</span>
+                    <span className={styles.shortLabel}>{isBts ? 'Écrire à Aurélie' : 'Réserver un rendez-vous téléphonique'}</span>
                     <span className={styles.arrow} aria-hidden="true">→</span>
                   </a>
                   <a href={directPhoneHref} className={`${styles.secondaryButton} focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-academy-gold`}>

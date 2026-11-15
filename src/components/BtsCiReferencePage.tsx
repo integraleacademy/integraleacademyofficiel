@@ -1,3 +1,4 @@
+import { CourseBrochureCard } from '@/components/CourseBrochureCard';
 import { ManualArtwork } from '@/components/ManualArtwork';
 import { btsHeroArtwork, btsPracticeArtwork, btsMissionArtwork } from '@/data/btsIllustrations';
 import btsStyles from './BtsIdentity.module.css';
@@ -498,6 +499,7 @@ export function BtsCiReferencePage() {
 
       <BtsCompleteInformation course="ci" />
 
+      <CourseBrochureCard course="commerce-international" />
       <section id="admission" className="relative isolate overflow-hidden bg-[#0A1725] px-4 py-14 text-white sm:py-16 lg:py-20">
         <div className={`absolute inset-0 -z-10 ${btsStyles.admissionGlow}`} />
         <div className="absolute inset-0 -z-10 opacity-20 [background-image:linear-gradient(rgba(255,255,255,.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.08)_1px,transparent_1px)] [background-size:48px_48px]" />

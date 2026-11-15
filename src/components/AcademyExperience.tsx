@@ -114,24 +114,3 @@ export function AcademyJourney() {
     </div>
   </section>;
 }
-
-const learningTabs = ['Des manuels illustrés', 'Des cours en ligne', 'De la pratique'];
-
-export function AcademyLearningStudio() {
-  const [active, setActive] = useState(0);
-  const tabId = useId();
-  return <section className={styles.learningSection} aria-labelledby="learning-title">
-    <div className={styles.container}>
-      <div className={styles.sectionHeading}><p className={styles.eyebrow}>Notre façon de former</p><h2 id="learning-title">Tout pour comprendre.<br /><em>Et savoir faire.</em></h2><p>Des supports qui donnent envie d’apprendre. Des exercices qui donnent confiance.</p></div>
-      <div className={styles.learningTabs} role="tablist" aria-label="Découvrir nos outils pédagogiques">{learningTabs.map((label, index) => <button id={`${tabId}-tab-${index}`} key={label} type="button" role="tab" aria-selected={active === index} aria-controls={`${tabId}-panel`} tabIndex={active === index ? 0 : -1} onClick={() => setActive(index)} onKeyDown={e => { if (['ArrowRight', 'ArrowLeft', 'Home', 'End'].includes(e.key)) { e.preventDefault(); const next = e.key === 'Home' ? 0 : e.key === 'End' ? 2 : (active + (e.key === 'ArrowRight' ? 1 : 2)) % 3; setActive(next); document.getElementById(`${tabId}-tab-${next}`)?.focus(); } }}><span>0{index + 1}</span>{label}</button>)}</div>
-      <div className={styles.learningGrid} role="tabpanel" id={`${tabId}-panel`} aria-labelledby={`${tabId}-tab-${active}`} tabIndex={0}>
-        <div className={styles.learningVisual} key={active}>
-          {active === 0 && <div className={styles.books}>{[['ssiap-1/manuel/couverture-ssiap-1.webp', 'SSIAP 1'], ['aps/manuel/couverture-aps.webp', 'APS'], ['a3p/manuel/couverture-a3p.webp', 'A3P']].map(([src, label]) => <div key={src} className={styles.book}><img src={`/images/${src}`} alt={`Couverture du manuel ${label} Intégrale Academy`} width="210" height="300" loading="lazy" /></div>)}</div>}
-          {active === 1 && <div className={styles.laptop}><div className={styles.laptopBar}><i /><i /><i /><span>Votre espace d’apprentissage</span></div><div className={styles.laptopBody}><div className={styles.lessonSidebar}><strong>Mon parcours</strong><span>✓ Comprendre</span><span>02 S’entraîner</span><span>03 Réviser</span></div><div className={styles.lessonMain}><span>APPRENDRE À SON RYTHME</span><h3>Prévenir les risques.</h3><img src="/images/aps/manuel/acces.webp" alt="Illustration pédagogique du contrôle d’accès" width="380" height="220" loading="lazy" /><div className={styles.lessonChips}><span>Cours illustrés</span><span>Exercices</span><span>Révisions</span></div></div></div></div>}
-          {active === 2 && <div className={styles.practiceVisual}><img src={homeEditorialArtwork.security.src} alt={homeEditorialArtwork.security.alt} width="720" height="480" loading="lazy" /><span>Les gestes s’apprennent aussi sur le terrain.</span></div>}
-        </div>
-        <div className={styles.learningCopy}><span className={styles.smallNumber}>0{active + 1} / L’EXPÉRIENCE INTÉGRALE</span><h3>{['Le cours prend vie.', 'Votre formation vous suit.', 'La théorie devient un réflexe.'][active]}</h3><p>{['Des explications claires, des illustrations métier et des repères visuels pour comprendre et retrouver l’essentiel.', 'Selon votre parcours, retrouvez vos cours, vos exercices et vos révisions dans votre espace en ligne, en complément de la formation.', 'Vous vous entraînez avec des professionnels issus du terrain, dans des situations concrètes liées au métier que vous préparez.'][active]}</p><Link href="/ecole#pedagogie" className={styles.textLink}>Découvrir notre pédagogie <span aria-hidden="true">↗︎</span></Link><small>Supports et modalités selon la formation choisie.</small></div>
-      </div>
-    </div>
-  </section>;
-}

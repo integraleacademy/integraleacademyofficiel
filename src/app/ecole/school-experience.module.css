@@ -29,10 +29,6 @@
 .campusDescription { margin-top: 18px !important; min-height: 52px; color: #c5ced5; font-size: 14px; }
 .campusDates { display: flex !important; width: fit-content; margin-top: 24px; }
 .campusDetail > button { margin-top: 20px; color: #e7bd65; }
-.aurillac { display: flex; justify-content: space-between; align-items: center; gap: 28px; margin-top: 26px; padding: 26px 30px; border: 1px solid #40505f; border-radius: 22px; background: #10202f; }
-.aurillac h3 { margin-top: 8px !important; font-size: 21px; letter-spacing: -.02em; }
-.aurillac p:not(:first-child) { color: #bcc7d1; font-size: 13px; margin-top: 7px; }
-.aurillac > a { flex-shrink: 0; color: #e7bd65; }
 .teamCards { align-items: stretch; }
 .teamLead { display: grid; gap: 22px; min-width: 0; }
 .directorCard { padding: 30px; border: 1px solid #324253; border-radius: 26px; background: #081626; color: #fffaf0; }
@@ -124,7 +120,6 @@
   .campusExplorer { gap: 24px; }
   .campusDetail { min-height: 0; }
   .campusDescription { min-height: 0; }
-  .aurillac { align-items: flex-start; flex-direction: column; padding: 24px; gap: 18px; }
   .pedagogy { grid-template-columns: 1fr; gap: 24px; }
   .approachChoices { grid-template-columns: repeat(3, 1fr); gap: 8px; }
   .approachChoices button { flex-direction: column; align-items: center; gap: 8px; padding: 14px 8px; text-align: center; }

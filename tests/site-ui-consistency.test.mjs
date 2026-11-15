@@ -36,7 +36,7 @@ test('All FAQ entry points share the APS section and native numbered accordion c
 test('Company brochure, contact form and contextual planning actions are retained', () => {
   const companies = read('src/app/entreprises/page.tsx');
   assert.match(companies, /id="brochure-entreprises"/);
-  assert.match(companies, /download="Brochure-Entreprises-Integrale-Academy.pdf"/);
+  assert.match(companies, /href=\{INFORMATION_REQUEST_URL\}[^>]*>Télécharger la brochure/);
   const planning = read('src/app/planning/PlanningHelp.tsx');
   assert.match(planning, /onClick=\{onClear\}/);
   assert.match(planning, /onClick=\{onRequest\}/);

@@ -2,7 +2,7 @@ import { createPageMetadata } from '@/lib/seo';
 import Link from 'next/link';
 import { OrientationAssistant } from '@/components/OrientationAssistant';
 import { HomeHeroIllustrations } from '@/components/HomeHeroIllustrations';
-import { AcademyJourney, AcademyLearningStudio } from '@/components/AcademyExperience';
+import { AcademyJourney } from '@/components/AcademyExperience';
 import { BtsTrainingGrid, type BtsTrainingHighlight } from '@/components/BtsTrainingGrid';
 import { BtsTrainingComparisonModal } from '@/components/BtsTrainingComparisonModal';
 import { CampusSection } from '@/components/CampusSection';
@@ -97,7 +97,7 @@ const proofItems = [
   ['400 m²', 'École principale'],
   ['Qualiopi', 'Certification qualité'],
   ['CNAPS · ADEF', 'Agréments métiers'],
-  ['3 centres', 'Selon les sessions'],
+  ['2 centres', 'Selon les sessions'],
 ] as const;
 
 export default async function Home() {
@@ -123,7 +123,7 @@ export default async function Home() {
               <div className={heroStyles.heroProofs} data-home-hero-item aria-label="Points forts d’Intégrale Academy">
                 <span>Formations réglementées</span>
                 <span>Financements possibles</span>
-                <span>Côte d’Azur · Paris · Centre France</span>
+                <span>Côte d’Azur · Paris</span>
               </div>
             </div>
             <HomeHeroIllustrations />
@@ -185,7 +185,6 @@ export default async function Home() {
       </section>
 
       <AcademyJourney />
-      <AcademyLearningStudio />
 
       <section className={styles.proofBar} data-home-proof aria-label="Chiffres et reconnaissances">
         <div className={styles.container}><div className={styles.proofGrid}>{proofItems.map(([value, label]) => <div key={value} data-home-proof-item><strong>{value}</strong><span>{label}</span></div>)}</div></div>

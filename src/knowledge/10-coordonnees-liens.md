@@ -17,6 +17,5 @@ Détail de l’école : 400 m² dédiés aux enseignements pratiques et théoriq
 
 Centre Paris : 34 rue Poissonnière, 75002 Paris, mobilisé notamment pour les sessions dirigeant DESP selon le planning.
 
-Centre Aurillac / Centre France : Village d’entreprises - 14 avenue du Garric, 15000 Aurillac, mobilisé selon les sessions DESP.
 
 Liens utiles internes : /formations-securite, /bts, /vtc, /financements, /planning, /contact.

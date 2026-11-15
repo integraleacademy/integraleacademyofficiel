@@ -6,7 +6,7 @@ export const planning = [
   {formation:'TFP A3P',place:'Puget-sur-Argens',date:'9 novembre 2026 - 19 janvier 2027',exam:'20 janvier 2027',status:'Ouvert'},
   {formation:'SSIAP 1',place:'Puget-sur-Argens',date:'12 - 27 octobre 2026',exam:'28 octobre 2026',status:'Ouvert'},
   {formation:'VTC',place:'Théorie à distance · pratique Sud / Var',date:'Entrée théorique possible après inscription',exam:'Examens CMAR 2026 selon calendrier publié',status:'Inscriptions ouvertes'},
-  {formation:'DESP',place:'Paris, Côte d’Azur, Aurillac ou visio selon parcours',date:'Sessions 2026 selon centre et parcours initial ou VAE',exam:'Jury selon convocation',status:'Contacter un conseiller'},
+  {formation:'DESP',place:'Paris, Côte d’Azur ou visio selon parcours',date:'Sessions 2026 selon centre et parcours initial ou VAE',exam:'Jury selon convocation',status:'Contacter un conseiller'},
 ];
 
 export const vtcExamDates = [

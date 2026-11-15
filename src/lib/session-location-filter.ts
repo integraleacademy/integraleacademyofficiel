@@ -1,4 +1,4 @@
-export type SessionLocationFilterKey = 'all' | 'paris' | 'cote-azur' | 'auvergne';
+export type SessionLocationFilterKey = 'all' | 'paris' | 'cote-azur';
 
 export const directorPlanningLocations = [
   { key: 'paris', label: 'Paris', detail: 'Centre de Paris' },
@@ -11,7 +11,6 @@ export const sessionLocationFilters: { key: SessionLocationFilterKey; label: str
   { key: 'all', label: 'Tous' },
   { key: 'paris', label: 'Paris' },
   { key: 'cote-azur', label: 'Côte d’Azur' },
-  { key: 'auvergne', label: 'Aurillac / Auvergne' },
 ];
 
 function normalizedLocation(value?: string | null) {
@@ -23,15 +22,19 @@ function normalizedLocation(value?: string | null) {
     .trim();
 }
 
+export function isPublishedCampus(session: { location?: string | null }) {
+  return !/aurillac|auvergne|arpajon|garric|cantal|centre france/.test(normalizedLocation(session.location));
+}
+
 export function sessionMatchesLocation(
   session: { location?: string | null },
   filter: SessionLocationFilterKey,
 ) {
+  if (!isPublishedCampus(session)) return false;
   if (filter === 'all') return true;
 
   const location = normalizedLocation(session.location);
   if (filter === 'paris') return /(^| )paris( |$)/.test(location);
-  if (filter === 'auvergne') return location.includes('aurillac') || location.includes('auvergne');
   return location.includes('cote d azur') || location.includes('puget sur argens');
 }
 

@@ -7,7 +7,7 @@ const apsPage = readFileSync(
   'utf8',
 );
 const apsStyles = readFileSync(
-  new URL('../src/components/ApsReferencePage.module.css', import.meta.url),
+  new URL('../src/components/ApsEditorial.module.css', import.meta.url),
   'utf8',
 );
 
@@ -25,36 +25,13 @@ test('le parcours inscription APS devient une section dédiée après les dates 
   assert.doesNotMatch(apsPage.slice(datesStart, datesEnd), /Inscription & financement/);
 });
 
-test('la section conserve une hiérarchie claire et cohérente', () => {
-  for (const token of [
-    'relative isolate overflow-hidden bg-[#0A1725]',
-    'sm:grid-cols-2 lg:grid-cols-5',
-    'border border-white/10 bg-white/7',
-    'rounded-[1.5rem]',
-    'Nous vous accompagnons de A à Z',
-  ]) {
-    assert.ok(enrollmentSection.includes(token), `repère visuel manquant : ${token}`);
+test('les étapes, les actions de financement et les solutions ont des espaces indépendants', () => {
+  for (const area of ['intro', 'steps', 'funding', 'fundingActions', 'options', 'optionGrid']) {
+    assert.ok(enrollmentSection.includes('editorial.' + area));
   }
-});
-
-test('la promesse reste sur une seule ligne dans une mise en scène épurée', () => {
-  for (const token of [
-    'styles.enrollmentHeader',
-    'styles.enrollmentPromise',
-    'styles.enrollmentCard',
-    'styles.enrollmentNumber',
-    'styles.enrollmentFinancePrimary',
-    'styles.enrollmentFinanceOptions',
-  ]) {
-    assert.ok(enrollmentSection.includes(token), `élément de design manquant : ${token}`);
-  }
-
-  assert.match(apsStyles, /\.enrollmentPromise\s*\{[^}]*white-space:\s*nowrap;/s);
-  assert.match(apsStyles, /\.enrollmentCard::before\s*\{[^}]*background:\s*#60a5fa;/s);
-  assert.doesNotMatch(apsStyles, /\.enrollmentCard::after\s*\{/);
-  assert.doesNotMatch(apsStyles, /@keyframes promiseShimmer/);
-  assert.doesNotMatch(apsPage, /EnrollmentStepIcon|styles\.enrollmentIcon|styles\.enrollmentCardFeatured/);
-  assert.match(apsStyles, /@media \(prefers-reduced-motion: reduce\)/);
+  assert.ok(enrollmentSection.indexOf('editorial.fundingActions') < enrollmentSection.indexOf('editorial.options'));
+  assert.match(apsStyles, /@media\(max-width:640px\)/);
+  assert.doesNotMatch(apsStyles, /white-space:\s*nowrap/);
 });
 
 test('les cinq étapes et les quatre solutions de financement sont conservées', () => {

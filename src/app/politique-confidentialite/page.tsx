@@ -72,7 +72,7 @@ export default function Page() {
               <p>Selon votre démarche, les informations recueillies directement auprès de vous comprennent :</p>
               <ul className="list-disc space-y-2 pl-5 marker:text-academy-gold-strong">
                 <li>votre identité et vos coordonnées : nom, prénom, adresse électronique et téléphone ;</li>
-                <li>votre projet : formation, centre, session ou examen souhaité, demande de devis ou de rendez-vous ;</li>
+                <li>votre projet : formation, centre, session ou examen souhaité, demande de devis ou de rendez-vous téléphonique ;</li>
                 <li>votre situation de financement : informations déclarées sur le CPF, France Travail ou un financement personnel ;</li>
                 <li>les réponses relatives aux prérequis de la formation et, pour une candidature, les éléments de parcours et justificatifs que vous transmettez ;</li>
                 <li>vos messages et l’historique des échanges avec notre équipe ;</li>
@@ -98,7 +98,7 @@ export default function Page() {
 
             <PrivacySection id="destinataires" title="Qui peut accéder à vos données ?">
               <p>Les données utiles à votre dossier sont destinées aux personnes habilitées d’Intégrale Academy chargées de l’accueil, des admissions, du suivi commercial, administratif ou pédagogique, selon leur mission.</p>
-              <p>Les prestataires nécessaires au service interviennent pour l’hébergement, les formulaires, la messagerie ou la prise de rendez-vous. Lorsqu’un dossier de formation le nécessite, les informations pertinentes sont également destinées au financeur, à l’employeur concerné, aux organismes de certification ou aux autorités habilitées. Une simple visite du site n’entraîne pas l’envoi d’un dossier à ces organismes.</p>
+              <p>Les prestataires nécessaires au service interviennent pour l’hébergement, les formulaires, la messagerie ou la prise de rendez-vous téléphonique. Lorsqu’un dossier de formation le nécessite, les informations pertinentes sont également destinées au financeur, à l’employeur concerné, aux organismes de certification ou aux autorités habilitées. Une simple visite du site n’entraîne pas l’envoi d’un dossier à ces organismes.</p>
             </PrivacySection>
 
             <PrivacySection id="conservation" title="Combien de temps les données sont-elles conservées ?">
@@ -124,7 +124,7 @@ export default function Page() {
 
             <PrivacySection id="services-externes" title="Services externes et hébergement">
               <p>Le service web principal est hébergé par <strong>Render Services, Inc.</strong>, avec une région d’hébergement configurée à Francfort, en Allemagne. Cela ne signifie pas que tous les prestataires, leurs équipes ou leurs sous-traitants interviennent exclusivement dans l’Union européenne.</p>
-              <p>Le parcours peut vous conduire vers nos espaces dédiés de demande d’informations et de candidature BTS, vers Calendly pour un rendez-vous, Canva pour une brochure, ou ChatGPT, proposé par OpenAI, pour un échange avec l’assistant externe. Lorsque vous ouvrez ces services, les informations que vous y saisissez et certaines données de connexion sont traitées dans leur environnement.</p>
+              <p>Le parcours peut vous conduire vers nos espaces dédiés de demande d’informations et de candidature BTS, vers Calendly pour un rendez-vous téléphonique, Canva pour une brochure, ou ChatGPT, proposé par OpenAI, pour un échange avec l’assistant externe. Lorsque vous ouvrez ces services, les informations que vous y saisissez et certaines données de connexion sont traitées dans leur environnement.</p>
               <p>Les prestataires internationaux peuvent traiter des données hors de l’Espace économique européen. Leurs documents précisent les pays et les mécanismes de protection applicables, notamment les clauses contractuelles types lorsqu’elles sont utilisées. Vous pouvez nous demander des précisions sur un prestataire intervenant dans votre dossier et sur les garanties associées.</p>
               <ul className="list-disc space-y-1 pl-5 marker:text-academy-gold-strong">
                 <li><a href="https://render.com/dpa" className={linkClass}>Accord de protection des données de Render</a></li>
@@ -136,7 +136,7 @@ export default function Page() {
 
             <PrivacySection id="outils-orientation" title="Les outils d’orientation">
               <p>Les réponses aux questions de l’outil d’orientation et du test indicatif d’éligibilité VAE affichés sur le site sont traitées dans votre navigateur pendant l’ouverture de la page. Leur résultat vous aide à vous orienter ; il ne constitue pas une décision d’admission.</p>
-              <p>Si vous poursuivez par un formulaire, un rendez-vous ou l’assistant ChatGPT externe, les informations que vous communiquez à cette étape suivent les règles du service concerné. Évitez de transmettre des informations sensibles dans une conversation d’orientation.</p>
+              <p>Si vous poursuivez par un formulaire, un rendez-vous téléphonique ou l’assistant ChatGPT externe, les informations que vous communiquez à cette étape suivent les règles du service concerné. Évitez de transmettre des informations sensibles dans une conversation d’orientation.</p>
             </PrivacySection>
 
             <PrivacySection id="vos-droits" title="Comment exercer vos droits ?">

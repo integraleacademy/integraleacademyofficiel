@@ -1,3 +1,4 @@
+import { CourseBrochureCard } from '@/components/CourseBrochureCard';
 import { TrainingReferencePage, TrainingReferenceSection, TrainingReferenceContact, TrainingReferenceMobileBar } from '@/components/TrainingReferenceLayout';
 import { TrainingCourseTestimonials } from '@/components/TrainingCourseTestimonials';
 import { originalArtwork } from '@/data/originalArtwork';
@@ -160,8 +161,9 @@ export default async function DespVaePage(){
     <Info id="debouches" title="Débouchés" items={outcomes}/>
     <Info title="Après la validation du titre" items={afterValidation}/><TextBlock title="Titre, agrément et autorisation"><Note>Le titre DESP, l’agrément personnel du dirigeant et l’autorisation d’exercice de l’entreprise sont trois éléments distincts.</Note><p>La réussite de la VAE ne garantit pas automatiquement l’agrément CNAPS. Le CNAPS vérifie séparément les conditions de nationalité, d’honorabilité, d’aptitude professionnelle et les autres conditions réglementaires.</p></TextBlock>
     <section className="page-container py-8"><h2 className="text-2xl font-black">Financements</h2><div className="mt-5 grid gap-4 md:grid-cols-3">{despVaeAdmin.financing.map(item=><FeatureCard key={item} title={item}>{item}</FeatureCard>)}</div><Note>Le financement porte sur les prestations prévues au devis. Il ne signifie pas que la recevabilité ou la réussite devant le jury est garantie.</Note><div className="mt-5"><Button href="/contact" variant="orange">Recevoir un devis VAE personnalisé</Button></div></section>
-    <TextBlock title="Accessibilité"><p>Intégrale Academy étudie les besoins d’adaptation de chaque candidat, notamment pour les rendez-vous, les outils numériques et la préparation du jury.</p><p>Référent handicap : {despVaeAdmin.accessibilityReferent.name} · {despVaeAdmin.accessibilityReferent.email} · {despVaeAdmin.accessibilityReferent.phone}</p></TextBlock>
+    <TextBlock title="Accessibilité"><p>Intégrale Academy étudie les besoins d’adaptation de chaque candidat, notamment pour les rendez-vous téléphoniques, les outils numériques et la préparation du jury.</p><p>Référent handicap : {despVaeAdmin.accessibilityReferent.name} · {despVaeAdmin.accessibilityReferent.email} · {despVaeAdmin.accessibilityReferent.phone}</p></TextBlock>
     <Info title="Pourquoi suivre cette VAE chez Intégrale Academy" items={why}/>
+    <CourseBrochureCard course="vaedirigeant" />
     <TrainingCourseTestimonials category="VAE DESP" />
     <div id="faq-desp-vae"><PremiumFAQSection theme="orange" badge="FAQ DESP VAE" title="Vos questions sur la VAE DESP" description="Retrouvez les réponses essentielles sur l’éligibilité, la recevabilité, le dossier de preuves, le jury, les financements et l’accompagnement." items={[...formationFaq, ...despVaeFaq]} contactHref="/contact?formation=desp-vae" contactLabel="Poser une question VAE"/></div>
     <TrainingReferenceContact

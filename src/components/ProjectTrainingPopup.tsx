@@ -75,7 +75,7 @@ export function ProjectTrainingPopup() {
         <p className="mt-4 text-sm leading-6 text-stone-600">
           {isBts
             ? 'Aurélie BAYARD-CHAUSSEZ, chargée des relations clients et responsable des BTS, répond à vos questions sur la candidature et l’alternance.'
-            : 'Réservez un RDV téléphone avec Cassandre, responsable commerciale Intégrale Academy.'}
+            : 'Réservez un rendez-vous téléphonique avec Cassandre, responsable commerciale Intégrale Academy.'}
         </p>
 
         {isBts && (
@@ -91,7 +91,7 @@ export function ProjectTrainingPopup() {
             onClick={closePopup}
             className="inline-flex items-center justify-center rounded-full bg-academy-gold px-5 py-3 text-sm font-black text-academy-gold-text shadow-gold transition hover:-translate-y-0.5 hover:brightness-95"
           >
-            {isBts ? `Appeler ${contactName}` : 'Réserver un RDV téléphonique'} <span className="ml-3" aria-hidden="true">→</span>
+            {isBts ? `Appeler ${contactName}` : 'Réserver un rendez-vous téléphonique'} <span className="ml-3" aria-hidden="true">→</span>
           </Link>
           <Link
             href={isBts ? 'mailto:aurelie@integraleacademy.com?subject=Question%20sur%20un%20BTS' : '/contact'}

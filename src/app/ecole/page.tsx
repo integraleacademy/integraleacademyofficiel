@@ -57,7 +57,7 @@ export default async function Page() {
     <div className={styles.page}>
     <section className={styles.stats} aria-label="L’école en quelques repères">
       <div className={`${styles.container} ${styles.statsGrid}`}>
-        <div><strong>2018</strong><span>Le début de l’aventure</span></div><div><strong>400 <small>m²</small></strong><span>Pour apprendre à Puget-sur-Argens</span></div><div><strong>4 <small>salles</small></strong><span>Théorie & mise en pratique</span></div><div><strong>3 <small>implantations</small></strong><span>Puget, Paris · Aurillac selon les sessions</span></div>
+        <div><strong>2018</strong><span>Le début de l’aventure</span></div><div><strong>400 <small>m²</small></strong><span>Pour apprendre à Puget-sur-Argens</span></div><div><strong>4 <small>salles</small></strong><span>Théorie & mise en pratique</span></div><div><strong>2 <small>implantations</small></strong><span>Côte d’Azur et Paris</span></div>
       </div>
     </section>
 
@@ -65,7 +65,7 @@ export default async function Page() {
       <div className={styles.container}>
         <div className={styles.sectionHeading}>
           <div><p className={styles.eyebrow}>01 / Les lieux pour apprendre</p><h2 id="campus-title">De la Côte d’Azur<br /><em>à Paris.</em></h2></div>
-          <p>Notre siège à Puget-sur-Argens et notre implantation à Paris vous accueillent selon les formations et les sessions. Aurillac complète ces implantations pour certaines sessions DESP.</p>
+          <p>Notre siège à Puget-sur-Argens et notre implantation à Paris vous accueillent selon les formations et les sessions.</p>
         </div>
         <SchoolCampuses />
         <div className={styles.campusFacilities}>
@@ -159,7 +159,7 @@ export default async function Page() {
       <div id="histoire" className={`${styles.container} ${experience.history}`}>
         <p className={styles.eyebrow}>Une école qui grandit. Une conviction qui reste.</p>
         <ol className={styles.timeline}>
-          <li><span>2018</span><h3>Le début de l’aventure</h3><p>La création d’une école de formation professionnelle issue du terrain.</p></li><li><span>Au fil des années</span><h3>De nouvelles perspectives</h3><p>Sécurité, incendie, VTC et alternance enrichissent les parcours proposés.</p></li><li><span>Aujourd’hui</span><h3>La même proximité</h3><p>Puget-sur-Argens, Paris et Aurillac, selon les formations et les sessions.</p></li>
+          <li><span>2018</span><h3>Le début de l’aventure</h3><p>La création d’une école de formation professionnelle issue du terrain.</p></li><li><span>Au fil des années</span><h3>De nouvelles perspectives</h3><p>Sécurité, incendie, VTC et alternance enrichissent les parcours proposés.</p></li><li><span>Aujourd’hui</span><h3>La même proximité</h3><p>Puget-sur-Argens et Paris, selon les formations et les sessions.</p></li>
         </ol>
       </div>
     </section>

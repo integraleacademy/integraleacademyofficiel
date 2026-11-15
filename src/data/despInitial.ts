@@ -56,7 +56,7 @@ export const despInitialFaq = [
   { q: 'Puis-je travailler comme agent avec uniquement le DESP ?', a: 'Non. Un dirigeant qui réalise personnellement des missions opérationnelles doit également détenir la carte professionnelle correspondant à l’activité exercée.' },
   { q: 'Puis-je créer immédiatement ma société après le diplôme ?', a: 'La création juridique de la société ne suffit pas pour réaliser des prestations de sécurité. Le dirigeant doit obtenir son agrément et l’entreprise son autorisation d’exercice.' },
   { q: 'La formation est-elle entièrement à distance ?', a: 'Non. Elle comprend une partie à distance et une période obligatoire en présentiel.' },
-  { q: 'Peut-on suivre la formation à Paris, Aurillac ou Puget-sur-Argens ?', a: 'Oui, selon le planning et le lieu prévu pour chaque session.' },
+  { q: 'Peut-on suivre la formation à Paris ou Puget-sur-Argens ?', a: 'Oui, selon le planning et le lieu prévu pour chaque session.' },
   { q: 'La formation garantit-elle la réussite de l’entreprise ?', a: 'Non. Elle apporte les connaissances et compétences nécessaires, mais la réussite dépend du projet, du marché, de la gestion et du développement commercial.' },
   { q: 'La VAE est-elle proposée ?', a: 'Oui, une voie VAE distincte existe pour les candidats disposant d’une expérience correspondant au référentiel. Elle ne doit pas être confondue avec le parcours initial.' },
 ];

@@ -1,3 +1,4 @@
+import { CourseBrochureCard } from '@/components/CourseBrochureCard';
 import { PARIS_ADDRESS } from '@/data/locations';
 import { OrientationAssistant } from '@/components/OrientationAssistant';
 import { DespJourney } from '@/components/DespJourney';
@@ -119,7 +120,6 @@ function DespLocationsNotice() {
   const locations = [
     ['Paris', PARIS_ADDRESS],
     ['Côte d’Azur', 'Puget-sur-Argens · 54 chemin du Carreou, 83480 Puget-sur-Argens'],
-    ['Aurillac', 'Village d’entreprises · 14 avenue du Garric, 15000 Aurillac'],
   ];
 
   return (
@@ -128,9 +128,9 @@ function DespLocationsNotice() {
         <p className="text-xs font-black uppercase tracking-[.22em] text-orange-700">Dates DESP selon le lieu</p>
         <h2 className="mt-3 text-3xl font-black text-orange-950">Des sessions DESP sont prévues sur plusieurs sites</h2>
         <p className="mt-4 max-w-3xl text-base font-semibold leading-7 text-orange-950/80">
-          Attention : le planning DESP peut proposer des dates à Paris, en Côte d’Azur à Puget-sur-Argens et à Aurillac. Vérifiez bien le lieu indiqué avant de choisir votre session ou de déposer votre dossier.
+          Attention : le planning DESP peut proposer des dates à Paris ou sur la Côte d’Azur, à Puget-sur-Argens. Vérifiez bien le lieu indiqué avant de choisir votre session ou de déposer votre dossier.
         </p>
-        <div className="mt-6 grid gap-3 md:grid-cols-3">
+        <div className="mt-6 grid gap-3 md:grid-cols-2">
           {locations.map(([city, address]) => (
             <div key={city} className="rounded-2xl border border-orange-200 bg-white p-4">
               <p className="text-lg font-black text-academy-ink">{city}</p>
@@ -173,7 +173,7 @@ export function DespChoiceReferencePage({ sessions }: { sessions: TrainingDatesP
               <p className="mt-5 text-base leading-7 text-academy-muted sm:text-lg">Formation initiale ou VAE : deux chemins différents pour atteindre le même objectif.</p>
             </div>
 
-            <div className="mt-10 grid items-stretch gap-6 lg:grid-cols-2 lg:gap-8">
+            <div className="mt-10 grid items-stretch gap-3 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:gap-4">
               <DespPathCard
                 tone="light"
                 label="FORMATION INITIALE"
@@ -191,6 +191,11 @@ export function DespChoiceReferencePage({ sessions }: { sessions: TrainingDatesP
                 cta="Voir les infos DESP initial"
                 href="/dirigeant"
               />
+              <div className="flex items-center justify-center gap-3 text-orange-900 lg:flex-col" aria-label="ou">
+                <span aria-hidden="true" className="h-px w-16 bg-orange-300 lg:h-16 lg:w-px" />
+                <strong className="grid size-16 place-items-center rounded-full border border-orange-300 bg-white text-xl font-black tracking-tight shadow-sm">OU</strong>
+                <span aria-hidden="true" className="h-px w-16 bg-orange-300 lg:h-16 lg:w-px" />
+              </div>
               <DespPathCard
                 tone="dark"
                 label="VAE"
@@ -226,7 +231,7 @@ export function DespChoiceReferencePage({ sessions }: { sessions: TrainingDatesP
         showDeliveryPeriods
         showLocationFilter
         defaultPrice="À partir de 3 850 € TTC"
-        defaultLocation="Paris, Puget-sur-Argens ou Aurillac"
+        defaultLocation="Paris ou Puget-sur-Argens"
         priceDescription="Parcours initial : 4 350 € TTC · VAE : 3 850 € TTC"
         benefits={['CPF', 'France Travail', 'Paiement x3 / x4 / x10', 'Initial ou VAE']}
         registrationHref={sessionHref}
@@ -234,6 +239,7 @@ export function DespChoiceReferencePage({ sessions }: { sessions: TrainingDatesP
         emptyAction={{ href: '/contact?formation=desp&objet=alerte-planning', label: 'Recevoir les prochaines dates →' }}
       />
       <ConversionStrip theme="orange" />
+      <CourseBrochureCard course="despvaeouinitial" />
       <PremiumFAQSection badge="FAQ formation" title="Vos questions sur la formation DESP" description="Les réponses utiles avant de choisir votre parcours." items={formationFaq} theme="orange" contactHref="/contact?formation=desp" />
     </main>
   );

@@ -60,7 +60,6 @@ export function SchoolCampuses() {
     return () => window.removeEventListener('hashchange', readHash);
   }, []);
   const location = locations.find(item => item.id === selected)!;
-  const aurillac = locations.find(item => item.id === 'aurillac')!;
   const isPuget = selected === 'puget';
   return <>
     <div className={`${school.campusLayout} ${styles.campusExplorer}`}>
@@ -91,10 +90,6 @@ export function SchoolCampuses() {
         </article>
       </div>
     </div>
-    <article className={styles.aurillac}>
-      <div><p className={school.eyebrow}>Notre troisième implantation · Selon les sessions</p><h3>Aurillac · Centre France</h3><p>{aurillac.address}</p><p>{aurillac.detail}</p></div>
-      <Link href="/planning?lieu=auvergne#sessions" className={school.textLink}>Voir les dates à Aurillac <Arrow diagonal /></Link>
-    </article>
   </>;
 }
 
@@ -135,7 +130,7 @@ function VisitDialog({ campus, onClose }: { campus: SchoolVisitCampus; onClose: 
   return <dialog ref={dialog} onCancel={onClose} className={styles.visitDialog} aria-labelledby="school-visit-title" aria-describedby="school-visit-intro">
     <div className={styles.dialogHeading}><div><p className={school.eyebrow}>Faisons connaissance</p><h2 id="school-visit-title">{success ? 'Votre demande est enregistrée.' : 'Préparons votre visite.'}</h2></div><button type="button" onClick={onClose} aria-label="Fermer la demande de visite">×</button></div>
     <div className={styles.requestSummary}><strong>Motif : visite de l’école</strong><span>Lieu : {schoolVisitCampuses[campus]}</span></div>
-    {success ? <div role="status"><p id="school-visit-intro">Notre équipe dispose de votre demande et de vos coordonnées. Nous vous recontacterons pour convenir d’un rendez-vous.</p><p className={styles.formHint}>Votre visite sera confirmée avec l’équipe.</p><button type="button" className={school.button} onClick={onClose}>Revenir à la découverte de l’école</button></div> : <form onSubmit={submit} className={styles.visitForm}>
+    {success ? <div role="status"><p id="school-visit-intro">Notre équipe dispose de votre demande et de vos coordonnées. Nous vous recontacterons pour convenir par téléphone de la date de votre visite.</p><p className={styles.formHint}>Votre visite sera confirmée avec l’équipe.</p><button type="button" className={school.button} onClick={onClose}>Revenir à la découverte de l’école</button></div> : <form onSubmit={submit} className={styles.visitForm}>
       <p id="school-visit-intro">Indiquez vos coordonnées et, si vous le souhaitez, vos disponibilités. {campus === 'paris' ? 'L’accueil à Paris s’organise selon les sessions.' : 'Nous préparerons votre venue à Puget-sur-Argens.'}</p>
       <div className={styles.fieldPair}><label>Prénom<input name="firstName" autoComplete="given-name" required maxLength={80} /></label><label>Nom<input name="lastName" autoComplete="family-name" required maxLength={80} /></label></div>
       <div className={styles.fieldPair}><label>Adresse e-mail<input name="email" type="email" autoComplete="email" required maxLength={120} /></label><label>Téléphone<input name="phone" type="tel" autoComplete="tel" required maxLength={40} minLength={8} /></label></div>
