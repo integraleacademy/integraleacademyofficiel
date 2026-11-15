@@ -1,3 +1,4 @@
+import { CourseFilm } from '@/components/CourseFilm';
 import { CourseBrochureCard } from '@/components/CourseBrochureCard';
 import { PARIS_ADDRESS } from '@/data/locations';
 import { OrientationAssistant } from '@/components/OrientationAssistant';
@@ -159,6 +160,9 @@ export function DespChoiceReferencePage({ sessions }: { sessions: TrainingDatesP
         }
         visual={<div className="overflow-hidden rounded-[2rem] border border-orange-200 bg-orange-50 p-2 shadow-card"><ManualArtwork illustration={despArtwork.management} priority /></div>}
       />
+
+      <CourseFilm film="desp" title="Diriger une entreprise de sécurité privée"
+        description="Découvrez le métier en vidéo, puis voyez si la formation initiale ou la VAE correspond à votre expérience." />
 
       <section className="bg-orange-50/60 px-4 py-10"><div className="page-container max-w-4xl"><OrientationAssistant initialFormationKey="desp" /></div></section>
 
