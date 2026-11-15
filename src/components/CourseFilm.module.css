@@ -23,7 +23,7 @@
 .summary p { margin: 0; max-width: 56ch; color: #e1e8e9; font-size: clamp(1rem, 1.25vw, 1.15rem); line-height: 1.55; }
 .summary a { display: inline-flex; align-items: center; gap: .55rem; min-height: 44px; color: var(--film-accent); text-decoration: underline; text-underline-offset: .22em; font-size: .88rem; font-weight: 700; }
 .section a:focus-visible { outline: 3px solid #f5c967; outline-offset: 3px; }
-.stage { position: relative; width: 100%; height: min(56.25vw, 110svh); min-height: 200px; background: #101619; overflow: hidden; }
+.stage { position: relative; width: 100%; aspect-ratio: 16 / 9; min-height: 200px; max-height: 120svh; background: #101619; overflow: hidden; }
 .player, .player iframe, .poster { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
 .player iframe { display: block; }
 .poster { display: grid; place-items: center; color: white; text-decoration: none; }

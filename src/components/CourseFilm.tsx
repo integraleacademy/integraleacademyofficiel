@@ -17,7 +17,7 @@ type Props = { film: keyof typeof videos; title: string; titleAccent?: string; d
 let activePlayer: YouTubePlayer | null = null;
 
 function claimPlayer(player: YouTubePlayer) {
-  if (activePlayer && activePlayer !== player) activePlayer.pauseVideo();
+  if (activePlayer && activePlayer !== player && [1, 3].includes(activePlayer.getPlayerState())) activePlayer.pauseVideo();
   activePlayer = player;
 }
 
