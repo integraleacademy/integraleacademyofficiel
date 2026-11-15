@@ -165,7 +165,7 @@ const formationFilters: {
     filterImage: '/images/formation-scenes-manuel/bts-campus-mixte.webp?v=manuel-aps-4',
     label: 'BTS',
     eyebrow: 'Alternance',
-    description: 'MOS, MCO, NDRC, CI et PI',
+    description: 'MOS, MCO, NDRC, CI, PI et CG',
     category: 'bts',
     slugs: [
       'bts',
@@ -290,18 +290,21 @@ function planningThemeForSession(session: Session) {
   return planningThemeClass(planningAccentForSession(session));
 }
 
+const formatDayParis = new Intl.DateTimeFormat('fr-FR', {
+  day: '2-digit',
+  timeZone: 'Europe/Paris',
+});
+const formatMonthParis = new Intl.DateTimeFormat('fr-FR', {
+  month: 'short',
+  timeZone: 'Europe/Paris',
+});
+
 function shortDate(value?: string | Date) {
   if (!value) return { day: '--', month: '' };
   const date = new Date(value);
   return {
-    day: new Intl.DateTimeFormat('fr-FR', {
-      day: '2-digit',
-      timeZone: 'Europe/Paris',
-    }).format(date),
-    month: new Intl.DateTimeFormat('fr-FR', {
-      month: 'short',
-      timeZone: 'Europe/Paris',
-    }).format(date).replace('.', '').toUpperCase(),
+    day: formatDayParis.format(date),
+    month: formatMonthParis.format(date).replace('.', '').toUpperCase(),
   };
 }
 

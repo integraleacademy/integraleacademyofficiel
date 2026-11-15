@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return createPageMetadata(path);
 }
 
-const btsApplicationUrl = "https://inscriptionsbts.onrender.com/";
+const btsApplicationUrl = "https://admissions.integraleconnect.com/";
 
 function btsContactSlug(slug: string) {
   return slug.replace(/[^a-z0-9-]/gi, "-");

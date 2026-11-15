@@ -15,7 +15,7 @@ La formation APS prépare au Titre à Finalité Professionnelle Agent de Préven
 - Répertoire : RNCP36648
 - Niveau : niveau 3
 - Certificateurs : CPNE des entreprises de prévention et de sécurité / ADEF
-- Échéance indiquée sur la fiche RNCP fournie : 1er juillet 2027
+- Échéance indiquée sur la fiche de certification : 1er juillet 2027
 - Programme : CPNEFP version V3.2, mis à jour le 23 juillet 2026
 - Code ROME : K2503
 - Code NSF : 344
@@ -49,7 +49,7 @@ Le dossier doit également permettre de vérifier :
 - la connaissance des principes de la République ;
 - les conditions de moralité examinées par le CNAPS ;
 - une pièce d’identité valide et les justificatifs administratifs demandés ;
-- pour les ressortissants étrangers, la condition mentionnée dans la fiche RNCP fournie d’un titre de séjour détenu depuis au moins cinq ans pour demander l’autorisation préalable, sous réserve des règles applicables à chaque situation.
+- pour les ressortissants étrangers, la condition mentionnée dans la fiche de certification d’un titre de séjour détenu depuis au moins cinq ans pour demander l’autorisation préalable, sous réserve des règles applicables à chaque situation.
 
 Ces éléments sont vérifiés avant l’admission définitive. Ne pas présenter le contrôle de français comme une simple formalité réalisée le premier jour.
 
@@ -106,7 +106,7 @@ L’activité peut être exercée 24 h/24 et 7 j/7, la nuit, le week-end et les 
 
 ## Données nationales d’insertion
 
-Ces chiffres proviennent de la fiche RNCP fournie et concernent la certification au niveau national, pas les résultats propres à Intégrale Academy.
+Ces chiffres proviennent de la fiche de certification et concernent la certification au niveau national, pas les résultats propres à Intégrale Academy.
 
 | Année | Certifiés | Insertion globale à 6 mois | Métier visé à 6 mois | Métier visé à 2 ans |
 |---|---:|---:|---:|---:|

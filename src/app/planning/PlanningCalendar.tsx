@@ -6,6 +6,8 @@ import { formatSessionDate, formatSessionPeriod } from '@/lib/public-sessions';
 import { formatVtcDeadline, formatVtcExamDate } from '@/data/vtc';
 import styles from './planning.module.css';
 
+const formatMonthYearUtc = new Intl.DateTimeFormat('fr-FR', { month: 'long', year: 'numeric', timeZone: 'UTC' });
+
 export function PlanningCalendar({ sessions, onSelect, selectedId, themeForSession }: {
   sessions: any[];
   onSelect: (session: any) => void;
@@ -20,7 +22,7 @@ export function PlanningCalendar({ sessions, onSelect, selectedId, themeForSessi
   const end = calendarMonth(start, 3);
   const months = Array.from({ length: 3 }, (_, index) => {
     const date = calendarMonth(start, index);
-    return { date, label: new Intl.DateTimeFormat('fr-FR', { month: 'long', year: 'numeric', timeZone: 'UTC' }).format(date), left: (date - start) / (end - start) * 100, width: (calendarMonth(date, 1) - date) / (end - start) * 100 };
+    return { date, label: formatMonthYearUtc.format(date), left: (date - start) / (end - start) * 100, width: (calendarMonth(date, 1) - date) / (end - start) * 100 };
   });
   const visible = sessions.filter(session => sessionInCalendarWindow(session, start, end));
   const positionStyle = (position: { left: number; width: number }) => ({ left: position.left + '%', width: position.width + '%' });

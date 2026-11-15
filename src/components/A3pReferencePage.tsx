@@ -248,7 +248,7 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
         </article>
       </div>
       <article className="mt-5 overflow-hidden rounded-[2rem] border border-academy-line bg-[#FFFDF8] p-6 shadow-soft lg:p-8">
-        <div className="flex flex-wrap items-end justify-between gap-4"><div><Label>Insertion nationale</Label><h3 className="mt-3 text-3xl font-black">Données historiques de la certification.</h3></div><p className="max-w-xl text-sm font-semibold leading-6 text-academy-muted">Statistiques nationales France compétences figurant dans la fiche RNCP fournie. Elles concernent la certification, pas les résultats propres à Intégrale Academy.</p></div>
+        <div className="flex flex-wrap items-end justify-between gap-4"><div><Label>Insertion nationale</Label><h3 className="mt-3 text-3xl font-black">Données historiques de la certification.</h3></div><p className="max-w-xl text-sm font-semibold leading-6 text-academy-muted">Statistiques nationales France compétences figurant dans la fiche de certification. Elles concernent la certification, pas les résultats propres à Intégrale Academy.</p></div>
         <div className="mt-6 overflow-x-auto">
           <table className="min-w-[720px] w-full border-separate border-spacing-y-2 text-left text-sm">
             <thead><tr className="text-xs uppercase tracking-[.12em] text-academy-muted"><th className="px-4 py-2">Année</th><th className="px-4 py-2">Certifiés</th><th className="px-4 py-2">Insertion globale à 6 mois</th><th className="px-4 py-2">Métier visé à 6 mois</th><th className="px-4 py-2">Métier visé à 2 ans</th></tr></thead>

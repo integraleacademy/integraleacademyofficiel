@@ -34,9 +34,10 @@ test('la galerie est accessible, responsive et ouvre les documents dans un nouve
   assert.match(component, /sm:grid-cols-2 xl:grid-cols-3/);
   assert.match(component, /target="_blank"/);
   assert.match(component, /rel="noopener noreferrer"/);
-  assert.match(component, /aria-label={\`Consulter le dossier de présentation/);
+  assert.match(component, /Consulter le dossier de présentation/);
+  assert.match(component, /Consulter la fiche/);
   assert.match(component, /loading="lazy"/);
-  assert.match(component, /https:\/\/inscriptionsbts\.onrender\.com\//);
+  assert.match(component, /https:\/\/admissions\.integraleconnect\.com\//);
 });
 
 test('les pages sont accessibles depuis le pied de page et le contact BTS reste attribué à Aurélie', () => {

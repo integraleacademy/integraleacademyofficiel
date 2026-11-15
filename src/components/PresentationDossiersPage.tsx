@@ -39,11 +39,11 @@ function DossierStack({ dossiers, isBts }: { dossiers: readonly PresentationDoss
 }
 
 function DossierCard({ dossier, isBts }: { dossier: PresentationDossier; isBts: boolean }) {
-  return <a id={dossier.id} href={dossier.href} target="_blank" rel="noopener noreferrer" aria-label={`Consulter le dossier de présentation ${dossier.title} sur Canva (nouvel onglet)`} className="group flex h-full scroll-mt-32 flex-col overflow-hidden rounded-[1.75rem] border border-academy-line bg-academy-surface shadow-soft transition duration-300 hover:-translate-y-1.5 hover:border-academy-gold/60 hover:shadow-card focus:outline-none focus:ring-4 focus:ring-academy-gold/30" data-dossier-card>
+  return <a id={dossier.id} href={dossier.href} target="_blank" rel="noopener noreferrer" aria-label={dossier.href.startsWith('/') ? `Consulter la fiche ${dossier.title} (nouvel onglet)` : `Consulter le dossier de présentation ${dossier.title} sur Canva (nouvel onglet)`} className="group flex h-full scroll-mt-32 flex-col overflow-hidden rounded-[1.75rem] border border-academy-line bg-academy-surface shadow-soft transition duration-300 hover:-translate-y-1.5 hover:border-academy-gold/60 hover:shadow-card focus:outline-none focus:ring-4 focus:ring-academy-gold/30" data-dossier-card>
     <div className="relative mx-4 mt-4 aspect-[600/850] overflow-hidden rounded-[1.25rem] bg-academy-soft">
-      <Image src={dossier.image} alt={`Couverture du dossier de présentation ${dossier.title}`} width={600} height={850} sizes="(max-width: 640px) 90vw, (max-width: 1280px) 45vw, 360px" loading="lazy" className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.035]" />
+      <Image src={dossier.image} alt={dossier.href.startsWith('/') ? '' : `Couverture du dossier de présentation ${dossier.title}`} width={600} height={850} sizes="(max-width: 640px) 90vw, (max-width: 1280px) 45vw, 360px" loading="lazy" className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.035]" />
       <span className="absolute inset-x-3 bottom-3 flex items-center justify-between gap-3 rounded-full bg-[#172235]/92 px-4 py-3 text-xs font-black text-white shadow-lg backdrop-blur transition group-hover:bg-academy-gold group-hover:text-academy-gold-text">
-        Afficher le dossier <ArrowUpRightIcon />
+        {dossier.href.startsWith('/') ? 'Voir la fiche formation' : 'Afficher le dossier'} <ArrowUpRightIcon />
       </span>
     </div>
     <div className="flex flex-1 flex-col p-5 sm:p-6">
@@ -61,11 +61,11 @@ function ClosingCallout({ isBts }: { isBts: boolean }) {
       <div className="page-container overflow-hidden rounded-[2rem] bg-[linear-gradient(135deg,#172235,#293a54_58%,#172235)] p-7 text-white shadow-soft sm:p-10">
         <div className="grid gap-7 lg:grid-cols-[1fr_auto] lg:items-center">
           <div className="max-w-3xl">
-            <span className="inline-flex rounded-full bg-blue-500/20 px-3 py-1 text-xs font-black uppercase tracking-[.18em] text-blue-200">Admissions 2026</span>
-            <h2 className="mt-4 text-3xl font-black tracking-tight sm:text-4xl">Les inscriptions 2026 sont ouvertes.</h2>
-            <p className="mt-3 max-w-2xl text-base font-medium leading-7 text-white/70">Complétez votre dossier de pré-inscription en moins de 10 minutes. L’équipe BTS étudiera ensuite votre candidature et vous accompagnera dans les prochaines étapes.</p>
+            <span className="inline-flex rounded-full bg-blue-500/20 px-3 py-1 text-xs font-black uppercase tracking-[.18em] text-blue-200">Admissions BTS</span>
+            <h2 className="mt-4 text-3xl font-black tracking-tight sm:text-4xl">Préparez votre candidature pour la rentrée 2027.</h2>
+            <p className="mt-3 max-w-2xl text-base font-medium leading-7 text-white/70">Le portail des admissions présente les dates d’ouverture et le dossier à compléter. Pour une demande d’entrée tardive en 2026, contactez directement l’équipe BTS.</p>
           </div>
-          <a href="https://inscriptionsbts.onrender.com/" target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-academy-gold px-6 py-3 text-center text-sm font-black text-academy-gold-text shadow-gold transition hover:-translate-y-0.5 hover:brightness-105 focus:outline-none focus:ring-4 focus:ring-academy-gold/35">Débuter ma pré-inscription <ArrowUpRightIcon /></a>
+          <a href="https://admissions.integraleconnect.com/" target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-academy-gold px-6 py-3 text-center text-sm font-black text-academy-gold-text shadow-gold transition hover:-translate-y-0.5 hover:brightness-105 focus:outline-none focus:ring-4 focus:ring-academy-gold/35">Accéder aux admissions 2027 <ArrowUpRightIcon /></a>
         </div>
       </div>
     </section>;

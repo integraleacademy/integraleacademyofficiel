@@ -346,7 +346,7 @@ const btsOverviewJourney: CourseJourneyConfig = {
     copy('Votre projet', 'Choisissez le domaine qui vous donne envie d’avancer.', 'Sécurité, commerce, relation client, international, immobilier ou comptabilité : découvrez nos six BTS et les compétences qu’ils permettent de développer.', '#formations-bts', 'Découvrir les six BTS'),
     copy('Votre alternance', 'Un diplôme et une expérience qui se construisent ensemble.', `BTS MOS : ${btsRhythms.MOS.description} Pour les BTS MCO, NDRC, CI, PI et CG : ${btsRhythms.MCO.description} Les modalités de présentiel ou de visioconférence sont précisées sur chaque parcours.`, '#alternance-bts', 'Comprendre le rythme'),
     copy('Votre expérience', 'Apprendre un métier en participant à la vie d’une entreprise.', 'Conseiller un client, préparer une prestation, suivre une opération ou analyser des résultats : les missions dépendent du BTS et de l’entreprise qui vous accueille.', '#formations-bts', 'Trouver mon domaine'),
-    copy('Votre prochain chapitre', 'Faites le premier pas vers votre BTS.', 'L’équipe admissions étudie votre dossier et votre projet. Elle vous accompagne dans les étapes de candidature, de recherche d’entreprise et de préparation du contrat d’apprentissage.', 'https://inscriptionsbts.onrender.com/', 'Préparer ma candidature'),
+    copy('Votre prochain chapitre', 'Faites le premier pas vers votre BTS.', 'L’équipe admissions étudie votre dossier et votre projet. Elle vous accompagne dans les étapes de candidature, de recherche d’entreprise et de préparation du contrat d’apprentissage.', 'https://admissions.integraleconnect.com/', 'Préparer ma candidature'),
   ],
   opening: { kicker: 'VOTRE TALENT A DE L’AVENIR.', heading: ['Trouvez votre voie.', 'Prenez votre élan.'], text: 'Six BTS, des univers différents et une même ambition : vous aider à construire votre avenir professionnel.', verbs: ['Choisir', 'Apprendre', 'Avancer'] },
   study: { value: '2', unit: 'ANS · EN ALTERNANCE', heading: ['Un pied à l’école.', 'Un pied en entreprise.'], panels: [
@@ -360,7 +360,7 @@ const btsOverviewJourney: CourseJourneyConfig = {
   ], note: 'Explorez chaque BTS pour choisir le parcours adapté à votre projet.' },
   outcome: { heading: ['Votre choix.', 'Le début de la suite.'], code: 'BTS', role: 'Un diplôme Bac+2 et une expérience en entreprise.', milestones: [
     { label: '01 · MON PARCOURS', title: 'Je découvre.', text: 'Comparer les six spécialités', href: '#formations-bts' },
-    { label: '02 · MA CANDIDATURE', title: 'Je me lance.', text: 'Préparer mon dossier en ligne', href: 'https://inscriptionsbts.onrender.com/' },
+    { label: '02 · MA CANDIDATURE', title: 'Je me lance.', text: 'Préparer mon dossier en ligne', href: 'https://admissions.integraleconnect.com/' },
   ], note: 'Admission après étude du dossier et du projet d’alternance.' },
 };
 

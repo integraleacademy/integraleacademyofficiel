@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 
 type NavSubLink = readonly [string, string] | readonly [string, string, string, string];
@@ -12,19 +12,32 @@ type MobileHeaderMenuProps = {
 
 export function MobileHeaderMenu({ nav, appointmentFormUrl }: MobileHeaderMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const toggle = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    if (!isOpen) return;
+    function closeOnEscape(event: KeyboardEvent) {
+      if (event.key === 'Escape') {
+        setIsOpen(false);
+        toggle.current?.focus();
+      }
+    }
+    document.addEventListener('keydown', closeOnEscape);
+    return () => document.removeEventListener('keydown', closeOnEscape);
+  }, [isOpen]);
   const closeMenu = () => setIsOpen(false);
 
   return <div className="relative">
     <button
       type="button"
       aria-expanded={isOpen}
-      aria-haspopup="menu"
+      ref={toggle}
+      aria-controls={isOpen ? "mobile-navigation" : undefined}
       onClick={() => setIsOpen(current => !current)}
       className="min-h-11 rounded-full border border-academy-line bg-academy-surface px-3.5 py-2 text-sm font-bold text-academy-ink shadow-soft sm:px-4"
     >
       Menu
     </button>
-    {isOpen ? <div className="fixed inset-x-3 top-[calc(var(--site-header-height)+.5rem)] max-h-[calc(100dvh-var(--site-header-height)-1.5rem)] w-auto overflow-y-auto overscroll-contain rounded-3xl bg-academy-surface p-4 text-academy-ink shadow-soft ring-1 ring-academy-line sm:absolute sm:inset-x-auto sm:right-0 sm:top-full sm:mt-3 sm:max-h-[80vh] sm:w-[min(22rem,calc(100vw-2rem))]">
+    {isOpen ? <div id="mobile-navigation" className="fixed inset-x-3 top-[calc(var(--site-header-height)+.5rem)] max-h-[calc(100dvh-var(--site-header-height)-1.5rem)] w-auto overflow-y-auto overscroll-contain rounded-3xl bg-academy-surface p-4 text-academy-ink shadow-soft ring-1 ring-academy-line sm:absolute sm:inset-x-auto sm:right-0 sm:top-full sm:mt-3 sm:max-h-[80vh] sm:w-[min(22rem,calc(100vw-2rem))]">
       <nav className="grid gap-2" aria-label="Navigation mobile">
         {nav.map(([n, h]) => typeof h !== 'string' ? <div key={n} className="rounded-2xl bg-academy-bg/60 p-2"><p className="px-2 py-2 text-xs font-black uppercase tracking-[.18em] text-academy-gold-strong">{n}</p><div className="grid gap-1">{h.map(([label, href]) => <Link key={href} href={href} onClick={closeMenu} className="flex min-h-11 items-center rounded-xl px-3 py-2 font-semibold hover:text-academy-gold-strong">{label}</Link>)}</div></div> : <Link key={h} href={h} onClick={closeMenu} className="rounded-2xl px-4 py-3 font-semibold hover:text-academy-gold-strong">{n}</Link>)}
       </nav>

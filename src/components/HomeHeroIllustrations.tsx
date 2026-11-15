@@ -59,6 +59,11 @@ export function HomeHeroIllustrations() {
     };
   }, []);
 
+  const [visited, setVisited] = useState<number[]>([0]);
+  useEffect(() => {
+    setVisited(previous => previous.includes(current) ? previous : [...previous, current]);
+  }, [current]);
+
   const running = visible && pageVisible && !paused && !hovered && !quietMode;
   useEffect(() => {
     if (!running) return;
@@ -97,16 +102,16 @@ export function HomeHeroIllustrations() {
               className={styles.scene}
             >
               <a href={scene.href} className={styles.sceneLink} aria-label={scene.action} onClick={() => setPaused(true)}>
-                <Image
+                {(index === current || visited.includes(index)) && <Image
                   src={scene.image}
                   alt={scene.alt}
                   width={1536}
                   height={1024}
                   sizes="(max-width: 900px) calc(100vw - 40px), (max-width: 1320px) 50vw, 640px"
                   priority={index === 0}
-                  loading={index === 0 ? undefined : 'eager'}
+                  loading={index === 0 ? undefined : 'lazy'}
                   draggable={false}
-                />
+                />}
                 <div className={styles.sceneContent}>
                   <span className={styles.sceneLabel}>{scene.label}</span>
                   <h2>{scene.title}</h2>

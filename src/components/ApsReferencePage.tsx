@@ -163,9 +163,11 @@ const faq = [
   { q: 'Une expérience dans la sécurité est-elle obligatoire ?', a: 'Non. La formation est accessible aux débutants qui remplissent les conditions administratives et linguistiques réglementaires.' },
 ];
 
+const formatMonthDayYearParis = new Intl.DateTimeFormat('fr-FR', { timeZone: 'Europe/Paris', day: '2-digit', month: 'short', year: 'numeric' });
+
 function formatDate(value?: string | null, compact = false) {
   if (!value) return 'À confirmer';
-  return new Intl.DateTimeFormat('fr-FR', { timeZone: 'Europe/Paris', day: '2-digit', month: 'short', year: 'numeric' }).format(new Date(value)).replace(/^0/, compact ? '' : '0');
+  return formatMonthDayYearParis.format(new Date(value)).replace(/^0/, compact ? '' : '0');
 }
 
 function sessionHref() {

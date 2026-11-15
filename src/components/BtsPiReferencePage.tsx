@@ -12,7 +12,7 @@ import { MissionAnimation } from '@/components/MissionAnimation';
 import { TrainingIllustratedCards, type TrainingIllustratedCard } from '@/components/TrainingIllustratedCards';
 import { PremiumFAQSection } from '@/components/ui';
 
-const applicationUrl = 'https://inscriptionsbts.onrender.com/';
+const applicationUrl = 'https://admissions.integraleconnect.com/';
 const aurelieEmail = 'aurelie@integraleacademy.com';
 const aurelieDirectHref = 'tel:+33487830615';
 const aurelieMobileHref = 'tel:+33769390457';
@@ -204,7 +204,7 @@ function HeroRoadmap() {
   return (
     <aside className={`${btsStyles.roadmap} relative rounded-[2rem] border border-white/60 bg-[#FFFDF8] p-5 text-academy-ink shadow-[0_34px_100px_rgba(0,0,0,.34)] sm:p-6`}>
       <span className="absolute -right-2 -top-3 rounded-full bg-bts-700 px-3 py-2 text-[.58rem] font-black uppercase tracking-[.14em] text-white shadow-soft">
-        Admissions 2026
+        Admissions 2027
       </span>
       <div className="flex items-start justify-between gap-3">
         <div>
@@ -294,13 +294,13 @@ export function BtsPiReferencePage() {
                 Diplôme d’État · Bac+2 · Niveau 5 · RNCP 38380
               </span>
               <h1 className="mt-5 max-w-4xl text-4xl font-black tracking-[-.06em] sm:text-5xl lg:text-6xl xl:text-7xl">
-                Entrez dans l’immobilier <span className="text-bts-200">par la grande porte.</span>
+                BTS PI <span className="text-bts-200">Professions immobilières</span>
               </h1>
               <p className="mt-5 max-w-2xl text-lg font-medium leading-8 text-white/70 sm:text-xl">
                 Avec le BTS Professions Immobilières, apprenez à vendre, louer, gérer et valoriser des biens tout en accompagnant des projets de vie concrets.
               </p>
               <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-                <CTA href={applicationUrl} variant="gold" external>Je candidate pour 2026 →</CTA>
+                <CTA href={applicationUrl} variant="gold" external>Admissions 2027 →</CTA>
                 <CTA href={aurelieDirectHref} variant="outline">Parler à Aurélie</CTA>
               </div>
               <div className="mt-6 flex flex-wrap gap-2 text-xs font-bold text-white/75">
@@ -505,10 +505,10 @@ export function BtsPiReferencePage() {
         <div className={`absolute inset-0 -z-10 ${btsStyles.admissionGlow}`} />
         <div className="absolute inset-0 -z-10 opacity-20 [background-image:linear-gradient(rgba(255,255,255,.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.08)_1px,transparent_1px)] [background-size:48px_48px]" />
         <div className="page-container">
-          <Eyebrow light>06 — Admissions 2026</Eyebrow>
+          <Eyebrow light>06 — Admissions 2027</Eyebrow>
           <div className="mt-3 flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-end">
             <div><h2 className="max-w-4xl text-3xl font-black tracking-[-.05em] sm:text-4xl lg:text-5xl">Votre candidature en cinq étapes. <span className="text-bts-200">Simple, claire, accompagnée.</span></h2><p className="mt-5 max-w-3xl text-base font-medium leading-8 text-white/62">Vous ne savez pas encore comment trouver une entreprise ? C’est normal. Commencez par votre candidature : notre équipe vous guide ensuite.</p></div>
-            <CTA href={applicationUrl} variant="gold" external>Je candidate pour 2026 →</CTA>
+            <CTA href={applicationUrl} variant="gold" external>Admissions 2027 →</CTA>
           </div>
           <div className="mt-9 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
             {admissionSteps.map(([number, title, text]) => (

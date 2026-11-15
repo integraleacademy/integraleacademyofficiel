@@ -18,7 +18,7 @@ import { serializeCourseJsonLd } from '@/lib/seo';
 import identity from './BtsIdentity.module.css';
 import styles from './BtsMosExperience.module.css';
 
-const applicationUrl = 'https://inscriptionsbts.onrender.com/';
+const applicationUrl = 'https://admissions.integraleconnect.com/';
 const parcoursup = {
   campus: 'https://dossier.parcoursup.fr/Candidats/public/fiches/afficherFicheFormation?g_ta_cod=34004',
   remote: 'https://dossier.parcoursup.fr/Candidats/public/fiches/afficherFicheFormation?g_ta_cod=46600&typeBac=0',

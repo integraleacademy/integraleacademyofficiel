@@ -89,4 +89,11 @@ export const btsPresentationDossiers = [
     image: '/images/dossiers/cover-11.png',
     href: 'https://www.canva.com/design/DAGVNpUITsI/2wf_HST7zlm7a8AzYczlxQ/view?utm_content=DAGVNpUITsI&utm_campaign=designshare&utm_medium=link&utm_source=editor',
   },
+  {
+    title: 'Comptabilité et gestion (CG)',
+    category: 'Gestion et comptabilité',
+    description: 'Programme du BTS Comptabilité et gestion, rythme de l’alternance et candidature.',
+    image: '/images/bts/tenues-2026/cg-carte.webp',
+    href: '/bts/comptabilite-gestion',
+  },
 ] satisfies readonly PresentationDossier[];

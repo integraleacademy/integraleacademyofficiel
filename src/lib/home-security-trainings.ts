@@ -9,26 +9,29 @@ export type HomeTrainingSession = {
   } | null;
 };
 
+const parisDateParts = new Intl.DateTimeFormat('en-CA', {
+  timeZone: 'Europe/Paris',
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit',
+});
+const frenchSessionDate = new Intl.DateTimeFormat('fr-FR', {
+  timeZone: 'Europe/Paris',
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+
 const apsSlugs = new Set(['aps']);
 const a3pSlugs = new Set(['a3p', 'a3p-apr']);
 const despSlugs = new Set(['desp', 'desp-dssp', 'desp-initial', 'desp-vae']);
 
 function parisDateKey(value: string | Date) {
-  return new Intl.DateTimeFormat('en-CA', {
-    timeZone: 'Europe/Paris',
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  }).format(new Date(value));
+  return parisDateParts.format(new Date(value));
 }
 
 function formatFrenchDate(value: string | Date) {
-  const parts = new Intl.DateTimeFormat('fr-FR', {
-    timeZone: 'Europe/Paris',
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  }).formatToParts(new Date(value));
+  const parts = frenchSessionDate.formatToParts(new Date(value));
   const day = parts.find((part) => part.type === 'day')?.value ?? '';
   const month = parts.find((part) => part.type === 'month')?.value ?? '';
   const year = parts.find((part) => part.type === 'year')?.value ?? '';

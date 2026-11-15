@@ -1,8 +1,10 @@
 import type { NextConfig } from 'next';
+import imageWidths from './src/data/image-widths.json';
 import urlRedirects from './src/data/url-redirects.json';
 
 const nextConfig: NextConfig = {
   output: 'standalone',
+  images: { ...imageWidths, loader: 'custom', loaderFile: './src/lib/static-image-loader.ts' },
   async redirects() {
     // Relative destinations work on the preview and on the future public domain.
     // Next.js retains query parameters and uses permanent HTTP 308 redirects.

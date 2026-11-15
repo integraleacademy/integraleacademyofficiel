@@ -1,7 +1,10 @@
 type DatedSession = { startDate?: string | Date; endDate?: string | Date; examDate?: string | Date | null };
 
+const formatMonthYearParis = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Paris', year: 'numeric', month: '2-digit' });
+const formatMonthDayYearParis = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Paris', year: 'numeric', month: '2-digit', day: '2-digit' });
+
 export function planningMonth(value: string | Date) {
-  return new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Paris', year: 'numeric', month: '2-digit' }).format(new Date(value));
+  return formatMonthYearParis.format(new Date(value));
 }
 
 /** Include a course spanning the selected month, not only courses starting in it. */
@@ -28,7 +31,7 @@ export function planningMonths(sessions: DatedSession[]) {
 }
 
 export function nextBtsIntakeYear(referenceDate = new Date()) {
-  const key = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Paris', year: 'numeric', month: '2-digit', day: '2-digit' }).format(referenceDate);
+  const key = formatMonthDayYearParis.format(referenceDate);
   const year = Number(key.slice(0, 4));
   return key.slice(5) < '09-01' ? year : year + 1;
 }

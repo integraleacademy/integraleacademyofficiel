@@ -7,7 +7,6 @@ import { PageSeo } from '@/components/PageSeo';
 import './globals.css';
 import './global-contact-cta-continuous.css';
 import { Header, Footer } from '@/components/ui';
-import { ProjectTrainingPopup } from '@/components/ProjectTrainingPopup';
 import { GoogleRatingBadge } from '@/components/GoogleRatingBadge';
 import { GlobalContactCTA } from '@/components/GlobalContactCTA';
 import { GlobalMobileCTA } from '@/components/GlobalMobileCTA';
@@ -40,4 +39,4 @@ const themeInitScript = `
   })();
 `;
 
-export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="fr" suppressHydrationWarning><head><script dangerouslySetInnerHTML={{__html:themeInitScript}} /></head><body className="bg-academy-bg text-academy-ink"><OrganizationSeo/><Header/><main>{children}</main><PageSeo/><GlobalContactCTA/><Footer/><GlobalMobileCTA/><ProjectTrainingPopup/><GoogleRatingBadge/></body></html>}
+export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="fr" suppressHydrationWarning><head><script dangerouslySetInnerHTML={{__html:themeInitScript}} /></head><body className="bg-academy-bg text-academy-ink"><OrganizationSeo/><Header/><main>{children}</main><PageSeo/><GlobalContactCTA/><GoogleRatingBadge/><Footer/><GlobalMobileCTA/></body></html>}

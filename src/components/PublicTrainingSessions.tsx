@@ -1,16 +1,8 @@
+import { parisDateKey, formatSessionDate as formatDate } from '@/lib/public-sessions';
 import Link from 'next/link';
 import { getSessionSeatAvailability, resolveSessionSeatCapacity } from '@/lib/session-seat-availability';
 
 export type PublicTrainingSession = any;
-
-function parisDateKey(date = new Date()) {
-  return new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Paris', year: 'numeric', month: '2-digit', day: '2-digit' }).format(date);
-}
-
-function formatDate(value?: string) {
-  if (!value) return '';
-  return new Intl.DateTimeFormat('fr-FR', { timeZone: 'Europe/Paris', day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(value));
-}
 
 function primaryHref(session: PublicTrainingSession) {
   const base = session.registrationUrl || '/contact';

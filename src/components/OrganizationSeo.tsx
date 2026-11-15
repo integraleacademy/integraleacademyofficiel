@@ -12,7 +12,10 @@ export function OrganizationSeo() {
       address: { '@type': 'PostalAddress', streetAddress: '54 chemin du Carreou - ZI du Carreou', postalCode: '83480', addressLocality: 'Puget-sur-Argens', addressCountry: 'FR' },
       location: locations.map((location) => ({ '@type': 'Place', name: location.name, address: location.address })),
       sameAs: socialLinks.filter((link) => link.label === 'Facebook' || link.label === 'Instagram').map((link) => link.href),
-      contactPoint: { '@type': 'ContactPoint', telephone: '+33422470768', contactType: 'Admissions et informations', availableLanguage: ['French'] },
+      contactPoint: { '@type': 'ContactPoint', telephone: '+33422470768', contactType: 'Admissions et informations', availableLanguage: ['French'], hoursAvailable: {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: '09:00', closes: '17:00',
+      } },
     },
     { '@type': 'WebSite', '@id': WEBSITE_ID, name: SITE_NAME, url: SITE_ORIGIN, inLanguage: 'fr-FR', publisher: { '@id': ORGANIZATION_ID } },
   ] };

@@ -65,7 +65,8 @@ test('les éléments flottants ne se recouvrent plus et restent dans le viewport
   assert.doesNotMatch(popup, /calc\(100%-2rem\)/);
   assert.match(popup, /inset-x-3/);
   assert.match(popup, /max-h-\[calc\(100dvh-7rem\)\]/);
-  assert.match(rating, /bottom-\[calc\(5\.5rem\+env\(safe-area-inset-bottom\)\)\] left-3 right-auto/);
+  assert.match(rating, /group relative.*lg:fixed/);
+  assert.doesNotMatch(rating, /group fixed/);
   assert.match(assistant, /lg:bottom-24 lg:right-6/);
 });
 

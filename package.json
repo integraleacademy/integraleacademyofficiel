@@ -10,7 +10,9 @@
     "render:postdeploy": "prisma migrate deploy && tsx prisma/seed.ts",
     "db:seed": "prisma db seed",
     "test:home-cards": "tsx --test tests/home-security-trainings.test.ts",
-    "test:a3p": "node --test tests/a3p-official-content.test.mjs"
+    "test:a3p": "node --test tests/a3p-official-content.test.mjs",
+    "prebuild": "node scripts/build-image-variants.mjs",
+    "predev": "node scripts/build-image-variants.mjs"
   },
   "dependencies": {
     "next": "15.3.3",

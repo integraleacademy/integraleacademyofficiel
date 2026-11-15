@@ -11,7 +11,7 @@ import { MissionAnimation } from '@/components/MissionAnimation';
 import { TrainingIllustratedCards, type TrainingIllustratedCard } from '@/components/TrainingIllustratedCards';
 import { PremiumFAQSection } from '@/components/ui';
 
-const applicationUrl = 'https://inscriptionsbts.onrender.com/';
+const applicationUrl = 'https://admissions.integraleconnect.com/';
 const aurelieEmail = 'aurelie@integraleacademy.com';
 const aurelieDirectHref = 'tel:+33487830615';
 const aurelieMobileHref = 'tel:+33769390457';
@@ -169,7 +169,7 @@ function HeroRoadmap() {
   ];
   return (
     <aside className={`${btsStyles.roadmap} relative rounded-[2rem] border border-white/60 bg-[#FFFDF8] p-5 text-academy-ink shadow-[0_34px_100px_rgba(0,0,0,.34)] sm:p-6`}>
-      <span className="absolute -right-2 -top-3 rounded-full bg-bts-700 px-3 py-2 text-[.58rem] font-black uppercase tracking-[.14em] text-white shadow-soft">Admissions 2026</span>
+      <span className="absolute -right-2 -top-3 rounded-full bg-bts-700 px-3 py-2 text-[.58rem] font-black uppercase tracking-[.14em] text-white shadow-soft">Admissions 2027</span>
       <div className="flex items-start justify-between gap-3"><div><Eyebrow>Votre trajectoire</Eyebrow><h2 className="mt-2 text-2xl font-black">Objectif : BTS CG</h2></div><span className="rounded-full bg-bts-50 px-3 py-1.5 text-[.6rem] font-black uppercase tracking-[.12em] text-bts-800 ring-1 ring-bts-200">Dossier en ligne</span></div>
       <div className={`${btsStyles.roadmapSteps} mt-5 rounded-[1.5rem] border border-[#E4D9C8] bg-[#F4EFE6] p-4`}>
         {steps.map(([number, title, detail, status], index) => (
@@ -211,9 +211,11 @@ export function BtsCgReferencePage() {
           <div className={`${btsStyles.heroLayout} grid items-center gap-9 lg:grid-cols-[1.08fr_.92fr] lg:gap-12`}>
             <div>
               <span className="inline-flex items-center gap-2 rounded-full border border-bts-300/35 bg-white/8 px-4 py-2 text-[.66rem] font-black uppercase tracking-[.18em] text-bts-100 backdrop-blur"><span className="h-2.5 w-2.5 rounded-full bg-bts-200 shadow-[0_0_16px_rgb(var(--bts-300)/.7)]" />Diplôme d’État · Bac+2 · Niveau 5 · RNCP 39159</span>
-              <h1 className="mt-5 max-w-4xl text-4xl font-black tracking-[-.06em] sm:text-5xl lg:text-6xl xl:text-7xl">Transformez les chiffres en <span className="text-bts-200">décisions.</span></h1>
+              <h1 className="mt-5 max-w-4xl text-4xl font-black tracking-[-.06em] sm:text-5xl lg:text-6xl xl:text-7xl">
+                BTS CG <span className="text-bts-200">Comptabilité et gestion</span>
+              </h1>
               <p className="mt-5 max-w-2xl text-lg font-medium leading-8 text-white/70 sm:text-xl">Avec le BTS Comptabilité et Gestion, apprenez à comprendre la santé d’une entreprise, sécuriser ses obligations et guider ses choix.</p>
-              <div className="mt-6 flex flex-col gap-3 sm:flex-row"><CTA href={applicationUrl} variant="gold" external>Je candidate pour 2026 →</CTA><CTA href={aurelieDirectHref} variant="outline">Parler à Aurélie</CTA></div>
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row"><CTA href={applicationUrl} variant="gold" external>Admissions 2027 →</CTA><CTA href={aurelieDirectHref} variant="outline">Parler à Aurélie</CTA></div>
               <div className="mt-6 flex flex-wrap gap-2 text-xs font-bold text-white/75"><span className="rounded-full border border-white/15 bg-white/7 px-3 py-2">✓ Sans frais de scolarité pour l’apprenti*</span><span className="rounded-full border border-white/15 bg-white/7 px-3 py-2">✓ Présentiel ou visioconférence</span><span className="rounded-full border border-white/15 bg-white/7 px-3 py-2">✓ Comptabilité, fiscalité et pilotage</span></div>
             </div>
             <div className={btsStyles.heroArtwork}><ManualArtwork illustration={btsHeroArtwork.cg} priority /></div>
@@ -270,7 +272,7 @@ export function BtsCgReferencePage() {
 
       <section id="admission" className="relative isolate overflow-hidden bg-[#0A1725] px-4 py-14 text-white sm:py-16 lg:py-20">
         <div className={`absolute inset-0 -z-10 ${btsStyles.admissionGlow}`} />
-        <div className="page-container"><Eyebrow light>06 — Admissions 2026</Eyebrow><div className="mt-3 flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-end"><div><h2 className="max-w-4xl text-3xl font-black tracking-[-.05em] sm:text-4xl lg:text-5xl">Votre candidature en cinq étapes. <span className="text-bts-200">Simple, claire, accompagnée.</span></h2><p className="mt-5 max-w-3xl text-base font-medium leading-8 text-white/62">Vous ne savez pas encore comment trouver une entreprise ? C’est normal. Commencez par votre candidature : notre équipe vous guide ensuite.</p></div><CTA href={applicationUrl} variant="gold" external>Je candidate pour 2026 →</CTA></div>
+        <div className="page-container"><Eyebrow light>06 — Admissions 2027</Eyebrow><div className="mt-3 flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-end"><div><h2 className="max-w-4xl text-3xl font-black tracking-[-.05em] sm:text-4xl lg:text-5xl">Votre candidature en cinq étapes. <span className="text-bts-200">Simple, claire, accompagnée.</span></h2><p className="mt-5 max-w-3xl text-base font-medium leading-8 text-white/62">Vous ne savez pas encore comment trouver une entreprise ? C’est normal. Commencez par votre candidature : notre équipe vous guide ensuite.</p></div><CTA href={applicationUrl} variant="gold" external>Admissions 2027 →</CTA></div>
           <div className="mt-9 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">{admissionSteps.map(([number, title, text]) => <article key={number} className="rounded-[1.6rem] border border-white/10 bg-white/7 p-5"><span className="grid h-11 w-11 place-items-center rounded-full bg-bts-200 text-xs font-black text-bts-950">{number}</span><h3 className="mt-7 text-lg font-black">{title}</h3><p className="mt-3 text-sm leading-6 text-white/50">{text}</p></article>)}</div>
           <div className="mt-6 grid gap-5 lg:grid-cols-[1.15fr_.85fr]"><article className="rounded-[2rem] bg-[#FFFDF8] p-6 text-academy-ink shadow-card"><Eyebrow>Après le BTS</Eyebrow><h3 className="mt-3 text-3xl font-black">Des débouchés concrets et des poursuites d’études</h3><div className="mt-5 flex flex-wrap gap-2">{['Assistant comptable', 'Collaborateur en cabinet', 'Comptable clients ou fournisseurs', 'Assistant contrôle de gestion', 'DCG', 'Licence professionnelle'].map((job) => <span key={job} className="rounded-full border border-academy-line bg-academy-bg px-4 py-2 text-xs font-black">{job}</span>)}</div></article><article className="rounded-[2rem] bg-gradient-to-br from-bts-300 to-bts-200 p-6 text-bts-950 shadow-gold"><Eyebrow>Votre avenir commence ici</Eyebrow><h3 className="mt-3 text-3xl font-black">Prêt à faire parler les chiffres ?</h3><p className="mt-4 text-sm font-semibold leading-6 opacity-70">Déposez votre candidature et échangez avec Aurélie avant toute décision définitive.</p><CTA href={aurelieDirectHref} variant="dark" className="mt-5">Parler à Aurélie →</CTA></article></div>
         </div>
