@@ -290,3 +290,11 @@
   .courseNavIdentity { padding-right: 0; }
   .courseNavKicker { display: none; }
 }
+
+/* A short landscape viewport needs the available height for the form and its buttons. */
+@media (max-width: 1023px) and (max-height: 480px) {
+  .courseNav {
+    position: relative;
+    top: auto;
+  }
+}

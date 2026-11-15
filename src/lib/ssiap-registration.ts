@@ -4,9 +4,22 @@ import { formatSessionPeriod } from '@/lib/public-sessions';
 export type SsiapFormula = 'ssiap-1' | 'ssiap-1-sst';
 
 export function ssiapSessionFormula(title?: string | null): SsiapFormula | undefined {
-  if (/\bavec SST\b/i.test(title || '')) return 'ssiap-1-sst';
+  if (/(?:\bavec\s+|\+\s*)SST\b/i.test(title || '')) return 'ssiap-1-sst';
   if (/\bsans SST\b/i.test(title || '')) return 'ssiap-1';
   return undefined;
+}
+
+export function importedSessionPrice(
+  slug: string, title: string, startDate: Date, priceCents: number | null, priceLabel: string,
+) {
+  const label = priceLabel.replace(/[€\s]/g, '').replace(/TTC$/i, '');
+  const commonPrice = !label || /^(?:980|1230)(?:[,.]00)?$/.test(label);
+  if (slug === 'ssiap-1' && startDate.getUTCFullYear() === 2027 &&
+      ssiapSessionFormula(title) === 'ssiap-1-sst' && commonPrice &&
+      (priceCents === null || priceCents === 98000 || priceCents === 123000)) {
+    return { priceCents: 123000, priceLabel: '1 230 € TTC' };
+  }
+  return { priceCents, priceLabel };
 }
 
 export function ssiapRegistrationHref(session?: TrainingDatesPricingSession | null, formula?: SsiapFormula) {

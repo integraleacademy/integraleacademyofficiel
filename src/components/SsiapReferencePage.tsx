@@ -16,8 +16,7 @@ import Image from 'next/image';
 import { SsiapBooking } from './SsiapBooking';
 import { SsiapManualPreview, SsiapPracticeQuestion } from './SsiapDiscovery';
 import { SsiapTestimonials } from './SsiapTestimonials';
-import { ssiapRegistrationHref } from '@/lib/ssiap-registration';
-import { parisDateKey } from '@/lib/public-sessions';
+import { ssiapRegistrationHref, ssiapSessionFormula } from '@/lib/ssiap-registration';
 import styles from './SsiapReferencePage.module.css';
 import mos from './SsiapMos.module.css';
 import { TrainingMotionGallery } from '@/components/TrainingMotionGallery';
@@ -39,14 +38,6 @@ const navigationItems = [
   { label: 'Débouchés', href: '#debouches' },
   { label: 'FAQ', href: '#faq-ssiap' },
 ] as const;
-
-const fallbackSessions = [
-  { id: 'ssiap-1-octobre-2026', title: 'SSIAP 1 — Octobre 2026', startDate: '2026-10-12T00:00:00.000Z', endDate: '2026-10-27T00:00:00.000Z', examDate: '2026-10-28T00:00:00.000Z', status: 'OPEN', seatsTotal: 12, seatsLeft: 8, location: 'Puget-sur-Argens', priceLabel: '980 €' },
-  { id: 'ssiap-1-fevrier-2027', title: 'SSIAP 1 — Février 2027', startDate: '2027-02-15T00:00:00.000Z', endDate: '2027-02-26T00:00:00.000Z', examDate: '2027-03-01T00:00:00.000Z', status: 'OPEN', seatsTotal: 12, seatsLeft: null, location: 'Puget-sur-Argens', priceLabel: '980 €' },
-  { id: 'ssiap-1-mai-2027', title: 'SSIAP 1 — Mai 2027', startDate: '2027-05-24T00:00:00.000Z', endDate: '2027-06-04T00:00:00.000Z', examDate: '2027-06-07T00:00:00.000Z', status: 'OPEN', seatsTotal: 12, seatsLeft: null, location: 'Puget-sur-Argens', priceLabel: '980 €' },
-  { id: 'ssiap-1-septembre-2027', title: 'SSIAP 1 — Septembre 2027', startDate: '2027-09-13T00:00:00.000Z', endDate: '2027-09-24T00:00:00.000Z', examDate: '2027-09-27T00:00:00.000Z', status: 'OPEN', seatsTotal: 12, seatsLeft: null, location: 'Puget-sur-Argens', priceLabel: '980 €' },
-  { id: 'ssiap-1-novembre-2027', title: 'SSIAP 1 — Novembre 2027', startDate: '2027-11-08T00:00:00.000Z', endDate: '2027-11-22T00:00:00.000Z', examDate: '2027-11-23T00:00:00.000Z', status: 'OPEN', seatsTotal: 12, seatsLeft: null, location: 'Puget-sur-Argens', priceLabel: '980 €' },
-];
 
 const missions = [
   ['01', 'Prévenir les risques', 'Repérer les situations dangereuses et veiller au respect des règles de sécurité incendie.'],
@@ -103,7 +94,6 @@ const faq = [
   { q: 'Peut-on évoluer vers le SSIAP 2 ?', a: 'Oui, après avoir acquis l’expérience professionnelle réglementaire requise pour accéder à la formation de chef d’équipe SSIAP 2.' },
 ];
 
-function sessionHref(session: any) { return ssiapRegistrationHref(session); }
 
 function CTA({ href, children, variant = 'red', className = '' }: { href: string; children: ReactNode; variant?: 'dark' | 'red' | 'light' | 'outline'; className?: string }) {
   const styles = {
@@ -133,8 +123,8 @@ function Section({ id, eyebrow, title, intro, children, tone = 'cream', enhanced
 }
 
 export function SsiapReferencePage({ sessions }: { sessions: any[] }) {
-  const visibleSessions = sessions.length ? sessions : fallbackSessions.filter(session => session.startDate.slice(0, 10) >= parisDateKey()).map(session => ({ ...session, showSeatsLeft: false }));
-  const next = visibleSessions[0];
+  const next = sessions[0];
+  const includesSst = ssiapSessionFormula(next?.title) === 'ssiap-1-sst';
   const faqSchema = faq.map(item => ({ '@type': 'Question', name: item.q, acceptedAnswer: { '@type': 'Answer', text: item.a } }));
 
   return <div className={`${styles.page} ${mos.page} relative overflow-x-clip`} data-ssiap-experience="mos-v4">
@@ -154,13 +144,13 @@ export function SsiapReferencePage({ sessions }: { sessions: any[] }) {
       primaryAction={{ href: '#dates-tarifs', label: 'Voir les prochaines dates →' }}
     >
       <TrainingHeroSessionCard
-        session={next} theme="red" defaultPrice="980 €"
-        priceNote="SSIAP 1 seul · +250 € avec SST"
-        assistantKey="ssiap-1" registrationHref={sessionHref(next)}
+        session={next} theme="red" defaultPrice={includesSst ? '1 230 € TTC' : '980 € TTC'}
+        priceNote={includesSst ? 'SSIAP 1 + SST · secourisme inclus' : 'SSIAP 1 seul · formule avec SST à 1 230 € TTC'}
+        assistantKey="ssiap-1" registrationHref={ssiapRegistrationHref(next)}
         approval="Agrément SSIAP n°8323"
         facts={[
           { label: 'Certification', value: 'Diplôme SSIAP 1', details: ['Agent de sécurité incendie'] },
-          { label: 'Durée et format', value: '67 heures', details: ['Hors examen et déplacements', '100 % présentiel'] },
+          { label: 'Durée et format', value: includesSst ? '67 h de SSIAP 1 + SST' : '67 heures', details: ['Hors examen et déplacements', '100 % présentiel'] },
           { label: 'Effectif', value: '12 stagiaires maximum', details: ['Apprentissage sur le terrain'] },
         ]}
       />
@@ -221,7 +211,7 @@ export function SsiapReferencePage({ sessions }: { sessions: any[] }) {
       <div className="mt-8 flex flex-wrap items-center justify-between gap-5 rounded-[1.7rem] border border-white/10 bg-white/6 p-5"><div><p className="font-black">Une préparation exigeante, un effectif maîtrisé.</p><p className="mt-1 text-sm text-white/55">12 stagiaires maximum · diplôme SSIAP 1 · <a href="https://www.francecompetences.fr/recherche/rs/7845/" target="_blank" rel="noopener noreferrer">RS7845 pour les parcours 2027</a></p></div><CTA href={contactHref('conditions examen')} variant="outline">Poser une question</CTA></div>
     </Section>
 
-    <SsiapBooking sessions={visibleSessions.map(session => ({
+    <SsiapBooking sessions={sessions.map(session => ({
       id: session.id, title: session.title, startDate: session.startDate, endDate: session.endDate,
       examDate: session.examDate, status: session.status, location: session.location,
       seatsTotal: session.seatsTotal, seatsLeft: session.seatsLeft, showSeatsLeft: session.showSeatsLeft,
