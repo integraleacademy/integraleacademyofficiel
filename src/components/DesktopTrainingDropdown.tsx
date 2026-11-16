@@ -48,12 +48,6 @@ export function DesktopTrainingDropdown({ label }: { label: string }) {
   return (
     <div
       ref={root}
-      onFocus={event => {
-        if (event.target !== trigger.current) {
-          clearCloseTimer();
-          setOpenMode('expanded');
-        }
-      }}
       onPointerEnter={event => {
         if (event.pointerType !== 'mouse') return;
         clearCloseTimer();
@@ -82,6 +76,10 @@ export function DesktopTrainingDropdown({ label }: { label: string }) {
       <div
         id={panelId}
         hidden={!openMode}
+        onFocus={() => {
+          clearCloseTimer();
+          setOpenMode('expanded');
+        }}
         className="absolute inset-x-0 top-full z-[70] mx-auto w-[calc(100%_-_2rem)] max-w-[74rem] pt-2"
       >
         <div className="grid max-h-[calc(100dvh-var(--site-header-height)-1rem)] grid-cols-[.9fr_1fr_1fr] items-start gap-6 overflow-y-auto overscroll-contain rounded-[1.75rem] border border-academy-line bg-academy-surface p-5 text-academy-ink shadow-card">
