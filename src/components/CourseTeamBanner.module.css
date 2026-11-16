@@ -15,6 +15,7 @@
 }
 .intro h2 {
   margin: 0;
+  scroll-margin-top: calc(var(--site-header-height) + var(--site-section-nav-height) + 1.5rem);
   color: #21261f;
   font-size: clamp(1.8rem, 3.2vw, 3.1rem);
   font-weight: 800;
@@ -109,4 +110,9 @@
   .inner { width: calc(100% - 1.25rem); }
   .name { font-size: clamp(.7rem, 3vw, .86rem); }
   .role { font-size: clamp(.65rem, 2.7vw, .77rem); }
+}
+@media (max-width: 360px) {
+  .inner { width: calc(100% - .75rem); }
+  .people { grid-template-columns: .8fr .9fr repeat(3, 1.1fr); gap: 2px; }
+  .portrait { width: min(100%, 15vw); }
 }
