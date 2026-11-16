@@ -1,5 +1,9 @@
 export interface YouTubePlayer {
   mute(): void;
+  unMute(): void;
+  isMuted(): boolean;
+  getVolume(): number;
+  setVolume(volume: number): void;
   playVideo(): void;
   pauseVideo(): void;
   getPlayerState(): number;
@@ -12,7 +16,7 @@ type YouTubeApi = {
     events: {
       onReady: (event: PlayerEvent) => void;
       onStateChange: (event: PlayerEvent & { data: number }) => void;
-      onAutoplayBlocked: () => void;
+      onAutoplayBlocked: (event: PlayerEvent) => void;
       onError: () => void;
     };
   }) => YouTubePlayer;
