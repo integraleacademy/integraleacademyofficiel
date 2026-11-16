@@ -127,7 +127,11 @@ function LegacySection({
   );
 }
 
-export function SsiapCoursePage({ config, sessions = [] }: { config: SsiapCourseConfig; sessions?: TrainingDatesPricingSession[] }) {
+export function SsiapCoursePage({ config, sessions = [], datesSection }: {
+  config: SsiapCourseConfig;
+  sessions?: TrainingDatesPricingSession[];
+  datesSection?: ReactNode;
+}) {
   const heroKey = config.slug === 'ssiap-2' ? 'ssiap-2' : config.slug === 'ssiap-3' ? 'ssiap-3' : null;
   const Section = heroKey ? TrainingReferenceSection : LegacySection;
   const visuals = heroKey ? ssiapCourseVisuals[heroKey] : null;
@@ -218,7 +222,7 @@ export function SsiapCoursePage({ config, sessions = [] }: { config: SsiapCourse
               <h1 className="mt-5 max-w-4xl text-4xl font-black tracking-[-.055em] sm:text-5xl lg:text-6xl xl:text-7xl">{config.title}</h1>
               <p className="mt-5 max-w-2xl text-lg font-medium leading-8 text-white/72 sm:text-xl">{config.intro}</p>
               <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-                <CTA href={contactHref(config, 'prochaines dates')} variant="red">Recevoir les prochaines dates →</CTA>
+                <CTA href={datesSection ? '#dates-tarifs' : contactHref(config, 'prochaines dates')} variant="red">{datesSection ? 'Voir les prochaines dates →' : 'Recevoir les prochaines dates →'}</CTA>
                 <CTA href="tel:0422470768" variant="outline">Parler à un conseiller</CTA>
               </div>
             </div>
@@ -356,7 +360,7 @@ export function SsiapCoursePage({ config, sessions = [] }: { config: SsiapCourse
         </div>
       </Section>
 
-      {heroKey && sessions.length > 0 ? <TrainingDatesPricingSection
+      {datesSection || (heroKey && sessions.length > 0 ? <TrainingDatesPricingSection
         sessions={sessions}
         theme="red"
         seatCapacity={heroKey === 'ssiap-3' ? 10 : 12}
@@ -380,7 +384,7 @@ export function SsiapCoursePage({ config, sessions = [] }: { config: SsiapCourse
           </div>
         </div>
       </section>
-      )}
+      ))}
 
       <Section eyebrow="Après la formation" title="Faites reconnaître et évoluer vos compétences" intro="Votre parcours vous prépare aux responsabilités correspondant à votre niveau SSIAP.">
         <div className="grid gap-5 lg:grid-cols-[1.05fr_.95fr]">
@@ -427,7 +431,7 @@ export function SsiapCoursePage({ config, sessions = [] }: { config: SsiapCourse
       </section>
 
       <div data-fixed-actions="course" className="fixed inset-x-0 bottom-0 z-40 border-t border-academy-line bg-[#FFFDF8]/96 p-3 pb-[calc(.75rem+env(safe-area-inset-bottom))] shadow-[0_-12px_40px_rgba(0,0,0,.12)] backdrop-blur lg:hidden">
-        <div className="mx-auto flex max-w-lg gap-2"><CTA href="tel:0422470768" variant="light" className="min-w-0 flex-1 px-3">Appeler</CTA><CTA href={contactHref(config, 'inscription')} variant="red" className="min-w-0 flex-[1.4] px-3">Recevoir les dates</CTA></div>
+        <div className="mx-auto flex max-w-lg gap-2"><CTA href="tel:0422470768" variant="light" className="min-w-0 flex-1 px-3">Appeler</CTA><CTA href={datesSection ? '#dates-tarifs' : contactHref(config, 'inscription')} variant="red" className="min-w-0 flex-[1.4] px-3">{datesSection ? 'Voir les dates' : 'Recevoir les dates'}</CTA></div>
       </div>
       </>}
 
