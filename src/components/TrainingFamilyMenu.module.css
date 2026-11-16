@@ -83,3 +83,15 @@
 .mobileList .course > span { grid-column: 1; }
 .mobileList .course .arrow { grid-column: 2; grid-row: 1; }
 @media (prefers-reduced-motion: reduce) { .family { transition: none; } }
+
+/* Gentle interaction refinements; preserve menu structure, colours and typography. */
+.primaryFamily, .announced li a { transition: background-color .2s ease, color .2s ease; }
+.overview .arrow, .mobileFamilies .arrow { transition: transform .2s ease; }
+.primaryHeading:hover .arrow, .primaryHeading:focus-visible .arrow,
+.announced li a:hover .arrow, .announced li a:focus-visible .arrow,
+.mobileFamilies .course:hover .arrow { transform: translateX(3px); }
+.mobileFamilies details[open] > .family .arrow { transform: rotate(-90deg); }
+.overview a:focus-visible, .mobileFamilies a:focus-visible { outline: 2px solid rgb(var(--accent-strong)); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) {
+  .primaryFamily, .announced li a, .overview .arrow, .mobileFamilies .arrow { transition: none; }
+}

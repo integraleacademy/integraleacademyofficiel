@@ -3,9 +3,16 @@ import { INFORMATION_REQUEST_URL } from '@/lib/contact-request';
 import { courseBrochures } from '@/data/course-brochures';
 import styles from './CourseBrochure.module.css';
 
+const relatedCourses: Record<string, { href: string; label: string } | undefined> = {
+  aps: { href: '/formations-securite/a3p-apr', label: 'Découvrir la protection rapprochée (A3P)' },
+  'a3p-apr': { href: '/despvaeouinitial', label: 'Découvrir la direction d’entreprise de sécurité (DESP)' },
+  mos: { href: '/#bachelors', label: 'Explorer nos Bachelors en sécurité' },
+};
+
 export function CourseBrochureCard({ course }: { course: string }) {
   const brochure = courseBrochures[course];
   if (!brochure) return null;
+  const relatedCourse = relatedCourses[course];
 
   return (
     <section id="brochure" className={styles.section} aria-labelledby="brochure-title">
@@ -15,12 +22,14 @@ export function CourseBrochureCard({ course }: { course: string }) {
           <h2 id="brochure-title">La brochure <em>détaillée</em></h2>
           <p className={styles.course}>{brochure.title}</p>
           <p className={styles.details}>Dates, informations pratiques, programme et financement… Toutes les informations utiles pour préparer votre formation.</p>
-          <a href={INFORMATION_REQUEST_URL} target="_blank" rel="noopener noreferrer" className={styles.button}>
+          <a href={INFORMATION_REQUEST_URL} target="_blank" rel="noopener noreferrer" className={styles.button} data-academy-action="brochure">
             <svg aria-hidden="true" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
               <path d="M12 3v12m-5-5 5 5 5-5M4 16v4h16v-4" />
             </svg>
-            Télécharger la brochure<span className="sr-only"> (nouvel onglet)</span>
+            Recevoir la brochure<span className="sr-only"> (formulaire dans un nouvel onglet)</span>
           </a>
+          <p className={styles.formNote}>Le formulaire de demande d’informations s’ouvre dans un nouvel onglet.</p>
+          {relatedCourse && <p className={styles.related}>Pour aller plus loin : <a href={relatedCourse.href}>{relatedCourse.label} <span aria-hidden="true">→</span></a></p>}
         </div>
         <div className={styles.art} aria-hidden="true">
           <div className={styles.book}>

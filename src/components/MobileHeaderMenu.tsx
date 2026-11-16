@@ -25,6 +25,7 @@ export function MobileHeaderMenu({ appointmentFormUrl }: { appointmentFormUrl: s
     <button
       type="button"
       aria-expanded={isOpen}
+      aria-label={isOpen ? 'Fermer le menu de navigation' : 'Ouvrir le menu de navigation'}
       ref={toggle}
       aria-controls={isOpen ? "mobile-navigation" : undefined}
       onClick={() => setIsOpen(current => !current)}

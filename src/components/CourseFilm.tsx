@@ -209,7 +209,7 @@ export function CourseFilm({ film, title, titleAccent, description }: Props) {
 
   const playIcon = <svg aria-hidden="true" width="18" height="18" viewBox="0 0 20 20" fill="currentColor"><path d="M5 3.5v13L16 10z" /></svg>;
   const soundButton = sound !== null && (
-    <button type="button" className={styles.soundButton} onClick={() => changeSound.current?.(sound !== 'on')}>
+    <button type="button" className={styles.soundButton} aria-pressed={sound === 'on'} onClick={() => changeSound.current?.(sound !== 'on')}>
       <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <path d="M11 5 6 9H3v6h3l5 4z" />
         {sound === 'on' ? <path d="M15 9a4 4 0 0 1 0 6m3-9a8 8 0 0 1 0 12" /> : <path d="m16 9 6 6m0-6-6 6" />}
@@ -217,6 +217,7 @@ export function CourseFilm({ film, title, titleAccent, description }: Props) {
       {sound === 'on' ? 'Couper le son' : 'Activer le son'}
     </button>
   );
+  const soundHint = sound === 'off' && <span className={styles.soundHint}>Vidéo sans son ? Vous pouvez l’activer ici.</span>;
   const playerStage = (
     <div ref={stage} className={portrait ? `${styles.stage} ${reportage.video}` : styles.stage}>
       <div ref={mount} hidden={display !== 'player'} className={styles.player} />
@@ -238,6 +239,7 @@ export function CourseFilm({ film, title, titleAccent, description }: Props) {
           <p className={reportage.description}>{description}</p>
           <div className={`${styles.actions} ${reportage.actions}`}>
             {soundButton}
+            {soundHint}
             <a className={reportage.watch} href={watchUrl} target="_blank" rel="noopener noreferrer">
               <span className={reportage.play}>{playIcon}</span>
               Voir sur YouTube <span className={reportage.duration}>{video.duration}</span>
@@ -263,6 +265,7 @@ export function CourseFilm({ film, title, titleAccent, description }: Props) {
             <p>{description}</p>
             <div className={styles.actions}>
               {soundButton}
+            {soundHint}
               <a href={watchUrl} target="_blank" rel="noopener noreferrer">Voir sur YouTube <span aria-hidden="true">↗︎</span></a>
             </div>
           </div>

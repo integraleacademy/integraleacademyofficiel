@@ -218,7 +218,7 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
           </button>)}
         </div>
         <div className="mt-4 flex flex-col gap-3 text-[10px] font-semibold text-white/50 sm:flex-row sm:items-center sm:justify-between" data-home-dock-footer>
-          <span>L’assistant conserve votre parcours : formation, situation, financement, dates et prise de rendez-vous téléphonique.</span>
+          <span>Choisissez une formation pour consulter les informations, les dates et les possibilités de rendez-vous téléphonique.</span>
           <button type="button" aria-haspopup="dialog" aria-expanded={isExpanded && selectedKey === null} aria-controls={dialogId} onClick={(event) => { triggerRef.current = event.currentTarget; setSelectedKey(null); setStep('formations'); setIsExpanded(true); }} className="shrink-0 font-black text-white underline decoration-academy-gold/50 underline-offset-4 transition hover:text-academy-gold">Je ne sais pas encore →</button>
         </div>
       </div>
@@ -226,7 +226,7 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
   </aside>;
 
   const assistantTitle = step === 'formations' ? 'Quelle formation vous intéresse ?'
-    : step === 2 ? 'Comment pouvons-nous vous aider ?'
+    : step === 2 ? 'Que souhaitez-vous faire ?'
     : step === 3 ? 'Préparons votre inscription'
     : step === 4 ? 'Trouvons le bon parcours'
     : step === 'loading' ? 'Votre projet de formation' : 'Les informations essentielles';
@@ -244,7 +244,7 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
         <div className={styles.heading}>
           {selectedFormation && <p className={styles.course}><span aria-hidden="true" />{selectedFormation.label}</p>}
           <h2 id={`${dialogId}-title`}>{assistantTitle}</h2>
-          {(step === 'formations' || step === 2) && <p className={styles.intro}>Les bonnes informations pour avancer dans votre projet.</p>}
+          {(step === 'formations' || step === 2) && <p className={styles.intro}>{step === 'formations' ? 'Choisissez votre métier ou votre diplôme pour commencer.' : 'Consultez votre formation ou préparez un rendez-vous téléphonique.'}</p>}
         </div>
 
         {step === 'formations' && <div className={styles.formationList}>
@@ -263,9 +263,9 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
         {step === 2 && selectedFormation && <div className={styles.choices}>
           <button type="button" onClick={() => startFormationInformation()} className={styles.choice}>
             <span className={styles.optionIcon}><AssistantIcon name="book" /></span>
-            <span className={styles.choiceTitle}>Me renseigner</span>
-            <span className={styles.choiceDescription}>Tarifs, prochaines dates, <br />durée et financements.</span>
-            <span className={styles.choiceAction}>Voir les informations <AssistantIcon name="arrow" /></span>
+            <span className={styles.choiceTitle}>Voir dates et tarifs</span>
+            <span className={styles.choiceDescription}>Durée, financement et <br />prochaines sessions.</span>
+            <span className={styles.choiceAction}>Consulter ma formation <AssistantIcon name="arrow" /></span>
           </button>
           <button type="button" onClick={() => { setIsExpanded(true); setStep(3); }} className={`${styles.choice} ${styles.enroll}`}>
             <span className={styles.optionIcon}><AssistantIcon name="calendar" /></span>

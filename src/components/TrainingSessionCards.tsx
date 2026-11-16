@@ -129,10 +129,10 @@ function ActionLink({ action, variant, className = '' }: { action: Action; varia
   const classes = `inline-flex min-h-12 items-center justify-center rounded-full px-5 py-3 text-center text-sm font-black transition hover:-translate-y-0.5 focus:outline-none focus:ring-4 ${actionStyles[variant]} ${className}`;
 
   if (action.external) {
-    return <a href={action.href} target="_blank" rel="noopener noreferrer" className={classes}>{action.label}</a>;
+    return <a href={action.href} target="_blank" rel="noopener noreferrer" className={classes} data-academy-action="session">{action.label}</a>;
   }
 
-  return <Link href={action.href} className={classes}>{action.label}</Link>;
+  return <Link href={action.href} className={classes} data-academy-action="session">{action.label}</Link>;
 }
 
 function SessionCard({
@@ -179,7 +179,7 @@ function SessionCard({
   ];
   const [mainPeriod, ...detailPeriods] = deliveryPeriods;
 
-  if (compact) return <article className="rounded-[1.5rem] border border-academy-line bg-[#FFFDF8] p-6">
+  if (compact) return <article data-next-session={index === 0 ? "true" : undefined} aria-label={`${index === 0 ? "Prochaine session" : "Session suivante"} : ${mainPeriod.value}`} className="rounded-[1.5rem] border border-academy-line bg-[#FFFDF8] p-6">
     <div className="flex flex-wrap items-center justify-between gap-3"><p className={`text-[.65rem] font-black uppercase tracking-[.14em] ${sessionTheme.detailIcon}`}>{index === 0 ? 'Prochaine session' : 'Session suivante'}</p><span className={`rounded-full border px-3 py-1.5 text-xs font-bold ${seatAvailability.badgeClassName}`}>{seatAvailability.label}</span></div>
     {showSessionTitle && sessionTitle ? <h3 className="mt-4 text-lg font-bold text-academy-ink">{sessionTitle}</h3> : null}
     <p className="mt-4 text-xl font-black leading-snug tracking-tight text-academy-ink">{mainPeriod.value}</p>
@@ -189,9 +189,9 @@ function SessionCard({
     <div className="mt-5 flex flex-wrap items-center justify-between gap-4">{showSessionPrice && <strong className="text-2xl">{formatTrainingPrice(session, defaultPrice)}</strong>}<ActionLink action={{ href: session.registrationHref, label: actionLabel }} variant={full ? 'light' : theme} /></div>
   </article>;
 
-  return <article className={`flex h-full flex-col rounded-[1.8rem] border p-5 shadow-soft ${index === 0 ? sessionTheme.featuredCard : 'border-academy-line bg-[#FFFDF8]'}`}>
+  return <article data-next-session={index === 0 ? "true" : undefined} aria-label={`${index === 0 ? "Prochaine session" : "Session suivante"} : ${mainPeriod.value}`} className={`flex h-full flex-col rounded-[1.8rem] border p-5 shadow-soft ${index === 0 ? sessionTheme.featuredCard : 'border-academy-line bg-[#FFFDF8]'}`}>
     <div className="flex flex-wrap items-center justify-between gap-3">
-      <span className={`rounded-full border px-3 py-1.5 text-[.64rem] font-black uppercase tracking-[.15em] ${sessionTheme.badge}`}>{comingSoon ? 'Session prévisionnelle' : index === 0 ? 'Prochaine session' : 'Session ouverte'}</span>
+      <span className={`rounded-full border px-3 py-1.5 text-[.64rem] font-black uppercase tracking-[.15em] ${sessionTheme.badge}`}>{comingSoon ? 'Session prévisionnelle' : index === 0 ? 'Prochaine session' : 'Session suivante'}</span>
       <span className={`rounded-full border px-3 py-1.5 text-xs font-black ${seatAvailability.badgeClassName}`}>{seatAvailability.label}</span>
     </div>
     {showSessionTitle && sessionTitle ? <h3 className="mt-5 text-xl font-black tracking-tight text-academy-ink">{sessionTitle}</h3> : null}
@@ -280,7 +280,7 @@ export function TrainingSessionCards({
       <div>
         <p className="text-[.64rem] font-black uppercase tracking-[.18em] text-orange-700">Centre de formation</p>
         <p className="mt-1 text-sm font-bold text-academy-muted" aria-live="polite">
-          {filteredSessions.length} {filteredSessions.length > 1 ? 'sessions disponibles' : 'session disponible'}
+          {filteredSessions.length} {filteredSessions.length > 1 ? 'sessions au planning' : 'session au planning'}
         </p>
       </div>
       <div className="flex w-fit max-w-full items-center overflow-x-auto rounded-full border border-academy-line bg-academy-bg p-1" role="group" aria-label="Filtrer les sessions par centre">

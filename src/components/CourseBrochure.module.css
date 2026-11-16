@@ -49,3 +49,17 @@
   .book { width: 95%; max-width: 7rem; margin-left: 0; }
   .button { gap: .42rem; margin-top: 1rem; padding: .72rem .95rem; font-size: .875rem; }
 }
+
+/* Keep the existing brochure banner and artwork; polish its interaction only. */
+.button { transition: background-color .2s ease, transform .2s ease, box-shadow .2s ease; }
+.button:hover { transform: translateY(-2px); box-shadow: 0 9px 22px #041f2b33; }
+.book { transition: transform .35s ease, box-shadow .35s ease; }
+@media (hover: hover) and (pointer: fine) {
+  .section:hover .book { transform: rotate(5deg) translateY(-3px); box-shadow: 2px 1px #d3cbb9, 4px 2px #fffcf2, 6px 3px #b0aa9c, 8px 5px #f8f3e6, 17px 19px 26px #1c393e50; }
+}
+.formNote { margin: .65rem 0 0; color: #e0e9e8; font-size: .8rem; line-height: 1.5; }
+.related { margin: 1.05rem 0 0; color: #e0e9e8; font-size: .82rem; line-height: 1.55; }
+.related a { display: inline-block; color: #f4d59b; font-weight: 750; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .22em; }
+.related a:hover { color: #fff; }
+.related a:focus-visible { outline: 2px solid white; outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { .button, .book { transition: none; } .section:hover .book { transform: rotate(7deg); } }

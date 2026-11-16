@@ -165,3 +165,9 @@ button.artworkLink { width: 100%; }
 .previewBody ul { margin: 0; padding-left: 1.2rem; list-style: disc; }
 .previewBody li { margin-top: .45rem; padding-left: .15rem; line-height: 1.5; color: rgb(var(--text-muted)); }
 .previewBody li::marker { color: rgb(var(--accent-strong)); }
+
+/* Contextual programme information remains understated inside existing cards. */
+.certificationNote { max-width: 420px; margin: .65rem 0 0; color: rgb(var(--text-muted)); font-size: .76rem; font-weight: 600; line-height: 1.5; }
+.previewCertification { margin: -.45rem 0 1.25rem; padding-left: .8rem; border-left: 2px solid rgb(var(--accent)); color: rgb(var(--text-muted)); font-size: .8rem; line-height: 1.55; }
+.previewCareers { margin-top: 1.3rem; padding-top: 1.15rem; border-top: 1px solid rgb(var(--border)); }
+.previewCareers li { font-size: .9rem; }

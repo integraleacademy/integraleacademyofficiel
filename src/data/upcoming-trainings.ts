@@ -10,6 +10,8 @@ export type UpcomingCourse = {
   imageAlt: string;
   status: TrainingStatus;
   topics: string[];
+  jobs?: string[];
+  certificationStatus?: string;
 };
 
 export type UpcomingFamily = {
@@ -32,6 +34,8 @@ export const upcomingFamilies: UpcomingFamily[] = [
         imageAlt: 'Un analyste reconstitue la chronologie d’un incident au tableau avec une collègue munie d’une tablette.',
         status: 'PROCHAINEMENT',
         topics: ['Évaluer la fiabilité des sources qui signalent une menace.', 'Reconstituer la chronologie d’un incident à partir des traces disponibles.', 'Rédiger une synthèse pour les équipes chargées de protéger l’organisation.'],
+        jobs: ['Analyste en renseignement sur les cybermenaces', 'Chargé de veille en cybersécurité', 'Analyste d’investigation numérique'],
+        certificationStatus: 'Certification de niveau 6 : enregistrement en cours auprès de France compétences.',
       },
       {
         anchorId: 'bachelor-dms', shortTitle: 'DMS', title: 'Direction et management de la sécurité', tabLabel: 'DMS',
@@ -40,6 +44,7 @@ export const upcomingFamilies: UpcomingFamily[] = [
         imageAlt: 'Depuis la mezzanine d’un hall, une responsable et un agent de sécurité examinent le plan des accès.',
         status: 'SEPTEMBRE 2027',
         topics: ['Dimensionner une prestation de sécurité en fonction des risques du site.', 'Organiser les plannings, répartir les missions et transmettre les consignes.', 'Suivre la qualité de la prestation et en rendre compte au client.'],
+        jobs: ['Coordinateur de prestations de sécurité', 'Responsable de site de sécurité', 'Adjoint au responsable d’exploitation'],
       },
     ],
   },
@@ -53,6 +58,8 @@ export const upcomingFamilies: UpcomingFamily[] = [
         imageAlt: 'Une utilisatrice teste un prototype de tri des demandes sur une tablette pendant que la cheffe de produit prend des notes.',
         status: 'PROCHAINEMENT',
         topics: ['Choisir un usage de l’IA à partir des difficultés rencontrées par les utilisateurs.', 'Tester un prototype et arbitrer les fonctionnalités à développer.', 'Mesurer l’adoption du produit et décider des améliorations prioritaires.'],
+        jobs: ['Chef de produit en IA', 'Product owner de solutions IA', 'Chef de projet automatisation'],
+        certificationStatus: 'Certification de niveau 7 : enregistrement en cours auprès de France compétences.',
       },
       {
         anchorId: 'mastere-ingenierie-ia-generative', shortTitle: 'Expert en ingénierie', title: 'de l’IA générative', tabLabel: 'IA générative',
@@ -61,6 +68,8 @@ export const upcomingFamilies: UpcomingFamily[] = [
         imageAlt: 'Deux ingénieurs comparent le croquis d’une lampe aux variantes produites par un modèle génératif.',
         status: 'PROCHAINEMENT',
         topics: ['Choisir un modèle et préparer les données adaptées à l’usage visé.', 'Intégrer les composants et tester la fiabilité des résultats.', 'Déployer le système et suivre sa qualité en conditions réelles.'],
+        jobs: ['Ingénieur en IA générative', 'Développeur d’applications IA', 'Architecte de solutions IA'],
+        certificationStatus: 'Certification de niveau 7 : enregistrement en cours auprès de France compétences.',
       },
     ],
   },

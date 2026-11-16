@@ -316,7 +316,7 @@ export default function EntreprisesPage() {
             <span className={styles.ribbon}>Le dossier entreprises</span><h3 id="brochure-title">Toutes nos solutions,<br />à portée de main.</h3>
             <a href={INFORMATION_REQUEST_URL} target="_blank" rel="noopener noreferrer" className={styles.brochureCover}><img src="/images/entreprises/brochure-entreprises-2026-10.webp" alt="Couverture de la brochure entreprises Intégrale Academy : recruter, former et faire évoluer vos futurs professionnels de la sécurité privée." width="1050" height="799" loading="lazy" /><span className="sr-only"> (nouvel onglet)</span></a>
             <p>Les trois dispositifs, les programmes, les calendriers et les simulations pour préparer votre prochain recrutement.</p>
-            <a href={INFORMATION_REQUEST_URL} target="_blank" rel="noopener noreferrer" className={styles.primaryButton}>Télécharger la brochure <Icon name="document" /><span className="sr-only"> (nouvel onglet)</span></a><small>PDF · 20 pages · dernière version</small>
+            <a href={INFORMATION_REQUEST_URL} target="_blank" rel="noopener noreferrer" className={styles.primaryButton} data-academy-action="brochure">Recevoir la brochure <Icon name="document" /><span className="sr-only"> (nouvel onglet)</span></a><small>La demande s’effectue via notre formulaire, dans un nouvel onglet.</small>
           </aside>
       }
     />
