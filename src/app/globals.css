@@ -424,3 +424,17 @@
     position: static;
   }
 }
+
+/* A consistent, restrained hover response on the principal actions only. */
+:where(a, button)[data-academy-action] {
+  transition: transform .22s ease, box-shadow .22s ease, background-color .22s ease, border-color .22s ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  :where(a, button)[data-academy-action]:hover { transform: translateY(-2px); }
+  :where(a, button)[data-academy-action]:hover > svg:last-child { transform: translateX(3px); }
+}
+:where(a, button)[data-academy-action] > svg:last-child { transition: transform .22s ease; }
+@media (prefers-reduced-motion: reduce) {
+  :where(a, button)[data-academy-action], :where(a, button)[data-academy-action] > svg:last-child { transition: none; }
+  :where(a, button)[data-academy-action]:hover { transform: none; }
+}

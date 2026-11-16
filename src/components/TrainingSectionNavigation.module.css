@@ -298,3 +298,29 @@
     top: auto;
   }
 }
+
+/* Finishing touches shared by APS, A3P, DESP, SSIAP and BTS: same active-section cue. */
+.courseNavLink { position: relative; }
+.courseNavLink::after {
+  content: '';
+  position: absolute;
+  left: .7rem;
+  right: .7rem;
+  bottom: .25rem;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--nav-accent);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform .24s ease;
+}
+.courseNavLinkActive::after { transform: scaleX(1); }
+.courseNavLink:focus-visible, .courseNavCta:focus-visible {
+  outline: 2px solid var(--nav-accent);
+  outline-offset: 2px;
+}
+.courseNavCtaArrow { transition: transform .24s ease; }
+.courseNavCta:hover .courseNavCtaArrow { transform: translateX(2px); }
+@media (prefers-reduced-motion: reduce) {
+  .courseNavLink::after, .courseNavCtaArrow { transition: none; }
+}

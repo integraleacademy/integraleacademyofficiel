@@ -31,3 +31,10 @@
   .inner a { padding-block: 10px; }
 }
 @media (max-width: 800px) { .inner { width: 100%; padding-inline: var(--site-gutter); } }
+
+/* Keep the École/Contact section marker visually consistent with course menus. */
+.inner a:hover::after { transform: scaleX(.6); }
+.inner a[aria-current='location']:hover::after { transform: scaleX(1); }
+@media (prefers-reduced-motion: reduce) {
+  .inner a::after { transition: none; }
+}
