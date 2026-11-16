@@ -14,7 +14,7 @@ export function DirectorLocationChoices({ sessions, onChoose, selected, compact 
   return <div className={`${styles.directorLocations} ${compact ? styles.directorLocationsCompact : ''}`} role="group" aria-label="Choisir le lieu de formation DIRIGEANT">
     {directorPlanningLocations.map(location => {
       const count = sessions.filter(session => sessionMatchesLocation(session, location.key)).length;
-      return <button key={location.key} type="button" className={styles.directorLocation} aria-label={`Choisir ${location.label}`} aria-pressed={selected === location.key} onClick={() => onChoose(location.key)}>
+      return <button key={location.key} type={compact ? 'submit' : 'button'} name="lieu" value={location.key} className={styles.directorLocation} aria-label={`Choisir ${location.label}`} aria-pressed={selected === location.key} onClick={event => { event.preventDefault(); onChoose(location.key); }}>
         <span className={styles.directorLocationImage}>
           <Image src={destinationArtwork[location.key].src} alt={destinationArtwork[location.key].alt} width={1536} height={1024} sizes={compact ? '(max-width: 640px) 42vw, 320px' : '(max-width: 640px) 92vw, 650px'} />
           <span className={styles.directorLocationBadge}><span aria-hidden="true" />{count ? `${count} ${count > 1 ? 'sessions' : 'session'}` : 'Dates à venir'}</span>
