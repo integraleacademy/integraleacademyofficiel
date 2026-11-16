@@ -552,16 +552,24 @@ function MissingDates({
   );
 }
 
-export function PlanningClient({ initialSessions, initialLocation = 'all' }: { initialSessions: Session[]; initialLocation?: SessionLocationFilterKey }) {
+export function PlanningClient({ initialSessions, initialLocation = 'all', requestedFormation, requestedCourse, allDates = false }: {
+  initialSessions: Session[];
+  initialLocation?: SessionLocationFilterKey;
+  requestedFormation?: string;
+  requestedCourse?: string;
+  allDates?: boolean;
+}) {
   const sortedSessions = useMemo(
     () => [...initialSessions].sort((a, b) => +new Date(a.startDate) - +new Date(b.startDate)),
     [initialSessions],
   );
-  const [activeFormation, setActiveFormation] = useState<FormationFilterKey>('all');
-  const [activeSsiapCourse, setActiveSsiapCourse] = useState<SsiapPlanningCourse | null>(null);
+  const initialFormation = formationFilters.find(item => item.key === requestedFormation)?.key ?? 'all';
+  const initialCourse = initialFormation === 'ssiap' ? ssiapPlanningCourses.find(item => item.key === requestedCourse)?.key : null;
+  const [activeFormation, setActiveFormation] = useState<FormationFilterKey>(initialFormation);
+  const [activeSsiapCourse, setActiveSsiapCourse] = useState<SsiapPlanningCourse | null>(initialCourse ?? null);
   const [locationFilter, setLocationFilter] = useState<SessionLocationFilterKey>(initialLocation);
   const [view, setView] = useState<ViewMode>('list');
-  const [showAll, setShowAll] = useState(initialLocation !== 'all');
+  const [showAll, setShowAll] = useState(allDates || (initialFormation === 'all' && initialLocation !== 'all'));
   const [selectedSessionId, setSelectedSessionId] = useState<string | null>(null);
   const [detailSession, setDetailSession] = useState<Session | null>(null);
   const [registrationSession, setRegistrationSession] = useState<Session | null>(null);

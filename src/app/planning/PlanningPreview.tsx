@@ -63,39 +63,49 @@ export function PlanningPreview({ formations, initialFormation, initialSsiapCour
   const openDates = () => formation && onChoose(formation.key, courseKey, locationKey);
 
   return (
-    <div className={styles.preview}>
+    <div id="prochaine-session" className={styles.preview}>
       <div className={styles.previewHeading}>
         <div>
           <p className={styles.eyebrow}>{showSession ? 'Prochaine session' : 'La formation'}</p>
           <h2 ref={heading} tabIndex={-1}>{title}</h2>
         </div>
-        {formation && <button type="button" className={styles.previewBack} onClick={goBack}>
-          <span aria-hidden="true">←</span> {courseKey ? 'Changer de parcours' : locationKey ? 'Changer de centre' : 'Toutes les formations'}
-        </button>}
+        {formation && <form action="/planning#prochaine-session" method="get" onSubmit={event => { event.preventDefault(); goBack(); }}>
+          {(courseKey || locationKey) && <input type="hidden" name="formation" value={formation.key} />}
+          <button type="submit" className={styles.previewBack}>
+            <span aria-hidden="true">←</span> {courseKey ? 'Changer de parcours' : locationKey ? 'Changer de centre' : 'Toutes les formations'}
+          </button>
+        </form>}
       </div>
       <div className={styles.previewPanel}>
         {!formation ? (
-          <div className={styles.previewChoices}>
-            {formations.map(item => <button key={item.key} type="button" onClick={() => { setFormationKey(item.key); focusHeading(); }}>
+          <form className={styles.previewChoices} action="/planning#prochaine-session" method="get">
+            {formations.map(item => <button key={item.key} type="submit" name="formation" value={item.key} onClick={event => { event.preventDefault(); setFormationKey(item.key); focusHeading(); }}>
               <span><Image src={item.image} alt="" width={600} height={400} style={{ objectPosition: item.key === 'director' ? 'right center' : undefined }} sizes="(min-width: 1200px) 18vw, (min-width: 600px) 210px, 45vw" priority /></span>
               <strong>{item.label}{item.previewDetail && <small>{item.previewDetail}</small>}</strong>
               <i><Arrow diagonal /></i>
             </button>)}
-          </div>
+          </form>
         ) : needsLocation ? (
-          <DirectorLocationChoices compact sessions={formation.sessions} onChoose={key => { setLocationKey(key); focusHeading(); }} />
+          <form action="/planning#prochaine-session" method="get">
+            <input type="hidden" name="formation" value="director" />
+            <DirectorLocationChoices compact sessions={formation.sessions} onChoose={key => { setLocationKey(key); focusHeading(); }} />
+          </form>
         ) : needsCourse ? (
-          <SsiapCourseChoices compact sessions={formation.sessions} onChoose={key => { setCourseKey(key); focusHeading(); }} />
-        ) : nextSession ? (
-          <div className={styles.previewSummary}>
-            {renderSession(nextSession)}
-            <button type="button" className={styles.previewAction} onClick={openDates} aria-controls="sessions">Afficher toutes les dates <Arrow /></button>
-          </div>
+          <form action="/planning#prochaine-session" method="get">
+            <input type="hidden" name="formation" value="ssiap" />
+            <SsiapCourseChoices compact sessions={formation.sessions} onChoose={key => { setCourseKey(key); focusHeading(); }} />
+          </form>
         ) : (
-          <div className={styles.previewSummary}>
-            <p>Aucune date publiée pour ce parcours pour le moment.</p>
-            <button type="button" className={styles.previewAction} onClick={openDates}>Me renseigner sur ce parcours <Arrow /></button>
-          </div>
+          <form className={styles.previewSummary} action="/planning#sessions" method="get" onSubmit={event => { event.preventDefault(); openDates(); }}>
+            <input type="hidden" name="formation" value={formation.key} />
+            {courseKey && <input type="hidden" name="parcours" value={courseKey} />}
+            {locationKey && <input type="hidden" name="lieu" value={locationKey} />}
+            <input type="hidden" name="dates" value="toutes" />
+            {nextSession ? renderSession(nextSession) : <p>Aucune date publiée pour ce parcours pour le moment.</p>}
+            <button type="submit" className={styles.previewAction} aria-controls="sessions">
+              {nextSession ? 'Afficher toutes les dates' : 'Me renseigner sur ce parcours'} <Arrow />
+            </button>
+          </form>
         )}
       </div>
     </div>

@@ -22,7 +22,7 @@
 }
 
 .page { overflow-x: clip; }
-.page section[id] { scroll-margin-top: calc(var(--site-header-height) + 18px); }
+.page section[id], .preview { scroll-margin-top: calc(var(--site-header-height) + 18px); }
 .page button:focus-visible, .page select:focus-visible, .sessionDialog button:focus-visible, .sessionDialog a:focus-visible { outline: 3px solid #d9ac42; outline-offset: 4px; }
 .eyebrow { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .18em; color: #e6ba5b; }
 
@@ -129,6 +129,10 @@
 .ssiapCompactHeading strong { display: block; font-size: 16px; font-weight: 800; }
 .ssiapCompactHeading small { display: block; margin-top: 4px; color: var(--ssiap-muted); font-size: 10px; line-height: 1.4; }
 .ssiapToggle { margin-left: auto; padding-inline: 5px; color: #806124; font-size: 20px; }
+.ssiapCompactHeading { cursor: pointer; list-style: none; }
+.ssiapCompactHeading::-webkit-details-marker { display: none; }
+.ssiapToggle::before { content: '+'; }
+.ssiapLevel[open] > summary .ssiapToggle::before { content: '−'; }
 .ssiapChoicesCompact .ssiapCourse { min-height: 57px; padding: 10px 8px; }
 .ssiapChoicesCompact .ssiapCourse strong { font-size: 12px; }
 .ssiapChoicesCompact .ssiapCourse small { font-size: 10px; }
