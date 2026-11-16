@@ -61,9 +61,9 @@ export function AcademyFilm({ compact = false }: { compact?: boolean }) {
 }
 
 const steps = [
-  { title: 'Vous avez un projet', text: 'Un métier en tête, une envie de reconversion ou une poursuite d’études. Ensemble, nous trouvons le parcours qui vous correspond.', label: 'Le bon point de départ', caption: 'Une formation qui vous ressemble.' },
-  { title: 'On prépare la suite', text: 'Prérequis, dossier, solutions de financement et prochaines dates : notre équipe vous aide à préparer votre entrée en formation.', label: 'Une équipe à vos côtés', caption: 'Chaque étape devient plus simple.' },
-  { title: 'Vous passez à l’action', text: 'Cours, supports illustrés, exercices et mises en situation : vous développez les compétences concrètes de votre futur métier.', label: 'Place à la formation', caption: 'Apprendre. S’entraîner. Progresser.' },
+  { title: 'Vous avez un projet', text: 'Un métier en tête, une envie de reconversion ou une poursuite d’études. Ensemble, nous trouvons le parcours qui vous correspond.', label: 'Le bon point de départ', caption: 'Une formation qui vous ressemble' },
+  { title: 'On prépare la suite', text: 'Prérequis, dossier, solutions de financement et prochaines dates : notre équipe vous aide à préparer votre entrée en formation.', label: 'Une équipe à vos côtés', caption: 'Chaque étape devient plus simple' },
+  { title: 'Vous passez à l’action', text: 'Cours, supports illustrés, exercices et mises en situation : vous développez les compétences concrètes de votre futur métier.', label: 'Place à la formation', caption: 'Apprendre, s’entraîner et progresser' },
 ];
 
 export function AcademyJourney() {

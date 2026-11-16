@@ -39,7 +39,7 @@ const professionalJourneys = {
       copy('L’immersion terrain', 'Préparer, se coordonner et s’adapter', 'Reconnaissance de sites, déplacements et scénarios de protection : les exercices vous apprennent à agir en équipe. Briefings et débriefings permettent de comprendre vos choix et de progresser.', '#pedagogie', 'Découvrir les exercices'),
       copy('Votre prochain chapitre', 'Préparez le TFP A3P et la suite de votre parcours', 'Vous vous préparez aux évaluations écrites, aux mises en situation et à la soutenance. Après la réussite, la demande de carte professionnelle A3P auprès du CNAPS constitue une étape distincte.', '#inscription', 'Préparer mon inscription'),
     ],
-    opening: { image: originalArtwork['a3p-parcours'].src, kicker: 'LA DISCRÉTION. LA PRÉCISION. L’ACTION.', heading: ['Une présence discrète.', 'Un rôle décisif'], text: 'Apprenez à anticiper les risques et à protéger les personnes, en équipe et sur le terrain.', verbs: ['Anticiper', 'Préparer', 'Protéger'] },
+    opening: { image: originalArtwork['a3p-parcours'].src, kicker: 'DISCRÉTION, PRÉCISION ET ACTION', heading: ['Une présence discrète.', 'Un rôle décisif'], text: 'Apprenez à anticiper les risques et à protéger les personnes, en équipe et sur le terrain.', verbs: ['Anticiper', 'Préparer', 'Protéger'] },
     study: { value: '328', unit: 'HEURES · HORS EXAMEN', heading: ['Apprendre le métier.', 'Dans toute sa dimension'], panels: [
       { label: 'LE SOCLE', value: '41', unit: 'heures', detail: 'Les fondamentaux de la sécurité privée' },
       { label: 'LA SPÉCIALITÉ', value: '287', unit: 'heures', detail: 'La protection physique des personnes' },
@@ -49,7 +49,7 @@ const professionalJourneys = {
       { title: 'Travailler en équipe', text: 'Coordonner les déplacements et la communication.' },
       { title: 'Préparer une mission', text: 'Analyser, organiser puis débriefer un scénario.' },
     ], note: 'Des mises en situation encadrées, au plus près du métier.' },
-    outcome: { heading: ['Votre engagement.', 'Une nouvelle trajectoire'], code: 'A3P', role: 'Agent de protection physique des personnes.', milestones: [
+    outcome: { heading: ['Votre engagement.', 'Une nouvelle trajectoire'], code: 'A3P', role: 'Agent de protection physique des personnes', milestones: [
       { label: '01 · CERTIFICATION', title: 'Le TFP A3P', text: 'Préparer et réussir les évaluations', href: '#certification' },
       { label: '02 · EXERCICE', title: 'La carte pro', text: 'Déposer votre demande au CNAPS', href: '#references-rncp' },
     ], note: 'Le titre et la carte professionnelle sont deux étapes distinctes.' },
@@ -63,7 +63,7 @@ const professionalJourneys = {
       copy('Votre projet concret', 'Apprenez en construisant votre future activité', 'Étude de marché, prévisionnel, offre commerciale et organisation des équipes : les études de cas vous font travailler sur les décisions du dirigeant. Vous préparez aussi les évaluations et les soutenances.', '#programme', 'Explorer le programme'),
       copy('Votre prochain chapitre', 'Préparez le titre. Anticipez les démarches qui suivent', 'L’obtention du DESP passe par la validation des évaluations. Le titre, l’agrément personnel du dirigeant et l’autorisation d’exercice de l’entreprise sont ensuite trois éléments distincts de votre parcours.', '#inscription', 'Préparer mon inscription'),
     ],
-    opening: { image: originalArtwork['desp-initial-parcours'].src, kicker: 'VOTRE AMBITION PREND FORME.', heading: ['Pensez entreprise.', 'Apprenez à diriger'], text: 'Une vision, des décisions, une équipe. Préparez-vous à prendre de nouvelles responsabilités.', verbs: ['Créer', 'Reprendre', 'Diriger'] },
+    opening: { image: originalArtwork['desp-initial-parcours'].src, kicker: 'VOTRE AMBITION PREND FORME', heading: ['Pensez entreprise.', 'Apprenez à diriger'], text: 'Une vision, des décisions, une équipe. Préparez-vous à prendre de nouvelles responsabilités.', verbs: ['Créer', 'Reprendre', 'Diriger'] },
     study: { value: '7', unit: 'SEMAINES · 245 HEURES', heading: ['Un nouveau', 'cap à prendre'], panels: [
       { label: 'À DISTANCE', value: '5', unit: 'semaines', detail: '175 heures pour construire vos bases' },
       { label: 'EN PRÉSENTIEL', value: '2', unit: 'semaines', detail: '70 heures pour approfondir et pratiquer' },
@@ -73,7 +73,7 @@ const professionalJourneys = {
       { title: 'Construire vos prévisions', text: 'Budget, coûts, trésorerie et développement.' },
       { title: 'Organiser votre entreprise', text: 'Recrutement, équipes et suivi des prestations.' },
     ], note: 'Des travaux pédagogiques pour préparer vos décisions.' },
-    outcome: { heading: ['Votre formation.', 'Votre prochain chapitre'], code: 'DESP', role: 'Dirigeant d’entreprise de sécurité privée.', milestones: [
+    outcome: { heading: ['Votre formation.', 'Votre prochain chapitre'], code: 'DESP', role: 'Dirigeant d’entreprise de sécurité privée', milestones: [
       { label: '01 · LE TITRE', title: 'Je me prépare', text: 'Évaluations, projet et soutenances', href: '#examen' },
       { label: '02 · LA SUITE', title: 'Je construis', text: 'Démarches CNAPS et projet d’entreprise', href: '#debouches' },
     ], note: 'La délivrance des autorisations relève d’une instruction distincte.' },
@@ -87,7 +87,7 @@ const professionalJourneys = {
       copy('Votre dossier', 'Faites parler vos réalisations', 'À partir de situations professionnelles réelles, vous expliquez vos actions, vos choix et les compétences mobilisées. Les preuves donnent de la consistance à votre dossier et préparent l’échange avec le jury.', '#preuves', 'Voir les preuves utiles'),
       copy('Votre prochain chapitre', 'Présentez vos acquis. Préparez la suite', 'Le jury étudie votre dossier et échange avec vous. La délivrance du titre dépend de sa décision. Après validation, les démarches d’agrément dirigeant et d’autorisation d’exercice restent distinctes.', '#jury', 'Comprendre le jury'),
     ],
-    opening: { image: originalArtwork['desp-vae-parcours'].src, kicker: 'VOTRE PARCOURS A DE LA VALEUR.', heading: ['Vous l’avez vécu.', 'Faites-le reconnaître'], text: 'Vos missions, vos décisions et vos réalisations sont au cœur de votre démarche VAE.', verbs: ['Analyser', 'Démontrer', 'Valoriser'] },
+    opening: { image: originalArtwork['desp-vae-parcours'].src, kicker: 'VOTRE PARCOURS A DE LA VALEUR', heading: ['Vous l’avez vécu.', 'Faites-le reconnaître'], text: 'Vos missions, vos décisions et vos réalisations sont au cœur de votre démarche VAE.', verbs: ['Analyser', 'Démontrer', 'Valoriser'] },
     study: { value: 'VAE', unit: 'UN PARCOURS INDIVIDUALISÉ', heading: ['Votre expérience.', 'Votre fil conducteur'], panels: [
       { label: 'LE POINT DE DÉPART', value: 'Vos', unit: 'missions', detail: 'Analyser les activités réellement exercées' },
       { label: 'LE DOSSIER', value: 'Vos', unit: 'preuves', detail: 'Démontrer les compétences mobilisées' },
@@ -97,7 +97,7 @@ const professionalJourneys = {
       { title: 'Expliquer vos décisions', text: 'Décrire vos actions et analyser les résultats.' },
       { title: 'Rassembler les preuves', text: 'Relier les pièces aux compétences démontrées.' },
     ], note: 'Des expériences authentiques, présentées avec méthode.' },
-    outcome: { heading: ['Votre expérience.', 'Un nouvel horizon'], code: 'DESP', role: 'Le titre de dirigeant, par la validation de vos acquis.', milestones: [
+    outcome: { heading: ['Votre expérience.', 'Un nouvel horizon'], code: 'DESP', role: 'Le titre de dirigeant, par la validation de vos acquis', milestones: [
       { label: '01 · PRÉSENTATION', title: 'Le jury', text: 'Expliquer et défendre votre parcours', href: '#jury' },
       { label: '02 · PERSPECTIVES', title: 'La suite', text: 'Préparer votre projet de direction', href: '#debouches' },
     ], note: 'Le titre est délivré après décision favorable du jury.' },
@@ -111,7 +111,7 @@ const professionalJourneys = {
       copy('La mise en pratique', 'Préparez une course de bout en bout', 'Itinéraire, accueil du passager, conduite et facturation : vous travaillez les situations de l’épreuve pratique. Le véhicule double commande est prévu pour l’examen dans la formule présentée.', '#examen', 'Explorer les épreuves'),
       copy('Votre prochain chapitre', 'De la préparation à vos premières démarches', 'Vous préparez d’abord les épreuves théoriques puis la mise en situation pratique. Après la réussite, notre équipe vous explique les démarches de carte professionnelle et de lancement d’activité.', '#inscription', 'Préparer mon inscription'),
     ],
-    opening: { image: originalArtwork['vtc-parcours'].src, kicker: 'UNE NOUVELLE DIRECTION.', heading: ['Prenez le volant.', 'Ouvrez la voie'], text: 'Apprenez à offrir une expérience de transport sûre, fluide et professionnelle.', verbs: ['Accueillir', 'Conduire', 'Fidéliser'] },
+    opening: { image: originalArtwork['vtc-parcours'].src, kicker: 'UNE NOUVELLE DIRECTION', heading: ['Prenez le volant.', 'Ouvrez la voie'], text: 'Apprenez à offrir une expérience de transport sûre, fluide et professionnelle.', verbs: ['Accueillir', 'Conduire', 'Fidéliser'] },
     study: { value: '105', unit: 'HEURES ESTIMÉES', heading: ['Votre préparation.', 'À votre rythme'], panels: [
       { label: 'THÉORIE EN LIGNE', value: '24/7', unit: 'accessible', detail: 'Cours, QCM et révisions' },
       { label: 'PRATIQUE ENCADRÉE', value: 'Sur', unit: 'la route', detail: 'Avec un formateur spécialisé VTC' },
@@ -121,7 +121,7 @@ const professionalJourneys = {
       { title: 'Accueillir et conduire', text: 'Allier confort, sécurité et qualité de service.' },
       { title: 'Finaliser la prestation', text: 'Facturer, encaisser et entretenir la relation client.' },
     ], note: 'Des mises en situation pour préparer l’épreuve pratique.' },
-    outcome: { heading: ['Votre formation.', 'Votre nouvelle direction'], code: 'VTC', role: 'Chauffeur professionnel. Un projet qui vous ressemble.', milestones: [
+    outcome: { heading: ['Votre formation.', 'Votre nouvelle direction'], code: 'VTC', role: 'Votre projet de chauffeur professionnel', milestones: [
       { label: '01 · L’EXAMEN', title: 'Je me prépare', text: 'Théorie puis mise en situation pratique', href: '#examen' },
       { label: '02 · LES DÉMARCHES', title: 'Je démarre', text: 'Carte professionnelle et lancement', href: '#parcours' },
     ], note: 'Les formalités professionnelles suivent la réussite à l’examen.' },
@@ -138,7 +138,7 @@ const fireAndFirstAidJourneys = {
       copy('Votre entraînement', 'Des gestes répétés, des réflexes construits', 'Manipulations, rondes avec anomalies et mises en situation complètent les cours. Vous apprenez à observer, transmettre une alerte et participer à l’intervention dans le cadre de vos missions.', '#pedagogie', 'Découvrir la pratique'),
       copy('Votre prochain chapitre', 'Préparez votre diplôme SSIAP 1', 'La formation vous prépare aux épreuves de l’examen. Une fois diplômé, vous pouvez évoluer dans les services de sécurité incendie et poursuivre votre parcours selon votre expérience et les conditions d’accès.', '#dates-tarifs', 'Voir les prochaines dates'),
     ],
-    opening: { image: '/images/ssiap-1/manuel/assistance.webp', kicker: 'PRÉVENIR. VEILLER. INTERVENIR.', heading: ['Votre vigilance.', 'Leur sécurité'], text: 'Apprenez à prévenir les risques et à agir au sein d’un service de sécurité incendie.', verbs: ['Prévenir', 'Alerter', 'Intervenir'] },
+    opening: { image: '/images/ssiap-1/manuel/assistance.webp', kicker: 'PRÉVENIR, VEILLER ET INTERVENIR', heading: ['Votre vigilance.', 'Leur sécurité'], text: 'Apprenez à prévenir les risques et à agir au sein d’un service de sécurité incendie.', verbs: ['Prévenir', 'Alerter', 'Intervenir'] },
     study: { value: '67', unit: 'HEURES MINIMUM · HORS EXAMEN', heading: ['Les connaissances.', 'Les bons réflexes'], panels: [
       { label: 'COMPRENDRE', value: 'Le', unit: 'risque', detail: 'Feu, bâtiments et installations' },
       { label: 'AGIR', value: 'Les', unit: 'gestes', detail: 'Rondes et interventions encadrées' },
@@ -148,7 +148,7 @@ const fireAndFirstAidJourneys = {
       { title: 'Utiliser les équipements', text: 'Comprendre les moyens de secours et le SSI.' },
       { title: 'Gérer une situation', text: 'Alerter et mettre en œuvre les consignes.' },
     ], note: 'Cours, démonstrations et mises en situation se complètent.' },
-    outcome: { heading: ['Votre formation.', 'Un rôle essentiel'], code: 'SSIAP 1', role: 'Agent de sécurité incendie.', milestones: [
+    outcome: { heading: ['Votre formation.', 'Un rôle essentiel'], code: 'SSIAP 1', role: 'Agent de sécurité incendie', milestones: [
       { label: '01 · LE DIPLÔME', title: 'Je me prépare', text: 'Connaître les attendus de l’examen', href: '#examen' },
       { label: '02 · LE MÉTIER', title: 'Je me projette', text: 'Découvrir les fonctions et les évolutions', href: '#debouches' },
     ], note: 'Le diplôme est obtenu après réussite aux épreuves.' },
@@ -162,7 +162,7 @@ const fireAndFirstAidJourneys = {
       copy('Votre entraînement', 'Savoir décider et faire agir ensemble', 'Vous préparez des séquences pédagogiques, travaillez la coordination des agents et la gestion d’incidents au PC sécurité. Les exercices vous aident à relier consignes, décisions et communication.', '#validation', 'Voir les mises en situation'),
       copy('Votre prochain chapitre', 'Préparez le diplôme de chef d’équipe', 'Les épreuves écrite, orale et pratique évaluent les compétences attendues du chef d’équipe SSIAP 2. Notre équipe vérifie vos prérequis et vous accompagne dans l’organisation de votre entrée en formation.', '#dates-tarifs', 'Recevoir les prochaines dates'),
     ],
-    opening: { image: originalArtwork['ssiap-2-parcours'].src, kicker: 'LE TERRAIN. L’ÉQUIPE. LA DÉCISION.', heading: ['Faites équipe.', 'Prenez le relais'], text: 'Donnez une nouvelle dimension à votre expérience de la sécurité incendie.', verbs: ['Encadrer', 'Coordonner', 'Transmettre'] },
+    opening: { image: originalArtwork['ssiap-2-parcours'].src, kicker: 'LE TERRAIN, L’ÉQUIPE ET LA DÉCISION', heading: ['Faites équipe.', 'Prenez le relais'], text: 'Donnez une nouvelle dimension à votre expérience de la sécurité incendie.', verbs: ['Encadrer', 'Coordonner', 'Transmettre'] },
     study: { value: '70', unit: 'HEURES · HORS EXAMEN', heading: ['Votre expérience.', 'Un nouveau niveau'], panels: [
       { label: 'ENCADRER', value: 'Une', unit: 'équipe', detail: 'Organiser et accompagner les agents' },
       { label: 'COORDONNER', value: 'Le', unit: 'PC sécurité', detail: 'Piloter les actions en situation de crise' },
@@ -172,7 +172,7 @@ const fireAndFirstAidJourneys = {
       { title: 'Coordonner un incident', text: 'Analyser la situation et orienter les agents.' },
       { title: 'Former et rendre compte', text: 'Expliquer les gestes et informer la hiérarchie.' },
     ], note: 'Des exercices pour préparer vos responsabilités et les épreuves.' },
-    outcome: { heading: ['Votre expertise.', 'La force d’une équipe'], code: 'SSIAP 2', role: 'Chef d’équipe de sécurité incendie.', milestones: [
+    outcome: { heading: ['Votre expertise.', 'La force d’une équipe'], code: 'SSIAP 2', role: 'Chef d’équipe de sécurité incendie', milestones: [
       { label: '01 · VALIDATION', title: 'Le diplôme', text: 'Écrit, oral et mise en situation', href: '#validation' },
       { label: '02 · RESPONSABILITÉS', title: 'Le terrain', text: 'Organisation, coordination et management', href: '#missions' },
     ], note: 'Admission selon vos prérequis ; diplôme après réussite aux épreuves.' },
@@ -186,7 +186,7 @@ const fireAndFirstAidJourneys = {
       copy('Vos études de cas', 'Analyser, argumenter, conseiller', 'Lecture de plans, notice technique, analyse des risques et préparation des commissions : vous travaillez les situations du chef de service et préparez les attendus des épreuves.', '#validation', 'Découvrir les évaluations'),
       copy('Votre prochain chapitre', 'Préparez le diplôme SSIAP 3 et vos futures responsabilités', 'Le parcours vous prépare aux épreuves écrites et à l’entretien devant le jury. Vous développez les compétences pour organiser le service et conseiller le chef d’établissement.', '#dates-tarifs', 'Recevoir les prochaines dates'),
     ],
-    opening: { image: originalArtwork['ssiap-3-parcours'].src, kicker: 'L’EXPERTISE QUI ORIENTE LES DÉCISIONS.', heading: ['Prenez de la hauteur.', 'Pilotez la sécurité'], text: 'Reliez réglementation, risques et management pour diriger un service de sécurité incendie.', verbs: ['Analyser', 'Conseiller', 'Piloter'] },
+    opening: { image: originalArtwork['ssiap-3-parcours'].src, kicker: 'L’EXPERTISE QUI ORIENTE LES DÉCISIONS', heading: ['Prenez de la hauteur.', 'Pilotez la sécurité'], text: 'Reliez réglementation, risques et management pour diriger un service de sécurité incendie.', verbs: ['Analyser', 'Conseiller', 'Piloter'] },
     study: { value: '216', unit: 'HEURES · HORS EXAMEN', heading: ['Une vision globale.', 'Des choix éclairés'], panels: [
       { label: 'L’EXPERTISE', value: 'Le', unit: 'cadre', detail: 'Bâtiments, risques et réglementation' },
       { label: 'LE PILOTAGE', value: 'Les', unit: 'moyens', detail: 'Équipe, maintenance et budget' },
@@ -196,7 +196,7 @@ const fireAndFirstAidJourneys = {
       { title: 'Préparer les documents', text: 'Argumenter les choix dans une notice technique.' },
       { title: 'Conseiller l’établissement', text: 'Prioriser les risques et organiser les moyens.' },
     ], note: 'Des cas concrets pour relier l’expertise à la décision.' },
-    outcome: { heading: ['Votre maîtrise.', 'Une vision d’ensemble'], code: 'SSIAP 3', role: 'Chef de service de sécurité incendie.', milestones: [
+    outcome: { heading: ['Votre maîtrise.', 'Une vision d’ensemble'], code: 'SSIAP 3', role: 'Chef de service de sécurité incendie', milestones: [
       { label: '01 · VALIDATION', title: 'Le diplôme', text: 'Épreuves écrites et entretien', href: '#validation' },
       { label: '02 · PILOTAGE', title: 'Le service', text: 'Conseil, organisation et gestion des risques', href: '#missions' },
     ], note: 'Admission après étude du dossier ; diplôme après réussite aux épreuves.' },
@@ -210,7 +210,7 @@ const fireAndFirstAidJourneys = {
       copy('Votre entraînement', 'Observer la situation. Choisir le bon geste', 'Vous vous entraînez à protéger, examiner, alerter ou faire alerter, puis secourir. Les mises en situation vous aident à appliquer les gestes adaptés dans un contexte professionnel.', '#programme-sst', 'Découvrir les gestes'),
       copy('Votre prochain chapitre', 'Validez vos compétences, puis entretenez-les', 'Les évaluations réalisées pendant la formation permettent de vérifier vos acquis. Le certificat SST est délivré après réussite ; le maintien et l’actualisation des compétences permettent ensuite de le renouveler.', '#dates-tarifs', 'Voir les prochaines dates'),
     ],
-    opening: { image: originalArtwork['sst-parcours'].src, kicker: 'DES GESTES QUI ONT DU SENS.', heading: ['Soyez prêt à agir.', 'Quand cela compte'], text: 'Prévention et premiers secours : devenez un relais utile au sein de votre entreprise.', verbs: ['Protéger', 'Alerter', 'Secourir'] },
+    opening: { image: originalArtwork['sst-parcours'].src, kicker: 'DES GESTES QUI ONT DU SENS', heading: ['Soyez prêt à agir.', 'Quand cela compte'], text: 'Prévention et premiers secours : devenez un relais utile au sein de votre entreprise.', verbs: ['Protéger', 'Alerter', 'Secourir'] },
     study: { value: '14', unit: 'HEURES · 2 JOURS', heading: ['Apprendre ensemble.', 'S’entraîner pour agir'], panels: [
       { label: 'PRÉVENTION', value: 'Les', unit: 'risques', detail: 'Repérer et contribuer à la prévention' },
       { label: 'INTERVENTION', value: 'Les', unit: 'secours', detail: 'Appliquer les gestes adaptés' },
@@ -220,7 +220,7 @@ const fireAndFirstAidJourneys = {
       { title: 'Alerter ou faire alerter', text: 'Transmettre les informations utiles aux secours.' },
       { title: 'Secourir', text: 'Choisir et réaliser les gestes adaptés.' },
     ], note: 'Des démonstrations, des répétitions et des retours du formateur.' },
-    outcome: { heading: ['Votre formation.', 'Des réflexes utiles'], code: 'SST', role: 'Sauveteur Secouriste du Travail.', milestones: [
+    outcome: { heading: ['Votre formation.', 'Des réflexes utiles'], code: 'SST', role: 'Sauveteur Secouriste du Travail', milestones: [
       { label: '01 · CERTIFICATION', title: 'Je valide', text: 'Démontrer les compétences acquises', href: '#evaluation-sst' },
       { label: '02 · ACTUALISATION', title: 'Je maintiens', text: 'MAC SST tous les 24 mois', href: '#evaluation-sst' },
     ], note: 'Certificat délivré après réussite aux évaluations certificatives.' },
@@ -251,7 +251,7 @@ function btsJourney(profile: BtsJourneyProfile): CourseJourneyConfig {
       copy('Votre expérience', 'Ce que vous apprenez prend vie en entreprise', `Votre alternance vous permet de mettre en pratique les compétences du BTS ${profile.code}. Vous prenez part à des missions concrètes, développez votre posture professionnelle et construisez progressivement votre expérience.`, '#programme', 'Explorer le programme'),
       copy('Votre prochain chapitre', 'Un diplôme. Une expérience. De nouvelles perspectives', `${profile.outcome} Votre parcours prépare un diplôme national de niveau Bac+2. L’équipe vous accompagne dans votre candidature et les étapes vers l’entreprise d’accueil.`, '#admission', 'Préparer ma candidature'),
     ],
-    opening: { image: originalArtwork[`bts-${profile.code.toLowerCase()}-parcours` as keyof typeof originalArtwork].src, kicker: 'VOTRE AVENIR SE CONSTRUIT MAINTENANT.', heading: profile.headline, text: profile.pitch, verbs: profile.verbs },
+    opening: { image: originalArtwork[`bts-${profile.code.toLowerCase()}-parcours` as keyof typeof originalArtwork].src, kicker: 'VOTRE AVENIR SE CONSTRUIT MAINTENANT', heading: profile.headline, text: profile.pitch, verbs: profile.verbs },
     study: { value: '2', unit: 'ANS · EN ALTERNANCE', heading: ['J’apprends.', 'Je mets en pratique'], panels: [
       { label: 'LES COURS', value: String(rhythm.schoolDays), unit: 'jours', detail: 'À l’école ou en visioconférence' },
       { label: 'L’ENTREPRISE', value: String(rhythm.companyDays), unit: 'jours', detail: 'Des missions professionnelles concrètes' },
@@ -348,7 +348,7 @@ const btsOverviewJourney: CourseJourneyConfig = {
     copy('Votre expérience', 'Apprendre un métier en participant à la vie d’une entreprise', 'Conseiller un client, préparer une prestation, suivre une opération ou analyser des résultats : les missions dépendent du BTS et de l’entreprise qui vous accueille.', '#formations-bts', 'Trouver mon domaine'),
     copy('Votre prochain chapitre', 'Faites le premier pas vers votre BTS', 'L’équipe admissions étudie votre dossier et votre projet. Elle vous accompagne dans les étapes de candidature, de recherche d’entreprise et de préparation du contrat d’apprentissage.', 'https://admissions.integraleconnect.com/', 'Préparer ma candidature'),
   ],
-  opening: { kicker: 'VOTRE TALENT A DE L’AVENIR.', heading: ['Trouvez votre voie.', 'Prenez votre élan'], text: 'Six BTS, des univers différents et une même ambition : vous aider à construire votre avenir professionnel.', verbs: ['Choisir', 'Apprendre', 'Avancer'] },
+  opening: { kicker: 'VOTRE TALENT A DE L’AVENIR', heading: ['Trouvez votre voie.', 'Prenez votre élan'], text: 'Six BTS, des univers différents et une même ambition : vous aider à construire votre avenir professionnel.', verbs: ['Choisir', 'Apprendre', 'Avancer'] },
   study: { value: '2', unit: 'ANS · EN ALTERNANCE', heading: ['Un pied à l’école.', 'Un pied en entreprise'], panels: [
     { label: 'BTS MOS', value: '15 / 15', unit: 'jours', detail: '15 jours à l’école, puis 15 jours en entreprise' },
     { label: 'LES CINQ AUTRES BTS', value: '2 / 3', unit: 'jours', detail: '2 jours à l’école, 3 jours en entreprise par semaine' },
@@ -358,7 +358,7 @@ const btsOverviewJourney: CourseJourneyConfig = {
     { title: 'Client et international', text: 'BTS NDRC · BTS Commerce International' },
     { title: 'Immobilier et gestion', text: 'BTS PI · BTS Comptabilité et Gestion' },
   ], note: 'Explorez chaque BTS pour choisir le parcours adapté à votre projet.' },
-  outcome: { heading: ['Votre choix.', 'Le début de la suite'], code: 'BTS', role: 'Un diplôme Bac+2 et une expérience en entreprise.', milestones: [
+  outcome: { heading: ['Votre choix.', 'Le début de la suite'], code: 'BTS', role: 'Un diplôme Bac+2 et une expérience en entreprise', milestones: [
     { label: '01 · MON PARCOURS', title: 'Je découvre', text: 'Comparer les six spécialités', href: '#formations-bts' },
     { label: '02 · MA CANDIDATURE', title: 'Je me lance', text: 'Préparer mon dossier en ligne', href: 'https://admissions.integraleconnect.com/' },
   ], note: 'Admission après étude du dossier et du projet d’alternance.' },

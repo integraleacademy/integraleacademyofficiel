@@ -124,7 +124,7 @@ export function ContactExperience({ initialInterest = 'undecided', requestLinks,
               <div className={styles.homeIndicator} aria-hidden="true" />
             </div>
             <div className={styles.floatingNote}><Icon name="sparkle" /><span>Le premier échange<strong>Gratuit, sans engagement.</strong></span></div>
-            <p className={styles.sceneCaption}>Un exemple d’échange avec notre équipe.</p>
+            <p className={styles.sceneCaption}>Un exemple d’échange avec notre équipe</p>
           </div>
         </div>
 
