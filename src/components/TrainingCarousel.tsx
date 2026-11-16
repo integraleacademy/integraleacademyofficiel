@@ -10,6 +10,8 @@ export type TrainingCarouselItem = {
   shortTitle: string;
   title: string;
   description: string;
+  jobs?: readonly string[];
+  certificationStatus?: string;
   imageSrc: string;
   imageAlt: string;
   tabPrefix?: string;
@@ -123,8 +125,8 @@ export function TrainingCarousel({ items, label, tabListLabel, previousLabel, ne
         {items.map((item, index) => {
           function courseAction(children: ReactNode, className: string, ariaLabel?: string) {
             return item.slug
-              ? <Link href={item.slug} className={className} aria-label={ariaLabel}>{children}</Link>
-              : <button type="button" className={className} aria-label={ariaLabel} aria-haspopup="dialog" aria-controls={dialogId}
+              ? <Link href={item.slug} className={className} data-academy-action={className === styles.discover ? 'training' : undefined} aria-label={ariaLabel}>{children}</Link>
+              : <button type="button" className={className} data-academy-action={className === styles.discover ? 'training' : undefined} aria-label={ariaLabel} aria-haspopup="dialog" aria-controls={dialogId}
                   onClick={() => previewDialog.current?.showModal()}>{children}</button>;
           }
           const heading = <><strong>{item.shortTitle}</strong>{' '}<em>{item.title}</em></>;
@@ -152,6 +154,7 @@ export function TrainingCarousel({ items, label, tabListLabel, previousLabel, ne
                   {courseAction(heading, styles.titleLink)}
                 </h3>
                 <p className={styles.description}>{item.description}</p>
+                {item.certificationStatus && <p className={styles.certificationNote}>{item.certificationStatus}</p>}
                 {item.details}
                 {courseAction(<>{item.ctaLabel}<Arrow /></>, styles.discover)}
               </div>
@@ -202,8 +205,10 @@ export function TrainingCarousel({ items, label, tabListLabel, previousLabel, ne
             </div>
             <p className={styles.previewFamily}>{[activeItem.preview.family, activeItem.preview.level, activeItem.preview.location].filter(Boolean).join(' · ')}</p>
             <h2 id={`${dialogId}-heading`}>{activeItem.preview.name}</h2>
+            {activeItem.certificationStatus && <p className={styles.previewCertification}>{activeItem.certificationStatus}</p>}
             <h3>Ce que vous apprendrez</h3>
             <ul>{activeItem.topics.map(topic => <li key={topic}>{topic}</li>)}</ul>
+            {activeItem.jobs && activeItem.jobs.length > 0 && <div className={styles.previewCareers}><h3>Exemples de métiers visés</h3><ul>{activeItem.jobs.map(job => <li key={job}>{job}</li>)}</ul></div>}
             <Link href="/contact" onClick={() => previewDialog.current?.close()} className={styles.discover}>Poser une question à l’école <Arrow /></Link>
           </div>
         </dialog>
