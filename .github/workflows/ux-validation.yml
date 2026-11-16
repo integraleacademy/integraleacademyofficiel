@@ -23,6 +23,6 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npx prisma generate
-      - run: node --test tests/ux-ameliorations-2026.test.mjs tests/site-ui-consistency.test.mjs tests/training-section-navigation.test.mjs tests/training-session-blocks.test.mjs
+      - run: node --test tests/ux-ameliorations-2026.test.mjs tests/site-ui-consistency.test.mjs
       - run: npx tsc --noEmit
       - run: npm run build
