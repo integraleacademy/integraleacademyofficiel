@@ -25,7 +25,7 @@
 .mapHint { padding: 0 14px 10px; color: #746348; font-size: 11px; }
 .campusDetail { min-height: 474px; }
 .campusTags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
-.campusTags span { padding: 4px 10px; border: 1px solid #586479; border-radius: 99px; color: #f2d89a; font-size: 11px; font-weight: 700; }
+.campusTags span { max-width: 100%; white-space: normal; padding: 4px 10px; border: 1px solid #586479; border-radius: 99px; color: #f2d89a; font-size: 11px; font-weight: 700; }
 .campusDescription { margin-top: 18px !important; min-height: 52px; color: #c5ced5; font-size: 14px; }
 .campusDates { display: flex !important; width: fit-content; margin-top: 24px; }
 .campusDetail > button { margin-top: 20px; color: #e7bd65; }

@@ -65,7 +65,7 @@ export default async function Page() {
       <div className={styles.container}>
         <div className={styles.sectionHeading}>
           <div><p className={styles.eyebrow}>01 / Les lieux pour apprendre</p><h2 id="campus-title">De la Côte d’Azur<br /><em>à Paris.</em></h2></div>
-          <p>Les formations de l’école se déroulent à Puget-sur-Argens. Vous pouvez aussi préparer le DESP dans notre centre de Paris, dédié à cette formation.</p>
+          <p>Notre école principale est à Puget-sur-Argens, sur la Côte d’Azur. À Paris, vous pouvez préparer le DESP. Nos deux mastères en intelligence artificielle y ouvriront prochainement.</p>
         </div>
         <SchoolCampuses />
         <div className={styles.campusFacilities}>
@@ -168,7 +168,7 @@ export default async function Page() {
       <div id="histoire" className={`${styles.container} ${experience.history}`}>
         <p className={styles.eyebrow}>Une école qui grandit. Une conviction qui reste.</p>
         <ol className={styles.timeline}>
-          <li><span>2018</span><h3>Le début de l’aventure</h3><p>La création d’une école de formation professionnelle issue du terrain.</p></li><li><span>Au fil des années</span><h3>De nouvelles perspectives</h3><p>Sécurité, incendie, VTC et alternance enrichissent les parcours proposés.</p></li><li><span>Aujourd’hui</span><h3>La même proximité</h3><p>L’école vous accueille à Puget-sur-Argens et propose aussi le DESP à Paris.</p></li>
+          <li><span>2018</span><h3>Le début de l’aventure</h3><p>La création d’une école de formation professionnelle issue du terrain.</p></li><li><span>Au fil des années</span><h3>De nouvelles perspectives</h3><p>Sécurité, incendie, VTC et alternance enrichissent les parcours proposés.</p></li><li><span>Aujourd’hui</span><h3>La même proximité</h3><p>L’école vous accueille à Puget-sur-Argens et à Paris.</p></li>
         </ol>
       </div>
     </section>

@@ -3,10 +3,11 @@ import Link from 'next/link';
 import { OrientationAssistant } from '@/components/OrientationAssistant';
 import { HomeHeroIllustrations } from '@/components/HomeHeroIllustrations';
 import { AcademyJourney } from '@/components/AcademyExperience';
-import { BtsTrainingGrid, type BtsTrainingHighlight } from '@/components/BtsTrainingGrid';
+import { BtsTrainingGrid } from '@/components/BtsTrainingGrid';
 import { BtsTrainingComparisonModal } from '@/components/BtsTrainingComparisonModal';
 import { TrainingCarousel } from '@/components/TrainingCarousel';
-import { degreeFamilies } from '@/data/upcoming-trainings';
+import { upcomingFamilies, upcomingCourseName, upcomingDiscoveryLabel } from '@/data/upcoming-trainings';
+import { btsCommon, btsHighlights } from '@/data/bts-highlights';
 import { locations } from '@/data/locations';
 import { CampusSection } from '@/components/CampusSection';
 import { GoogleReviewsSection } from '@/components/GoogleReviewsSection';
@@ -28,79 +29,12 @@ export const dynamic = 'force-dynamic';
 
 export const metadata = createPageMetadata('/');
 
-const btsCommon = {
-  certification: 'Diplôme d’État',
-  level: 'Bac +2',
-  duration: '2 ans',
-  rhythm: 'Alternance',
-  onsiteLocation: 'Puget-sur-Argens',
-  distanceMode: 'En visioconférence',
-} as const;
-
-const btsHighlights: BtsTrainingHighlight[] = [
-  {
-    ...btsCommon,
-    slug: '/bts/mos',
-    shortTitle: 'BTS MOS',
-    title: 'Management Opérationnel de la Sécurité',
-    category: 'Management & sécurité',
-    description: 'Pilotez des prestations de sécurité, coordonnez les équipes et développez la relation client.',
-    visual: 'mos',
-    featured: true,
-  },
-  {
-    ...btsCommon,
-    slug: '/bts/mco',
-    shortTitle: 'BTS MCO',
-    title: 'Management Commercial Opérationnel',
-    category: 'Commerce',
-    description: 'Développez la vente, la relation client et le management pour piloter efficacement une unité commerciale.',
-    visual: 'mco',
-  },
-  {
-    ...btsCommon,
-    slug: '/bts/ndrc',
-    shortTitle: 'BTS NDRC',
-    title: 'Négociation et Digitalisation de la Relation Client',
-    category: 'Relation client',
-    description: 'Maîtrisez la prospection, la négociation et la fidélisation, en face à face comme sur les canaux digitaux.',
-    visual: 'ndrc',
-  },
-  {
-    ...btsCommon,
-    slug: '/bts/commerce-international',
-    shortTitle: 'BTS CI',
-    title: 'Commerce International',
-    category: 'International',
-    description: 'Préparez-vous à développer des marchés, gérer l’import-export et coordonner des opérations à l’international.',
-    visual: 'ci',
-  },
-  {
-    ...btsCommon,
-    slug: '/bts/professions-immobilieres',
-    shortTitle: 'BTS PI',
-    title: 'Professions Immobilières',
-    category: 'Immobilier',
-    description: 'Formez-vous à la transaction, à la gestion locative, à la copropriété et au conseil immobilier.',
-    visual: 'pi',
-  },
-  {
-    ...btsCommon,
-    slug: '/bts/comptabilite-gestion',
-    shortTitle: 'BTS CG',
-    title: 'Comptabilité et Gestion',
-    category: 'Comptabilité',
-    description: 'Maîtrisez la comptabilité, la gestion et le pilotage financier.',
-    visual: 'cg',
-  },
-];
-
 const proofItems = [
   ['Depuis 2018', 'Expérience terrain'],
   ['400 m²', 'École principale'],
   ['Qualiopi', 'Certification qualité'],
   ['CNAPS · ADEF', 'Agréments métiers'],
-  ['2 centres', 'Côte d’Azur · Paris pour le DESP'],
+  ['2 centres', 'Côte d’Azur · Paris'],
 ] as const;
 
 export default async function Home() {
@@ -191,20 +125,27 @@ export default async function Home() {
         </div>
       </section>
 
-      {degreeFamilies.map(family => (
+      {upcomingFamilies.map(family => (
         <section key={family.id} id={family.id} aria-labelledby={`${family.id}-heading`}
-          className={`${carouselStyles.section} ${family.id === 'bachelors' ? carouselStyles.sectionAlternate : ''}`}>
+          className={`${carouselStyles.section} ${family.id === 'masteres' ? '' : carouselStyles.sectionAlternate}`}>
           <div className="page-container">
             <div className={carouselStyles.heading}>
               <h2 id={`${family.id}-heading`}>{family.label}</h2>
-              <p>{family.level}</p>
+              <p>{[family.level, family.location].filter(Boolean).join(' · ')}</p>
             </div>
             <TrainingCarousel
               label={`Découvrir nos ${family.label.toLowerCase()}`}
               tabListLabel={`Choisir un ${family.singular.toLowerCase()}`}
               previousLabel={`${family.singular} précédent`}
               nextLabel={`${family.singular} suivant`}
-              items={family.items}
+              items={family.items.map(course => ({
+                ...course,
+                ctaLabel: upcomingDiscoveryLabel(family, course),
+                preview: {
+                  name: upcomingCourseName(family, course),
+                  family: family.singular, level: family.level, location: family.location,
+                },
+              }))}
             />
           </div>
         </section>

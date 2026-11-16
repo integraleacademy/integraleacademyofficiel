@@ -1,8 +1,36 @@
-export const trainingNavigation = [
-  {label:'Métiers de la sécurité', href:'/#formations-securite', description:'Agent de sécurité privée (APS), Agent de Protection Physique des Personnes (A3P), SSIAP et Dirigeant d’entreprise de sécurité privée (DESP).', icon:'👮'},
-  {label:'BTS en alternance', href:'/#bts', description:'BTS sécurité (MOS), BTS commerce (CI, MCO, NDRC), BTS immobilier (PI).', icon:'🎓'},
-  {label:'Chauffeur VTC', href:'/vtc', description:'Formation Théorique et Formation Pratique VTC.', icon:'🚘'},
-] as const;
+import { btsHighlights } from './bts-highlights';
+import { upcomingCourseName, upcomingFamilies, type TrainingStatus } from './upcoming-trainings';
+
+export type TrainingMenuCourse = { label: string; href: string; status?: TrainingStatus };
+export type TrainingMenuFamily = { label: string; href: string; courses: TrainingMenuCourse[] };
+
+export const trainingNavigation: TrainingMenuFamily[] = [
+  {
+    label: 'Métiers de la sécurité', href: '/#formations-securite',
+    courses: [
+      { label: 'APS – Agent de prévention et de sécurité', href: '/formations-securite/aps' },
+      { label: 'A3P – Agent de protection physique des personnes', href: '/formations-securite/a3p-apr' },
+      { label: 'DESP – Dirigeant d’entreprise de sécurité privée', href: '/despvaeouinitial' },
+      { label: 'SSIAP – Sécurité incendie', href: '/formations-securite/ssiap' },
+      { label: 'SST – Sauveteur secouriste du travail', href: '/formations-securite/sst' },
+    ],
+  },
+  {
+    label: 'Chauffeur VTC', href: '/#formation-vtc',
+    courses: [{ label: 'Formation chauffeur VTC', href: '/vtc' }],
+  },
+  {
+    label: 'BTS en alternance', href: '/#bts',
+    courses: btsHighlights.map(course => ({ label: `${course.shortTitle} – ${course.title}`, href: course.slug })),
+  },
+  ...upcomingFamilies.map(family => ({
+    label: family.level ? `${family.label} (${family.level})` : family.label,
+    href: `/#${family.id}`,
+    courses: family.items.map(course => ({
+      label: upcomingCourseName(family, course), href: `/#${course.anchorId}`, status: course.status,
+    })),
+  })),
+];
 
 export const navigation = [
   {label:'Nos formations', children:trainingNavigation},

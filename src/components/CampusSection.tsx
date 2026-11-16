@@ -23,7 +23,7 @@ export function CampusSection() {
                   <h3>{shortName}</h3>
                   <CampusFormationTags tags={tags} />
                   <p>{address}</p>
-                  <Link href={`/planning?lieu=${planningKey}#sessions`}>{id === 'paris' ? 'Voir les dates du DESP à Paris' : 'Voir les dates sur la Côte d’Azur'} <span aria-hidden="true">→</span></Link>
+                  <Link href={`/planning?lieu=${planningKey}#sessions`}>{id === 'paris' ? 'Voir les sessions programmées à Paris' : 'Voir les dates sur la Côte d’Azur'} <span aria-hidden="true">→</span></Link>
                 </div>
               </article>
             );
