@@ -32,7 +32,7 @@ export function TrainingReferenceHero({ id, badge, heading, accent, title, tagli
   primaryAction: Action; secondaryAction?: Action; additionalAction?: ReactNode; highlights?: readonly string[];
   facts?: ReadonlyArray<ReadonlyArray<string | undefined>>; children: ReactNode; extendedCopy?: boolean; className?: string;
 }) {
-  return <section className={`${reference.hero} ${styles.hero} ${className}`} aria-labelledby={`${id}-title`} data-extended-copy={extendedCopy || undefined}>
+  return <section className={`${reference.hero} ${styles.hero} ${className}`} data-page-hero aria-labelledby={`${id}-title`} data-extended-copy={extendedCopy || undefined}>
     <div className={reference.container}>
       <div className={reference.heroGrid}>
         <div className={reference.heroCopy}>

@@ -53,7 +53,7 @@ const faqItems = [
 
 export default function FinancementsPage() {
   return <div className={`${styles.page} ${navigation.scope}`}>
-    <section className={styles.hero} aria-labelledby="financements-title">
+    <section className={styles.hero} data-page-hero aria-labelledby="financements-title">
       <div className={styles.container}>
         <div className={styles.heroLayout}>
           <div className={styles.heroCopy}>

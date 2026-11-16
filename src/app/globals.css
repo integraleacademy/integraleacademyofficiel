@@ -51,6 +51,8 @@
 
   :root {
     --site-desktop-scale: 1;
+    --site-viewport-height: 100vh;
+    --site-layout-viewport-height: var(--site-viewport-height);
     --site-gutter: clamp(1rem, 3.2vw, 4rem);
     --site-content-max: calc(90rem * var(--site-desktop-scale));
     --site-content-width: min(calc(100% - 2 * var(--site-gutter)), var(--site-content-max));
@@ -61,6 +63,10 @@
     --site-section-nav-height: 0px;
     --site-header-logo-height: 44px;
     --site-header-height: calc(var(--site-header-logo-height) + .75rem + 1px);
+  }
+
+  @supports (height: 100dvh) {
+    :root { --site-viewport-height: 100dvh; }
   }
 
   @media (min-width: 640px) {
@@ -83,7 +89,13 @@
   /* Match the preferred 90% desktop view across every component. Native CSS
      zoom reflows content and preserves sticky positioning and natural heights. */
   @media screen and (min-width: 1024px) {
-    html { zoom: .9; }
+    @supports (zoom: 1) {
+      :root {
+        zoom: var(--site-desktop-scale);
+        /* Viewport units are scaled with the document. Convert back to layout pixels. */
+        --site-layout-viewport-height: calc(var(--site-viewport-height) / var(--site-desktop-scale));
+      }
+    }
   }
   body { min-height: 100vh; overflow-x: hidden; overflow-x: clip; background: rgb(var(--background)); color: rgb(var(--text-main)); font-feature-settings: "ss01" on; transition: background-color .25s ease, color .25s ease; }
 
@@ -97,6 +109,13 @@
 
 
 @layer components {
+  @media screen {
+    [data-page-hero] {
+      min-height: calc(var(--site-layout-viewport-height) - var(--site-header-height) - var(--section-nav-height, var(--site-section-nav-height)));
+      align-content: center;
+    }
+  }
+
   .page-container,
   .content-container,
   .section-inner {

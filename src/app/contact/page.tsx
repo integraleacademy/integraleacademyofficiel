@@ -55,7 +55,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<Rec
 
   return (
     <ContactMotion className={`${school.page} ${styles.page} ${navigation.scope}`}>
-      <section className={`${school.hero} ${styles.hero}`} aria-labelledby="contact-title">
+      <section className={`${school.hero} ${styles.hero}`} data-page-hero aria-labelledby="contact-title">
         <div className={`${school.container} ${school.heroGrid} ${styles.heroGrid}`}>
           <div className={school.heroCopy} data-contact-reveal>
             <p className={school.eyebrow}><span className={school.smallLine} /> Contact & admissions</p>

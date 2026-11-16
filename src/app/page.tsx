@@ -44,7 +44,7 @@ export default async function Home() {
   return (
     <div className={styles.home} data-home-page>
       <HomePageAnimations />
-      <section className={heroStyles.hero} aria-labelledby="home-hero-title">
+      <section className={heroStyles.hero} data-page-hero aria-labelledby="home-hero-title">
         <div className={heroStyles.container}>
           <div className={heroStyles.heroComposition}>
             <div className={heroStyles.heroCopy}>
