@@ -3,8 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { navigation } from '@/data/navigation';
-import { degreeMenuGroups, professionalTitleGroup } from '@/data/upcoming-trainings';
-import { AnnouncedTrainingGroup } from './AnnouncedTrainingGroup';
+import { TrainingFamilyMenu } from './TrainingFamilyMenu';
 
 export function MobileHeaderMenu({ appointmentFormUrl }: { appointmentFormUrl: string }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -38,14 +37,7 @@ export function MobileHeaderMenu({ appointmentFormUrl }: { appointmentFormUrl: s
         {navigation.map(item => 'children' in item ? (
           <div key={item.label} className="rounded-2xl bg-academy-bg/60 p-2">
             <p className="px-2 py-2 text-xs font-black uppercase tracking-[.18em] text-academy-gold-strong">{item.label}</p>
-            <div className="grid gap-1">
-              {item.children.map(link => (
-                <Link key={link.href} href={link.href} onClick={closeMenu} className="flex min-h-11 items-center rounded-xl px-3 py-2 font-semibold hover:text-academy-gold-strong">{link.label}</Link>
-              ))}
-              {[...degreeMenuGroups, professionalTitleGroup].map(group => (
-                <AnnouncedTrainingGroup key={group.label} group={group} mobile onNavigate={closeMenu} />
-              ))}
-            </div>
+            <TrainingFamilyMenu mobile onNavigate={closeMenu} />
           </div>
         ) : (
           <Link key={item.href} href={item.href} onClick={closeMenu} className="rounded-2xl px-4 py-3 font-semibold hover:text-academy-gold-strong">{item.label}</Link>

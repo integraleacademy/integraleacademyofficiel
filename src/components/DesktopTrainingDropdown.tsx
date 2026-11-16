@@ -1,10 +1,7 @@
 'use client';
 
 import { useEffect, useId, useRef, useState } from 'react';
-import Link from 'next/link';
-import { trainingNavigation } from '@/data/navigation';
-import { degreeMenuGroups, professionalTitleGroup } from '@/data/upcoming-trainings';
-import { AnnouncedTrainingGroup } from './AnnouncedTrainingGroup';
+import { TrainingFamilyMenu } from './TrainingFamilyMenu';
 
 export function DesktopTrainingDropdown({ label }: { label: string }) {
   const [openMode, setOpenMode] = useState<'hover' | 'expanded' | null>(null);
@@ -80,25 +77,10 @@ export function DesktopTrainingDropdown({ label }: { label: string }) {
           clearCloseTimer();
           setOpenMode('expanded');
         }}
-        className="absolute inset-x-0 top-full z-[70] mx-auto w-[calc(100%_-_2rem)] max-w-[74rem] pt-2"
+        className="absolute inset-x-0 top-full z-[70] mx-auto w-[calc(100%_-_2rem)] max-w-[58rem] pt-2"
       >
-        <div className="grid max-h-[calc(100dvh-var(--site-header-height)-1rem)] grid-cols-[.9fr_1fr_1fr] items-start gap-6 overflow-y-auto overscroll-contain rounded-[1.75rem] border border-academy-line bg-academy-surface p-5 text-academy-ink shadow-card">
-          <div className="grid gap-1 rounded-2xl bg-academy-soft/50 p-2">
-            {trainingNavigation.map(item => (
-              <Link key={item.href} href={item.href} onClick={closeMenu} className="flex items-start gap-3 rounded-xl p-3 transition hover:bg-academy-elevated focus-visible:bg-academy-elevated">
-                <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-academy-gold/20 text-xl" aria-hidden="true">{item.icon}</span>
-                <span className="min-w-0">
-                  <span className="block font-extrabold">{item.label}</span>
-                  <span className="mt-1 block text-xs font-medium leading-5 text-academy-muted">{item.description}</span>
-                </span>
-                <span className="ml-auto text-academy-gold-strong" aria-hidden="true">→</span>
-              </Link>
-            ))}
-          </div>
-          <div className="grid gap-4">
-            {degreeMenuGroups.map(group => <AnnouncedTrainingGroup key={group.label} group={group} onNavigate={closeMenu} />)}
-          </div>
-          <AnnouncedTrainingGroup group={professionalTitleGroup} onNavigate={closeMenu} />
+        <div className="max-h-[calc(100dvh-var(--site-header-height)-1rem)] overflow-y-auto overscroll-contain rounded-[1.5rem] border border-academy-line bg-academy-surface p-5 text-academy-ink shadow-card">
+          <TrainingFamilyMenu onNavigate={closeMenu} />
         </div>
       </div>
     </div>

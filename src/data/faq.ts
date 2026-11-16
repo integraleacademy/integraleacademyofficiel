@@ -1,7 +1,7 @@
 export const globalFaq = [
   {
     q: 'Quelles formations propose Intégrale Academy ?',
-    a: 'Nous vous formons aux métiers de la sécurité privée, de la sécurité incendie, de la protection rapprochée et de la direction d’une entreprise de sécurité. Nous proposons également la formation chauffeur VTC et six BTS en alternance. Chaque page présente le programme, les prérequis, les modalités et les possibilités de financement.',
+    a: 'Nous vous formons aux métiers de la sécurité privée, de la sécurité incendie, de la protection rapprochée et de la direction d’une entreprise de sécurité. Nous proposons également la formation chauffeur VTC et six BTS en alternance. Notre catalogue présente aussi les bachelors, les mastères en intelligence artificielle et les titres professionnels à venir.',
     links: [
       { href: '/formations-securite', label: 'Les métiers de la sécurité' },
       { href: '/vtc', label: 'La formation chauffeur VTC' },
@@ -58,7 +58,7 @@ export const globalFaq = [
   },
   {
     q: 'Où se déroulent les formations ?',
-    a: 'Notre école principale se situe à Puget-sur-Argens, dans le Var. Notre centre de Paris est réservé au DESP (dirigeant d’entreprise de sécurité privée). L’APS et l’A3P se préparent sur la Côte d’Azur. Pour le VTC, la théorie se suit en ligne et la pratique est organisée dans les secteurs de Nice, Cannes, Toulon ou Fréjus. Le lieu exact est indiqué sur la session choisie.',
+    a: 'Notre école principale se situe à Puget-sur-Argens, dans le Var. Notre centre de Paris accueille le DESP (dirigeant d’entreprise de sécurité privée) et proposera prochainement deux mastères en intelligence artificielle. L’APS et l’A3P se préparent sur la Côte d’Azur. Pour le VTC, la théorie se suit en ligne et la pratique est organisée dans les secteurs de Nice, Cannes, Toulon ou Fréjus. Le lieu exact est indiqué sur la session choisie.',
     links: [
       { href: '/ecole', label: 'Découvrir notre école et nos implantations' },
       { href: '/planning', label: 'Voir les lieux des prochaines sessions' },
@@ -109,6 +109,6 @@ export const globalFaq = [
 
 export const formationFaq = [
   { q: 'Comment s’inscrire ?', a: 'Utilisez le formulaire de contact ou le bouton “Demander des informations”. Un conseiller vous recontacte pour valider le projet, les prérequis et le financement.' },
-  { q: 'Où se déroulent les formations ?', a: 'Les formations se déroulent à Puget-sur-Argens. Seul le DESP est également proposé à Paris. Certaines modalités sont à distance.' },
+  { q: 'Où se déroulent les formations ?', a: 'Notre école principale se trouve à Puget-sur-Argens. À Paris, le centre accueille le DESP et proposera prochainement nos deux mastères en intelligence artificielle. Certains cours se suivent à distance selon le parcours.' },
   { q: 'Comment sont validés les prérequis ?', a: 'Les prérequis sont étudiés avec l’équipe admissions avant l’entrée en formation afin de sécuriser le dossier candidat.' },
 ];

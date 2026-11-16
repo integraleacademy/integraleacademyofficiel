@@ -23,7 +23,7 @@ export const seoPages: Record<string, SeoPage> = {
   },
   '/centres': {
     title: 'Nos écoles et lieux de formation',
-    description: 'Retrouvez les formations de la Côte d’Azur à Puget-sur-Argens et notre centre de Paris, réservé au DESP. Consultez les adresses et les dates.',
+    description: 'Retrouvez les adresses de nos centres de Puget-sur-Argens et de Paris. À Paris, découvrez le DESP et les deux mastères en intelligence artificielle à venir.',
     label: 'Lieux de formation', type: 'CollectionPage',
   },
   '/formations-securite': {

@@ -124,7 +124,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<Rec
             </div>
           </div>
           <div className={styles.otherLocations}>
-            <p>Pour suivre le DESP, vous pouvez également choisir Paris.</p>
+            <p>Vous pouvez préparer le DESP à Paris. Nos deux mastères en intelligence artificielle y ouvriront prochainement.</p>
             <div className={school.locationGrid}>
               {otherLocations.map(location => <article key={location.id}>
                 <p className={styles.locationLabel}>Centre de formation</p><h3>{location.name}</h3><CampusFormationTags tags={location.tags} /><address>{location.address}</address><p>{location.detail}</p>

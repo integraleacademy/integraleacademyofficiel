@@ -740,7 +740,7 @@ export function PlanningClient({ initialSessions, initialLocation = 'all' }: { i
                     }}
                     className={'rounded-full px-3.5 py-2.5 text-xs font-black transition sm:px-4 ' + (selected ? 'planning-neutral-action' : 'text-academy-muted hover:text-academy-ink')}
                   >
-                    {filter.key === 'paris' && activeFormation === 'all' ? 'Paris · DESP uniquement' : filter.label}
+                    {filter.label}
                   </button>
                 );
               })}

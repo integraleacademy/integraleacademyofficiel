@@ -284,7 +284,7 @@ export function Footer(){
         </div>
         <ul className={footerStyles.locations}>
           <li><strong>Intégrale Academy Côte d'Azur :</strong> 54 chemin du Carreou 83480 PUGET SUR ARGENS</li>
-          <li><strong>Intégrale Academy Paris · DESP uniquement</strong><br /> {PARIS_ADDRESS}</li>
+          <li><strong>Intégrale Academy Paris</strong><br /> {PARIS_ADDRESS}</li>
         </ul>
       </section>
       <div className={footerStyles.bottom}>
