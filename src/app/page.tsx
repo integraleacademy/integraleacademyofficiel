@@ -5,6 +5,8 @@ import { HomeHeroIllustrations } from '@/components/HomeHeroIllustrations';
 import { AcademyJourney } from '@/components/AcademyExperience';
 import { BtsTrainingGrid, type BtsTrainingHighlight } from '@/components/BtsTrainingGrid';
 import { BtsTrainingComparisonModal } from '@/components/BtsTrainingComparisonModal';
+import { TrainingCarousel } from '@/components/TrainingCarousel';
+import { degreeFamilies } from '@/data/upcoming-trainings';
 import { locations } from '@/data/locations';
 import { CampusSection } from '@/components/CampusSection';
 import { GoogleReviewsSection } from '@/components/GoogleReviewsSection';
@@ -188,6 +190,25 @@ export default async function Home() {
           </div>
         </div>
       </section>
+
+      {degreeFamilies.map(family => (
+        <section key={family.id} id={family.id} aria-labelledby={`${family.id}-heading`}
+          className={`${carouselStyles.section} ${family.id === 'bachelors' ? carouselStyles.sectionAlternate : ''}`}>
+          <div className="page-container">
+            <div className={carouselStyles.heading}>
+              <h2 id={`${family.id}-heading`}>{family.label}</h2>
+              <p>{family.level}</p>
+            </div>
+            <TrainingCarousel
+              label={`Découvrir nos ${family.label.toLowerCase()}`}
+              tabListLabel={`Choisir un ${family.singular.toLowerCase()}`}
+              previousLabel={`${family.singular} précédent`}
+              nextLabel={`${family.singular} suivant`}
+              items={family.items}
+            />
+          </div>
+        </section>
+      ))}
 
       <AcademyJourney />
 

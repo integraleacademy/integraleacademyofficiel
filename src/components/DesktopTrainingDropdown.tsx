@@ -1,85 +1,104 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import Link from 'next/link';
+import { trainingNavigation } from '@/data/navigation';
+import { degreeMenuGroups, professionalTitleGroup } from '@/data/upcoming-trainings';
+import { AnnouncedTrainingGroup } from './AnnouncedTrainingGroup';
 
-type TrainingNavItem = readonly [label: string, href: string, description: string, icon: string];
+export function DesktopTrainingDropdown({ label }: { label: string }) {
+  const [openMode, setOpenMode] = useState<'hover' | 'expanded' | null>(null);
+  const root = useRef<HTMLDivElement>(null);
+  const trigger = useRef<HTMLButtonElement>(null);
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const panelId = useId();
 
-type DesktopTrainingDropdownProps = {
-  label: string;
-  items: readonly TrainingNavItem[];
-};
+  function clearCloseTimer() {
+    if (timer.current !== null) clearTimeout(timer.current);
+    timer.current = null;
+  }
 
-const closeDelayMs = 250;
+  function closeMenu() {
+    clearCloseTimer();
+    setOpenMode(null);
+  }
 
-export function DesktopTrainingDropdown({ label, items }: DesktopTrainingDropdownProps) {
-  const [isOpen, setIsOpen] = useState(false);
-  const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const clearCloseTimer = () => {
-    if (closeTimerRef.current) {
-      clearTimeout(closeTimerRef.current);
-      closeTimerRef.current = null;
+  useEffect(() => clearCloseTimer, []);
+  useEffect(() => {
+    if (!openMode) return;
+    function closeOutside(event: Event) {
+      if (event.target instanceof Node && !root.current?.contains(event.target)) closeMenu();
     }
-  };
-
-  const openMenu = () => {
-    clearCloseTimer();
-    setIsOpen(true);
-  };
-
-  const scheduleClose = () => {
-    clearCloseTimer();
-    closeTimerRef.current = setTimeout(() => {
-      setIsOpen(false);
-      closeTimerRef.current = null;
-    }, closeDelayMs);
-  };
-
-  const closeMenu = () => {
-    clearCloseTimer();
-    setIsOpen(false);
-  };
-
-  const menuStateClasses = isOpen
-    ? 'visible translate-y-0 opacity-100'
-    : 'invisible translate-y-3 opacity-0';
+    function closeOnEscape(event: KeyboardEvent) {
+      if (event.key === 'Escape') {
+        closeMenu();
+        if (root.current?.contains(document.activeElement)) trigger.current?.focus();
+      }
+    }
+    document.addEventListener('pointerdown', closeOutside);
+    document.addEventListener('focusin', closeOutside);
+    document.addEventListener('keydown', closeOnEscape);
+    return () => {
+      document.removeEventListener('pointerdown', closeOutside);
+      document.removeEventListener('focusin', closeOutside);
+      document.removeEventListener('keydown', closeOnEscape);
+    };
+  }, [openMode]);
 
   return (
     <div
-      className="group relative"
-      onMouseEnter={openMenu}
-      onMouseLeave={scheduleClose}
-      onFocus={openMenu}
-      onBlur={scheduleClose}
+      ref={root}
+      onPointerEnter={event => {
+        if (event.pointerType !== 'mouse') return;
+        clearCloseTimer();
+        setOpenMode(mode => mode ?? 'hover');
+      }}
+      onPointerLeave={event => {
+        if (event.pointerType !== 'mouse') return;
+        clearCloseTimer();
+        timer.current = setTimeout(() => setOpenMode(mode => mode === 'hover' ? null : mode), 250);
+      }}
     >
-      <span className="invisible absolute left-1/2 top-full h-5 w-[30rem] -translate-x-1/2" aria-hidden="true" />
       <button
+        ref={trigger}
         type="button"
         className="inline-flex items-center gap-1 rounded-full px-3 py-2 font-bold text-white/75 transition hover:bg-white/5 hover:text-academy-gold focus:bg-white/5 focus:text-academy-gold focus:outline-none focus:ring-2 focus:ring-academy-gold"
-        aria-haspopup="true"
-        aria-expanded={isOpen}
+        aria-expanded={openMode !== null}
+        aria-controls={panelId}
+        onClick={() => {
+          clearCloseTimer();
+          setOpenMode(mode => mode === 'expanded' ? null : 'expanded');
+        }}
       >
         <span>{label}</span>
-        <span className={`text-academy-gold transition ${isOpen ? 'rotate-180' : ''}`} aria-hidden="true">⌄</span>
+        <span className={`text-academy-gold transition ${openMode ? 'rotate-180' : ''}`} aria-hidden="true">⌄</span>
       </button>
-      <span className="absolute left-1/2 top-full z-[60] h-5 w-[30rem] -translate-x-1/2 bg-transparent" aria-hidden="true" />
-      <div className={`absolute left-1/2 top-full z-[70] mt-3 w-[30rem] -translate-x-1/2 overflow-hidden rounded-[2rem] border border-academy-gold/25 bg-academy-surface/95 p-3 shadow-[0_28px_80px_rgba(55,43,18,.18)] ring-1 ring-white/70 backdrop-blur-2xl transition duration-200 ${menuStateClasses}`}>
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(244,196,90,.28),transparent_38%),linear-gradient(135deg,rgba(255,255,255,.92),rgba(255,248,232,.72))]" aria-hidden="true" />
-        <div className="relative rounded-[1.5rem] border border-white/70 bg-white/55 p-3">
-          <p className="px-3 pb-2 text-[0.68rem] font-black uppercase tracking-[.22em] text-academy-gold-strong">Choisir une famille</p>
-          <div className="grid gap-2">
-            {items.map(([itemLabel, href, description, icon]) => (
-              <Link key={href} href={href} onClick={closeMenu} className="group/item flex items-center gap-4 rounded-[1.25rem] p-3 text-academy-ink transition hover:-translate-y-0.5 hover:bg-white hover:shadow-card focus:-translate-y-0.5 focus:bg-white focus:shadow-card focus:outline-none">
-                <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-academy-gold/18 text-xl shadow-inner transition group-hover/item:scale-105" aria-hidden="true">{icon}</span>
+      <div
+        id={panelId}
+        hidden={!openMode}
+        onFocus={() => {
+          clearCloseTimer();
+          setOpenMode('expanded');
+        }}
+        className="absolute inset-x-0 top-full z-[70] mx-auto w-[calc(100%_-_2rem)] max-w-[74rem] pt-2"
+      >
+        <div className="grid max-h-[calc(100dvh-var(--site-header-height)-1rem)] grid-cols-[.9fr_1fr_1fr] items-start gap-6 overflow-y-auto overscroll-contain rounded-[1.75rem] border border-academy-line bg-academy-surface p-5 text-academy-ink shadow-card">
+          <div className="grid gap-1 rounded-2xl bg-academy-soft/50 p-2">
+            {trainingNavigation.map(item => (
+              <Link key={item.href} href={item.href} onClick={closeMenu} className="flex items-start gap-3 rounded-xl p-3 transition hover:bg-academy-elevated focus-visible:bg-academy-elevated">
+                <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-academy-gold/20 text-xl" aria-hidden="true">{item.icon}</span>
                 <span className="min-w-0">
-                  <span className="block font-black">{itemLabel}</span>
-                  <span className="mt-1 block text-xs font-semibold leading-5 text-academy-muted">{description}</span>
+                  <span className="block font-extrabold">{item.label}</span>
+                  <span className="mt-1 block text-xs font-medium leading-5 text-academy-muted">{item.description}</span>
                 </span>
-                <span className="ml-auto text-lg text-academy-gold-strong transition group-hover/item:translate-x-1" aria-hidden="true">→</span>
+                <span className="ml-auto text-academy-gold-strong" aria-hidden="true">→</span>
               </Link>
             ))}
           </div>
+          <div className="grid gap-4">
+            {degreeMenuGroups.map(group => <AnnouncedTrainingGroup key={group.label} group={group} onNavigate={closeMenu} />)}
+          </div>
+          <AnnouncedTrainingGroup group={professionalTitleGroup} onNavigate={closeMenu} />
         </div>
       </div>
     </div>
