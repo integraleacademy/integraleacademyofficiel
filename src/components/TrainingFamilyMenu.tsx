@@ -1,8 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { useId, useLayoutEffect, useRef, useState } from 'react';
-import { trainingNavigation, type TrainingMenuFamily } from '@/data/navigation';
+import { Fragment, useId } from 'react';
+import { announcedTrainingNavigation, coreTrainingNavigation, trainingNavigation, type TrainingMenuFamily } from '@/data/navigation';
 import { TrainingStatusBadge } from './TrainingStatusBadge';
 import styles from './TrainingFamilyMenu.module.css';
 
@@ -15,8 +15,8 @@ const pictograms: Record<TrainingMenuFamily['icon'], string> = {
   'titres-professionnels': 'M8.5 7V5.5c0-.9.6-1.5 1.5-1.5h4c.9 0 1.5.6 1.5 1.5V7 M4.5 7h15A1.5 1.5 0 0 1 21 8.5v9a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5v-9A1.5 1.5 0 0 1 4.5 7Z M3 11c5 3 13 3 18 0 M10 12.8v2.7h4v-2.7',
 };
 
-function Arrow({ back = false }: { back?: boolean }) {
-  return <svg className={styles.arrow} aria-hidden="true" viewBox="0 0 20 20" fill="none"><path d={back ? 'M16 10H4m5-5-5 5 5 5' : 'M4 10h12m-5-5 5 5-5 5'} stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>;
+function Arrow() {
+  return <svg className={styles.arrow} aria-hidden="true" viewBox="0 0 20 20" fill="none"><path d="M4 10h12m-5-5 5 5-5 5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>;
 }
 
 function Pictogram({ family }: { family: TrainingMenuFamily }) {
@@ -43,21 +43,54 @@ function CourseList({ family, onNavigate }: { family: TrainingMenuFamily; onNavi
   </>;
 }
 
+type FamilyProps = { family: TrainingMenuFamily; onNavigate: () => void };
+
+const primaryIcons: Partial<Record<TrainingMenuFamily['icon'], string>> = { security: '👮', bts: '🎓', vtc: '🚘' };
+
+function PrimaryFamily({ family, onNavigate }: FamilyProps) {
+  const href = family.icon === 'vtc' ? family.courses[0].href : family.href;
+  return (
+    <div className={styles.primaryFamily}>
+      <a href={href} onClick={onNavigate} className={styles.primaryHeading}>
+        <span className={styles.primaryIcon} aria-hidden="true">{primaryIcons[family.icon]}</span>
+        <strong>{family.label}</strong>
+        <Arrow />
+      </a>
+      <p className={styles.primaryDescription}>
+        {family.courses.map((course, index) => (
+          <Fragment key={course.href}>
+            {index > 0 && (index === family.courses.length - 1 ? ' et ' : ', ')}
+            <Link href={course.href} onClick={onNavigate} aria-label={course.label}>{course.shortLabel ?? course.label}</Link>
+          </Fragment>
+        ))}.
+      </p>
+    </div>
+  );
+}
+
+function AnnouncedFamily({ family, onNavigate }: FamilyProps) {
+  const isDegree = family.icon !== 'titres-professionnels';
+  return (
+    <section data-family={family.icon} className={styles.announced}>
+      <h2>
+        <a href={family.href} onClick={onNavigate}>{family.label}{isDegree && <Arrow />}</a>
+      </h2>
+      <ul>
+        {family.courses.map(course => (
+          <li key={course.href}>
+            <a href={course.href} onClick={onNavigate}>
+              <span>{course.label}</span>
+              {course.status && <TrainingStatusBadge status={course.status} />}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
 export function TrainingFamilyMenu({ mobile = false, onNavigate }: { mobile?: boolean; onNavigate: () => void }) {
   const id = useId();
-  const [selected, setSelected] = useState<number | null>(null);
-  const cards = useRef<(HTMLButtonElement | null)[]>([]);
-  const back = useRef<HTMLButtonElement>(null);
-  const lastCard = useRef<number | null>(null);
-
-  useLayoutEffect(() => {
-    if (selected !== null) {
-      lastCard.current = selected;
-      back.current?.focus();
-    } else if (lastCard.current !== null) {
-      cards.current[lastCard.current]?.focus();
-    }
-  }, [selected]);
 
   if (mobile) return <div className={styles.mobileFamilies}>
     {trainingNavigation.map(family => <details key={family.href} name={id}>
@@ -66,16 +99,12 @@ export function TrainingFamilyMenu({ mobile = false, onNavigate }: { mobile?: bo
     </details>)}
   </div>;
 
-  return <>
-    <div role="group" aria-label="Familles de formations" className={styles.families} hidden={selected !== null}>
-      {trainingNavigation.map((family, index) => <button type="button" key={family.href} className={styles.family}
-        ref={element => { cards.current[index] = element; }} aria-expanded={selected === index} aria-controls={`${id}-list-${index}`}
-        onClick={() => setSelected(index)}><FamilyCard family={family} /></button>)}
+  return (
+    <div role="group" aria-label="Familles de formations" className={styles.overview}>
+      <div className={styles.primary}>
+        {coreTrainingNavigation.map(family => <PrimaryFamily key={family.href} family={family} onNavigate={onNavigate} />)}
+      </div>
+      {announcedTrainingNavigation.map(family => <AnnouncedFamily key={family.href} family={family} onNavigate={onNavigate} />)}
     </div>
-    {trainingNavigation.map((family, index) => <section key={family.href} id={`${id}-list-${index}`} aria-labelledby={`${id}-label-${index}`} hidden={selected !== index} className={styles.panel}>
-      <button type="button" ref={selected === index ? back : undefined} className={styles.back} onClick={() => setSelected(null)}><Arrow back /> Toutes les formations</button>
-      <h2 id={`${id}-label-${index}`}><Pictogram family={family} />{family.label}</h2>
-      <CourseList family={family} onNavigate={onNavigate} />
-    </section>)}
-  </>;
+  );
 }

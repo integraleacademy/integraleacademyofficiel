@@ -46,7 +46,6 @@ export function DesktopTrainingDropdown({ label }: { label: string }) {
   return (
     <div
       ref={root}
-      className={styles.dropdown}
       onPointerEnter={event => {
         if (event.pointerType !== 'mouse') return;
         clearCloseTimer();
@@ -61,7 +60,7 @@ export function DesktopTrainingDropdown({ label }: { label: string }) {
       <button
         ref={trigger}
         type="button"
-        className="inline-flex items-center gap-1 rounded-full px-3 py-2 font-bold text-white/75 transition hover:bg-white/5 hover:text-academy-gold focus:bg-white/5 focus:text-academy-gold focus:outline-none focus:ring-2 focus:ring-academy-gold"
+        className="inline-flex items-center gap-1 rounded-full px-3 py-2 font-bold text-white/75 transition hover:bg-white/5 hover:text-academy-gold aria-expanded:bg-white/5 aria-expanded:text-academy-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-academy-gold"
         aria-expanded={openMode !== null}
         aria-controls={panelId}
         onClick={() => {
@@ -82,7 +81,7 @@ export function DesktopTrainingDropdown({ label }: { label: string }) {
         className={styles.flyout}
       >
         <div className={styles.surface}>
-          <TrainingFamilyMenu key={openMode === null ? 'closed' : 'open'} onNavigate={closeMenu} />
+          <TrainingFamilyMenu onNavigate={closeMenu} />
         </div>
       </div>
     </div>
