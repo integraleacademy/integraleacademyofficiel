@@ -166,7 +166,6 @@ export function SsiapReferencePage({ sessions }: { sessions: any[] }) {
       theme="red"
     />
 
-    <CourseBrochureCard course="ssiap-1" />
 
     <CourseJourney course="ssiap-1">
       <Section id="metier" eyebrow="01 / Le métier" title={<>Un rôle essentiel dans les <span className={mos.accent}>ERP et les IGH</span></>} intro={<>L’agent SSIAP 1 protège les personnes et les bâtiments. Il prévient les risques, contrôle les installations et intervient au sein d’un service de sécurité incendie.</>}>
@@ -180,7 +179,6 @@ export function SsiapReferencePage({ sessions }: { sessions: any[] }) {
       </Section>
     </CourseJourney>
 
-    <CourseTeamBanner />
 
     <Section id="admission" eyebrow="02 / Admission" title={<>Les prérequis, <span className={mos.accent}>expliqués simplement</span></>} intro={<>Notre équipe vérifie chaque pièce avant l’entrée en formation pour sécuriser votre admission et éviter toute mauvaise surprise le jour de l’examen.</>} tone="paper">
       <div className={mos.prerequisites}>{prerequisites.map(([title, text], index) => <article key={title}><span>0{index + 1}</span><h3>{title}</h3><p>{text}</p></article>)}</div>
@@ -188,13 +186,15 @@ export function SsiapReferencePage({ sessions }: { sessions: any[] }) {
       <div className={mos.enrollment}><Eyebrow>Inscription</Eyebrow><h3 className="mt-3 text-3xl font-black">Cinq étapes, un dossier maîtrisé</h3><ol>{enrollment.map((item, index) => <li key={item}><span>0{index + 1}</span><p>{item}</p></li>)}</ol></div>
     </Section>
 
+    <CourseBrochureCard course="ssiap-1" />
     <Section enhanced id="programme" eyebrow="03 / Programme" title={<>67 heures pour devenir opérationnel</>} intro={<>Un programme réglementaire complet qui progresse des fondamentaux du feu jusqu’aux rondes et mises en situation professionnelles.</>}>
       <TrainingProgramDownload href="/documents/programme-ssiap-1.pdf" course="SSIAP 1" theme="red" className="mb-6 w-full sm:w-auto" />
       <SsiapProgramExplorer parts={program} />
     </Section>
 
+    <CourseTeamBanner />
     <section id="pedagogie" className={`${styles.terrain} ${experience.retained} ${experience.terrain} ${mos.section}`} aria-labelledby="terrain-title"><div className={mos.container}>
-      <div className={mos.sectionHeading}><div><p className={styles.eyebrow}>04 / Votre formation, sur le terrain</p><h2 id="terrain-title" className={styles.sectionTitle}>Comprendre en cours.<br /><em>Apprendre en pratiquant</em></h2></div><p className={styles.intro}>À Puget-sur-Argens, les connaissances prennent forme dans les exercices. Découvrez votre environnement de formation et les gestes que vous travaillerez.</p></div>
+      <div className={mos.sectionHeading}><div><p className={styles.eyebrow}>Bienvenue chez Intégrale Academy</p><h2 id="terrain-title" className={styles.sectionTitle}>Comprendre en cours.<br /><em>Apprendre en pratiquant</em></h2></div><p className={styles.intro}>À Puget-sur-Argens, les connaissances prennent forme dans les exercices. Découvrez votre environnement de formation et les gestes que vous travaillerez.</p></div>
       <div className={experience.pedagogyLead}><div><p className={experience.eyebrow}>Pédagogie terrain</p><h3>On apprend en faisant</h3><p>Cours réglementaires, démonstrations et entraînements sont complétés par des rondes, des manipulations et des scénarios proches du terrain.</p><ul>{['Manipulation des équipements', 'Rondes avec anomalies', 'Visites applicatives', 'Mises en situation', 'Entraînement au QCM', 'Préparation à l’examen'].map((item, index) => <li key={item}><span>0{index + 1}</span>{item}</li>)}</ul></div><div className={experience.pedagogyVisual}><MissionAnimation variant="ssiap" illustration={originalArtwork['ssiap-1-mission-ensemble']} /></div></div>
       <div className={experience.practiceGallery}><TrainingMotionGallery variant="ssiap" illustrations={ssiapPracticeArtwork} /></div>
       <div className="mt-10"><div className={styles.campusPhotos}>

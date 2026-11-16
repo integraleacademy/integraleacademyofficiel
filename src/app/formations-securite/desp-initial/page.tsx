@@ -1,5 +1,4 @@
 import { CourseFilm } from '@/components/CourseFilm';
-import { CourseTeamBanner } from '@/components/CourseTeamBanner';
 import { CourseBrochureCard } from '@/components/CourseBrochureCard';
 import { TrainingReferencePage, TrainingReferenceSection, TrainingReferenceCampus, TrainingReferenceContact, TrainingReferenceMobileBar } from '@/components/TrainingReferenceLayout';
 import { TrainingCourseTestimonials } from '@/components/TrainingCourseTestimonials';
@@ -110,7 +109,6 @@ export default async function DespInitialPage(){
       theme="orange"
     />
 
-    <CourseBrochureCard course="dirigeant" />
 
     <CourseFilm film="desp" title="Préparer son projet d’entreprise"
       description="Créer sa société de sécurité privée, la gérer et encadrer son équipe. Découvrez ce que vous préparez en formation DESP." />
@@ -119,13 +117,13 @@ export default async function DespInitialPage(){
       <section className="page-container py-10"><MissionAnimation variant="despInitial" className="mb-8" illustration={originalArtwork['desp-initial-mission']} /><div className="grid gap-4 md:grid-cols-3"><FeatureCard title="Durée">7 semaines · 245 heures</FeatureCard><FeatureCard title="Public concerné">Candidats souhaitant acquérir ou consolider les compétences de dirigeant en sécurité privée.</FeatureCard><FeatureCard title="Prérequis">Niveau 4 ou expérience à valider avec l’équipe admissions ; conditions CNAPS et honorabilité à vérifier.</FeatureCard><FeatureCard title="Lieux">Distanciel + présentiel à Paris ou Puget-sur-Argens selon les sessions.</FeatureCard><FeatureCard title="Financement">CPF, France Travail, entreprise ou facilités de paiement selon dossier.</FeatureCard><FeatureCard title="Certification / examen"><strong>Titre RNCP Dirigeant d’entreprise de sécurité privée – niveau 5</strong><br/>Titre : Dirigeant d’entreprise de sécurité privée · Sigle : DESP · Code : {despInitialAdminData.rncpCode} · Certificateur : Scotia Formation · Échéance actuelle : 28 mars 2027 · Durée : {despInitialAdminData.duration.total} · Tarif actuel : {despInitialAdminData.priceLabel}<br/><span className="mt-2 block">Cette certification permet de justifier de l’aptitude professionnelle nécessaire à la demande d’agrément dirigeant auprès du CNAPS. L’agrément reste délivré séparément par le CNAPS après étude du dossier.</span></FeatureCard></div></section>
     </CourseJourney>
 
-    <CourseTeamBanner />
     <ConversionStrip theme="orange"/>
     <TrainingReferenceSection id="metier" eyebrow="01 — Le métier" title="Quel est le rôle d’un dirigeant d’entreprise de sécurité privée ?" intro="Le dirigeant d’entreprise de sécurité privée crée, reprend, dirige ou développe une structure exerçant une ou plusieurs activités réglementées de sécurité privée. Il veille au respect du Livre VI du Code de la sécurité intérieure, pilote la stratégie de l’entreprise, contrôle son équilibre financier, développe son activité commerciale et encadre les équipes."><DespIllustratedCards items={jobMissions}/><Note>Le dirigeant ne réalise pas nécessairement lui-même les missions opérationnelles. S’il exerce personnellement des activités d’agent de sécurité, il doit également détenir la carte professionnelle correspondant à l’activité exercée.</Note></TrainingReferenceSection>
     <Info title="À qui s’adresse la formation ?" items={audience}/><NoteSection>La formation ne s’adresse pas uniquement aux agents de sécurité expérimentés. Une expérience du secteur constitue un avantage, mais l’admission dépend de l’ensemble du profil et des conditions du certificateur.</NoteSection>
     <TextSection title="Quels sont les prérequis pour entrer en DESP initial ?"><CardGrid items={prerequisites}/><Note>Chaque candidature est étudiée individuellement. Un entretien préalable permet de vérifier le niveau, l’expérience, la cohérence du projet et la capacité à suivre une formation intensive de niveau 5.</Note></TextSection>
     <TextSection title="Quelles conditions faut-il remplir pour obtenir l’agrément dirigeant ?" intro="Le CNAPS vérifie notamment :"><CardGrid items={cnaps}/><Note>La réussite au titre DESP ne garantit pas automatiquement la délivrance de l’agrément. La décision appartient au CNAPS après enquête administrative.</Note><div className="mt-5"><Button href={contactHref} variant="orange">Faire vérifier mes prérequis</Button></div></TextSection>
     <TextSection id="format" title="Une formation hybride de 245 heures"><div className="grid gap-4 md:grid-cols-2"><ListCard title="5 semaines à distance – 175 heures" items={['plateforme pédagogique accessible en ligne','cours et ressources numériques','études de cas','travaux individuels','préparation du projet professionnel','accompagnement par l’équipe pédagogique','évaluations et suivi de progression']}/><ListCard title="2 semaines en présentiel – 70 heures" items={['mises en situation','études de cas collectives','entraînements aux évaluations','travail sur la création ou la reprise d’entreprise','gestion financière et commerciale','management','préparation aux soutenances et au jury']}/></div><p className="mt-5 text-sm font-semibold leading-6 text-academy-muted">Lieux possibles selon les sessions administrées : Paris ou Puget-sur-Argens.</p></TextSection>
+    <CourseBrochureCard course="dirigeant" />
     <ProgramSection/>
     <TrainingReferenceCampus description="Découvrez notre centre de Puget-sur-Argens. Le parcours DESP propose aussi Paris selon le calendrier des sessions." />
     <IntegraleWelcomePack course="desp-initial" />

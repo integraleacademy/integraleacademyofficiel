@@ -332,13 +332,11 @@ export function BtsMcoReferencePage() {
 
       <BtsSectionNavigation code="MCO" competencyHref="#metier" competencyLabel="Le métier" faqHref="#faq-mco" registrationHref={applicationUrl} />
 
-      <CourseBrochureCard course="mco" />
 
       <CourseJourney course="bts-mco">
         <BtsStudentBenefits courseName="BTS MCO" />
       </CourseJourney>
 
-      <CourseTeamBanner />
 
       <Section
         id="pour-qui"
@@ -393,9 +391,10 @@ export function BtsMcoReferencePage() {
         <MissionAnimation variant="mco" className="mt-8" illustration={btsMissionArtwork.mco} />
       </Section>
 
+      <CourseTeamBanner />
       <Section
         id="formats"
-        eyebrow="03 — Deux formats, le même BTS"
+        eyebrow="Bienvenue chez Intégrale Academy"
         title={<>Choisissez la façon d’étudier qui vous correspond vraiment</>}
         intro={<>Le format est un choix d’organisation. L’exigence, le diplôme et l’accompagnement restent au cœur du parcours.</>}
       >
@@ -472,6 +471,7 @@ export function BtsMcoReferencePage() {
         </article>
       </Section>
 
+      <CourseBrochureCard course="mco" />
       <Section
         id="programme"
         eyebrow="05 — Le programme et le diplôme"

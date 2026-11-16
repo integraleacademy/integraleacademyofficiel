@@ -179,7 +179,6 @@ export default function VtcPage() {
       theme="violet"
     />
 
-    <CourseBrochureCard course="vtc" />
 
     <CourseJourney course="vtc">
       <section className={styles.accreditations}>
@@ -201,7 +200,6 @@ export default function VtcPage() {
       </section>
     </CourseJourney>
 
-    <CourseTeamBanner />
 
     <section id="formation" className={styles.elearning}>
       <div className={styles.container}>
@@ -250,6 +248,7 @@ export default function VtcPage() {
       </div>
     </section>
 
+    <CourseBrochureCard course="vtc" />
     <section id="programme" className={styles.program}>
       <div className={styles.container}>
         <div className={styles.sectionHead}><div><span>06 — Les compétences</span><h2>Bien plus que conduire.<br/><em>Devenez professionnel</em></h2></div><p>Le programme suit les compétences évaluées à l’examen et celles qui feront la différence face à vos futurs clients.</p></div>
@@ -294,11 +293,12 @@ export default function VtcPage() {
       </div>
     </section>
 
+    <CourseTeamBanner />
     <section className={styles.local}>
       <div className={styles.container}>
         <div className={styles.localCard}>
           <div className={styles.localVisual}><div className={styles.coast}><span>Nice</span><span>Cannes</span><span>Fréjus</span><span>Toulon</span></div><div className={styles.carBadge}><Icon name="car"/></div></div>
-          <div className={styles.localCopy}><span>10 — La Côte d’Azur comme terrain de jeu</span><h2>Apprenez là où<br/>vous allez <em>conduire</em></h2><p>Les gares, les hôtels, les aéroports, les événements et les exigences d’une clientèle internationale font de notre territoire un cadre idéal pour apprendre le métier.</p><div className={styles.locationChips}><span>Nice</span><span>Cannes</span><span>Fréjus</span><span>Toulon</span></div></div>
+          <div className={styles.localCopy}><span>Bienvenue chez Intégrale Academy</span><h2>Apprenez là où<br/>vous allez <em>conduire</em></h2><p>Les gares, les hôtels, les aéroports, les événements et les exigences d’une clientèle internationale font de notre territoire un cadre idéal pour apprendre le métier.</p><div className={styles.locationChips}><span>Nice</span><span>Cannes</span><span>Fréjus</span><span>Toulon</span></div></div>
         </div>
       </div>
     </section>

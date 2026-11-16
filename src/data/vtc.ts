@@ -36,8 +36,10 @@ export function isVtcRegistrationOpen(deadline: string | Date, referenceDate: Da
   return lastDay > today || (lastDay === today && Number(parisHour.format(referenceDate)) < 12);
 }
 
+export const vtcDeadlineTimeLabel = 'avant 12 h';
+
 export function formatVtcDeadline(value?: string | Date | null) {
-  return value ? formatSessionDate(value) + ' avant 12 h' : 'À confirmer';
+  return value ? formatSessionDate(value) + ' ' + vtcDeadlineTimeLabel : 'À confirmer';
 }
 
 export function formatVtcExamDate(value?: string | Date | null) {

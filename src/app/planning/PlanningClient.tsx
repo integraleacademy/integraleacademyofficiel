@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
-import { formatSessionDate, formatSessionPeriod, formatSplitInPersonPeriod, hasDetailedDeliveryPeriods } from '@/lib/public-sessions';
+import { formatSessionDate, formatSessionPeriod, formatSplitInPersonPeriod, hasDetailedDeliveryPeriods, inPersonPeriods, parisDateKey } from '@/lib/public-sessions';
 import { getSessionSeatAvailability, resolveSessionSeatCapacity } from '@/lib/session-seat-availability';
 import { directorPlanningLocations, sessionLocationFilters, sessionMatchesLocation, type DirectorLocationFilterKey, type SessionLocationFilterKey } from '@/lib/session-location-filter';
 import { formatTrainingPrice } from '@/lib/training-price';
@@ -11,7 +11,7 @@ import { planningFormationHref } from '@/lib/planning-data';
 import { planningSsiapCourse, ssiapPlanningCourses, ssiapPlanningGroups, ssiapPlanningContactHref, type SsiapPlanningCourse } from '@/lib/planning-ssiap';
 import { SsiapCourseChoices } from './SsiapCourseChoices';
 import { DirectorLocationChoices } from './DirectorLocationChoices';
-import { formatVtcDeadline, formatVtcExamDate, vtcCourse } from '@/data/vtc';
+import { formatVtcDeadline, formatVtcExamDate, vtcCourse, vtcDeadlineTimeLabel } from '@/data/vtc';
 import styles from './planning.module.css';
 import { PlanningPreview, type PlanningFormationKey } from './PlanningPreview';
 import { PlanningCalendar } from './PlanningCalendar';
@@ -311,33 +311,76 @@ function deliveryPeriodRows(session: Session): { label: string; value: string; i
 const previewDate = new Intl.DateTimeFormat('fr-FR', {
   day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Europe/Paris',
 });
+const previewDayMonth = new Intl.DateTimeFormat('fr-FR', {
+  day: 'numeric', month: 'long', timeZone: 'Europe/Paris',
+});
+
+function SessionDateMark({ value, label }: { value: Date; label: string }) {
+  const parts = previewDate.formatToParts(value);
+  return <div className={styles.dateMark}>
+    <span className={styles.dateLabel}>{label}</span>
+    <time dateTime={parisDateKey(value)} aria-label={previewDate.format(value)}>
+      <b>{formatDayParis.format(value)}</b>
+      <span>{parts.find(part => part.type === 'month')?.value}<small>{parts.find(part => part.type === 'year')?.value}</small></span>
+    </time>
+  </div>;
+}
+
+function previewPeriod(from: string | Date, to: string | Date) {
+  const start = new Date(from);
+  const end = new Date(to);
+  if (!(end >= start)) return formatSessionPeriod(from, to);
+  const startKey = parisDateKey(start);
+  const endKey = parisDateKey(end);
+  if (startKey === endKey) return previewDate.format(start);
+  let first = previewDate.format(start);
+  if (startKey.slice(0, 7) === endKey.slice(0, 7)) first = String(Number(startKey.slice(8)));
+  else if (startKey.slice(0, 4) === endKey.slice(0, 4)) first = previewDayMonth.format(start);
+  return `Du ${first} au ${previewDate.format(end)}`;
+}
 
 function NextSessionSummary({ session }: { session: Session }) {
   const isVtc = session.scheduleKind === 'vtc-exam';
-  const start = new Date(session.startDate);
-  const end = session.endDate ? new Date(session.endDate) : start;
-  const dates = isVtc ? formatVtcDeadline(session.vtcDates?.deadline || session.startDate)
-    : previewDate.formatRange(start, end >= start ? end : start);
-  const facts = [];
+  const start = new Date(isVtc ? session.vtcDates?.deadline || session.startDate : session.startDate);
+  const end = !isVtc && session.endDate ? new Date(session.endDate) : null;
+  const hasEnd = end && end > start && parisDateKey(end) !== parisDateKey(start);
+  const availability = isVtc ? null : planningSeatAvailability(session);
+  const details: { label: string; value: string; icon: IconName }[] = [];
   if (isVtc) {
-    facts.push(['Examen théorique', formatVtcExamDate(session.vtcDates?.theory)], ['Examen pratique', formatVtcExamDate(session.vtcDates?.practical)]);
+    details.push(
+      { label: 'Examen théorique', value: formatVtcExamDate(session.vtcDates?.theory), icon: 'screen' },
+      { label: 'Examen pratique', value: formatVtcExamDate(session.vtcDates?.practical), icon: 'check' },
+    );
   } else {
     if (hasDetailedDeliveryPeriods(session)) {
-      if (session.remoteStartDate && session.remoteEndDate) facts.push(['À distance', formatSessionPeriod(session.remoteStartDate, session.remoteEndDate)]);
-      if (session.inPersonStartDate && session.inPersonEndDate) facts.push(['En présentiel', formatSplitInPersonPeriod(session) || formatSessionPeriod(session.inPersonStartDate, session.inPersonEndDate)]);
+      if (session.remoteStartDate && session.remoteEndDate) {
+        details.push({ label: 'À distance', value: previewPeriod(session.remoteStartDate, session.remoteEndDate), icon: 'screen' });
+      }
+      const onSite = inPersonPeriods(session);
+      if (onSite.length) details.push({
+        label: 'En présentiel', value: onSite.map(period => previewPeriod(period.start, period.end)).join('\n'), icon: 'people',
+      });
     }
-    if (session.examDate) facts.push(['Examen', formatSessionDate(session.examDate)]);
+    if (session.examDate) details.push({ label: 'Examen', value: formatSessionDate(session.examDate), icon: 'check' });
   }
-  if (session.location) facts.push(['Lieu', session.location]);
-  facts.push(['Tarif', displayPrice(session)]);
-  if (!isVtc) facts.push(['Disponibilité', planningSeatAvailability(session).label]);
+  if (session.location) details.push({ label: 'Lieu', value: session.location.replace(/^Paris\s*·\s*(?=\d.*\bParis\b)/i, ''), icon: 'location' });
 
   return <>
-    <p className={styles.nextDateLabel}>{isVtc ? 'Date limite d’inscription' : 'Dates de formation'}</p>
-    <p className={styles.nextDate}>{dates}</p>
-    <dl className={styles.nextFacts}>{facts.map(([label, value]) => (
-      <div key={label}><dt>{label}</dt><dd>{value}</dd></div>
-    ))}</dl>
+    <div className={styles.sessionDates}>
+      <SessionDateMark value={start} label={isVtc ? 'Date limite d’inscription' : hasEnd ? 'Du' : 'Date de formation'} />
+      {hasEnd && <>
+        <span className={styles.dateConnector} aria-hidden="true"><Icon name="arrow" /></span>
+        <SessionDateMark value={end} label="Au" />
+      </>}
+      {isVtc && <span className={styles.deadlineTime}><Icon name="clock" />{vtcDeadlineTimeLabel}</span>}
+    </div>
+    {details.length > 0 && <dl className={styles.sessionDetails}>{details.map(({ label, value, icon }) => (
+      <div key={label}><dt><Icon name={icon} />{label}</dt><dd>{value}</dd></div>
+    ))}</dl>}
+    <dl className={styles.sessionOffer}>
+      <div><dt>Tarif</dt><dd>{displayPrice(session)}</dd></div>
+      {availability && <div><dt className="sr-only">Disponibilité</dt><dd className={styles.seatStatus} data-tone={availability.tone}>{availability.label}</dd></div>}
+    </dl>
   </>;
 }
 
