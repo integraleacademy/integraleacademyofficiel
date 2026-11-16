@@ -1,3 +1,4 @@
+import { CourseTeamBanner } from './CourseTeamBanner';
 import editorial from './ApsEditorial.module.css';
 import type { ReactNode } from 'react';
 import type { ManualIllustration } from '@/data/manualIllustrations';
@@ -73,15 +74,38 @@ export function TrainingReferenceMissions({ items, label = 'Mission' }: { items:
   </article>)}</div>;
 }
 
-export function TrainingReferenceCampus({ title = 'Découvrez votre cadre de formation', description = 'Les espaces de l’école à Puget-sur-Argens accompagnent les cours, les échanges et la vie de votre groupe.' }: { title?: string; description?: string }) {
-  return <section className={reference.terrain} aria-label="L’école de Puget-sur-Argens"><div className={reference.container}>
-    <div className={reference.sectionHead}><div><p className={reference.eyebrow}>Votre école, en images</p><h2 className={reference.sectionTitle}>{title}</h2></div><p className={reference.intro}>{description}</p></div>
-    <div className={reference.campusPhotos}>
-      <figure><Image src="/images/campus/salle-formation.webp" alt="Salle de formation du centre Intégrale Academy à Puget-sur-Argens" width={1000} height={700} sizes="(max-width: 700px) 92vw, 720px" /><figcaption>La salle de formation</figcaption></figure>
-      <div><figure><Image src="/images/campus/accueil-centre.webp" alt="Accueil du centre de formation" width={700} height={500} sizes="(max-width: 700px) 44vw, 450px" /><figcaption>L’accueil du centre</figcaption></figure><figure><Image src="/images/campus/espace-detente.webp" alt="Espace de détente à Puget-sur-Argens" width={700} height={500} sizes="(max-width: 700px) 44vw, 450px" /><figcaption>Les espaces de pause</figcaption></figure></div>
-    </div>
-    <div className={reference.campusFooter}><span>Photos du centre Intégrale Academy · Puget-sur-Argens</span><Link href="/ecole#photos">Découvrir tous les espaces ↗</Link></div>
-  </div></section>;
+export function TrainingReferenceCampus({
+  title = 'Découvrez votre cadre de formation',
+  description = 'Les espaces de l’école à Puget-sur-Argens accompagnent les cours, les échanges et la vie de votre groupe.',
+  compact = false,
+}: { title?: string; description?: string; compact?: boolean }) {
+  return <>
+    <CourseTeamBanner />
+    <section className={compact ? styles.campusWelcome : reference.terrain} aria-label="L’école de Puget-sur-Argens">
+      <div className={reference.container}>
+        <div className={compact ? styles.campusWelcomeHead : reference.sectionHead}>
+          <div>
+            {!compact && <p className={reference.eyebrow}>Bienvenue chez Intégrale Academy</p>}
+            <h2 className={reference.sectionTitle}>{compact ? 'Bienvenue chez Intégrale Academy' : title}</h2>
+          </div>
+          <div>
+            <p className={reference.intro}>{description}</p>
+            {compact && <Link href="/ecole" className={styles.campusWelcomeLink}>Découvrir l’école <span aria-hidden="true">→</span></Link>}
+          </div>
+        </div>
+        {!compact && <>
+          <div className={reference.campusPhotos}>
+            <figure><Image src="/images/campus/salle-formation.webp" alt="Salle de formation du centre Intégrale Academy à Puget-sur-Argens" width={1000} height={700} sizes="(max-width: 700px) 92vw, 720px" /><figcaption>La salle de formation</figcaption></figure>
+            <div>
+              <figure><Image src="/images/campus/accueil-centre.webp" alt="Accueil du centre de formation" width={700} height={500} sizes="(max-width: 700px) 44vw, 450px" /><figcaption>L’accueil du centre</figcaption></figure>
+              <figure><Image src="/images/campus/espace-detente.webp" alt="Espace de détente à Puget-sur-Argens" width={700} height={500} sizes="(max-width: 700px) 44vw, 450px" /><figcaption>Les espaces de pause</figcaption></figure>
+            </div>
+          </div>
+          <div className={reference.campusFooter}><span>Photos du centre Intégrale Academy · Puget-sur-Argens</span><Link href="/ecole#photos">Découvrir tous les espaces ↗</Link></div>
+        </>}
+      </div>
+    </section>
+  </>;
 }
 
 export function TrainingReferenceContact({ description, title, href, additionalActions, assurances = [], portraitMedallion = false, schoolStyle = false }: { description: ReactNode; title?: string; href: string; additionalActions?: ReactNode; assurances?: readonly string[]; portraitMedallion?: boolean; schoolStyle?: boolean }) {

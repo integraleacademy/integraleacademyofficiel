@@ -1,4 +1,3 @@
-import { CourseTeamBanner } from '@/components/CourseTeamBanner';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import type { CertificationProject } from '@/data/certification-projects';
@@ -160,7 +159,6 @@ export function CertificationProjectPage({ project }: { project: CertificationPr
       </Section>
 
       <TrainingReferenceCampus title="Une école, une équipe, des lieux" description="Découvrez les espaces d’Intégrale Academy à Puget-sur-Argens. L’organisation propre à chaque futur parcours sera précisée avant contractualisation." />
-      <CourseTeamBanner />
 
       <Section id="debouches" eyebrow="Les perspectives professionnelles" title={<>Des compétences pour<br /><em>des métiers concrets</em></>} tone="stone" intro="Les responsabilités confiées dépendent de l’expérience, du contexte d’emploi et de l’organisation.">
         <div className={styles.careers}><div><h3>Les emplois visés</h3><ul className={styles.jobs}>{project.jobs.map(job => <li key={job}><span aria-hidden="true">↗</span>{job}</li>)}</ul>{project.employmentNote && <p className={styles.employmentNote}>{project.employmentNote}</p>}</div><aside className={styles.sectors}><p className={styles.kicker}>Les environnements de travail</p><h3>Où exercer ?</h3><p>Dans les organisations qui conçoivent, intègrent ou exploitent des produits et services fondés sur l’IA.</p><ul><li>Éditeurs de logiciels et plateformes numériques</li><li>ESN et cabinets de conseil</li><li>Industrie, services et commerce</li><li>Finance et santé, selon les exigences du secteur</li><li>Administrations et organisations publiques</li></ul></aside></div>

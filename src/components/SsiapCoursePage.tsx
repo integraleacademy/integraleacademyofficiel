@@ -1,4 +1,3 @@
-import { CourseTeamBanner } from '@/components/CourseTeamBanner';
 import { CourseBrochureCard } from '@/components/CourseBrochureCard';
 import type { ReactNode } from 'react';
 import { TrainingReferencePage, TrainingReferenceHero, TrainingReferenceSection, TrainingReferenceMissions, TrainingReferenceCampus, TrainingReferenceContact, TrainingReferenceMobileBar } from '@/components/TrainingReferenceLayout';
@@ -281,11 +280,9 @@ export function SsiapCoursePage({ config, sessions = [] }: { config: SsiapCourse
         </div>
       </nav>}
 
-      <CourseBrochureCard course={config.slug} />
 
       {heroKey ? <CourseJourney course={heroKey}>{missions}</CourseJourney> : missions}
 
-      <CourseTeamBanner />
 
       <Section id="admission" eyebrow="Admission" title="Les conditions d’accès, vérifiées avant l’inscription" intro="Chaque justificatif est contrôlé pour vous orienter vers le bon parcours et sécuriser votre entrée en formation." tone="paper">
         <div className="grid gap-4 md:grid-cols-2">
@@ -304,6 +301,7 @@ export function SsiapCoursePage({ config, sessions = [] }: { config: SsiapCourse
         </div>
       </Section>
 
+      <CourseBrochureCard course={config.slug} />
       <Section id="programme" eyebrow="Programme réglementaire" title={`${config.duration} pour maîtriser votre fonction`} intro={config.durationDetail}>
         {heroKey && <TrainingProgramDownload href={`/documents/programme-${heroKey}.pdf`} course={config.label} theme="red" className="mb-6 w-full sm:w-auto" />}
         <div className="space-y-3">
@@ -339,7 +337,8 @@ export function SsiapCoursePage({ config, sessions = [] }: { config: SsiapCourse
         </div>
       </Section>
 
-      {heroKey && <><TrainingReferenceCampus /><IntegraleWelcomePack course={heroKey} /></>}
+      <TrainingReferenceCampus compact={!heroKey} />
+      {heroKey && <IntegraleWelcomePack course={heroKey} />}
 
       <Section id="validation" eyebrow="Validation" title="Des attendus clairs, travaillés pendant le parcours" intro="La formation alterne apports réglementaires, exercices, cas concrets et préparation aux modalités de validation." tone="dark">
         {visuals && <div className="mb-7 grid items-center gap-7 overflow-hidden rounded-[1.8rem] border border-white/15 bg-white/5 p-5 sm:p-7 lg:grid-cols-[.95fr_1.05fr]">

@@ -5,6 +5,7 @@ import { useRef, useState, type ReactNode } from 'react';
 import type { toPublicSession } from '@/lib/public-session-data';
 import { planningSsiapCourse, ssiapPlanningCourses, type SsiapPlanningCourse } from '@/lib/planning-ssiap';
 import { directorPlanningLocations, nextSessionForLocation, type DirectorLocationFilterKey } from '@/lib/session-location-filter';
+import { destinationArtwork } from '@/data/siteIllustrations';
 import { DirectorLocationChoices } from './DirectorLocationChoices';
 import { SsiapCourseChoices } from './SsiapCourseChoices';
 import styles from './planning.module.css';
@@ -57,14 +58,17 @@ export function PlanningPreview({ formations, initialFormation, initialSsiapCour
   let title = 'Quelle formation vous intéresse ?';
   if (needsLocation) title = 'Dans quel centre souhaitez-vous vous former ?';
   else if (needsCourse) title = 'Quel parcours SSIAP souhaitez-vous suivre ?';
-  else if (formation) title = course?.label || [formation.label, location?.label].filter(Boolean).join(' · ');
+  else if (formation) title = course?.label || [formation.key === 'director' ? 'Dirigeant' : formation.label, location?.label].filter(Boolean).join(' · ');
 
   const showSession = formation && !needsLocation && !needsCourse;
   const openDates = () => formation && onChoose(formation.key, courseKey, locationKey);
 
   return (
-    <div id="prochaine-session" className={styles.preview}>
+    <div id="prochaine-session" className={styles.preview} data-summary={showSession || undefined}>
       <div className={styles.previewHeading}>
+        {showSession && <div className={styles.summaryArt} aria-hidden="true">
+          <Image src={locationKey ? destinationArtwork[locationKey].src : formation.image} alt="" fill sizes="(max-width: 600px) 42vw, 290px" />
+        </div>}
         <div>
           <p className={styles.eyebrow}>{showSession ? 'Prochaine session' : 'La formation'}</p>
           <h2 ref={heading} tabIndex={-1}>{title}</h2>

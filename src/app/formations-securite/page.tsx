@@ -1,4 +1,4 @@
-import { CourseTeamBanner } from '@/components/CourseTeamBanner';
+import { TrainingReferenceCampus } from '@/components/TrainingReferenceLayout';
 import { createPageMetadata } from '@/lib/seo';
 import { VisualSection } from '@/components/visuals';
 import {
@@ -53,7 +53,7 @@ export default function Page() {
           </div>
         </section>
       </VisualSection>
-      <CourseTeamBanner />
+      <TrainingReferenceCampus compact />
     </>
   );
 }

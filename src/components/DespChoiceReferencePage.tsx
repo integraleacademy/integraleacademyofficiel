@@ -127,7 +127,7 @@ function DespLocationsNotice() {
   return (
     <section className="page-container py-10">
       <div className="rounded-[2rem] border border-orange-300 bg-orange-50 p-6 shadow-soft sm:p-8">
-        <p className="text-xs font-black uppercase tracking-[.22em] text-orange-700">Dates DESP selon le lieu</p>
+        <p className="text-xs font-black uppercase tracking-[.22em] text-orange-700">Bienvenue chez Intégrale Academy</p>
         <h2 className="mt-3 text-3xl font-black text-orange-950">Des sessions DESP sont prévues sur plusieurs sites</h2>
         <p className="mt-4 max-w-3xl text-base font-semibold leading-7 text-orange-950/80">
           Attention : le planning DESP peut proposer des dates à Paris ou sur la Côte d’Azur, à Puget-sur-Argens. Vérifiez bien le lieu indiqué avant de choisir votre session ou de déposer votre dossier.
@@ -162,7 +162,6 @@ export function DespChoiceReferencePage({ sessions }: { sessions: TrainingDatesP
         visual={<div className="overflow-hidden rounded-[2rem] border border-orange-200 bg-orange-50 p-2 shadow-card"><ManualArtwork illustration={despArtwork.management} priority /></div>}
       />
 
-      <CourseBrochureCard course="despvaeouinitial" />
 
       <CourseFilm film="desp" title="Diriger une entreprise de sécurité privée"
         description="Découvrez le métier en vidéo, puis voyez si la formation initiale ou la VAE correspond à votre expérience." />
@@ -170,6 +169,7 @@ export function DespChoiceReferencePage({ sessions }: { sessions: TrainingDatesP
       <section className="bg-orange-50/60 px-4 py-10"><div className="page-container max-w-4xl"><OrientationAssistant initialFormationKey="desp" /></div></section>
 
       <DespJourney>
+        <CourseBrochureCard course="despvaeouinitial" />
         <section id="choisir-desp" className="scroll-mt-[120px] bg-gradient-to-b from-orange-50 via-white to-orange-50/60 px-4 py-16 sm:py-20">
           <div className="page-container">
             <div className="mx-auto max-w-3xl text-center">

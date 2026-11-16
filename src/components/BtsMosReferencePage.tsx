@@ -1,4 +1,3 @@
-import { CourseTeamBanner } from '@/components/CourseTeamBanner';
 import { CourseBrochureCard } from '@/components/CourseBrochureCard';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -120,7 +119,6 @@ export function BtsMosReferencePage() {
 
     <div className={styles.navigation}><TrainingSectionNavigation mark="MOS" title="BTS MOS" items={navigation} registrationHref="#admission" registrationLabel="Je m’inscris" theme="bts" ariaLabel="Sommaire du BTS MOS" /></div>
 
-    <CourseBrochureCard course="mos" />
 
     <CourseJourney course="bts-mos">
       <section id="metier" className={styles.section} aria-labelledby="mos-mission-title">
@@ -136,7 +134,6 @@ export function BtsMosReferencePage() {
       </section>
     </CourseJourney>
 
-    <CourseTeamBanner />
 
     <section id="alternance" className={`${styles.section} ${styles.tinted}`}>
       <div className={styles.container}>
@@ -196,6 +193,7 @@ export function BtsMosReferencePage() {
       </div>
     </ApsFacilitiesSections>
 
+    <CourseBrochureCard course="mos" />
     <section id="programme" className={`${styles.section} ${styles.program}`}>
       <div id="guide-complet" className={styles.container}>
         <Heading label="04 / Le programme complet" title={<>Comprendre. Organiser.<br /><span>Manager</span></>} text="1 350 heures sur deux ans. Quatre blocs professionnels, des enseignements généraux et des situations issues de votre alternance." />

@@ -1,3 +1,4 @@
+import { CourseTeamBanner } from './CourseTeamBanner';
 import Image from 'next/image';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
@@ -75,6 +76,7 @@ export async function ApsFacilitiesSections({ course = 'aps', children }: { cour
         {children}
       </div>
     </section>
+    <CourseTeamBanner />
     <section id={schoolId} aria-labelledby={`${schoolId}-title`} className={`${styles.section} ${styles.school}`}>
       <div className="page-container">
         <div className={styles.heading}><div><p className={styles.eyebrow}>Votre école sur la Côte d’Azur</p><h2 id={`${schoolId}-title`}>Bienvenue chez<br /><em>Intégrale Academy</em></h2></div><div><p>{isMos ? 'Depuis 2018, notre équipe vous accueille à Puget-sur-Argens. En BTS MOS, vous retrouvez votre promotion dans une école à taille humaine : des salles de cours, des espaces pour travailler ensemble et une équipe qui suit votre projet pendant les deux années. Le parcours 100 % en ligne conserve ses cours en direct en visioconférence.' : 'Depuis 2018, notre équipe vous accueille à Puget-sur-Argens. Des salles de cours aux espaces de pratique, vous apprenez dans une école à taille humaine.'}</p><Link className={styles.schoolLink} href="/ecole">Entrez, on vous fait visiter <span aria-hidden="true">↗</span></Link></div></div>

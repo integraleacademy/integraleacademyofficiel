@@ -338,13 +338,11 @@ export function BtsNdrcReferencePage() {
 
       <BtsSectionNavigation code="NDRC" competencyHref="#competences" competencyLabel="Compétences" faqHref="#faq-ndrc" registrationHref={applicationUrl} />
 
-      <CourseBrochureCard course="ndrc" />
 
       <CourseJourney course="bts-ndrc">
         <BtsStudentBenefits courseName="BTS NDRC" />
       </CourseJourney>
 
-      <CourseTeamBanner />
 
       <Section
         id="pour-qui"
@@ -399,9 +397,10 @@ export function BtsNdrcReferencePage() {
         <MissionAnimation variant="ndrc" className="mt-8" illustration={btsMissionArtwork.ndrc} />
       </Section>
 
+      <CourseTeamBanner />
       <Section
         id="formats"
-        eyebrow="03 — Deux formats, le même BTS"
+        eyebrow="Bienvenue chez Intégrale Academy"
         title={<>Choisissez la façon d’étudier qui vous correspond vraiment</>}
         intro={<>Le format est un choix d’organisation. L’exigence, le diplôme et l’accompagnement restent au cœur du parcours.</>}
       >
@@ -478,6 +477,7 @@ export function BtsNdrcReferencePage() {
         </article>
       </Section>
 
+      <CourseBrochureCard course="ndrc" />
       <Section
         id="programme"
         eyebrow="05 — Le programme et le diplôme"

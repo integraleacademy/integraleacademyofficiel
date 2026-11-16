@@ -1,4 +1,3 @@
-import { CourseTeamBanner } from '@/components/CourseTeamBanner';
 import { CourseBrochureCard } from '@/components/CourseBrochureCard';
 import type { ReactNode } from 'react';
 import editorial from './ApsEditorial.module.css';
@@ -282,7 +281,6 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
 
     <ApsSectionNavigation registrationHref="#dates-tarifs" />
 
-    <CourseBrochureCard course="aps" />
 
     <CourseFilm film="aps" title="Devenir agent de sécurité"
       description="Surveiller un site, contrôler les accès, prévenir les incidents… Découvrez le métier auquel prépare notre formation APS." />
@@ -294,7 +292,6 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
       </Section>
     </ApsJourney>
 
-    <CourseTeamBanner />
 
     <Section id="admission" eyebrow="02 — Admission" title={<>Votre dossier est-il prêt pour l’APS&nbsp;?</>} intro={<>Les conditions essentielles, une équipe pour vous guider et un dossier préparé ensemble.</>} tone="stone">
       <ApsAdmission prerequisites={prerequisites} href={apsContact('autorisation préalable CNAPS (ministère de l’Intérieur)')} />
@@ -316,6 +313,7 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
 
     <ApsFacilitiesSections />
 
+    <CourseBrochureCard course="aps" />
     <Section id="programme" eyebrow="04 — Programme" title={<>Les 14 UV du programme officiel, sans raccourci</>} intro={<>Programme CPNEFP version V3.2 mis à jour le 23 juillet 2026 : 41 heures de socle de base et 134 heures de spécialité APS, soit 175 heures au total.</>}>
       <TrainingProgramDownload href="/documents/programme-aps.pdf" course="APS" theme="blue" className="mb-6 w-full sm:w-auto" />
       <ApsProgramExplorer units={program} />
