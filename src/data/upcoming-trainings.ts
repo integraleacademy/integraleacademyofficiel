@@ -64,8 +64,8 @@ export const upcomingFamilies: UpcomingFamily[] = [
       {
         anchorId: 'mastere-ingenierie-ia-generative', shortTitle: 'Expert en ingénierie', title: 'de l’IA générative', tabLabel: 'IA générative',
         description: 'Concevoir une application qui utilise des modèles génératifs, tester la qualité de ses réponses et suivre son fonctionnement après la mise en service.',
-        imageSrc: '/images/formations-annoncees/mastere-ingenierie-ia-generative.webp',
-        imageAlt: 'Deux ingénieurs comparent le croquis d’une lampe aux variantes produites par un modèle génératif.',
+        imageSrc: '/images/formations-annoncees/mastere-ingenierie-ia-generative.webp?v=assistant-ia',
+        imageAlt: 'Deux ingénieurs vérifient la réponse d’un assistant IA en la comparant au document source.',
         status: 'PROCHAINEMENT',
         topics: ['Choisir un modèle et préparer les données adaptées à l’usage visé.', 'Intégrer les composants et tester la fiabilité des résultats.', 'Déployer le système et suivre sa qualité en conditions réelles.'],
         jobs: ['Ingénieur en IA générative', 'Développeur d’applications IA', 'Architecte de solutions IA'],
