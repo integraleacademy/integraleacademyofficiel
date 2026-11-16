@@ -64,21 +64,17 @@
 .stepStatus { margin-top: 12px !important; color: rgb(var(--text-muted)); text-align: right; font-size: 11px; font-weight: 700; letter-spacing: .05em; }
 .founderWelcome { gap: 60px; }
 .welcomeLetter {
-  position: relative;
+  justify-self: center;
+  width: min(100%, 28rem);
   margin: 0;
-  padding: clamp(1.35rem, 3.1vw, 3rem);
-  border-block: 1px solid #dacfb8;
-  border-inline-start: 3px solid #c5a15f;
-  background: #faf5e9;
-  color: #263641;
   scroll-margin-top: calc(var(--site-header-height) + var(--site-section-nav-height) + 1rem);
 }
-.welcomeLetter .letterLabel { color: #6b5129; line-height: 1.4; font-size: .76rem; font-weight: 750; letter-spacing: .1em; text-transform: uppercase; }
-.welcomeLetter h3 { margin: .75rem 0 1.05rem; font: italic 400 clamp(2.1rem, 3.4vw, 3.3rem)/1.1 Georgia, serif; letter-spacing: -.04em; }
-.welcomeLetter blockquote { margin: 0; font-size: clamp(1rem, 1.2vw, 1.14rem); line-height: 1.65; }
-.welcomeLetter blockquote p + p { margin-top: .85rem; }
-.welcomeLetter .letterSignature { margin-top: 1.4rem; padding-top: .85rem; border-top: 1px solid #d7cbb2; font-family: Georgia, serif; font-size: 1.35rem; line-height: 1.35; }
-.letterSignature span { display: block; margin-top: .15rem; color: #53606a; font: 500 .84rem/1.4 system-ui, sans-serif; }
+.letterPage { display: block; width: 100%; height: auto; background: #faf6eb; box-shadow: 0 1px 3px #372d231c, 0 9px 28px #372d2314; }
+.letterTranscript { margin-top: .55rem; }
+.letterTranscript summary { width: fit-content; padding: .65rem .25rem; color: rgb(var(--text-muted)); font-size: .9rem; text-decoration: underline; text-underline-offset: .2em; cursor: pointer; }
+.letterTranscript summary:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+.letterTranscript blockquote { margin: .5rem 0 0; padding-inline-start: 1rem; border-inline-start: 2px solid #c5a15f; font-size: 1rem; line-height: 1.65; }
+.letterTranscript blockquote > * + * { margin-top: .75rem; }
 .founderSignature { margin-top: 1.3rem; display: flex; align-items: center; gap: 17px; }
 .founderSignature p { font-size: 18px; font-weight: 800; }
 .founderSignature span { display: block; color: rgb(var(--text-muted)); font-size: 12px; font-weight: 500; }

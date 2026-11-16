@@ -144,7 +144,7 @@ export function CourseFilm({ film, title, titleAccent, description }: Props) {
       <div ref={mount} hidden={display !== 'player'} className={styles.player} />
       {display !== 'player' && (
         <a className={styles.poster} href={watchUrl} target="_blank" rel="noopener noreferrer" onClick={playFromPoster} aria-label={`Lire « ${fullTitle} »`}>
-          <Image src={`/images/course-videos/${film}.webp`} alt="" fill sizes={portrait ? '(max-width: 760px) 65vw, 340px' : '100vw'} />
+          <Image src={`/images/course-videos/${film}.webp`} alt="" fill sizes={portrait ? '(max-width: 760px) 62vw, 240px' : '(max-width: 760px) min(92vw, 512px), (max-width: 1150px) 44vw, 512px'} />
           <span className={styles.play}>{playIcon}{display === 'unavailable' ? 'Lire sur YouTube' : 'Lire la vidéo'}</span>
         </a>
       )}
@@ -176,10 +176,8 @@ export function CourseFilm({ film, title, titleAccent, description }: Props) {
     <section id={anchor} data-film={film} aria-labelledby={`${anchor}-titre`} className={styles.section}>
       <div className={styles.layout}>
         <header className={styles.heading}>
-          <div>
-            <p className={styles.credit}>{video.credit}<span>{video.duration}</span></p>
-            <h2 id={`${anchor}-titre`} className={styles.title}>{title}</h2>
-          </div>
+          <p className={styles.credit}>{video.credit}<span>{video.duration}</span></p>
+          <h2 id={`${anchor}-titre`} className={styles.title}>{title}</h2>
           <div className={styles.summary}>
             <p>{description}</p>
             <a href={watchUrl} target="_blank" rel="noopener noreferrer">Voir sur YouTube <span aria-hidden="true">↗︎</span></a>
