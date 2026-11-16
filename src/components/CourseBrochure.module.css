@@ -3,6 +3,7 @@
   isolation: isolate;
   overflow: hidden;
   width: 100%;
+  border-block: clamp(8px, .85vw, 12px) solid #fff;
   background: #173844;
   color: #fffaf0;
   scroll-margin-top: calc(var(--site-header-height) + 1rem);

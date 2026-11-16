@@ -89,7 +89,7 @@ export default async function Page() {
         </div>
         <div className={styles.teamLayout}>
           <div className={experience.teamLead}>
-            <article className={experience.directorCard}>
+            <article id="equipe-clement" className={experience.directorCard}>
               <p className={experience.directorLabel}>La direction de l’école</p>
               <div className={experience.directorIdentity}>
                 <div aria-hidden="true"><TeamPortrait person="clement" size={92} /></div>
@@ -104,7 +104,7 @@ export default async function Page() {
             </figure>
           </div>
           <div className={`${styles.teamGrid} ${experience.teamCards}`}>
-            {team.map(person => <article className={`${styles.person} ${experience.teamCard}`} key={person.name}>
+            {team.map(person => <article id={`equipe-${person.portrait}`} className={`${styles.person} ${experience.teamCard}`} key={person.name}>
               <div className={styles.personAvatar} aria-hidden="true"><TeamPortrait person={person.portrait} size={92} /></div>
               <p className={experience.helpLabel}>{person.specialty}</p><h3>{person.name}</h3><p className={styles.role}>{person.role}</p><p className={styles.mission}>{person.mission}</p>
             </article>)}
