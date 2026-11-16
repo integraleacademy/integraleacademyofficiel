@@ -44,8 +44,8 @@ function JourneyVisual({ index, onNext }: { index: number; onNext: () => void })
       <CardHeader label="Le déclic" />
       <div className={styles.ambitionBody}>
         <p className={styles.cardEyebrow}>ET SI C’ÉTAIT VOUS ?</p>
-        <p className={styles.ambitionTitle}>Faites place<br />à votre <span>ambition.</span></p>
-        <p className={styles.ambitionSubtitle}>Votre entreprise de sécurité.<br />Votre vision. Votre prochain chapitre.</p>
+        <p className={styles.ambitionTitle}>Faites place<br />à votre <span>ambition</span></p>
+        <p className={styles.ambitionSubtitle}>Votre projet d’entreprise<br />dans la sécurité privée</p>
         <span className={styles.openingArrow} aria-hidden="true"><Pictogram kind="rise" /></span>
       </div>
       <div className={styles.ambitionVerbs}><span><small>01</small>Créer</span><span><small>02</small>Reprendre</span><span><small>03</small>Diriger</span></div>
@@ -57,7 +57,7 @@ function JourneyVisual({ index, onNext }: { index: number; onNext: () => void })
     <div className={`${styles.card} ${styles.trainingCard}`}>
       <CardHeader label="Formation initiale" />
       <div className={styles.durationHeadline}>
-        <strong>7</strong><div><span className={styles.cardEyebrow}>SEMAINES · 245 HEURES</span><p>Un nouveau<br /><span>cap à prendre.</span></p></div>
+        <strong>7</strong><div><span className={styles.cardEyebrow}>SEMAINES · 245 HEURES</span><p>Un nouveau<br /><span>cap à prendre</span></p></div>
       </div>
       <div className={styles.studyPlan}>
         <div className={styles.remoteStudy}><div className={styles.studyTop}><span>À DISTANCE</span><Pictogram kind="screen" /></div><p><strong>5</strong><span>semaines<small>175 heures</small></span></p><div className={styles.weekMarks} aria-hidden="true"><i /><i /><i /><i /><i /></div></div>
@@ -74,13 +74,13 @@ function JourneyVisual({ index, onNext }: { index: number; onNext: () => void })
   if (index === 2) return (
     <div className={`${styles.card} ${styles.experienceCard}`}>
       <CardHeader label="Le parcours VAE" />
-      <div className={styles.experienceHeading}><p className={styles.cardEyebrow}>VOUS AVEZ DÉJÀ LE VÉCU.</p><p className={styles.cardTitle}>L’expérience,<br /><span>c’est votre force.</span></p></div>
+      <div className={styles.experienceHeading}><p className={styles.cardEyebrow}>VOUS AVEZ DÉJÀ L’EXPÉRIENCE</p><p className={styles.cardTitle}>L’expérience,<br /><span>c’est votre force</span></p></div>
       <div className={styles.proofScene}>
         <div className={styles.proofBack} aria-hidden="true" />
         <div className={styles.proofPaper}>
           <div className={styles.paperHeading}><span>DOSSIER DE VALIDATION</span><span>DESP</span></div>
-          <strong>Votre parcours<br />a de la valeur.</strong>
-          <p>Vos missions. Vos réalisations.</p>
+          <strong>Votre parcours<br />a de la valeur</strong>
+          <p>Vos missions et vos réalisations</p>
         </div>
         <div className={styles.experienceSeal} aria-hidden="true"><Pictogram kind="rise" /></div>
       </div>
@@ -97,11 +97,11 @@ function JourneyVisual({ index, onNext }: { index: number; onNext: () => void })
     <div className={`${styles.card} ${styles.futureCard}`}>
       <div className={styles.futureOrbit} aria-hidden="true" />
       <CardHeader label="Votre prochain chapitre" />
-      <p className={styles.futureHeading}>Deux chemins.<br /><span>Une nouvelle dimension.</span></p>
-      <div className={styles.despDestination}><strong>DESP<span aria-hidden="true"><Pictogram kind="rise" /></span></strong><p>Dirigeant d’entreprise<br />de sécurité privée.</p></div>
+      <p className={styles.futureHeading}>Deux chemins<br /><span>vers le titre DESP</span></p>
+      <div className={styles.despDestination}><strong>DESP<span aria-hidden="true"><Pictogram kind="rise" /></span></strong><p>Dirigeant d’entreprise<br />de sécurité privée</p></div>
       <div className={styles.futurePaths}>
-        <Link href="/dirigeant"><span>FORMATION INITIALE<Pictogram kind="rise" /></span><strong>J’apprends.</strong><small>Acquérir les compétences</small></Link>
-        <Link href="/vaedirigeant"><span>VAE<Pictogram kind="rise" /></span><strong>Je valorise.</strong><small>Faire reconnaître mes acquis</small></Link>
+        <Link href="/dirigeant"><span>FORMATION INITIALE<Pictogram kind="rise" /></span><strong>J’apprends</strong><small>Acquérir les compétences</small></Link>
+        <Link href="/vaedirigeant"><span>VAE<Pictogram kind="rise" /></span><strong>Je valorise</strong><small>Faire reconnaître mes acquis</small></Link>
       </div>
       <p className={styles.validationNote}>Un même titre, après validation.</p>
       <CardAction href="#choisir-desp">Trouver mon parcours</CardAction>

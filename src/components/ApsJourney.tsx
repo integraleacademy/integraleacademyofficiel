@@ -61,8 +61,8 @@ function JourneyVisual({ index, onNext }: { index: number; onNext: () => void })
     <CardHeader label="Le déclic" />
     <div className={styles.ambitionBody}>
       <p className={styles.eyebrow}>ET SI C’ÉTAIT VOTRE TOUR ?</p>
-      <p className={styles.ambitionTitle}>Un métier de terrain.<br /><span>Un rôle essentiel.</span></p>
-      <p className={styles.subtitle}>Prévenir. Protéger. Rassurer.<br />Votre vigilance peut faire la différence.</p>
+      <p className={styles.ambitionTitle}>Un métier de terrain,<br /><span>un rôle essentiel</span></p>
+      <p className={styles.subtitle}>Prévenir, protéger et rassurer<br />Votre vigilance peut faire la différence.</p>
       <span className={styles.openingArrow} aria-hidden="true"><Icon kind="rise" /></span>
     </div>
     <div className={styles.verbs}><span><small>01</small>Observer</span><span><small>02</small>Alerter</span><span><small>03</small>Agir</span></div>
@@ -71,7 +71,7 @@ function JourneyVisual({ index, onNext }: { index: number; onNext: () => void })
 
   if (index === 1) return <div className={`${styles.card} ${styles.trainingCard}`}>
     <CardHeader label="Votre formation" />
-    <div className={styles.durationHeadline}><strong>5</strong><div><span className={styles.eyebrow}>SEMAINES · 175 HEURES</span><p>Un nouveau<br /><span>cap à prendre.</span></p></div></div>
+    <div className={styles.durationHeadline}><strong>5</strong><div><span className={styles.eyebrow}>SEMAINES · 175 HEURES</span><p>Un nouveau<br /><span>cap à prendre</span></p></div></div>
     <div className={styles.studyPlan}>
       <div className={styles.remoteStudy}><div className={styles.studyTop}><span>À DISTANCE</span><Icon kind="screen" /></div><p><strong>51</strong><span>heures<small>pour les bases</small></span></p><div className={styles.studyBar} aria-hidden="true"><i /></div></div>
       <div className={styles.schoolStudy}><div className={styles.studyTop}><span>À L’ÉCOLE</span><Icon kind="school" /></div><p><strong>124</strong><span>heures<small>pour progresser</small></span></p><div className={styles.studyBar} aria-hidden="true"><i /></div></div>
@@ -83,7 +83,7 @@ function JourneyVisual({ index, onNext }: { index: number; onNext: () => void })
   if (index === 2) return <div className={`${styles.card} ${styles.practiceCard}`}>
     <CardHeader label="Immersion terrain" />
     <div className={styles.practiceBody}>
-      <p className={styles.practiceTitle}>Les bons gestes.<br /><span>Les bons réflexes.</span></p>
+      <p className={styles.practiceTitle}>Les bons gestes<br /><span>et les bons réflexes</span></p>
       <figure className={styles.practicePhoto}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={originalArtwork['aps-atelier-radio'].src} alt={originalArtwork['aps-atelier-radio'].alt} width="1536" height="1024" loading="lazy" decoding="async" />
@@ -98,11 +98,11 @@ function JourneyVisual({ index, onNext }: { index: number; onNext: () => void })
   return <div className={`${styles.card} ${styles.futureCard}`}>
     <div className={styles.futureOrbit} aria-hidden="true" />
     <CardHeader label="Votre prochain chapitre" />
-    <p className={styles.futureHeading}>Votre formation.<br /><span>Un nouvel horizon.</span></p>
-    <div className={styles.destination}><strong>APS<span><Icon kind="rise" /></span></strong><p>Agent de prévention<br />et de sécurité.</p></div>
+    <p className={styles.futureHeading}>Votre formation,<br /><span>un nouvel horizon</span></p>
+    <div className={styles.destination}><strong>APS<span><Icon kind="rise" /></span></strong><p>Agent de prévention<br />et de sécurité</p></div>
     <div className={styles.futureSteps}>
-      <Link href="#examen"><span>01 · LE TITRE<Icon kind="rise" /></span><strong>Le TFP APS.</strong><small>Réussir votre examen</small></Link>
-      <Link href="#debouches"><span>02 · LA CARTE<Icon kind="rise" /></span><strong>La carte professionnelle.</strong><small>CNAPS (ministère de l’Intérieur)</small></Link>
+      <Link href="#examen"><span>01 · LE TITRE<Icon kind="rise" /></span><strong>Le TFP APS</strong><small>Réussir votre examen</small></Link>
+      <Link href="#debouches"><span>02 · LA CARTE<Icon kind="rise" /></span><strong>La carte professionnelle</strong><small>CNAPS (ministère de l’Intérieur)</small></Link>
     </div>
     <p className={styles.validationNote}>Le titre obtenu, la demande de carte est une démarche distincte.</p>
     <CardAction href="#inscription-financement">Préparer mon inscription</CardAction>

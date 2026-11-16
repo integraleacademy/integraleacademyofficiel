@@ -117,13 +117,13 @@ export default async function Page() {
     <section id="pedagogie" className={styles.section} aria-labelledby="approach-title">
       <div className={styles.container}>
         <div className={styles.sectionHeading}>
-          <div><p className={styles.eyebrow}>03 / Notre manière de former</p><h2 id="approach-title">Du concret. De l’exigence.<br /><em>Et de l’attention</em></h2></div>
+          <div><p className={styles.eyebrow}>03 / Notre manière de former</p><h2 id="approach-title">Du concret, de l’exigence<br /><em>et de l’attention</em></h2></div>
           <p>Choisissez une étape pour découvrir comment nous vous accompagnons, du premier échange à la mise en pratique.</p>
         </div>
         <SchoolPedagogy />
       </div>
       <div className={`${styles.container} ${styles.domains}`}>
-        <p className={styles.eyebrow}>Plusieurs voies. La même exigence.</p>
+        <p className={styles.eyebrow}>Plusieurs voies, la même exigence</p>
         <div className={styles.domainGrid}>
           {[
             ['Sécurité privée', '/formations-securite', 'aps-atelier-radio.webp', 'Illustration d’un atelier de communication radio en formation à la sécurité privée'],
@@ -166,7 +166,7 @@ export default async function Page() {
         </article>
       </div>
       <div id="histoire" className={`${styles.container} ${experience.history}`}>
-        <p className={styles.eyebrow}>Une école qui grandit. Une conviction qui reste.</p>
+        <p className={styles.eyebrow}>Une école qui grandit, une conviction qui reste</p>
         <ol className={styles.timeline}>
           <li><span>2018</span><h3>Le début de l’aventure</h3><p>La création d’une école de formation professionnelle issue du terrain.</p></li><li><span>Au fil des années</span><h3>De nouvelles perspectives</h3><p>Sécurité, incendie, VTC et alternance enrichissent les parcours proposés.</p></li><li><span>Aujourd’hui</span><h3>La même proximité</h3><p>L’école vous accueille à Puget-sur-Argens et à Paris.</p></li>
         </ol>

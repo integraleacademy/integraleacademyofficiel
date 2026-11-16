@@ -424,7 +424,7 @@ export function BtsNdrcReferencePage() {
           </article>
         </div>
         <div className="mt-5 flex flex-col items-start justify-between gap-4 rounded-[1.7rem] border border-bts-300 bg-bts-50 p-5 sm:flex-row sm:items-center">
-          <div><p className="text-lg font-black text-bts-950">Même diplôme d’État. Même programme. Même équipe à vos côtés.</p><p className="mt-1 text-sm font-semibold text-bts-900/65">Le format est validé avec l’équipe admissions selon votre situation.</p></div>
+          <div><p className="text-lg font-black text-bts-950">Le même diplôme d’État, le même programme et la même équipe à vos côtés</p><p className="mt-1 text-sm font-semibold text-bts-900/65">Le format est validé avec l’équipe admissions selon votre situation.</p></div>
           <span className="rounded-full bg-white px-4 py-2 text-xs font-black text-academy-ink ring-1 ring-bts-300">BTS NDRC · RNCP 38368</span>
         </div>
       </Section>
@@ -432,7 +432,7 @@ export function BtsNdrcReferencePage() {
       <Section
         id="alternance"
         eyebrow="04 — L’alternance"
-        title={<>Apprenez. Pratiquez. Construisez votre CV</>}
+        title={<>Apprenez par la pratique et construisez votre CV</>}
         intro={<>Deux années pour obtenir un diplôme, gagner en assurance, construire votre réseau et valoriser une vraie expérience sur votre CV.</>}
         tone="paper"
       >
