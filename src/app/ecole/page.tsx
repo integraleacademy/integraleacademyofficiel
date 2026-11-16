@@ -30,7 +30,7 @@ export default async function Page() {
 
   return <div className={`${experience.guidedPage} ${navigation.scope}`}>
     <div className={styles.page}>
-    <section className={`${styles.hero} ${experience.guidedHero}`} aria-labelledby="school-title">
+    <section className={`${styles.hero} ${experience.guidedHero}`} data-page-hero aria-labelledby="school-title">
       <div className={`${styles.container} ${styles.heroGrid}`}>
         <div className={styles.heroCopy}>
           <p className={styles.eyebrow}><span className={styles.smallLine} /> Notre école · Depuis 2018</p>

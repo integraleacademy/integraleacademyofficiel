@@ -134,7 +134,7 @@ const faq = [
 export default function VtcPage() {
   const examDates = getUpcomingVtcExamSessions();
   return <main className={styles.page}>
-    <section className={`${styles.hero} isolate`}>
+    <section className={`${styles.hero} isolate`} data-page-hero>
       <div className={styles.heroGlow}/><div className={styles.heroGrid}/>
       <div className={styles.container}>
         <div className={styles.heroLayout}>

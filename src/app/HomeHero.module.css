@@ -84,7 +84,7 @@
   /* Leave room below the illustration for its navigation and the complete assistant.
      Content can still grow naturally at larger text/zoom settings. */
   .hero {
-    --home-scene-height: clamp(260px, calc(100svh - var(--site-header-height) - 21rem), 480px);
+    --home-scene-height: clamp(260px, calc(var(--site-layout-viewport-height) - var(--site-header-height) - 21rem), 480px);
     padding-block: clamp(12px, 2.5svh, 32px);
   }
   .heroComposition { gap: clamp(24px, 3vw, 48px); }

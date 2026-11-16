@@ -565,7 +565,7 @@
 .heroAdviser:hover { color: #fff; text-decoration: underline; text-underline-offset: 4px; }
 .mosHero :global([class*='heroHighlights']) { margin-top: 12px; }
 @media (min-width: 1024px) {
-  .page .mosHero { display: flex; align-items: center; min-height: calc(100svh - var(--site-header-height) - var(--site-section-nav-height, 69px) - 4px); padding-block: 24px; }
+  .page .mosHero { display: flex; align-items: center; padding-block: 24px; }
   .page[data-bts] .mosHero h1 { font-size: clamp(64px, 10svh, 100px); }
   .page[data-bts] .mosHero h1 em { max-width: 25ch; font-size: clamp(32px, 4.6svh, 44px); }
   .mosHero :global([class*='heroGrid']) { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: clamp(28px, 3vw, 48px); }

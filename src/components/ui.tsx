@@ -186,7 +186,7 @@ export function ArtDirectionVisual({ world, illustration }: { world: ArtDirectio
   </div>;
 }
 
-export function Hero({badge,title,subtitle,actions,visual,theme='gold'}:{badge?:string;title:React.ReactNode;subtitle:string;actions?:React.ReactNode;visual?:React.ReactNode;theme?:UiAccent}){
+export function Hero({badge,title,subtitle,actions,visual,theme='gold',fillViewport=true}:{badge?:string;title:React.ReactNode;subtitle:string;actions?:React.ReactNode;visual?:React.ReactNode;theme?:UiAccent;fillViewport?:boolean}){
   const glows: Record<UiAccent, string> = {
     gold: 'gold-glow',
     blue: 'training-glow-blue',
@@ -195,7 +195,7 @@ export function Hero({badge,title,subtitle,actions,visual,theme='gold'}:{badge?:
     red: 'training-glow-red',
     violet: 'training-glow-violet',
   };
-  return <section className={`${compactHeroStyles.hero} relative isolate grid-soft overflow-hidden px-4 py-16 md:py-24 ${glows[theme]}`}><div className={`${compactHeroStyles.layout} page-container grid gap-10 lg:grid-cols-[1.15fr_.85fr] lg:items-center`}><div className="reveal">{badge&&<Badge tone={theme}>{badge}</Badge>}<h1 className="mt-5 text-4xl font-black tracking-tight md:text-6xl">{title}</h1><p className="mt-6 max-w-2xl text-lg leading-8 text-stone-600">{subtitle}</p>{actions&&<div className="mt-8 flex flex-wrap gap-3">{actions}</div>}</div>{visual ?? <div className="relative rounded-[2rem] bg-white/90 p-6 shadow-soft ring-1 ring-academy-line backdrop-blur reveal"><div className="rounded-[1.5rem] bg-academy-bg p-6"><p className="text-sm font-bold text-stone-500">Centres & modalités</p><div className="mt-5 grid gap-3">{contact.locations.map(l=><div key={l.name} className="rounded-2xl bg-white p-4"><b>{l.name}</b><p className="text-sm text-stone-600">{l.address}</p></div>)}</div></div></div>}</div></section>;
+  return <section className={`${compactHeroStyles.hero} relative isolate grid-soft overflow-hidden px-4 py-16 md:py-24 ${glows[theme]}`} data-page-hero={fillViewport || undefined}><div className={`${compactHeroStyles.layout} page-container grid gap-10 lg:grid-cols-[1.15fr_.85fr] lg:items-center`}><div className="reveal">{badge&&<Badge tone={theme}>{badge}</Badge>}<h1 className="mt-5 text-4xl font-black tracking-tight md:text-6xl">{title}</h1><p className="mt-6 max-w-2xl text-lg leading-8 text-stone-600">{subtitle}</p>{actions&&<div className="mt-8 flex flex-wrap gap-3">{actions}</div>}</div>{visual ?? <div className="relative rounded-[2rem] bg-white/90 p-6 shadow-soft ring-1 ring-academy-line backdrop-blur reveal"><div className="rounded-[1.5rem] bg-academy-bg p-6"><p className="text-sm font-bold text-stone-500">Centres & modalités</p><div className="mt-5 grid gap-3">{contact.locations.map(l=><div key={l.name} className="rounded-2xl bg-white p-4"><b>{l.name}</b><p className="text-sm text-stone-600">{l.address}</p></div>)}</div></div></div>}</div></section>;
 }
 export const appointmentFormUrl = 'https://assistance-alw9.onrender.com/demande-informations-formations';
 

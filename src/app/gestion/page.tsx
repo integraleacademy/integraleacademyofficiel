@@ -11,7 +11,7 @@ const resources = [
 
 export default function ResourcesPage() {
   return <>
-    <Hero badge="Ressources" title="Tests et ressources de formation" subtitle="Retrouvez les accès communiqués par votre équipe pédagogique." />
+    <Hero fillViewport={false} badge="Ressources" title="Tests et ressources de formation" subtitle="Retrouvez les accès communiqués par votre équipe pédagogique." />
     <section className="page-container grid gap-5 py-12 md:grid-cols-3">
       {resources.map(([label, href]) => <div key={href} className="rounded-3xl border border-academy-line bg-academy-surface p-6">
         <h2 className="mb-6 text-xl font-black">{label}</h2>

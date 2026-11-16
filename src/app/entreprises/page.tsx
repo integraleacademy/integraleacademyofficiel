@@ -158,7 +158,7 @@ const faqItems = [
 
 export default function EntreprisesPage() {
   return <div className={styles.page}>
-    <section className={styles.hero} aria-labelledby="entreprises-title">
+    <section className={styles.hero} data-page-hero aria-labelledby="entreprises-title">
       <div className={styles.honeycomb} aria-hidden="true" />
       <div className={styles.container}>
         <div className={styles.heroInner}>

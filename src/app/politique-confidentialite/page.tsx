@@ -33,7 +33,7 @@ function PrivacySection({ id, title, children }: { id: string; title: string; ch
 export default function Page() {
   return (
     <>
-      <Hero badge="Vos données personnelles" title="Politique de confidentialité" subtitle="Comprendre l’utilisation de vos informations et savoir comment exercer vos droits." />
+      <Hero fillViewport={false} badge="Vos données personnelles" title="Politique de confidentialité" subtitle="Comprendre l’utilisation de vos informations et savoir comment exercer vos droits." />
 
       <div className="page-container py-10 sm:py-14">
         <div className="mb-8 rounded-[1.7rem] border border-academy-gold/30 bg-academy-gold-soft/25 p-5 sm:p-7">

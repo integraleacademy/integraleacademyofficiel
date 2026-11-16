@@ -705,7 +705,7 @@ export function PlanningClient({ initialSessions, initialLocation = 'all', reque
 
   return (
     <main className={styles.page}>
-      <section className={`${styles.hero} relative isolate overflow-hidden border-b border-academy-line/70 bg-[#f7f1e7] px-4 py-14 text-[#141820] sm:py-16 lg:py-20`}>
+      <section className={`${styles.hero} relative isolate overflow-hidden border-b border-academy-line/70 bg-[#f7f1e7] px-4 py-14 text-[#141820] sm:py-16 lg:py-20`} data-page-hero>
         <div className="absolute -right-40 -top-48 -z-10 h-[34rem] w-[34rem] rounded-full bg-academy-gold/20" />
         <div className="absolute -bottom-48 left-[38%] -z-10 h-[28rem] w-[28rem] rounded-full border border-academy-gold/20" />
 
