@@ -6,10 +6,10 @@ import { TrainingJourney } from './TrainingJourney';
 import styles from './DespJourney.module.css';
 
 const steps = [
-  { label: 'Votre projet', title: 'Créer, reprendre, diriger : commencez par votre ambition.', description: 'Vous souhaitez prendre la tête d’une entreprise de sécurité privée ? Votre expérience et vos objectifs sont le point de départ pour choisir entre formation initiale et VAE.', link: 'Parlons de votre projet', href: '/contact?formation=desp' },
-  { label: 'La formation initiale', title: 'Apprenez le métier de dirigeant, étape par étape.', description: 'Un parcours de 7 semaines : 5 à distance, puis 2 en présentiel. Réglementation, gestion, management et développement commercial : vous construisez les compétences pour piloter votre activité.', link: 'Découvrir le DESP initial', href: '/dirigeant' },
-  { label: 'La VAE', title: 'Vous avez l’expérience. Faites reconnaître vos compétences.', description: 'Vous exercez déjà des responsabilités de gestion, de management ou de direction ? Après étude de votre parcours, vous constituez votre dossier de preuves et préparez votre présentation devant le jury.', link: 'Découvrir le DESP en VAE', href: '/vaedirigeant' },
-  { label: 'Votre prochain chapitre', title: 'Deux parcours. Un même titre. À vous de choisir votre chemin.', description: 'Apprendre avec la formation initiale ou faire reconnaître vos acquis avec la VAE : notre équipe vous aide à choisir le parcours adapté et à préparer votre inscription et votre financement.', link: 'Comparer les deux parcours', href: '#choisir-desp' },
+  { label: 'Votre projet', title: 'Créer, reprendre, diriger : commencez par votre ambition', description: 'Vous souhaitez prendre la tête d’une entreprise de sécurité privée ? Votre expérience et vos objectifs sont le point de départ pour choisir entre formation initiale et VAE.', link: 'Parlons de votre projet', href: '/contact?formation=desp' },
+  { label: 'La formation initiale', title: 'Apprenez le métier de dirigeant, étape par étape', description: 'Un parcours de 7 semaines : 5 à distance, puis 2 en présentiel. Réglementation, gestion, management et développement commercial : vous construisez les compétences pour piloter votre activité.', link: 'Découvrir le DESP initial', href: '/dirigeant' },
+  { label: 'La VAE', title: 'Vous avez l’expérience. Faites reconnaître vos compétences', description: 'Vous exercez déjà des responsabilités de gestion, de management ou de direction ? Après étude de votre parcours, vous constituez votre dossier de preuves et préparez votre présentation devant le jury.', link: 'Découvrir le DESP en VAE', href: '/vaedirigeant' },
+  { label: 'Votre prochain chapitre', title: 'Deux parcours. Un même titre. À vous de choisir votre chemin', description: 'Apprendre avec la formation initiale ou faire reconnaître vos acquis avec la VAE : notre équipe vous aide à choisir le parcours adapté et à préparer votre inscription et votre financement.', link: 'Comparer les deux parcours', href: '#choisir-desp' },
 ] as const;
 
 function Arrow() {
@@ -114,7 +114,7 @@ export function DespJourney({ children }: { children: ReactNode }) {
     id="parcours-desp"
     name="DESP"
     eyebrow="DEVENIR DIRIGEANT · DESP"
-    title={<>De votre ambition au titre DESP,<br /><span>trouvez votre chemin.</span></>}
+    title={<>De votre ambition au titre DESP,<br /><span>trouvez votre chemin</span></>}
     steps={steps.map((step, index) => ({ ...step, visual: (onNext: () => void) => <JourneyVisual index={index} onNext={onNext} /> }))}
     continuationHref="#choisir-desp"
   >{children}</TrainingJourney>;

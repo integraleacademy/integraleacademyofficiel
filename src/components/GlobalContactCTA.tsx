@@ -104,7 +104,7 @@ export function GlobalContactCTA() {
                   Une question sur votre projet ?
                 </span>
                 <h2 id="global-contact-cta-title" className={`${styles.title} ${styles.revealItem}`} style={{ '--delay': '180ms' } as CSSProperties}>
-                  Faites le <span key={`${pathname}-${isVisible ? 'active' : 'idle'}`} className={styles.highlight} data-contact-zoom={isVisible ? 'active' : undefined}>premier pas</span> vers votre futur métier.
+                  Faites le <span key={`${pathname}-${isVisible ? 'active' : 'idle'}`} className={styles.highlight} data-contact-zoom={isVisible ? 'active' : undefined}>premier pas</span> vers votre futur métier
                 </h2>
                 <p className={`${styles.revealItem} mt-5 max-w-2xl text-base font-medium leading-8 text-academy-muted sm:text-lg`} style={{ '--delay': '280ms' } as CSSProperties}>
                   {isBts

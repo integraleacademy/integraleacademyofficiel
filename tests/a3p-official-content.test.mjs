@@ -44,7 +44,7 @@ test('les identifiants RNCP, les prérequis étrangers et les statistiques certi
 });
 
 test('les repères officiels A3P reprennent la structure visuelle de la page APS', () => {
-  assert.match(component, /Certification, conditions d’exercice et données d’insertion\./);
+  assert.match(component, /title="Certification, conditions d’exercice et données d’insertion"/);
   assert.match(component, /Réalités du métier/);
   assert.match(component, /TFP A3P · niveau 4/);
   assert.match(component, /Insertion nationale/);

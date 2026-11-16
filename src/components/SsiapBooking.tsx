@@ -15,7 +15,7 @@ export function SsiapBooking({ sessions, children }: { sessions: TrainingDatesPr
   return <div id="dates-tarifs" className={`${styles.booking} ${mos.booking}`}>
     <div className={mos.container}>
       <div className={mos.sectionHeading}><div><p className={styles.eyebrow}>07 / Votre inscription · 01 / La formule</p>
-      <h2 className={styles.sectionTitle}>Le bon parcours.<br /><em>Le tarif expliqué.</em></h2></div>
+      <h2 className={styles.sectionTitle}>Le bon parcours.<br /><em>Le tarif expliqué</em></h2></div>
       <p className={styles.intro}>Choisissez votre formule, puis la session qui vous convient. Notre équipe vérifie votre dossier et confirme les dates avant votre inscription.</p></div>
       <fieldset className={`${styles.formulas} ${mos.formulas}`}>
         <legend className="sr-only">Choisissez votre formule SSIAP 1</legend>

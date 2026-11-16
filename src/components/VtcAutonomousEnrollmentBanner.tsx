@@ -15,7 +15,7 @@ export function VtcAutonomousEnrollmentBanner() {
           </p>
           <h2 id="vtc-autonomous-title" className={styles.title}>
             Votre nouveau départ<br />
-            <span>commence ici.</span>
+            <span>commence ici</span>
           </h2>
           <p className={styles.description}>
             Vous avez plus de 1500 euros sur votre compte CPF ? Votre Identité

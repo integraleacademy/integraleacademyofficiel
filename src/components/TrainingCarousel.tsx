@@ -31,12 +31,13 @@ function Arrow({ previous = false }: { previous?: boolean }) {
   return <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d={previous ? 'M19 12H5m6-6-6 6 6 6' : 'M5 12h14m-6-6 6 6-6 6'} stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>;
 }
 
-export function TrainingCarousel({ items, label, tabListLabel, previousLabel, nextLabel }: {
+export function TrainingCarousel({ items, label, tabListLabel, previousLabel, nextLabel, visualFirst = false }: {
   items: TrainingCarouselItem[];
   label: string;
   tabListLabel: string;
   previousLabel: string;
   nextLabel: string;
+  visualFirst?: boolean;
 }) {
   const carouselId = useId();
   const [activeIndex, setActiveIndex] = useState(0);
@@ -144,7 +145,7 @@ export function TrainingCarousel({ items, label, tabListLabel, previousLabel, ne
               aria-hidden={index !== activeIndex}
               inert={index !== activeIndex}
               data-active={index === activeIndex}
-              className={styles.slide}
+              className={visualFirst ? `${styles.slide} ${styles.visualFirst}` : styles.slide}
             >
               <div className={styles.copy}>
                 <p className={styles.category}>

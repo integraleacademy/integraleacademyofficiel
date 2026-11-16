@@ -58,7 +58,7 @@ export default function FinancementsPage() {
         <div className={styles.heroLayout}>
           <div className={styles.heroCopy}>
             <span className={styles.eyebrow}><span aria-hidden="true" /> Votre projet commence ici</span>
-            <h1 id="financements-title">Trouvez comment <em>financer votre formation.</em></h1>
+            <h1 id="financements-title">Trouvez comment <em>financer votre formation</em></h1>
             <p>À chaque parcours, ses possibilités. Identifiez les vôtres et avancez avec un conseiller à vos côtés.</p>
             <div className={styles.heroActions}>
               <Link href="#simulateur" className={styles.primaryButton}>Estimer mon reste à charge <Icon name="arrow" /></Link>
@@ -81,7 +81,7 @@ export default function FinancementsPage() {
     <section id="solutions" className={styles.solutionsSection} aria-labelledby="solutions-title">
       <div className={styles.container}>
         <div className={styles.sectionIntro}>
-          <div><span className={styles.eyebrow}>01 / Les possibilités</span><h2 id="solutions-title">Plusieurs chemins.<br /><em>Un même projet.</em></h2></div>
+          <div><span className={styles.eyebrow}>01 / Les possibilités</span><h2 id="solutions-title">Plusieurs chemins.<br /><em>Un même projet</em></h2></div>
           <p>Découvrez les principaux dispositifs. Nous vérifions ensuite avec vous ceux qui correspondent à votre situation.</p>
         </div>
         <div className={styles.fundingGrid}>
@@ -104,7 +104,7 @@ export default function FinancementsPage() {
           <div className={styles.identityLogo}><img src="/images/financements/identite-numerique-la-poste.svg" alt="L’Identité Numérique La Poste" width="240" height="67" loading="lazy" /></div>
           <div>
             <span className={styles.eyebrow}>Pour vos démarches CPF</span>
-            <h3 id="identity-title">Préparez votre connexion sécurisée.</h3>
+            <h3 id="identity-title">Préparez votre connexion sécurisée</h3>
             <p>L’Identité Numérique La Poste vous permet de vous identifier avec FranceConnect+. France Identité est également proposée. Vérifiez les conditions et les étapes sur les services officiels.</p>
             <div className={styles.identityLinks}>
               <a href="https://lidentitenumerique.laposte.fr/" target="_blank" rel="noopener noreferrer">Découvrir l’Identité Numérique <span aria-hidden="true">↗</span><span className="sr-only"> (nouvel onglet)</span></a>
@@ -120,13 +120,13 @@ export default function FinancementsPage() {
     <section id="accompagnement" className={styles.supportSection} aria-labelledby="support-title">
       <div className={styles.container}>
         <div className={styles.sectionIntro}>
-          <div><span className={styles.eyebrow}>03 / À vos côtés</span><h2 id="support-title">Un projet à vous.<br /><em>Des démarches ensemble.</em></h2></div>
+          <div><span className={styles.eyebrow}>03 / À vos côtés</span><h2 id="support-title">Un projet à vous.<br /><em>Des démarches ensemble</em></h2></div>
           <p>Pas besoin de maîtriser tous les dispositifs. Notre équipe vous aide à y voir clair, du premier échange à votre demande.</p>
         </div>
         <ol className={styles.steps}>
-          <li><span>01</span><h3>On fait le point.</h3><p>Votre situation, la formation souhaitée et votre calendrier : nous partons de votre projet.</p></li>
-          <li><span>02</span><h3>On explore les solutions.</h3><p>Nous identifions les dispositifs envisageables et le reste à charge potentiel.</p></li>
-          <li><span>03</span><h3>On prépare votre dossier.</h3><p>Devis, programme, justificatifs : vous savez quoi transmettre et à quel interlocuteur.</p></li>
+          <li><span>01</span><h3>On fait le point</h3><p>Votre situation, la formation souhaitée et votre calendrier : nous partons de votre projet.</p></li>
+          <li><span>02</span><h3>On explore les solutions</h3><p>Nous identifions les dispositifs envisageables et le reste à charge potentiel.</p></li>
+          <li><span>03</span><h3>On prépare votre dossier</h3><p>Devis, programme, justificatifs : vous savez quoi transmettre et à quel interlocuteur.</p></li>
         </ol>
       </div>
     </section>
@@ -141,7 +141,7 @@ export default function FinancementsPage() {
     <section id="contact-financement" className={styles.contactSection} aria-labelledby="contact-title">
       <div className={styles.container}>
         <div className={styles.contactPanel}>
-          <div><span className={styles.eyebrow}>Le prochain pas, ensemble</span><h2 id="contact-title">Votre projet mérite<br /><em>une conversation.</em></h2><p>Expliquez-nous votre situation. Cassandre vous accompagne pour faire le point sur les possibilités de financement.</p></div>
+          <div><span className={styles.eyebrow}>Le prochain pas, ensemble</span><h2 id="contact-title">Votre projet mérite<br /><em>une conversation</em></h2><p>Expliquez-nous votre situation. Cassandre vous accompagne pour faire le point sur les possibilités de financement.</p></div>
           <div className={styles.contactDetails}>
             <div className={styles.contactPerson}><span className={styles.contactInitial} aria-hidden="true"><TeamPortrait person="cassandre" size={48} /></span><div><strong>Cassandre</strong><span>Votre interlocutrice chez Intégrale Academy</span></div></div>
             <Link href={appointmentFormUrl} className={styles.primaryButton}>Parler de mon financement <Icon name="arrow" /></Link>

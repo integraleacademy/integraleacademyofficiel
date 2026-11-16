@@ -53,7 +53,7 @@ export default async function Home() {
                   <a key={centre.id} href={`#centre-${centre.planningKey}`}>{centre.shortName}</a>
                 ))}
               </nav>
-              <h1 id="home-hero-title" data-home-hero-item>Votre futur métier mérite une formation <em>à la hauteur.</em></h1>
+              <h1 id="home-hero-title" data-home-hero-item>Votre futur métier mérite une formation <em>à la hauteur</em></h1>
               <p data-home-hero-item>Des formations en sécurité, VTC et BTS, et une équipe à vos côtés pour construire la suite.</p>
               <div className={heroStyles.heroActions} data-home-hero-item>
                 <Link href="/formations-securite" className={heroStyles.primaryButton}>Sécurité</Link>
@@ -134,6 +134,7 @@ export default async function Home() {
               <p>{[family.level, family.location].filter(Boolean).join(' · ')}</p>
             </div>
             <TrainingCarousel
+              visualFirst={family.id === 'bachelors' || family.id === 'titres-professionnels'}
               label={`Découvrir nos ${family.label.toLowerCase()}`}
               tabListLabel={`Choisir un ${family.singular.toLowerCase()}`}
               previousLabel={`${family.singular} précédent`}

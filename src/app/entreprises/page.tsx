@@ -164,7 +164,7 @@ export default function EntreprisesPage() {
         <div className={styles.heroInner}>
           <div className={styles.heroCopy}>
             <span className={styles.eyebrow}><span /> Solutions entreprises · Sécurité privée</span>
-            <h1 id="entreprises-title">Recruter, former et faire évoluer vos futurs professionnels de la <em>sécurité privée.</em></h1>
+            <h1 id="entreprises-title">Recruter, former et faire évoluer vos futurs professionnels de la <em>sécurité privée</em></h1>
             <p>Des solutions clés en main pour renforcer vos équipes. Nous trouvons les candidats, nous les formons, nous vous accompagnons.</p>
             <div className={styles.heroActions}>
               <Link href="#solutions" className={styles.primaryButton}>Découvrir les 3 solutions <Icon name="arrow" /></Link>
@@ -200,7 +200,7 @@ export default function EntreprisesPage() {
 
     <section className={styles.challengesSection} aria-labelledby="challenges-title">
       <div className={styles.container}>
-        <div className={styles.sectionHeading}><span className={styles.sectionEyebrow}>Vos enjeux, notre mission</span><h2 id="challenges-title">Des problématiques concrètes.<br /><em>Des solutions immédiates.</em></h2><p>Recrutement difficile, turn-over, manque de profils qualifiés… Construisons ensemble une équipe qui répond aux réalités de votre terrain.</p></div>
+        <div className={styles.sectionHeading}><span className={styles.sectionEyebrow}>Vos enjeux, notre mission</span><h2 id="challenges-title">Des problématiques concrètes.<br /><em>Des solutions immédiates</em></h2><p>Recrutement difficile, turn-over, manque de profils qualifiés… Construisons ensemble une équipe qui répond aux réalités de votre terrain.</p></div>
         <div className={styles.challengesGrid}>{challenges.map((challenge) => <article key={challenge.title} className={styles.challengeCard}>
           <span className={styles.challengeIcon}><Icon name={challenge.icon} /></span><div><h3>{challenge.title}</h3><p>{challenge.text}</p></div>
         </article>)}</div>
@@ -211,7 +211,7 @@ export default function EntreprisesPage() {
 
     <section id="solutions" className={styles.solutionsSection} aria-labelledby="solutions-title">
       <div className={styles.container}>
-        <div className={styles.sectionHeading}><span className={styles.sectionEyebrow}>À chaque besoin, sa solution</span><h2 id="solutions-title">Trois façons de faire<br /><em>grandir vos équipes.</em></h2><p>Un agent polyvalent, un recrutement avant embauche ou un futur chef d’équipe : choisissez le dispositif adapté à votre projet.</p></div>
+        <div className={styles.sectionHeading}><span className={styles.sectionEyebrow}>À chaque besoin, sa solution</span><h2 id="solutions-title">Trois façons de faire<br /><em>grandir vos équipes</em></h2><p>Un agent polyvalent, un recrutement avant embauche ou un futur chef d’équipe : choisissez le dispositif adapté à votre projet.</p></div>
         <div className={styles.solutionsGrid}>{solutions.map((solution) => <article key={solution.id} className={`${styles.solutionCard} ${styles[`solution${solution.tone}`]}`}>
           <div className={styles.solutionTop}><span className={styles.solutionLabel}>{solution.label}</span><Icon name={solution.icon} /></div>
           <h3>{solution.title}</h3>
@@ -229,7 +229,7 @@ export default function EntreprisesPage() {
       <div className={styles.container}>
         <div className={styles.deviceHeading}><span>Dispositif 01 / 03</span><span>Former & fidéliser</span></div>
         <div className={styles.detailHero}>
-          <div className={styles.detailCopy}><h2 id="alternance-title"><em>Parcours sécurité</em><br />en alternance.</h2><p>Un an pour former un agent polyvalent et immédiatement opérationnel, en combinant APS, protection rapprochée et sécurité incendie.</p><div className={styles.pillList}><span>Contrat d’apprentissage · 1 an</span><span>3 qualifications</span><span>OPCO AKTO</span></div></div>
+          <div className={styles.detailCopy}><h2 id="alternance-title"><em>Parcours sécurité</em><br />en alternance</h2><p>Un an pour former un agent polyvalent et immédiatement opérationnel, en combinant APS, protection rapprochée et sécurité incendie.</p><div className={styles.pillList}><span>Contrat d’apprentissage · 1 an</span><span>3 qualifications</span><span>OPCO AKTO</span></div></div>
           <div className={styles.costPanel}><span>Près de 1 100 h réelles en entreprise</span><strong>≈ 4 €<small>/ heure</small></strong><p><b>4 499 € pour une année complète</b>, charges incluses et après aides, selon les hypothèses de la simulation.</p><span className={styles.costCaption}>Selon le profil, la taille de l’entreprise et les aides en vigueur. Estimation personnalisée avant engagement.</span></div>
         </div>
         <div className={styles.qualificationGrid}>
@@ -237,7 +237,7 @@ export default function EntreprisesPage() {
           <article><span className={styles.a3pIcon}><Icon name="people" /></span><div><strong>Protection physique des personnes</strong><small>TFP A3P · 328 h</small></div></article>
           <article><span className={styles.fireIcon}><Icon name="fire" /></span><div><strong>Agent de sécurité incendie</strong><small>SSIAP 1 · Formation et examen</small></div></article>
         </div>
-        <div className={styles.timelineHeading}><span className={styles.ribbon}>Deux rentrées pour recruter en 2027</span><h3>La formation. Le terrain.<br />La montée en compétences.</h3><p>Une même architecture pédagogique, avec deux calendriers pour organiser vos recrutements.</p></div>
+        <div className={styles.timelineHeading}><span className={styles.ribbon}>Deux rentrées pour recruter en 2027</span><h3>La formation. Le terrain.<br />La montée en compétences</h3><p>Une même architecture pédagogique, avec deux calendriers pour organiser vos recrutements.</p></div>
         <div className={styles.sessionGrid}>{alternanceSessions.map((session) => <article key={session.name} className={styles.sessionCard}>
           <header><span>{session.name}</span><h4>{session.period}</h4></header>
           <ol className={styles.sessionTimeline}>{session.steps.map((step, index) => <li key={step.date}><span className={styles.timelineDot}>{String(index + 1).padStart(2, '0')}</span><div><small>{step.date}</small><strong>{step.title}</strong><p>{step.detail}</p></div></li>)}</ol>
@@ -251,7 +251,7 @@ export default function EntreprisesPage() {
       <div className={styles.container}>
         <div className={styles.deviceHeading}><span>Dispositif 02 / 03</span><span>Préparer & recruter</span></div>
         <div className={styles.detailHero}>
-          <div className={styles.detailCopy}><h2 id="poei-title"><em>POEI</em><br />Sécurité privée.</h2><p>Formez vos futurs collaborateurs avant leur prise de poste. La Préparation Opérationnelle à l’Emploi Individuelle prépare des demandeurs d’emploi aux besoins de votre entreprise.</p></div>
+          <div className={styles.detailCopy}><h2 id="poei-title"><em>POEI</em><br />Sécurité privée</h2><p>Formez vos futurs collaborateurs avant leur prise de poste. La Préparation Opérationnelle à l’Emploi Individuelle prépare des demandeurs d’emploi aux besoins de votre entreprise.</p></div>
           <aside className={styles.employerJourney}><span className={styles.ribbon}>Votre recrutement, accompagné</span><ul><li><Icon name="check" />Besoin et profils définis ensemble</li><li><Icon name="check" />Candidats sourcés et présélectionnés</li><li><Icon name="check" />Formation adaptée à vos missions</li><li><Icon name="check" />Intégration en entreprise accompagnée</li></ul></aside>
         </div>
         <div className={styles.poeiMetrics}><div><strong>450 h</strong><span>de formation intensive</span></div><div><strong>100 %</strong><span>formation financée*</span></div><div><strong>6 mois</strong><span>d’engagement d’embauche</span></div><div><strong>12 places</strong><span>maximum par session</span></div></div>
@@ -260,9 +260,9 @@ export default function EntreprisesPage() {
           <div className={styles.programContent}><p>Un socle complet pour des agents directement employables, de la posture professionnelle aux techniques de sécurité.</p><div className={styles.programGrid}>{poeiProgram.map((module) => <article key={module.title}><div><Icon name={module.icon} /><strong>{module.hours}</strong></div><h4>{module.title}</h4><p>{module.text}</p></article>)}</div></div>
         </details>
         <div className={styles.sessionsBar}><span><Icon name="calendar" />Les sessions</span><strong>11 janvier → 12 avril 2027</strong><strong>21 septembre → 22 décembre 2027</strong></div>
-        <div className={styles.siteSkillsHeading}><span className={styles.ribbon}>Des compétences pour vos sites</span><h3>Des agents préparés<br />à vos réalités de terrain.</h3><p>Chaque environnement a ses contraintes, ses publics et ses priorités. Nous préparons les candidats à appliquer les consignes et à adopter la bonne posture professionnelle.</p></div>
+        <div className={styles.siteSkillsHeading}><span className={styles.ribbon}>Des compétences pour vos sites</span><h3>Des agents préparés<br />à vos réalités de terrain</h3><p>Chaque environnement a ses contraintes, ses publics et ses priorités. Nous préparons les candidats à appliquer les consignes et à adopter la bonne posture professionnelle.</p></div>
         <div className={styles.siteSkillsGrid}>{siteSkills.map((site) => <article key={site.title}><img src={site.image} alt={site.alt} width="1122" height="1402" loading="lazy" /><div><h4>{site.title}</h4><p>{site.text}</p></div></article>)}</div>
-        <aside className={styles.fireComplement}><img src="/images/ssiap-1/manuel/prevention.webp" alt="Un agent explique les consignes et le plan de sécurité incendie." width="1200" height="800" loading="lazy" /><div><span>Une compétence complémentaire</span><h4>La sécurité incendie.</h4><p>Le SSIAP 1 prépare à la prévention incendie, à la surveillance des installations de sécurité et à l’assistance aux personnes en ERP et IGH. Les missions confiées respectent les qualifications et les autorisations de chaque agent.</p></div></aside>
+        <aside className={styles.fireComplement}><img src="/images/ssiap-1/manuel/prevention.webp" alt="Un agent explique les consignes et le plan de sécurité incendie." width="1200" height="800" loading="lazy" /><div><span>Une compétence complémentaire</span><h4>La sécurité incendie</h4><p>Le SSIAP 1 prépare à la prévention incendie, à la surveillance des installations de sécurité et à l’assistance aux personnes en ERP et IGH. Les missions confiées respectent les qualifications et les autorisations de chaque agent.</p></div></aside>
         <div className={styles.sectionBottom}><p className={styles.disclaimer}>* Financement à 100 % sous réserve de validation du dossier et du devis par France Travail. Pour ce parcours, l’entreprise s’engage sur un CDI ou un CDD de 6 mois minimum à l’issue de la formation.</p><a href="#contact-entreprises" className={styles.deviceButton}>Étudier une POEI <Icon name="arrow" /></a></div>
       </div>
     </section>
@@ -272,13 +272,13 @@ export default function EntreprisesPage() {
       <div className={styles.container}>
         <div className={styles.deviceHeading}><span>Dispositif 03 / 03</span><span>Accompagner & faire évoluer</span></div>
         <div className={styles.detailHero}>
-          <div className={styles.detailCopy}><h2 id="bts-title">Vos futurs chefs d’équipe.<br /><em>Le BTS MOS.</em></h2><p>Deux ans pour former votre prochain encadrant en Management opérationnel de la sécurité, avec une présence longue et structurée dans votre entreprise.</p><div className={styles.pillList}><span>Chef d’équipe</span><span>Superviseur</span><span>Responsable d’exploitation</span></div></div>
+          <div className={styles.detailCopy}><h2 id="bts-title">Vos futurs chefs d’équipe.<br /><em>Le BTS MOS</em></h2><p>Deux ans pour former votre prochain encadrant en Management opérationnel de la sécurité, avec une présence longue et structurée dans votre entreprise.</p><div className={styles.pillList}><span>Chef d’équipe</span><span>Superviseur</span><span>Responsable d’exploitation</span></div></div>
           <div className={styles.costPanel}><span>Coût horaire moyen estimé</span><strong className={styles.btsCostFigure}>{euro(btsBudgets[0].hourly)} à {euro(btsBudgets[1].hourly)} €<small>/ heure</small></strong><p>Selon la rémunération du candidat et les aides mobilisées.</p></div>
         </div>
         <div className={styles.btsMetrics}><div><strong>{euro(btsHours, 0)} h</strong><span>en entreprise sur 2 ans</span></div><div><strong>15 j / 15 j</strong><span>entreprise et école</span></div><div><strong>100 %</strong><span>en entreprise l’été, hors examens</span></div><div><strong>0 €*</strong><span>de frais de scolarité, sous réserve d’accord OPCO</span></div></div>
         <div className={styles.yearsGrid}>
-          <article><span>Année 01</span><h3>Apprendre le métier.<br />Prendre sa place.</h3><p>Septembre 2026 à mai 2027 : 15 jours en entreprise et 15 jours à l’école chaque mois.</p><p><b>Juin à août 2027 :</b> 100 % en entreprise.</p><strong>856 h <small>en entreprise</small></strong></article>
-          <article><span>Année 02</span><h3>Gagner en autonomie.<br />Préparer l’encadrement.</h3><p>Septembre 2027 à mai 2028 : 15 jours en entreprise et 15 jours à l’école chaque mois. Juin 2028 : examens du BTS.</p><p><b>Juillet et août 2028 :</b> 100 % en entreprise.</p><strong>706 h <small>en entreprise</small></strong></article>
+          <article><span>Année 01</span><h3>Apprendre le métier.<br />Prendre sa place</h3><p>Septembre 2026 à mai 2027 : 15 jours en entreprise et 15 jours à l’école chaque mois.</p><p><b>Juin à août 2027 :</b> 100 % en entreprise.</p><strong>856 h <small>en entreprise</small></strong></article>
+          <article><span>Année 02</span><h3>Gagner en autonomie.<br />Préparer l’encadrement</h3><p>Septembre 2027 à mai 2028 : 15 jours en entreprise et 15 jours à l’école chaque mois. Juin 2028 : examens du BTS.</p><p><b>Juillet et août 2028 :</b> 100 % en entreprise.</p><strong>706 h <small>en entreprise</small></strong></article>
         </div>
         <details className={styles.programBlock}>
           <summary><span><Icon name="briefcase" /><span><strong>Comprendre le budget employeur</strong><small>Hypothèses de rémunération et de financement</small></span></span><b aria-hidden="true">+</b></summary>
@@ -297,23 +297,23 @@ export default function EntreprisesPage() {
 
     <section id="accompagnement" className={styles.supportSection} aria-labelledby="support-title">
       <div className={styles.container}>
-        <div className={styles.sectionHeading}><span className={styles.sectionEyebrow}>Un accompagnement de A à Z</span><h2 id="support-title">Vous vous concentrez sur le terrain.<br /><em>Nous simplifions le reste.</em></h2><p>Depuis 2020, Intégrale Academy accompagne les entreprises de sécurité privée dans le recrutement, la formation et la montée en compétences de leurs équipes.</p></div>
+        <div className={styles.sectionHeading}><span className={styles.sectionEyebrow}>Un accompagnement de A à Z</span><h2 id="support-title">Vous vous concentrez sur le terrain.<br /><em>Nous simplifions le reste</em></h2><p>Depuis 2020, Intégrale Academy accompagne les entreprises de sécurité privée dans le recrutement, la formation et la montée en compétences de leurs équipes.</p></div>
         <div className={styles.supportGrid}>{supportSteps.map((step) => <article key={step.number}><span>{step.number}</span><div><h3>{step.title}</h3><p>{step.text}</p></div></article>)}</div>
-        <div className={styles.partnerCard}><div><span className={styles.ribbon}>Notre engagement</span><h3>Un partenaire.<br />Toute la filière sécurité.</h3></div><ul>{heroBenefits.map((benefit) => <li key={benefit}><Icon name="check" />{benefit}</li>)}</ul></div>
-        <div className={styles.catalogHeading}><span className={styles.sectionEyebrow}>Au-delà du recrutement</span><h3>Maintenir et développer les compétences.</h3></div>
+        <div className={styles.partnerCard}><div><span className={styles.ribbon}>Notre engagement</span><h3>Un partenaire.<br />Toute la filière sécurité</h3></div><ul>{heroBenefits.map((benefit) => <li key={benefit}><Icon name="check" />{benefit}</li>)}</ul></div>
+        <div className={styles.catalogHeading}><span className={styles.sectionEyebrow}>Au-delà du recrutement</span><h3>Maintenir et développer les compétences</h3></div>
         <div className={styles.catalogGrid}>{catalog.map((item) => <article key={item.title}><Icon name={item.icon} /><h4>{item.title}</h4><p>{item.text}</p></article>)}</div>
         <div className={styles.proofBar}><span><Icon name="check" />Qualiopi</span><span><Icon name="shield" />Autorisation CNAPS</span><span>France Travail</span><span>OPCO AKTO</span><span>Côte d’Azur · Paris</span></div>
       </div>
     </section>
 
     <PremiumFAQSection theme="gold"
-      id="diagnostic" badge="Les réponses à vos questions" title="Avant de se lancer."
+      id="diagnostic" badge="Les réponses à vos questions" title="Avant de se lancer"
       description="Retrouvez les réponses utiles pour préparer votre projet de recrutement ou de formation."
       items={faqItems.map(({ question, answer }) => ({ q: question, a: answer }))}
       contactHref="#contact-entreprises"
       contactContent={
           <aside id="brochure-entreprises" className={`${styles.diagnosticCard} ${styles.brochureCard}`} aria-labelledby="brochure-title">
-            <span className={styles.ribbon}>Le dossier entreprises</span><h3 id="brochure-title">Toutes nos solutions,<br />à portée de main.</h3>
+            <span className={styles.ribbon}>Le dossier entreprises</span><h3 id="brochure-title">Toutes nos solutions,<br />à portée de main</h3>
             <a href={INFORMATION_REQUEST_URL} target="_blank" rel="noopener noreferrer" className={styles.brochureCover}><img src="/images/entreprises/brochure-entreprises-2026-10.webp" alt="Couverture de la brochure entreprises Intégrale Academy : recruter, former et faire évoluer vos futurs professionnels de la sécurité privée." width="1050" height="799" loading="lazy" /><span className="sr-only"> (nouvel onglet)</span></a>
             <p>Les trois dispositifs, les programmes, les calendriers et les simulations pour préparer votre prochain recrutement.</p>
             <a href={INFORMATION_REQUEST_URL} target="_blank" rel="noopener noreferrer" className={styles.primaryButton} data-academy-action="brochure">Recevoir la brochure <Icon name="document" /><span className="sr-only"> (nouvel onglet)</span></a><small>La demande s’effectue via notre formulaire, dans un nouvel onglet.</small>
@@ -323,7 +323,7 @@ export default function EntreprisesPage() {
 
     <section id="contact-entreprises" className={styles.contactsSection} aria-labelledby="contacts-title">
       <div className={styles.container}>
-        <div className={styles.sectionHeading}><span className={styles.sectionEyebrow}>Parlons de votre projet</span><h2 id="contacts-title">Vos prochains recrutements<br /><em>commencent ici.</em></h2><p>Besoins ponctuels ou massifs, événementiel, sites sensibles, sécurité incendie ou protection rapprochée : construisons ensemble la solution adaptée à votre entreprise.</p></div>
+        <div className={styles.sectionHeading}><span className={styles.sectionEyebrow}>Parlons de votre projet</span><h2 id="contacts-title">Vos prochains recrutements<br /><em>commencent ici</em></h2><p>Besoins ponctuels ou massifs, événementiel, sites sensibles, sécurité incendie ou protection rapprochée : construisons ensemble la solution adaptée à votre entreprise.</p></div>
         <div className={styles.contactsGrid}>{contacts.map((contact) => <article key={contact.email} className={styles.contactCard}>
           <div className={styles.contactPerson}><div className={styles.contactAvatar} aria-hidden="true"><TeamPortrait person={contact.portrait} size={61} className={styles.contactPortrait} /></div><div><h3>{contact.name}</h3><span>{contact.role}</span></div></div>
           <address className={styles.contactDetails}>

@@ -1,3 +1,4 @@
+import { CourseTeamBanner } from '@/components/CourseTeamBanner';
 import { CourseBrochureCard } from '@/components/CourseBrochureCard';
 import type { ReactNode } from 'react';
 import { TrainingReferencePage, TrainingReferenceHero, TrainingReferenceSection, TrainingReferenceMissions, TrainingReferenceCampus, TrainingReferenceContact, TrainingReferenceMobileBar } from '@/components/TrainingReferenceLayout';
@@ -153,7 +154,7 @@ export function SsiapCoursePage({ config, sessions = [] }: { config: SsiapCourse
   };
 
   const missions = (
-    <Section id="missions" eyebrow="Le parcours" title="Des compétences directement liées à votre fonction." intro={config.audience}>
+    <Section id="missions" eyebrow="Le parcours" title="Des compétences directement liées à votre fonction" intro={config.audience}>
       {visuals ? <TrainingReferenceMissions items={config.missions.map((mission, index) => ({ title: mission.title, description: mission.text, illustration: visuals.missions[index] }))} /> : (
         <div className="grid gap-4 lg:grid-cols-3">
           {config.missions.map((mission, index) => (
@@ -176,12 +177,12 @@ export function SsiapCoursePage({ config, sessions = [] }: { config: SsiapCourse
       {heroKey ? <TrainingReferenceHero
         id={heroKey}
         heading={heroKey === 'ssiap-2' ? 'Devenez chef d’équipe' : 'Pilotez un service'}
-        accent="de sécurité incendie."
+        accent="de sécurité incendie"
         illustration={ssiapLeadershipArtwork[heroKey]}
-        caption={heroKey === 'ssiap-2' ? 'Encadrer. Coordonner. Transmettre.' : 'Analyser. Conseiller. Diriger.'}
+        caption={heroKey === 'ssiap-2' ? 'Encadrer, coordonner et transmettre' : 'Analyser, conseiller et diriger'}
         badge={`${config.label} · Formation réglementée`}
         title={`Formation ${config.role.toLocaleLowerCase('fr-FR')}`}
-        tagline={heroKey === 'ssiap-2' ? 'Encadrez votre équipe sur le terrain.' : 'Pilotez la sécurité de votre établissement.'}
+        tagline={heroKey === 'ssiap-2' ? 'Encadrez votre équipe sur le terrain' : 'Pilotez la sécurité de votre établissement'}
         description={<p>{config.intro}</p>}
         primaryAction={{ href: '#dates-tarifs', label: 'Recevoir les prochaines dates →' }}
       >
@@ -280,9 +281,13 @@ export function SsiapCoursePage({ config, sessions = [] }: { config: SsiapCourse
         </div>
       </nav>}
 
+      <CourseBrochureCard course={config.slug} />
+
       {heroKey ? <CourseJourney course={heroKey}>{missions}</CourseJourney> : missions}
 
-      <Section id="admission" eyebrow="Admission" title="Les conditions d’accès, vérifiées avant l’inscription." intro="Chaque justificatif est contrôlé pour vous orienter vers le bon parcours et sécuriser votre entrée en formation." tone="paper">
+      <CourseTeamBanner />
+
+      <Section id="admission" eyebrow="Admission" title="Les conditions d’accès, vérifiées avant l’inscription" intro="Chaque justificatif est contrôlé pour vous orienter vers le bon parcours et sécuriser votre entrée en formation." tone="paper">
         <div className="grid gap-4 md:grid-cols-2">
           {config.prerequisites.map((item, index) => (
             <article key={item.title} className="rounded-[1.7rem] border border-academy-line bg-white p-5 shadow-soft">
@@ -299,8 +304,7 @@ export function SsiapCoursePage({ config, sessions = [] }: { config: SsiapCourse
         </div>
       </Section>
 
-      <CourseBrochureCard course={config.slug} />
-      <Section id="programme" eyebrow="Programme réglementaire" title={`${config.duration} pour maîtriser votre fonction.`} intro={config.durationDetail}>
+      <Section id="programme" eyebrow="Programme réglementaire" title={`${config.duration} pour maîtriser votre fonction`} intro={config.durationDetail}>
         {heroKey && <TrainingProgramDownload href={`/documents/programme-${heroKey}.pdf`} course={config.label} theme="red" className="mb-6 w-full sm:w-auto" />}
         <div className="space-y-3">
           {config.program.map((item, index) => (
@@ -337,7 +341,7 @@ export function SsiapCoursePage({ config, sessions = [] }: { config: SsiapCourse
 
       {heroKey && <><TrainingReferenceCampus /><IntegraleWelcomePack course={heroKey} /></>}
 
-      <Section id="validation" eyebrow="Validation" title="Des attendus clairs, travaillés pendant le parcours." intro="La formation alterne apports réglementaires, exercices, cas concrets et préparation aux modalités de validation." tone="dark">
+      <Section id="validation" eyebrow="Validation" title="Des attendus clairs, travaillés pendant le parcours" intro="La formation alterne apports réglementaires, exercices, cas concrets et préparation aux modalités de validation." tone="dark">
         {visuals && <div className="mb-7 grid items-center gap-7 overflow-hidden rounded-[1.8rem] border border-white/15 bg-white/5 p-5 sm:p-7 lg:grid-cols-[.95fr_1.05fr]">
           <div className="aspect-[3/2] overflow-hidden rounded-2xl"><ManualArtwork illustration={visuals.assessment.illustration} /></div>
           <div><Eyebrow light>Se préparer aux épreuves</Eyebrow><h3 className="mt-3 text-3xl font-black tracking-[-.035em]">{visuals.assessment.title}</h3><p className="mt-4 leading-8 text-white/75">{visuals.assessment.text}</p></div>
@@ -367,7 +371,7 @@ export function SsiapCoursePage({ config, sessions = [] }: { config: SsiapCourse
         <div className="page-container overflow-hidden rounded-[2.2rem] bg-[#0D1725] p-6 text-white shadow-card sm:p-9 lg:grid lg:grid-cols-[1fr_auto] lg:items-center lg:gap-10">
           <div>
             <Eyebrow light>Dates & tarifs</Eyebrow>
-            <h2 className="mt-3 text-3xl font-black tracking-[-.045em] sm:text-4xl">Recevez le prochain calendrier et votre devis.</h2>
+            <h2 className="mt-3 text-3xl font-black tracking-[-.045em] sm:text-4xl">Recevez le prochain calendrier et votre devis</h2>
             <p className="mt-4 max-w-3xl text-lg leading-8 text-white/65">Les dates, le tarif et les possibilités de financement sont confirmés selon le parcours et votre dossier. Aucun calendrier n’est affiché tant qu’il n’est pas ouvert à l’inscription.</p>
             <div className="mt-5 flex flex-wrap gap-2 text-xs font-bold text-white/75"><span className="rounded-full border border-white/15 bg-white/8 px-3 py-2">✓ {config.duration}</span><span className="rounded-full border border-white/15 bg-white/8 px-3 py-2">✓ Présentiel</span><span className="rounded-full border border-white/15 bg-white/8 px-3 py-2">✓ Puget-sur-Argens</span></div>
           </div>
@@ -379,7 +383,7 @@ export function SsiapCoursePage({ config, sessions = [] }: { config: SsiapCourse
       </section>
       )}
 
-      <Section eyebrow="Après la formation" title="Faites reconnaître et évoluer vos compétences." intro="Votre parcours vous prépare aux responsabilités correspondant à votre niveau SSIAP.">
+      <Section eyebrow="Après la formation" title="Faites reconnaître et évoluer vos compétences" intro="Votre parcours vous prépare aux responsabilités correspondant à votre niveau SSIAP.">
         <div className="grid gap-5 lg:grid-cols-[1.05fr_.95fr]">
           <article className="rounded-[2rem] border border-academy-line bg-[#FFFDF8] p-6">
             <Eyebrow>Fonctions et perspectives</Eyebrow>
@@ -410,7 +414,7 @@ export function SsiapCoursePage({ config, sessions = [] }: { config: SsiapCourse
 
       {heroKey ? <>
         <TrainingReferenceContact
-          title="Faites vérifier votre parcours avant de vous inscrire."
+          title="Faites vérifier votre parcours avant de vous inscrire"
           description="Cassandre vous aide à choisir le bon niveau, contrôler les justificatifs et préparer votre financement."
           href={contactHref(config, 'rendez-vous téléphonique avec Cassandre')}
         />
@@ -418,7 +422,7 @@ export function SsiapCoursePage({ config, sessions = [] }: { config: SsiapCourse
       </> : <>
       <section className="bg-academy-bg px-4 pb-20 pt-8">
         <div className="page-container overflow-hidden rounded-[2.4rem] border border-academy-line bg-[#FFFDF8] p-7 shadow-card sm:p-10 lg:flex lg:items-center lg:justify-between lg:gap-12 lg:p-12">
-          <div><Eyebrow>Votre projet SSIAP</Eyebrow><h2 className="mt-4 max-w-3xl text-4xl font-black tracking-[-.05em] sm:text-5xl">Faites vérifier votre parcours avant de vous inscrire.</h2><p className="mt-5 max-w-2xl text-lg leading-8 text-academy-muted">Cassandre vous aide à choisir le bon niveau, contrôler les justificatifs et préparer votre financement.</p></div>
+          <div><Eyebrow>Votre projet SSIAP</Eyebrow><h2 className="mt-4 max-w-3xl text-4xl font-black tracking-[-.05em] sm:text-5xl">Faites vérifier votre parcours avant de vous inscrire</h2><p className="mt-5 max-w-2xl text-lg leading-8 text-academy-muted">Cassandre vous aide à choisir le bon niveau, contrôler les justificatifs et préparer votre financement.</p></div>
           <div className="mt-7 flex shrink-0 flex-col gap-3 lg:mt-0"><CTA href={contactHref(config, 'rendez-vous téléphonique avec Cassandre')}>Réserver un rendez-vous téléphonique →</CTA><CTA href="tel:0422470768" variant="light">Appeler Cassandre</CTA></div>
         </div>
       </section>

@@ -1,4 +1,5 @@
 import { CourseFilm } from '@/components/CourseFilm';
+import { CourseTeamBanner } from '@/components/CourseTeamBanner';
 import { CourseBrochureCard } from '@/components/CourseBrochureCard';
 import { TrainingReferencePage, TrainingReferenceSection, TrainingReferenceCampus, TrainingReferenceContact, TrainingReferenceMobileBar } from '@/components/TrainingReferenceLayout';
 import { TrainingCourseTestimonials } from '@/components/TrainingCourseTestimonials';
@@ -109,12 +110,16 @@ export default async function DespInitialPage(){
       theme="orange"
     />
 
+    <CourseBrochureCard course="dirigeant" />
+
     <CourseFilm film="desp" title="Préparer son projet d’entreprise"
       description="Créer sa société de sécurité privée, la gérer et encadrer son équipe. Découvrez ce que vous préparez en formation DESP." />
 
     <CourseJourney course="desp-initial">
       <section className="page-container py-10"><MissionAnimation variant="despInitial" className="mb-8" illustration={originalArtwork['desp-initial-mission']} /><div className="grid gap-4 md:grid-cols-3"><FeatureCard title="Durée">7 semaines · 245 heures</FeatureCard><FeatureCard title="Public concerné">Candidats souhaitant acquérir ou consolider les compétences de dirigeant en sécurité privée.</FeatureCard><FeatureCard title="Prérequis">Niveau 4 ou expérience à valider avec l’équipe admissions ; conditions CNAPS et honorabilité à vérifier.</FeatureCard><FeatureCard title="Lieux">Distanciel + présentiel à Paris ou Puget-sur-Argens selon les sessions.</FeatureCard><FeatureCard title="Financement">CPF, France Travail, entreprise ou facilités de paiement selon dossier.</FeatureCard><FeatureCard title="Certification / examen"><strong>Titre RNCP Dirigeant d’entreprise de sécurité privée – niveau 5</strong><br/>Titre : Dirigeant d’entreprise de sécurité privée · Sigle : DESP · Code : {despInitialAdminData.rncpCode} · Certificateur : Scotia Formation · Échéance actuelle : 28 mars 2027 · Durée : {despInitialAdminData.duration.total} · Tarif actuel : {despInitialAdminData.priceLabel}<br/><span className="mt-2 block">Cette certification permet de justifier de l’aptitude professionnelle nécessaire à la demande d’agrément dirigeant auprès du CNAPS. L’agrément reste délivré séparément par le CNAPS après étude du dossier.</span></FeatureCard></div></section>
     </CourseJourney>
+
+    <CourseTeamBanner />
     <ConversionStrip theme="orange"/>
     <TrainingReferenceSection id="metier" eyebrow="01 — Le métier" title="Quel est le rôle d’un dirigeant d’entreprise de sécurité privée ?" intro="Le dirigeant d’entreprise de sécurité privée crée, reprend, dirige ou développe une structure exerçant une ou plusieurs activités réglementées de sécurité privée. Il veille au respect du Livre VI du Code de la sécurité intérieure, pilote la stratégie de l’entreprise, contrôle son équilibre financier, développe son activité commerciale et encadre les équipes."><DespIllustratedCards items={jobMissions}/><Note>Le dirigeant ne réalise pas nécessairement lui-même les missions opérationnelles. S’il exerce personnellement des activités d’agent de sécurité, il doit également détenir la carte professionnelle correspondant à l’activité exercée.</Note></TrainingReferenceSection>
     <Info title="À qui s’adresse la formation ?" items={audience}/><NoteSection>La formation ne s’adresse pas uniquement aux agents de sécurité expérimentés. Une expérience du secteur constitue un avantage, mais l’admission dépend de l’ensemble du profil et des conditions du certificateur.</NoteSection>
@@ -149,7 +154,7 @@ export default async function DespInitialPage(){
     <ActivitiesSection/>
     <AccessibilitySection/>
     <Info title="Pourquoi suivre cette formation chez Intégrale Academy" items={why}/>
-    <CourseBrochureCard course="dirigeant" />
+
     <TrainingCourseTestimonials category="DESP" />
     <div id="faq-desp-initial"><PremiumFAQSection theme="orange" badge="FAQ DESP initial" title="Vos questions sur la formation DESP initial" description="Retrouvez les réponses essentielles sur le déroulement du parcours, les prérequis, les financements, l’examen, le CNAPS et les étapes d’inscription." items={[...formationFaq, ...despInitialFaq]} contactHref="/contact?formation=desp-initial" contactLabel="Poser une question"/></div>
     <TrainingReferenceContact description="Cassandre vous aide à préparer votre projet de création ou de reprise, vérifier les prérequis, choisir votre centre et étudier votre financement." href="/contact?formation=desp-initial&objet=rendez-vous" />

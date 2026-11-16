@@ -35,7 +35,7 @@ const galleries: Record<TrainingMotionGalleryVariant, {
 }> = {
   a3p: {
     eyebrow: 'A3P en mouvement',
-    title: 'La protection rapprochée, en images.',
+    title: 'La protection rapprochée, en images',
     intro: 'Visualisez les réflexes qui structurent une mission, de la préparation au débriefing.',
     theme: 'green',
     stories: [
@@ -49,7 +49,7 @@ const galleries: Record<TrainingMotionGalleryVariant, {
   },
   ssiap: {
     eyebrow: 'SSIAP 1 en mouvement',
-    title: 'La sécurité incendie, en images.',
+    title: 'La sécurité incendie, en images',
     intro: 'Des rondes au poste de sécurité, découvrez les gestes essentiels d’un agent SSIAP 1.',
     theme: 'red',
     stories: [
@@ -63,7 +63,7 @@ const galleries: Record<TrainingMotionGalleryVariant, {
   },
   sst: {
     eyebrow: 'SST en mouvement',
-    title: 'Les gestes qui sauvent, en images.',
+    title: 'Les gestes qui sauvent, en images',
     intro: 'Une méthode simple à mémoriser pour prévenir, protéger et secourir sans perdre de temps.',
     theme: 'rescue',
     stories: [
@@ -77,7 +77,7 @@ const galleries: Record<TrainingMotionGalleryVariant, {
   },
   despVae: {
     eyebrow: 'DESP VAE en mouvement',
-    title: 'De l’expérience au titre, en images.',
+    title: 'De l’expérience au titre, en images',
     intro: 'Visualisez les étapes qui transforment votre parcours professionnel en dossier de validation structuré.',
     theme: 'orange',
     stories: [
@@ -91,7 +91,7 @@ const galleries: Record<TrainingMotionGalleryVariant, {
   },
   despInitial: {
     eyebrow: 'DESP initial en mouvement',
-    title: 'Diriger une entreprise, en images.',
+    title: 'Diriger une entreprise, en images',
     intro: 'Du projet à l’agrément, visualisez les responsabilités clés d’un dirigeant de sécurité privée.',
     theme: 'orange',
     stories: [
@@ -105,7 +105,7 @@ const galleries: Record<TrainingMotionGalleryVariant, {
   },
   btsMos: {
     eyebrow: 'BTS MOS en mouvement',
-    title: 'Le management de la sécurité, en images.',
+    title: 'Le management de la sécurité, en images',
     intro: 'Du terrain au pilotage, visualisez les responsabilités qui structurent une prestation de sécurité.',
     theme: 'bts',
     stories: [
@@ -119,7 +119,7 @@ const galleries: Record<TrainingMotionGalleryVariant, {
   },
   btsMco: {
     eyebrow: 'BTS MCO en mouvement',
-    title: 'Le commerce et le management, en images.',
+    title: 'Le commerce et le management, en images',
     intro: 'Du conseil client au pilotage des résultats, découvrez les compétences d’un manager commercial opérationnel.',
     theme: 'bts',
     stories: [
@@ -133,7 +133,7 @@ const galleries: Record<TrainingMotionGalleryVariant, {
   },
   btsNdrc: {
     eyebrow: 'BTS NDRC en mouvement',
-    title: 'La relation client à 360°, en images.',
+    title: 'La relation client à 360°, en images',
     intro: 'Prospection, négociation et fidélisation : visualisez une relation commerciale devenue pleinement omnicanale.',
     theme: 'bts',
     stories: [
@@ -147,7 +147,7 @@ const galleries: Record<TrainingMotionGalleryVariant, {
   },
   btsCi: {
     eyebrow: 'BTS CI en mouvement',
-    title: 'Les échanges internationaux, en images.',
+    title: 'Les échanges internationaux, en images',
     intro: 'Des marchés étrangers à la livraison, visualisez les étapes d’une opération commerciale internationale.',
     theme: 'bts',
     stories: [
@@ -161,7 +161,7 @@ const galleries: Record<TrainingMotionGalleryVariant, {
   },
   btsPi: {
     eyebrow: 'BTS PI en mouvement',
-    title: 'L’immobilier, en images.',
+    title: 'L’immobilier, en images',
     intro: 'De l’estimation à la gestion, visualisez les missions qui rythment une activité immobilière.',
     theme: 'bts',
     stories: [
@@ -175,7 +175,7 @@ const galleries: Record<TrainingMotionGalleryVariant, {
   },
   btsCg: {
     eyebrow: 'BTS CG en mouvement',
-    title: 'La gestion et la comptabilité, en images.',
+    title: 'La gestion et la comptabilité, en images',
     intro: 'De la pièce comptable au tableau de bord, visualisez les opérations qui rendent une entreprise plus fiable.',
     theme: 'bts',
     stories: [
@@ -189,7 +189,7 @@ const galleries: Record<TrainingMotionGalleryVariant, {
   },
   vtc: {
     eyebrow: 'VTC en mouvement',
-    title: 'Le métier de chauffeur VTC, en images.',
+    title: 'Le métier de chauffeur VTC, en images',
     intro: 'De la réservation à la fidélisation, visualisez les gestes qui transforment un trajet en véritable service professionnel.',
     theme: 'violet',
     stories: [

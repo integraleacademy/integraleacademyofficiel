@@ -111,10 +111,10 @@ export const certificationProjects = {
     ],
     admission: 'L’admission prévue repose sur un dossier présentant le parcours et les réalisations, un entretien de positionnement et une étude de cas technique. Les candidats admis sur la base de leur expérience devront démontrer les mêmes acquis d’entrée. Le positionnement précisera les acquis, les écarts et les éventuelles remises à niveau.',
     assessments: [
-      'Étude d’architecture et décision de faisabilité.',
-      'Réalisation et démonstration d’un système génératif.',
-      'Qualification technique et décision de mise en service.',
-      'Déploiement, exploitation et évolution d’un système génératif.',
+      'Étude d’architecture et décision de faisabilité',
+      'Réalisation et démonstration d’un système génératif',
+      'Qualification technique et décision de mise en service',
+      'Déploiement, exploitation et évolution d’un système génératif',
     ],
     jobs: [
       'Expert en ingénierie de l’intelligence artificielle générative.',

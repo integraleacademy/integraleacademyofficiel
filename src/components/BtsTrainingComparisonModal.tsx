@@ -211,7 +211,7 @@ export function BtsTrainingComparisonModal({ items, className = '' }: { items: B
             <header className={styles.dialogHeader}>
               <div className={styles.headingCopy}>
                 <span className={styles.eyebrow}><i aria-hidden="true" /> Comparateur de BTS</span>
-                <h2 id={titleId}>Comparez les BTS.<br /><em>Choisissez votre voie.</em></h2>
+                <h2 id={titleId}>Comparez les BTS.<br /><em>Choisissez votre voie</em></h2>
                 <p id={descriptionId}>Métiers, compétences, débouchés, rythme et coût : les différences essentielles sont réunies au même endroit.</p>
               </div>
               <div className={styles.headerMeta}>

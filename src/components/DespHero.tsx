@@ -19,13 +19,13 @@ export function DespHero({ variant, title, subtitle, stats, sessions }: {
   const rncp = stats.find(([label]) => label === 'RNCP')?.[1] || 'RNCP40385';
   return <TrainingReferenceHero
     id={`desp-${variant}`}
-    heading={isVae ? 'Votre expérience.' : 'Devenez dirigeant'}
-    accent={isVae ? 'Votre titre DESP.' : 'en sécurité privée.'}
+    heading={isVae ? 'Votre expérience,' : 'Devenez dirigeant'}
+    accent={isVae ? 'votre titre DESP' : 'en sécurité privée'}
     illustration={isVae ? despArtwork.direction : despArtwork.pilotage}
-    caption={isVae ? 'Démontrer. Valoriser. Faire reconnaître.' : 'Créer. Gérer. Développer.'}
+    caption={isVae ? 'Démontrer et faire reconnaître ses compétences' : 'Créer, gérer et développer'}
     badge={`DESP · ${isVae ? 'Validation des acquis de l’expérience' : 'Formation initiale'}`}
     title={title}
-    tagline={isVae ? 'Faites reconnaître votre expérience.' : 'Créez, reprenez, dirigez votre entreprise.'}
+    tagline={isVae ? 'Faites reconnaître votre expérience' : 'Créez, reprenez, dirigez votre entreprise'}
     description={subtitle}
     primaryAction={{ href: `/contact?formation=desp-${variant}`, label: 'Recevoir le dossier →' }}
     additionalAction={<Link href="/despvaeouinitial" className="self-center text-sm font-bold text-orange-200 underline decoration-orange-300/50 underline-offset-4">Comparer initial et VAE →</Link>}

@@ -1,3 +1,4 @@
+import { CourseTeamBanner } from '@/components/CourseTeamBanner';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import type { CertificationProject } from '@/data/certification-projects';
@@ -44,12 +45,12 @@ const chapters: readonly TrainingSectionNavigationItem[] = [
 
 const presentation = {
   cpiaa: {
-    heading: 'Chef de produit', accent: 'IA et automatisation.',
-    tagline: 'Du besoin utilisateur au produit qui fait la différence.',
-    caption: 'Comprendre. Concevoir. Piloter.',
+    heading: 'Chef de produit', accent: 'IA et automatisation',
+    tagline: 'Du besoin utilisateur au produit qui fait la différence',
+    caption: 'Comprendre, concevoir et piloter',
     heroAlt: 'Illustration de professionnels qui construisent la feuille de route d’un produit d’intelligence artificielle',
     missionAlt: 'Illustration d’un atelier de test d’un prototype avec des utilisateurs',
-    missionTitle: 'Transformer une idée en produit utile.',
+    missionTitle: 'Transformer une idée en produit utile',
     missionDescription: 'Comprendre les utilisateurs, expérimenter une solution et prendre les bonnes décisions : le chef de produit donne une direction au projet et coordonne les personnes qui le réalisent.',
     missions: [
       ['Comprendre les usages', 'Analyser les besoins et les processus pour choisir les cas d’usage pertinents.'],
@@ -59,12 +60,12 @@ const presentation = {
     audiences: ['Professionnels du numérique', 'Chefs de projet', 'Profils marketing et produit', 'Managers en évolution'],
   },
   eiag: {
-    heading: 'Expert en ingénierie', accent: 'de l’IA générative.',
-    tagline: 'De l’architecture au système fiable en production.',
-    caption: 'Concevoir. Développer. Fiabiliser.',
+    heading: 'Expert en ingénierie', accent: 'de l’IA générative',
+    tagline: 'De l’architecture au système fiable en production',
+    caption: 'Concevoir, développer et fiabiliser',
     heroAlt: 'Illustration de deux professionnels qui conçoivent un système d’intelligence artificielle générative',
     missionAlt: 'Illustration d’une experte qui analyse les résultats de tests d’un système d’IA générative',
-    missionTitle: 'Faire fonctionner l’IA dans des conditions réelles.',
+    missionTitle: 'Faire fonctionner l’IA dans des conditions réelles',
     missionDescription: 'Choisir une architecture, développer les composants et vérifier leurs limites : l’expert construit des systèmes dont il peut démontrer la fiabilité, la sécurité et la qualité de fonctionnement.',
     missions: [
       ['Concevoir le système', 'Traduire le besoin métier en architecture et préparer les données nécessaires.'],
@@ -115,16 +116,16 @@ export function CertificationProjectPage({ project }: { project: CertificationPr
 
       <TrainingSectionNavigation mark={project.acronym} title={project.acronym} eyebrowLabel="Projet de certification" theme={theme} items={chapters} registrationHref="#contact" registrationLabel="Nous contacter" ariaLabel={`Sommaire du projet ${project.acronym}`} />
 
-      <Section id="metier" eyebrow="Le métier, concrètement" title={<>Des idées aux <em>réalisations.</em></>} intro={project.objective}>
+      <Section id="metier" eyebrow="Le métier, concrètement" title={<>Des idées aux <em>réalisations</em></>} intro={project.objective}>
         <TrainingReferenceMissions label="Votre métier" items={[{ title: copy.missionTitle, description: copy.missionDescription, illustration: { src: `/images/certifications/${project.slug}-mission.webp?v=manuel-aps-2`, alt: copy.missionAlt }, body: <p className={styles.role}>{project.role}</p> }]} />
         <div className={styles.missionGrid}>{copy.missions.map(([title, text], index) => <article key={title} className={styles.missionCard}><span className={styles.number}>0{index + 1}</span><h3>{title}</h3><p>{text}</p></article>)}</div>
         <div className={styles.audience}><strong>À qui s’adresse le projet ?</strong><div>{copy.audiences.map(audience => <span key={audience}>{audience}</span>)}</div><p>Sous réserve de satisfaire les prérequis et le positionnement prévus.</p></div>
       </Section>
 
-      <Section id="acces" eyebrow="Conditions d’accès prévues" title={<>Votre expérience,<br /><em>le point de départ.</em></>} tone="stone" intro="Un dossier, un entretien et une mise en situation pour examiner les acquis et préparer un parcours adapté.">
+      <Section id="acces" eyebrow="Conditions d’accès prévues" title={<>Votre expérience,<br /><em>le point de départ</em></>} tone="stone" intro="Un dossier, un entretien et une mise en situation pour examiner les acquis et préparer un parcours adapté.">
         <div className={`${experience.admission} ${styles.admission}`}>
           <div className={experience.admissionLead}>
-            <p className={experience.kicker}>Préparer son projet</p><h3>Faisons le point<br /><em>sur votre parcours.</em></h3><p>Le positionnement identifiera vos acquis, les compétences à développer et les éventuelles remises à niveau. Les exigences à la sortie resteront les mêmes pour tous les candidats.</p><TrainingReferenceAction href="#contact">Échanger avec notre équipe →</TrainingReferenceAction>
+            <p className={experience.kicker}>Préparer son projet</p><h3>Faisons le point<br /><em>sur votre parcours</em></h3><p>Le positionnement identifiera vos acquis, les compétences à développer et les éventuelles remises à niveau. Les exigences à la sortie resteront les mêmes pour tous les candidats.</p><TrainingReferenceAction href="#contact">Échanger avec notre équipe →</TrainingReferenceAction>
           </div>
           <div className={experience.requirements}>
             {[
@@ -136,11 +137,11 @@ export function CertificationProjectPage({ project }: { project: CertificationPr
         </div>
       </Section>
 
-      <Section id="competences" eyebrow="Le référentiel du projet" title={<>Quatre blocs pour<br /><em>maîtriser le métier.</em></>} intro="Explorez les compétences et les productions prévues pour chaque bloc. Les intitulés reprennent le référentiel du projet de certification." tone="paper">
+      <Section id="competences" eyebrow="Le référentiel du projet" title={<>Quatre blocs pour<br /><em>maîtriser le métier</em></>} intro="Explorez les compétences et les productions prévues pour chaque bloc. Les intitulés reprennent le référentiel du projet de certification." tone="paper">
         <div className={styles.program}><TrainingProgramExplorer units={units} idPrefix={project.slug} hours="4" unitLabel="blocs" overview="Un parcours de compétences capitalisables" subtitle="Référentiel du projet · demande RNCP en préparation" facts={[["Niveau demandé", "7"], ["Évaluation", "1 épreuve / bloc"], ["Oral", "45 min / bloc"]]} menuTitle="Les blocs de compétences" tabListLabel={`Blocs de compétences ${project.acronym}`} illustration={{ src: `/images/certifications/${project.slug}.webp`, alt: `Logo de la certification en projet ${project.acronym}` }} nextLabel="Bloc suivant" restartLabel="Revenir au premier bloc" /></div>
       </Section>
 
-      <Section id="evaluation" eyebrow="Les évaluations prévues" title={<>Présenter son travail.<br /><em>Démontrer sa maîtrise.</em></>} intro="Quatre épreuves individuelles, une par bloc, à partir d’un contexte professionnel réel ou reconstitué." tone="dark" className={styles.evaluation}>
+      <Section id="evaluation" eyebrow="Les évaluations prévues" title={<>Présenter son travail.<br /><em>Démontrer sa maîtrise</em></>} intro="Quatre épreuves individuelles, une par bloc, à partir d’un contexte professionnel réel ou reconstitué." tone="dark" className={styles.evaluation}>
         <div className={styles.examGrid}>{project.assessments.map((assessment, index) => <article key={assessment} className={styles.examCard}><span>Épreuve 0{index + 1} · {project.blocks[index].code}</span><h3>{assessment.replace(' et soutenance individuelle.', '')}</h3><p>Production préparée et remise en amont, puis soutenance individuelle devant le jury.</p></article>)}</div>
         <div className={styles.oral}>
           <div className={styles.oralHeading}><span>Pour chaque bloc</span><strong>45 <small>minutes d’oral</small></strong></div>
@@ -150,7 +151,7 @@ export function CertificationProjectPage({ project }: { project: CertificationPr
         <div className={styles.validation}><div><h3>Valider les quatre blocs</h3><p>Chaque compétence devra satisfaire tous les critères qui lui sont associés. La délivrance du titre reposera sur la validation des quatre blocs, sans compensation entre compétences ou entre blocs.</p></div><div><h3>Conserver les acquis</h3><p>Les blocs acquis donneront lieu à une attestation et seront capitalisables. Seuls les blocs non acquis seront à représenter. Aucune correspondance automatique avec une autre certification n’est prévue.</p></div></div>
       </Section>
 
-      <Section id="parcours" eyebrow="Parcours et accompagnement" title={<>Un projet qui tient compte<br /><em>de votre expérience.</em></>} intro="La formation et la VAE sont deux voies prévues dans le projet. Elles répondent aux mêmes exigences de compétences.">
+      <Section id="parcours" eyebrow="Parcours et accompagnement" title={<>Un projet qui tient compte<br /><em>de votre expérience</em></>} intro="La formation et la VAE sont deux voies prévues dans le projet. Elles répondent aux mêmes exigences de compétences.">
         <div className={styles.pathways}>
           <article><span className={styles.number}>01</span><p className={styles.kicker}>Par la formation</p><h3>Un parcours après positionnement</h3><p>La préparation sera adaptée aux acquis et aux écarts identifiés. Les séquences, les modalités, le calendrier et la durée seront arrêtés avant contractualisation.</p><div className={styles.note}>Aucun volume horaire global, aucune date de session et aucun tarif ne sont annoncés à ce stade.</div></article>
           <article><span className={styles.number}>02</span><p className={styles.kicker}>Par l’expérience</p><h3>Une voie VAE prévue</h3><p>Le candidat présentera un dossier d’expériences, des preuves professionnelles et un entretien de 45 minutes par bloc présenté, selon les mêmes compétences et critères.</p><div className={styles.note}>Les prérequis d’entrée en formation ne s’appliquent pas à la VAE. Le lien entre l’expérience et les activités visées sera examiné.</div></article>
@@ -158,15 +159,16 @@ export function CertificationProjectPage({ project }: { project: CertificationPr
         <div className={styles.accessibility}><span aria-hidden="true">↗</span><div><h3>Accessibilité et handicap</h3><p>Les besoins d’aménagement seront étudiés avec le référent handicap pour adapter les conditions d’accès et d’évaluation, en préservant les compétences et les critères exigés.</p></div><a href={emailHref}>Préparer cet échange →</a></div>
       </Section>
 
-      <TrainingReferenceCampus title="Une école, une équipe, des lieux." description="Découvrez les espaces d’Intégrale Academy à Puget-sur-Argens. L’organisation propre à chaque futur parcours sera précisée avant contractualisation." />
+      <TrainingReferenceCampus title="Une école, une équipe, des lieux" description="Découvrez les espaces d’Intégrale Academy à Puget-sur-Argens. L’organisation propre à chaque futur parcours sera précisée avant contractualisation." />
+      <CourseTeamBanner />
 
-      <Section id="debouches" eyebrow="Les perspectives professionnelles" title={<>Des compétences pour<br /><em>des métiers concrets.</em></>} tone="stone" intro="Les responsabilités confiées dépendent de l’expérience, du contexte d’emploi et de l’organisation.">
+      <Section id="debouches" eyebrow="Les perspectives professionnelles" title={<>Des compétences pour<br /><em>des métiers concrets</em></>} tone="stone" intro="Les responsabilités confiées dépendent de l’expérience, du contexte d’emploi et de l’organisation.">
         <div className={styles.careers}><div><h3>Les emplois visés</h3><ul className={styles.jobs}>{project.jobs.map(job => <li key={job}><span aria-hidden="true">↗</span>{job}</li>)}</ul>{project.employmentNote && <p className={styles.employmentNote}>{project.employmentNote}</p>}</div><aside className={styles.sectors}><p className={styles.kicker}>Les environnements de travail</p><h3>Où exercer ?</h3><p>Dans les organisations qui conçoivent, intègrent ou exploitent des produits et services fondés sur l’IA.</p><ul><li>Éditeurs de logiciels et plateformes numériques</li><li>ESN et cabinets de conseil</li><li>Industrie, services et commerce</li><li>Finance et santé, selon les exigences du secteur</li><li>Administrations et organisations publiques</li></ul></aside></div>
       </Section>
 
-      <PremiumFAQSection id="faq-projet" badge={`Questions fréquentes · ${project.acronym}`} title={<>Des réponses pour<br /><em>préparer votre projet.</em></>} description="Niveau, admission, durée et statut du projet : les informations à connaître avant d’aller plus loin." items={faq} theme={project.slug === 'cpiaa' ? 'blue' : 'violet'} contactHref={emailHref} contactLabel="Poser ma question" callLabel="Appeler l’équipe" />
+      <PremiumFAQSection id="faq-projet" badge={`Questions fréquentes · ${project.acronym}`} title={<>Des réponses pour<br /><em>préparer votre projet</em></>} description="Niveau, admission, durée et statut du projet : les informations à connaître avant d’aller plus loin." items={faq} theme={project.slug === 'cpiaa' ? 'blue' : 'violet'} contactHref={emailHref} contactLabel="Poser ma question" callLabel="Appeler l’équipe" />
 
-      <div id="contact"><TrainingReferenceContact href="/contact#demande" title={`Parlons de votre projet ${project.acronym}.`} description="Notre équipe vous renseigne sur les compétences visées, les prérequis et les modalités envisagées. Cet échange permet aussi de faire le point sur votre parcours." additionalActions={<a href={emailHref} className={styles.emailLink}>Nous écrire au sujet de {project.acronym} →</a>} /></div>
+      <div id="contact"><TrainingReferenceContact href="/contact#demande" title={`Parlons de votre projet ${project.acronym}`} description="Notre équipe vous renseigne sur les compétences visées, les prérequis et les modalités envisagées. Cet échange permet aussi de faire le point sur votre parcours." additionalActions={<a href={emailHref} className={styles.emailLink}>Nous écrire au sujet de {project.acronym} →</a>} /></div>
       <div className={styles.legal}><p>Organisme porteur : Intégrale Sécurité Formations · Nom commercial : Intégrale Academy.</p><p>Projet de certification — demande d’enregistrement au RNCP en préparation. Le niveau 7 demandé reste soumis à la décision de France compétences.</p></div>
       <TrainingReferenceMobileBar href="#contact" label="Nous contacter" />
     </TrainingReferencePage>

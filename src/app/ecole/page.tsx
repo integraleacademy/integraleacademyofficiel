@@ -34,7 +34,7 @@ export default async function Page() {
       <div className={`${styles.container} ${styles.heroGrid}`}>
         <div className={styles.heroCopy}>
           <p className={styles.eyebrow}><span className={styles.smallLine} /> Notre école · Depuis 2018</p>
-          <h1 id="school-title">Un lieu pour<br /> apprendre.<br /><em>Une équipe<br /> pour avancer.</em></h1>
+          <h1 id="school-title">Un lieu pour<br /> apprendre,<br /><em>une équipe<br /> pour avancer</em></h1>
           <p className={styles.intro}>Des métiers concrets. Des personnes engagées. À Puget-sur-Argens, Intégrale Academy vous accompagne dans la suite de votre parcours professionnel.</p>
           <div className={styles.heroActions}>
             <a href="#campus" className={styles.button}>Explorer l’école <Arrow /></a>
@@ -64,7 +64,7 @@ export default async function Page() {
     <section id="campus" className={`${styles.section} ${styles.campusSection}`} aria-labelledby="campus-title">
       <div className={styles.container}>
         <div className={styles.sectionHeading}>
-          <div><p className={styles.eyebrow}>01 / Les lieux pour apprendre</p><h2 id="campus-title">De la Côte d’Azur<br /><em>à Paris.</em></h2></div>
+          <div><p className={styles.eyebrow}>01 / Les lieux pour apprendre</p><h2 id="campus-title">De la Côte d’Azur<br /><em>à Paris</em></h2></div>
           <p>Notre école principale est à Puget-sur-Argens, sur la Côte d’Azur. À Paris, vous pouvez préparer le DESP. Nos deux mastères en intelligence artificielle y ouvriront prochainement.</p>
         </div>
         <SchoolCampuses />
@@ -84,7 +84,7 @@ export default async function Page() {
     <section id="equipe" className={styles.section} aria-labelledby="team-title">
       <div className={styles.container}>
         <div className={styles.sectionHeading}>
-          <div><p className={styles.eyebrow}>02 / Les personnes derrière l’école</p><h2 id="team-title">On avance mieux<br /><em>bien entouré.</em></h2></div>
+          <div><p className={styles.eyebrow}>02 / Les personnes derrière l’école</p><h2 id="team-title">On avance mieux<br /><em>bien entouré</em></h2></div>
           <p>Avant, pendant et après la formation, des interlocuteurs identifiés vous accompagnent. Voici les personnes à qui vous pouvez vous adresser.</p>
         </div>
         <div className={styles.teamLayout}>
@@ -117,7 +117,7 @@ export default async function Page() {
     <section id="pedagogie" className={styles.section} aria-labelledby="approach-title">
       <div className={styles.container}>
         <div className={styles.sectionHeading}>
-          <div><p className={styles.eyebrow}>03 / Notre manière de former</p><h2 id="approach-title">Du concret. De l’exigence.<br /><em>Et de l’attention.</em></h2></div>
+          <div><p className={styles.eyebrow}>03 / Notre manière de former</p><h2 id="approach-title">Du concret. De l’exigence.<br /><em>Et de l’attention</em></h2></div>
           <p>Choisissez une étape pour découvrir comment nous vous accompagnons, du premier échange à la mise en pratique.</p>
         </div>
         <SchoolPedagogy />
@@ -142,7 +142,7 @@ export default async function Page() {
       <div className={`${styles.container} ${styles.founderGrid} ${experience.founderWelcome}`}>
         <div className={styles.founderCopy}>
           <p className={styles.eyebrow}>04 / Notre histoire · Depuis 2018</p>
-          <h2 id="founder-title">Le terrain comme point de départ.<br /><em>L’humain comme fil conducteur.</em></h2>
+          <h2 id="founder-title">Le terrain comme point de départ.<br /><em>L’humain comme fil conducteur</em></h2>
           <div className={experience.founderSignature}><TeamPortrait person="clement" size={72} /><div><p>Clément VAILLANT</p><span>Fondateur & directeur général</span></div></div>
           <details className={experience.biography}><summary>Découvrir le parcours du fondateur <span className={styles.plus} aria-hidden="true">+</span></summary>
           <p>Entrepreneur engagé dans la formation professionnelle, Clément VAILLANT a construit son parcours au croisement de la sécurité privée, de la gestion d’équipes, de la communication et de la formation. Son expérience, acquise dans des environnements exigeants et réglementés, l’a conduit des fonctions opérationnelles à la coordination puis à la direction de projets et d’équipes.</p>
@@ -183,7 +183,7 @@ export default async function Page() {
 
     <section id="visite" className={styles.visit} aria-labelledby="visit-title">
       <div className={`${styles.container} ${styles.visitGrid}`}>
-        <div><p className={styles.eyebrow}>La prochaine étape se fait ensemble</p><h2 id="visit-title">Poussez la porte.<br /><em>Parlons de la suite.</em></h2><p>Découvrez les lieux, rencontrez l’équipe et échangez sur votre projet. Nous vous aidons à préparer votre venue.</p></div>
+        <div><p className={styles.eyebrow}>La prochaine étape se fait ensemble</p><h2 id="visit-title">Poussez la porte.<br /><em>Parlons de la suite</em></h2><p>Découvrez les lieux, rencontrez l’équipe et échangez sur votre projet. Nous vous aidons à préparer votre venue.</p></div>
         <div className={styles.visitActions}><SchoolVisitAdviser /><SchoolVisitButton className={styles.button} /><a href="tel:+33422470768" className={styles.visitPhone}>{contact.phone}</a><p>Un premier échange gratuit et sans engagement.</p><Link href="/planning" className={styles.textLink}>Voir les prochaines sessions <Arrow diagonal /></Link></div>
       </div>
     </section>

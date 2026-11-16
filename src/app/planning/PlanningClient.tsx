@@ -13,13 +13,13 @@ import { SsiapCourseChoices } from './SsiapCourseChoices';
 import { DirectorLocationChoices } from './DirectorLocationChoices';
 import { formatVtcDeadline, formatVtcExamDate, vtcCourse } from '@/data/vtc';
 import styles from './planning.module.css';
-import { PlanningPreview } from './PlanningPreview';
+import { PlanningPreview, type PlanningFormationKey } from './PlanningPreview';
 import { PlanningCalendar } from './PlanningCalendar';
 import { PlanningRegistration } from './PlanningRegistration';
 
 type Session = any;
 type CategoryKey = 'security' | 'fire' | 'vtc';
-type FormationFilterKey = 'all' | 'aps' | 'a3p' | 'director' | 'ssiap' | 'vtc';
+type FormationFilterKey = 'all' | PlanningFormationKey;
 type ViewMode = 'list' | 'calendar';
 type PlanningAccent = 'blue' | 'green' | 'orange' | 'red' | 'violet' | 'gold';
 
@@ -308,6 +308,39 @@ function deliveryPeriodRows(session: Session): { label: string; value: string; i
   ];
 }
 
+const previewDate = new Intl.DateTimeFormat('fr-FR', {
+  day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Europe/Paris',
+});
+
+function NextSessionSummary({ session }: { session: Session }) {
+  const isVtc = session.scheduleKind === 'vtc-exam';
+  const start = new Date(session.startDate);
+  const end = session.endDate ? new Date(session.endDate) : start;
+  const dates = isVtc ? formatVtcDeadline(session.vtcDates?.deadline || session.startDate)
+    : previewDate.formatRange(start, end >= start ? end : start);
+  const facts = [];
+  if (isVtc) {
+    facts.push(['Examen théorique', formatVtcExamDate(session.vtcDates?.theory)], ['Examen pratique', formatVtcExamDate(session.vtcDates?.practical)]);
+  } else {
+    if (hasDetailedDeliveryPeriods(session)) {
+      if (session.remoteStartDate && session.remoteEndDate) facts.push(['À distance', formatSessionPeriod(session.remoteStartDate, session.remoteEndDate)]);
+      if (session.inPersonStartDate && session.inPersonEndDate) facts.push(['En présentiel', formatSplitInPersonPeriod(session) || formatSessionPeriod(session.inPersonStartDate, session.inPersonEndDate)]);
+    }
+    if (session.examDate) facts.push(['Examen', formatSessionDate(session.examDate)]);
+  }
+  if (session.location) facts.push(['Lieu', session.location]);
+  facts.push(['Tarif', displayPrice(session)]);
+  if (!isVtc) facts.push(['Disponibilité', planningSeatAvailability(session).label]);
+
+  return <>
+    <p className={styles.nextDateLabel}>{isVtc ? 'Date limite d’inscription' : 'Dates de formation'}</p>
+    <p className={styles.nextDate}>{dates}</p>
+    <dl className={styles.nextFacts}>{facts.map(([label, value]) => (
+      <div key={label}><dt>{label}</dt><dd>{value}</dd></div>
+    ))}</dl>
+  </>;
+}
+
 function SessionCard({
   session,
   isNext,
@@ -468,7 +501,7 @@ function MissingDates({
         <div className="max-w-4xl">
           <p className="text-[11px] font-black uppercase tracking-[.22em] text-academy-gold-strong">Alertes personnalisées</p>
           <h2 className="mt-4 text-3xl font-black tracking-tight text-academy-ink dark:text-white sm:text-5xl">
-            Pas encore de date ? Gardez une longueur d’avance.
+            Pas encore de date ? Gardez une longueur d’avance
           </h2>
           <p className="mt-4 max-w-3xl text-base font-semibold leading-7 text-academy-muted sm:text-lg">
             Les formations sans session ouverte restent accessibles : créez une alerte et soyez prévenu dès la publication d’une nouvelle rentrée.
@@ -505,7 +538,7 @@ function MissingDates({
           <div className="relative grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
             <div>
               <p className="text-[10px] font-black uppercase tracking-[.2em] text-academy-gold">Mon alerte planning</p>
-              <h3 className="mt-3 text-2xl font-black tracking-tight sm:text-3xl">Recevez uniquement les dates qui vous intéressent.</h3>
+              <h3 className="mt-3 text-2xl font-black tracking-tight sm:text-3xl">Recevez uniquement les dates qui vous intéressent</h3>
               <p className="mt-3 max-w-2xl text-sm font-semibold leading-6 text-white/65">Formation, centre et période souhaitée : l’équipe vous recontacte dès qu’une session adaptée est ouverte.</p>
             </div>
             <Link href="/contact?motif=alerte-planning" className="inline-flex items-center justify-center gap-2 rounded-full bg-academy-gold px-6 py-4 text-sm font-black text-academy-gold-text transition hover:-translate-y-0.5">
@@ -559,7 +592,8 @@ export function PlanningClient({ initialSessions, initialLocation = 'all' }: { i
     });
   }, [activeFormation, activeSsiapCourse, isChoosingDirector, locationFilter, sortedSessions]);
 
-  const visibleSessions = showAll ? filteredSessions : filteredSessions.slice(0, 6);
+  const nextOnly = activeFormation !== 'all' && !showAll;
+  const visibleSessions = showAll ? filteredSessions : filteredSessions.slice(0, nextOnly ? 1 : 6);
   const selectedSession = filteredSessions.find(session => session.id === selectedSessionId) || null;
   const previewFormations = formationFilters.map(formation => ({ ...formation, sessions: sortedSessions.filter(session => formationMatchesSlug(formation, session.training?.slug)) }));
   const resultKey = `${activeFormation}-${activeSsiapCourse}-${locationFilter}-${view}`;
@@ -595,26 +629,27 @@ export function PlanningClient({ initialSessions, initialLocation = 'all' }: { i
     setActiveSsiapCourse(null);
     if (formation === 'ssiap' || formation === 'director' || (formation !== 'all' && locationFilter === 'paris')) setLocationFilter('all');
     setShowAll(false);
+    setView('list');
     setSelectedSessionId(null);
     scrollToSessions();
   }
 
-  function showFormationDates(formation: FormationFilterKey, course: SsiapPlanningCourse | null = null, location: DirectorLocationFilterKey | null = null) {
+  function showFormationDates(formation: FormationFilterKey, course: SsiapPlanningCourse | null = null, location: DirectorLocationFilterKey | null = null, allDates = true) {
     setActiveFormation(formation);
     setActiveSsiapCourse(formation === 'ssiap' ? course : null);
     setLocationFilter(formation === 'director' && location ? location : 'all');
     setView('list');
-    setShowAll(true);
+    setShowAll(allDates);
     setSelectedSessionId(null);
     scrollToSessions();
   }
 
   function chooseSsiapCourse(course: SsiapPlanningCourse) {
-    showFormationDates('ssiap', course);
+    showFormationDates('ssiap', course, null, false);
   }
 
   function chooseDirectorLocation(location: DirectorLocationFilterKey) {
-    showFormationDates('director', null, location);
+    showFormationDates('director', null, location, false);
   }
 
   return (
@@ -631,7 +666,7 @@ export function PlanningClient({ initialSessions, initialLocation = 'all' }: { i
             </span>
             <h1 className={`mt-6 font-black tracking-[-.045em] ${styles.heroTitle}`}>
               Consultez les dates,<br />{' '}
-              <em className="text-[#b9820a]">trouvez votre formation.</em>
+              <em className="text-[#b9820a]">trouvez votre formation</em>
             </h1>
             <p className="mt-6 max-w-2xl text-base font-semibold leading-8 text-[#5f625f] sm:text-lg">
               Consultez les prochaines sessions en sécurité privée, en sécurité incendie et en VTC. Choisissez votre centre et vérifiez les places disponibles.
@@ -648,7 +683,7 @@ export function PlanningClient({ initialSessions, initialLocation = 'all' }: { i
             </div>
           </div>
 
-          <PlanningPreview key={`${activeFormation}-${activeSsiapCourse}-${selectedDirectorLocation?.key}`} formations={previewFormations} initialFormation={activeFormation} initialSsiapCourse={activeSsiapCourse} initialDirectorLocation={selectedDirectorLocation?.key} onChoose={(key, course, location) => showFormationDates(key as FormationFilterKey, course, location)} />
+          <PlanningPreview key={`${activeFormation}-${activeSsiapCourse}-${selectedDirectorLocation?.key}`} formations={previewFormations} initialFormation={activeFormation} initialSsiapCourse={activeSsiapCourse} initialDirectorLocation={selectedDirectorLocation?.key} onChoose={showFormationDates} renderSession={session => <NextSessionSummary session={session} />} />
         </div>
       </section>
 
@@ -710,10 +745,10 @@ export function PlanningClient({ initialSessions, initialLocation = 'all' }: { i
             <p>Choisissez votre niveau, puis le type de formation qui vous concerne.</p>
           </div> : <div>
             <p role="status" aria-live="polite" aria-atomic="true" className="text-2xl font-black text-academy-ink dark:text-white"><span key={`${activeFormation}-${activeSsiapCourse}-${locationFilter}`} className={styles.countEnter}>
-              {filteredSessions.length + (filteredSessions.length > 1 ? ' sessions disponibles' : ' session disponible')}
+              {nextOnly && filteredSessions.length ? 'Prochaine session' : filteredSessions.length + (filteredSessions.length > 1 ? ' sessions disponibles' : ' session disponible')}
             </span></p>
             <p className="mt-1 text-sm font-semibold text-academy-muted">
-              {view === 'list' ? 'Triées par prochaine date de rentrée ou échéance d’inscription' : 'Affichées dans le calendrier'}
+              {nextOnly ? selectedSsiapCourse?.label || selectedFormationDetails?.label : view === 'list' ? 'Triées par prochaine date de rentrée ou échéance d’inscription' : 'Affichées dans le calendrier'}
             </p>
           </div>}
 
@@ -735,6 +770,7 @@ export function PlanningClient({ initialSessions, initialLocation = 'all' }: { i
                     aria-pressed={selected}
                     onClick={() => {
                       setLocationFilter(filter.key);
+                      setView('list');
                       setShowAll(false);
                       setSelectedSessionId(null);
                     }}
@@ -746,10 +782,10 @@ export function PlanningClient({ initialSessions, initialLocation = 'all' }: { i
               })}
             </div>
 
-            <div className="flex w-fit rounded-full border border-academy-line bg-white p-1 dark:bg-white/5">
+            {!nextOnly && <div className="flex w-fit rounded-full border border-academy-line bg-white p-1 dark:bg-white/5">
               <button type="button" aria-pressed={view === 'list'} onClick={() => setView('list')} className={'rounded-full px-4 py-2.5 text-xs font-black transition ' + (view === 'list' ? 'planning-neutral-action' : 'text-academy-muted hover:text-academy-ink')}>Vue liste</button>
               <button type="button" aria-pressed={view === 'calendar'} onClick={() => setView('calendar')} className={'rounded-full px-4 py-2.5 text-xs font-black transition ' + (view === 'calendar' ? 'planning-neutral-action' : 'text-academy-muted hover:text-academy-ink')}>Vue calendrier</button>
-            </div>
+            </div>}
           </> : null}
           </div>
         </div>
@@ -765,10 +801,10 @@ export function PlanningClient({ initialSessions, initialLocation = 'all' }: { i
                   <div key={session.id} className={styles.sessionEnter} style={{ '--session-delay': `${Math.min(index, 5) * 45}ms` } as CSSProperties}><SessionCard session={session} isNext={index === 0} selected={selectedSessionId === session.id} onSelect={selectSession} /></div>
                 ))}
               </div>
-              {filteredSessions.length > visibleSessions.length ? (
+              {nextOnly || filteredSessions.length > visibleSessions.length ? (
                 <div className="mt-7 text-center">
                   <button type="button" onClick={() => setShowAll(true)} className="planning-accent-hover rounded-full border border-academy-line bg-white px-6 py-3.5 text-sm font-black text-academy-ink shadow-soft transition hover:-translate-y-0.5 dark:bg-white/5 dark:text-white">
-                    Voir toutes les dates ({filteredSessions.length})
+                    Afficher toutes les dates
                   </button>
                 </div>
               ) : null}
@@ -778,7 +814,7 @@ export function PlanningClient({ initialSessions, initialLocation = 'all' }: { i
           )
         ) : selectedSsiapCourse ? (
           <div className="mt-6 rounded-[2rem] border border-dashed border-academy-line bg-white/65 p-8 text-center shadow-soft dark:bg-white/5 sm:p-12">
-            <h3 className="text-2xl font-black text-academy-ink dark:text-white">Aucune date publiée pour {selectedSsiapCourse.label}{locationFilter !== 'all' ? ' dans ce centre' : ''}.</h3>
+            <h3 className="text-2xl font-black text-academy-ink dark:text-white">Aucune date publiée pour {selectedSsiapCourse.label}{locationFilter !== 'all' ? ' dans ce centre' : ''}</h3>
             <p className="mx-auto mt-3 max-w-xl text-sm font-semibold leading-6 text-academy-muted">Contactez l’équipe pour connaître les prochaines ouvertures de ce parcours.</p>
             <div className="mt-6 flex flex-wrap justify-center gap-3">
               {locationFilter !== 'all' && <button type="button" onClick={() => setLocationFilter('all')} className="planning-neutral-action rounded-full px-5 py-3 text-sm font-black">Voir tous les centres</button>}
@@ -789,7 +825,7 @@ export function PlanningClient({ initialSessions, initialLocation = 'all' }: { i
         ) : (
           <div className="mt-6 rounded-[2rem] border border-dashed border-academy-line bg-white/65 p-8 text-center shadow-soft dark:bg-white/5 sm:p-12">
             <Icon name="search" className="planning-accent-text mx-auto h-10 w-10" />
-            <h3 className="mt-4 text-2xl font-black text-academy-ink dark:text-white">Aucune session ouverte pour cette sélection.</h3>
+            <h3 className="mt-4 text-2xl font-black text-academy-ink dark:text-white">Aucune session ouverte pour cette sélection</h3>
             <p className="mx-auto mt-3 max-w-xl text-sm font-semibold leading-6 text-academy-muted">Choisissez un autre centre, consultez toutes les sessions ou créez une alerte pour être prévenu de la prochaine date disponible.</p>
             <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
               <button type="button" onClick={() => { setLocationFilter('all'); chooseFormation('all'); }} className="rounded-full bg-[#101a29] px-5 py-3 text-sm font-black text-white">Voir toutes les sessions</button>

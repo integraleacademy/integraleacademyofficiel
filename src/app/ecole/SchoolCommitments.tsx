@@ -31,7 +31,7 @@ export function SchoolCommitments() {
   return <section id="agrements" className={`${school.section} ${styles.commitments}`} aria-labelledby="certifications-title">
     <div className={school.container}>
       <div className={school.sectionHeading}>
-        <div><p className={school.eyebrow}>05 / Nos agréments</p><h2 id="certifications-title">La confiance se construit.<br /><em>Elle se vérifie aussi.</em></h2></div>
+        <div><p className={school.eyebrow}>05 / Nos agréments</p><h2 id="certifications-title">La confiance se construit.<br /><em>Elle se vérifie aussi</em></h2></div>
         <p>Certifications, agréments et habilitations : retrouvez les références de l’école et les documents qui les accompagnent.</p>
       </div>
 
@@ -80,7 +80,7 @@ export function SchoolCommitments() {
         <article className={styles.referencePanel} aria-labelledby="school-registration-title">
           <div className={styles.panelHeading}>
             <span className={styles.icon}><ReferenceIcon kind="school" /></span>
-            <div><p>L’organisme de formation</p><h3 id="school-registration-title">Une école identifiée.</h3></div>
+            <div><p>L’organisme de formation</p><h3 id="school-registration-title">Une école identifiée</h3></div>
           </div>
           <dl className={styles.referenceList}>
             <div><dt>Déclaration d’activité</dt><dd>Déclarée auprès du Préfet de la Région Provence Alpes Côte d’Azur (DIRECCTE).<strong>NDA 93830600283</strong></dd></div>
@@ -94,7 +94,7 @@ export function SchoolCommitments() {
         <article className={styles.referencePanel} aria-labelledby="school-authorizations-title">
           <div className={styles.panelHeading}>
             <span className={styles.icon}><ReferenceIcon kind="shield" /></span>
-            <div><p>Les formations professionnelles</p><h3 id="school-authorizations-title">Des habilitations précises.</h3></div>
+            <div><p>Les formations professionnelles</p><h3 id="school-authorizations-title">Des habilitations précises</h3></div>
           </div>
           <dl className={styles.referenceList}>
             <div><dt>CNAPS · Sécurité privée</dt><dd>Autorisation d’exercice CNAPS<strong>n°FOR-083-2027-02-08-20200755135</strong></dd></div>

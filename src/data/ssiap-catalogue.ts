@@ -254,7 +254,7 @@ export const ssiapMaintenanceConfig: SsiapCourseConfig = {
   slug: 'recyclage-remise-a-niveau-ssiap',
   label: 'Recyclage & remise à niveau SSIAP',
   role: 'Maintien des connaissances SSIAP 1, 2 et 3',
-  title: 'Maintenez votre qualification SSIAP à jour.',
+  title: 'Maintenez votre qualification SSIAP à jour',
   intro:
     'Choisissez le parcours adapté à votre niveau, à la date de votre dernier diplôme et à votre activité récente dans un service de sécurité incendie.',
   duration: '14 à 35 heures',

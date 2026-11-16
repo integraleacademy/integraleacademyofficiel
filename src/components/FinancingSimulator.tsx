@@ -113,7 +113,7 @@ function EditorialSimulator({
       <header className={styles.header}>
         <div>
           <p className={styles.eyebrow}>02 / Votre estimation</p>
-          <h2 id={`${id}-title`}>Estimez votre <em>reste à charge.</em></h2>
+          <h2 id={`${id}-title`}>Estimez votre <em>reste à charge</em></h2>
         </div>
         <p className={styles.introduction}>Votre formation, votre solde CPF. <br />Quelques chiffres pour y voir plus clair.</p>
       </header>
@@ -238,7 +238,7 @@ export default function FinancingSimulator({ variant = 'default' }: { variant?: 
       <div className="mb-9 grid gap-5 lg:grid-cols-[1fr_.48fr] lg:items-end">
         <div className="max-w-3xl">
           <p className="text-xs font-black uppercase tracking-[.28em] text-academy-gold">Simulateur de financement</p>
-          <h2 className="mt-3 text-3xl font-black tracking-tight md:text-5xl">Calculez une première estimation de votre reste à charge.</h2>
+          <h2 className="mt-3 text-3xl font-black tracking-tight md:text-5xl">Calculez une première estimation de votre reste à charge</h2>
         </div>
         <p className="text-sm leading-7 text-stone-300 md:text-base">Choisissez votre formation, indiquez le montant disponible sur votre CPF, puis testez un échéancier.</p>
       </div>

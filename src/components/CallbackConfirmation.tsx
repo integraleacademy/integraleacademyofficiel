@@ -8,7 +8,7 @@ export function CallbackConfirmation({ formation, href }: { formation: string; h
           <svg viewBox="0 0 24 24" className="h-8 w-8" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m5 12 4 4L19 6" /></svg>
         </span>
         <p className="mt-6 text-xs font-black uppercase tracking-[.15em] text-academy-gold-strong">{formation}</p>
-        <h1 className="mt-4 text-3xl font-black tracking-tight text-academy-ink dark:text-white sm:text-4xl">Votre demande de rappel est confirmée.</h1>
+        <h1 className="mt-4 text-3xl font-black tracking-tight text-academy-ink dark:text-white sm:text-4xl">Votre demande de rappel est confirmée</h1>
         <p className="mt-5 text-base font-semibold leading-8 text-academy-muted">Notre équipe vous recontactera au numéro indiqué dans votre demande pour échanger sur votre projet de formation.</p>
         <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
           <Link href={href} className="inline-flex min-h-12 items-center justify-center rounded-full bg-academy-gold px-6 py-3 text-sm font-black text-academy-gold-text">Consulter la formation</Link>

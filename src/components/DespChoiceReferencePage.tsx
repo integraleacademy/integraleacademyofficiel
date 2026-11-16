@@ -1,4 +1,5 @@
 import { CourseFilm } from '@/components/CourseFilm';
+import { CourseTeamBanner } from '@/components/CourseTeamBanner';
 import { CourseBrochureCard } from '@/components/CourseBrochureCard';
 import { PARIS_ADDRESS } from '@/data/locations';
 import { OrientationAssistant } from '@/components/OrientationAssistant';
@@ -161,6 +162,8 @@ export function DespChoiceReferencePage({ sessions }: { sessions: TrainingDatesP
         visual={<div className="overflow-hidden rounded-[2rem] border border-orange-200 bg-orange-50 p-2 shadow-card"><ManualArtwork illustration={despArtwork.management} priority /></div>}
       />
 
+      <CourseBrochureCard course="despvaeouinitial" />
+
       <CourseFilm film="desp" title="Diriger une entreprise de sécurité privée"
         description="Découvrez le métier en vidéo, puis voyez si la formation initiale ou la VAE correspond à votre expérience." />
 
@@ -226,6 +229,8 @@ export function DespChoiceReferencePage({ sessions }: { sessions: TrainingDatesP
         </section>
       </DespJourney>
 
+      <CourseTeamBanner />
+
       <DespLocationsNotice />
       <TrainingDatesPricingSection
       priceYear={2027}
@@ -243,7 +248,7 @@ export function DespChoiceReferencePage({ sessions }: { sessions: TrainingDatesP
         emptyAction={{ href: '/contact?formation=desp&objet=alerte-planning', label: 'Recevoir les prochaines dates →' }}
       />
       <ConversionStrip theme="orange" />
-      <CourseBrochureCard course="despvaeouinitial" />
+
       <PremiumFAQSection badge="FAQ formation" title="Vos questions sur la formation DESP" description="Les réponses utiles avant de choisir votre parcours." items={formationFaq} theme="orange" contactHref="/contact?formation=desp" />
     </main>
   );

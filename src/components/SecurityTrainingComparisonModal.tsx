@@ -230,7 +230,7 @@ export function SecurityTrainingComparisonModal({ items, className = '' }: { ite
             <header className={styles.dialogHeader}>
               <div className={styles.headingCopy}>
                 <span className={styles.eyebrow}><i aria-hidden="true" /> Comparateur de formations</span>
-                <h2 id={titleId}>Comparez les parcours.<br /><em>Choisissez votre métier.</em></h2>
+                <h2 id={titleId}>Comparez les parcours.<br /><em>Choisissez votre métier</em></h2>
                 <p id={descriptionId}>Durée, format, compétences, certification et tarif : les différences essentielles sont réunies au même endroit.</p>
               </div>
               <div className={styles.headerMeta}>

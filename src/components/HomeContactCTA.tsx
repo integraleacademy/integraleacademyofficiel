@@ -24,7 +24,7 @@ export function HomeContactCTA() {
         <div className={styles.layout}>
           <div className={styles.copy}>
             <p className={styles.eyebrow}><span aria-hidden="true" /> Votre prochaine étape</p>
-            <h2 id="home-contact-title" className={styles.title}>La suite commence<br /><em>par une conversation.</em></h2>
+            <h2 id="home-contact-title" className={styles.title}>La suite commence<br /><em>par une conversation</em></h2>
             <p className={styles.intro}>Une envie, une question, un projet encore à préciser ? Prenons le temps d’en parler et de trouver la formation qui vous correspond.</p>
 
             <ol className={styles.talkingPoints} aria-label="Les sujets de notre échange">

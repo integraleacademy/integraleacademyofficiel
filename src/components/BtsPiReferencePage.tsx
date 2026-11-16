@@ -1,3 +1,4 @@
+import { CourseTeamBanner } from '@/components/CourseTeamBanner';
 import { CourseBrochureCard } from '@/components/CourseBrochureCard';
 import { ManualArtwork } from '@/components/ManualArtwork';
 import { btsHeroArtwork, btsPracticeArtwork, btsMissionArtwork } from '@/data/btsIllustrations';
@@ -334,21 +335,25 @@ export function BtsPiReferencePage() {
 
       <BtsSectionNavigation code="PI" competencyHref="#competences" competencyLabel="Compétences" faqHref="#faq-pi" registrationHref={applicationUrl} />
 
+      <CourseBrochureCard course="professions-immobilieres" />
+
       <CourseJourney course="bts-pi">
         <BtsStudentBenefits courseName="BTS Professions Immobilières" />
       </CourseJourney>
 
+      <CourseTeamBanner />
+
       <Section
         id="pour-qui"
         eyebrow="01 — Un choix qui parle à toute la famille"
-        title={<>Un métier de terrain pour vous. Un diplôme solide pour vos parents.</>}
+        title={<>Un métier de terrain pour vous. Un diplôme solide pour vos parents</>}
         intro={<>Un BTS pour celles et ceux qui aiment le contact, la négociation, le concret et l’idée d’accompagner des projets qui comptent.</>}
       >
         <div className="grid gap-5 lg:grid-cols-2">
           <article className="rounded-[2rem] border border-[#22354C] bg-[#0D1725] p-6 text-white shadow-card sm:p-8">
             <span className="grid h-14 w-14 place-items-center rounded-2xl bg-bts-400/15 text-2xl text-bts-300">↗</span>
             <Eyebrow light>Pour le futur étudiant</Eyebrow>
-            <h3 className="mt-4 text-3xl font-black tracking-[-.04em]">Vous aimez convaincre, conseiller et voir les projets prendre vie.</h3>
+            <h3 className="mt-4 text-3xl font-black tracking-[-.04em]">Vous aimez convaincre, conseiller et voir les projets prendre vie</h3>
             <p className="mt-4 leading-7 text-white/62">Le BTS PI transforme cette énergie en compétences concrètes : prospection, estimation, visite, négociation, location et gestion.</p>
             <div className="mt-6 grid gap-3">
               {['Des missions concrètes dès l’alternance', 'Un métier de relation et de terrain', 'Plusieurs voies : vente, location ou syndic'].map((item) => (
@@ -359,7 +364,7 @@ export function BtsPiReferencePage() {
           <article className="rounded-[2rem] border border-academy-line bg-[#FFFDF8] p-6 shadow-card sm:p-8">
             <span className="grid h-14 w-14 place-items-center rounded-2xl bg-bts-100 text-2xl text-bts-700">◎</span>
             <Eyebrow>Pour les parents</Eyebrow>
-            <h3 className="mt-4 text-3xl font-black tracking-[-.04em]">Vous cherchez un diplôme solide et un cadre sérieux.</h3>
+            <h3 className="mt-4 text-3xl font-black tracking-[-.04em]">Vous cherchez un diplôme solide et un cadre sérieux</h3>
             <p className="mt-4 leading-7 text-academy-muted">Le parcours associe un diplôme national, deux années d’expérience professionnelle et le suivi d’une équipe BTS clairement identifiée.</p>
             <div className="mt-6 grid gap-3">
               {['Diplôme d’État de niveau 5 — RNCP 38380', 'Sans frais de scolarité pour l’apprenti*', 'Accompagnement de la candidature jusqu’au contrat'].map((item) => (
@@ -374,13 +379,13 @@ export function BtsPiReferencePage() {
       <Section
         id="competences"
         eyebrow="02 — Du premier contact à la remise des clés"
-        title={<>Vous pilotez le projet immobilier.</>}
+        title={<>Vous pilotez le projet immobilier</>}
         intro={<>Le BTS PI vous apprend à prospecter, conseiller, négocier, sécuriser les dossiers et accompagner chaque client jusqu’à l’aboutissement de son projet.</>}
         tone="paper"
       >
         <TrainingIllustratedCards items={skillCards} theme="bts" illustrations={btsPracticeArtwork.pi} singleIllustration />
         <div className="mt-6 grid items-center gap-5 rounded-[1.7rem] border border-bts-200 bg-bts-50 p-6 sm:grid-cols-[1fr_auto]">
-          <div><Eyebrow>Votre montée en compétences</Eyebrow><h3 className="mt-3 text-2xl font-black text-bts-950">Une vision complète des métiers immobiliers.</h3><p className="mt-3 max-w-3xl text-sm leading-7 text-bts-950/70">Vous progressez de la prospection au mandat, puis de la visite à la signature, sans oublier la gestion et la copropriété.</p></div>
+          <div><Eyebrow>Votre montée en compétences</Eyebrow><h3 className="mt-3 text-2xl font-black text-bts-950">Une vision complète des métiers immobiliers</h3><p className="mt-3 max-w-3xl text-sm leading-7 text-bts-950/70">Vous progressez de la prospection au mandat, puis de la visite à la signature, sans oublier la gestion et la copropriété.</p></div>
           <div className="rounded-2xl border border-bts-200 bg-white/70 px-6 py-4"><p className="text-4xl font-black text-bts-700">3+1</p><p className="mt-2 max-w-[14rem] text-xs font-black uppercase tracking-[.12em] text-bts-950/70">pôles et identité professionnelle</p></div>
         </div>
         <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -394,7 +399,7 @@ export function BtsPiReferencePage() {
       <Section
         id="formats"
         eyebrow="03 — Deux formats, le même BTS"
-        title={<>Choisissez la façon d’étudier qui vous correspond vraiment.</>}
+        title={<>Choisissez la façon d’étudier qui vous correspond vraiment</>}
         intro={<>Le format est un choix d’organisation. L’exigence, le diplôme et l’accompagnement restent au cœur du parcours.</>}
       >
         <div className="grid gap-5 lg:grid-cols-2">
@@ -424,14 +429,14 @@ export function BtsPiReferencePage() {
       <Section
         id="alternance"
         eyebrow="04 — L’alternance"
-        title={<>Apprenez. Visitez. Négociez. Construisez déjà votre réseau.</>}
+        title={<>Apprenez. Visitez. Négociez. Construisez déjà votre réseau</>}
         intro={<>Deux années pour obtenir un diplôme, accompagner de vrais clients et construire une expérience professionnelle immédiatement visible sur votre CV.</>}
         tone="paper"
       >
         <div className="grid gap-5 lg:grid-cols-[1.2fr_.8fr]">
           <article className="rounded-[2rem] bg-[#0D1725] p-6 text-white shadow-card sm:p-8">
             <Eyebrow light>Une formation qui se vit</Eyebrow>
-            <h3 className="mt-4 text-3xl font-black tracking-[-.04em]">À l’école, vous comprenez. En entreprise, vous appliquez.</h3>
+            <h3 className="mt-4 text-3xl font-black tracking-[-.04em]">À l’école, vous comprenez. En entreprise, vous appliquez</h3>
             <div className="mt-6 grid gap-3">
               {[
                 ['01', 'À l’école', 'Droit, économie, transaction, gestion, bâti et communication'],
@@ -448,7 +453,7 @@ export function BtsPiReferencePage() {
           <article className="rounded-[2rem] border border-bts-300 bg-bts-100 p-6 shadow-card sm:p-8">
             <Eyebrow>Côté budget</Eyebrow>
             <p className="mt-5 text-7xl font-black tracking-[-.08em]">0 €*</p>
-            <h3 className="mt-5 text-3xl font-black tracking-[-.04em]">de frais de scolarité pour l’apprenti.</h3>
+            <h3 className="mt-5 text-3xl font-black tracking-[-.04em]">de frais de scolarité pour l’apprenti</h3>
             <p className="mt-4 leading-7 text-bts-950/70">La formation est prise en charge dans le cadre du contrat d’alternance et de l’accord de l’entreprise avec son OPCO.</p>
             <CTA href={contactHref('Question sur le financement du BTS Professions Immobilières')} variant="dark" className="mt-6">Poser ma question à Aurélie →</CTA>
             <p className="mt-4 text-[.62rem] font-semibold text-bts-950/55">* Sous réserve de la conclusion et de la prise en charge du contrat.</p>
@@ -456,7 +461,7 @@ export function BtsPiReferencePage() {
         </div>
         <article className="mt-5 rounded-[2rem] border border-academy-line bg-academy-bg p-6 shadow-soft">
           <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
-            <div><Eyebrow>Le coin des parents</Eyebrow><h3 className="mt-3 text-2xl font-black">Ce qui compte vraiment pour vous rassurer.</h3></div>
+            <div><Eyebrow>Le coin des parents</Eyebrow><h3 className="mt-3 text-2xl font-black">Ce qui compte vraiment pour vous rassurer</h3></div>
             <CTA href={aurelieDirectHref} variant="light">Appeler Aurélie →</CTA>
           </div>
           <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -473,7 +478,7 @@ export function BtsPiReferencePage() {
       <Section
         id="programme"
         eyebrow="05 — Le programme et le diplôme"
-        title={<>Un programme ancré dans le réel. Des compétences pour tout l’immobilier.</>}
+        title={<>Un programme ancré dans le réel. Des compétences pour tout l’immobilier</>}
         intro={<>Trois grands pôles professionnels pour maîtriser la vente et la location, la copropriété et le conseil sur le bâti.</>}
       >
         <div className="grid gap-3 lg:grid-cols-2">
@@ -489,7 +494,7 @@ export function BtsPiReferencePage() {
           ))}
         </div>
         <div className="mt-7 grid gap-5 rounded-[2rem] bg-[#0D1725] p-6 text-white lg:grid-cols-[.72fr_1.28fr] lg:p-8">
-          <div><Eyebrow light>Validation</Eyebrow><h3 className="mt-4 text-3xl font-black">Un diplôme national de niveau 5.</h3><p className="mt-4 leading-7 text-white/62">Le diplôme est obtenu avec une moyenne supérieure ou égale à 10/20 sur l’ensemble des épreuves prévues par le référentiel national.</p></div>
+          <div><Eyebrow light>Validation</Eyebrow><h3 className="mt-4 text-3xl font-black">Un diplôme national de niveau 5</h3><p className="mt-4 leading-7 text-white/62">Le diplôme est obtenu avec une moyenne supérieure ou égale à 10/20 sur l’ensemble des épreuves prévues par le référentiel national.</p></div>
           <div className="grid gap-3 sm:grid-cols-3">
             {[
               ['01', 'Épreuves nationales', 'Selon le référentiel de l’Éducation nationale'],
@@ -502,14 +507,13 @@ export function BtsPiReferencePage() {
 
       <BtsCompleteInformation course="pi" />
 
-      <CourseBrochureCard course="professions-immobilieres" />
       <section id="admission" className="relative isolate overflow-hidden bg-[#0A1725] px-4 py-14 text-white sm:py-16 lg:py-20">
         <div className={`absolute inset-0 -z-10 ${btsStyles.admissionGlow}`} />
         <div className="absolute inset-0 -z-10 opacity-20 [background-image:linear-gradient(rgba(255,255,255,.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.08)_1px,transparent_1px)] [background-size:48px_48px]" />
         <div className="page-container">
           <Eyebrow light>06 — Admissions 2027</Eyebrow>
           <div className="mt-3 flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-end">
-            <div><h2 className="max-w-4xl text-3xl font-black tracking-[-.05em] sm:text-4xl lg:text-5xl">Votre candidature en cinq étapes. <span className="text-bts-200">Simple, claire, accompagnée.</span></h2><p className="mt-5 max-w-3xl text-base font-medium leading-8 text-white/62">Vous ne savez pas encore comment trouver une entreprise ? C’est normal. Commencez par votre candidature : notre équipe vous guide ensuite.</p></div>
+            <div><h2 className="max-w-4xl text-3xl font-black tracking-[-.05em] sm:text-4xl lg:text-5xl">Votre candidature en cinq étapes. <span className="text-bts-200">Simple, claire, accompagnée</span></h2><p className="mt-5 max-w-3xl text-base font-medium leading-8 text-white/62">Vous ne savez pas encore comment trouver une entreprise ? C’est normal. Commencez par votre candidature : notre équipe vous guide ensuite.</p></div>
             <CTA href={applicationUrl} variant="gold" external>Admissions 2027 →</CTA>
           </div>
           <div className="mt-9 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">

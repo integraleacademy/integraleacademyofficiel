@@ -1,3 +1,4 @@
+import { CourseTeamBanner } from '@/components/CourseTeamBanner';
 import { CourseBrochureCard } from '@/components/CourseBrochureCard';
 import { ManualArtwork } from '@/components/ManualArtwork';
 import { btsHeroArtwork, btsPracticeArtwork, btsMissionArtwork } from '@/data/btsIllustrations';
@@ -331,21 +332,25 @@ export function BtsCiReferencePage() {
 
       <BtsSectionNavigation code="CI" competencyHref="#competences" competencyLabel="Compétences" faqHref="#faq-ci" registrationHref={applicationUrl} />
 
+      <CourseBrochureCard course="commerce-international" />
+
       <CourseJourney course="bts-ci">
         <BtsStudentBenefits courseName="BTS Commerce International" />
       </CourseJourney>
 
+      <CourseTeamBanner />
+
       <Section
         id="pour-qui"
         eyebrow="01 — Un choix qui parle à toute la famille"
-        title={<>Un projet qui ouvre vos horizons. Un parcours qui rassure vos parents.</>}
+        title={<>Un projet qui ouvre vos horizons. Un parcours qui rassure vos parents</>}
         intro={<>Un BTS pour celles et ceux qui aiment les langues, les échanges, les cultures et l’idée de travailler avec le monde entier.</>}
       >
         <div className="grid gap-5 lg:grid-cols-2">
           <article className="rounded-[2rem] border border-[#22354C] bg-[#0D1725] p-6 text-white shadow-card sm:p-8">
             <span className="grid h-14 w-14 place-items-center rounded-2xl bg-bts-400/15 text-2xl text-bts-300">↗</span>
             <Eyebrow light>Pour le futur étudiant</Eyebrow>
-            <h3 className="mt-4 text-3xl font-black tracking-[-.04em]">Vous êtes curieux, à l’aise avec les langues et attiré par l’ailleurs.</h3>
+            <h3 className="mt-4 text-3xl font-black tracking-[-.04em]">Vous êtes curieux, à l’aise avec les langues et attiré par l’ailleurs</h3>
             <p className="mt-4 leading-7 text-white/62">Le BTS CI transforme cette ouverture en compétences concrètes : négociation, import-export, logistique, langues et communication interculturelle.</p>
             <div className="mt-6 grid gap-3">
               {['De vraies missions à dimension internationale', 'L’anglais professionnel au quotidien', 'Des compétences utiles dans tous les secteurs'].map((item) => (
@@ -356,7 +361,7 @@ export function BtsCiReferencePage() {
           <article className="rounded-[2rem] border border-academy-line bg-[#FFFDF8] p-6 shadow-card sm:p-8">
             <span className="grid h-14 w-14 place-items-center rounded-2xl bg-bts-100 text-2xl text-bts-700">◎</span>
             <Eyebrow>Pour les parents</Eyebrow>
-            <h3 className="mt-4 text-3xl font-black tracking-[-.04em]">Vous cherchez un diplôme solide et un cadre sérieux.</h3>
+            <h3 className="mt-4 text-3xl font-black tracking-[-.04em]">Vous cherchez un diplôme solide et un cadre sérieux</h3>
             <p className="mt-4 leading-7 text-academy-muted">Le parcours associe un diplôme national, deux années d’expérience professionnelle et le suivi d’une équipe BTS clairement identifiée.</p>
             <div className="mt-6 grid gap-3">
               {['Diplôme d’État de niveau 5 — RNCP 41759', 'Sans frais de scolarité pour l’apprenti*', 'Accompagnement de la candidature jusqu’au contrat'].map((item) => (
@@ -371,13 +376,13 @@ export function BtsCiReferencePage() {
       <Section
         id="competences"
         eyebrow="02 — Du premier contact à la livraison"
-        title={<>Vous apprenez à faire circuler les affaires.</>}
+        title={<>Vous apprenez à faire circuler les affaires</>}
         intro={<>Le BTS CI vous apprend à développer une relation commerciale interculturelle, coordonner des opérations et conquérir de nouveaux marchés.</>}
         tone="paper"
       >
         <TrainingIllustratedCards items={skillCards} theme="bts" illustrations={btsPracticeArtwork.ci} singleIllustration />
         <div className="mt-6 grid items-center gap-5 rounded-[1.7rem] border border-bts-200 bg-bts-50 p-6 sm:grid-cols-[1fr_auto]">
-          <div><Eyebrow>Votre montée en compétences</Eyebrow><h3 className="mt-3 text-2xl font-black text-bts-950">Une vision complète des échanges mondiaux.</h3><p className="mt-3 max-w-3xl text-sm leading-7 text-bts-950/70">Vous progressez de la prospection à la négociation, puis jusqu’au suivi logistique, douanier et commercial des opérations.</p></div>
+          <div><Eyebrow>Votre montée en compétences</Eyebrow><h3 className="mt-3 text-2xl font-black text-bts-950">Une vision complète des échanges mondiaux</h3><p className="mt-3 max-w-3xl text-sm leading-7 text-bts-950/70">Vous progressez de la prospection à la négociation, puis jusqu’au suivi logistique, douanier et commercial des opérations.</p></div>
           <div className="rounded-2xl border border-bts-200 bg-white/70 px-6 py-4"><p className="text-4xl font-black text-bts-700">3+1</p><p className="mt-2 max-w-[14rem] text-xs font-black uppercase tracking-[.12em] text-bts-950/70">blocs et compétence transversale</p></div>
         </div>
         <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -391,7 +396,7 @@ export function BtsCiReferencePage() {
       <Section
         id="formats"
         eyebrow="03 — Deux formats, le même BTS"
-        title={<>Choisissez la façon d’étudier qui vous correspond vraiment.</>}
+        title={<>Choisissez la façon d’étudier qui vous correspond vraiment</>}
         intro={<>Le format est un choix d’organisation. L’exigence, le diplôme et l’accompagnement restent au cœur du parcours.</>}
       >
         <div className="grid gap-5 lg:grid-cols-2">
@@ -421,14 +426,14 @@ export function BtsCiReferencePage() {
       <Section
         id="alternance"
         eyebrow="04 — L’alternance"
-        title={<>Apprenez. Négociez. Construisez déjà votre réseau.</>}
+        title={<>Apprenez. Négociez. Construisez déjà votre réseau</>}
         intro={<>Deux années pour obtenir un diplôme, vivre de vraies opérations commerciales et construire une expérience qui dépasse les frontières.</>}
         tone="paper"
       >
         <div className="grid gap-5 lg:grid-cols-[1.2fr_.8fr]">
           <article className="rounded-[2rem] bg-[#0D1725] p-6 text-white shadow-card sm:p-8">
             <Eyebrow light>Une formation qui se vit</Eyebrow>
-            <h3 className="mt-4 text-3xl font-black tracking-[-.04em]">À l’école, vous comprenez. En entreprise, vous appliquez.</h3>
+            <h3 className="mt-4 text-3xl font-black tracking-[-.04em]">À l’école, vous comprenez. En entreprise, vous appliquez</h3>
             <div className="mt-6 grid gap-3">
               {[
                 ['01', 'À l’école', 'Langues, commerce, logistique, douane et négociation'],
@@ -445,7 +450,7 @@ export function BtsCiReferencePage() {
           <article className="rounded-[2rem] border border-bts-300 bg-bts-100 p-6 shadow-card sm:p-8">
             <Eyebrow>Côté budget</Eyebrow>
             <p className="mt-5 text-7xl font-black tracking-[-.08em]">0 €*</p>
-            <h3 className="mt-5 text-3xl font-black tracking-[-.04em]">de frais de scolarité pour l’apprenti.</h3>
+            <h3 className="mt-5 text-3xl font-black tracking-[-.04em]">de frais de scolarité pour l’apprenti</h3>
             <p className="mt-4 leading-7 text-bts-950/70">La formation est prise en charge dans le cadre du contrat d’alternance et de l’accord de l’entreprise avec son OPCO.</p>
             <CTA href={contactHref('Question sur le financement du BTS Commerce International')} variant="dark" className="mt-6">Poser ma question à Aurélie →</CTA>
             <p className="mt-4 text-[.62rem] font-semibold text-bts-950/55">* Sous réserve de la conclusion et de la prise en charge du contrat.</p>
@@ -453,7 +458,7 @@ export function BtsCiReferencePage() {
         </div>
         <article className="mt-5 rounded-[2rem] border border-academy-line bg-academy-bg p-6 shadow-soft">
           <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
-            <div><Eyebrow>Le coin des parents</Eyebrow><h3 className="mt-3 text-2xl font-black">Ce qui compte vraiment pour vous rassurer.</h3></div>
+            <div><Eyebrow>Le coin des parents</Eyebrow><h3 className="mt-3 text-2xl font-black">Ce qui compte vraiment pour vous rassurer</h3></div>
             <CTA href={aurelieDirectHref} variant="light">Appeler Aurélie →</CTA>
           </div>
           <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -470,7 +475,7 @@ export function BtsCiReferencePage() {
       <Section
         id="programme"
         eyebrow="05 — Le programme et le diplôme"
-        title={<>Un programme ouvert sur le monde. Des compétences utiles dans chaque pays.</>}
+        title={<>Un programme ouvert sur le monde. Des compétences utiles dans chaque pays</>}
         intro={<>Trois blocs professionnels pour maîtriser la relation interculturelle, les opérations internationales et le développement commercial.</>}
       >
         <div className="grid gap-3 lg:grid-cols-2">
@@ -486,7 +491,7 @@ export function BtsCiReferencePage() {
           ))}
         </div>
         <div className="mt-7 grid gap-5 rounded-[2rem] bg-[#0D1725] p-6 text-white lg:grid-cols-[.72fr_1.28fr] lg:p-8">
-          <div><Eyebrow light>Validation</Eyebrow><h3 className="mt-4 text-3xl font-black">Un diplôme national de niveau 5.</h3><p className="mt-4 leading-7 text-white/62">Le diplôme est obtenu avec une moyenne supérieure ou égale à 10/20 sur l’ensemble des épreuves prévues par le référentiel national.</p></div>
+          <div><Eyebrow light>Validation</Eyebrow><h3 className="mt-4 text-3xl font-black">Un diplôme national de niveau 5</h3><p className="mt-4 leading-7 text-white/62">Le diplôme est obtenu avec une moyenne supérieure ou égale à 10/20 sur l’ensemble des épreuves prévues par le référentiel national.</p></div>
           <div className="grid gap-3 sm:grid-cols-3">
             {[
               ['01', 'Épreuves nationales', 'Selon le référentiel de l’Éducation nationale'],
@@ -499,14 +504,13 @@ export function BtsCiReferencePage() {
 
       <BtsCompleteInformation course="ci" />
 
-      <CourseBrochureCard course="commerce-international" />
       <section id="admission" className="relative isolate overflow-hidden bg-[#0A1725] px-4 py-14 text-white sm:py-16 lg:py-20">
         <div className={`absolute inset-0 -z-10 ${btsStyles.admissionGlow}`} />
         <div className="absolute inset-0 -z-10 opacity-20 [background-image:linear-gradient(rgba(255,255,255,.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.08)_1px,transparent_1px)] [background-size:48px_48px]" />
         <div className="page-container">
           <Eyebrow light>06 — Admissions 2027</Eyebrow>
           <div className="mt-3 flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-end">
-            <div><h2 className="max-w-4xl text-3xl font-black tracking-[-.05em] sm:text-4xl lg:text-5xl">Votre candidature en cinq étapes. <span className="text-bts-200">Simple, claire, accompagnée.</span></h2><p className="mt-5 max-w-3xl text-base font-medium leading-8 text-white/62">Vous ne savez pas encore comment trouver une entreprise ? C’est normal. Commencez par votre candidature : notre équipe vous guide ensuite.</p></div>
+            <div><h2 className="max-w-4xl text-3xl font-black tracking-[-.05em] sm:text-4xl lg:text-5xl">Votre candidature en cinq étapes. <span className="text-bts-200">Simple, claire, accompagnée</span></h2><p className="mt-5 max-w-3xl text-base font-medium leading-8 text-white/62">Vous ne savez pas encore comment trouver une entreprise ? C’est normal. Commencez par votre candidature : notre équipe vous guide ensuite.</p></div>
             <CTA href={applicationUrl} variant="gold" external>Admissions 2027 →</CTA>
           </div>
           <div className="mt-9 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">

@@ -26,17 +26,17 @@ export function SsiapJourneyOverview() {
 export function SsiapAdmissionDossier({ prerequisites, enrollment }: { prerequisites: string[][]; enrollment: string[] }) {
   return <>
     <div className={styles.admissionDossier}>
-      <div className={styles.dossierIllustration}><span className={styles.folderTab}>Votre entrée en formation</span><div className={styles.dossierSheet}><p className={styles.eyebrow}>Intégrale Academy · SSIAP 1</p><h3>Un projet.<br />Un dossier.<br /><span>On avance ensemble.</span></h3><div className={styles.documentLines} aria-hidden="true"><span /><span /><span /></div><a href="/documents/certificat-medical-ssiap.pdf" target="_blank" rel="noopener noreferrer"><span className={styles.pdfBadge}>PDF</span><span>Certificat médical<small>Le document à préparer</small></span><span aria-hidden="true">↓</span></a><p className={styles.dossierStamp}>Accompagné<br /><strong>par notre équipe</strong></p></div></div>
+      <div className={styles.dossierIllustration}><span className={styles.folderTab}>Votre entrée en formation</span><div className={styles.dossierSheet}><p className={styles.eyebrow}>Intégrale Academy · SSIAP 1</p><h3>Un projet.<br />Un dossier.<br /><span>On avance ensemble</span></h3><div className={styles.documentLines} aria-hidden="true"><span /><span /><span /></div><a href="/documents/certificat-medical-ssiap.pdf" target="_blank" rel="noopener noreferrer"><span className={styles.pdfBadge}>PDF</span><span>Certificat médical<small>Le document à préparer</small></span><span aria-hidden="true">↓</span></a><p className={styles.dossierStamp}>Accompagné<br /><strong>par notre équipe</strong></p></div></div>
       <div className={styles.requirements}><p className={styles.eyebrow}>Les quatre points à vérifier</p>{prerequisites.map(([title, text], index) => <article key={title}><span>0{index + 1}</span><div><h3>{title}</h3><p>{text}</p></div></article>)}<div className={styles.requirementLinks}><a href="/documents/certificat-medical-ssiap.pdf" target="_blank" rel="noopener noreferrer">Télécharger le certificat médical (PDF) ↗</a><a href="#dates-tarifs">Choisir entre SSIAP 1 et SSIAP 1 + SST →</a></div></div>
     </div>
-    <div className={styles.enrollment}><div><p className={styles.eyebrow}>Inscription</p><h3>Cinq étapes, un dossier maîtrisé.</h3></div><ol>{enrollment.map((item, index) => <li key={item}><span>0{index + 1}</span><strong>{item}</strong></li>)}</ol></div>
+    <div className={styles.enrollment}><div><p className={styles.eyebrow}>Inscription</p><h3>Cinq étapes, un dossier maîtrisé</h3></div><ol>{enrollment.map((item, index) => <li key={item}><span>0{index + 1}</span><strong>{item}</strong></li>)}</ol></div>
   </>;
 }
 
 export function SsiapExamExperience({ steps }: { steps: string[][] }) {
   return <div className={styles.examExperience}>
     <div className={styles.examTheory}><p className={styles.eyebrow}>01 · {steps[0][1]}</p><div className={styles.examMetrics}><div><strong>30</strong><span>questions</span></div><span aria-hidden="true">/</span><div><strong>30</strong><span>minutes</span></div></div><p>{steps[0][2]}</p><div className={styles.examThreshold}><strong>12<span>/20</span></strong><span>La note minimale<br />attendue au QCM</span></div></div>
-    <div className={styles.examPractice}><ManualArtwork illustration={ssiapEditorialArtwork.exam} natural sizes="(max-width: 800px) 90vw, 600px" /><div><p className={styles.eyebrow}>02 · {steps[1][1]}</p><h3>Vos réflexes, en situation.</h3><p>{steps[1][2]}</p></div></div>
+    <div className={styles.examPractice}><ManualArtwork illustration={ssiapEditorialArtwork.exam} natural sizes="(max-width: 800px) 90vw, 600px" /><div><p className={styles.eyebrow}>02 · {steps[1][1]}</p><h3>Vos réflexes, en situation</h3><p>{steps[1][2]}</p></div></div>
     <div className={styles.examValidation}><span className={styles.validationMark} aria-hidden="true">✓</span><div><p className={styles.eyebrow}>03 · {steps[2][1]}</p><p>{steps[2][2]}</p></div><span className={styles.diploma}>SSIAP 1<small>Diplôme · RS7845 (parcours 2027)</small></span></div>
   </div>;
 }
