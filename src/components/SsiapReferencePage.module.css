@@ -261,3 +261,16 @@
   .contactCard .textLink { min-height: 44px; padding-block: 8px; }
   .contact .supportPills { margin-top: 20px; }
 }
+
+/* One authentic review takes a little more visual importance; no extra quotes. */
+.reviewFeatured { border-color: #d9bd86; box-shadow: 0 12px 35px #8c764820; }
+.reviewMore { padding-block: 16px; }
+.reviewMore summary { cursor: pointer; list-style: none; color: inherit; }
+.reviewMore summary::-webkit-details-marker { display: none; }
+.reviewExcerpt { display: block; font-size: 16px; line-height: 1.8; }
+.reviewReadMore { display: inline-block; margin-top: .45rem; font-size: .82rem; font-weight: 800; color: #8a631f; text-decoration: underline; text-underline-offset: .2em; }
+.reviewMore[open] .reviewExcerpt { display: none; }
+.reviewMore[open] .reviewReadMore { margin-top: 0; }
+.reviewMore[open] .reviewReadMore::after { content: ' (réduire)'; }
+.reviewMore blockquote { padding: .75rem 0 0; }
+.reviewMore summary:focus-visible { outline: 2px solid #8a631f; outline-offset: 3px; }

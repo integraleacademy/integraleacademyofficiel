@@ -44,3 +44,9 @@
   .layout { grid-template-columns: minmax(0, 1fr); gap: .8rem; max-width: 32rem; }
   .layout > .stage { justify-self: start; }
 }
+
+/* Clarifies muted autoplay without changing the existing film or its poster. */
+.soundHint { flex-basis: 100%; color: #e0e8e8; font-size: .75rem; font-weight: 600; line-height: 1.45; }
+.soundButton { transition: background-color .2s ease, border-color .2s ease; }
+.soundButton[aria-pressed='false'] { border-color: var(--film-accent); }
+@media (prefers-reduced-motion: reduce) { .soundButton { transition: none; } }

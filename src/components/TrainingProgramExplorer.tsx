@@ -50,9 +50,10 @@ export function TrainingProgramExplorer({ units, idPrefix, hours, unitLabel = 'h
       </div>
       <Image className={styles.programImage} src={illustration.src} alt={illustration.alt} width={1536} height={1024} sizes="(max-width: 550px) 90vw, 260px" />
     </div>
+    <p className="sr-only" role="status" aria-live="polite">Unité {active + 1} sur {units.length} : {units[active]?.title}</p>
     <div className={styles.programBody}>
       <div className={styles.programMenu}>
-        <p className={styles.kicker}>{menuTitle} <span>Faites défiler ↓</span></p>
+        <p className={styles.kicker}>{menuTitle} <span>Sélectionnez une unité ↓</span></p>
         <div ref={tabList} className={styles.programTabs} role="tablist" aria-label={tabListLabel} aria-orientation="vertical">
           {units.map(({ number, title, duration }, index) => <button key={number} ref={node => { buttons.current[index] = node; }} type="button" role="tab" id={`${idPrefix}-tab-${index}`} aria-controls={`${idPrefix}-panel-${index}`} aria-selected={active === index} tabIndex={active === index ? 0 : -1} onClick={() => select(index)} onKeyDown={event => navigate(event, index)}><span>{number}</span><strong>{title}</strong><small>{duration}</small><span aria-hidden="true">↗</span></button>)}
         </div>
