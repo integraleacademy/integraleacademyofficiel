@@ -44,7 +44,7 @@ export function AcademyFilm({ compact = false }: { compact?: boolean }) {
 
   return <section className={`${styles.filmSection} ${compact ? styles.filmCompact : ''}`} aria-labelledby={titleId}>
     <div className={styles.container}>
-      <div className={styles.filmHeading}><div><p className={styles.eyebrow}>Bienvenue chez Intégrale Academy</p><h2 id={titleId}>Votre avenir <em>prend forme.</em></h2></div><span className={styles.filmDuration}>Le film de l’école <span>30 secondes</span></span></div>
+      <div className={styles.filmHeading}><div><p className={styles.eyebrow}>Bienvenue chez Intégrale Academy</p><h2 id={titleId}>Votre avenir <em>prend forme</em></h2></div><span className={styles.filmDuration}>Le film de l’école <span>30 secondes</span></span></div>
       <div className={styles.cinema}>
         <video ref={videoRef} src={filmUrl} poster={posterUrl} muted loop playsInline preload="none" aria-label="Présentation animée d’Intégrale Academy" aria-describedby={`${titleId}-transcript`} onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} onError={() => setFailed(true)} onTimeUpdate={() => { const v = videoRef.current; if (v && Number.isFinite(v.duration) && v.duration > 0) setProgress(v.currentTime / v.duration * 100); }} />
         {!playing && !failed && <button type="button" className={styles.bigPlay} onClick={togglePlayback} aria-label="Lire le film de présentation"><span aria-hidden="true">▶︎</span></button>}
@@ -61,9 +61,9 @@ export function AcademyFilm({ compact = false }: { compact?: boolean }) {
 }
 
 const steps = [
-  { title: 'Vous avez un projet.', text: 'Un métier en tête, une envie de reconversion ou une poursuite d’études. Ensemble, nous trouvons le parcours qui vous correspond.', label: 'Le bon point de départ', caption: 'Une formation qui vous ressemble.' },
-  { title: 'On prépare la suite.', text: 'Prérequis, dossier, solutions de financement et prochaines dates : notre équipe vous aide à préparer votre entrée en formation.', label: 'Une équipe à vos côtés', caption: 'Chaque étape devient plus simple.' },
-  { title: 'Vous passez à l’action.', text: 'Cours, supports illustrés, exercices et mises en situation : vous développez les compétences concrètes de votre futur métier.', label: 'Place à la formation', caption: 'Apprendre. S’entraîner. Progresser.' },
+  { title: 'Vous avez un projet', text: 'Un métier en tête, une envie de reconversion ou une poursuite d’études. Ensemble, nous trouvons le parcours qui vous correspond.', label: 'Le bon point de départ', caption: 'Une formation qui vous ressemble.' },
+  { title: 'On prépare la suite', text: 'Prérequis, dossier, solutions de financement et prochaines dates : notre équipe vous aide à préparer votre entrée en formation.', label: 'Une équipe à vos côtés', caption: 'Chaque étape devient plus simple.' },
+  { title: 'Vous passez à l’action', text: 'Cours, supports illustrés, exercices et mises en situation : vous développez les compétences concrètes de votre futur métier.', label: 'Place à la formation', caption: 'Apprendre. S’entraîner. Progresser.' },
 ];
 
 export function AcademyJourney() {
@@ -89,7 +89,7 @@ export function AcademyJourney() {
 
   return <section id="votre-parcours" ref={sectionRef} className={styles.journeySection} aria-labelledby="journey-title">
     <div className={styles.container}>
-      <div className={styles.sectionHeading} data-home-journey-heading><p className={styles.eyebrow}>Du premier échange au premier cours</p><h2 id="journey-title">Un projet. <em>Et on avance.</em></h2><p>Vous savez toujours quelle est la prochaine étape.</p></div>
+      <div className={styles.sectionHeading} data-home-journey-heading><p className={styles.eyebrow}>Du premier échange au premier cours</p><h2 id="journey-title">Un projet. <em>Et on avance</em></h2><p>Vous savez toujours quelle est la prochaine étape.</p></div>
       <div className={styles.journeyGrid}>
         <div className={styles.journeySteps}>
           {steps.map((step, index) => <button type="button" key={step.title} className={`${styles.step} ${active === index ? styles.activeStep : ''}`} aria-pressed={active === index} aria-controls={panelId} onClick={() => { setActive(index); setAutomatic(false); }}><span className={styles.stepIndex}>0{index + 1}<span aria-hidden="true">↗︎</span></span><span><strong>{step.title}</strong><span>{step.text}</span></span></button>)}

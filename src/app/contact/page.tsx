@@ -59,7 +59,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<Rec
         <div className={`${school.container} ${school.heroGrid} ${styles.heroGrid}`}>
           <div className={school.heroCopy} data-contact-reveal>
             <p className={school.eyebrow}><span className={school.smallLine} /> Contact & admissions</p>
-            <h1 id="contact-title">Une question ?<br /><em>Parlons de<br /> votre avenir.</em></h1>
+            <h1 id="contact-title">Une question ?<br /><em>Parlons de<br /> votre avenir</em></h1>
             <p className={school.intro}>Choisir une formation, préparer votre financement ou venir découvrir l’école : notre équipe vous accompagne dès le premier échange.</p>
             <div className={school.heroActions}>
               <a href="#demande" className={school.button}>Parler de mon projet <Arrow /></a>
@@ -118,7 +118,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<Rec
               <div className={styles.campusAccess}><span>À 500 m de l’A8</span><span>Parking gratuit</span><span>Bus 4 · Général de Gaulle</span></div>
             </article>}
             <div className={styles.visitInfo} data-contact-reveal>
-              <div><p className={school.eyebrow}>Les portes sont ouvertes au dialogue.</p><h3>Un lieu à découvrir.<br />Une équipe à rencontrer.</h3><p>Venez mettre des visages sur votre projet et découvrir votre futur environnement de formation. Contactez-nous pour organiser votre visite.</p></div>
+              <div><p className={school.eyebrow}>Les portes sont ouvertes au dialogue.</p><h3>Un lieu à découvrir.<br />Une équipe à rencontrer</h3><p>Venez mettre des visages sur votre projet et découvrir votre futur environnement de formation. Contactez-nous pour organiser votre visite.</p></div>
               <div className={styles.visitHours}><span>Pour nous joindre par téléphone</span><strong>{contact.phone}</strong><p>{contact.hours}</p></div>
               <div className={styles.visitActions}><a href={phoneHref} className={school.button}>Organiser ma visite <Arrow /></a><Link href="/ecole" className={school.textLink}>Découvrir notre école <Arrow diagonal /></Link></div>
             </div>
@@ -138,7 +138,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<Rec
       <section id="reperes" className={school.section} aria-labelledby="links-title">
         <div className={school.container}>
           <div className={school.sectionHeading} data-contact-reveal>
-            <div><p className={school.eyebrow}>04 / Quelques repères utiles</p><h2 id="links-title">Votre prochaine étape,<br /><em>à portée de clic.</em></h2></div>
+            <div><p className={school.eyebrow}>04 / Quelques repères utiles</p><h2 id="links-title">Votre prochaine étape,<br /><em>à portée de clic</em></h2></div>
             <p>Parcourez les formations, consultez les dates ou découvrez les solutions pour financer votre projet.</p>
           </div>
           <div className={styles.quickLinks} data-contact-reveal>

@@ -29,7 +29,7 @@ export function PlanningCalendar({ sessions, onSelect, selectedId, themeForSessi
 
   return <div className={styles.calendar}>
     <div className={styles.calendarHeading}>
-      <div><p className={styles.eyebrow}>Vue calendrier</p><h3>Votre prochaine rentrée,<br /><em>en un coup d’œil.</em></h3><p>Explorez les dates, puis cliquez sur une session pour la découvrir.</p></div>
+      <div><p className={styles.eyebrow}>Vue calendrier</p><h3>Votre prochaine rentrée,<br /><em>en un coup d’œil</em></h3><p>Explorez les dates, puis cliquez sur une session pour la découvrir.</p></div>
       <div className={styles.monthControls}>
         <button type="button" disabled={boundedOffset === 0} onClick={() => setOffset(Math.max(0, boundedOffset - 3))} aria-label="Afficher les trois mois précédents">‹</button>
         <span aria-live="polite" aria-atomic="true">{months[0].label}<span aria-hidden="true"> → </span><span className="sr-only"> à </span>{months[2].label}</span>

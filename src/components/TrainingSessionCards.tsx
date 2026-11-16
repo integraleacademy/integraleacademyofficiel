@@ -321,7 +321,7 @@ export function TrainingSessionCards({
       </details> : null}
     </> : <article className="rounded-[1.8rem] border border-dashed border-academy-line bg-[#FFFDF8] p-6 shadow-soft">
       <span className={`rounded-full border px-3 py-1.5 text-[.64rem] font-black uppercase tracking-[.15em] ${sessionTheme.badge}`}>{showLocationFilter && sessions.length ? `Centre : ${selectedLocationLabel}` : 'Planning en préparation'}</span>
-      <h3 className="mt-5 text-2xl font-black">{showLocationFilter && sessions.length ? `Aucune session disponible actuellement pour ${selectedLocationLabel}.` : 'La prochaine session est en cours de programmation.'}</h3>
+      <h3 className="mt-5 text-2xl font-black">{showLocationFilter && sessions.length ? `Aucune session disponible actuellement pour ${selectedLocationLabel}` : 'La prochaine session est en cours de programmation'}</h3>
       <p className="mt-2 font-bold text-academy-muted">Laissez-nous vos coordonnées pour recevoir les dates dès leur ouverture.</p>
       {emptyAction && <ActionLink action={emptyAction} variant={theme} className="mt-5" />}
     </article>}

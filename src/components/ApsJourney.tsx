@@ -10,25 +10,25 @@ import styles from './ApsJourney.module.css';
 const steps = [
   {
     label: 'Votre projet',
-    title: 'Un nouveau départ. Un métier qui compte.',
+    title: 'Un nouveau départ. Un métier qui compte',
     description: 'Vous souhaitez vous reconvertir ou découvrir la sécurité privée ? Apprenez à observer, prévenir les risques et protéger les personnes. Notre équipe vous accompagne pour préparer votre entrée en formation.',
     link: 'Parlons de ma formation', href: '#inscription-financement',
   },
   {
     label: 'Votre formation',
-    title: 'Les bases pour comprendre. La pratique pour agir.',
+    title: 'Les bases pour comprendre. La pratique pour agir',
     description: '175 heures de formation : 51 heures à distance et 124 heures à l’école, à Puget-sur-Argens. Vous avancez avec un programme structuré et préparez aussi le certificat Sauveteur Secouriste du Travail.',
     link: 'Découvrir l’organisation', href: '#hybride',
   },
   {
     label: 'L’immersion terrain',
-    title: 'Entraînez-vous aux situations de votre futur quotidien.',
+    title: 'Entraînez-vous aux situations de votre futur quotidien',
     description: 'Rondes, contrôle d’accès, palpation, inspection des bagages, gestion des incidents : vous répétez les gestes professionnels lors d’exercices encadrés. Le PC sécurité et le matériel pédagogique font partie de votre apprentissage.',
     link: 'Explorer la pratique', href: '#pratique',
   },
   {
     label: 'Votre prochain chapitre',
-    title: 'Préparez le titre APS. Avancez vers votre futur métier.',
+    title: 'Préparez le titre APS. Avancez vers votre futur métier',
     description: 'La réussite à l’examen permet d’obtenir le TFP APS. Vous pouvez ensuite demander votre carte professionnelle auprès du CNAPS (ministère de l’Intérieur). Notre équipe vous aide à préparer votre parcours, votre dossier et votre financement.',
     link: 'Préparer mon inscription', href: '#inscription-financement',
   },
@@ -116,7 +116,7 @@ export function ApsJourney({ children }: { children: ReactNode }) {
     name="APS"
     theme="blue"
     eyebrow="DEVENIR AGENT DE SÉCURITÉ · APS"
-    title={<>De votre projet au métier d’APS,<br /><span>passez à l’action.</span></>}
+    title={<>De votre projet au métier d’APS,<br /><span>passez à l’action</span></>}
     steps={steps.map((step, index) => ({ ...step, visual: (onNext: () => void) => <JourneyVisual index={index} onNext={onNext} /> }))}
   >{children}</TrainingJourney>;
 }

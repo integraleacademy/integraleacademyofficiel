@@ -73,7 +73,7 @@ export function TrainingReferenceMissions({ items, label = 'Mission' }: { items:
   </article>)}</div>;
 }
 
-export function TrainingReferenceCampus({ title = 'Découvrez votre cadre de formation.', description = 'Les espaces de l’école à Puget-sur-Argens accompagnent les cours, les échanges et la vie de votre groupe.' }: { title?: string; description?: string }) {
+export function TrainingReferenceCampus({ title = 'Découvrez votre cadre de formation', description = 'Les espaces de l’école à Puget-sur-Argens accompagnent les cours, les échanges et la vie de votre groupe.' }: { title?: string; description?: string }) {
   return <section className={reference.terrain} aria-label="L’école de Puget-sur-Argens"><div className={reference.container}>
     <div className={reference.sectionHead}><div><p className={reference.eyebrow}>Votre école, en images</p><h2 className={reference.sectionTitle}>{title}</h2></div><p className={reference.intro}>{description}</p></div>
     <div className={reference.campusPhotos}>
@@ -81,7 +81,6 @@ export function TrainingReferenceCampus({ title = 'Découvrez votre cadre de for
       <div><figure><Image src="/images/campus/accueil-centre.webp" alt="Accueil du centre de formation" width={700} height={500} sizes="(max-width: 700px) 44vw, 450px" /><figcaption>L’accueil du centre</figcaption></figure><figure><Image src="/images/campus/espace-detente.webp" alt="Espace de détente à Puget-sur-Argens" width={700} height={500} sizes="(max-width: 700px) 44vw, 450px" /><figcaption>Les espaces de pause</figcaption></figure></div>
     </div>
     <div className={reference.campusFooter}><span>Photos du centre Intégrale Academy · Puget-sur-Argens</span><Link href="/ecole#photos">Découvrir tous les espaces ↗</Link></div>
-    <div className={reference.trainer}><div><p className={reference.eyebrow}>Une équipe à vos côtés</p><h3>Des personnes pour vous accompagner.</h3><p>Découvrez l’équipe et les interlocuteurs qui vous accompagnent dans votre parcours.</p></div><Link href="/ecole#equipe" className={reference.textLink}>Rencontrer l’équipe ↗</Link></div>
   </div></section>;
 }
 
@@ -89,7 +88,7 @@ export function TrainingReferenceContact({ description, title, href, additionalA
   const heading = <>
     <p className={schoolStyle ? editorial.schoolLabel : reference.eyebrow}>Une question sur votre projet ?</p>
     <h2 id="course-contact-title" className={schoolStyle ? editorial.schoolTitle : reference.sectionTitle}>
-      Faites le premier pas<br /><em>vers votre futur métier.</em>
+      Faites le premier pas<br /><em>vers votre futur métier</em>
     </h2>
   </>;
   const intro = <>

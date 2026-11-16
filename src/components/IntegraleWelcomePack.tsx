@@ -39,7 +39,7 @@ const manuals = {
   },
 } as const;
 
-export function IntegraleWelcomePack({ course, title = 'Pack Intégrale.' }: { course: keyof typeof manuals; title?: string }) {
+export function IntegraleWelcomePack({ course, title = 'Pack Intégrale' }: { course: keyof typeof manuals; title?: string }) {
   const manual = manuals[course];
 
   return <section id="pack-integrale" className={styles.banner} aria-labelledby="pack-integrale-title">

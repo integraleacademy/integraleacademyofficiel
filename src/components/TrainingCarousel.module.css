@@ -20,6 +20,10 @@
 .slide { grid-area: 1 / 1; display: grid; grid-template-columns: minmax(0, .88fr) minmax(0, 1.12fr); gap: calc(56px * var(--site-desktop-scale)); align-items: center; min-height: calc(425px * var(--site-desktop-scale)); visibility: hidden; pointer-events: none; }
 .slide[data-active='true'] { visibility: visible; pointer-events: auto; }
 .visualFirst { grid-template-columns: minmax(0, 1.12fr) minmax(0, .88fr); }
+@media (min-width: 701px) {
+  .visualFirst > .visual { grid-column: 1; grid-row: 1; }
+  .visualFirst > .copy { grid-column: 2; grid-row: 1; }
+}
 .copy { min-width: 0; padding: 12px 0 22px; }
 .category { margin: 0 0 18px; color: rgb(var(--text-muted)); font-size: 12px; line-height: 1.5; }
 .title { margin: 0; }

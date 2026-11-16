@@ -94,7 +94,7 @@ export default function Page() {
               Cadre légal · mise à jour 13 août 2026
             </span>
             <h1 className="mt-6 max-w-4xl text-4xl font-black tracking-[-.045em] sm:text-5xl lg:text-[4.3rem] lg:leading-[1.02]">
-              Mentions légales, <span className="text-academy-gold">en toute transparence.</span>
+              Mentions légales, <span className="text-academy-gold">en toute transparence</span>
             </h1>
             <p className="mt-6 max-w-2xl text-base font-semibold leading-8 text-white/68 sm:text-lg">
               Identité de l’éditeur, publication, hébergement et règles d’utilisation : les informations essentielles du site Intégrale Academy sont réunies ici, dans un format clair et vérifiable.

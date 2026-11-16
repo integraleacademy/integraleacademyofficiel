@@ -29,7 +29,7 @@ export function SchoolGallery() {
   return <section id="photos" className={`${school.section} ${styles.gallery}`} aria-labelledby="gallery-title">
     <div className={school.container}>
       <div className={school.sectionHeading}>
-        <div><p className={school.eyebrow}>À l’intérieur du centre · Puget-sur-Argens</p><h2 id="gallery-title">Votre quotidien,<br /><em>à l’école.</em></h2></div>
+        <div><p className={school.eyebrow}>À l’intérieur du centre · Puget-sur-Argens</p><h2 id="gallery-title">Votre quotidien,<br /><em>à l’école</em></h2></div>
         <p>Des salles pour apprendre, des espaces pour échanger et un coin pour souffler. Découvrez les lieux qui vous accueillent pendant votre formation.</p>
       </div>
       <div className={styles.mosaic}>

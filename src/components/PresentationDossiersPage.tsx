@@ -62,7 +62,7 @@ function ClosingCallout({ isBts }: { isBts: boolean }) {
         <div className="grid gap-7 lg:grid-cols-[1fr_auto] lg:items-center">
           <div className="max-w-3xl">
             <span className="inline-flex rounded-full bg-blue-500/20 px-3 py-1 text-xs font-black uppercase tracking-[.18em] text-blue-200">Admissions BTS</span>
-            <h2 className="mt-4 text-3xl font-black tracking-tight sm:text-4xl">Préparez votre candidature pour la rentrée 2027.</h2>
+            <h2 className="mt-4 text-3xl font-black tracking-tight sm:text-4xl">Préparez votre candidature pour la rentrée 2027</h2>
             <p className="mt-3 max-w-2xl text-base font-medium leading-7 text-white/70">Le portail des admissions présente les dates d’ouverture et le dossier à compléter. Pour une demande d’entrée tardive en 2026, contactez directement l’équipe BTS.</p>
           </div>
           <a href="https://admissions.integraleconnect.com/" target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-academy-gold px-6 py-3 text-center text-sm font-black text-academy-gold-text shadow-gold transition hover:-translate-y-0.5 hover:brightness-105 focus:outline-none focus:ring-4 focus:ring-academy-gold/35">Accéder aux admissions 2027 <ArrowUpRightIcon /></a>
@@ -112,7 +112,7 @@ export function PresentationDossiersPage({ variant, dossiers }: PresentationDoss
       <div className="page-container">
         <div className="mx-auto mb-10 max-w-3xl text-center reveal">
           <span className="text-xs font-black uppercase tracking-[.22em] text-academy-gold-strong">{dossiers.length} dossiers disponibles</span>
-          <h2 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl md:text-5xl">Cliquez sur une couverture pour consulter le dossier détaillé.</h2>
+          <h2 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl md:text-5xl">Cliquez sur une couverture pour consulter le dossier détaillé</h2>
           <p className="mt-4 text-base font-medium leading-7 text-academy-muted">Chaque document s’ouvre dans un nouvel onglet afin que vous puissiez le lire, le télécharger ou le partager facilement.</p>
         </div>
         <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">

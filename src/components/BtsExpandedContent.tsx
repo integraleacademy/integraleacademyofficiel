@@ -51,7 +51,7 @@ export function BtsStudentBenefits({ courseName, variant = 'default', artwork }:
             Deux avantages exceptionnels inclus
           </span>
           <h2 className="mt-5 text-3xl font-black tracking-[-.05em] sm:text-4xl lg:text-5xl">
-            Votre {courseName}, avec <span className="text-bts-200">l’iPad et Londres.</span>
+            Votre {courseName}, avec <span className="text-bts-200">l’iPad et Londres</span>
           </h2>
           <p className="mx-auto mt-4 max-w-3xl text-base font-medium leading-8 text-white/65 sm:text-lg">
             Intégrale Academy équipe ses étudiants dès leur entrée dans l’apprentissage et finance intégralement une expérience collective à Londres en deuxième année.
@@ -70,7 +70,7 @@ export function BtsStudentBenefits({ courseName, variant = 'default', artwork }:
               </span>
             </div>
             <p className="relative mt-7 text-[.68rem] font-black uppercase tracking-[.18em] text-bts-300">Votre outil de travail</p>
-            <h3 className="relative mt-3 text-3xl font-black tracking-[-.04em] sm:text-4xl">Un iPad offert à chaque étudiant.</h3>
+            <h3 className="relative mt-3 text-3xl font-black tracking-[-.04em] sm:text-4xl">Un iPad offert à chaque étudiant</h3>
             <p className="relative mt-4 max-w-xl text-base leading-7 text-white/65">
               L’iPad est offert dès la signature de votre contrat d’apprentissage pour travailler, suivre les cours et organiser vos projets pendant les deux années de BTS.
             </p>
@@ -87,7 +87,7 @@ export function BtsStudentBenefits({ courseName, variant = 'default', artwork }:
               </span>
             </div>
             <p className="relative mt-7 text-[.68rem] font-black uppercase tracking-[.18em] text-bts-800">Une expérience de promotion</p>
-            <h3 className="relative mt-3 text-3xl font-black tracking-[-.04em] sm:text-4xl">Un voyage à Londres en 2ᵉ année.</h3>
+            <h3 className="relative mt-3 text-3xl font-black tracking-[-.04em] sm:text-4xl">Un voyage à Londres en 2ᵉ année</h3>
             <p className="relative mt-4 max-w-xl text-base font-semibold leading-7 text-bts-950/75">
               Le voyage à Londres est intégralement financé par Intégrale Academy : il est 100 % pris en charge pour les étudiants de la promotion.
             </p>
@@ -121,7 +121,7 @@ export function BtsCompleteInformation({ course }: { course: BtsExpandedCourseKe
           <div>
             <p className="text-[.66rem] font-black uppercase tracking-[.24em] text-bts-700">Le guide complet de la formation</p>
             <h2 className="mt-3 max-w-4xl text-3xl font-black tracking-[-.05em] sm:text-4xl lg:text-5xl">
-              Le {data.shortName} dans les moindres détails.
+              Le {data.shortName} dans les moindres détails
             </h2>
             <p className="mt-5 max-w-4xl text-base font-medium leading-8 text-academy-muted">{data.summary}</p>
           </div>
@@ -152,7 +152,7 @@ export function BtsCompleteInformation({ course }: { course: BtsExpandedCourseKe
         <div className="mt-10 grid gap-5 lg:grid-cols-2">
           <article className="rounded-[2rem] bg-[#0D1725] p-6 text-white shadow-card sm:p-8">
             <p className="text-[.66rem] font-black uppercase tracking-[.2em] text-bts-300">Objectifs de la formation</p>
-            <h3 className="mt-4 text-3xl font-black tracking-[-.04em]">Ce que ce BTS vous prépare à faire.</h3>
+            <h3 className="mt-4 text-3xl font-black tracking-[-.04em]">Ce que ce BTS vous prépare à faire</h3>
             <div className="mt-6"><CheckList items={data.objective} dark /></div>
           </article>
           <article className="rounded-[2rem] border border-academy-line bg-white p-6 shadow-card sm:p-8">
@@ -165,7 +165,7 @@ export function BtsCompleteInformation({ course }: { course: BtsExpandedCourseKe
         <div className="mt-12">
           <p className="text-[.66rem] font-black uppercase tracking-[.22em] text-bts-700">Missions en entreprise</p>
           <div className="mt-3 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
-            <h3 className="max-w-3xl text-3xl font-black tracking-[-.04em]">Des missions concrètes dès l’alternance.</h3>
+            <h3 className="max-w-3xl text-3xl font-black tracking-[-.04em]">Des missions concrètes dès l’alternance</h3>
             <p className="max-w-lg text-sm leading-6 text-academy-muted">Les missions varient selon l’entreprise d’accueil, son activité et votre progression.</p>
           </div>
           <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -182,7 +182,7 @@ export function BtsCompleteInformation({ course }: { course: BtsExpandedCourseKe
 
         <div className="mt-12 rounded-[2rem] border border-academy-line bg-academy-bg p-5 sm:p-7 lg:p-9">
           <p className="text-[.66rem] font-black uppercase tracking-[.22em] text-bts-700">Programme professionnel détaillé</p>
-          <h3 className="mt-3 text-3xl font-black tracking-[-.04em]">Tous les grands blocs de compétences.</h3>
+          <h3 className="mt-3 text-3xl font-black tracking-[-.04em]">Tous les grands blocs de compétences</h3>
           <div className="mt-7 grid gap-3 lg:grid-cols-2">
             {data.competencyBlocks.map((block, index) => (
               <details key={block.title} open={index === 0} className="group rounded-[1.5rem] border border-academy-line bg-white p-5 shadow-soft">
@@ -203,7 +203,7 @@ export function BtsCompleteInformation({ course }: { course: BtsExpandedCourseKe
           <div className="grid gap-5 lg:grid-cols-[.68fr_1.32fr]">
             <article className="rounded-[2rem] bg-[#0D1725] p-6 text-white shadow-card sm:p-8">
               <p className="text-[.66rem] font-black uppercase tracking-[.22em] text-bts-300">L’examen du BTS</p>
-              <h3 className="mt-4 text-3xl font-black tracking-[-.04em]">Les épreuves et leurs coefficients.</h3>
+              <h3 className="mt-4 text-3xl font-black tracking-[-.04em]">Les épreuves et leurs coefficients</h3>
               <p className="mt-5 leading-7 text-white/62">{data.examLocation}</p>
               <p className="mt-5 rounded-2xl bg-white/7 p-4 text-xs font-semibold leading-5 text-white/55">
                 La forme exacte — contrôle en cours de formation ou épreuve ponctuelle — dépend du statut du candidat et de l’habilitation du CFA. L’équipe pédagogique confirme les modalités applicables à votre promotion.
@@ -239,7 +239,7 @@ export function BtsCompleteInformation({ course }: { course: BtsExpandedCourseKe
         <div className="mt-12 grid gap-5 lg:grid-cols-2">
           <article className="rounded-[2rem] border border-academy-line bg-white p-6 shadow-card sm:p-8">
             <p className="text-[.66rem] font-black uppercase tracking-[.22em] text-bts-700">Admission et alternance</p>
-            <h3 className="mt-4 text-3xl font-black tracking-[-.04em]">Les conditions à connaître.</h3>
+            <h3 className="mt-4 text-3xl font-black tracking-[-.04em]">Les conditions à connaître</h3>
             <div className="mt-6"><CheckList items={data.admission} /></div>
             <div className="mt-6 rounded-2xl border border-bts-200 bg-bts-50 p-5 text-bts-950">
               <p className="font-black">Pas encore d’entreprise à la rentrée 2026 ?</p>
@@ -291,12 +291,12 @@ export function BtsCompleteInformation({ course }: { course: BtsExpandedCourseKe
         <div className="mt-12 grid gap-5 lg:grid-cols-2">
           <article className="rounded-[2rem] bg-[#0D1725] p-6 text-white shadow-card sm:p-8">
             <p className="text-[.66rem] font-black uppercase tracking-[.22em] text-bts-300">Après le diplôme</p>
-            <h3 className="mt-4 text-3xl font-black tracking-[-.04em]">Les métiers accessibles.</h3>
+            <h3 className="mt-4 text-3xl font-black tracking-[-.04em]">Les métiers accessibles</h3>
             <div className="mt-6"><CheckList items={data.jobs} dark /></div>
           </article>
           <article className="rounded-[2rem] border border-academy-line bg-white p-6 shadow-card sm:p-8">
             <p className="text-[.66rem] font-black uppercase tracking-[.22em] text-bts-700">Poursuite d’études</p>
-            <h3 className="mt-4 text-3xl font-black tracking-[-.04em]">Continuer vers un bac+3 ou plus.</h3>
+            <h3 className="mt-4 text-3xl font-black tracking-[-.04em]">Continuer vers un bac+3 ou plus</h3>
             <div className="mt-6"><CheckList items={data.furtherStudies} /></div>
           </article>
         </div>

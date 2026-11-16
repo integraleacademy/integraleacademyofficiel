@@ -4,7 +4,7 @@ export function ContactRequestCard({ href }: { href: string }) {
   return (
     <div className="rounded-[2rem] border border-academy-line/70 bg-academy-surface p-5 shadow-[0_28px_90px_rgba(54,40,20,.12)] sm:p-8">
       <span className="inline-flex rounded-full bg-academy-gold-soft/55 px-3 py-2 text-[10px] font-black uppercase tracking-[.16em] text-academy-gold-strong">Votre demande</span>
-      <h2 className="mt-5 text-2xl font-black tracking-[-.03em] text-academy-ink dark:text-white sm:text-3xl">Préparons votre projet de formation.</h2>
+      <h2 className="mt-5 text-2xl font-black tracking-[-.03em] text-academy-ink dark:text-white sm:text-3xl">Préparons votre projet de formation</h2>
       <p className="mt-4 text-sm font-semibold leading-7 text-academy-muted">
         Pour une formation en sécurité privée, SSIAP 1 ou VTC, indiquez vos coordonnées, la formation souhaitée et votre situation. Notre équipe pourra étudier votre demande et vous accompagner dans les prochaines étapes.
       </p>

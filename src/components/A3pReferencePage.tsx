@@ -1,3 +1,4 @@
+import { CourseTeamBanner } from '@/components/CourseTeamBanner';
 import { CourseBrochureCard } from '@/components/CourseBrochureCard';
 import { TrainingReferencePage, TrainingReferenceHero, TrainingReferenceSection as Section, TrainingReferenceMissions, TrainingReferenceCampus, TrainingReferenceContact, TrainingReferenceMobileBar } from '@/components/TrainingReferenceLayout';
 import { TrainingCourseTestimonials } from '@/components/TrainingCourseTestimonials';
@@ -126,11 +127,11 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
 
     <TrainingReferenceHero
       id="a3p" badge="Formation TFP A3P"
-      heading="Devenez agent de" accent="protection rapprochée."
+      heading="Devenez agent de" accent="protection rapprochée"
       title="Formation agent de protection rapprochée"
-      tagline="Apprenez le métier sur le terrain."
+      tagline="Apprenez le métier sur le terrain"
       description={<p>Préparez, organisez et sécurisez les déplacements de personnes exposées. Une formation réglementée, intensive et résolument tournée vers les réalités du terrain.</p>}
-      illustration={a3pArtwork.protection} caption="Anticiper. Sécuriser. Protéger."
+      illustration={a3pArtwork.protection} caption="Anticiper, sécuriser et protéger"
       primaryAction={{ href: a3pContact('dossier-a3p'), label: 'Recevoir le dossier A3P →' }}
     >
       <TrainingHeroSessionCard
@@ -154,11 +155,13 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
       theme="green"
     />
 
+    <CourseBrochureCard course="a3p-apr" />
+
     <CourseFilm film="a3p" title="Se former à la protection rapprochée"
       description="Découvrez la formation A3P d’Intégrale Academy à Puget-sur-Argens, sur la Côte d’Azur." />
 
     <CourseJourney course="a3p">
-      <Section id="metier" label="01 — Le métier" title={<>Protéger, anticiper, <span className="decoration-emerald-500 decoration-[.16em] underline underline-offset-[-.03em]">décider.</span></>} intro="L’agent de protection physique des personnes assure la sécurité de dirigeants, personnalités, artistes ou toute personne exposée. Son rôle : préparer la mission, analyser les risques et protéger avec efficacité, proportionnalité et discrétion."
+      <Section id="metier" label="01 — Le métier" title={<>Protéger, anticiper, <span className="decoration-emerald-500 decoration-[.16em] underline underline-offset-[-.03em]">décider</span></>} intro="L’agent de protection physique des personnes assure la sécurité de dirigeants, personnalités, artistes ou toute personne exposée. Son rôle : préparer la mission, analyser les risques et protéger avec efficacité, proportionnalité et discrétion."
         fullWidthFooter={
           <CourseFilm film="neo" title="C’est quoi, le métier" titleAccent="de garde du corps ?"
             description="Après vingt ans en protection rapprochée, Véronique forme les futurs gardes du corps chez Intégrale Academy. Au micro de Néo, elle raconte son métier." />
@@ -166,15 +169,17 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
         <TrainingReferenceMissions items={métierCards.map(([, title, description], index) => ({ title, description, illustration: [originalArtwork['a3p-mission-preparation'], originalArtwork['a3p-mission-trajets'], a3pArtwork.discretion][index] }))} />
         <MissionAnimation variant="a3p" className="mt-5" illustration={originalArtwork['a3p-mission-ensemble']} />
         <div className="mt-5 grid items-center gap-6 rounded-[2rem] bg-[#0D1725] p-6 text-white shadow-card lg:grid-cols-[.8fr_1.2fr]">
-          <div><Label light>Une mission, cinq temps forts</Label><h3 className="mt-3 text-2xl font-black">De la préparation au débriefing.</h3><p className="mt-2 text-sm text-white/60">Une lecture concrète du métier avant le détail du programme.</p></div>
+          <div><Label light>Une mission, cinq temps forts</Label><h3 className="mt-3 text-2xl font-black">De la préparation au débriefing</h3><p className="mt-2 text-sm text-white/60">Une lecture concrète du métier avant le détail du programme.</p></div>
           <div className="flex items-start justify-between gap-2 overflow-x-auto">{['Briefing', 'Reconnaissance', 'Dispositif', 'Déplacement', 'Débriefing'].map((step, index) => <div key={step} className="flex min-w-[5.5rem] flex-1 items-center gap-2"><div className="text-center"><span className="mx-auto grid h-9 w-9 place-items-center rounded-full border border-emerald-300/35 bg-white/[.07] text-xs font-black text-emerald-300">0{index + 1}</span><p className="mt-2 text-[.65rem] font-black">{step}</p></div>{index < 4 && <span className="mb-5 text-emerald-300">→</span>}</div>)}</div>
         </div>
       </Section>
     </CourseJourney>
 
+    <CourseTeamBanner />
+
     <section className="bg-academy-bg px-4 pb-16"><div className="page-container grid gap-5 lg:grid-cols-[1.2fr_.8fr]">
-      <div className="rounded-[2rem] border border-academy-line bg-[#FFFDF8] p-6 shadow-soft sm:p-8"><Label>À qui s’adresse la formation ?</Label><h2 className="mt-3 text-2xl font-black tracking-[-.04em] sm:text-3xl">Un parcours ouvert à plusieurs profils.</h2><div className="mt-6 flex flex-wrap gap-2.5">{audiences.map((item) => <span key={item} className="rounded-full border border-[#E4DAC9] bg-[#F3EEE5] px-4 py-2.5 text-xs font-black before:mr-2 before:text-emerald-600 before:content-['✓']">{item}</span>)}</div></div>
-      <div className="relative overflow-hidden rounded-[2rem] border border-emerald-200 bg-[linear-gradient(135deg,#ECFDF5,#D1FAE5)] p-7 shadow-soft"><div className="absolute -right-16 -top-20 h-48 w-48 rounded-full border border-emerald-300/50 shadow-[0_0_0_35px_rgba(255,255,255,.2)]" /><Label>Candidature personnalisée</Label><h2 className="relative mt-3 text-2xl font-black tracking-[-.04em] sm:text-3xl">Votre profil est étudié individuellement.</h2><p className="relative mt-4 text-sm font-semibold leading-7 text-emerald-950/80">Une expérience militaire ou policière est un atout, mais elle n’est pas obligatoire. Nous vérifions votre projet avant l’inscription.</p><CTA href={a3pContact('etude-profil')} className="relative mt-5">Faire le point →</CTA></div>
+      <div className="rounded-[2rem] border border-academy-line bg-[#FFFDF8] p-6 shadow-soft sm:p-8"><Label>À qui s’adresse la formation ?</Label><h2 className="mt-3 text-2xl font-black tracking-[-.04em] sm:text-3xl">Un parcours ouvert à plusieurs profils</h2><div className="mt-6 flex flex-wrap gap-2.5">{audiences.map((item) => <span key={item} className="rounded-full border border-[#E4DAC9] bg-[#F3EEE5] px-4 py-2.5 text-xs font-black before:mr-2 before:text-emerald-600 before:content-['✓']">{item}</span>)}</div></div>
+      <div className="relative overflow-hidden rounded-[2rem] border border-emerald-200 bg-[linear-gradient(135deg,#ECFDF5,#D1FAE5)] p-7 shadow-soft"><div className="absolute -right-16 -top-20 h-48 w-48 rounded-full border border-emerald-300/50 shadow-[0_0_0_35px_rgba(255,255,255,.2)]" /><Label>Candidature personnalisée</Label><h2 className="relative mt-3 text-2xl font-black tracking-[-.04em] sm:text-3xl">Votre profil est étudié individuellement</h2><p className="relative mt-4 text-sm font-semibold leading-7 text-emerald-950/80">Une expérience militaire ou policière est un atout, mais elle n’est pas obligatoire. Nous vérifions votre projet avant l’inscription.</p><CTA href={a3pContact('etude-profil')} className="relative mt-5">Faire le point →</CTA></div>
     </div></section>
 
     <section id="admission" className="bg-[#FFFDF8] px-4 py-14 sm:py-18 lg:py-20"><div className="page-container overflow-hidden rounded-[2.25rem] bg-[#0D1725] p-6 text-white shadow-card sm:p-8 lg:p-10"><div className="grid gap-8 lg:grid-cols-[.72fr_1.28fr]">
@@ -182,7 +187,7 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
       <div className="grid gap-3 sm:grid-cols-2">{a3pPrerequisites.map((item, index) => <details key={item.title} className="group rounded-2xl border border-white/10 bg-[#182537] p-4"><summary className="flex cursor-pointer list-none gap-3"><span className="font-black text-emerald-300">{index === a3pPrerequisites.length - 1 ? '→' : '✓'}</span><span className="flex-1 text-sm font-black">{item.title}</span><span className="text-white/45 transition group-open:rotate-45">+</span></summary><div className="mt-3 border-t border-white/10 pt-3 text-xs font-medium leading-6 text-white/60">{item.body?.map((paragraph) => <p key={paragraph} className="mb-2 last:mb-0">{paragraph}</p>)}{item.note && <p className="mt-3 font-black text-amber-200">{item.note}</p>}</div></details>)}</div>
     </div></div></section>
 
-    <Section id="competences" label="03 — Compétences" title={<>Ce que vous saurez faire <span className="decoration-emerald-500 decoration-[.16em] underline underline-offset-[-.03em]">sur le terrain.</span></>} intro="Les compétences du bloc unique sont présentées en cinq piliers métier. Le programme officiel détaillé par unité de valeur figure juste après.">
+    <Section id="competences" label="03 — Compétences" title={<>Ce que vous saurez faire <span className="decoration-emerald-500 decoration-[.16em] underline underline-offset-[-.03em]">sur le terrain</span></>} intro="Les compétences du bloc unique sont présentées en cinq piliers métier. Le programme officiel détaillé par unité de valeur figure juste après.">
       <div className={styles.skillsGrid}>
         {skillPillars.map((skill, index) => (
           <article key={skill.title} className={`${styles.skillCard} ${skill.featured ? styles.featuredSkill : skill.dark ? styles.darkSkill : ''}`}>
@@ -198,8 +203,7 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
       </div>
     </Section>
 
-    <CourseBrochureCard course="a3p-apr" />
-    <Section id="programme" label="04 — Programme" title={<>328 heures pour devenir <span className="decoration-emerald-500 decoration-[.16em] underline underline-offset-[-.03em]">opérationnel.</span></>} intro="Le programme réglementaire comporte neuf unités de valeur : 41 heures de socle de base et 287 heures de spécialité A3P, soit 328 heures hors examen dont 92 heures et 50 minutes de pratique." tone="stone">
+    <Section id="programme" label="04 — Programme" title={<>328 heures pour devenir <span className="decoration-emerald-500 decoration-[.16em] underline underline-offset-[-.03em]">opérationnel</span></>} intro="Le programme réglementaire comporte neuf unités de valeur : 41 heures de socle de base et 287 heures de spécialité A3P, soit 328 heures hors examen dont 92 heures et 50 minutes de pratique." tone="stone">
       <div className="grid items-start gap-5 lg:grid-cols-[.62fr_1.38fr]">
         <aside className="rounded-[2rem] bg-emerald-600 p-7 text-white shadow-[0_24px_65px_rgba(5,150,105,.22)] lg:sticky lg:top-5"><span className="rounded-full bg-white px-3 py-1.5 text-[.62rem] font-black uppercase tracking-[.14em] text-emerald-800">Formation réglementée</span><p className="mt-8 text-6xl font-black tracking-[-.06em]">328 h</p><p className="mt-3 font-black text-white/85">Hors examen<br />100 % en présentiel</p><ul className="mt-8 space-y-2 text-sm font-bold text-white/85"><li>✓ 41 h de socle de base</li><li>✓ 287 h de spécialité A3P</li><li>✓ 92 h 50 de pratique</li><li>✓ 9 unités de valeur</li><li>✓ Mission complète et jury</li></ul><a href={a3pConfig.programPdfUrl} target="_blank" rel="noopener noreferrer" aria-label="Consulter le programme de formation A3P (PDF, nouvel onglet)" className="mt-8 inline-flex min-h-12 w-full items-center justify-center rounded-full bg-[#11100D] px-5 py-3 text-center text-sm font-black text-white shadow-soft transition hover:-translate-y-0.5 hover:bg-black focus:outline-none focus:ring-4 focus:ring-white/30">Consulter le programme de formation (PDF) ↗</a></aside>
         <div className="space-y-3">{programPhases.map(([number, title, body]) => <article key={title} className="rounded-[1.65rem] border border-academy-line bg-[#FFFDF8] p-5 shadow-soft motion-safe:transition-transform motion-safe:hover:-translate-y-0.5 sm:p-6"><div className="flex gap-4"><span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl border border-academy-line bg-academy-bg text-xs font-black">{number}</span><div><h3 className="text-xl font-black tracking-[-.03em]">{title}</h3><p className="mt-2 text-sm font-semibold leading-7 text-academy-muted">{body}</p></div></div></article>)}
@@ -208,7 +212,7 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
       </div>
     </Section>
 
-    <Section id="pedagogie" label="05 — Immersion & pédagogie" title={<>Un terrain d’entraînement qui <span className="text-emerald-300">ressemble au vrai.</span></>} intro="Zones urbaines, axes routiers et environnements variés permettent de construire des exercices réalistes entre Cannes et Saint-Tropez." tone="dark">
+    <Section id="pedagogie" label="05 — Immersion & pédagogie" title={<>Un terrain d’entraînement qui <span className="text-emerald-300">ressemble au vrai</span></>} intro="Zones urbaines, axes routiers et environnements variés permettent de construire des exercices réalistes entre Cannes et Saint-Tropez." tone="dark">
       <div className="grid gap-5 md:grid-cols-2">
         {practices.map((practice, index) => <article key={practice.title} className={styles.practiceCard}>
           <span className={styles.practiceNumber}>0{index + 1}</span>
@@ -219,13 +223,13 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
           </div>
         </article>)}
       </div>
-      <div className="mt-7 rounded-[1.7rem] border border-emerald-300/25 bg-emerald-400/10 p-6"><Label light>École de Puget-sur-Argens</Label><h3 className="mt-3 text-xl font-black text-emerald-200">Entraînez-vous dans des configurations variées.</h3><p className="mt-2 max-w-4xl text-sm font-medium leading-7 text-white/65">La progression alterne démonstrations, exercices individuels, travail en équipe, scénarios professionnels et débriefings.</p></div>
+      <div className="mt-7 rounded-[1.7rem] border border-emerald-300/25 bg-emerald-400/10 p-6"><Label light>École de Puget-sur-Argens</Label><h3 className="mt-3 text-xl font-black text-emerald-200">Entraînez-vous dans des configurations variées</h3><p className="mt-2 max-w-4xl text-sm font-medium leading-7 text-white/65">La progression alterne démonstrations, exercices individuels, travail en équipe, scénarios professionnels et débriefings.</p></div>
     </Section>
 
     <TrainingReferenceCampus />
     <IntegraleWelcomePack course="a3p" />
 
-    <Section id="certification" label="06 — Certification" title={<>Un examen qui valide <span className="decoration-emerald-500 decoration-[.16em] underline underline-offset-[-.03em]">vos décisions.</span></>} intro="L’évaluation vérifie les connaissances réglementaires et votre capacité à préparer puis exécuter une mission de protection physique des personnes." tone="paper">
+    <Section id="certification" label="06 — Certification" title={<>Un examen qui valide <span className="decoration-emerald-500 decoration-[.16em] underline underline-offset-[-.03em]">vos décisions</span></>} intro="L’évaluation vérifie les connaissances réglementaires et votre capacité à préparer puis exécuter une mission de protection physique des personnes." tone="paper">
       <div className="relative grid gap-5 md:grid-cols-4 before:absolute before:left-[8%] before:right-[8%] before:top-6 before:hidden before:h-px before:bg-emerald-200 md:before:block">{examSteps.map(([title, body], index) => <article key={title} className="relative"><span className="relative z-10 grid h-12 w-12 place-items-center rounded-full border-[6px] border-[#FFFDF8] bg-emerald-600 text-xs font-black text-white shadow-[0_0_0_1px_#A7F3D0]">0{index + 1}</span><h3 className="mt-6 text-lg font-black tracking-[-.03em]">{title}</h3><p className="mt-3 text-xs font-semibold leading-6 text-academy-muted">{body}</p></article>)}</div>
       <div className="mt-8 grid gap-3 md:grid-cols-3">{[
         ['Note ≥ 12/20', 'Unité de valeur acquise', 'bg-emerald-50 text-emerald-900 border-emerald-200'],
@@ -236,11 +240,11 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
       <div className="mt-8 rounded-[1.5rem] border border-emerald-200 bg-emerald-50/60 p-5"><Label>Après réussite</Label><p className="mt-2 text-base font-black">TFP A3P <span className="text-emerald-700">→</span> Demande CNAPS <span className="text-emerald-700">→</span> Carte professionnelle <span className="text-emerald-700">→</span> Exercer</p><p className="mt-2 text-xs font-semibold text-academy-muted">La certification permet de justifier l’aptitude professionnelle nécessaire à la demande de carte. La délivrance de la carte reste une décision du CNAPS.</p></div>
     </Section>
 
-    <Section id="references-rncp" label="07 — Repères officiels" title="Certification, conditions d’exercice et données d’insertion." intro={<>Ces informations complètent la présentation commerciale avec les repères figurant dans la fiche RNCP38002 fournie.</>}>
+    <Section id="references-rncp" label="07 — Repères officiels" title="Certification, conditions d’exercice et données d’insertion" intro={<>Ces informations complètent la présentation commerciale avec les repères figurant dans la fiche RNCP38002 fournie.</>}>
       <div className="grid gap-5 lg:grid-cols-[1.15fr_.85fr]">
         <article className="rounded-[2rem] border border-academy-line bg-white p-6 shadow-soft lg:p-8">
           <Label>Réalités du métier</Label>
-          <h3 className="mt-3 text-3xl font-black">Des conditions qui varient selon la mission.</h3>
+          <h3 className="mt-3 text-3xl font-black">Des conditions qui varient selon la mission</h3>
           <div className="mt-6 grid gap-3 sm:grid-cols-2">{a3pWorkConditions.map((item) => <div key={item} className="flex gap-3 rounded-2xl bg-academy-bg p-4 text-sm font-bold leading-6 text-academy-muted"><span className="mt-0.5 text-emerald-700">✓</span><span>{item}</span></div>)}</div>
         </article>
         <article className="rounded-[2rem] bg-[#0D1725] p-6 text-white shadow-card lg:p-8">
@@ -258,7 +262,7 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
         </article>
       </div>
       <article className="mt-5 overflow-hidden rounded-[2rem] border border-academy-line bg-[#FFFDF8] p-6 shadow-soft lg:p-8">
-        <div className="flex flex-wrap items-end justify-between gap-4"><div><Label>Insertion nationale</Label><h3 className="mt-3 text-3xl font-black">Données historiques de la certification.</h3></div><p className="max-w-xl text-sm font-semibold leading-6 text-academy-muted">Statistiques nationales France compétences figurant dans la fiche de certification. Elles concernent la certification, pas les résultats propres à Intégrale Academy.</p></div>
+        <div className="flex flex-wrap items-end justify-between gap-4"><div><Label>Insertion nationale</Label><h3 className="mt-3 text-3xl font-black">Données historiques de la certification</h3></div><p className="max-w-xl text-sm font-semibold leading-6 text-academy-muted">Statistiques nationales France compétences figurant dans la fiche de certification. Elles concernent la certification, pas les résultats propres à Intégrale Academy.</p></div>
         <div className="mt-6 overflow-x-auto">
           <table className="min-w-[720px] w-full border-separate border-spacing-y-2 text-left text-sm">
             <thead><tr className="text-xs uppercase tracking-[.12em] text-academy-muted"><th className="px-4 py-2">Année</th><th className="px-4 py-2">Certifiés</th><th className="px-4 py-2">Insertion globale à 6 mois</th><th className="px-4 py-2">Métier visé à 6 mois</th><th className="px-4 py-2">Métier visé à 2 ans</th></tr></thead>
@@ -293,25 +297,25 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
       emptyAction={{ href: a3pContact('alerte-session'), label: 'Recevoir les prochaines dates →' }}
     />
 
-    <Section id="inscription" label="09 — Inscription" title="Un parcours vérifié avant la rentrée." intro="L’admission tient compte des délais de financement et d’instruction CNAPS. Il est recommandé d’engager les démarches dès que votre projet est confirmé." tone="paper">
+    <Section id="inscription" label="09 — Inscription" title="Un parcours vérifié avant la rentrée" intro="L’admission tient compte des délais de financement et d’instruction CNAPS. Il est recommandé d’engager les démarches dès que votre projet est confirmé." tone="paper">
       <div className="grid gap-3 md:grid-cols-5">{a3pEnrollmentSteps.map(([number, title, body]) => <article key={number} className="rounded-[1.5rem] border border-academy-line bg-academy-bg p-5"><span className="grid h-9 w-9 place-items-center rounded-full bg-emerald-600 text-xs font-black text-white">{number}</span><h3 className="mt-5 text-base font-black">{title}</h3><p className="mt-2 text-xs font-semibold leading-6 text-academy-muted">{body}</p></article>)}</div>
-      <div className="mt-5 grid gap-5 rounded-[1.75rem] border border-emerald-200 bg-emerald-50 p-6 lg:grid-cols-[1fr_auto] lg:items-center"><div><Label>Accessibilité et handicap</Label><h3 className="mt-2 text-2xl font-black text-emerald-950">Anticipez vos besoins d’aménagement.</h3><p className="mt-3 max-w-4xl text-sm font-semibold leading-7 text-emerald-900/75">Signalez votre situation avant l’inscription. L’équipe étudie avec vous les adaptations possibles au regard des objectifs, des exercices pratiques et des exigences de certification ; si nécessaire, elle vous oriente vers une solution adaptée.</p></div><CTA href={a3pContact('accessibilite-handicap')} className="shrink-0">Étudier mes besoins →</CTA></div>
+      <div className="mt-5 grid gap-5 rounded-[1.75rem] border border-emerald-200 bg-emerald-50 p-6 lg:grid-cols-[1fr_auto] lg:items-center"><div><Label>Accessibilité et handicap</Label><h3 className="mt-2 text-2xl font-black text-emerald-950">Anticipez vos besoins d’aménagement</h3><p className="mt-3 max-w-4xl text-sm font-semibold leading-7 text-emerald-900/75">Signalez votre situation avant l’inscription. L’équipe étudie avec vous les adaptations possibles au regard des objectifs, des exercices pratiques et des exigences de certification ; si nécessaire, elle vous oriente vers une solution adaptée.</p></div><CTA href={a3pContact('accessibilite-handicap')} className="shrink-0">Étudier mes besoins →</CTA></div>
     </Section>
 
     <section id="debouches" className="bg-[#FFFDF8] px-4 py-14 sm:py-18 lg:py-20"><div className="page-container">
-      <div className="grid gap-5 lg:grid-cols-[.85fr_1.15fr]"><div className="rounded-[2rem] border border-emerald-200 bg-[linear-gradient(145deg,#D1FAE5,#F0FDF4)] p-7 shadow-soft"><Label>Hébergement</Label><h2 className="mt-3 text-3xl font-black tracking-[-.045em]">Restez sur place pendant votre formation.</h2><p className="mt-4 text-sm font-semibold leading-7 text-academy-muted">Une solution collective peut être proposée à l’école, sous réserve de disponibilité et de réservation préalable.</p><p className="mt-6 text-5xl font-black tracking-[-.05em] text-emerald-800">{a3pConfig.accommodationPriceLabel}</p><p className="mt-2 text-xs font-semibold leading-6 text-academy-muted">{a3pConfig.accommodationNote}</p><CTA href={a3pContact('hebergement-a3p')} className="mt-6">Vérifier les disponibilités →</CTA></div><div className="grid grid-cols-2 gap-3 rounded-[2rem] border border-emerald-100 bg-emerald-50/60 p-5 sm:p-6">{['Dortoir collectif', 'Cuisine équipée', 'Salle de bain & douche', 'Machine à laver', 'Sèche-linge', 'Espaces communs'].map((item) => <span key={item} className="rounded-2xl border border-emerald-100 bg-white p-4 text-xs font-black before:mr-2 before:text-emerald-600 before:content-['✓']">{item}</span>)}</div></div>
+      <div className="grid gap-5 lg:grid-cols-[.85fr_1.15fr]"><div className="rounded-[2rem] border border-emerald-200 bg-[linear-gradient(145deg,#D1FAE5,#F0FDF4)] p-7 shadow-soft"><Label>Hébergement</Label><h2 className="mt-3 text-3xl font-black tracking-[-.045em]">Restez sur place pendant votre formation</h2><p className="mt-4 text-sm font-semibold leading-7 text-academy-muted">Une solution collective peut être proposée à l’école, sous réserve de disponibilité et de réservation préalable.</p><p className="mt-6 text-5xl font-black tracking-[-.05em] text-emerald-800">{a3pConfig.accommodationPriceLabel}</p><p className="mt-2 text-xs font-semibold leading-6 text-academy-muted">{a3pConfig.accommodationNote}</p><CTA href={a3pContact('hebergement-a3p')} className="mt-6">Vérifier les disponibilités →</CTA></div><div className="grid grid-cols-2 gap-3 rounded-[2rem] border border-emerald-100 bg-emerald-50/60 p-5 sm:p-6">{['Dortoir collectif', 'Cuisine équipée', 'Salle de bain & douche', 'Machine à laver', 'Sèche-linge', 'Espaces communs'].map((item) => <span key={item} className="rounded-2xl border border-emerald-100 bg-white p-4 text-xs font-black before:mr-2 before:text-emerald-600 before:content-['✓']">{item}</span>)}</div></div>
 
       <div className="mt-14 grid gap-5 lg:grid-cols-[1.05fr_.95fr]">
-        <div className="rounded-[2rem] bg-[#0D1725] p-7 text-white shadow-card"><Label light>10 — Débouchés</Label><h2 className="mt-3 text-3xl font-black tracking-[-.045em] sm:text-4xl">Après le TFP A3P.</h2><div className="mt-6 flex flex-wrap gap-2">{jobs.map((job) => <span key={job} className="rounded-full border border-white/12 bg-[#182537] px-4 py-2 text-[.68rem] font-black">{job}</span>)}</div><p className="mt-6 text-xs font-medium leading-6 text-white/55">La certification ne garantit pas un emploi. Le recrutement dépend aussi de l’expérience, du réseau, de la mobilité et des compétences complémentaires.</p></div>
-        <div className="rounded-[2rem] border border-academy-line bg-white p-7 shadow-soft"><Label>Employeurs et secteurs</Label><h2 className="mt-3 text-2xl font-black tracking-[-.04em]">Des contextes d’exercice variés.</h2><div className="mt-5 grid gap-2 sm:grid-cols-2">{a3pEmployerSectors.map((sector) => <span key={sector} className="rounded-xl bg-[#F3EEE5] px-3 py-2 text-[.65rem] font-black before:mr-2 before:text-emerald-600 before:content-['✓']">{sector}</span>)}</div></div>
+        <div className="rounded-[2rem] bg-[#0D1725] p-7 text-white shadow-card"><Label light>10 — Débouchés</Label><h2 className="mt-3 text-3xl font-black tracking-[-.045em] sm:text-4xl">Après le TFP A3P</h2><div className="mt-6 flex flex-wrap gap-2">{jobs.map((job) => <span key={job} className="rounded-full border border-white/12 bg-[#182537] px-4 py-2 text-[.68rem] font-black">{job}</span>)}</div><p className="mt-6 text-xs font-medium leading-6 text-white/55">La certification ne garantit pas un emploi. Le recrutement dépend aussi de l’expérience, du réseau, de la mobilité et des compétences complémentaires.</p></div>
+        <div className="rounded-[2rem] border border-academy-line bg-white p-7 shadow-soft"><Label>Employeurs et secteurs</Label><h2 className="mt-3 text-2xl font-black tracking-[-.04em]">Des contextes d’exercice variés</h2><div className="mt-5 grid gap-2 sm:grid-cols-2">{a3pEmployerSectors.map((sector) => <span key={sector} className="rounded-xl bg-[#F3EEE5] px-3 py-2 text-[.65rem] font-black before:mr-2 before:text-emerald-600 before:content-['✓']">{sector}</span>)}</div></div>
       </div>
 
-      <div className="mt-5 rounded-[2rem] border border-academy-line bg-white p-7 shadow-soft"><Label>Rémunération</Label><h2 className="mt-3 text-2xl font-black tracking-[-.04em]">Un niveau variable selon les missions.</h2><p className="mt-4 max-w-4xl text-sm font-semibold leading-7 text-academy-muted">Le type de mission, la durée, le niveau de risque et l’expérience influencent fortement la rémunération.</p><div className="mt-5 flex flex-wrap gap-2">{salaryFactors.map((factor) => <span key={factor} className="rounded-full bg-[#F3EEE5] px-3 py-2 text-[.65rem] font-black">{factor}</span>)}</div></div>
+      <div className="mt-5 rounded-[2rem] border border-academy-line bg-white p-7 shadow-soft"><Label>Rémunération</Label><h2 className="mt-3 text-2xl font-black tracking-[-.04em]">Un niveau variable selon les missions</h2><p className="mt-4 max-w-4xl text-sm font-semibold leading-7 text-academy-muted">Le type de mission, la durée, le niveau de risque et l’expérience influencent fortement la rémunération.</p><div className="mt-5 flex flex-wrap gap-2">{salaryFactors.map((factor) => <span key={factor} className="rounded-full bg-[#F3EEE5] px-3 py-2 text-[.65rem] font-black">{factor}</span>)}</div></div>
 
       <div className="mt-5 grid items-center gap-6 rounded-[2rem] bg-emerald-600 p-6 text-white shadow-[0_24px_65px_rgba(5,150,105,.22)] lg:grid-cols-[1.2fr_.55fr_auto]"><div><Label light>Parcours recommandé</Label><h2 className="mt-2 text-2xl font-black tracking-[-.035em]">Double compétence APS + A3P</h2><p className="mt-2 text-xs font-semibold text-white/80">Élargissez les missions accessibles et renforcez votre polyvalence.</p></div><div><p className="text-3xl font-black">{a3pConfig.apsA3pOffer.priceLabel}</p><p className="text-xs font-bold text-white/75">Tarifs individuels 2027 : {a3pConfig.apsA3pOffer.oldPriceLabel} · {a3pConfig.apsA3pOffer.discountLabel}</p></div><CTA href={a3pConfig.apsA3pOffer.href} variant="dark">Découvrir le parcours →</CTA></div>
     </div></section>
 
-    <Section label="11 — Intégrale Academy" title="Un cadre sérieux pour un métier exigeant." intro="Des éléments concrets et vérifiables, directement liés au parcours A3P." tone="stone">
+    <Section label="11 — Intégrale Academy" title="Un cadre sérieux pour un métier exigeant" intro="Des éléments concrets et vérifiables, directement liés au parcours A3P." tone="stone">
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{[
         ['Agrément', 'Centre agréé ADEF A3P', `N° ${a3pConfig.adefApproval}`],
         ['Intensité', a3pConfig.durationHours, a3pConfig.practiceHours],

@@ -1,3 +1,4 @@
+import { CourseTeamBanner } from '@/components/CourseTeamBanner';
 import { btsArtworkForPath } from '@/data/btsIllustrations';
 import { originalArtwork } from '@/data/originalArtwork';
 import { btsRhythms } from '@/data/btsRhythms';
@@ -90,6 +91,7 @@ export default function Page() {
           </div>
         </section>
       </VisualSection>
+      <CourseTeamBanner />
     </>
   );
 }

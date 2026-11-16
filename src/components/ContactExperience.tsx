@@ -10,16 +10,16 @@ import styles from './ContactExperience.module.css';
 export type ContactInterest = 'security' | 'vtc' | 'bts' | 'undecided';
 
 const interests = [
-  { id: 'security', label: 'Sécurité', detail: 'Sécurité privée & incendie', icon: 'shield', image: '/images/formation-scenes-manuel/aps-arrivee.webp', imageAlt: 'Illustration d’un échange autour d’une formation en sécurité', message: 'Je souhaite me reconvertir dans la sécurité. Par où commencer ?', response: 'Parlons du métier qui vous attire, des prérequis et des formations possibles.', topics: ['Votre métier', 'Les prérequis', 'Le financement'], next: 'Trouvons la formation qui vous correspond.', description: 'APS, A3P, SSIAP, dirigeant… Cassandre vous aide à préciser votre projet et à préparer les prochaines étapes.' },
-  { id: 'vtc', label: 'VTC', detail: 'Votre projet de chauffeur', icon: 'car', image: '/images/formation-scenes-manuel/vtc-parcours.webp', imageAlt: 'Illustration du parcours de formation de chauffeur VTC', message: 'J’aimerais devenir chauffeur VTC. Comment préparer mon projet ?', response: 'Regardons ensemble la formation, la préparation à l’examen et les possibilités de financement.', topics: ['La formation', 'L’examen', 'Le financement'], next: 'Donnons une direction à votre projet VTC.', description: 'Formation, préparation à l’examen, financement : échangez avec Cassandre pour préparer votre parcours de chauffeur VTC.' },
-  { id: 'bts', label: 'BTS', detail: 'Études & alternance', icon: 'book', image: '/images/bts/mixite-2026/mco-ventes.webp', imageAlt: 'Illustration d’étudiants en BTS en situation professionnelle', message: 'Je cherche un BTS en alternance. Pouvez-vous m’accompagner ?', response: 'Échangeons sur le BTS qui vous intéresse, votre candidature et votre recherche d’entreprise.', topics: ['Votre BTS', 'La candidature', 'L’alternance'], next: 'Construisons votre projet d’alternance.', description: 'Choix du BTS, candidature et recherche d’entreprise : Aurélie vous accompagne dans votre projet d’alternance.' },
-  { id: 'undecided', label: 'Je ne sais pas encore', detail: 'Commençons par en parler', icon: 'compass', image: '/images/illustrations-2026/campus-accompagnement.webp', imageAlt: 'Illustration de l’accueil et de l’accompagnement des futurs apprenants', message: 'J’ai envie de changer de métier, mais je ne sais pas par où commencer.', response: 'Vos envies, votre expérience, votre situation : prenons le temps d’en parler pour vous orienter.', topics: ['Vos envies', 'Votre situation', 'Vos possibilités'], next: 'Un premier échange pour y voir plus clair.', description: 'Vous n’avez pas besoin d’avoir toutes les réponses. Cassandre vous aide à explorer les possibilités et à trouver votre direction.' },
+  { id: 'security', label: 'Sécurité', detail: 'Sécurité privée & incendie', icon: 'shield', image: '/images/formation-scenes-manuel/aps-arrivee.webp', imageAlt: 'Illustration d’un échange autour d’une formation en sécurité', message: 'Je souhaite me reconvertir dans la sécurité. Par où commencer ?', response: 'Parlons du métier qui vous attire, des prérequis et des formations possibles.', topics: ['Votre métier', 'Les prérequis', 'Le financement'], next: 'Trouvons la formation qui vous correspond', description: 'APS, A3P, SSIAP, dirigeant… Cassandre vous aide à préciser votre projet et à préparer les prochaines étapes.' },
+  { id: 'vtc', label: 'VTC', detail: 'Votre projet de chauffeur', icon: 'car', image: '/images/formation-scenes-manuel/vtc-parcours.webp', imageAlt: 'Illustration du parcours de formation de chauffeur VTC', message: 'J’aimerais devenir chauffeur VTC. Comment préparer mon projet ?', response: 'Regardons ensemble la formation, la préparation à l’examen et les possibilités de financement.', topics: ['La formation', 'L’examen', 'Le financement'], next: 'Donnons une direction à votre projet VTC', description: 'Formation, préparation à l’examen, financement : échangez avec Cassandre pour préparer votre parcours de chauffeur VTC.' },
+  { id: 'bts', label: 'BTS', detail: 'Études & alternance', icon: 'book', image: '/images/bts/mixite-2026/mco-ventes.webp', imageAlt: 'Illustration d’étudiants en BTS en situation professionnelle', message: 'Je cherche un BTS en alternance. Pouvez-vous m’accompagner ?', response: 'Échangeons sur le BTS qui vous intéresse, votre candidature et votre recherche d’entreprise.', topics: ['Votre BTS', 'La candidature', 'L’alternance'], next: 'Construisons votre projet d’alternance', description: 'Choix du BTS, candidature et recherche d’entreprise : Aurélie vous accompagne dans votre projet d’alternance.' },
+  { id: 'undecided', label: 'Je ne sais pas encore', detail: 'Commençons par en parler', icon: 'compass', image: '/images/illustrations-2026/campus-accompagnement.webp', imageAlt: 'Illustration de l’accueil et de l’accompagnement des futurs apprenants', message: 'J’ai envie de changer de métier, mais je ne sais pas par où commencer.', response: 'Vos envies, votre expérience, votre situation : prenons le temps d’en parler pour vous orienter.', topics: ['Vos envies', 'Votre situation', 'Vos possibilités'], next: 'Un premier échange pour y voir plus clair', description: 'Vous n’avez pas besoin d’avoir toutes les réponses. Cassandre vous aide à explorer les possibilités et à trouver votre direction.' },
 ] as const;
 
 const steps = [
-  { title: 'Vous nous racontez.', description: 'Une idée, une envie de changement ou une simple question. Tout commence par vous.' },
-  { title: 'On fait le point.', description: 'Formation, prérequis, financement : nous regardons ensemble ce qui correspond à votre situation.' },
-  { title: 'La suite prend forme.', description: 'Vous identifiez les prochaines étapes avec une personne pour vous accompagner.' },
+  { title: 'Vous nous racontez', description: 'Une idée, une envie de changement ou une simple question. Tout commence par vous.' },
+  { title: 'On fait le point', description: 'Formation, prérequis, financement : nous regardons ensemble ce qui correspond à votre situation.' },
+  { title: 'La suite prend forme', description: 'Vous identifiez les prochaines étapes avec une personne pour vous accompagner.' },
 ];
 
 function Icon({ name, className }: { name: string; className?: string }) {
@@ -74,7 +74,7 @@ export function ContactExperience({ initialInterest = 'undecided', requestLinks,
   return <section id="demande" className={`${school.section} ${styles.experience}`} aria-labelledby="contact-experience-title">
     <div className={school.container}>
       <div className={school.sectionHeading} data-contact-reveal>
-        <div><p className={school.eyebrow}>02 / Votre premier échange</p><h2 id="contact-experience-title">Une question.<br /><em>Un premier pas.</em></h2></div>
+        <div><p className={school.eyebrow}>02 / Votre premier échange</p><h2 id="contact-experience-title">Une question.<br /><em>Un premier pas</em></h2></div>
         <p>Vous avez un projet en tête ? Ou simplement envie d’explorer vos possibilités ? Faisons le point ensemble.</p>
       </div>
 
@@ -131,7 +131,7 @@ export function ContactExperience({ initialInterest = 'undecided', requestLinks,
         <div id="interlocutrice" className={styles.adviserCard} data-contact-reveal>
           <div className={styles.adviserIntro}>
             <p className={school.eyebrow}>Votre interlocutrice</p>
-            <h2>Parlons de votre<br /><em>prochain métier.</em></h2>
+            <h2>Parlons de votre<br /><em>prochain métier</em></h2>
             <div className={styles.person} key={adviser}>
               <Avatar bts={isBts} large />
               <div><h3>{adviser}</h3><p>{isBts ? 'Relations clients & responsable BTS' : 'Responsable commerciale'}</p><span>Intégrale Academy</span></div>

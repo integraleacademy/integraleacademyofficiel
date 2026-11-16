@@ -6,10 +6,10 @@ const component = readFileSync('src/components/GlobalContactCTA.tsx', 'utf8');
 const layout = readFileSync('src/app/layout.tsx', 'utf8');
 const motionCss = readFileSync('src/app/global-contact-cta-continuous.css', 'utf8');
 
-test('le titre du bandeau reste inchangé et seul premier pas reçoit le déclencheur', () => {
+test('le titre du bandeau garde le zoom sur les mots « premier pas »', () => {
   assert.match(
     component,
-    /Faites le <span key=\{`\$\{pathname\}-\$\{isVisible \? 'active' : 'idle'\}`\} className=\{styles\.highlight\} data-contact-zoom=\{isVisible \? 'active' : undefined\}>premier pas<\/span> vers votre futur métier\./,
+    /Faites le <span key=\{`\$\{pathname\}-\$\{isVisible \? 'active' : 'idle'\}`\} className=\{styles\.highlight\} data-contact-zoom=\{isVisible \? 'active' : undefined\}>premier pas<\/span> vers votre futur métier\s*<\/h2>/,
   );
 });
 

@@ -196,7 +196,7 @@ export function TrainingDatesPricingSection({
   registrationHref,
   id = 'dates-tarifs',
   eyebrow = 'Dates & tarifs',
-  title = 'Choisissez votre prochaine session.',
+  title = 'Choisissez votre prochaine session',
   intro = 'Les dates, examens, tarifs et places restantes proviennent des informations enregistrées par l’administration.',
   benefits = defaultBenefits,
   showDeliveryPeriods = false,
@@ -266,7 +266,7 @@ export function TrainingDatesPricingSection({
 
         <article className="rounded-[2rem] bg-[#0D1725] p-6 text-white shadow-card">
           <p className={`text-[.66rem] font-black uppercase tracking-[.24em] ${sessionTheme.periodLabel}`}>Financement</p>
-          <h3 className="mt-3 text-3xl font-black">Simulez votre reste à charge.</h3>
+          <h3 className="mt-3 text-3xl font-black">Simulez votre reste à charge</h3>
           <p className="mt-3 leading-7 text-white/65">Estimez le montant restant après vos aides et votre CPF.</p>
           <ActionLink action={{ href: '/financements#simulateur', label: 'Ouvrir le simulateur →' }} variant={theme} className="mt-5 w-full" />
           <div className="mt-5 grid grid-cols-2 gap-3">{fundingOptions.map(([optionTitle, text]) => <div key={optionTitle} className="rounded-2xl border border-white/10 bg-white/7 p-4"><p className="font-black">{optionTitle}</p><p className="mt-1 text-xs text-white/50">{text}</p></div>)}</div>

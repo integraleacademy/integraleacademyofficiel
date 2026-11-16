@@ -24,7 +24,7 @@ export function TrainingWelcomePack({ course }: { course: keyof typeof manuals |
       <div className={styles.hero}>
         <div className={styles.intro}>
           <p className={styles.eyebrow}>Bienvenue chez Intégrale Academy</p>
-          <h2 id="pack-integrale-title">{vae ? 'Votre parcours VAE.' : 'Votre premier jour.'}<br /><span>Votre Pack Intégrale.</span></h2>
+          <h2 id="pack-integrale-title">{vae ? 'Votre parcours VAE.' : 'Votre premier jour.'}<br /><span>Votre Pack Intégrale</span></h2>
           <p className={styles.lead}>{vae ? 'Votre accompagnement commence avec les bons outils.' : 'Tout commence avec les bons outils.'}</p>
           <p className={styles.description}>{vae ? 'Au début de votre accompagnement, nous vous remettons ' : 'Dès votre arrivée, nous vous remettons '}{manual.name}, un carnet de notes, un stylo et votre Ecocup Intégrale Academy.</p>
           <span className={styles.dayBadge}><span aria-hidden="true">✓</span> {vae ? 'Remis au début de l’accompagnement' : 'Remis le 1er jour de formation'}</span>
@@ -65,7 +65,7 @@ export function TrainingWelcomePack({ course }: { course: keyof typeof manuals |
           </div>
           <div className={styles.productCopy}>
             <span className={styles.detailLabel}>Utiliser &amp; réutiliser</span>
-            <h4>Votre Ecocup, aux couleurs de l’école.</h4>
+            <h4>Votre Ecocup, aux couleurs de l’école</h4>
             <p>Un gobelet réutilisable pour vous accompagner pendant les pauses.</p>
           </div>
         </article>
@@ -75,7 +75,7 @@ export function TrainingWelcomePack({ course }: { course: keyof typeof manuals |
           </div>
           <div className={styles.productCopy}>
             <span className={styles.detailLabel}>Écrire &amp; retenir</span>
-            <h4>Le stylo, toujours à portée de main.</h4>
+            <h4>Le stylo, toujours à portée de main</h4>
             <p>{vae ? 'Pour vos notes et la préparation de votre dossier.' : 'Pour vos prises de notes et vos activités en formation.'}</p>
           </div>
         </article>

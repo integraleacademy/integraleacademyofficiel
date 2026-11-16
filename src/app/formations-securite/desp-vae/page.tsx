@@ -1,4 +1,5 @@
 import { CourseFilm } from '@/components/CourseFilm';
+import { CourseTeamBanner } from '@/components/CourseTeamBanner';
 import { CourseBrochureCard } from '@/components/CourseBrochureCard';
 import { TrainingReferencePage, TrainingReferenceSection, TrainingReferenceContact, TrainingReferenceMobileBar } from '@/components/TrainingReferenceLayout';
 import { TrainingCourseTestimonials } from '@/components/TrainingCourseTestimonials';
@@ -126,12 +127,16 @@ export default async function DespVaePage(){
       theme="orange"
     />
 
+    <CourseBrochureCard course="vaedirigeant" />
+
     <CourseFilm film="desp" title="Le métier visé par la VAE"
       description="Cette présentation du DESP donne un aperçu des responsabilités du dirigeant. Lesquelles exercez-vous déjà dans votre entreprise ?" />
 
     <CourseJourney course="desp-vae">
       <section className="page-container py-10"><MissionAnimation variant="despVae" className="mb-8" illustration={originalArtwork['desp-vae-accompagnement']} /><div className="grid gap-4 md:grid-cols-3"><FeatureCard title="Durée">{despVaeAdmin.duration}<br/><br/>{despVaeAdmin.durationNote}</FeatureCard><FeatureCard title="Public concerné">Profils expérimentés en sécurité, encadrement, gestion, création ou direction d’entreprise.</FeatureCard><FeatureCard title="Prérequis">Expérience justifiée en management, création, gestion d’entreprise ou responsabilités proches du référentiel DESP.</FeatureCard><FeatureCard title="Lieux">Accompagnement VAE possible en visioconférence ; jury selon convocation. L’accompagnement peut être réalisé à distance selon l’organisation convenue. Le lieu, la date et le format du jury dépendent de la convocation du certificateur.</FeatureCard><FeatureCard title="Financement">CPF, entreprise, OPCO, France Travail ou financement personnel selon dossier.</FeatureCard><FeatureCard title="Certification / examen">Titre RNCP Dirigeant d’entreprise de sécurité privée – niveau 5<br/><br/>La certification permet de justifier de l’aptitude professionnelle nécessaire à la demande d’agrément dirigeant. L’agrément est ensuite délivré séparément par le CNAPS après étude du dossier.<br/><br/>{despVaeAdmin.rncp} · {despVaeAdmin.level} · Certificateur : {despVaeAdmin.certifier} · Échéance actuelle : {despVaeAdmin.deadline}<br/>Tarif actuel de l’accompagnement : {despVaeAdmin.price}</FeatureCard></div></section>
     </CourseJourney>
+
+    <CourseTeamBanner />
     <section id="eligibilite" className="page-container scroll-mt-36 py-8"><div className="rounded-[2rem] border border-orange-300/50 bg-gradient-to-br from-orange-100 via-orange-300 to-orange-100 p-7 text-orange-950 shadow-soft"><p className="text-xs font-black uppercase tracking-[.22em] text-academy-muted">Test rapide</p><h2 className="mt-3 text-3xl font-black">Tester mon éligibilité à la VAE</h2><p className="mt-4 leading-7 font-semibold text-orange-950/85">Répondez à quelques questions pour savoir si votre profil semble compatible avec une démarche VAE DESP.</p><div className="mt-7"><VaeEligibilityModal/></div></div></section>
     <TextBlock id="vae" eyebrow="Comprendre" title="Obtenir le DESP grâce à votre expérience"><p>La Validation des acquis de l’expérience permet de faire reconnaître officiellement les compétences acquises au cours de votre parcours professionnel ou extra-professionnel.</p><p>Elle ne consiste pas à suivre les 245 heures de la formation initiale. Le candidat doit démontrer, à l’aide de situations réelles et de preuves, qu’il maîtrise les compétences attendues d’un dirigeant d’entreprise de sécurité privée.</p><Note>La VAE n’est ni une équivalence automatique, ni un raccourci fondé uniquement sur le nombre d’années d’expérience. La décision appartient au jury de certification.</Note></TextBlock>
     <Info title="À qui s’adresse la VAE DESP ?" items={profiles}/><TextBlock title="Recevabilité"><p>Il n’existe pas de durée minimale générale d’expérience pour engager une VAE. La recevabilité dépend avant tout du lien direct entre les activités réellement exercées et le référentiel du titre.</p></TextBlock>
@@ -167,7 +172,7 @@ export default async function DespVaePage(){
     <section className="page-container py-8"><h2 className="text-2xl font-black">Financements</h2><div className="mt-5 grid gap-4 md:grid-cols-3">{despVaeAdmin.financing.map(item=><FeatureCard key={item} title={item}>{item}</FeatureCard>)}</div><Note>Le financement porte sur les prestations prévues au devis. Il ne signifie pas que la recevabilité ou la réussite devant le jury est garantie.</Note><div className="mt-5"><Button href="/contact" variant="orange">Recevoir un devis VAE personnalisé</Button></div></section>
     <TextBlock title="Accessibilité"><p>Intégrale Academy étudie les besoins d’adaptation de chaque candidat, notamment pour les rendez-vous téléphoniques, les outils numériques et la préparation du jury.</p><p>Référent handicap : {despVaeAdmin.accessibilityReferent.name} · {despVaeAdmin.accessibilityReferent.email} · {despVaeAdmin.accessibilityReferent.phone}</p></TextBlock>
     <Info title="Pourquoi suivre cette VAE chez Intégrale Academy" items={why}/>
-    <CourseBrochureCard course="vaedirigeant" />
+
     <TrainingCourseTestimonials category="VAE DESP" />
     <div id="faq-desp-vae"><PremiumFAQSection theme="orange" badge="FAQ DESP VAE" title="Vos questions sur la VAE DESP" description="Retrouvez les réponses essentielles sur l’éligibilité, la recevabilité, le dossier de preuves, le jury, les financements et l’accompagnement." items={[...formationFaq, ...despVaeFaq]} contactHref="/contact?formation=desp-vae" contactLabel="Poser une question VAE"/></div>
     <TrainingReferenceContact

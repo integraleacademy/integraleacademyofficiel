@@ -1,3 +1,4 @@
+import { CourseTeamBanner } from '@/components/CourseTeamBanner';
 import { CourseBrochureCard } from '@/components/CourseBrochureCard';
 import { TeamPortrait } from '@/components/TeamPortrait';
 import { CourseJourney } from '@/components/CourseJourney';
@@ -139,7 +140,7 @@ export default function VtcPage() {
         <div className={styles.heroLayout}>
           <div className={styles.heroCopy}>
             <span className={styles.pill}><span/> Formation VTC · Côte d’Azur</span>
-            <h1>Formation chauffeur VTC<br/><em>Prenez le volant.</em></h1>
+            <h1>Formation chauffeur VTC<br/><em>Prenez le volant</em></h1>
             <p>Une préparation complète pour réussir l’examen VTC et démarrer votre activité avec les bons réflexes — pas seulement une plateforme de cours.</p>
             <div className={styles.heroActions}>
               <CTA href={contactHref('Je souhaite m’inscrire à la formation VTC')}>Je démarre mon projet</CTA>
@@ -178,6 +179,7 @@ export default function VtcPage() {
       theme="violet"
     />
 
+    <CourseBrochureCard course="vtc" />
 
     <CourseJourney course="vtc">
       <section className={styles.accreditations}>
@@ -193,11 +195,13 @@ export default function VtcPage() {
 
       <section id="formule" className={styles.promise}>
         <div className={styles.container}>
-          <div className={styles.sectionHead}><div><span>01 — Une formule vraiment complète</span><h2>Tout ce qu’il vous faut.<br/><em>Rien à ajouter.</em></h2></div><p>Chaque élément du parcours est pensé pour vous rapprocher concrètement de la réussite, de votre première connexion à votre passage devant le jury.</p></div>
+          <div className={styles.sectionHead}><div><span>01 — Une formule vraiment complète</span><h2>Tout ce qu’il vous faut.<br/><em>Rien à ajouter</em></h2></div><p>Chaque élément du parcours est pensé pour vous rapprocher concrètement de la réussite, de votre première connexion à votre passage devant le jury.</p></div>
           <div className={styles.includedGrid}>{included.map(([n,title,text])=><article key={n}><span className={styles.number}>{n}</span><div className={styles.miniIcon}><Icon name={n==='03'||n==='04'?'car':'check'}/></div><h3>{title}</h3><p>{text}</p></article>)}</div>
         </div>
       </section>
     </CourseJourney>
+
+    <CourseTeamBanner />
 
     <section id="formation" className={styles.elearning}>
       <div className={styles.container}>
@@ -212,14 +216,14 @@ export default function VtcPage() {
               </div>
             </div>
           </div>
-          <div className={styles.elearningCopy}><span>03 — Votre formation théorique</span><h2>Apprenez à votre rythme.<br/><em>Mesurez vos progrès.</em></h2><p>Dès que votre inscription est finalisée, vous accédez à votre espace de formation personnel, disponible 24h/24 et 7j/7.</p><ul><li><Icon name="check"/> 13 séquences correspondant aux matières de l’examen</li><li><Icon name="check"/> Quiz composés de questions issues des annales</li><li><Icon name="check"/> Score et correction affichés instantanément</li><li><Icon name="check"/> Quiz recommençables autant de fois que nécessaire</li><li><Icon name="check"/> Livre officiel envoyé par courrier</li></ul><a href="https://www.canva.com/design/DAFhLhaNPtg/JTpC91OFj5kP1K96Zq7LGQ/view?utm_campaign=designshare&utm_content=DAFhLhaNPtg&utm_medium=link&utm_source=editor" target="_blank" rel="noopener noreferrer" className={styles.programLink}>Consulter le programme détaillé <Icon name="arrow"/></a></div>
+          <div className={styles.elearningCopy}><span>03 — Votre formation théorique</span><h2>Apprenez à votre rythme.<br/><em>Mesurez vos progrès</em></h2><p>Dès que votre inscription est finalisée, vous accédez à votre espace de formation personnel, disponible 24h/24 et 7j/7.</p><ul><li><Icon name="check"/> 13 séquences correspondant aux matières de l’examen</li><li><Icon name="check"/> Quiz composés de questions issues des annales</li><li><Icon name="check"/> Score et correction affichés instantanément</li><li><Icon name="check"/> Quiz recommençables autant de fois que nécessaire</li><li><Icon name="check"/> Livre officiel envoyé par courrier</li></ul><a href="https://www.canva.com/design/DAFhLhaNPtg/JTpC91OFj5kP1K96Zq7LGQ/view?utm_campaign=designshare&utm_content=DAFhLhaNPtg&utm_medium=link&utm_source=editor" target="_blank" rel="noopener noreferrer" className={styles.programLink}>Consulter le programme détaillé <Icon name="arrow"/></a></div>
         </div>
       </div>
     </section>
 
     <section id="dates-tarifs" className={styles.dates}>
       <div className={styles.container}>
-        <div className={styles.datesHeading}><div><span>04 — Prochaines échéances</span><h2>Votre calendrier<br/><em>jusqu’à l’examen.</em></h2></div><p>La théorie démarre dès la finalisation de votre inscription. Ces échéances vous permettent ensuite d’organiser votre passage aux épreuves.</p></div>
+        <div className={styles.datesHeading}><div><span>04 — Prochaines échéances</span><h2>Votre calendrier<br/><em>jusqu’à l’examen</em></h2></div><p>La théorie démarre dès la finalisation de votre inscription. Ces échéances vous permettent ensuite d’organiser votre passage aux épreuves.</p></div>
         <div className={styles.dateTable}>
           <div className={styles.dateHeader}><span>Date limite d’inscription</span><span>Examen théorique</span><span>Examen pratique</span></div>
           {examDates.map(({deadline,theory,practical},index)=><div className={styles.dateRow} key={deadline}><span><small>Session {index+1} · Date limite d’inscription</small><strong>{formatVtcDeadline(deadline)}</strong></span><span><small>Admissibilité</small><strong>{formatVtcExamDate(theory)}</strong></span><span><small>Admission</small><strong>{formatVtcExamDate(practical)}</strong></span></div>)}
@@ -232,7 +236,7 @@ export default function VtcPage() {
     <section id="parcours" className={styles.journey}>
       <div className={styles.container}>
         <div className={styles.journeyLayout}>
-          <div className={styles.journeyIntro}><span>05 — Votre parcours</span><h2>De votre projet<br/>à vos <em>premières courses.</em></h2><p>Vous savez toujours où vous en êtes et quelle est la prochaine étape.</p><CTA href={contactHref('Recevoir le détail du parcours VTC')}>Recevoir le programme</CTA></div>
+          <div className={styles.journeyIntro}><span>05 — Votre parcours</span><h2>De votre projet<br/>à vos <em>premières courses</em></h2><p>Vous savez toujours où vous en êtes et quelle est la prochaine étape.</p><CTA href={contactHref('Recevoir le détail du parcours VTC')}>Recevoir le programme</CTA></div>
           <div className={styles.timeline}>
             {[
               ['01','On valide votre projet','Prérequis, financement, disponibilité et objectif professionnel.'],
@@ -248,15 +252,14 @@ export default function VtcPage() {
 
     <section id="programme" className={styles.program}>
       <div className={styles.container}>
-        <div className={styles.sectionHead}><div><span>06 — Les compétences</span><h2>Bien plus que conduire.<br/><em>Devenez professionnel.</em></h2></div><p>Le programme suit les compétences évaluées à l’examen et celles qui feront la différence face à vos futurs clients.</p></div>
+        <div className={styles.sectionHead}><div><span>06 — Les compétences</span><h2>Bien plus que conduire.<br/><em>Devenez professionnel</em></h2></div><p>Le programme suit les compétences évaluées à l’examen et celles qui feront la différence face à vos futurs clients.</p></div>
         <TrainingIllustratedCards items={program} theme="violet" illustrations={vtcPracticeArtwork} singleIllustration />
       </div>
     </section>
 
-    <CourseBrochureCard course="vtc" />
     <section id="examen" className={styles.exam}>
       <div className={styles.container}>
-        <div className={styles.examHeading}><span>07 — L’examen VTC expliqué simplement</span><h2>Deux épreuves.<br/><em>Une préparation complète.</em></h2><p>L’examen est organisé par la Chambre de métiers et de l’artisanat. Nous vous préparons aux connaissances attendues comme aux conditions réelles de l’épreuve pratique.</p></div>
+        <div className={styles.examHeading}><span>07 — L’examen VTC expliqué simplement</span><h2>Deux épreuves.<br/><em>Une préparation complète</em></h2><p>L’examen est organisé par la Chambre de métiers et de l’artisanat. Nous vous préparons aux connaissances attendues comme aux conditions réelles de l’épreuve pratique.</p></div>
         <div className={styles.examGrid}>
           <article><div className={styles.examNumber}>01</div><span>ADMISSIBILITÉ</span><h3>L’examen théorique</h3><strong>7 épreuves · environ 3 h 50</strong><ul><li>5 matières communes Taxi/VTC</li><li>2 matières spécifiques au VTC</li><li>Questions sous forme de QCM et de QRC</li><li>Moyenne pondérée minimale : 10/20</li><li>Certaines notes sont éliminatoires</li></ul></article>
           <article className={styles.examFeatured}><div className={styles.examNumber}>02</div><span>ADMISSION</span><h3>La mise en situation pratique</h3><strong>Conduite en circulation · 20 min minimum</strong><ul><li>Sécurité et souplesse de conduite</li><li>Accueil et relation client</li><li>Construction et adaptation du parcours</li><li>Devis, facturation et encaissement</li><li>Note minimale pour réussir : 12/20</li></ul></article>
@@ -267,7 +270,7 @@ export default function VtcPage() {
 
     <section className={styles.prerequisites}>
       <div className={styles.container}>
-        <div className={styles.prereqLayout}><div><span>08 — Avant de vous inscrire</span><h2>Les prérequis<br/><em>à vérifier.</em></h2><p>Notre équipe contrôle votre situation avec vous avant la constitution définitive du dossier.</p></div><div className={styles.prereqList}>{prerequisites.map((item,index)=><div key={item}><span>{String(index+1).padStart(2,'0')}</span><p>{item}</p></div>)}</div></div>
+        <div className={styles.prereqLayout}><div><span>08 — Avant de vous inscrire</span><h2>Les prérequis<br/><em>à vérifier</em></h2><p>Notre équipe contrôle votre situation avec vous avant la constitution définitive du dossier.</p></div><div className={styles.prereqList}>{prerequisites.map((item,index)=><div key={item}><span>{String(index+1).padStart(2,'0')}</span><p>{item}</p></div>)}</div></div>
       </div>
     </section>
 
@@ -276,7 +279,7 @@ export default function VtcPage() {
     <section className={styles.offer}>
       <div className={styles.container}>
         <div className={styles.offerCard}>
-          <div className={styles.offerCopy}><span>09 — L’offre Intégrale</span><h2>Votre projet VTC,<br/><em>clé en main.</em></h2><p>Une seule formule lisible, sans découvrir au dernier moment qu’il faut encore payer la pratique, le véhicule ou l’examen.</p><ul><li><Icon name="check"/> 105 heures de préparation</li><li><Icon name="check"/> E-learning accessible 24h/24</li><li><Icon name="check"/> Formation pratique encadrée</li><li><Icon name="check"/> Livre officiel inclus</li><li><Icon name="check"/> Frais d’examen inclus</li><li><Icon name="check"/> Véhicule double commande inclus</li></ul></div>
+          <div className={styles.offerCopy}><span>09 — L’offre Intégrale</span><h2>Votre projet VTC,<br/><em>clé en main</em></h2><p>Une seule formule lisible, sans découvrir au dernier moment qu’il faut encore payer la pratique, le véhicule ou l’examen.</p><ul><li><Icon name="check"/> 105 heures de préparation</li><li><Icon name="check"/> E-learning accessible 24h/24</li><li><Icon name="check"/> Formation pratique encadrée</li><li><Icon name="check"/> Livre officiel inclus</li><li><Icon name="check"/> Frais d’examen inclus</li><li><Icon name="check"/> Véhicule double commande inclus</li></ul></div>
           <div className={styles.checkout}>
             <span className={styles.checkoutPill}>FORMATION COMPLÈTE</span><p>Prix tout inclus</p><strong>1 500 €</strong><small>Finançable par le CPF selon éligibilité</small><CTA href={contactHref('Étude de financement formation VTC')}>Étudier mon financement</CTA><Link href="tel:0422470768" className={styles.phone}>Ou appeler le 04 22 47 07 68</Link><div className={styles.reassurance}>✓ Étude gratuite et sans engagement</div>
           </div>
@@ -295,7 +298,7 @@ export default function VtcPage() {
       <div className={styles.container}>
         <div className={styles.localCard}>
           <div className={styles.localVisual}><div className={styles.coast}><span>Nice</span><span>Cannes</span><span>Fréjus</span><span>Toulon</span></div><div className={styles.carBadge}><Icon name="car"/></div></div>
-          <div className={styles.localCopy}><span>10 — La Côte d’Azur comme terrain de jeu</span><h2>Apprenez là où<br/>vous allez <em>conduire.</em></h2><p>Les gares, les hôtels, les aéroports, les événements et les exigences d’une clientèle internationale font de notre territoire un cadre idéal pour apprendre le métier.</p><div className={styles.locationChips}><span>Nice</span><span>Cannes</span><span>Fréjus</span><span>Toulon</span></div></div>
+          <div className={styles.localCopy}><span>10 — La Côte d’Azur comme terrain de jeu</span><h2>Apprenez là où<br/>vous allez <em>conduire</em></h2><p>Les gares, les hôtels, les aéroports, les événements et les exigences d’une clientèle internationale font de notre territoire un cadre idéal pour apprendre le métier.</p><div className={styles.locationChips}><span>Nice</span><span>Cannes</span><span>Fréjus</span><span>Toulon</span></div></div>
         </div>
       </div>
     </section>
@@ -303,7 +306,7 @@ export default function VtcPage() {
     <section className={styles.contact}>
       <div className={styles.container}>
         <div className={styles.contactCard}>
-          <div><span>UNE QUESTION SUR VOTRE PROJET ?</span><h2>Faites le premier pas<br/>vers votre <em>future activité.</em></h2><p>Cassandre vérifie votre éligibilité, vous explique le calendrier et vous aide à choisir le financement adapté.</p></div>
+          <div><span>UNE QUESTION SUR VOTRE PROJET ?</span><h2>Faites le premier pas<br/>vers votre <em>future activité</em></h2><p>Cassandre vérifie votre éligibilité, vous explique le calendrier et vous aide à choisir le financement adapté.</p></div>
           <aside><TeamPortrait person="cassandre" size={96} alt="Cassandre, responsable commerciale Intégrale Academy"/><div><span>VOTRE CONSEILLÈRE</span><h3>Cassandre</h3><p>Responsable commerciale</p></div><a href="tel:0422470768">04 22 47 07 68</a><CTA href={contactHref('Être rappelé au sujet de la formation VTC')}>Réserver un échange</CTA></aside>
         </div>
       </div>

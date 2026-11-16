@@ -7,21 +7,21 @@ import styles from './HomeHeroIllustrations.module.css';
 const scenes = [
   {
     label: 'Sécurité privée', href: '#formations-securite',
-    title: 'Protéger. Intervenir. Évoluer.',
+    title: 'Protéger, intervenir et évoluer',
     description: 'Sécurité privée, sécurité incendie, protection rapprochée, direction d’une entreprise de sécurité.',
     action: 'Découvrez nos formations métiers de la sécurité privée',
     image: '/images/formation-scenes-manuel/aps-atelier-radio.webp', alt: 'Des stagiaires en sécurité privée s’entraînent à communiquer par radio.',
   },
   {
     label: 'Chauffeur VTC', href: '#formation-vtc',
-    title: 'Prenez le volant de votre avenir.',
+    title: 'Prenez le volant de votre avenir',
     description: 'De la théorie à la conduite, préparez votre examen VTC avec notre formation tout inclus.',
     action: 'Découvrir la formation chauffeur VTC',
     image: '/images/formation-scenes-manuel/vtc-parcours.webp', alt: 'Une stagiaire prépare son véhicule avec son formateur VTC.',
   },
   {
     label: 'BTS en alternance', href: '#bts',
-    title: 'Un diplôme officiel. De l’expérience.',
+    title: 'Un diplôme officiel et de l’expérience',
     description: 'Découvrez nos six BTS en alternance et construisez votre avenir.',
     action: 'Découvrir nos BTS en alternance',
     image: '/images/formation-scenes-manuel/bts-campus-mixte.webp?v=manuel-aps-4', alt: 'Une étudiante et un étudiant en BTS préparent ensemble un projet en classe.',

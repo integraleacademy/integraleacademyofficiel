@@ -1,3 +1,4 @@
+import { CourseTeamBanner } from '@/components/CourseTeamBanner';
 import { CourseBrochureCard } from '@/components/CourseBrochureCard';
 import type { ReactNode } from 'react';
 import editorial from './ApsEditorial.module.css';
@@ -270,32 +271,36 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
 
     <TrainingReferenceHero
       id="aps" badge="Formation TFP APS"
-      heading="Devenez agent de" accent="prévention et sécurité."
+      heading="Devenez agent de" accent="prévention et de sécurité"
       title="Formation agent de prévention et de sécurité"
-      tagline="Apprenez le métier sur le terrain."
+      tagline="Apprenez le métier sur le terrain"
       description={<p>Rondes, contrôle d’accès, palpation, inspection des bagages et gestion d’incidents : entraînez-vous aux situations que vous rencontrerez réellement en poste.</p>}
       illustration={{ src: '/images/aps/manuel/equipe.webp', alt: 'Deux agents de sécurité préparent leur ronde, illustration du manuel APS Intégrale Academy' }}
-      caption="Observer. Prévenir. Protéger."
+      caption="Observer, prévenir et protéger"
       primaryAction={{ href: apsContact('démarrer mon projet'), label: 'Je démarre mon projet' }}
     ><HeroSession session={next} /></TrainingReferenceHero>
 
     <ApsSectionNavigation registrationHref="#dates-tarifs" />
 
+    <CourseBrochureCard course="aps" />
+
     <CourseFilm film="aps" title="Devenir agent de sécurité"
       description="Surveiller un site, contrôler les accès, prévenir les incidents… Découvrez le métier auquel prépare notre formation APS." />
 
     <ApsJourney>
-      <Section id="metier" eyebrow="01 — Le métier" title={<>Un métier de terrain, de vigilance et de sang-froid.</>} intro={<>L’agent APS prévient les risques, protège les personnes et les biens, applique les consignes et rend compte de chaque événement.</>}>
+      <Section id="metier" eyebrow="01 — Le métier" title={<>Un métier de terrain, de vigilance et de sang-froid</>} intro={<>L’agent APS prévient les risques, protège les personnes et les biens, applique les consignes et rend compte de chaque événement.</>}>
         <TrainingMissionCards items={missions.map(([, title, text, featured], index) => ({ title: String(title), description: String(text), featured: Boolean(featured), illustration: apsMissionArtwork[index] }))} />
-        <div className={`${styles.liftCard} mt-8 grid gap-5 rounded-[2rem] border border-academy-line bg-white p-6 shadow-soft lg:grid-cols-[.7fr_1.3fr] lg:p-8`}><div><Eyebrow>À qui s’adresse la formation ?</Eyebrow><h3 className="mt-3 text-3xl font-black">Un parcours accessible, un métier réglementé.</h3><p className="mt-4 leading-7 text-academy-muted">Aucune expérience préalable dans la sécurité n’est obligatoire.</p></div><div className="grid gap-3 sm:grid-cols-2">{audiences.map((item,index) => <div key={item} className="flex items-center gap-3 rounded-2xl bg-academy-bg p-4 font-bold"><span className={`grid h-8 w-8 shrink-0 place-items-center rounded-full text-xs font-black ${index === 5 ? 'bg-orange-100 text-orange-700' : 'bg-sky-100 text-sky-700'}`}>✓</span>{item}</div>)}</div></div>
+        <div className={`${styles.liftCard} mt-8 grid gap-5 rounded-[2rem] border border-academy-line bg-white p-6 shadow-soft lg:grid-cols-[.7fr_1.3fr] lg:p-8`}><div><Eyebrow>À qui s’adresse la formation ?</Eyebrow><h3 className="mt-3 text-3xl font-black">Un parcours accessible, un métier réglementé</h3><p className="mt-4 leading-7 text-academy-muted">Aucune expérience préalable dans la sécurité n’est obligatoire.</p></div><div className="grid gap-3 sm:grid-cols-2">{audiences.map((item,index) => <div key={item} className="flex items-center gap-3 rounded-2xl bg-academy-bg p-4 font-bold"><span className={`grid h-8 w-8 shrink-0 place-items-center rounded-full text-xs font-black ${index === 5 ? 'bg-orange-100 text-orange-700' : 'bg-sky-100 text-sky-700'}`}>✓</span>{item}</div>)}</div></div>
       </Section>
     </ApsJourney>
+
+    <CourseTeamBanner />
 
     <Section id="admission" eyebrow="02 — Admission" title={<>Votre dossier est-il prêt pour l’APS&nbsp;?</>} intro={<>Les conditions essentielles, une équipe pour vous guider et un dossier préparé ensemble.</>} tone="stone">
       <ApsAdmission prerequisites={prerequisites} href={apsContact('autorisation préalable CNAPS (ministère de l’Intérieur)')} />
     </Section>
 
-    <Section id="pratique" eyebrow="03 — Immersion terrain" title={<>Vous ne regardez pas seulement&nbsp;: vous pratiquez.</>} intro={<>La formation vous place dans des situations proches du réel. Chaque geste est expliqué, répété, observé puis débriefé avec le formateur.</>} tone="dark">
+    <Section id="pratique" eyebrow="03 — Immersion terrain" title={<>Vous ne regardez pas seulement&nbsp;: vous pratiquez</>} intro={<>La formation vous place dans des situations proches du réel. Chaque geste est expliqué, répété, observé puis débriefé avec le formateur.</>} tone="dark">
       <div className="grid gap-5 md:grid-cols-2">
         {practicalExercises.map(([icon,title,text,visuals],index) => <article key={title} className={`${styles.practicalCard} rounded-[1.5rem] border border-white/10 bg-white/7 p-5`}>
           <div className="relative z-10 flex min-w-0 flex-1 flex-col">
@@ -311,18 +316,18 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
 
     <ApsFacilitiesSections />
 
-    <Section id="programme" eyebrow="04 — Programme" title={<>Les 14 UV du programme officiel, sans raccourci.</>} intro={<>Programme CPNEFP version V3.2 mis à jour le 23 juillet 2026 : 41 heures de socle de base et 134 heures de spécialité APS, soit 175 heures au total.</>}>
+    <Section id="programme" eyebrow="04 — Programme" title={<>Les 14 UV du programme officiel, sans raccourci</>} intro={<>Programme CPNEFP version V3.2 mis à jour le 23 juillet 2026 : 41 heures de socle de base et 134 heures de spécialité APS, soit 175 heures au total.</>}>
       <TrainingProgramDownload href="/documents/programme-aps.pdf" course="APS" theme="blue" className="mb-6 w-full sm:w-auto" />
       <ApsProgramExplorer units={program} />
     </Section>
 
-    <Section id="hybride" eyebrow="05 — Distanciel + Présentiel" title={<>La souplesse du distanciel, l’exigence du terrain.</>} intro={<>Découvrez votre espace de cours en ligne, puis retrouvez votre groupe à l’école. 175 heures, deux façons complémentaires d’apprendre.</>} tone="paper">
+    <Section id="hybride" eyebrow="05 — Distanciel + Présentiel" title={<>La souplesse du distanciel, l’exigence du terrain</>} intro={<>Découvrez votre espace de cours en ligne, puis retrouvez votre groupe à l’école. 175 heures, deux façons complémentaires d’apprendre.</>} tone="paper">
       <ApsHybridExperience />
     </Section>
 
-    <IntegraleWelcomePack course="aps" title="Pack Intégrale Academy." />
+    <IntegraleWelcomePack course="aps" title="Pack Intégrale Academy" />
 
-    <Section id="examen" eyebrow="06 — Examen" title={<>Un examen qui valide vos réflexes.</>} intro={<>Connaissances, gestes professionnels et capacité à réagir : l’évaluation finale associe des QCU et deux mises en situation individuelles, en présentiel.</>} tone="dark">
+    <Section id="examen" eyebrow="06 — Examen" title={<>Un examen qui valide vos réflexes</>} intro={<>Connaissances, gestes professionnels et capacité à réagir : l’évaluation finale associe des QCU et deux mises en situation individuelles, en présentiel.</>} tone="dark">
       <ApsExamExperience steps={examSteps} />
     </Section>
 
@@ -350,7 +355,6 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
       priceAction={{ href: apsCpfUrl, label: 'S’inscrire avec mon CPF 🔐', external: true }}
     />
 
-    <CourseBrochureCard course="aps" />
     <section id="inscription-financement" className={editorial.enrollment}>
       <div className={editorial.wrap}>
         <p className={editorial.kicker}>08 — Inscriptions &amp; financement</p>
@@ -376,7 +380,7 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
         </ol>
         <article className={editorial.funding}>
           <div className={editorial.fundingTitle}><p className={editorial.kicker}>Votre financement</p>
-            <h3>Préparez votre financement.</h3>
+            <h3>Préparez votre financement</h3>
           </div>
           <div className={editorial.identity}>
               <p>CPF ou France Travail ? Anticipez votre Identité Numérique.</p>
@@ -390,7 +394,7 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
         </article>
         <article className={editorial.options}>
           <header><p className={editorial.kicker}>Solutions possibles</p>
-            <h3>Quatre voies, un accompagnement personnalisé.</h3>
+            <h3>Quatre voies, un accompagnement personnalisé</h3>
           </header>
           <div className={editorial.optionGrid}>
             {financingOptions.map(([title, text]) => (
@@ -404,9 +408,9 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
       </div>
     </section>
 
-    <Section id="debouches" eyebrow="09 — Débouchés & emploi" title={<>Un vrai diplôme dans un secteur qui recrute.</>} intro={<>Les besoins sont réguliers dans de nombreux environnements : commerce, industrie, logistique, santé, bureaux, événementiel et sites sensibles. Le TFP APS ouvre l’accès à des missions variées, sous réserve d’obtenir la carte professionnelle CNAPS (ministère de l’Intérieur).</>} tone="paper"><div className="mb-8 grid gap-4 md:grid-cols-3"><article className={`${styles.outcomeCard} rounded-[1.7rem] border border-blue-200 bg-blue-50 p-6`}><p className="text-sm font-black uppercase tracking-[.16em] text-blue-700">Un besoin permanent</p><h3 className="mt-3 text-2xl font-black">Des recrutements toute l’année</h3><p className="mt-3 leading-7 text-blue-950/70">Les entreprises de sécurité doivent couvrir des prestations de jour, de nuit, en semaine, le week-end et lors de grands événements.</p></article><article className={`${styles.outcomeCard} rounded-[1.7rem] border border-sky-200 bg-sky-50 p-6`}><p className="text-sm font-black uppercase tracking-[.16em] text-sky-700">Des missions variées</p><h3 className="mt-3 text-2xl font-black">De nombreux sites à sécuriser</h3><p className="mt-3 leading-7 text-sky-950/70">Vous pouvez travailler sur un site fixe, effectuer des rondes, contrôler des accès, sécuriser un événement ou intervenir sur plusieurs sites.</p></article><article className={`${styles.outcomeCard} rounded-[1.7rem] border border-yellow-300 bg-yellow-50 p-6`}><p className="text-sm font-black uppercase tracking-[.16em] text-yellow-800">Des évolutions possibles</p><h3 className="mt-3 text-2xl font-black">Construire un parcours</h3><p className="mt-3 leading-7 text-yellow-950/70">Avec l’expérience et des qualifications complémentaires, vous pouvez viser des fonctions de chef de poste, de sécurité incendie, de télésurveillance ou d’encadrement.</p></article></div><div className="grid gap-4 md:grid-cols-4">{[['Réussir le TFP APS','Valider les épreuves'],['Recevoir le titre niveau 3','Obtenir la certification'],['Demander la carte CNAPS (ministère de l’Intérieur)','Constituer le dossier'],['Commencer à exercer','Après délivrance de la carte']].map(([title,text],index) => <article key={title} className={`${styles.examCard} rounded-[1.7rem] border border-academy-line bg-white p-5 text-center`}><span className="mx-auto grid h-11 w-11 place-items-center rounded-full bg-academy-gold font-black">0{index+1}</span><h3 className="mt-6 text-lg font-black">{title}</h3><p className="mt-2 text-sm text-academy-muted">{text}</p></article>)}</div><div className="mt-5 rounded-[1.4rem] border border-yellow-300 bg-yellow-50 p-4 font-bold text-yellow-900">Important : le TFP APS ne déclenche pas automatiquement la carte professionnelle.</div><div className="mt-8 grid gap-5 lg:grid-cols-2"><article className="rounded-[2rem] border border-academy-line bg-white p-6"><Eyebrow>Débouchés</Eyebrow><h3 className="mt-3 text-3xl font-black">Les métiers accessibles</h3><div className="mt-5 grid gap-3 sm:grid-cols-2">{jobs.map(([icon,title]) => <div key={title} className={styles.jobCard}><span className={styles.jobIcon} aria-hidden="true">{icon === 'pré-vol' ? <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M3 10h18l-2-6H5l-2 6Zm1 0v10h16V10M8 20v-6h5v6M3 10c0 3 4 3 4 0 0 3 5 3 5 0 0 3 5 3 5 0 0 3 4 3 4 0"/></svg> : icon}</span><span className="text-sm font-black leading-5">{title}</span></div>)}</div></article><article className={styles.dualSkill}>
+    <Section id="debouches" eyebrow="09 — Débouchés & emploi" title={<>Un vrai diplôme dans un secteur qui recrute</>} intro={<>Les besoins sont réguliers dans de nombreux environnements : commerce, industrie, logistique, santé, bureaux, événementiel et sites sensibles. Le TFP APS ouvre l’accès à des missions variées, sous réserve d’obtenir la carte professionnelle CNAPS (ministère de l’Intérieur).</>} tone="paper"><div className="mb-8 grid gap-4 md:grid-cols-3"><article className={`${styles.outcomeCard} rounded-[1.7rem] border border-blue-200 bg-blue-50 p-6`}><p className="text-sm font-black uppercase tracking-[.16em] text-blue-700">Un besoin permanent</p><h3 className="mt-3 text-2xl font-black">Des recrutements toute l’année</h3><p className="mt-3 leading-7 text-blue-950/70">Les entreprises de sécurité doivent couvrir des prestations de jour, de nuit, en semaine, le week-end et lors de grands événements.</p></article><article className={`${styles.outcomeCard} rounded-[1.7rem] border border-sky-200 bg-sky-50 p-6`}><p className="text-sm font-black uppercase tracking-[.16em] text-sky-700">Des missions variées</p><h3 className="mt-3 text-2xl font-black">De nombreux sites à sécuriser</h3><p className="mt-3 leading-7 text-sky-950/70">Vous pouvez travailler sur un site fixe, effectuer des rondes, contrôler des accès, sécuriser un événement ou intervenir sur plusieurs sites.</p></article><article className={`${styles.outcomeCard} rounded-[1.7rem] border border-yellow-300 bg-yellow-50 p-6`}><p className="text-sm font-black uppercase tracking-[.16em] text-yellow-800">Des évolutions possibles</p><h3 className="mt-3 text-2xl font-black">Construire un parcours</h3><p className="mt-3 leading-7 text-yellow-950/70">Avec l’expérience et des qualifications complémentaires, vous pouvez viser des fonctions de chef de poste, de sécurité incendie, de télésurveillance ou d’encadrement.</p></article></div><div className="grid gap-4 md:grid-cols-4">{[['Réussir le TFP APS','Valider les épreuves'],['Recevoir le titre niveau 3','Obtenir la certification'],['Demander la carte CNAPS (ministère de l’Intérieur)','Constituer le dossier'],['Commencer à exercer','Après délivrance de la carte']].map(([title,text],index) => <article key={title} className={`${styles.examCard} rounded-[1.7rem] border border-academy-line bg-white p-5 text-center`}><span className="mx-auto grid h-11 w-11 place-items-center rounded-full bg-academy-gold font-black">0{index+1}</span><h3 className="mt-6 text-lg font-black">{title}</h3><p className="mt-2 text-sm text-academy-muted">{text}</p></article>)}</div><div className="mt-5 rounded-[1.4rem] border border-yellow-300 bg-yellow-50 p-4 font-bold text-yellow-900">Important : le TFP APS ne déclenche pas automatiquement la carte professionnelle.</div><div className="mt-8 grid gap-5 lg:grid-cols-2"><article className="rounded-[2rem] border border-academy-line bg-white p-6"><Eyebrow>Débouchés</Eyebrow><h3 className="mt-3 text-3xl font-black">Les métiers accessibles</h3><div className="mt-5 grid gap-3 sm:grid-cols-2">{jobs.map(([icon,title]) => <div key={title} className={styles.jobCard}><span className={styles.jobIcon} aria-hidden="true">{icon === 'pré-vol' ? <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M3 10h18l-2-6H5l-2 6Zm1 0v10h16V10M8 20v-6h5v6M3 10c0 3 4 3 4 0 0 3 5 3 5 0 0 3 5 3 5 0 0 3 4 3 4 0"/></svg> : icon}</span><span className="text-sm font-black leading-5">{title}</span></div>)}</div></article><article className={styles.dualSkill}>
         <p className={styles.dualEyebrow}>Double compétence</p>
-        <h3>Deux expertises.<br /><span>Plus de possibilités.</span></h3>
+        <h3>Deux expertises.<br /><span>Plus de possibilités</span></h3>
         <p className={styles.dualIntro}>Associez le TFP APS et le SSIAP 1 pour élargir vos missions dans la surveillance humaine et la sécurité incendie.</p>
         <div className={styles.dualPanels}>
           <div className={styles.dualSecurity}><span className={styles.dualLabel}>TFP APS</span><ApsPracticalVisual kind="patrol" illustration={originalArtwork['aps-metier-site']} /><h4>Prévenir & surveiller</h4><p>Rondes, contrôle d’accès, protection des personnes et des biens.</p></div>

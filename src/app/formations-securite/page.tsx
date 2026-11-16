@@ -1,3 +1,4 @@
+import { CourseTeamBanner } from '@/components/CourseTeamBanner';
 import { createPageMetadata } from '@/lib/seo';
 import { VisualSection } from '@/components/visuals';
 import {
@@ -52,6 +53,7 @@ export default function Page() {
           </div>
         </section>
       </VisualSection>
+      <CourseTeamBanner />
     </>
   );
 }
