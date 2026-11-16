@@ -2,6 +2,7 @@
 
 import { useEffect, useId, useRef, useState } from 'react';
 import { TrainingFamilyMenu } from './TrainingFamilyMenu';
+import styles from './TrainingFamilyMenu.module.css';
 
 export function DesktopTrainingDropdown({ label }: { label: string }) {
   const [openMode, setOpenMode] = useState<'hover' | 'expanded' | null>(null);
@@ -45,6 +46,7 @@ export function DesktopTrainingDropdown({ label }: { label: string }) {
   return (
     <div
       ref={root}
+      className={styles.dropdown}
       onPointerEnter={event => {
         if (event.pointerType !== 'mouse') return;
         clearCloseTimer();
@@ -77,10 +79,10 @@ export function DesktopTrainingDropdown({ label }: { label: string }) {
           clearCloseTimer();
           setOpenMode('expanded');
         }}
-        className="absolute inset-x-0 top-full z-[70] mx-auto w-[calc(100%_-_2rem)] max-w-[58rem] pt-2"
+        className={styles.flyout}
       >
-        <div className="max-h-[calc(100dvh-var(--site-header-height)-1rem)] overflow-y-auto overscroll-contain rounded-[1.5rem] border border-academy-line bg-academy-surface p-5 text-academy-ink shadow-card">
-          <TrainingFamilyMenu onNavigate={closeMenu} />
+        <div className={styles.surface}>
+          <TrainingFamilyMenu key={openMode === null ? 'closed' : 'open'} onNavigate={closeMenu} />
         </div>
       </div>
     </div>
