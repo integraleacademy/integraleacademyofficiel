@@ -10,6 +10,8 @@ export type TrainingDatesPricingSession = {
   endDate?: string | Date | null;
   inPersonStartDate?: string | Date | null;
   inPersonEndDate?: string | Date | null;
+  inPersonFirstEndDate?: string | Date | null;
+  inPersonResumeDate?: string | Date | null;
   remoteStartDate?: string | Date | null;
   remoteEndDate?: string | Date | null;
   examDate?: string | Date | null;
@@ -168,6 +170,8 @@ function serializeSession(
     endDate: serializeDate(session.endDate),
     inPersonStartDate: serializeDate(session.inPersonStartDate),
     inPersonEndDate: serializeDate(session.inPersonEndDate),
+    inPersonFirstEndDate: serializeDate(session.inPersonFirstEndDate),
+    inPersonResumeDate: serializeDate(session.inPersonResumeDate),
     remoteStartDate: serializeDate(session.remoteStartDate),
     remoteEndDate: serializeDate(session.remoteEndDate),
     examDate: serializeDate(session.examDate),

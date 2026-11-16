@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { validateInPersonSplit } from '@/lib/public-sessions';
 import { requireAdmin } from '@/lib/admin/guard';
 import { getPrisma } from '@/lib/db';
 import { listSessions } from '@/lib/training-data';
@@ -17,6 +18,8 @@ function sessionData(data: any) {
     endDate: new Date(String(data.endDate || '')),
     inPersonStartDate: toDate(data.inPersonStartDate),
     inPersonEndDate: toDate(data.inPersonEndDate),
+    inPersonFirstEndDate: toDate(data.inPersonFirstEndDate),
+    inPersonResumeDate: toDate(data.inPersonResumeDate),
     remoteStartDate: toDate(data.remoteStartDate),
     remoteEndDate: toDate(data.remoteEndDate),
     examDate: toDate(data.examDate),
@@ -50,8 +53,8 @@ export async function POST(request: NextRequest) {
   if (!prisma) return NextResponse.json({ error: 'Base de données serveur indisponible.' }, { status: 503 });
   console.log('[ADMIN_SESSIONS] create session');
   const data = await request.json();
-  const seatError = validateSessionSeatCounts(data);
-  if (seatError) return NextResponse.json({ error: seatError }, { status: 400 });
+  const validationError = validateSessionSeatCounts(data) ?? validateInPersonSplit(data);
+  if (validationError) return NextResponse.json({ error: validationError }, { status: 400 });
   const session = await prisma.trainingSession.create({ data: sessionData(data), include: { training: true } });
   return NextResponse.json(session);
 }

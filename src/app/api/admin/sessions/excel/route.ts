@@ -5,6 +5,7 @@ import { requireAdmin } from '@/lib/admin/guard';
 import { getPrisma } from '@/lib/db';
 import { seedAdminData } from '@/lib/admin/seed';
 import { inflateRawSync } from 'zlib';
+import { validateInPersonSplit } from '@/lib/public-sessions';
 import { validateSessionSeatCounts } from '@/lib/session-capacity';
 
 export const runtime = 'nodejs';
@@ -89,6 +90,10 @@ function worksheetXml(sheet: ImportSheet) {
   const theme = themeStyle[sheet.theme];
   const columns = [...leadingColumns, ...(sheet.hasDeliveryPeriods ? deliveryPeriodColumns : []), ...trailingColumns];
   const columnWidths = [...leadingColumnWidths, ...(sheet.hasDeliveryPeriods ? deliveryPeriodColumnWidths : []), ...trailingColumnWidths];
+  if (sheet.hasDeliveryPeriods) {
+    columns.push('Fin de la première période de présentiel (DD/MM/YYYY)', 'Reprise du présentiel (DD/MM/YYYY)');
+    columnWidths.push(190, 170);
+  }
   const help = `Remplir une session par ligne. Les dates de début et de fin sont obligatoires au format DD/MM/YYYY. Les lignes sans ces deux dates sont ignorées.${sheet.hasDeliveryPeriods ? ' Renseigner aussi les périodes présentiel et distanciel applicables à la session.' : ''} Places totales : 12 maximum. Les places restantes doivent être comprises entre 0 et la capacité de la session. Statuts autorisés : OPEN, FULL, COMING_SOON, HIDDEN.`;
   const example = [`Exemple ${sheet.name}`, '', '', ...(sheet.hasDeliveryPeriods ? ['', '', '', ''] : []), '', 'OPEN', sheet.priceCents ?? '', sheet.priceLabel ?? '', sheet.location, '', '', sheet.registrationUrl, sheet.durationLabel ?? '', '', '', '0', 'non'];
   const helpRow = [help, ...Array(columns.length - 1).fill('')];
@@ -122,6 +127,8 @@ function rowsToSessions(rowsBySheet: Map<string, string[][]>) {
     const header = headerIndex >= 0 ? allRows[headerIndex] : [];
     const hasDeliveryPeriods = header.some(cell => cell.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes('debut presentiel'));
     const trailingOffset = hasDeliveryPeriods ? deliveryPeriodColumns.length : 0;
+    const firstEndColumn = header.findIndex(cell => cell.startsWith('Fin de la première période de présentiel'));
+    const resumeColumn = header.findIndex(cell => cell.startsWith('Reprise du présentiel'));
     const rows = allRows.slice(headerIndex >= 0 ? headerIndex + 1 : 0);
     rows.forEach((cells, index) => {
       const startDate = safeDate(cells[1] || '');
@@ -138,6 +145,8 @@ function rowsToSessions(rowsBySheet: Map<string, string[][]>) {
           endDate,
           inPersonStartDate: hasDeliveryPeriods ? safeDate(cells[3] || '') : null,
           inPersonEndDate: hasDeliveryPeriods ? safeDate(cells[4] || '') : null,
+          inPersonFirstEndDate: safeDate(cells[firstEndColumn] || ''),
+          inPersonResumeDate: safeDate(cells[resumeColumn] || ''),
           remoteStartDate: hasDeliveryPeriods ? safeDate(cells[5] || '') : null,
           remoteEndDate: hasDeliveryPeriods ? safeDate(cells[6] || '') : null,
           examDate: safeDate(cells[3 + trailingOffset] || ''),
@@ -277,8 +286,8 @@ export async function POST(request: NextRequest) {
   const parsed = parseWorkbook(buffer);
   if (parsed.length === 0) return NextResponse.json({ error: 'Aucune session importée. Format conseillé : ouvrez le modèle exporté, remplissez les onglets, puis faites Fichier > Enregistrer sous > Classeur Excel (.xlsx) avant import. Les anciens .xls binaires ne sont pas pris en charge. Les dates début/fin doivent être remplies.' }, { status: 400 });
   for (const item of parsed) {
-    const seatError = validateSessionSeatCounts(item.data);
-    if (seatError) return NextResponse.json({ error: `${item.sheet.name} — ${item.data.title} : ${seatError}` }, { status: 400 });
+    const validationError = validateSessionSeatCounts(item.data) ?? validateInPersonSplit(item.data);
+    if (validationError) return NextResponse.json({ error: `${item.sheet.name} — ${item.data.title} : ${validationError}` }, { status: 400 });
   }
   await seedAdminData(prisma);
   const trainings = await prisma.training.findMany({ where: { slug: { in: [...new Set(sheets.map(sheet => sheet.slug))] } } });

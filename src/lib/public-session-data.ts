@@ -10,6 +10,8 @@ export function toPublicSession(session: any) {
     remoteEndDate: session.remoteEndDate,
     inPersonStartDate: session.inPersonStartDate,
     inPersonEndDate: session.inPersonEndDate,
+    inPersonFirstEndDate: session.inPersonFirstEndDate,
+    inPersonResumeDate: session.inPersonResumeDate,
     priceCents: session.priceCents,
     priceLabel: session.priceLabel,
     durationLabel: session.durationLabel,

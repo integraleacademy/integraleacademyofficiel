@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
-import { formatSessionPeriod } from '@/lib/public-sessions';
+import { formatSessionPeriod, formatSplitInPersonPeriod } from '@/lib/public-sessions';
 import { getSessionSeatAvailability, resolveSessionSeatCapacity } from '@/lib/session-seat-availability';
 import { sessionLocationFilters, sessionMatchesLocation, type SessionLocationFilterKey } from '@/lib/session-location-filter';
 import { formatTrainingPrice } from '@/lib/training-price';
@@ -32,6 +32,8 @@ export type TrainingSessionCardItem = {
   endDate?: string | null;
   inPersonStartDate?: string | null;
   inPersonEndDate?: string | null;
+  inPersonFirstEndDate?: string | null;
+  inPersonResumeDate?: string | null;
   remoteStartDate?: string | null;
   remoteEndDate?: string | null;
   examDate?: string | null;
@@ -165,13 +167,15 @@ function SessionCard({
   compact?: boolean;
 }) {
   const full = isFull(session);
+  const comingSoon = session.status === 'COMING_SOON';
+  const actionLabel = comingSoon ? 'Me renseigner sur l’ouverture' : full ? 'Être alerté' : 'Choisir cette session →';
   const sessionTitle = String(session.title || '').trim();
   const capacity = resolveSessionSeatCapacity(session, seatCapacity);
   const seatAvailability = getSessionSeatAvailability(session, capacity);
   const deliveryPeriods = [
     { label: 'Période complète', value: formatPublicPeriod(session.startDate, session.endDate), icon: 'calendar' as const, confirmed: Boolean(session.startDate && session.endDate) },
     { label: 'À distance', value: formatPublicPeriod(session.remoteStartDate, session.remoteEndDate, remotePeriodFallback), icon: 'screen' as const, confirmed: Boolean(session.remoteStartDate && session.remoteEndDate) },
-    { label: 'En présentiel', value: formatPublicPeriod(session.inPersonStartDate, session.inPersonEndDate, inPersonPeriodFallback), icon: 'location' as const, confirmed: Boolean(session.inPersonStartDate && session.inPersonEndDate) },
+    { label: 'En présentiel', value: formatSplitInPersonPeriod(session) ?? formatPublicPeriod(session.inPersonStartDate, session.inPersonEndDate, inPersonPeriodFallback), icon: 'location' as const, confirmed: Boolean(session.inPersonStartDate && session.inPersonEndDate) },
   ];
   const [mainPeriod, ...detailPeriods] = deliveryPeriods;
 
@@ -182,12 +186,12 @@ function SessionCard({
     <p className="mt-3 text-sm text-academy-muted">Examen : <strong>{formatDate(session.examDate)}</strong></p>
     <p className="mt-2 text-xs text-academy-muted">{String(session.location || defaultLocation).replace(/\s*\/\s*(?=Côte d[’']Azur)/g, ' · ')}</p>
     {showDeliveryPeriods && <details className="group/periods mt-5 border-t border-academy-line pt-4"><summary className={`flex min-h-10 cursor-pointer list-none items-center justify-between gap-4 text-xs font-bold ${sessionTheme.detailIcon} [&::-webkit-details-marker]:hidden`}><span>Calendrier à distance & en présentiel</span><span className="text-lg transition group-open/periods:rotate-45" aria-hidden="true">+</span></summary><dl className="mt-3 grid gap-4 sm:grid-cols-2">{detailPeriods.map(period => <div key={period.label}><dt className="text-[.65rem] font-bold uppercase tracking-wider text-academy-muted">{period.label}</dt><dd className="mt-1 text-sm font-bold leading-relaxed text-academy-ink">{period.value}</dd></div>)}</dl></details>}
-    <div className="mt-5 flex flex-wrap items-center justify-between gap-4">{showSessionPrice && <strong className="text-2xl">{formatTrainingPrice(session, defaultPrice)}</strong>}<ActionLink action={{ href: session.registrationHref, label: full ? 'Être alerté' : 'Choisir cette session →' }} variant={full ? 'light' : theme} /></div>
+    <div className="mt-5 flex flex-wrap items-center justify-between gap-4">{showSessionPrice && <strong className="text-2xl">{formatTrainingPrice(session, defaultPrice)}</strong>}<ActionLink action={{ href: session.registrationHref, label: actionLabel }} variant={full ? 'light' : theme} /></div>
   </article>;
 
   return <article className={`flex h-full flex-col rounded-[1.8rem] border p-5 shadow-soft ${index === 0 ? sessionTheme.featuredCard : 'border-academy-line bg-[#FFFDF8]'}`}>
     <div className="flex flex-wrap items-center justify-between gap-3">
-      <span className={`rounded-full border px-3 py-1.5 text-[.64rem] font-black uppercase tracking-[.15em] ${sessionTheme.badge}`}>{index === 0 ? 'Prochaine session' : 'Session ouverte'}</span>
+      <span className={`rounded-full border px-3 py-1.5 text-[.64rem] font-black uppercase tracking-[.15em] ${sessionTheme.badge}`}>{comingSoon ? 'Session prévisionnelle' : index === 0 ? 'Prochaine session' : 'Session ouverte'}</span>
       <span className={`rounded-full border px-3 py-1.5 text-xs font-black ${seatAvailability.badgeClassName}`}>{seatAvailability.label}</span>
     </div>
     {showSessionTitle && sessionTitle ? <h3 className="mt-5 text-xl font-black tracking-tight text-academy-ink">{sessionTitle}</h3> : null}
@@ -217,7 +221,7 @@ function SessionCard({
     </div>
     <div className="mt-auto flex flex-wrap items-end justify-between gap-4 pt-5">
       {showSessionPrice && <strong className="text-3xl">{formatTrainingPrice(session, defaultPrice)}</strong>}
-      <ActionLink action={{ href: session.registrationHref, label: full ? 'Être alerté' : 'Choisir cette session →' }} variant={full ? 'light' : theme} />
+      <ActionLink action={{ href: session.registrationHref, label: actionLabel }} variant={full ? 'light' : theme} />
     </div>
   </article>;
 }

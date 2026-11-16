@@ -19,6 +19,8 @@ export type PublicSessionLike = {
   endDate?: string | Date;
   inPersonStartDate?: string | Date | null;
   inPersonEndDate?: string | Date | null;
+  inPersonFirstEndDate?: string | Date | null;
+  inPersonResumeDate?: string | Date | null;
   remoteStartDate?: string | Date | null;
   remoteEndDate?: string | Date | null;
   status?: string;
@@ -45,7 +47,7 @@ export function isPublicUpcomingSession(session: PublicSessionLike) {
 
 export function computedSeats(session: PublicSessionLike, referenceDate = new Date()): number | null {
   if (session.status === 'FULL') return 0;
-  if (session.showSeatsLeft === false) return null;
+  if (session.status === 'COMING_SOON' || session.showSeatsLeft === false) return null;
   const capacity = resolveSessionSeatCapacity(session);
   const storedCount = normalizeSeatCount(session.seatsLeft);
   // Ignore legacy counts above the session capacity and keep the existing date-based rule.
@@ -76,6 +78,32 @@ export function formatSessionPeriod(startDate?: string | Date | null, endDate?: 
   const start = formatSessionNumericDate(startDate);
   const end = formatSessionNumericDate(endDate);
   return start && end ? `Du ${start} au ${end}` : 'À renseigner dans l’administration';
+}
+
+type InPersonSchedule = Pick<PublicSessionLike,
+  'inPersonStartDate' | 'inPersonEndDate' | 'inPersonFirstEndDate' | 'inPersonResumeDate'>;
+
+export function validateInPersonSplit(session: InPersonSchedule) {
+  const { inPersonStartDate: start, inPersonFirstEndDate: firstEnd, inPersonResumeDate: resume, inPersonEndDate: end } = session;
+  if (!firstEnd && !resume) return null;
+  if (start && firstEnd && resume && end && +new Date(start) <= +new Date(firstEnd)
+    && +new Date(firstEnd) < +new Date(resume) && +new Date(resume) <= +new Date(end)) return null;
+  return 'Vérifiez la fin de la première période et la date de reprise dans les dates du présentiel.';
+}
+
+export function inPersonPeriods(session: InPersonSchedule) {
+  const { inPersonStartDate: start, inPersonFirstEndDate: firstEnd, inPersonResumeDate: resume, inPersonEndDate: end } = session;
+  if (!start || !end) return [];
+  if (firstEnd && resume && !validateInPersonSplit(session)) {
+    return [{ start, end: firstEnd }, { start: resume, end }];
+  }
+  return [{ start, end }];
+}
+
+export function formatSplitInPersonPeriod(session: InPersonSchedule) {
+  const [first, second] = inPersonPeriods(session);
+  if (!second) return null;
+  return `${formatSessionPeriod(first.start, first.end)}, puis du ${formatSessionNumericDate(second.start)} au ${formatSessionNumericDate(second.end)}`;
 }
 
 export function hasDetailedDeliveryPeriods(session: PublicSessionLike) {

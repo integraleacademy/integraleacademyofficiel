@@ -17,6 +17,8 @@ const emptySession = (training?: TrainingRow) => ({
   endDate: '',
   inPersonStartDate: '',
   inPersonEndDate: '',
+  inPersonFirstEndDate: '',
+  inPersonResumeDate: '',
   remoteStartDate: '',
   remoteEndDate: '',
   examDate: '',
@@ -42,6 +44,8 @@ function serialize(row: SessionRow) {
     endDate: inputDate(row.endDate) || row.endDate,
     inPersonStartDate: inputDate(row.inPersonStartDate) || row.inPersonStartDate || '',
     inPersonEndDate: inputDate(row.inPersonEndDate) || row.inPersonEndDate || '',
+    inPersonFirstEndDate: inputDate(row.inPersonFirstEndDate),
+    inPersonResumeDate: inputDate(row.inPersonResumeDate),
     remoteStartDate: inputDate(row.remoteStartDate) || row.remoteStartDate || '',
     remoteEndDate: inputDate(row.remoteEndDate) || row.remoteEndDate || '',
     examDate: inputDate(row.examDate) || row.examDate,
@@ -187,6 +191,8 @@ export function SessionsClient({ initialRows }: { initialRows: SessionRow[] }) {
       {hasDeliveryPeriods ? <>
         <label className="text-sm font-semibold">Date de début présentiel<input type="date" value={inputDate(row.inPersonStartDate) || row.inPersonStartDate || ''} onChange={event => onChange({ inPersonStartDate: event.target.value })} className="mt-1 w-full rounded-xl border p-3" disabled={disabled}/></label>
         <label className="text-sm font-semibold">Date de fin présentiel<input type="date" value={inputDate(row.inPersonEndDate) || row.inPersonEndDate || ''} onChange={event => onChange({ inPersonEndDate: event.target.value })} className="mt-1 w-full rounded-xl border p-3" disabled={disabled}/></label>
+        <label className="text-sm font-semibold">Fin de la première période de présentiel (si coupure)<input type="date" value={inputDate(row.inPersonFirstEndDate) || row.inPersonFirstEndDate || ''} onChange={event => onChange({ inPersonFirstEndDate: event.target.value })} className="mt-1 w-full rounded-xl border p-3" disabled={disabled}/></label>
+        <label className="text-sm font-semibold">Reprise du présentiel (si coupure)<input type="date" value={inputDate(row.inPersonResumeDate) || row.inPersonResumeDate || ''} onChange={event => onChange({ inPersonResumeDate: event.target.value })} className="mt-1 w-full rounded-xl border p-3" disabled={disabled}/></label>
         <label className="text-sm font-semibold">Date de début distanciel<input type="date" value={inputDate(row.remoteStartDate) || row.remoteStartDate || ''} onChange={event => onChange({ remoteStartDate: event.target.value })} className="mt-1 w-full rounded-xl border p-3" disabled={disabled}/></label>
         <label className="text-sm font-semibold">Date de fin distanciel<input type="date" value={inputDate(row.remoteEndDate) || row.remoteEndDate || ''} onChange={event => onChange({ remoteEndDate: event.target.value })} className="mt-1 w-full rounded-xl border p-3" disabled={disabled}/></label>
       </> : null}
