@@ -2,22 +2,24 @@
 
 import Link from 'next/link';
 import { useId, useRef, useState, type CSSProperties, type KeyboardEvent, type PointerEvent, type ReactNode } from 'react';
+import type { TrainingStatus } from '@/data/upcoming-trainings';
+import { TrainingStatusBadge } from './TrainingStatusBadge';
 import styles from './TrainingCarousel.module.css';
 
 export type TrainingCarouselItem = {
-  slug: string;
   shortTitle: string;
   title: string;
-  category: string;
   description: string;
-  ctaLabel: string;
   imageSrc: string;
   imageAlt: string;
   tabPrefix?: string;
   tabLabel?: string;
   details?: ReactNode;
   caption?: ReactNode;
-};
+} & (
+  | { slug: string; ctaLabel: string; category: string; status?: never }
+  | { status: TrainingStatus; slug?: never; ctaLabel?: never; category?: never }
+);
 
 function Arrow({ previous = false }: { previous?: boolean }) {
   return <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d={previous ? 'M19 12H5m6-6-6 6 6 6' : 'M5 12h14m-6-6 6 6-6 6'} stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>;
@@ -83,61 +85,58 @@ export function TrainingCarousel({ items, label, tabListLabel, previousLabel, ne
         onPointerUp={handlePointerUp}
         onPointerCancel={() => { pointerStart.current = null; }}
       >
-        {items.map((item, index) => (
-          <article
-            key={item.slug}
-            id={`${carouselId}-panel-${index}`}
-            role="tabpanel"
-            aria-labelledby={`${carouselId}-tab-${index}`}
-            aria-hidden={index !== activeIndex}
-            inert={index !== activeIndex}
-            data-active={index === activeIndex}
-            className={styles.slide}
-          >
-            <div className={styles.copy}>
-              <p className={styles.category}>{item.category}</p>
-              <h3 className={styles.title}>
-                <Link href={item.slug} className={styles.titleLink}>
-                  <strong>{item.shortTitle}</strong>
-                  <em>{item.title}</em>
-                </Link>
-              </h3>
-              <p className={styles.description}>{item.description}</p>
-              {item.details}
-              <Link href={item.slug} className={styles.discover}>
-                {item.ctaLabel}<Arrow />
-              </Link>
-            </div>
-            <div className={styles.visual}>
-              <figure className={styles.artwork}>
-                <Link href={item.slug} className={styles.artworkLink} aria-label={item.ctaLabel}>
-                  <img
-                    src={item.imageSrc}
-                    alt={item.imageAlt}
-                    width={1200}
-                    height={800}
-                    loading="lazy"
-                    decoding="async"
-                    draggable={false}
-                  />
-                </Link>
-              </figure>
-              {item.caption && <div className={styles.caption}>{item.caption}</div>}
-            </div>
-          </article>
-        ))}
+        {items.map((item, index) => {
+          const heading = <><strong>{item.shortTitle}</strong>{' '}<em>{item.title}</em></>;
+          const artwork = (
+            <img src={item.imageSrc} alt={item.imageAlt} width={1200} height={800}
+              loading="lazy" decoding="async" draggable={false} />
+          );
+
+          return (
+            <article
+              key={item.slug ?? item.shortTitle}
+              id={`${carouselId}-panel-${index}`}
+              role="tabpanel"
+              aria-labelledby={`${carouselId}-tab-${index}`}
+              aria-hidden={index !== activeIndex}
+              inert={index !== activeIndex}
+              data-active={index === activeIndex}
+              className={styles.slide}
+            >
+              <div className={styles.copy}>
+                <p className={styles.category}>
+                  {item.status ? <TrainingStatusBadge status={item.status} /> : item.category}
+                </p>
+                <h3 className={styles.title}>
+                  {item.slug ? <Link href={item.slug} className={styles.titleLink}>{heading}</Link> : heading}
+                </h3>
+                <p className={styles.description}>{item.description}</p>
+                {item.details}
+                {item.slug && <Link href={item.slug} className={styles.discover}>{item.ctaLabel}<Arrow /></Link>}
+              </div>
+              <div className={styles.visual}>
+                <figure className={styles.artwork}>
+                  {item.slug
+                    ? <Link href={item.slug} className={styles.artworkLink} aria-label={item.ctaLabel}>{artwork}</Link>
+                    : artwork}
+                </figure>
+                {item.caption && <div className={styles.caption}>{item.caption}</div>}
+              </div>
+            </article>
+          );
+        })}
       </div>
 
       <div className={styles.navigation}>
         <div className={styles.tabs} role="tablist" aria-label={tabListLabel}>
           {items.map((item, index) => (
             <button
-              key={item.slug}
+              key={item.slug ?? item.shortTitle}
               ref={(element) => { tabsRef.current[index] = element; }}
               id={`${carouselId}-tab-${index}`}
               type="button"
               role="tab"
-              aria-label={item.shortTitle}
+              aria-label={item.status ? item.tabLabel ?? item.shortTitle : item.shortTitle}
               aria-selected={index === activeIndex}
               aria-controls={`${carouselId}-panel-${index}`}
               tabIndex={index === activeIndex ? 0 : -1}
@@ -154,7 +153,7 @@ export function TrainingCarousel({ items, label, tabListLabel, previousLabel, ne
           <button type="button" aria-label={nextLabel} aria-controls={`${carouselId}-slides`} onClick={() => selectSlide(activeIndex + 1, 'next')}><Arrow /></button>
         </div>
       </div>
-      <p className="sr-only" role="status" aria-live="polite" aria-atomic="true">{activeItem.shortTitle} — {activeItem.title}. Formation {activeIndex + 1} sur {items.length}.</p>
+      <p className="sr-only" role="status" aria-live="polite" aria-atomic="true">{activeItem.shortTitle} — {activeItem.title}. {activeItem.status && `${activeItem.status}. `}Formation {activeIndex + 1} sur {items.length}.</p>
     </div>
   );
 }

@@ -8,6 +8,7 @@ import type { ManualIllustration } from '@/data/manualIllustrations';
 import { contact } from '@/data/site';
 import { MobileHeaderMenu } from '@/components/MobileHeaderMenu';
 import { DesktopTrainingDropdown } from '@/components/DesktopTrainingDropdown';
+import { navigation } from '@/data/navigation';
 import compactHeroStyles from '@/components/CompactHero.module.css';
 import footerStyles from '@/components/Footer.module.css';
 
@@ -213,13 +214,7 @@ function BrandSigle({ placement }: { placement: 'header' | 'footer' }){
 }
 
 export function Header(){
-  const trainingNav=[
-    ['Métiers de la sécurité','/#formations-securite','Agent de sécurité privée (APS), Agent de Protection Physique des Personnes (A3P), SSIAP et Dirigeant d’entreprise de sécurité privée (DESP).','👮'],
-    ['BTS en alternance','/#bts','BTS sécurité (MOS), BTS commerce (CI, MCO, NDRC), BTS immobilier (PI).','🎓'],
-    ['Chauffeur VTC','/vtc','Formation Théorique et Formation Pratique VTC.','🚘'],
-  ] as const;
-  const nav=[['Nos formations',trainingNav],['Notre école','/ecole'],['Financements','/financements'],['Entreprises','/entreprises'],['Planning','/planning'],['Contact','/contact']] as const;
-  return <header className="site-header sticky top-0 z-50 border-b border-white/15 bg-[linear-gradient(90deg,#40506a_0%,#344259_48%,#2b384d_100%)] text-white shadow-[0_16px_42px_rgba(31,42,58,.24)]"><div className="page-container flex items-center justify-between gap-2 px-0 py-1.5"><Link href="/" aria-label="Retour à l’accueil Intégrale Academy" className="group flex min-w-0 shrink items-center gap-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-academy-gold sm:gap-3"><BrandSigle placement="header"/><span className="min-w-0 whitespace-nowrap text-[11px] font-black tracking-[.06em] sm:text-[15px] sm:tracking-[.08em] xl:text-[calc(20px*var(--site-desktop-scale))]"><span className="text-white">INTÉGRALE</span><span className="ml-1 text-academy-gold sm:ml-1.5">ACADEMY</span></span></Link><nav className="hidden items-center gap-1 text-sm font-bold xl:flex" aria-label="Navigation principale">{nav.map(([n,h])=>typeof h!=='string'?<DesktopTrainingDropdown key={n} label={n} items={h}/>:<Link key={h} href={h} className="rounded-full px-3 py-2 text-white/80 transition hover:bg-white/10 hover:text-academy-gold focus:bg-white/10 focus:text-academy-gold">{n}</Link>)}</nav><div className="hidden items-center gap-2 xl:flex"><div className="hidden items-center gap-2 min-[1440px]:flex"><Button href="tel:0422470768" variant="ghost">Appeler</Button><AppointmentButton/></div></div><div className="flex shrink-0 items-center gap-2 xl:hidden"><MobileHeaderMenu nav={nav} appointmentFormUrl={appointmentFormUrl}/></div></div></header>
+  return <header className="site-header sticky top-0 z-50 border-b border-white/15 bg-[linear-gradient(90deg,#40506a_0%,#344259_48%,#2b384d_100%)] text-white shadow-[0_16px_42px_rgba(31,42,58,.24)]"><div className="page-container flex items-center justify-between gap-2 px-0 py-1.5"><Link href="/" aria-label="Retour à l’accueil Intégrale Academy" className="group flex min-w-0 shrink items-center gap-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-academy-gold sm:gap-3"><BrandSigle placement="header"/><span className="min-w-0 whitespace-nowrap text-[11px] font-black tracking-[.06em] sm:text-[15px] sm:tracking-[.08em] xl:text-[calc(20px*var(--site-desktop-scale))]"><span className="text-white">INTÉGRALE</span><span className="ml-1 text-academy-gold sm:ml-1.5">ACADEMY</span></span></Link><nav className="hidden items-center gap-1 text-sm font-bold xl:flex" aria-label="Navigation principale">{navigation.map(item=>'children' in item?<DesktopTrainingDropdown key={item.label} label={item.label}/>:<Link key={item.href} href={item.href} className="rounded-full px-3 py-2 text-white/80 transition hover:bg-white/10 hover:text-academy-gold focus:bg-white/10 focus:text-academy-gold">{item.label}</Link>)}</nav><div className="hidden items-center gap-2 xl:flex"><div className="hidden items-center gap-2 min-[1440px]:flex"><Button href="tel:0422470768" variant="ghost">Appeler</Button><AppointmentButton/></div></div><div className="flex shrink-0 items-center gap-2 xl:hidden"><MobileHeaderMenu appointmentFormUrl={appointmentFormUrl}/></div></div></header>
 }
 export function Footer(){
   const footerLinks=[
