@@ -21,6 +21,11 @@ function claimPlayer(player: YouTubePlayer) {
   activePlayer = player;
 }
 
+function enableSound(player: YouTubePlayer) {
+  if (player.getVolume() === 0) player.setVolume(70);
+  player.unMute();
+}
+
 export function CourseFilm({ film, title, titleAccent, description }: Props) {
   const video = videos[film];
   const portrait = film === 'neo';
@@ -30,7 +35,9 @@ export function CourseFilm({ film, title, titleAccent, description }: Props) {
   const stage = useRef<HTMLDivElement>(null);
   const mount = useRef<HTMLDivElement>(null);
   const startManually = useRef<(() => void) | null>(null);
+  const changeSound = useRef<((enable: boolean) => void) | null>(null);
   const [display, setDisplay] = useState<'poster' | 'player' | 'unavailable'>('poster');
+  const [sound, setSound] = useState<'off' | 'on' | null>(null);
 
   useEffect(() => {
     if (!mount.current || !stage.current) return;
@@ -45,23 +52,52 @@ export function CourseFilm({ film, title, titleAccent, description }: Props) {
     let manual = false;
     let resume = true;
     let pausedOffscreen = false;
+    let playRequested = false;
+    let triedMutedPlayback = false;
+    let volumeTimer: number | undefined;
     setDisplay('poster');
+    setSound(null);
+
+    function updateSoundControl() {
+      if (!player || !ready || disposed || failed) return;
+      const playing = [1, 3].includes(player.getPlayerState());
+      setSound(playing && !player.isMuted() && player.getVolume() > 0 ? 'on' : 'off');
+    }
+
+    function stopWatchingVolume() {
+      window.clearInterval(volumeTimer);
+      volumeTimer = undefined;
+    }
+
+    function requestPlayback(target: YouTubePlayer) {
+      pausedOffscreen = false;
+      playRequested = target.getPlayerState() !== 1;
+      claimPlayer(target);
+      target.playVideo();
+    }
 
     function sync() {
       if (disposed || failed) return;
       if (document.hidden || (visibleRatio === 0 && !manual)) {
-        if (ready && player && [1, 3].includes(player.getPlayerState())) {
+        stopWatchingVolume();
+        if (ready && player && (playRequested || [1, 3].includes(player.getPlayerState()))) {
+          playRequested = false;
           pausedOffscreen = true;
           player.pauseVideo();
         }
         return;
+      }
+      if (ready && volumeTimer === undefined) {
+        // YouTube's native volume controls do not emit a public volume-change event.
+        updateSoundControl();
+        volumeTimer = window.setInterval(updateSoundControl, 500);
       }
       if (!manual && (visibleRatio <= .5 || !resume)) return;
       if (!frame) {
         frame = document.createElement('iframe');
         const url = new URL(`https://www.youtube-nocookie.com/embed/${video.id}`);
         url.search = new URLSearchParams({
-          enablejsapi: '1', origin: window.location.origin, playsinline: '1', controls: '1', rel: '0', mute: '1', hl: 'fr',
+          enablejsapi: '1', origin: window.location.origin, playsinline: '1', controls: '1', rel: '0', hl: 'fr',
         }).toString();
         frame.title = fullTitle;
         frame.referrerPolicy = 'strict-origin-when-cross-origin';
@@ -77,11 +113,13 @@ export function CourseFilm({ film, title, titleAccent, description }: Props) {
               if (disposed) return;
               player = target;
               ready = true;
-              target.mute();
+              enableSound(target);
               sync();
             },
             onStateChange: ({ target, data }) => {
               if (disposed) return;
+              if (data === 0 || data === 1 || data === 2) playRequested = false;
+              updateSoundControl();
               if (data === 1) {
                 if (document.hidden || (visibleRatio === 0 && !manual)) {
                   pausedOffscreen = true;
@@ -96,10 +134,25 @@ export function CourseFilm({ film, title, titleAccent, description }: Props) {
                 resume = false;
               }
             },
-            onAutoplayBlocked: () => { manual = false; resume = false; },
+            onAutoplayBlocked: ({ target }) => {
+              if (disposed || failed) return;
+              playRequested = false;
+              setSound('off');
+              if (document.hidden || (!manual && visibleRatio <= .5)) return;
+              if (triedMutedPlayback) {
+                manual = false;
+                resume = false;
+                return;
+              }
+              triedMutedPlayback = true;
+              target.mute();
+              requestPlayback(target);
+            },
             onError: () => {
               if (disposed) return;
               failed = true;
+              stopWatchingVolume();
+              setSound(null);
               if (activePlayer === player) activePlayer = null;
               setDisplay('unavailable');
             },
@@ -107,13 +160,24 @@ export function CourseFilm({ film, title, titleAccent, description }: Props) {
         }).catch(() => {
           // The native iframe still provides its own play, sound and fullscreen controls.
         });
-      } else if (ready && player && player.getPlayerState() !== 1) {
-        pausedOffscreen = false;
-        claimPlayer(player);
-        player.playVideo();
+      } else if (ready && player && !playRequested && ![1, 3].includes(player.getPlayerState())) {
+        requestPlayback(player);
       }
     }
 
+    changeSound.current = enable => {
+      if (!player || !ready || failed) return;
+      if (enable) {
+        manual = visibleRatio === 0 && player.getPlayerState() !== 1;
+        resume = true;
+        triedMutedPlayback = false;
+        enableSound(player);
+        requestPlayback(player);
+      } else {
+        player.mute();
+        setSound('off');
+      }
+    };
     startManually.current = () => { manual = true; resume = true; sync(); };
     const observer = typeof IntersectionObserver === 'undefined' ? null : new IntersectionObserver(([entry]) => {
       visibleRatio = entry.intersectionRatio;
@@ -124,6 +188,8 @@ export function CourseFilm({ film, title, titleAccent, description }: Props) {
     return () => {
       disposed = true;
       startManually.current = null;
+      changeSound.current = null;
+      stopWatchingVolume();
       observer?.disconnect();
       document.removeEventListener('visibilitychange', sync);
       if (activePlayer === player) activePlayer = null;
@@ -139,6 +205,15 @@ export function CourseFilm({ film, title, titleAccent, description }: Props) {
   }
 
   const playIcon = <svg aria-hidden="true" width="18" height="18" viewBox="0 0 20 20" fill="currentColor"><path d="M5 3.5v13L16 10z" /></svg>;
+  const soundButton = sound !== null && (
+    <button type="button" className={styles.soundButton} onClick={() => changeSound.current?.(sound !== 'on')}>
+      <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M11 5 6 9H3v6h3l5 4z" />
+        {sound === 'on' ? <path d="M15 9a4 4 0 0 1 0 6m3-9a8 8 0 0 1 0 12" /> : <path d="m16 9 6 6m0-6-6 6" />}
+      </svg>
+      {sound === 'on' ? 'Couper le son' : 'Activer le son'}
+    </button>
+  );
   const playerStage = (
     <div ref={stage} className={portrait ? `${styles.stage} ${reportage.video}` : styles.stage}>
       <div ref={mount} hidden={display !== 'player'} className={styles.player} />
@@ -158,10 +233,13 @@ export function CourseFilm({ film, title, titleAccent, description }: Props) {
           <p className={reportage.byline}><strong>Reportage</strong><span>{video.credit}</span></p>
           <h3 id={`${anchor}-titre`} className={reportage.headline}>{title}{titleAccent && <> <em>{titleAccent}</em></>}</h3>
           <p className={reportage.description}>{description}</p>
-          <a className={reportage.watch} href={watchUrl} target="_blank" rel="noopener noreferrer">
-            <span className={reportage.play}>{playIcon}</span>
-            Voir sur YouTube <span className={reportage.duration}>{video.duration}</span>
-          </a>
+          <div className={`${styles.actions} ${reportage.actions}`}>
+            {soundButton}
+            <a className={reportage.watch} href={watchUrl} target="_blank" rel="noopener noreferrer">
+              <span className={reportage.play}>{playIcon}</span>
+              Voir sur YouTube <span className={reportage.duration}>{video.duration}</span>
+            </a>
+          </div>
         </div>
         <div className={reportage.photos}>
           <div className={reportage.portrait}><Image src="/images/course-videos/neo-veronique.webp" alt="" fill sizes="(max-width: 760px) 38vw, 23vw" /></div>
@@ -180,7 +258,10 @@ export function CourseFilm({ film, title, titleAccent, description }: Props) {
           <h2 id={`${anchor}-titre`} className={styles.title}>{title}</h2>
           <div className={styles.summary}>
             <p>{description}</p>
-            <a href={watchUrl} target="_blank" rel="noopener noreferrer">Voir sur YouTube <span aria-hidden="true">↗︎</span></a>
+            <div className={styles.actions}>
+              {soundButton}
+              <a href={watchUrl} target="_blank" rel="noopener noreferrer">Voir sur YouTube <span aria-hidden="true">↗︎</span></a>
+            </div>
           </div>
         </header>
         {playerStage}

@@ -22,6 +22,14 @@
 .credit span { padding-inline-start: .8rem; border-inline-start: 1px solid currentColor; font-variant-numeric: tabular-nums; text-transform: none; letter-spacing: normal; }
 .heading .title { margin: .65rem 0; max-width: 22ch; color: #fffaf1; font-size: clamp(1.85rem, 3vw, 2.9rem); line-height: 1.08; letter-spacing: -.045em; text-wrap: balance; font-weight: 750; }
 .summary p { margin: 0; max-width: 46ch; color: #e1e8e9; font-size: clamp(1rem, 1.1vw, 1.1rem); line-height: 1.55; }
+.actions { display: flex; align-items: center; flex-wrap: wrap; gap: .45rem 1rem; margin-block-start: .7rem; }
+.soundButton {
+  display: inline-flex; align-items: center; gap: .55rem; min-height: 44px; padding: .5rem .95rem;
+  border: 1px solid currentColor; border-radius: 100vw; background: transparent;
+  color: inherit; font: inherit; font-size: .9rem; font-weight: 700; cursor: pointer;
+}
+.soundButton:hover { background: color-mix(in srgb, currentColor 10%, transparent); }
+.soundButton:focus-visible { outline: 3px solid currentColor; outline-offset: 3px; }
 .summary a { display: inline-flex; align-items: center; gap: .55rem; min-height: 44px; color: var(--film-accent); text-decoration: underline; text-underline-offset: .22em; font-size: .88rem; font-weight: 700; }
 .section a:focus-visible { outline: 3px solid #f5c967; outline-offset: 3px; }
 .stage { position: relative; width: 100%; aspect-ratio: 16 / 9; min-height: 200px; background: #101619; overflow: hidden; }

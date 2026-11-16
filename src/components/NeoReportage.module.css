@@ -54,12 +54,12 @@
   line-height: 1.55;
 }
 
+.copy .actions { margin-block-start: clamp(1.5rem, 2.2vw, 2.5rem); }
 .watch {
   display: inline-flex;
   align-items: center;
   gap: .8rem;
   min-height: 3rem;
-  margin-block-start: clamp(1.5rem, 2.2vw, 2.5rem);
   padding: .36rem 1.1rem .36rem .36rem;
   background: #193c30;
   color: #fffdf5;
@@ -112,5 +112,5 @@
   .copy { padding: clamp(1.6rem, 5vw, 2.25rem) clamp(1.25rem, 5vw, 2.5rem) 2.25rem; }
   .headline { margin-block-start: 1.1rem; font-size: clamp(2.15rem, 7.7vw, 3.5rem); }
   .description { margin-block-start: 1rem; }
-  .watch { margin-block-start: 1.35rem; }
+  .copy .actions { margin-block-start: 1.35rem; }
 }
