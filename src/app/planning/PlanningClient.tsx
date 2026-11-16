@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
-import { formatSessionDate, formatSessionPeriod, hasDetailedDeliveryPeriods } from '@/lib/public-sessions';
+import { formatSessionDate, formatSessionPeriod, formatSplitInPersonPeriod, hasDetailedDeliveryPeriods } from '@/lib/public-sessions';
 import { getSessionSeatAvailability, resolveSessionSeatCapacity } from '@/lib/session-seat-availability';
 import { directorPlanningLocations, sessionLocationFilters, sessionMatchesLocation, type DirectorLocationFilterKey, type SessionLocationFilterKey } from '@/lib/session-location-filter';
 import { formatTrainingPrice } from '@/lib/training-price';
@@ -304,7 +304,7 @@ function deliveryPeriodRows(session: Session): { label: string; value: string; i
   return [
     { label: '', value: displayPlanningPeriod(session.startDate, session.endDate), icon: 'calendar' },
     { label: 'À distance', value: displayPlanningPeriod(session.remoteStartDate, session.remoteEndDate), icon: 'screen' },
-    { label: 'En présentiel', value: displayPlanningPeriod(session.inPersonStartDate, session.inPersonEndDate), icon: 'location' },
+    { label: 'En présentiel', value: formatSplitInPersonPeriod(session) ?? displayPlanningPeriod(session.inPersonStartDate, session.inPersonEndDate), icon: 'location' },
   ];
 }
 

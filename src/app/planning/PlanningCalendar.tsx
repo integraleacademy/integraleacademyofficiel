@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { calendarExtent, calendarMonth, calendarPosition, sessionCalendarPosition, sessionInCalendarWindow } from '@/lib/planning-calendar';
-import { formatSessionDate, formatSessionPeriod } from '@/lib/public-sessions';
+import { formatSessionDate, formatSessionPeriod, inPersonPeriods } from '@/lib/public-sessions';
 import { formatVtcDeadline, formatVtcExamDate } from '@/data/vtc';
 import styles from './planning.module.css';
 
@@ -49,7 +49,9 @@ export function PlanningCalendar({ sessions, onSelect, selectedId, themeForSessi
         const whole = sessionCalendarPosition(session, start, end)!;
         const phases = isVtc ? [] : [
           { label: 'À distance', from: session.remoteStartDate, to: session.remoteEndDate, className: styles.remotePhase },
-          { label: 'En présentiel', from: session.inPersonStartDate, to: session.inPersonEndDate, className: styles.inPersonPhase },
+          ...inPersonPeriods(session).map(period => ({
+            label: 'En présentiel', from: period.start, to: period.end, className: styles.inPersonPhase,
+          })),
         ].filter(phase => phase.from && phase.to);
         const exam = calendarPosition(session.examDate, session.examDate, start, end);
         return <button key={session.id} type="button" onClick={() => onSelect(session)} className={`${styles.calendarRow} ${themeForSession(session)}`} data-selected={selectedId === session.id || undefined} aria-label={`Voir la session ${title}, ${isVtc ? 'date limite d’inscription : ' + formatVtcDeadline(session.startDate) : formatSessionPeriod(session.startDate, session.endDate)}`} aria-haspopup="dialog">
@@ -59,7 +61,7 @@ export function PlanningCalendar({ sessions, onSelect, selectedId, themeForSessi
             <span className={styles.courseBar} style={positionStyle(whole)} />
             {phases.map(phase => {
               const position = calendarPosition(phase.from, phase.to, start, end);
-              return position ? <span key={phase.label} title={`${phase.label} · ${formatSessionPeriod(phase.from, phase.to)}`} className={`${styles.phase} ${phase.className}`} style={positionStyle(position)} /> : null;
+              return position ? <span key={phase.label + String(phase.from)} title={`${phase.label} · ${formatSessionPeriod(phase.from, phase.to)}`} className={`${styles.phase} ${phase.className}`} style={positionStyle(position)} /> : null;
             })}
             {exam ? <span className={styles.examMarker} style={{ left: `clamp(14px, ${exam.left + exam.width / 2}%, calc(100% - 14px))` }} title={isVtc ? 'Examen pratique · ' + formatVtcExamDate(session.examDate) : 'Examen le ' + formatSessionDate(session.examDate)}>E</span> : null}
           </span>

@@ -1,5 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import { formatSplitInPersonPeriod, inPersonPeriods, validateInPersonSplit } from '../src/lib/public-sessions';
+import { getSessionSeatAvailability } from '../src/lib/session-seat-availability';
 import { toPublicSession } from '../src/lib/public-session-data';
 import { planningMonths, sessionMatchesMonth } from '../src/lib/planning-filters';
 import { planningRegistrationAction, validatePlanningRequest } from '../src/lib/planning-registration';
@@ -114,4 +116,24 @@ test('VTC registration closes at Paris noon in winter and summer on both plannin
     assert.equal(getVtcPlanningSessions(new Date(lastMinute), [session]).length, 1);
     assert.equal(getVtcPlanningSessions(new Date(noon), [session]).length, 0);
   }
+});
+
+
+test('les deux périodes de présentiel restent distinctes sur le planning public', () => {
+  const session = toPublicSession({
+    inPersonStartDate: '2027-11-29', inPersonFirstEndDate: '2027-12-02',
+    inPersonResumeDate: '2027-12-06', inPersonEndDate: '2027-12-10',
+  });
+  assert.deepEqual(inPersonPeriods(session), [
+    { start: '2027-11-29', end: '2027-12-02' },
+    { start: '2027-12-06', end: '2027-12-10' },
+  ]);
+  assert.equal(formatSplitInPersonPeriod(session), 'Du 29/11/2027 au 02/12/2027, puis du 06/12/2027 au 10/12/2027');
+  assert.ok(validateInPersonSplit({ ...session, inPersonResumeDate: '2027-12-01' }));
+  assert.ok(validateInPersonSplit({ ...session, inPersonFirstEndDate: null }));
+  const continuous = { inPersonStartDate: '2027-02-08', inPersonEndDate: '2027-02-18' };
+  assert.equal(formatSplitInPersonPeriod(continuous), null);
+  assert.deepEqual(inPersonPeriods(continuous), [{ start: '2027-02-08', end: '2027-02-18' }]);
+  assert.equal(getSessionSeatAvailability({ status: 'COMING_SOON', seatsTotal: 12 }).count, null);
+  assert.equal(planningRegistrationAction({ status: 'COMING_SOON' }).kind, 'opening');
 });

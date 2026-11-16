@@ -4,6 +4,7 @@ import 'server-only';
 import { getSessionSeatAvailability, resolveSessionSeatCapacity } from '@/lib/session-seat-availability';
 import { getPrisma } from '@/lib/db';
 import { canonicalSiteHref } from '@/lib/site-urls';
+import { formatSplitInPersonPeriod } from '@/lib/public-sessions';
 import { toPublicSession } from '@/lib/public-session-data';
 
 export const sessionStatuses = ['OPEN','FULL','COMING_SOON','HIDDEN'] as const;
@@ -67,7 +68,7 @@ export async function getRelevantDynamicTrainingData(question:string){
   const context=sessions.map((s:any)=>{
     const slug=String(s.training?.slug||'');
     const hasDeliveryPeriods=slug==='aps'||slug.startsWith('desp-');
-    const deliveryPeriods=hasDeliveryPeriods?`\nPrésentiel: ${formatPeriod(s.inPersonStartDate,s.inPersonEndDate)}\nDistanciel: ${formatPeriod(s.remoteStartDate,s.remoteEndDate)}`:'';
+    const deliveryPeriods=hasDeliveryPeriods?`\nPrésentiel: ${formatSplitInPersonPeriod(s) ?? formatPeriod(s.inPersonStartDate,s.inPersonEndDate)}\nDistanciel: ${formatPeriod(s.remoteStartDate,s.remoteEndDate)}`:'';
     return `Formation: ${s.training?.name} (${s.training?.title})\nPage: ${s.training?.pageUrl}\nSession: ${s.title}\nDates: du ${formatDate(s.startDate)} au ${formatDate(s.endDate)}${deliveryPeriods}\nExamen: ${s.examDate?formatDate(s.examDate):'non précisé'}\nTarif: ${s.priceLabel} (${s.priceCents} centimes)\nLieu: ${s.location}\nStatut: ${s.status}\nPlaces restantes: ${getSessionSeatAvailability(s).label}\nCapacité maximale de la session: ${resolveSessionSeatCapacity(s)}\nInscription: ${s.registrationUrl}\nFinancement: ${s.fundingNotes||'à vérifier avec l’équipe'}\nNotes publiques: ${s.publicNotes}`;
   }).join('\n\n---\n\n');
   return {trainings,sessions,context,selectedDynamicTrainings:trainings.map((t:any)=>t.slug),selectedSessions:sessions.map((s:any)=>s.id)};

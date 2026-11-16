@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { validateInPersonSplit } from '@/lib/public-sessions';
 import { requireAdmin } from '@/lib/admin/guard';
 import { getPrisma } from '@/lib/db';
 import { validateSessionSeatCounts } from '@/lib/session-capacity';
@@ -14,6 +15,8 @@ function sessionUpdateData(data: any) {
   if ('endDate' in data) update.endDate = new Date(String(data.endDate || ''));
   if ('inPersonStartDate' in data) update.inPersonStartDate = toDate(data.inPersonStartDate);
   if ('inPersonEndDate' in data) update.inPersonEndDate = toDate(data.inPersonEndDate);
+  if ('inPersonFirstEndDate' in data) update.inPersonFirstEndDate = toDate(data.inPersonFirstEndDate);
+  if ('inPersonResumeDate' in data) update.inPersonResumeDate = toDate(data.inPersonResumeDate);
   if ('remoteStartDate' in data) update.remoteStartDate = toDate(data.remoteStartDate);
   if ('remoteEndDate' in data) update.remoteEndDate = toDate(data.remoteEndDate);
   if ('examDate' in data) update.examDate = toDate(data.examDate);
@@ -35,8 +38,8 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
   const data = await request.json();
   const current = await prisma.trainingSession.findUnique({ where: { id } });
   if (!current) return NextResponse.json({ error: 'Session introuvable.' }, { status: 404 });
-  const seatError = validateSessionSeatCounts({ ...current, ...data });
-  if (seatError) return NextResponse.json({ error: seatError }, { status: 400 });
+  const validationError = validateSessionSeatCounts({ ...current, ...data }) ?? validateInPersonSplit({ ...current, ...data });
+  if (validationError) return NextResponse.json({ error: validationError }, { status: 400 });
   const session = await prisma.trainingSession.update({ where: { id }, data: sessionUpdateData(data), include: { training: true } });
   return NextResponse.json(session);
 }

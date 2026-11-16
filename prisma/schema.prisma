@@ -38,6 +38,8 @@ model TrainingSession {
   endDate           DateTime
   inPersonStartDate DateTime?
   inPersonEndDate   DateTime?
+  inPersonFirstEndDate DateTime?
+  inPersonResumeDate   DateTime?
   remoteStartDate   DateTime?
   remoteEndDate     DateTime?
   examDate          DateTime?

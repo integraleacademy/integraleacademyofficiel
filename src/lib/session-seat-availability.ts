@@ -33,6 +33,9 @@ export function getSessionSeatAvailability(
   capacity = 12,
   referenceDate = new Date(),
 ): SessionSeatAvailability {
+  if (session.status === 'COMING_SOON') {
+    return { count: null, label: 'Ouverture à confirmer', tone: 'moderate', badgeClassName: badgeStyles.moderate };
+  }
   const safeCapacity = resolveSessionSeatCapacity(session, capacity);
   if (session.showSeatsLeft === false && session.status !== 'FULL') {
     return { count: null, label: 'Places limitées', tone: 'available', badgeClassName: badgeStyles.available };
