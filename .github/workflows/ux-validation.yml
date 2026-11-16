@@ -1,0 +1,28 @@
+name: Validation des améliorations UX Intégrale Academy
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'src/components/**'
+      - 'src/app/globals.css'
+      - 'src/app/entreprises/page.tsx'
+      - 'src/data/upcoming-trainings.ts'
+      - 'tests/ux-ameliorations-2026.test.mjs'
+      - '.github/workflows/ux-validation.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npx prisma generate
+      - run: node --test tests/ux-ameliorations-2026.test.mjs tests/site-ui-consistency.test.mjs tests/training-section-navigation.test.mjs tests/training-session-blocks.test.mjs
+      - run: npx tsc --noEmit
+      - run: npm run build
