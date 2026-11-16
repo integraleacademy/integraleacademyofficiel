@@ -181,6 +181,11 @@
   mask-image: linear-gradient(90deg, transparent, #000 43%);
 }
 .summaryArt img { object-fit: cover; object-position: center 50%; }
+.summaryArt[data-course] {
+  max-width: 15rem;
+  mask-image: linear-gradient(90deg, transparent, #000 27%);
+}
+.summaryArt[data-course] img { object-position: center top; }
 .preview[data-summary] .eyebrow {
   display: flex;
   align-items: center;

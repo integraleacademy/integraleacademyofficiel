@@ -66,7 +66,7 @@ export function PlanningPreview({ formations, initialFormation, initialSsiapCour
   return (
     <div id="prochaine-session" className={styles.preview} data-summary={showSession || undefined}>
       <div className={styles.previewHeading}>
-        {showSession && <div className={styles.summaryArt} aria-hidden="true">
+        {showSession && <div className={styles.summaryArt} data-course={locationKey ? undefined : formation.key} aria-hidden="true">
           <Image src={locationKey ? destinationArtwork[locationKey].src : formation.image} alt="" fill sizes="(max-width: 600px) 42vw, 290px" />
         </div>}
         <div>
