@@ -54,14 +54,14 @@ export function CourseFilm({ film, title, titleAccent, description }: Props) {
     let pausedOffscreen = false;
     let playRequested = false;
     let triedMutedPlayback = false;
+    let needsPlayGesture = true;
     let volumeTimer: number | undefined;
     setDisplay('poster');
     setSound(null);
 
     function updateSoundControl() {
       if (!player || !ready || disposed || failed) return;
-      const playing = [1, 3].includes(player.getPlayerState());
-      setSound(playing && !player.isMuted() && player.getVolume() > 0 ? 'on' : 'off');
+      setSound(!needsPlayGesture && !player.isMuted() && player.getVolume() > 0 ? 'on' : 'off');
     }
 
     function stopWatchingVolume() {
@@ -119,6 +119,7 @@ export function CourseFilm({ film, title, titleAccent, description }: Props) {
             onStateChange: ({ target, data }) => {
               if (disposed) return;
               if (data === 0 || data === 1 || data === 2) playRequested = false;
+              if (data === 1 || data === 3) needsPlayGesture = false;
               updateSoundControl();
               if (data === 1) {
                 if (document.hidden || (visibleRatio === 0 && !manual)) {
@@ -137,6 +138,7 @@ export function CourseFilm({ film, title, titleAccent, description }: Props) {
             onAutoplayBlocked: ({ target }) => {
               if (disposed || failed) return;
               playRequested = false;
+              needsPlayGesture = true;
               setSound('off');
               if (document.hidden || (!manual && visibleRatio <= .5)) return;
               if (triedMutedPlayback) {
@@ -171,6 +173,7 @@ export function CourseFilm({ film, title, titleAccent, description }: Props) {
         manual = visibleRatio === 0 && player.getPlayerState() !== 1;
         resume = true;
         triedMutedPlayback = false;
+        needsPlayGesture = false;
         enableSound(player);
         requestPlayback(player);
       } else {

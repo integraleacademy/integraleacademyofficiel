@@ -21,6 +21,8 @@ function installTestPlayer({ policy, initialVolume }) {
     }
     playVideo() {
       this.attempts.push(this.muted);
+      // YouTube can accept the gesture before it has received the first media frame.
+      if (policy === 'blocked' && interacted && this.state === -1) return;
       if (policy === 'allowed' || interacted || (policy === 'muted-only' && this.muted)) this.setState(1);
       else setTimeout(() => this.events.onAutoplayBlocked({ target: this }), 0);
     }
@@ -81,6 +83,12 @@ try {
     const disable = section.getByRole('button', { name: 'Couper le son' });
     if (policy !== 'allowed') await enable.press('Enter');
     await disable.waitFor();
+    if (policy === 'blocked') {
+      const loading = await readPlayer();
+      assert.equal(loading.muted, false);
+      assert.equal(loading.state, -1);
+      await page.evaluate(key => window.filmPlayers[key].setState(1), film);
+    }
     const audible = await readPlayer();
     assert.equal(audible.state, 1);
     assert.equal(audible.muted, false);
