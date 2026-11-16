@@ -170,7 +170,7 @@ export default function EntreprisesPage() {
               <Link href="#solutions" className={styles.primaryButton}>Découvrir les 3 solutions <Icon name="arrow" /></Link>
               <a href="#contact-entreprises" className={styles.secondaryButton}>Parlons de vos besoins <Icon name="arrow" /></a>
             </div>
-            <a className={styles.brochureLink} href={INFORMATION_REQUEST_URL}><Icon name="document" /> Consulter la brochure entreprises · PDF, 20 pages</a>
+            <a className={styles.brochureLink} href={INFORMATION_REQUEST_URL} target="_blank" rel="noopener noreferrer"><Icon name="document" /> Consulter la brochure entreprises · PDF, 20 pages<span className="sr-only"> (nouvel onglet)</span></a>
             <div className={styles.heroTags}><span><Icon name="check" />Sourcing candidats</span><span><Icon name="check" />Gestion administrative</span><span><Icon name="check" />Suivi CNAPS</span></div>
           </div>
           <figure className={styles.heroArtwork}>
@@ -193,7 +193,7 @@ export default function EntreprisesPage() {
         <Link href="#poei"><i className={styles.dotGreen} />POEI</Link>
         <Link href="#bts-mos"><i className={styles.dotMauve} />BTS MOS</Link>
         <Link href="#accompagnement">Notre accompagnement</Link>
-        <Link href={INFORMATION_REQUEST_URL}>La brochure</Link>
+        <a href={INFORMATION_REQUEST_URL} target="_blank" rel="noopener noreferrer">La brochure<span className="sr-only"> (nouvel onglet)</span></a>
         <Link href="#contact-entreprises">Votre projet <Icon name="arrow" /></Link>
       </div>
     </nav>
@@ -314,9 +314,9 @@ export default function EntreprisesPage() {
       contactContent={
           <aside id="brochure-entreprises" className={`${styles.diagnosticCard} ${styles.brochureCard}`} aria-labelledby="brochure-title">
             <span className={styles.ribbon}>Le dossier entreprises</span><h3 id="brochure-title">Toutes nos solutions,<br />à portée de main.</h3>
-            <a href={INFORMATION_REQUEST_URL} className={styles.brochureCover}><img src="/images/entreprises/brochure-entreprises-2026-10.webp" alt="Couverture de la brochure entreprises Intégrale Academy : recruter, former et faire évoluer vos futurs professionnels de la sécurité privée." width="1050" height="799" loading="lazy" /></a>
+            <a href={INFORMATION_REQUEST_URL} target="_blank" rel="noopener noreferrer" className={styles.brochureCover}><img src="/images/entreprises/brochure-entreprises-2026-10.webp" alt="Couverture de la brochure entreprises Intégrale Academy : recruter, former et faire évoluer vos futurs professionnels de la sécurité privée." width="1050" height="799" loading="lazy" /><span className="sr-only"> (nouvel onglet)</span></a>
             <p>Les trois dispositifs, les programmes, les calendriers et les simulations pour préparer votre prochain recrutement.</p>
-            <a href={INFORMATION_REQUEST_URL} className={styles.primaryButton}>Télécharger la brochure <Icon name="document" /></a><small>PDF · 20 pages · dernière version</small>
+            <a href={INFORMATION_REQUEST_URL} target="_blank" rel="noopener noreferrer" className={styles.primaryButton}>Télécharger la brochure <Icon name="document" /><span className="sr-only"> (nouvel onglet)</span></a><small>PDF · 20 pages · dernière version</small>
           </aside>
       }
     />

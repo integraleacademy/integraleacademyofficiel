@@ -151,14 +151,18 @@ export default async function Page() {
           </details>
         </div>
         <article id="mot-du-directeur" className={experience.welcomeLetter} aria-labelledby="welcome-title">
-          <p className={experience.letterLabel}>Le mot du directeur</p>
-          <h3 id="welcome-title">Bienvenue !</h3>
-          <blockquote>
-            <p>Je vous souhaite une très belle formation au sein d’Intégrale Academy, riche en découvertes, en échanges et en réussites.</p>
-            <p>Osez poser vos questions, essayer et progresser. Toute l’équipe est à vos côtés pour vous accompagner.</p>
-            <p>Que ce carnet accueille vos idées et garde la trace de vos progrès.</p>
-          </blockquote>
-          <p className={experience.letterSignature}>Clément Vaillant<span>Directeur Intégrale Academy</span></p>
+          <h3 id="welcome-title" className="sr-only">Le mot du directeur</h3>
+          <Image src="/images/welcome-pack/mot-du-directeur.svg" alt="La page de bienvenue du carnet, manuscrite et signée par Clément Vaillant." width={1092} height={1531} unoptimized className={experience.letterPage} />
+          <details className={experience.letterTranscript}>
+            <summary>Lire la transcription</summary>
+            <blockquote>
+              <p>Bienvenue !</p>
+              <p>Je vous souhaite une très belle formation au sein d’Intégrale Academy, riche en découvertes, en échanges et en réussites.</p>
+              <p>Osez poser vos questions, essayer et progresser. Toute l’équipe est à vos côtés pour vous accompagner.</p>
+              <p>Que ce carnet accueille vos idées et garde la trace de vos progrès.</p>
+              <p>Clément Vaillant<br />Directeur Intégrale Academy</p>
+            </blockquote>
+          </details>
         </article>
       </div>
       <div id="histoire" className={`${styles.container} ${experience.history}`}>

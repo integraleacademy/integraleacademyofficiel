@@ -10,7 +10,7 @@ export function CampusSection() {
     <section className={styles.section} aria-labelledby="home-campus-title">
       <div className={styles.container}>
         <div className={styles.heading}>
-          <h2 id="home-campus-title">Nos deux centres de formation</h2>
+          <h2 id="home-campus-title">Nos centres de formation</h2>
           <Link href="/ecole">Découvrir notre école <span aria-hidden="true">↗</span></Link>
         </div>
         <div className={styles.grid}>

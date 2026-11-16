@@ -5,7 +5,6 @@ import { HomeHeroIllustrations } from '@/components/HomeHeroIllustrations';
 import { AcademyJourney } from '@/components/AcademyExperience';
 import { BtsTrainingGrid, type BtsTrainingHighlight } from '@/components/BtsTrainingGrid';
 import { BtsTrainingComparisonModal } from '@/components/BtsTrainingComparisonModal';
-import { CampusFormationTags } from '@/components/CampusFormationTags';
 import { locations } from '@/data/locations';
 import { CampusSection } from '@/components/CampusSection';
 import { GoogleReviewsSection } from '@/components/GoogleReviewsSection';
@@ -113,15 +112,11 @@ export default async function Home() {
         <div className={heroStyles.container}>
           <div className={heroStyles.heroComposition}>
             <div className={heroStyles.heroCopy}>
-              <div className={heroStyles.heroCentres} data-home-hero-item>
-                <p className={heroStyles.centreLabel}>Nos deux centres</p>
+              <nav className={heroStyles.heroCentres} aria-label="Nos centres de formation" data-home-hero-item>
                 {locations.map(centre => (
-                  <div key={centre.id} className={heroStyles.centre}>
-                    <a href={`#centre-${centre.planningKey}`}>{centre.shortName}</a>
-                    <CampusFormationTags tags={centre.tags} />
-                  </div>
+                  <a key={centre.id} href={`#centre-${centre.planningKey}`}>{centre.shortName}</a>
                 ))}
-              </div>
+              </nav>
               <h1 id="home-hero-title" data-home-hero-item>Votre futur métier mérite une formation <em>à la hauteur.</em></h1>
               <p data-home-hero-item>Des formations en sécurité, VTC et BTS, et une équipe à vos côtés pour construire la suite.</p>
               <div className={heroStyles.heroActions} data-home-hero-item>
