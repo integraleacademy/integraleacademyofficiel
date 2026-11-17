@@ -1,3 +1,4 @@
+import { businessFaq } from '@/data/faq/practical';
 import { PremiumFAQSection } from '@/components/FAQ';
 import { TeamPortrait } from '@/components/TeamPortrait';
 import { INFORMATION_REQUEST_URL } from '@/lib/contact-request';
@@ -114,9 +115,9 @@ const siteSkills = [
 ];
 
 const contacts = [
-  { portrait: 'cassandre' as const, firstName: 'Cassandre', name: 'Cassandre MENARD', role: 'Responsable commerciale', email: 'cassandre@integraleacademy.com', phone: '04 87 83 06 16', phoneHref: '+33487830616', mobile: '07 43 58 22 64', mobileHref: '+33743582264' },
-  { portrait: 'aurelie' as const, firstName: 'Aurélie', name: 'Aurélie BAYARD-CHAUSSEZ', role: 'Chargée des relations clients', email: 'aurelie@integraleacademy.com', phone: '04 87 83 06 15', phoneHref: '+33487830615', mobile: '07 69 39 04 57', mobileHref: '+33769390457' },
-  { portrait: 'clement' as const, firstName: 'Clément', name: 'Clément VAILLANT', role: 'Directeur général', email: 'clement@integraleacademy.com', phone: '04 87 83 06 14', phoneHref: '+33487830614', mobile: '06 65 24 52 71', mobileHref: '+33665245271' },
+  { portrait: 'cassandre' as const, contactLabel: 'Cassandre, responsable commercial', name: 'Cassandre MENARD', role: 'Responsable commercial', email: 'cassandre@integraleacademy.com', phone: '04 87 83 06 16', phoneHref: '+33487830616', mobile: '07 43 58 22 64', mobileHref: '+33743582264' },
+  { portrait: 'aurelie' as const, contactLabel: 'Aurélie, responsable des BTS', name: 'Aurélie BAYARD-CHAUSSEZ', role: 'Responsable des BTS · Relations clients', email: 'aurelie@integraleacademy.com', phone: '04 87 83 06 15', phoneHref: '+33487830615', mobile: '07 69 39 04 57', mobileHref: '+33769390457' },
+  { portrait: 'clement' as const, contactLabel: 'Clément', name: 'Clément VAILLANT', role: 'Directeur général', email: 'clement@integraleacademy.com', phone: '04 87 83 06 14', phoneHref: '+33487830614', mobile: '06 65 24 52 71', mobileHref: '+33665245271' },
 ];
 
 const poeiProgram = [
@@ -148,13 +149,6 @@ const catalog = [
   { icon: 'briefcase' as const, title: 'Solutions employeurs', text: 'POEI, alternance sécurité, BTS MOS, sourcing et financement OPCO AKTO.' },
 ];
 
-const faqItems = [
-  { question: 'Quel dispositif correspond à mon besoin ?', answer: 'L’alternance sécurité répond à un besoin d’agent polyvalent formé sur un an. La POEI est adaptée à une embauche rapide après 450 heures de formation. Le BTS MOS prépare plutôt un futur chef d’équipe, superviseur ou responsable d’exploitation.' },
-  { question: 'Les coûts annoncés sont-ils garantis ?', answer: 'Non. Ils constituent des estimations établies à partir des hypothèses de rémunération et d’aides. Le coût final dépend notamment de la rémunération, des aides en vigueur, de l’âge du candidat et des règles de prise en charge applicables au moment du contrat.' },
-  { question: 'Pouvez-vous recruter plusieurs candidats ?', answer: 'Oui. Nous pouvons organiser un sourcing individuel ou collectif, présélectionner les candidats et mettre en place des réunions d’information selon vos volumes et vos contraintes opérationnelles.' },
-  { question: 'Qui gère les contrats et les financeurs ?', answer: 'Intégrale Academy vous accompagne pour le montage administratif, les relations avec l’OPCO ou France Travail, les contrats et le suivi des autorisations CNAPS. Chaque prise en charge reste soumise à la décision du financeur concerné.' },
-  { question: 'Intervenez-vous hors de la Côte d’Azur ?', answer: 'Nous étudions chaque projet selon le lieu, le nombre de recrutements et les modalités pédagogiques possibles. Un premier échange permet de confirmer rapidement la faisabilité et l’organisation à prévoir.' },
-];
 
 export default function EntreprisesPage() {
   return <div className={styles.page}>
@@ -309,7 +303,7 @@ export default function EntreprisesPage() {
     <PremiumFAQSection theme="gold"
       id="diagnostic" badge="Les réponses à vos questions" title="Avant de se lancer"
       description="Retrouvez les réponses utiles pour préparer votre projet de recrutement ou de formation."
-      items={faqItems.map(({ question, answer }) => ({ q: question, a: answer }))}
+      items={businessFaq}
       contactHref="#contact-entreprises"
       contactContent={
           <aside id="brochure-entreprises" className={`${styles.diagnosticCard} ${styles.brochureCard}`} aria-labelledby="brochure-title">
@@ -331,7 +325,7 @@ export default function EntreprisesPage() {
             <a href={`tel:${contact.mobileHref}`}><Icon name="phone" /><span><small>Portable</small><strong>{contact.mobile}</strong></span></a>
             <a href={`mailto:${contact.email}`}><Icon name="email" /><span><small>E-mail</small><strong>{contact.email}</strong></span></a>
           </address>
-          <a href={`mailto:${contact.email}?subject=Projet%20de%20recrutement%20en%20entreprise`} className={styles.primaryButton}>Écrire à {contact.firstName} <Icon name="arrow" /></a>
+          <a href={`mailto:${contact.email}?subject=Projet%20de%20recrutement%20en%20entreprise`} className={styles.primaryButton}>Écrire à {contact.contactLabel} <Icon name="arrow" /></a>
         </article>)}</div>
         <div className={styles.contactFooter}><span>Premier échange gratuit et sans engagement</span><a href="tel:+33422470768">Accueil : 04 22 47 07 68</a><a href="mailto:ecole@integraleacademy.com">ecole@integraleacademy.com</a></div>
       </div>

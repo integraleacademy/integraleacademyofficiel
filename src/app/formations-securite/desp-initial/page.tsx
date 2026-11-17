@@ -155,7 +155,7 @@ export default async function DespInitialPage(){
 
     <TrainingCourseTestimonials category="DESP" />
     <div id="faq-desp-initial"><PremiumFAQSection theme="orange" badge="FAQ DESP initial" title="Vos questions sur la formation DESP initial" description="Retrouvez les réponses essentielles sur le déroulement du parcours, les prérequis, les financements, l’examen, le CNAPS et les étapes d’inscription." items={[...formationFaq, ...despInitialFaq]} contactHref="/contact?formation=desp-initial" contactLabel="Poser une question"/></div>
-    <TrainingReferenceContact description="Cassandre vous aide à préparer votre projet de création ou de reprise, vérifier les prérequis, choisir votre centre et étudier votre financement." href="/contact?formation=desp-initial&objet=rendez-vous" />
+    <TrainingReferenceContact description="Cassandre, responsable commercial, vous aide à préparer votre projet de création ou de reprise, vérifier les prérequis, choisir votre centre et étudier votre financement." href="/contact?formation=desp-initial&objet=rendez-vous" />
     <TrainingReferenceMobileBar label="Recevoir les dates" />
   </TrainingReferencePage>
 }

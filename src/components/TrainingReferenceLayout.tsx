@@ -123,11 +123,11 @@ export function TrainingReferenceContact({ description, title, href, additionalA
     </div>
     <Link href="/ecole#equipe" className={schoolStyle ? editorial.teamLink : reference.textLink}>Rencontrer les personnes qui vous accompagnent <span aria-hidden="true">↗︎</span></Link>
   </>;
-  const portrait = <TeamPortrait person="cassandre" size={240} alt="Memoji de Cassandre, responsable commerciale Intégrale Academy" className={schoolStyle ? editorial.adviserPortrait : `${reference.portrait} ${portraitMedallion ? styles.portraitMedallion : ''}`} />;
+  const portrait = <TeamPortrait person="cassandre" size={240} alt="Memoji de Cassandre, responsable commercial d’Intégrale Academy" className={schoolStyle ? editorial.adviserPortrait : `${reference.portrait} ${portraitMedallion ? styles.portraitMedallion : ''}`} />;
   const identity = <>
-    <p className={schoolStyle ? editorial.adviserLabel : reference.eyebrow}>Votre conseillère · Contactez Cassandre</p>
+    <p className={schoolStyle ? editorial.adviserLabel : reference.eyebrow}>Votre interlocutrice</p>
     <h3>Cassandre</h3>
-    <p className={schoolStyle ? editorial.adviserRole : undefined}>Responsable commerciale — Intégrale Academy</p>
+    <p className={schoolStyle ? editorial.adviserRole : undefined}>Responsable commercial — Intégrale Academy</p>
   </>;
   const appointment = <TrainingReferenceAction href={href}>Réserver un rendez-vous téléphonique →</TrainingReferenceAction>;
   const reassurance = <small>Échange gratuit et sans engagement</small>;
@@ -141,7 +141,7 @@ export function TrainingReferenceContact({ description, title, href, additionalA
         </div>
         <div className={editorial.adviser}>
           <div className={editorial.person}>{portrait}{identity}</div>
-          <a className={editorial.call} href="tel:0422470768"><span>Appeler Cassandre</span><strong>04 22 47 07 68</strong></a>
+          <a className={editorial.call} href="tel:0422470768"><span>Appeler Cassandre, responsable commercial</span><strong>04 22 47 07 68</strong></a>
           <div className={editorial.appointment}>{appointment}{additionalActions}{reassurance}</div>
         </div>
       </div>
@@ -151,7 +151,7 @@ export function TrainingReferenceContact({ description, title, href, additionalA
   return <section className={`${reference.contact} ${styles.contact}`} aria-labelledby="course-contact-title">
     <div className={`${reference.container} ${reference.contactGrid}`}>
       <div>{heading}{intro}</div>
-      <div className={reference.contactCard}>{portrait}{identity}<a className={reference.phone} href="tel:0422470768">04 22 47 07 68</a>{appointment}{additionalActions}<a className={reference.textLink} href="tel:0422470768">Appeler Cassandre</a>{reassurance}</div>
+      <div className={reference.contactCard}>{portrait}{identity}<a className={reference.phone} href="tel:0422470768">04 22 47 07 68</a>{appointment}{additionalActions}<a className={reference.textLink} href="tel:0422470768">Appeler Cassandre, responsable commercial</a>{reassurance}</div>
     </div>
   </section>;
 }

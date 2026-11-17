@@ -322,8 +322,6 @@
 .resultEnter { animation: planningEnter .3s ease-out both; }
 .sessionEnter { animation: planningEnter .4s ease-out both; animation-delay: var(--session-delay, 0ms); }
 .sessionCard[data-selected='true'] { outline: 2px solid #c7a050; outline-offset: 2px; }
-.sessionInterest { display: flex; flex: 1; align-items: center; justify-content: center; gap: 8px; padding: 12px 15px; border: 1px solid #d5b36e; border-radius: 999px; color: rgb(var(--text-main)); background: rgb(var(--accent) / .14); font-size: 12px; font-weight: 800; }
-.sessionInterest:hover { background: rgb(var(--accent) / .26); }
 
 /* Three-month timeline; each entire row is keyboard accessible. */
 .calendar { padding: 32px; border-radius: 28px; background: #101a29; color: #fffaf0; }

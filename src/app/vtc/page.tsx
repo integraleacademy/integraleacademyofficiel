@@ -1,3 +1,4 @@
+import { vtcFaq } from '@/data/faq/practical';
 import { CourseTeamBanner } from '@/components/CourseTeamBanner';
 import { CourseBrochureCard } from '@/components/CourseBrochureCard';
 import { TeamPortrait } from '@/components/TeamPortrait';
@@ -120,16 +121,6 @@ const prerequisites = [
   'Ne pas avoir été exclu pour fraude d’un examen T3P durant les cinq dernières années.',
 ];
 
-const faq = [
-  {q:'La formation coûte-t-elle vraiment 1 500 € tout inclus ?', a:'Oui. La formule présentée comprend la préparation théorique, la pratique, le livre officiel, les frais d’examen et la mise à disposition du véhicule à doubles commandes selon les modalités précisées dans votre convention.'},
-  {q:'Puis-je financer la formation avec mon CPF ?', a:'La formation peut être financée avec le CPF selon votre éligibilité et les règles applicables à votre dossier. Notre équipe vérifie avec vous les possibilités avant toute inscription.'},
-  {q:'Où se déroule la formation ?', a:'La théorie se suit en e-learning. Les temps pratiques sont organisés en présentiel dans les secteurs de Nice, Cannes, Toulon ou Fréjus selon la session.'},
-  {q:'Combien de temps dure la préparation ?', a:'Le parcours représente 105 heures estimées. L’organisation combine une partie théorique flexible à distance et des temps pratiques en présentiel.'},
-  {q:'Comment se déroule l’examen VTC ?', a:'L’examen comprend d’abord sept épreuves théoriques d’admissibilité, puis une mise en situation pratique de réalisation d’une course VTC.'},
-  {q:'Quel permis faut-il avoir ?', a:'Vous devez être titulaire du permis B et avoir dépassé la période probatoire. Votre aptitude et la conformité de votre dossier sont vérifiées avant l’inscription.'},
-  {q:'Est-ce adapté si je travaille déjà ?', a:'Oui. La théorie disponible en ligne 24h/24 permet d’avancer plus facilement autour de vos contraintes. Les séances pratiques sont ensuite planifiées avec vous.'},
-  {q:'Suis-je accompagné après la réussite ?', a:'Nous vous expliquons les étapes qui suivent l’examen : demande de carte professionnelle, choix du statut et préparation du lancement de votre activité.'},
-];
 
 export default function VtcPage() {
   const examDates = getUpcomingVtcExamSessions();
@@ -306,12 +297,12 @@ export default function VtcPage() {
     <section className={styles.contact}>
       <div className={styles.container}>
         <div className={styles.contactCard}>
-          <div><span>UNE QUESTION SUR VOTRE PROJET ?</span><h2>Faites le premier pas<br/>vers votre <em>future activité</em></h2><p>Cassandre vérifie votre éligibilité, vous explique le calendrier et vous aide à choisir le financement adapté.</p></div>
-          <aside><TeamPortrait person="cassandre" size={96} alt="Cassandre, responsable commerciale Intégrale Academy"/><div><span>VOTRE CONSEILLÈRE</span><h3>Cassandre</h3><p>Responsable commerciale</p></div><a href="tel:0422470768">04 22 47 07 68</a><CTA href={contactHref('Être rappelé au sujet de la formation VTC')}>Réserver un échange</CTA></aside>
+          <div><span>UNE QUESTION SUR VOTRE PROJET ?</span><h2>Faites le premier pas<br/>vers votre <em>future activité</em></h2><p>Cassandre, responsable commercial, vérifie votre éligibilité, vous explique le calendrier et vous aide à choisir le financement adapté.</p></div>
+          <aside><TeamPortrait person="cassandre" size={96} alt="Cassandre, responsable commercial d’Intégrale Academy"/><div><span>VOTRE CONSEILLÈRE</span><h3>Cassandre</h3><p>Responsable commercial</p></div><a href="tel:0422470768">04 22 47 07 68</a><CTA href={contactHref('Être rappelé au sujet de la formation VTC')}>Réserver un échange</CTA></aside>
         </div>
       </div>
     </section>
 
-    <div id="faq-vtc"><PremiumFAQSection theme="violet" badge="11 — FAQ VTC" title="Vos questions avant de prendre le volant" description="Tarif, financement, prérequis, examen et organisation : toutes les réponses utiles avant de démarrer." items={faq} contactHref={contactHref('Question sur la formation VTC')} contactLabel="Poser ma question" /></div>
+    <div id="faq-vtc"><PremiumFAQSection theme="violet" badge="11 — FAQ VTC" title="Vos questions avant de prendre le volant" description="Tarif, financement, prérequis, examen et organisation : toutes les réponses utiles avant de démarrer." items={vtcFaq} contactHref={contactHref('Question sur la formation VTC')} contactLabel="Poser ma question" /></div>
   </main>;
 }

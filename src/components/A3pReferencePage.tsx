@@ -329,7 +329,7 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
     <div id="faq-a3p"><PremiumFAQSection theme="green" badge="12 — FAQ A3P" title="Tout savoir avant de vous inscrire" description="Retrouvez les réponses aux questions les plus fréquentes sur la formation A3P, les prérequis CNAPS, le financement, l’hébergement et l’examen." items={a3pFaq} contactHref={a3pContact('question-faq-a3p')} /></div>
 
     <TrainingReferenceContact
-      description="Cassandre vérifie vos prérequis, vous présente les prochaines dates et étudie les solutions de financement adaptées à votre situation."
+      description="Cassandre, responsable commercial, vérifie vos prérequis, vous présente les prochaines dates et étudie les solutions de financement adaptées à votre situation."
       href={a3pContact('rdv-telephonique')}
     />
     <TrainingReferenceMobileBar href={a3pContact('mobile-dossier-a3p')} label="Recevoir le dossier" />

@@ -76,81 +76,83 @@ export default async function Home() {
         </div>
       </section>
 
-      <section id="formations-securite" aria-labelledby="security-heading" className={carouselStyles.section}>
-        <div className="page-container">
-          <div className={carouselStyles.heading}>
-            <h2 id="security-heading">Les métiers de la sécurité</h2>
-            <p>5 parcours pour se former et évoluer</p>
-          </div>
-          <SecurityTrainingGrid items={securityHighlights} />
-          <div className={carouselStyles.footer}>
-            <p className={carouselStyles.formats}>Un projet à préciser ? <Link href="#assistant-orientation">Être orienté <span aria-hidden="true">→</span></Link></p>
-            <div className={carouselStyles.actions}>
-              <SecurityTrainingComparisonModal items={securityHighlights} className={carouselStyles.secondary} />
-              <Link href="/planning" className={carouselStyles.secondary}>Voir le planning <span aria-hidden="true">→</span></Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="formation-vtc" aria-labelledby="formation-vtc-title" className={`${carouselStyles.section} ${carouselStyles.sectionAlternate}`}>
-        <div className="page-container">
-          <div className={carouselStyles.heading}>
-            <h2 id="formation-vtc-title">{vtcFormation.title}</h2>
-            <p>Théorie, pratique et examen · Une formule tout inclus</p>
-          </div>
-          <VtcTrainingCard
-            description="Apprenez la théorie à votre rythme, entraînez-vous au volant et préparez l’examen avec une formule tout inclus."
-            duration={vtcFormation.duration}
-            price={vtcFormation.price ?? '1 500 € tout inclus'}
-            href={vtcFormation.slug}
-          />
-        </div>
-      </section>
-
-      <section id="bts" aria-labelledby="bts-heading" className={carouselStyles.section}>
-        <div className="page-container">
-          <div className={carouselStyles.heading}>
-            <h2 id="bts-heading">BTS en alternance</h2>
-            <p>6 diplômes d’État · Bac +2 · 2 ans</p>
-          </div>
-          <BtsTrainingGrid items={btsHighlights} />
-          <div className={carouselStyles.footer}>
-            <p className={carouselStyles.formats}>Sur notre campus à <strong>{btsCommon.onsiteLocation}</strong> ou <strong>en visioconférence</strong>.</p>
-            <div className={carouselStyles.actions}>
-              <BtsTrainingComparisonModal items={btsHighlights} className={carouselStyles.secondary} />
-              <Link href="/bts#formations-bts" className={carouselStyles.secondary}>Découvrir les six BTS <span aria-hidden="true">→</span></Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {upcomingFamilies.map(family => (
-        <section key={family.id} id={family.id} aria-labelledby={`${family.id}-heading`}
-          className={`${carouselStyles.section} ${family.id === 'masteres' ? '' : carouselStyles.sectionAlternate}`}>
+      <div id="formations" className="scroll-mt-[var(--site-header-height)]" aria-label="Catalogue des formations" role="region">
+        <section id="formations-securite" aria-labelledby="security-heading" className={carouselStyles.section}>
           <div className="page-container">
             <div className={carouselStyles.heading}>
-              <h2 id={`${family.id}-heading`}>{family.label}</h2>
-              <p>{[family.level, family.location].filter(Boolean).join(' · ')}</p>
+              <h2 id="security-heading">Les métiers de la sécurité</h2>
+              <p>5 parcours pour se former et évoluer</p>
             </div>
-            <TrainingCarousel
-              visualFirst={family.id === 'bachelors' || family.id === 'titres-professionnels'}
-              label={`Découvrir nos ${family.label.toLowerCase()}`}
-              tabListLabel={`Choisir un ${family.singular.toLowerCase()}`}
-              previousLabel={`${family.singular} précédent`}
-              nextLabel={`${family.singular} suivant`}
-              items={family.items.map(course => ({
-                ...course,
-                ctaLabel: upcomingDiscoveryLabel(family, course),
-                preview: {
-                  name: upcomingCourseName(family, course),
-                  family: family.singular, level: family.level, location: family.location,
-                },
-              }))}
+            <SecurityTrainingGrid items={securityHighlights} />
+            <div className={carouselStyles.footer}>
+              <p className={carouselStyles.formats}>Un projet à préciser ? <Link href="#assistant-orientation">Être orienté <span aria-hidden="true">→</span></Link></p>
+              <div className={carouselStyles.actions}>
+                <SecurityTrainingComparisonModal items={securityHighlights} className={carouselStyles.secondary} />
+                <Link href="/planning" className={carouselStyles.secondary}>Voir le planning <span aria-hidden="true">→</span></Link>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="formation-vtc" aria-labelledby="formation-vtc-title" className={`${carouselStyles.section} ${carouselStyles.sectionAlternate}`}>
+          <div className="page-container">
+            <div className={carouselStyles.heading}>
+              <h2 id="formation-vtc-title">{vtcFormation.title}</h2>
+              <p>Théorie, pratique et examen · Une formule tout inclus</p>
+            </div>
+            <VtcTrainingCard
+              description="Apprenez la théorie à votre rythme, entraînez-vous au volant et préparez l’examen avec une formule tout inclus."
+              duration={vtcFormation.duration}
+              price={vtcFormation.price ?? '1 500 € tout inclus'}
+              href={vtcFormation.slug}
             />
           </div>
         </section>
-      ))}
+
+        <section id="bts" aria-labelledby="bts-heading" className={carouselStyles.section}>
+          <div className="page-container">
+            <div className={carouselStyles.heading}>
+              <h2 id="bts-heading">BTS en alternance</h2>
+              <p>6 diplômes d’État · Bac +2 · 2 ans</p>
+            </div>
+            <BtsTrainingGrid items={btsHighlights} />
+            <div className={carouselStyles.footer}>
+              <p className={carouselStyles.formats}>Sur notre campus à <strong>{btsCommon.onsiteLocation}</strong> ou <strong>en visioconférence</strong>.</p>
+              <div className={carouselStyles.actions}>
+                <BtsTrainingComparisonModal items={btsHighlights} className={carouselStyles.secondary} />
+                <Link href="/bts#formations-bts" className={carouselStyles.secondary}>Découvrir les six BTS <span aria-hidden="true">→</span></Link>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {upcomingFamilies.map(family => (
+          <section key={family.id} id={family.id} aria-labelledby={`${family.id}-heading`}
+            className={`${carouselStyles.section} ${family.id === 'masteres' ? '' : carouselStyles.sectionAlternate}`}>
+            <div className="page-container">
+              <div className={carouselStyles.heading}>
+                <h2 id={`${family.id}-heading`}>{family.label}</h2>
+                <p>{[family.level, family.location].filter(Boolean).join(' · ')}</p>
+              </div>
+              <TrainingCarousel
+                visualFirst={family.id === 'bachelors' || family.id === 'titres-professionnels'}
+                label={`Découvrir nos ${family.label.toLowerCase()}`}
+                tabListLabel={`Choisir un ${family.singular.toLowerCase()}`}
+                previousLabel={`${family.singular} précédent`}
+                nextLabel={`${family.singular} suivant`}
+                items={family.items.map(course => ({
+                  ...course,
+                  ctaLabel: upcomingDiscoveryLabel(family, course),
+                  preview: {
+                    name: upcomingCourseName(family, course),
+                    family: family.singular, level: family.level, location: family.location,
+                  },
+                }))}
+              />
+            </div>
+          </section>
+        ))}
+      </div>
 
       <AcademyJourney />
 

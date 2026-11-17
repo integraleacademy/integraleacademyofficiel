@@ -220,7 +220,7 @@ export function Footer(){
   const footerLinks=[
     {title:'Formations',links:[['Agent de sécurité','/formations-securite/aps'],['Sécurité incendie','/formations-securite/ssiap'],['Protection rapprochée','/formations-securite/a3p-apr'],['Dirigeant de sécurité','/despvaeouinitial'],['Chauffeur VTC','/vtc'],['BTS en alternance','/bts']]},
     {title:'Financements',links:[['CPF','/financements/cpf'],['France Travail','/financements/france-travail'],['Alternance','/financements/alternance'],['Toutes les solutions','/financements']]},
-    {title:'L’école',links:[['Notre école','/ecole'],['Nos centres','/centres'],['Planning','/planning'],['Entreprises','/entreprises']]},
+    {title:'L’école',links:[['Notre école','/ecole'],['Nos centres','/centres'],['Planning','/planning'],['Entreprises','/entreprises'],['Questions fréquentes','/faq']]},
   ];
 
   return <footer className={footerStyles.footer} data-site-footer>

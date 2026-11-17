@@ -10,11 +10,16 @@ import styles from './ContactExperience.module.css';
 export type ContactInterest = 'security' | 'vtc' | 'bts' | 'undecided';
 
 const interests = [
-  { id: 'security', label: 'Sécurité', detail: 'Sécurité privée & incendie', icon: 'shield', image: '/images/formation-scenes-manuel/aps-arrivee.webp', imageAlt: 'Illustration d’un échange autour d’une formation en sécurité', message: 'Je souhaite me reconvertir dans la sécurité. Par où commencer ?', response: 'Parlons du métier qui vous attire, des prérequis et des formations possibles.', topics: ['Votre métier', 'Les prérequis', 'Le financement'], next: 'Trouvons la formation qui vous correspond', description: 'APS, A3P, SSIAP, dirigeant… Cassandre vous aide à préciser votre projet et à préparer les prochaines étapes.' },
-  { id: 'vtc', label: 'VTC', detail: 'Votre projet de chauffeur', icon: 'car', image: '/images/formation-scenes-manuel/vtc-parcours.webp', imageAlt: 'Illustration du parcours de formation de chauffeur VTC', message: 'J’aimerais devenir chauffeur VTC. Comment préparer mon projet ?', response: 'Regardons ensemble la formation, la préparation à l’examen et les possibilités de financement.', topics: ['La formation', 'L’examen', 'Le financement'], next: 'Donnons une direction à votre projet VTC', description: 'Formation, préparation à l’examen, financement : échangez avec Cassandre pour préparer votre parcours de chauffeur VTC.' },
-  { id: 'bts', label: 'BTS', detail: 'Études & alternance', icon: 'book', image: '/images/bts/mixite-2026/mco-ventes.webp', imageAlt: 'Illustration d’étudiants en BTS en situation professionnelle', message: 'Je cherche un BTS en alternance. Pouvez-vous m’accompagner ?', response: 'Échangeons sur le BTS qui vous intéresse, votre candidature et votre recherche d’entreprise.', topics: ['Votre BTS', 'La candidature', 'L’alternance'], next: 'Construisons votre projet d’alternance', description: 'Choix du BTS, candidature et recherche d’entreprise : Aurélie vous accompagne dans votre projet d’alternance.' },
-  { id: 'undecided', label: 'Je ne sais pas encore', detail: 'Commençons par en parler', icon: 'compass', image: '/images/illustrations-2026/campus-accompagnement.webp', imageAlt: 'Illustration de l’accueil et de l’accompagnement des futurs apprenants', message: 'J’ai envie de changer de métier, mais je ne sais pas par où commencer.', response: 'Vos envies, votre expérience, votre situation : prenons le temps d’en parler pour vous orienter.', topics: ['Vos envies', 'Votre situation', 'Vos possibilités'], next: 'Un premier échange pour y voir plus clair', description: 'Vous n’avez pas besoin d’avoir toutes les réponses. Cassandre vous aide à explorer les possibilités et à trouver votre direction.' },
+  { id: 'security', label: 'Sécurité', detail: 'Sécurité privée & incendie', icon: 'shield', image: '/images/formation-scenes-manuel/aps-arrivee.webp', imageAlt: 'Illustration d’un échange autour d’une formation en sécurité', message: 'Je souhaite me reconvertir dans la sécurité. Par où commencer ?', response: 'Parlons du métier qui vous attire, des prérequis et des formations possibles.', topics: ['Votre métier', 'Les prérequis', 'Le financement'], next: 'Trouvons la formation qui vous correspond', description: 'Faites le point sur les métiers de la sécurité, les conditions d’entrée et les formations qui correspondent à votre profil.' },
+  { id: 'vtc', label: 'VTC', detail: 'Votre projet de chauffeur', icon: 'car', image: '/images/formation-scenes-manuel/vtc-parcours.webp', imageAlt: 'Illustration du parcours de formation de chauffeur VTC', message: 'J’aimerais devenir chauffeur VTC. Comment préparer mon projet ?', response: 'Regardons ensemble la formation, la préparation à l’examen et les possibilités de financement.', topics: ['La formation', 'L’examen', 'Le financement'], next: 'Donnons une direction à votre projet VTC', description: 'Échangez sur la préparation à l’examen, les heures de conduite et les possibilités de financement.' },
+  { id: 'bts', label: 'BTS', detail: 'Études & alternance', icon: 'book', image: '/images/bts/mixite-2026/mco-ventes.webp', imageAlt: 'Illustration d’étudiants en BTS en situation professionnelle', message: 'Je cherche un BTS en alternance. Pouvez-vous m’accompagner ?', response: 'Échangeons sur le BTS qui vous intéresse, votre candidature et votre recherche d’entreprise.', topics: ['Votre BTS', 'La candidature', 'L’alternance'], next: 'Construisons votre projet d’alternance', description: 'Précisez le BTS qui vous intéresse et les prochaines étapes de votre candidature et de votre recherche d’entreprise.' },
+  { id: 'undecided', label: 'Je ne sais pas encore', detail: 'Commençons par en parler', icon: 'compass', image: '/images/illustrations-2026/campus-accompagnement.webp', imageAlt: 'Illustration de l’accueil et de l’accompagnement des futurs apprenants', message: 'J’ai envie de changer de métier, mais je ne sais pas par où commencer.', response: 'Vos envies, votre expérience, votre situation : prenons le temps d’en parler pour vous orienter.', topics: ['Vos envies', 'Votre situation', 'Vos possibilités'], next: 'Un premier échange pour y voir plus clair', description: 'Partez de votre expérience et de vos envies pour identifier les métiers et les formations qui pourraient vous convenir.' },
 ] as const;
+
+const advisers = {
+  security: { name: 'Cassandre', role: 'responsable commercial', phone: '04 87 83 06 16', tel: 'tel:+33487830616' },
+  bts: { name: 'Aurélie', role: 'responsable des BTS', phone: '04 87 83 06 15', tel: 'tel:+33487830615' },
+} as const;
 
 const steps = [
   { title: 'Vous nous racontez', description: 'Une idée, une envie de changement ou une simple question. Tout commence par vous.' },
@@ -53,9 +58,7 @@ export function ContactExperience({ initialInterest = 'undecided', requestLinks,
   const stepRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const selected = interests.find(item => item.id === interest) ?? interests[3];
   const isBts = interest === 'bts';
-  const adviser = isBts ? 'Aurélie' : 'Cassandre';
-  const phone = isBts ? '04 87 83 06 15' : '04 22 47 07 68';
-  const phoneHref = isBts ? 'tel:+33487830615' : 'tel:+33422470768';
+  const adviser = isBts ? advisers.bts : advisers.security;
   const mailHref = isBts ? 'mailto:aurelie@integraleacademy.com?subject=Question%20sur%20un%20BTS' : 'mailto:ecole@integraleacademy.com?subject=Mon%20projet%20de%20formation';
   const requestHref = interest === 'vtc' ? requestLinks.vtc : interest === 'security' ? requestLinks.security : requestLinks.general;
 
@@ -84,73 +87,86 @@ export function ContactExperience({ initialInterest = 'undecided', requestLinks,
           <span className={styles.interestIcon}><Icon name={item.icon} /></span><span><strong>{item.label}</strong><small>{item.detail}</small></span><span className={styles.selectionMark} aria-hidden="true"><Icon name="check" /></span>
         </button>)}
       </div>
+    </div>
 
-      <div id="contact-interest-panel" role="tabpanel" tabIndex={0} aria-labelledby={`contact-interest-${interest}`}>
-        <div className={styles.journey} data-contact-reveal>
-          <div className={styles.journeyCopy}>
-            <p className={styles.chapterLabel}>Un échange, tout simplement.</p>
-            <div className={styles.steps} role="tablist" aria-label="Les étapes de votre échange" aria-orientation="vertical">
-              {steps.map((item, index) => <button type="button" role="tab" key={item.title} id={`contact-step-${index}`} aria-selected={step === index} aria-controls="contact-phone-panel" tabIndex={step === index ? 0 : -1} ref={element => { stepRefs.current[index] = element; }} onClick={() => setStep(index)} onKeyDown={event => navigateTabs(event, index, steps.length, setStep, stepRefs.current)}>
-                <span className={styles.stepNumber}>0{index + 1}<Icon name="arrow" /></span>
-                <span className={styles.stepCopy}><strong>{item.title}</strong><span>{item.description}</span></span>
-              </button>)}
-            </div>
-            <a href="#interlocutrice" className={`${school.textLink} ${styles.journeyLink}`}>Parler avec {adviser}<Icon name="diagonal" /></a>
+    <div id="contact-interest-panel" role="tabpanel" tabIndex={0} aria-labelledby={`contact-interest-${interest}`}>
+      <div className={`${school.container} ${styles.journey}`} data-contact-reveal>
+        <div className={styles.journeyCopy}>
+          <p className={styles.chapterLabel}>Un premier échange gratuit et sans engagement</p>
+          <div className={styles.steps} role="tablist" aria-label="Les étapes de votre échange" aria-orientation="vertical">
+            {steps.map((item, index) => <button type="button" role="tab" key={item.title} id={`contact-step-${index}`} aria-selected={step === index} aria-controls="contact-phone-panel" tabIndex={step === index ? 0 : -1} ref={element => { stepRefs.current[index] = element; }} onClick={() => setStep(index)} onKeyDown={event => navigateTabs(event, index, steps.length, setStep, stepRefs.current)}>
+              <span className={styles.stepNumber}>0{index + 1}<Icon name="arrow" /></span>
+              <span className={styles.stepCopy}><strong>{item.title}</strong><span>{item.description}</span></span>
+            </button>)}
           </div>
-
-          <div id="contact-phone-panel" role="tabpanel" tabIndex={0} aria-labelledby={`contact-step-${step}`} className={styles.scene}>
-            <div className={styles.sceneHalo} aria-hidden="true" />
-            <div className={styles.floatingAdviser} key={`adviser-${interest}`}><Avatar bts={isBts} /><span><strong>{adviser}</strong><small>À votre écoute</small></span><Icon name="sparkle" /></div>
-            <div className={styles.phone}>
-              <div className={styles.phoneStatus} aria-hidden="true"><span>9:41</span><i /><span>▰</span></div>
-              <div className={styles.phoneHeader}><Image src="/images/academy-a-icon.svg" alt="" width={35} height={35} /><div><strong>Intégrale Academy</strong><span>Votre projet de formation</span></div></div>
-              <div className={styles.phoneScreen} key={`${interest}-${step}`}>
-                <span className={styles.screenLabel}>{['Faisons connaissance', 'Une équipe pour vous guider', 'Construisons la suite'][step]}</span>
-                {step < 2 && <div className={styles.userBubble}>{selected.message}</div>}
-                {step === 0 && <>
-                  <div className={styles.previewIllustration}><Image src={selected.image} alt={selected.imageAlt} width={1536} height={1024} sizes="260px" /><span>{selected.detail}</span></div>
-                  <p className={styles.phoneNote}>Vos envies donnent la direction.</p>
-                </>}
-                {step === 1 && <>
-                  <div className={styles.adviserBubble}><span>{adviser} · Intégrale Academy</span>{selected.response}</div>
-                  <div className={styles.phoneTopics}>{selected.topics.map(topic => <span key={topic}><Icon name="check" />{topic}</span>)}</div>
-                </>}
-                {step === 2 && <>
-                  <div className={styles.summaryCard}><span className={styles.summaryIcon}><Icon name={selected.icon} /></span><strong>{selected.next}</strong><p>Votre projet · vos possibilités · les prochaines étapes</p><span className={styles.summaryStatus}><Icon name="sparkle" />À construire ensemble</span></div>
-                  <div className={styles.phoneSignoff}><Avatar bts={isBts} /><span>Avec {adviser}<small>Une personne à vos côtés.</small></span></div>
-                </>}
-              </div>
-              <div className={styles.phoneFooter}><span>Écouter</span><i />Orienter<i /><span>Accompagner</span></div>
-              <div className={styles.homeIndicator} aria-hidden="true" />
-            </div>
-            <div className={styles.floatingNote}><Icon name="sparkle" /><span>Le premier échange<strong>Gratuit, sans engagement.</strong></span></div>
-            <p className={styles.sceneCaption}>Un exemple d’échange avec notre équipe</p>
+          <div className={styles.adviserLinks} aria-label="Parler avec notre équipe">
+            {Object.entries(advisers).map(([key, person]) => (
+              <a key={key} href={person.tel}>
+                <Avatar bts={key === 'bts'} />
+                <span><strong>Parler avec {person.name}</strong><small>{person.role}</small></span>
+                <Icon name="phone" />
+              </a>
+            ))}
           </div>
         </div>
 
-        <div id="interlocutrice" className={styles.adviserCard} data-contact-reveal>
+        <div id="contact-phone-panel" role="tabpanel" tabIndex={0} aria-labelledby={`contact-step-${step}`} className={styles.scene}>
+          <div className={styles.sceneHalo} aria-hidden="true" />
+          <div className={styles.floatingAdviser} key={`adviser-${interest}`}><Avatar bts={isBts} /><span><strong>{adviser.name}</strong><small>{adviser.role}</small></span><Icon name="sparkle" /></div>
+          <div className={styles.phone}>
+            <div className={styles.phoneStatus} aria-hidden="true"><span>9:41</span><i /><span>▰</span></div>
+            <div className={styles.phoneHeader}><Image src="/images/academy-a-icon.svg" alt="" width={35} height={35} /><div><strong>Intégrale Academy</strong><span>Votre projet de formation</span></div></div>
+            <div className={styles.phoneScreen} key={`${interest}-${step}`}>
+              <span className={styles.screenLabel}>{['Faisons connaissance', 'Une équipe pour vous guider', 'Construisons la suite'][step]}</span>
+              {step < 2 && <div className={styles.userBubble}>{selected.message}</div>}
+              {step === 0 && <>
+                <div className={styles.previewIllustration}><Image src={selected.image} alt={selected.imageAlt} width={1536} height={1024} sizes="260px" /><span>{selected.detail}</span></div>
+                <p className={styles.phoneNote}>Vos envies donnent la direction.</p>
+              </>}
+              {step === 1 && <>
+                <div className={styles.adviserBubble}><span>{adviser.name}, {adviser.role}</span>{selected.response}</div>
+                <div className={styles.phoneTopics}>{selected.topics.map(topic => <span key={topic}><Icon name="check" />{topic}</span>)}</div>
+              </>}
+              {step === 2 && <>
+                <div className={styles.summaryCard}><span className={styles.summaryIcon}><Icon name={selected.icon} /></span><strong>{selected.next}</strong><p>Votre projet · vos possibilités · les prochaines étapes</p><span className={styles.summaryStatus}><Icon name="sparkle" />À construire ensemble</span></div>
+                <div className={styles.phoneSignoff}><Avatar bts={isBts} /><span>Avec {adviser.name}<small>{adviser.role}</small></span></div>
+              </>}
+            </div>
+            <div className={styles.phoneFooter}><span>Écouter</span><i />Orienter<i /><span>Accompagner</span></div>
+            <div className={styles.homeIndicator} aria-hidden="true" />
+          </div>
+          <p className={styles.sceneCaption}>Un exemple d’échange avec notre équipe</p>
+        </div>
+      </div>
+
+      <section id="interlocutrice" className={styles.adviserBand} aria-labelledby="adviser-title">
+        <div className={`${school.container} ${styles.adviserCard}`}>
           <div className={styles.adviserIntro}>
             <p className={school.eyebrow}>Votre interlocutrice</p>
-            <h2>Parlons de votre<br /><em>prochain métier</em></h2>
-            <div className={styles.person} key={adviser}>
+            <h2 id="adviser-title">Parlons de votre<br /><em>futur métier</em></h2>
+            <div className={styles.person} key={adviser.name}>
               <Avatar bts={isBts} large />
-              <div><h3>{adviser}</h3><p>{isBts ? 'Relations clients & responsable BTS' : 'Responsable commerciale'}</p><span>Intégrale Academy</span></div>
+              <div><h3>{adviser.name}</h3><p>{adviser.role}</p></div>
             </div>
           </div>
-          <div className={styles.adviserActions} key={`actions-${interest}`}>
-            <span className={styles.projectBadge}><Icon name={selected.icon} />{selected.detail}</span>
+          <div className={styles.adviserActions} key={interest}>
+            <span className={styles.projectBadge}><Icon name={selected.icon} />{selected.label}</span>
             <h3>{selected.next}</h3>
             <p>{selected.description}</p>
-            <div className={styles.topicTags}>{selected.topics.map(topic => <span key={topic}><Icon name="check" />{topic}</span>)}</div>
-            <a href={isBts ? mailHref : requestHref} className={`${school.button} ${styles.primaryAction}`}>{isBts ? 'Écrire à Aurélie' : 'Parler de mon projet'}<Icon name="arrow" /></a>
-            <p className={styles.actionHint}>{isBts ? 'Votre message est adressé directement à Aurélie.' : 'Décrivez votre projet dans notre formulaire. L’équipe vous recontactera pour préparer la suite.'}</p>
-            <div className={styles.directContact}><a href={phoneHref}><Icon name="phone" /><span><small>Appeler {adviser}</small>{phone}</span><Icon name="diagonal" /></a>{!isBts && <a href={mailHref} aria-label="Écrire à l’équipe par e-mail" className={styles.mailButton}><Icon name="mail" /></a>}</div>
+            <a href={isBts ? mailHref : requestHref} className={`${school.button} ${styles.primaryAction}`}>
+              {isBts ? 'Écrire à Aurélie, responsable des BTS' : 'Parler de mon projet'}<Icon name="arrow" />
+            </a>
+            <div className={styles.directContact}>
+              <a href={adviser.tel} aria-label={`Appeler ${adviser.name}, ${adviser.role}, au ${adviser.phone}`}>
+                <Icon name="phone" /><span><small>Ligne directe</small>{adviser.phone}</span><Icon name="diagonal" />
+              </a>
+              {!isBts && <a href={mailHref} aria-label="Écrire à l’équipe par e-mail" className={styles.mailButton}><Icon name="mail" /></a>}
+            </div>
             <p className={styles.hours}>{hours}</p>
-            <p className={styles.reassurance}><Icon name="sparkle" />Premier échange gratuit et sans engagement.</p>
           </div>
         </div>
-        {!isBts && <p className={styles.privacy}>Intégrale Academy utilise vos informations pour étudier votre projet et vous recontacter. Le formulaire dédié enregistre les réponses au fil de la saisie, avant validation. Retrouvez les destinataires, les durées de conservation et vos droits dans notre <Link href="/politique-confidentialite">politique de confidentialité</Link>.</p>}
-      </div>
+      </section>
+      {!isBts && <p className={styles.privacy}>Intégrale Academy utilise vos informations pour étudier votre projet et vous recontacter. Le formulaire dédié enregistre les réponses au fil de la saisie, avant validation. Retrouvez les destinataires, les durées de conservation et vos droits dans notre <Link href="/politique-confidentialite">politique de confidentialité</Link>.</p>}
     </div>
   </section>;
 }

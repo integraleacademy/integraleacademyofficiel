@@ -1,3 +1,4 @@
+import { certificationProjectFaq } from '@/data/certification-projects';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import type { CertificationProject } from '@/data/certification-projects';
@@ -86,14 +87,7 @@ export function CertificationProjectPage({ project }: { project: CertificationPr
     description: block.summary,
     delivery: `Évaluation prévue : ${project.assessments[index]}`,
   }));
-  const faq = [
-    { q: 'La certification est-elle déjà enregistrée au RNCP ?', a: 'Non. La demande d’enregistrement est en préparation. Le projet n’est pas enregistré au RNCP à ce jour et son niveau reste soumis à la décision de France compétences.' },
-    { q: 'Quel est le niveau demandé ?', a: 'Le niveau 7 est demandé dans le projet. Il s’agit du niveau de qualification visé à la sortie, et non du niveau de diplôme exigé pour candidater à la formation.' },
-    { q: 'Quels sont les prérequis ?', a: project.entryRequirement },
-    { q: 'Combien de temps durera la formation ?', a: 'Aucun volume horaire global n’est fixé à ce stade. La durée, les modalités et le calendrier seront définis après positionnement et communiqués avant toute contractualisation.' },
-    { q: 'Les blocs pourront-ils être validés séparément ?', a: 'Le dispositif prévu permet de capitaliser les blocs acquis. La délivrance du titre reposera sur la validation des quatre blocs, sans compensation entre compétences ou entre blocs.' },
-    { q: 'Peut-on déjà s’inscrire ou utiliser son CPF ?', a: 'Cette page présente un projet de certification. Aucune session ni aucun tarif n’est annoncé ici, et aucune éligibilité au CPF n’est annoncée à ce stade. Notre équipe peut vous renseigner sur les prérequis et l’avancement du projet.' },
-  ];
+  const faq = certificationProjectFaq(project);
 
   return <article className={styles.project} data-certification-project={project.slug}>
     <TrainingReferencePage theme={theme}>

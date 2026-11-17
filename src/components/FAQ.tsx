@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
+import { FaqDirectoryLink } from './FaqDirectoryLink';
 import layout from './FAQ.module.css';
 
 export type FAQTheme = 'gold' | 'blue' | 'green' | 'orange' | 'red' | 'violet' | 'bts';
@@ -94,7 +95,7 @@ export function PremiumFAQSection({ id, badge, title, description, items, contac
             </div>
           </div>}
       </div>
-      <FAQ items={items} theme={theme} />
+      <div className="min-w-0"><FaqDirectoryLink embedded /><FAQ items={items} theme={theme} /></div>
     </div>
   </section>;
 }

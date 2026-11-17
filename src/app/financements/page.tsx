@@ -1,3 +1,4 @@
+import { fundingFaq } from '@/data/faq/practical';
 import { PageSectionNavigation } from '@/components/PageSectionNavigation';
 import navigation from '@/components/PageSectionNavigation.module.css';
 import { PremiumFAQSection } from '@/components/FAQ';
@@ -42,14 +43,6 @@ const fundingOptions: { icon: IconName; audience: string; title: string; descrip
   { icon: 'building', logo: { src: '/images/financements/akto.svg', alt: 'AKTO, opérateur de compétences' }, audience: 'Salariés & employeurs', title: 'Entreprise & OPCO', description: 'Construisez votre projet avec votre employeur. AKTO ou votre OPCO peut étudier une prise en charge selon votre branche et les critères applicables.', href: '/entreprises', cta: 'Étudier cette solution' },
 ];
 
-const faqItems = [
-  { question: 'Ma formation peut-elle être financée à 100 % ?', answer: 'C’est possible dans certaines situations, mais jamais automatique. Le montant dépend de la formation, de vos droits, de votre statut et de la décision du financeur. Notre équipe vérifie avec vous le reste à charge éventuel avant l’inscription.' },
-  { question: 'Puis-je utiliser mon CPF pour toutes les formations ?', answer: 'Non. La formation et la certification préparée doivent être éligibles au CPF, et vos droits disponibles doivent être suffisants ou complétés par un autre financement. Nous vous aidons à vérifier la situation du parcours qui vous intéresse.' },
-  { question: 'Comment demander une aide à France Travail ?', answer: 'La première étape consiste à présenter un projet professionnel cohérent à votre conseiller. Intégrale Academy peut vous transmettre le programme et le devis nécessaires à l’étude de votre demande. France Travail reste seul décisionnaire.' },
-  { question: 'La formation en alternance est-elle payante pour l’étudiant ?', answer: 'Dans le cadre d’un contrat d’apprentissage ou de professionnalisation, les frais de formation sont généralement pris en charge selon les règles applicables au contrat. Les modalités sont confirmées avec l’entreprise et son OPCO.' },
-  { question: 'Quels documents faut-il préparer ?', answer: 'Ils varient selon le dispositif : pièce d’identité, CV, justificatifs de situation, programme, devis ou éléments liés au contrat. Votre conseiller vous indiquera la liste utile pour éviter les démarches inutiles.' },
-  { question: 'Que se passe-t-il si mon financement est refusé ?', answer: 'Un refus ne signifie pas forcément l’abandon du projet. Nous pouvons étudier avec vous une autre voie de financement, une prochaine session ou un paiement personnel échelonné, sous réserve des conditions applicables.' },
-];
 
 export default function FinancementsPage() {
   return <div className={`${styles.page} ${navigation.scope}`}>
@@ -134,16 +127,16 @@ export default function FinancementsPage() {
     <PremiumFAQSection theme="gold"
       id="questions-frequentes" badge="Les réponses utiles" title={<>Encore une question ?</>}
       description="Quelques repères avant de vous lancer."
-      items={faqItems.map(({ question, answer }) => ({ q: question, a: answer }))}
+      items={fundingFaq}
       contactHref="#contact-financement" contactLabel="Parlons-en ensemble"
     />
 
     <section id="contact-financement" className={styles.contactSection} aria-labelledby="contact-title">
       <div className={styles.container}>
         <div className={styles.contactPanel}>
-          <div><span className={styles.eyebrow}>Le prochain pas, ensemble</span><h2 id="contact-title">Votre projet mérite<br /><em>une conversation</em></h2><p>Expliquez-nous votre situation. Cassandre vous accompagne pour faire le point sur les possibilités de financement.</p></div>
+          <div><span className={styles.eyebrow}>Le prochain pas, ensemble</span><h2 id="contact-title">Votre projet mérite<br /><em>une conversation</em></h2><p>Expliquez-nous votre situation. Cassandre, responsable commercial, vous accompagne pour faire le point sur les possibilités de financement.</p></div>
           <div className={styles.contactDetails}>
-            <div className={styles.contactPerson}><span className={styles.contactInitial} aria-hidden="true"><TeamPortrait person="cassandre" size={48} /></span><div><strong>Cassandre</strong><span>Votre interlocutrice chez Intégrale Academy</span></div></div>
+            <div className={styles.contactPerson}><span className={styles.contactInitial} aria-hidden="true"><TeamPortrait person="cassandre" size={48} /></span><div><strong>Cassandre</strong><span>Responsable commercial</span></div></div>
             <Link href={appointmentFormUrl} className={styles.primaryButton}>Parler de mon financement <Icon name="arrow" /></Link>
             <a href="tel:+33422470768" className={styles.phone}>04 22 47 07 68</a>
             <p>Échange gratuit et sans engagement</p>

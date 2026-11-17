@@ -1,12 +1,19 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
+import { NextSessionSummary } from './NextSessionSummary';
+import { nextSessionForLocation, sessionMatchesLocation } from '@/lib/session-location-filter';
+import { planningSsiapCourse } from '@/lib/planning-ssiap';
+import { isBtsTraining } from '@/lib/planning-data';
+import { formatTrainingPrice } from '@/lib/training-price';
+import type { toPublicSession } from '@/lib/public-session-data';
+import planning from '@/app/planning/planning.module.css';
 import { getSessionSeatAvailability } from '@/lib/session-seat-availability';
 import FinancingSimulator from './FinancingSimulator';
 import { VaeEligibilityModal } from './VaeEligibilityModal';
 import { usePathname } from 'next/navigation';
 import { useEffect, useId, useMemo, useRef, useState } from 'react';
-import { formatSessionDate } from '@/lib/public-sessions';
 import { securityFormations } from '@/data/formations';
 import { ssiap2Config, ssiap3Config } from '@/data/ssiap-catalogue';
 import { despVaeAdmin } from '@/data/despVae';
@@ -14,13 +21,13 @@ import { createPortal } from 'react-dom';
 import styles from './OrientationAssistant.module.css';
 
 export type FormationKey = 'aps' | 'a3p' | 'desp' | 'desp-vae' | 'sst' | 'ssiap-1' | 'ssiap-2' | 'ssiap-3' | 'vtc' | 'bts';
-type Step = 'formations' | 'loading' | 'formation-result' | 2 | 3 | 4;
-type AssistantSession = { id: string; startDate: string; endDate: string; examDate?: string | null; seatsLeft?: number | null; seatsTotal?: number | null; status?: string | null; showSeatsLeft?: boolean | null; training?: { slug?: string; name?: string } | null; };
+type Step = 'formations' | 'formation-result' | 2 | 3 | 4;
+type AssistantSession = ReturnType<typeof toPublicSession>;
 
 type AssistantFormation = {
   key: FormationKey;
   label: string;
-  icon: string;
+  artwork: string;
   infoUrl: string;
   rdvUrl: string;
   homeTitle: string;
@@ -30,23 +37,22 @@ type AssistantFormation = {
 const calendlyDirigeantUrl = 'https://calendly.com/integraleacademy/dirigeant';
 const quoteRequestUrl = 'https://assistance-alw9.onrender.com/demande-informations-formations';
 const apsFormation = securityFormations.find(formation => formation.slug === '/formations-securite/aps');
-const informationLoadingDelayMs = 900;
 
 const formations: AssistantFormation[] = [
-  { key: 'aps', label: 'Agent de sécurité privée (APS)', icon: '👮', infoUrl: '/formations-securite/aps', rdvUrl: 'https://assistance-alw9.onrender.com/demande-informations-formations', homeTitle: 'Agent de sécurité', homeSubtitle: 'APS · surveillance' },
-  { key: 'a3p', label: 'Agent de protection physique des personnes (A3P)', icon: '◆', infoUrl: '/formations-securite/a3p-apr', rdvUrl: '/contact?formation=a3p&type=rdv', homeTitle: 'Agent de protection', homeSubtitle: 'A3P · APR' },
-  { key: 'desp', label: 'Dirigeant d’entreprise de sécurité (DESP)', icon: '▣', infoUrl: '/despvaeouinitial', rdvUrl: '/contact?formation=desp&type=rdv', homeTitle: 'Dirigeant sécurité', homeSubtitle: 'Initial · VAE' },
-  { key: 'vtc', label: 'Chauffeur VTC', icon: '🚗', infoUrl: '/vtc', rdvUrl: '/contact?formation=vtc&type=rdv', homeTitle: 'Chauffeur VTC', homeSubtitle: 'Théorie · pratique' },
-  { key: 'bts', label: 'Un BTS en alternance', icon: '◇', infoUrl: '/bts', rdvUrl: '/contact?formation=bts&type=rdv', homeTitle: 'Étudiant en BTS', homeSubtitle: 'Alternance · diplôme' },
+  { key: 'aps', label: 'Agent de sécurité privée (APS)', artwork: '/images/planning-metiers/aps.webp', infoUrl: '/formations-securite/aps', rdvUrl: 'https://assistance-alw9.onrender.com/demande-informations-formations', homeTitle: 'Agent de sécurité', homeSubtitle: 'APS · surveillance' },
+  { key: 'a3p', label: 'Agent de protection physique des personnes (A3P)', artwork: '/images/planning-metiers/a3p.webp', infoUrl: '/formations-securite/a3p-apr', rdvUrl: '/contact?formation=a3p&type=rdv', homeTitle: 'Agent de protection', homeSubtitle: 'A3P · APR' },
+  { key: 'desp', label: 'Dirigeant d’entreprise de sécurité (DESP)', artwork: '/images/planning-metiers/dirigeant.webp', infoUrl: '/despvaeouinitial', rdvUrl: '/contact?formation=desp&type=rdv', homeTitle: 'Dirigeant sécurité', homeSubtitle: 'Initial · VAE' },
+  { key: 'vtc', label: 'Chauffeur VTC', artwork: '/images/planning-metiers/vtc.webp', infoUrl: '/vtc', rdvUrl: '/contact?formation=vtc&type=rdv', homeTitle: 'Chauffeur VTC', homeSubtitle: 'Théorie · pratique' },
+  { key: 'bts', label: 'Un BTS en alternance', artwork: '/images/planning-metiers/bts.webp', infoUrl: '/bts', rdvUrl: '/contact?formation=bts&type=rdv', homeTitle: 'Étudiant en BTS', homeSubtitle: 'Alternance · diplôme' },
 ];
 
 // Contextual choices for the course heroes; the home assistant keeps its existing menu.
 const contextualFormations: AssistantFormation[] = [
-  { key: 'desp-vae', label: 'Dirigeant d’entreprise de sécurité privée par la VAE', icon: '▣', infoUrl: '/vaedirigeant', rdvUrl: '/contact?formation=desp-vae&type=rdv', homeTitle: 'DESP par la VAE', homeSubtitle: 'Expérience · accompagnement' },
-  { key: 'sst', label: 'Sauveteur secouriste du travail (SST)', icon: '+', infoUrl: '/formations-securite/sst', rdvUrl: '/contact?formation=sst&type=rdv', homeTitle: 'Secourisme au travail', homeSubtitle: 'SST' },
-  { key: 'ssiap-1', label: 'Agent de sécurité incendie (SSIAP 1)', icon: '◎', infoUrl: '/formations-securite/ssiap-1', rdvUrl: '/contact?formation=ssiap-1&type=rdv', homeTitle: 'SSIAP 1', homeSubtitle: 'Agent' },
-  { key: 'ssiap-2', label: 'Chef d’équipe de sécurité incendie (SSIAP 2)', icon: '◎', infoUrl: '/formations-securite/ssiap-2', rdvUrl: '/contact?formation=ssiap-2&type=rdv', homeTitle: 'SSIAP 2', homeSubtitle: 'Chef d’équipe' },
-  { key: 'ssiap-3', label: 'Chef de service de sécurité incendie (SSIAP 3)', icon: '◎', infoUrl: '/formations-securite/ssiap-3', rdvUrl: '/contact?formation=ssiap-3&type=rdv', homeTitle: 'SSIAP 3', homeSubtitle: 'Chef de service' },
+  { key: 'desp-vae', label: 'Dirigeant d’entreprise de sécurité privée par la VAE', artwork: '/images/planning-metiers/dirigeant.webp', infoUrl: '/vaedirigeant', rdvUrl: '/contact?formation=desp-vae&type=rdv', homeTitle: 'DESP par la VAE', homeSubtitle: 'Expérience · accompagnement' },
+  { key: 'sst', label: 'Sauveteur secouriste du travail (SST)', artwork: '/images/formation-scenes-manuel/sst-pedagogie.webp', infoUrl: '/formations-securite/sst', rdvUrl: '/contact?formation=sst&type=rdv', homeTitle: 'Secourisme au travail', homeSubtitle: 'SST' },
+  { key: 'ssiap-1', label: 'Agent de sécurité incendie (SSIAP 1)', artwork: '/images/ssiap-1/manuel/recyclage.webp', infoUrl: '/formations-securite/ssiap-1', rdvUrl: '/contact?formation=ssiap-1&type=rdv', homeTitle: 'SSIAP 1', homeSubtitle: 'Agent' },
+  { key: 'ssiap-2', label: 'Chef d’équipe de sécurité incendie (SSIAP 2)', artwork: '/images/planning-metiers/ssiap.webp', infoUrl: '/formations-securite/ssiap-2', rdvUrl: '/contact?formation=ssiap-2&type=rdv', homeTitle: 'SSIAP 2', homeSubtitle: 'Chef d’équipe' },
+  { key: 'ssiap-3', label: 'Chef de service de sécurité incendie (SSIAP 3)', artwork: '/images/planning-metiers/ssiap.webp', infoUrl: '/formations-securite/ssiap-3', rdvUrl: '/contact?formation=ssiap-3&type=rdv', homeTitle: 'SSIAP 3', homeSubtitle: 'Chef de service' },
 ];
 const allFormations = [...formations, ...contextualFormations];
 
@@ -70,8 +76,8 @@ const formationDetails: Record<FormationKey, AssistantFormationDetails> = {
   'ssiap-2': { title: ssiap2Config.title, shortLabel: ssiap2Config.label, sessionSlugs: ['ssiap-2'], price: 'Sur devis', keyPoints: [`Durée : ${ssiap2Config.duration} · ${ssiap2Config.durationDetail}`, 'Formation en présentiel à Puget-sur-Argens', ssiap2Config.capacity, ssiap2Config.intro, ssiap2Config.certification, 'Dossier, prérequis et financement vérifiés avant inscription'] },
   'ssiap-3': { title: ssiap3Config.title, shortLabel: ssiap3Config.label, sessionSlugs: ['ssiap-3'], price: 'Sur devis', capacity: 10, keyPoints: [`Durée : ${ssiap3Config.duration} · ${ssiap3Config.durationDetail}`, 'Formation en présentiel à Puget-sur-Argens', ssiap3Config.capacity, ssiap3Config.intro, ssiap3Config.certification, 'Dossier, prérequis et financement vérifiés avant inscription'] },
   aps: { title: 'Formation Agent de sécurité privée (APS)', shortLabel: 'APS', sessionSlugs: ['aps'], price: apsFormation?.price || 'Tarif sur demande', keyPoints: ['Format : Hybride (Distanciel + Présentiel) · 51 h à distance + 124 h en présentiel', `Durée : ${apsFormation?.duration || '175 heures au total'}`, `Lieu : ${apsFormation?.locations || 'Puget-sur-Argens, Côte d’Azur'}`, `Certification : ${apsFormation?.certification || 'TFP APS · RNCP n°36648 · niveau 3'}`, 'Examen final en présentiel : QCU contextualisés + deux mises en situation individuelles', `Financements : ${apsFormation?.financing || 'CPF, France Travail ou paiement en plusieurs fois'}`] },
-  a3p: { title: 'Formation Agent de protection physique des personnes (A3P)', shortLabel: 'A3P', sessionSlugs: ['a3p-apr'], price: '4 250 € TTC', keyPoints: ['Formation en présentiel orientée protection rapprochée', 'Durée : 9 semaines · 328 heures hors examen, dont 92 h 50 de pratique', 'Lieu : Puget-sur-Argens · hébergement collectif possible sur demande', 'Certification : TFP A3P · RNCP n°38002 · CNAPS', 'Évaluations théoriques et mises en situation professionnelles', 'Financements : CPF, France Travail et facilités de paiement selon dossier'] },
-  desp: { title: 'Formation Dirigeant d’entreprise de sécurité privée (DESP)', shortLabel: 'DESP', sessionSlugs: ['desp-dssp', 'desp-initial'], price: '4 350 € TTC initial · 3 850 € TTC VAE', keyPoints: ['Deux parcours : formation initiale ou validation des acquis de l’expérience (VAE)', 'Durée : initial 7 semaines · 245 heures ; VAE environ 1 mois', 'Lieux : distanciel + Paris ou Puget-sur-Argens selon les sessions', 'Certification : DESP · RNCP n°40385 · agrément dirigeant CNAPS', 'Évaluation : QCU, mises en situation et jury professionnel', 'Financements : CPF, France Travail et facilités de paiement selon dossier'] },
+  a3p: { title: 'Formation Agent de protection physique des personnes (A3P)', shortLabel: 'A3P', sessionSlugs: ['a3p', 'a3p-apr', 'apr'], price: '4 250 € TTC', keyPoints: ['Formation en présentiel orientée protection rapprochée', 'Durée : 9 semaines · 328 heures hors examen, dont 92 h 50 de pratique', 'Lieu : Puget-sur-Argens · hébergement collectif possible sur demande', 'Certification : TFP A3P · RNCP n°38002 · CNAPS', 'Évaluations théoriques et mises en situation professionnelles', 'Financements : CPF, France Travail et facilités de paiement selon dossier'] },
+  desp: { title: 'Formation Dirigeant d’entreprise de sécurité privée (DESP)', shortLabel: 'DESP', sessionSlugs: ['desp', 'desp-dssp', 'desp-initial'], price: '4 350 € TTC initial · 3 850 € TTC VAE', keyPoints: ['Deux parcours : formation initiale ou validation des acquis de l’expérience (VAE)', 'Durée : initial 7 semaines · 245 heures ; VAE environ 1 mois', 'Lieux : distanciel + Paris ou Puget-sur-Argens selon les sessions', 'Certification : DESP · RNCP n°40385 · agrément dirigeant CNAPS', 'Évaluation : QCU, mises en situation et jury professionnel', 'Financements : CPF, France Travail et facilités de paiement selon dossier'] },
   vtc: { title: 'Formation Chauffeur VTC', shortLabel: 'VTC', sessionSlugs: ['vtc'], price: '1 500 € tout inclus', keyPoints: ['Formation mixte : théorie en e-learning et pratique en présentiel', 'Durée : 105 heures', 'Pratique : Nice, Cannes, Toulon ou Fréjus', 'Certification : RS n°5637 · agrément préfectoral VTC-26-001', 'Le tarif inclut le livre, la pratique, le véhicule et les frais d’examen', 'Financement CPF selon éligibilité avec accompagnement administratif'] },
   bts: { title: 'BTS en alternance', shortLabel: 'BTS', sessionSlugs: ['bts-mos', 'bts-mco'], price: 'Sans frais pour l’apprenti', keyPoints: ['Parcours : MOS, MCO, NDRC, Commerce international, Professions immobilières et Comptabilité-Gestion', 'Durée habituelle : 2 ans en alternance', 'Modalités : présentiel ou distanciel selon le BTS et le dossier', 'Certification : diplôme national de niveau 5 délivré par le Ministère de l’Éducation nationale', 'Admission : niveau bac ou titre équivalent et projet d’alternance', 'Financement : prise en charge par l’entreprise et son OPCO selon le contrat'] },
 };
@@ -99,19 +105,14 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
   const isModalVariant = variant === 'modalTrigger' || variant === 'homeDock';
   const sessionsActive = !isModalVariant || isExpanded;
   const [step, setStep] = useState<Step>(initialStep ?? (initialFormationKey ? 2 : 'formations'));
-  const [sessions, setSessions] = useState<AssistantSession[]>([]);
+  const [sessions, setSessions] = useState<AssistantSession[] | null>(null);
   const [selectedKey, setSelectedKey] = useState<FormationKey | null>(initialFormationKey ?? null);
   const [despExperience, setDespExperience] = useState<boolean | null>(null);
-  const loadingTimeoutRef = useRef<number | null>(null);
   const selectedFormation = useMemo(() => allFormations.find((formation) => formation.key === selectedKey) ?? null, [selectedKey]);
   const normalizedPathname = pathname?.replace(/\/$/, '') || '/';
   const isAlreadyOnSelectedFormation = Boolean(selectedFormation && normalizedPathname === selectedFormation.infoUrl);
   const shouldHideInfoAction = hideInfoAction || isAlreadyOnSelectedFormation;
   const resetAssistantState = () => {
-    if (loadingTimeoutRef.current) {
-      window.clearTimeout(loadingTimeoutRef.current);
-      loadingTimeoutRef.current = null;
-    }
     setIsExpanded(false);
     setStep(initialStep ?? (initialFormationKey ? 2 : 'formations'));
     setSelectedKey(initialFormationKey ?? null);
@@ -124,15 +125,13 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
 
   useEffect(() => {
     if (!sessionsActive) return;
-    fetch('/api/sessions')
+    const controller = new AbortController();
+    fetch('/api/sessions?vue=orientation', { signal: controller.signal })
       .then(response => response.ok ? response.json() : Promise.reject())
-      .then(data => setSessions(Array.isArray(data.sessions) ? data.sessions : []))
-      .catch(() => setSessions([]));
+      .then(data => { if (!controller.signal.aborted) setSessions(Array.isArray(data.sessions) ? data.sessions : []); })
+      .catch(() => { if (!controller.signal.aborted) setSessions([]); });
+    return () => controller.abort();
   }, [sessionsActive]);
-
-  useEffect(() => () => {
-    if (loadingTimeoutRef.current) window.clearTimeout(loadingTimeoutRef.current);
-  }, []);
 
   useEffect(() => {
     if (!isExpanded || !isMounted) return;
@@ -150,30 +149,13 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
   }, [isExpanded, isMounted]);
 
   function chooseFormation(key: FormationKey){
-    if (loadingTimeoutRef.current) window.clearTimeout(loadingTimeoutRef.current);
     setSelectedKey(key);
     setDespExperience(null);
     setIsExpanded(true);
-    startFormationInformation(key);
-  }
-
-  function startFormationInformation(key = selectedKey){
-    if (!key) return;
-    if (loadingTimeoutRef.current) window.clearTimeout(loadingTimeoutRef.current);
-    setSelectedKey(key);
-    setIsExpanded(true);
-    setStep('loading');
-    loadingTimeoutRef.current = window.setTimeout(() => {
-      setStep('formation-result');
-      loadingTimeoutRef.current = null;
-    }, informationLoadingDelayMs);
+    setStep('formation-result');
   }
 
   function goBack(){
-    if (loadingTimeoutRef.current) {
-      window.clearTimeout(loadingTimeoutRef.current);
-      loadingTimeoutRef.current = null;
-    }
     if(step === 4){
       setStep(2);
       setDespExperience(null);
@@ -225,43 +207,41 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
     </div>
   </aside>;
 
+  const showResult = step === 'formation-result' && selectedFormation;
   const assistantTitle = step === 'formations' ? 'Quelle formation vous intéresse ?'
     : step === 2 ? 'Que souhaitez-vous faire ?'
     : step === 3 ? 'Préparons votre inscription'
     : step === 4 ? 'Trouvons le bon parcours'
-    : step === 'loading' ? 'Votre projet de formation' : 'Les informations essentielles';
+    : selectedFormation ? formationDetails[selectedFormation.key].shortLabel : 'Votre formation';
 
-  const assistantPanel = <aside ref={isExpanded ? undefined : inlinePanelRef} className={`orientation-assistant ${styles.panel} ${isExpanded ? styles.expanded : styles.embedded}`} aria-label="Assistant d’orientation formation" data-assistant-design="compact">
-      <div className={styles.topline}>
-        <div className={styles.identity}>
-          <span className={styles.assistantIcon}><AssistantIcon name="assistant" /></span>
-          <div><p className={styles.brand}>Intégrale Academy</p><p className={styles.assistantName}>Votre assistant formation</p></div>
+  const assistantPanel = <aside ref={isExpanded ? undefined : inlinePanelRef} className={`orientation-assistant ${styles.panel} ${isExpanded ? styles.expanded : styles.embedded}`} aria-label="Assistant d’orientation formation">
+      <header className={styles.topline}>
+        <div className={styles.headerArt} aria-hidden="true">
+          <Image src={selectedFormation?.artwork ?? '/images/illustrations-2026/campus-accompagnement.webp'} alt="" fill sizes="(max-width: 600px) 36vw, 230px" />
         </div>
+        <p className={styles.brand}>Votre assistant formation</p>
+        <h2 id={`${dialogId}-title`}>{assistantTitle}</h2>
+        {step !== 'formations' && step !== 2
+          ? <button type="button" onClick={goBack} className={styles.back}><span aria-hidden="true">←</span> {initialFormationKey ? 'Retour aux choix' : 'Toutes les formations'}</button>
+          : selectedFormation && <p className={styles.course}>{selectedFormation.label}</p>}
         <button type="button" onClick={minimizeAssistant} className={styles.close} aria-label={isExpanded || isModalVariant ? 'Fermer l’assistant' : 'Réduire l’assistant'}><AssistantIcon name="close" /></button>
-      </div>
+      </header>
 
       <div className={styles.content}>
-        <div className={styles.heading}>
-          {selectedFormation && <p className={styles.course}><span aria-hidden="true" />{selectedFormation.label}</p>}
-          <h2 id={`${dialogId}-title`}>{assistantTitle}</h2>
-          {(step === 'formations' || step === 2) && <p className={styles.intro}>{step === 'formations' ? 'Choisissez votre métier ou votre diplôme pour commencer.' : 'Consultez votre formation ou préparez un rendez-vous téléphonique.'}</p>}
-        </div>
-
         {step === 'formations' && <div className={styles.formationList}>
           {formations.map((formation) => <button key={formation.key} type="button" onClick={() => chooseFormation(formation.key)} className={styles.formationOption}>
-            <span className={styles.optionIcon}><AssistantIcon name="book" /></span>
+            <Image className={styles.optionArt} src={formation.artwork} width={76} height={54} sizes="76px" alt="" />
             <span>{formation.label}</span>
             <AssistantIcon name="arrow" />
           </button>)}
         </div>}
 
 
-        {step === 'loading' && selectedFormation && <FormationAssistantLoading formation={selectedFormation} />}
 
-        {step === 'formation-result' && selectedFormation && <FormationAssistantResult formation={selectedFormation} sessions={sessions} hideInfoAction={shouldHideInfoAction} isExpanded={isExpanded} />}
+        {showResult && <FormationAssistantResult formation={selectedFormation} sessions={sessions} hideInfoAction={shouldHideInfoAction} onNavigate={resetAssistantState} />}
 
         {step === 2 && selectedFormation && <div className={styles.choices}>
-          <button type="button" onClick={() => startFormationInformation()} className={styles.choice}>
+          <button type="button" onClick={() => chooseFormation(selectedFormation.key)} className={styles.choice}>
             <span className={styles.optionIcon}><AssistantIcon name="book" /></span>
             <span className={styles.choiceTitle}>Voir dates et tarifs</span>
             <span className={styles.choiceDescription}>Durée, financement et <br />prochaines sessions.</span>
@@ -299,13 +279,11 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
           <div className={styles.actions}><Link href={selectedFormation.rdvUrl} className={styles.primaryAction}>Réserver un rendez-vous téléphonique <AssistantIcon name="arrow" /></Link>{!shouldHideInfoAction && <Link href={selectedFormation.infoUrl} className={styles.secondaryAction}>Voir d’abord les informations</Link>}</div>
         </div>}
 
-        {step !== 'formations' && step !== 2 && <button type="button" onClick={goBack} className={styles.back}><span aria-hidden="true">←</span> {initialFormationKey ? 'Retour aux choix' : 'Retour aux formations'}</button>}
-        <p className={styles.footer}><AssistantIcon name="check" /><span>Un accompagnement à chaque étape de votre projet.</span></p>
       </div>
   </aside>;
 
   const assistantDialog = isExpanded && isMounted ? createPortal(
-    <dialog ref={dialogRef} id={dialogId} aria-labelledby={`${dialogId}-title`} data-wide={step === 'formation-result'} onCancel={() => resetAssistantState()} onClick={(event) => {
+    <dialog ref={dialogRef} id={dialogId} aria-labelledby={`${dialogId}-title`} onCancel={() => resetAssistantState()} onClick={(event) => {
       if (event.target !== event.currentTarget) return;
       const rect = event.currentTarget.getBoundingClientRect();
       if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) resetAssistantState();
@@ -344,32 +322,53 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
 }
 
 
-function FormationAssistantLoading({formation}:{formation:AssistantFormation}){
-  return <div className={styles.loading} role="status" aria-live="polite">
-    <div className="flex items-center gap-3">
-      <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-academy-gold/15 text-xl" aria-hidden="true">{formation.icon}</span>
-      <div><h3 className="text-lg font-black">Je recherche les informations sur la formation {formationDetails[formation.key].shortLabel}</h3><div className="mt-2 flex gap-1" aria-hidden="true">{[0,1,2].map(index => <span key={index} className="h-2 w-2 rounded-full bg-academy-gold motion-safe:animate-pulse" style={{ animationDelay: `${index * 160}ms` }} />)}</div></div>
-    </div>
-    <div className="mt-5 space-y-2" aria-hidden="true"><div className="h-3 w-11/12 rounded-full bg-academy-gold/10"/><div className="h-3 w-8/12 rounded-full bg-academy-gold/10"/><div className="h-3 w-10/12 rounded-full bg-academy-gold/10"/></div>
-  </div>;
-}
-
-function FormationAssistantResult({formation,sessions,hideInfoAction=false,isExpanded=false}:{formation:AssistantFormation;sessions:AssistantSession[];hideInfoAction?:boolean;isExpanded?:boolean}){
-  const details = formationDetails[formation.key];
-  const upcomingSessions = sessions.filter(session => Boolean(session.training?.slug && details.sessionSlugs.includes(session.training.slug))).sort((a,b) => +new Date(a.startDate) - +new Date(b.startDate)).slice(0, 1);
+function FormationAssistantResult({ formation, sessions, hideInfoAction, onNavigate }: {
+  formation: AssistantFormation;
+  sessions: AssistantSession[] | null;
+  hideInfoAction: boolean;
+  onNavigate: () => void;
+}) {
+  const { key } = formation;
+  const details = formationDetails[key];
+  const candidates = (sessions ?? []).filter(session => {
+    if (key.startsWith('ssiap-')) return planningSsiapCourse(session) === key;
+    if (key === 'bts') return isBtsTraining(session.training?.slug, session.training?.category);
+    return details.sessionSlugs.includes(session.training?.slug ?? '');
+  });
+  const next = nextSessionForLocation(candidates, 'all');
+  let datesHref = `/planning?formation=${key}&dates=toutes#sessions`;
+  let datesLabel = 'Afficher toutes les dates';
+  if (key.startsWith('ssiap-')) datesHref = `/planning?formation=ssiap&parcours=${key}&dates=toutes#sessions`;
+  if (key === 'desp') {
+    const campus = next && (['paris', 'cote-azur'] as const).find(location => sessionMatchesLocation(next, location));
+    datesHref = `/planning?formation=director${campus ? '&lieu=' + campus : ''}&dates=toutes#sessions`;
+  }
+  if (key === 'sst' || key === 'desp-vae') datesHref = `${formation.infoUrl}#dates-tarifs`;
+  if (key === 'bts') {
+    datesHref = '/contact?formation=bts';
+    datesLabel = 'Me renseigner sur la rentrée';
+  }
+  const price = key === 'bts' ? details.price : formatTrainingPrice(next, details.price);
   return <div className={styles.result}>
-    <div className={styles.resultIntro}><h3>{details.title}</h3><p>Voici les informations clés concernant cette formation chez Intégrale Academy.</p></div>
-    <div className={styles.resultGrid} data-expanded={isExpanded}>
-      <div className={styles.keyPoints}><h4>Informations clés</h4><ul>{details.keyPoints.map(point => <li key={point}><span aria-hidden="true">✓</span><span>{point}</span></li>)}</ul></div>
-      <div className={styles.price}><span>{['aps', 'a3p', 'desp', 'desp-initial', 'desp-vae'].includes(formation.key) ? 'Tarif 2027' : 'Tarif'}</span><strong>{details.price}</strong></div>
+    <section aria-label="Prochaine session" className={styles.session}>
+      {next ? <NextSessionSummary session={next} price={price} availability={getSessionSeatAvailability(next, details.capacity ?? 12)} /> :
+        <>
+          <p className={styles.sessionNote} role="status">{sessions === null ? 'Chargement de la prochaine date…' : 'Contactez notre équipe pour connaître la prochaine date.'}</p>
+          <dl className={planning.sessionOffer}><div><dt>Tarif</dt><dd>{details.price}</dd></div></dl>
+        </>}
+      <Link href={datesHref} onNavigate={onNavigate} className={planning.previewAction}>{datesLabel} <AssistantIcon name="arrow" /></Link>
+    </section>
+    <details className={styles.keyPoints}>
+      <summary>Les informations sur la formation <span aria-hidden="true">+</span></summary>
+      <p>{details.title}</p>
+      <ul>{details.keyPoints.map(point => <li key={point}><AssistantIcon name="check" />{point}</li>)}</ul>
+    </details>
+    <div className={styles.actions}>
+      <Link href={`/contact?formation=${key}&type=inscription`} className={styles.secondaryAction}>Préparer mon inscription <AssistantIcon name="arrow" /></Link>
+      {!hideInfoAction && <Link href={formation.infoUrl} className={styles.secondaryAction}>Découvrir la formation</Link>}
     </div>
-    <div><p className="font-black">Prochaine formation</p>{upcomingSessions.length ? <div className="mt-3 grid gap-3">{upcomingSessions.map(session => { const seatAvailability = getSessionSeatAvailability(session, details.capacity ?? 12); return <div key={session.id} className="rounded-2xl border border-academy-line bg-white p-3 shadow-sm"><div className="grid gap-3 sm:grid-cols-3"><p><span className="block text-[10px] font-black uppercase tracking-[.15em] text-academy-muted/70">Début</span><span className="font-black">{formatSessionDate(session.startDate)}</span></p><p><span className="block text-[10px] font-black uppercase tracking-[.15em] text-academy-muted/70">Fin</span><span className="font-black">{formatSessionDate(session.endDate)}</span></p><p><span className="block text-[10px] font-black uppercase tracking-[.15em] text-academy-muted/70">Examen</span><span className="font-black">{session.examDate ? formatSessionDate(session.examDate) : 'À confirmer'}</span></p></div><p className={`mt-3 inline-flex rounded-full px-3 py-1 text-xs font-black ${seatAvailability.badgeClassName}`}>{seatAvailability.label}</p></div>; })}</div> : <p className="mt-3 rounded-2xl border border-dashed border-academy-line bg-white/70 p-4 text-sm font-bold text-academy-muted">La prochaine date est à confirmer avec notre équipe.</p>}
-      <p className="mt-2 text-xs font-bold leading-5 text-stone-600">Consultez toutes les dates en <Link href={`/planning?formation=${formation.key}`} className="font-black text-yellow-700 underline decoration-academy-gold/50 underline-offset-4 hover:text-academy-ink">cliquant ici</Link>.</p>
-    </div>
-    <div className={styles.actions}><Link href={`/contact?formation=${formation.key}&type=inscription`} className={styles.primaryAction}>Préparer mon inscription <AssistantIcon name="arrow" /></Link>{!hideInfoAction && <Link href={formation.infoUrl} className={styles.secondaryAction}>Découvrir la formation</Link>}</div>
   </div>;
 }
-
 
 function IframeModalButton({label,url,title,featured=false}:{label:string;url:string;title:string;featured?:boolean}){
   const [open,setOpen]=useState(false);

@@ -5,8 +5,8 @@ import styles from './CourseTeamBanner.module.css';
 const team: ReadonlyArray<{ person: TeamMemberId; name: string; role: string }> = [
   { person: 'clement', name: 'Clément', role: 'Directeur général' },
   { person: 'elsa', name: 'Elsa', role: 'Assistante de direction' },
-  { person: 'cassandre', name: 'Cassandra', role: 'Responsable commerciale' },
-  { person: 'aurelie', name: 'Aurélie', role: 'Responsable BTS et relations clients' },
+  { person: 'cassandre', name: 'Cassandre', role: 'Responsable commercial' },
+  { person: 'aurelie', name: 'Aurélie', role: 'Responsable des BTS' },
   { person: 'yannice', name: 'Yanis', role: 'Coordinateur pédagogique' },
 ];
 
