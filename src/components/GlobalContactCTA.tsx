@@ -1,5 +1,6 @@
 'use client';
 
+import { TrainingActionLink } from '@/components/TrainingActionLink';
 import { isCertificationProjectPath } from '@/lib/certification-project-paths';
 
 import { TeamPortrait } from '@/components/TeamPortrait';
@@ -145,12 +146,12 @@ export function GlobalContactCTA() {
                 </div>
 
                 <div className={`${styles.revealItem} mt-6 grid gap-3 xl:grid-cols-[1.18fr_.82fr]`} style={{ '--delay': '480ms' } as CSSProperties}>
-                  <a href={primaryContactHref} className={`${styles.primaryButton} focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-academy-gold`}>
+                  <TrainingActionLink href={primaryContactHref} className={`${styles.primaryButton} focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-academy-gold`}>
                     {isBts ? <EmailIcon /> : <CalendarIcon />}
                     <span className={styles.longLabel}>{isBts ? 'Écrire à Aurélie, Responsable des BTS' : 'Réserver un rendez-vous téléphonique'}</span>
                     <span className={styles.shortLabel}>{isBts ? 'Écrire à Aurélie, Responsable des BTS' : 'Réserver un rendez-vous téléphonique'}</span>
                     <span className={styles.arrow} aria-hidden="true">→</span>
-                  </a>
+                  </TrainingActionLink>
                   <a href={directPhoneHref} className={`${styles.secondaryButton} focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-academy-gold`}>
                     <PhoneIcon />
                     Appeler {contactName}

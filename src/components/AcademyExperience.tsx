@@ -1,5 +1,6 @@
 'use client';
 
+import { TrainingActionLink } from '@/components/TrainingActionLink';
 import { homeEditorialArtwork } from '@/data/siteIllustrations';
 import { TeamPortrait } from '@/components/TeamPortrait';
 import Link from 'next/link';
@@ -93,7 +94,7 @@ export function AcademyJourney() {
       <div className={styles.journeyGrid}>
         <div className={styles.journeySteps}>
           {steps.map((step, index) => <button type="button" key={step.title} className={`${styles.step} ${active === index ? styles.activeStep : ''}`} aria-pressed={active === index} aria-controls={panelId} onClick={() => { setActive(index); setAutomatic(false); }}><span className={styles.stepIndex}>0{index + 1}<span aria-hidden="true">↗︎</span></span><span><strong>{step.title}</strong><span>{step.text}</span></span></button>)}
-          <div className={styles.journeyActions}><a href={appointmentUrl} className={styles.darkButton}>Parlons de votre projet <span aria-hidden="true">↗︎</span></a>{!reduced && <button className={styles.motionButton} type="button" onClick={() => setAutomatic(value => !value)} aria-pressed={automatic}>{automatic ? 'Ⅱ Pause' : '▶︎ Animer'}</button>}</div>
+          <div className={styles.journeyActions}><TrainingActionLink href={appointmentUrl} className={styles.darkButton}>Parlons de votre projet <span aria-hidden="true">↗︎</span></TrainingActionLink>{!reduced && <button className={styles.motionButton} type="button" onClick={() => setAutomatic(value => !value)} aria-pressed={automatic}>{automatic ? 'Ⅱ Pause' : '▶︎ Animer'}</button>}</div>
         </div>
         <div className={styles.phoneStage}>
           <div className={styles.phoneHalo} aria-hidden="true" />

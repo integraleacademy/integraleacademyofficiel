@@ -1,5 +1,6 @@
 'use client';
 
+import { TrainingActionLink } from '@/components/TrainingActionLink';
 import { isCertificationProjectPath } from '@/lib/certification-project-paths';
 
 import { TeamPortrait } from '@/components/TeamPortrait';
@@ -86,13 +87,13 @@ export function ProjectTrainingPopup() {
         )}
 
         <div className="mt-5 grid gap-3">
-          <Link
+          <TrainingActionLink
             href={isBts ? 'tel:+33487830615' : 'https://assistance-alw9.onrender.com/demande-informations-formations'}
             onClick={closePopup}
             className="inline-flex items-center justify-center rounded-full bg-academy-gold px-5 py-3 text-sm font-black text-academy-gold-text shadow-gold transition hover:-translate-y-0.5 hover:brightness-95"
           >
             {isBts ? `Appeler ${contactName}` : 'Réserver un rendez-vous téléphonique'} <span className="ml-3" aria-hidden="true">→</span>
-          </Link>
+          </TrainingActionLink>
           <Link
             href={isBts ? 'mailto:aurelie@integraleacademy.com?subject=Question%20sur%20un%20BTS' : '/contact'}
             onClick={closePopup}

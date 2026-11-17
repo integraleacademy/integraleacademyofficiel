@@ -1,3 +1,4 @@
+import { TrainingActionLink } from '@/components/TrainingActionLink';
 import { CampusFormationTags } from './CampusFormationTags';
 import { PARIS_ADDRESS } from '@/data/locations';
 import { premiumFaqThemes } from '@/components/FAQ';
@@ -112,7 +113,7 @@ export function Button({href,children,variant='primary',className=''}:{href:stri
     violet: 'bg-violet-600 text-white hover:bg-violet-700 focus:ring-violet-300/55',
     bts: 'bg-bts-700 text-white hover:bg-bts-800 focus:ring-bts-300/55',
   };
-  return <Link className={`inline-flex min-h-11 max-w-full items-center justify-center whitespace-normal rounded-full px-5 py-3 text-center text-sm font-bold leading-tight transition hover:-translate-y-0.5 focus:outline-none focus:ring-4 ${styles[variant]} ${className}`} href={href}>{children}</Link>;
+  return <TrainingActionLink className={`inline-flex min-h-11 max-w-full items-center justify-center whitespace-normal rounded-full px-5 py-3 text-center text-sm font-bold leading-tight transition hover:-translate-y-0.5 focus:outline-none focus:ring-4 ${styles[variant]} ${className}`} href={href}>{children}</TrainingActionLink>;
 }
 export function SectionTitle({eyebrow,title,children}:{eyebrow?:string;title:React.ReactNode;children?:React.ReactNode}){return <div className="mx-auto mb-10 max-w-3xl text-center reveal">{eyebrow&&<Badge>{eyebrow}</Badge>}<h2 className="mt-4 text-3xl font-black tracking-tight md:text-5xl">{title}</h2>{children&&<p className="mt-4 text-lg text-stone-600">{children}</p>}</div>}
 
@@ -200,7 +201,7 @@ export function Hero({badge,title,subtitle,actions,visual,theme='gold',fillViewp
 export const appointmentFormUrl = 'https://assistance-alw9.onrender.com/demande-informations-formations';
 
 function AppointmentButton(){
-  return <Link className="group inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-academy-gold via-academy-gold to-academy-gold px-5 py-3 text-sm font-black text-academy-gold-text shadow-gold ring-1 ring-academy-gold/70 transition hover:-translate-y-0.5 hover:brightness-105 focus:outline-none focus:ring-2 focus:ring-academy-gold focus:ring-offset-2" href={appointmentFormUrl}><span>Prendre un rendez-vous téléphonique</span><span className="transition group-hover:translate-x-0.5" aria-hidden="true">→</span></Link>
+  return <TrainingActionLink className="group inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-academy-gold via-academy-gold to-academy-gold px-5 py-3 text-sm font-black text-academy-gold-text shadow-gold ring-1 ring-academy-gold/70 transition hover:-translate-y-0.5 hover:brightness-105 focus:outline-none focus:ring-2 focus:ring-academy-gold focus:ring-offset-2" href={appointmentFormUrl}><span>Prendre un rendez-vous téléphonique</span><span className="transition group-hover:translate-x-0.5" aria-hidden="true">→</span></TrainingActionLink>
 }
 
 function BrandSigle({ placement }: { placement: 'header' | 'footer' }){

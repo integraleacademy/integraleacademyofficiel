@@ -1,3 +1,4 @@
+import { TrainingActionLink } from '@/components/TrainingActionLink';
 import { questionsByTopic } from '@/data/faq/catalogue';
 import { findFaqTopic } from '@/data/faq/topics';
 import { contactInfo } from '@/data/locations';
@@ -24,7 +25,7 @@ export default async function FaqPage({ searchParams }: { searchParams: Promise<
       <div className={styles.bandInner}>
         <h2 id="faq-contact-title">Faites le premier pas<br /><em>vers votre futur métier</em></h2>
         <div className={styles.bandActions}>
-          <a className={styles.appointment} href={INFORMATION_REQUEST_URL}>Prendre un rendez-vous téléphonique <span aria-hidden="true">→</span></a>
+          <TrainingActionLink className={styles.appointment} href={INFORMATION_REQUEST_URL}>Prendre un rendez-vous téléphonique <span aria-hidden="true">→</span></TrainingActionLink>
           <a className={styles.standard} href={contactInfo.phoneHref}>Appeler le standard <strong>{contactInfo.phone}</strong></a>
           <p>{contactInfo.hours}</p>
         </div>

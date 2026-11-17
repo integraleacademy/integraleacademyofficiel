@@ -1,5 +1,6 @@
 'use client';
 
+import { TrainingActionLink } from '@/components/TrainingActionLink';
 import { contactInfo } from '@/data/locations';
 import { TeamPortrait } from '@/components/TeamPortrait';
 import Image from 'next/image';
@@ -115,11 +116,11 @@ export function ContactExperience({ initialInterest = 'undecided', requestLinks,
 
         <div id="contact-phone-panel" role="tabpanel" tabIndex={0} aria-labelledby={`contact-step-${step}`} className={styles.scene}>
           <div className={styles.sceneHalo} aria-hidden="true" />
+          <div className={styles.exchangeNote}><Icon name="sparkle" /><span>Premier échange <strong>gratuit et sans engagement</strong></span></div>
           <div className={styles.floatingAdviser} key={`adviser-${interest}`}><Avatar bts={isBts} /><span><strong>{adviser.name}</strong><small>{adviser.role}</small></span><Icon name="sparkle" /></div>
           <div className={styles.phone}>
             <div className={styles.phoneStatus} aria-hidden="true"><span>9:41</span><i /><span>▰</span></div>
             <div className={styles.phoneHeader}><Image src="/images/academy-a-icon.svg" alt="" width={35} height={35} /><div><strong>Intégrale Academy</strong><span>Votre projet de formation</span></div></div>
-            <div className={styles.exchangeNote}><Icon name="check" /><span>Premier échange <strong>gratuit et sans engagement</strong></span></div>
             <div className={styles.phoneScreen} key={`${interest}-${step}`}>
               <span className={styles.screenLabel}>{['Faisons connaissance', 'Une équipe pour vous guider', 'Construisons la suite'][step]}</span>
               {step < 2 && <div className={styles.userBubble}>{selected.message}</div>}
@@ -157,9 +158,9 @@ export function ContactExperience({ initialInterest = 'undecided', requestLinks,
             <span className={styles.projectBadge}><Icon name={selected.icon} />{selected.label}</span>
             <h3>{selected.next}</h3>
             <p>{selected.description}</p>
-            <a href={isBts ? contactInfo.phoneHref : requestHref} className={`${school.button} ${styles.primaryAction}`}>
+            <TrainingActionLink href={isBts ? contactInfo.phoneHref : requestHref} className={`${school.button} ${styles.primaryAction}`}>
               {isBts ? 'Parler avec Aurélie, Responsable des BTS' : 'Parler de mon projet'}<Icon name="arrow" />
-            </a>
+            </TrainingActionLink>
             <div className={styles.directContact}>
               <a href={contactInfo.phoneHref} aria-label={`Appeler le standard au ${contactInfo.phone}`}>
                 <Icon name="phone" /><span><small>Standard Intégrale Academy</small>{contactInfo.phone}</span><Icon name="diagonal" />

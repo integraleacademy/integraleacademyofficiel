@@ -1,3 +1,4 @@
+import { TrainingActionLink } from '@/components/TrainingActionLink';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { TrainingSessionCards, type TrainingSessionCardItem } from '@/components/TrainingSessionCards';
@@ -150,7 +151,7 @@ function ActionLink({ action, variant = 'dark', className = '' }: { action: Acti
     return <a href={action.href} target="_blank" rel="noopener noreferrer" className={classes}>{action.label}</a>;
   }
 
-  return <Link href={action.href} className={classes}>{action.label}</Link>;
+  return <TrainingActionLink href={action.href} className={classes}>{action.label}</TrainingActionLink>;
 }
 
 function serializeDate(value?: string | Date | null) {

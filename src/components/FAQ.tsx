@@ -1,9 +1,8 @@
-import Link from 'next/link';
-import type { ReactNode } from 'react';
+import { TrainingActionLink } from '@/components/TrainingActionLink';
+import type { CatalogueQuestion } from '@/data/faq/catalogue';
 import layout from './FAQ.module.css';
 
 export type FAQTheme = 'gold' | 'blue' | 'green' | 'orange' | 'red' | 'violet' | 'bts';
-export type FAQItem = { q: string; a: ReactNode; links?: readonly { href: string; label: string }[] };
 
 export const premiumFaqThemes: Record<FAQTheme, { shell:string; glow:string; badge:string; contact:string; icon:string; item:string; bar:string; number:string; toggle:string; check:string }> = {
   bts: { shell:'bg-gradient-to-br from-bts-50 via-white to-bts-100', glow:'bg-bts-400/20', badge:'border-bts-300/45 text-bts-700', contact:'border-bts-300/45', icon:'bg-bts-100 text-bts-700', item:'border-bts-200/75 hover:border-bts-400 open:border-bts-500', bar:'bg-bts-700', number:'bg-bts-50 text-bts-700', toggle:'bg-bts-700 text-white shadow-soft', check:'bg-bts-100 text-bts-700' },
@@ -17,7 +16,7 @@ export const premiumFaqThemes: Record<FAQTheme, { shell:string; glow:string; bad
 
 
 /** Numbered accordion cards from the APS page. Native details retain keyboard support. */
-export function FAQ({ items, theme = 'gold' }: { items: readonly FAQItem[]; theme?: FAQTheme }) {
+export function FAQ({ items, theme = 'gold' }: { items: readonly CatalogueQuestion[]; theme?: FAQTheme }) {
   const styles = premiumFaqThemes[theme];
   return <div className={`${layout.list} grid gap-3 md:grid-cols-2 lg:gap-4`} data-faq-list data-faq-theme={theme}>
     {items.map((item, index) => <details key={item.q} data-faq-item className={`${layout.item} group overflow-hidden rounded-[1.35rem] border bg-white/92 shadow-[0_14px_42px_rgba(54,43,24,.075)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_20px_60px_rgba(54,43,24,.11)] open:shadow-[0_24px_70px_rgba(54,43,24,.14)] md:open:col-span-2 ${styles.item}`}>
@@ -34,9 +33,11 @@ export function FAQ({ items, theme = 'gold' }: { items: readonly FAQItem[]; them
       </summary>
       <div className="grid grid-rows-[0fr] transition-[grid-template-rows] duration-500 ease-out group-open:grid-rows-[1fr]">
         <div className="overflow-hidden"><div className="px-4 pb-5 sm:px-5">
-          <p className={`${layout.answer} border-t border-academy-line/80 pt-3 text-[0.95rem] font-medium leading-7 text-academy-muted sm:text-base sm:leading-8`}>{item.a}</p>
+          <div className={`${layout.answer} border-t border-academy-line/80 text-academy-muted`}>
+            {item.a.split('\n\n').map(paragraph => <p key={paragraph}>{paragraph}</p>)}
+          </div>
           {item.links?.length ? <ul className={layout.answerLinks} aria-label="Pour en savoir plus">
-            {item.links.map(link => <li key={link.href}><Link href={link.href}>{link.label}<span aria-hidden="true">→</span></Link></li>)}
+            {item.links.map(link => <li key={link.href}><TrainingActionLink href={link.href}>{link.label}<span aria-hidden="true">→</span></TrainingActionLink></li>)}
           </ul> : null}
         </div></div>
       </div>

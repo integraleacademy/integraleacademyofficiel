@@ -1,5 +1,6 @@
 'use client';
 
+import { TrainingActionLink } from '@/components/TrainingActionLink';
 import { useEffect, useRef, useState } from 'react';
 import styles from './TrainingSectionNavigation.module.css';
 
@@ -200,7 +201,7 @@ export function TrainingSectionNavigation({
           </div>
         </div>
 
-        <a
+        <TrainingActionLink
           href={registrationHref}
           className={styles.courseNavCta}
           target={externalRegistration ? '_blank' : undefined}
@@ -208,7 +209,7 @@ export function TrainingSectionNavigation({
         >
           <span>{registrationLabel}</span>
           <span aria-hidden="true" className={styles.courseNavCtaArrow}>→</span>
-        </a>
+        </TrainingActionLink>
       </div>
     </nav>
   );

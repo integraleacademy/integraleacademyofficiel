@@ -1,3 +1,4 @@
+import { TrainingActionLink } from '@/components/TrainingActionLink';
 import { CourseBrochureCard } from '@/components/CourseBrochureCard';
 import type { ReactNode } from 'react';
 import editorial from './ApsEditorial.module.css';
@@ -8,7 +9,6 @@ import { originalArtwork } from '@/data/originalArtwork';
 import { ssiapArtwork } from '@/data/manualIllustrations';
 import { serializeCourseJsonLd } from '@/lib/seo';
 
-import Link from 'next/link';
 
 import { CourseFilm } from '@/components/CourseFilm';
 import { ApsSectionNavigation } from '@/components/ApsSectionNavigation';
@@ -200,7 +200,7 @@ function CTA({ href, children, variant = 'dark', className = '', external = fals
   const focusStyle = variant === 'blue' ? 'focus-visible:ring-blue-300/55' : 'focus-visible:ring-academy-gold/30';
   const classNames = `${styles.cta} inline-flex min-h-12 items-center justify-center rounded-full px-5 py-3 text-center text-sm font-black transition hover:-translate-y-0.5 focus:outline-none focus-visible:ring-4 ${focusStyle} ${variantStyles[variant]} ${className}`;
   if (external) return <a href={href} target="_blank" rel="noopener noreferrer" className={classNames}>{children}</a>;
-  return <Link href={href} className={classNames}>{children}</Link>;
+  return <TrainingActionLink href={href} className={classNames}>{children}</TrainingActionLink>;
 }
 
 function Eyebrow({ children, light = false }: { children: ReactNode; light?: boolean }) {

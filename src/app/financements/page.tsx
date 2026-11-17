@@ -1,3 +1,4 @@
+import { TrainingActionLink } from '@/components/TrainingActionLink';
 import { PageSectionNavigation } from '@/components/PageSectionNavigation';
 import navigation from '@/components/PageSectionNavigation.module.css';
 import { FaqDirectoryLink } from '@/components/FaqDirectoryLink';
@@ -131,7 +132,7 @@ export default function FinancementsPage() {
           <div><span className={styles.eyebrow}>Le prochain pas, ensemble</span><h2 id="contact-title">Votre projet mérite<br /><em>une conversation</em></h2><p>Expliquez-nous votre situation. Cassandre, Responsable commercial, vous accompagne pour faire le point sur les possibilités de financement.</p></div>
           <div className={styles.contactDetails}>
             <div className={styles.contactPerson}><span className={styles.contactInitial} aria-hidden="true"><TeamPortrait person="cassandre" size={48} /></span><div><strong>Cassandre</strong><span>Responsable commercial</span></div></div>
-            <Link href={appointmentFormUrl} className={styles.primaryButton}>Parler de mon financement <Icon name="arrow" /></Link>
+            <TrainingActionLink href={appointmentFormUrl} className={styles.primaryButton}>Parler de mon financement <Icon name="arrow" /></TrainingActionLink>
             <a href="tel:+33422470768" className={styles.phone}>04 22 47 07 68</a>
             <p>Échange gratuit et sans engagement</p>
           </div>

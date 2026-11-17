@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+import { TrainingActionLink } from '@/components/TrainingActionLink';
 import { useMemo, useState } from 'react';
 import { formatSessionPeriod, formatSplitInPersonPeriod } from '@/lib/public-sessions';
 import { getSessionSeatAvailability, resolveSessionSeatCapacity } from '@/lib/session-seat-availability';
@@ -132,7 +132,7 @@ function ActionLink({ action, variant, className = '' }: { action: Action; varia
     return <a href={action.href} target="_blank" rel="noopener noreferrer" className={classes} data-academy-action="session">{action.label}</a>;
   }
 
-  return <Link href={action.href} className={classes} data-academy-action="session">{action.label}</Link>;
+  return <TrainingActionLink href={action.href} className={classes} data-academy-action="session">{action.label}</TrainingActionLink>;
 }
 
 function SessionCard({
