@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
-import { FaqDirectoryLink } from './FaqDirectoryLink';
 import layout from './FAQ.module.css';
 
 export type FAQTheme = 'gold' | 'blue' | 'green' | 'orange' | 'red' | 'violet' | 'bts';
@@ -43,59 +42,4 @@ export function FAQ({ items, theme = 'gold' }: { items: readonly FAQItem[]; them
       </div>
     </details>)}
   </div>;
-}
-
-const actionColors: Record<FAQTheme, string> = {
-  gold: 'bg-academy-ink text-white hover:bg-black',
-  blue: 'bg-blue-600 text-white hover:bg-blue-700',
-  green: 'bg-emerald-600 text-white hover:bg-emerald-700',
-  orange: 'bg-orange-600 text-white hover:bg-orange-700',
-  red: 'bg-red-600 text-white hover:bg-red-700',
-  violet: 'bg-violet-600 text-white hover:bg-violet-700',
-  bts: 'bg-bts-700 text-white hover:bg-bts-800',
-};
-const action = 'inline-flex max-w-full items-center justify-center whitespace-normal rounded-full px-5 py-3 text-center text-sm font-bold leading-tight transition hover:-translate-y-0.5';
-
-type PremiumFAQProps = {
-  id?: string;
-  badge: string;
-  title: ReactNode;
-  description: ReactNode;
-  items: readonly FAQItem[];
-  contactHref?: string;
-  contactLabel?: string;
-  callHref?: string;
-  callLabel?: string;
-  theme?: FAQTheme;
-  /** Retain contextual advice (planning selection or company brochure) in the same layout. */
-  contactContent?: ReactNode;
-  contained?: boolean;
-};
-
-/** One APS-reference layout for all site FAQs; only content and course accents vary. */
-export function PremiumFAQSection({ id, badge, title, description, items, contactHref = '/contact', contactLabel = 'Je souhaite en savoir plus', callHref = 'tel:0422470768', callLabel = 'Appeler l’école', theme = 'gold', contactContent, contained = false }: PremiumFAQProps) {
-  const styles = premiumFaqThemes[theme];
-  return <section id={id} aria-label={badge} data-faq-design="aps" data-faq-theme={theme} className={`${layout.section} relative isolate overflow-hidden py-14 lg:py-16 ${styles.shell} ${contained ? layout.contained : ''}`}>
-    <div className={`absolute left-0 top-0 -z-10 h-72 w-72 -translate-x-1/3 rounded-full blur-3xl ${styles.glow}`} aria-hidden="true" />
-    <div className="absolute bottom-0 right-0 -z-10 h-96 w-96 translate-x-1/4 rounded-full bg-white/80 blur-3xl" aria-hidden="true" />
-    <div className={`${contained ? layout.containedInner : 'page-container'} ${layout.grid} grid gap-7 lg:grid-cols-[0.78fr_1.22fr] lg:gap-10`}>
-      <div className={`${layout.intro} lg:sticky lg:top-28 lg:self-start`}>
-        <span className={`inline-flex rounded-full border bg-white/80 px-4 py-2 text-xs font-black uppercase tracking-[.24em] shadow-soft backdrop-blur ${styles.badge}`}>{badge}</span>
-        <h2 className={`${layout.title} mt-4 text-3xl font-black tracking-tight text-academy-ink sm:text-4xl lg:text-[2.7rem] lg:leading-[1.05]`}>{title}</h2>
-        <p className={`${layout.description} mt-4 max-w-xl text-base font-semibold leading-7 text-academy-muted`}>{description}</p>
-        {contactContent ? <div className={layout.context}>{contactContent}</div> :
-          <div className={`mt-6 overflow-hidden rounded-[1.5rem] border bg-white/85 p-5 shadow-[0_20px_55px_rgba(54,43,24,.10)] backdrop-blur ${styles.contact}`}>
-            <div className="flex items-start gap-3">
-              <span className={`grid h-10 w-10 shrink-0 place-items-center rounded-2xl text-lg ${styles.icon}`} aria-hidden="true">☎️</span>
-              <div><h3 className={`${layout.contactTitle} text-base font-black text-academy-ink`}>Besoin d’un renseignement ?</h3><p className={`${layout.contactDescription} mt-1 text-sm font-semibold leading-6 text-academy-muted`}>Notre équipe peut vous accompagner avant votre inscription.</p></div>
-            </div>
-            <div className="mt-4 flex flex-wrap gap-2">
-              <Link href={callHref} className={`${action} ${actionColors[theme]}`}>{callLabel}</Link>
-              <Link href={contactHref} className={`${action} bg-white text-academy-ink ring-1 ring-academy-line hover:bg-stone-50`}>{contactLabel}</Link>
-            </div>
-          </div>}
-      </div>
-      <div className="min-w-0"><FaqDirectoryLink embedded /><FAQ items={items} theme={theme} /></div>
-    </div>
-  </section>;
 }

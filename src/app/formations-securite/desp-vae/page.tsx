@@ -13,12 +13,12 @@ import { isPublicUpcomingSession } from '@/components/PublicTrainingSessions';
 import { TrainingDatesPricingSection } from '@/components/TrainingDatesPricingSection';
 import { TrainingSectionNavigation } from '@/components/TrainingSectionNavigation';
 import { DespIllustratedCards, type DespIllustratedCard } from '@/components/DespIllustratedCards';
-import { Button, ConversionStrip, FeatureCard, PremiumFAQSection } from '@/components/ui';
+import { Button, ConversionStrip, FeatureCard } from '@/components/ui';
+import { FaqDirectoryLink } from '@/components/FaqDirectoryLink';
 import { DespHero } from '@/components/DespHero';
 import { MissionAnimation } from '@/components/MissionAnimation';
 import { listPublicSessions as listSessions } from '@/lib/training-data';
-import { formationFaq } from '@/data/faq';
-import { despVaeAdmin, despVaeFaq } from '@/data/despVae';
+import { despVaeAdmin } from '@/data/despVae';
 
 export const dynamic = 'force-dynamic';
 
@@ -174,9 +174,9 @@ export default async function DespVaePage(){
     <Info title="Pourquoi suivre cette VAE chez Intégrale Academy" items={why}/>
 
     <TrainingCourseTestimonials category="VAE DESP" />
-    <div id="faq-desp-vae"><PremiumFAQSection theme="orange" badge="FAQ DESP VAE" title="Vos questions sur la VAE DESP" description="Retrouvez les réponses essentielles sur l’éligibilité, la recevabilité, le dossier de preuves, le jury, les financements et l’accompagnement." items={[...formationFaq, ...despVaeFaq]} contactHref="/contact?formation=desp-vae" contactLabel="Poser une question VAE"/></div>
+    <div id="faq-desp-vae"><FaqDirectoryLink embedded theme="orange" /></div>
     <TrainingReferenceContact
-      description={<><p className="font-bold">Cassandre, responsable commercial, vous accompagne dans votre choix</p><p>Elle étudie votre expérience, vous aide à choisir entre le DESP initial et la VAE et vous présente les modalités d’accompagnement et de financement.</p></>}
+      description={<><p className="font-bold">Cassandre, Responsable commercial, vous accompagne dans votre choix</p><p>Elle étudie votre expérience, vous aide à choisir entre le DESP initial et la VAE et vous présente les modalités d’accompagnement et de financement.</p></>}
       href="/contact?formation=desp-vae&objet=rendez-vous"
       additionalActions={<><VaeEligibilityModal label="Tester mon éligibilité"/><Button href="/contact?formation=desp-vae" variant="orange">Recevoir un devis VAE</Button></>}
     />

@@ -1,5 +1,4 @@
-import { businessFaq } from '@/data/faq/practical';
-import { PremiumFAQSection } from '@/components/FAQ';
+import { FaqDirectoryLink } from '@/components/FaqDirectoryLink';
 import { TeamPortrait } from '@/components/TeamPortrait';
 import { INFORMATION_REQUEST_URL } from '@/lib/contact-request';
 import { createPageMetadata } from '@/lib/seo';
@@ -115,8 +114,8 @@ const siteSkills = [
 ];
 
 const contacts = [
-  { portrait: 'cassandre' as const, contactLabel: 'Cassandre, responsable commercial', name: 'Cassandre MENARD', role: 'Responsable commercial', email: 'cassandre@integraleacademy.com', phone: '04 87 83 06 16', phoneHref: '+33487830616', mobile: '07 43 58 22 64', mobileHref: '+33743582264' },
-  { portrait: 'aurelie' as const, contactLabel: 'Aurélie, responsable des BTS', name: 'Aurélie BAYARD-CHAUSSEZ', role: 'Responsable des BTS · Relations clients', email: 'aurelie@integraleacademy.com', phone: '04 87 83 06 15', phoneHref: '+33487830615', mobile: '07 69 39 04 57', mobileHref: '+33769390457' },
+  { portrait: 'cassandre' as const, contactLabel: 'Cassandre, Responsable commercial', name: 'Cassandre MENARD', role: 'Responsable commercial', email: 'cassandre@integraleacademy.com', phone: '04 87 83 06 16', phoneHref: '+33487830616', mobile: '07 43 58 22 64', mobileHref: '+33743582264' },
+  { portrait: 'aurelie' as const, contactLabel: 'Aurélie, Responsable des BTS', name: 'Aurélie BAYARD-CHAUSSEZ', role: 'Responsable des BTS · Relations clients', email: 'aurelie@integraleacademy.com', phone: '04 87 83 06 15', phoneHref: '+33487830615', mobile: '07 69 39 04 57', mobileHref: '+33769390457' },
   { portrait: 'clement' as const, contactLabel: 'Clément', name: 'Clément VAILLANT', role: 'Directeur général', email: 'clement@integraleacademy.com', phone: '04 87 83 06 14', phoneHref: '+33487830614', mobile: '06 65 24 52 71', mobileHref: '+33665245271' },
 ];
 
@@ -300,20 +299,15 @@ export default function EntreprisesPage() {
       </div>
     </section>
 
-    <PremiumFAQSection theme="gold"
-      id="diagnostic" badge="Les réponses à vos questions" title="Avant de se lancer"
-      description="Retrouvez les réponses utiles pour préparer votre projet de recrutement ou de formation."
-      items={businessFaq}
-      contactHref="#contact-entreprises"
-      contactContent={
-          <aside id="brochure-entreprises" className={`${styles.diagnosticCard} ${styles.brochureCard}`} aria-labelledby="brochure-title">
-            <span className={styles.ribbon}>Le dossier entreprises</span><h3 id="brochure-title">Toutes nos solutions,<br />à portée de main</h3>
-            <a href={INFORMATION_REQUEST_URL} target="_blank" rel="noopener noreferrer" className={styles.brochureCover}><img src="/images/entreprises/brochure-entreprises-2026-10.webp" alt="Couverture de la brochure entreprises Intégrale Academy : recruter, former et faire évoluer vos futurs professionnels de la sécurité privée." width="1050" height="799" loading="lazy" /><span className="sr-only"> (nouvel onglet)</span></a>
-            <p>Les trois dispositifs, les programmes, les calendriers et les simulations pour préparer votre prochain recrutement.</p>
-            <a href={INFORMATION_REQUEST_URL} target="_blank" rel="noopener noreferrer" className={styles.primaryButton} data-academy-action="brochure">Recevoir la brochure <Icon name="document" /><span className="sr-only"> (nouvel onglet)</span></a><small>La demande s’effectue via notre formulaire, dans un nouvel onglet.</small>
-          </aside>
-      }
-    />
+    <FaqDirectoryLink embedded id="diagnostic" theme="gold" />
+    <div className={styles.brochureWrap}>
+      <aside id="brochure-entreprises" className={`${styles.diagnosticCard} ${styles.brochureCard}`} aria-labelledby="brochure-title">
+          <span className={styles.ribbon}>Le dossier entreprises</span><h3 id="brochure-title">Toutes nos solutions,<br />à portée de main</h3>
+          <a href={INFORMATION_REQUEST_URL} target="_blank" rel="noopener noreferrer" className={styles.brochureCover}><img src="/images/entreprises/brochure-entreprises-2026-10.webp" alt="Couverture de la brochure entreprises Intégrale Academy : recruter, former et faire évoluer vos futurs professionnels de la sécurité privée." width="1050" height="799" loading="lazy" /><span className="sr-only"> (nouvel onglet)</span></a>
+          <p>Les trois dispositifs, les programmes, les calendriers et les simulations pour préparer votre prochain recrutement.</p>
+          <a href={INFORMATION_REQUEST_URL} target="_blank" rel="noopener noreferrer" className={styles.primaryButton} data-academy-action="brochure">Recevoir la brochure <Icon name="document" /><span className="sr-only"> (nouvel onglet)</span></a><small>La demande s’effectue via notre formulaire, dans un nouvel onglet.</small>
+        </aside>
+    </div>
 
     <section id="contact-entreprises" className={styles.contactsSection} aria-labelledby="contacts-title">
       <div className={styles.container}>

@@ -21,16 +21,17 @@ test('Shared chapter navigation tracks scrolling, resizing and accessible anchor
   for (const value of ['position: sticky', 'overflow-x: auto', 'scroll-margin-top:', 'prefers-reduced-motion', "[aria-current='location']"]) assert.ok(css.includes(value), value);
 });
 
-test('All FAQ entry points share the APS section and native numbered accordion cards', () => {
-  const source = read('src/components/FAQ.tsx');
-  for (const value of ['data-faq-design="aps"', 'data-faq-list', '<details', '<summary', "padStart(2, '0')", 'md:open:col-span-2', '<FAQ items={items}']) assert.ok(source.includes(value), value);
-  assert.match(read('src/components/ui.tsx'), /export \{ FAQ, PremiumFAQSection \} from '@\/components\/FAQ'/);
-  for (const file of ['src/app/financements/page.tsx', 'src/app/entreprises/page.tsx', 'src/components/DespChoiceReferencePage.tsx']) {
+test('Only the FAQ directory renders the native question accordions', () => {
+  const list = read('src/components/FAQ.tsx');
+  for (const value of ['data-faq-list', '<details', '<summary', "padStart(2, '0')"]) assert.ok(list.includes(value), value);
+  const directory = read('src/app/faq/FaqDirectory.tsx');
+  assert.match(directory, /<FAQ\b/);
+  assert.match(directory, /type="search"/);
+  for (const file of ['src/app/page.tsx', 'src/app/financements/page.tsx', 'src/app/entreprises/page.tsx', 'src/components/DespChoiceReferencePage.tsx']) {
     const page = read(file);
-    assert.match(page, /<PremiumFAQSection\b/);
-    assert.doesNotMatch(page, /styles\.(faqList|questions|question)\b/);
+    assert.match(page, /<FaqDirectoryLink embedded/);
+    assert.doesNotMatch(page, /<FAQ\b|FAQPage/);
   }
-  assert.doesNotMatch(read('src/app/formations-securite/[slug]/page.tsx'), /<FAQ\b/);
 });
 
 test('Company brochure, contact form and contextual planning actions are retained', () => {
@@ -46,7 +47,7 @@ test('Company brochure, contact form and contextual planning actions are retaine
 
 test('FAQ typography is locally scoped; program accordions remain separate', () => {
   const css = read('src/components/FAQ.module.css');
-  for (const value of ['.list .summary', '.list .answer', '.section .title', 'color-scheme: light', 'prefers-reduced-motion']) assert.ok(css.includes(value), value);
+  for (const value of ['.list .summary', '.list .answer', 'color-scheme: light', 'prefers-reduced-motion']) assert.ok(css.includes(value), value);
   assert.match(read('src/app/entreprises/entreprises.module.css'), /\.programBlock > summary/);
   assert.match(read('src/app/ecole/school-experience.module.css'), /\.biography/);
 });

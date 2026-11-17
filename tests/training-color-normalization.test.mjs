@@ -64,7 +64,7 @@ test('Chauffeur VTC conserve le violet sur sa page de formation', () => {
   const page = read('src/app/vtc/page.tsx');
   const styles = read('src/app/vtc/vtc.module.css');
 
-  assert.match(page, /PremiumFAQSection theme="violet"/);
+  assert.match(page, /FaqDirectoryLink embedded theme="violet"/);
   assert.match(styles, /--accent:#7c3aed/);
   assert.doesNotMatch(styles, /--gold|var\(--gold\)|242,183,45|#f2b72d/i);
 });

@@ -11,12 +11,12 @@ import { isPublicUpcomingSession } from '@/components/PublicTrainingSessions';
 import { TrainingDatesPricingSection } from '@/components/TrainingDatesPricingSection';
 import { TrainingSectionNavigation } from '@/components/TrainingSectionNavigation';
 import { DespIllustratedCards, type DespIllustratedCard } from '@/components/DespIllustratedCards';
-import { Button, ConversionStrip, FeatureCard, PremiumFAQSection } from '@/components/ui';
+import { Button, ConversionStrip, FeatureCard } from '@/components/ui';
+import { FaqDirectoryLink } from '@/components/FaqDirectoryLink';
 import { DespHero } from '@/components/DespHero';
 import { MissionAnimation } from '@/components/MissionAnimation';
 import { listPublicSessions as listSessions } from '@/lib/training-data';
-import { formationFaq } from '@/data/faq';
-import { despActivities, despEnrollmentSteps, despFinancingCards, despInitialAdminData, despInitialFaq, despOutcomes } from '@/data/despInitial';
+import { despActivities, despEnrollmentSteps, despFinancingCards, despInitialAdminData, despOutcomes } from '@/data/despInitial';
 
 export const dynamic = 'force-dynamic';
 
@@ -154,8 +154,8 @@ export default async function DespInitialPage(){
     <Info title="Pourquoi suivre cette formation chez Intégrale Academy" items={why}/>
 
     <TrainingCourseTestimonials category="DESP" />
-    <div id="faq-desp-initial"><PremiumFAQSection theme="orange" badge="FAQ DESP initial" title="Vos questions sur la formation DESP initial" description="Retrouvez les réponses essentielles sur le déroulement du parcours, les prérequis, les financements, l’examen, le CNAPS et les étapes d’inscription." items={[...formationFaq, ...despInitialFaq]} contactHref="/contact?formation=desp-initial" contactLabel="Poser une question"/></div>
-    <TrainingReferenceContact description="Cassandre, responsable commercial, vous aide à préparer votre projet de création ou de reprise, vérifier les prérequis, choisir votre centre et étudier votre financement." href="/contact?formation=desp-initial&objet=rendez-vous" />
+    <div id="faq-desp-initial"><FaqDirectoryLink embedded theme="orange" /></div>
+    <TrainingReferenceContact description="Cassandre, Responsable commercial, vous aide à préparer votre projet de création ou de reprise, vérifier les prérequis, choisir votre centre et étudier votre financement." href="/contact?formation=desp-initial&objet=rendez-vous" />
     <TrainingReferenceMobileBar label="Recevoir les dates" />
   </TrainingReferencePage>
 }

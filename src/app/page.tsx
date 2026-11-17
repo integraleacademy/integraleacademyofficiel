@@ -16,8 +16,7 @@ import { HomePageAnimations } from '@/components/HomePageAnimations';
 import { SecurityTrainingComparisonModal } from '@/components/SecurityTrainingComparisonModal';
 import { SecurityTrainingGrid } from '@/components/SecurityTrainingGrid';
 import { VtcTrainingCard } from '@/components/VtcTrainingCard';
-import { PremiumFAQSection } from '@/components/ui';
-import { globalFaq } from '@/data/faq';
+import { FaqDirectoryLink } from '@/components/FaqDirectoryLink';
 import { createHomeSecurityHighlights } from '@/lib/home-security-trainings';
 import { listPublicSessions as listSessions } from '@/lib/training-data';
 import { vtcFormation } from '@/data/site';
@@ -162,7 +161,7 @@ export default async function Home() {
 
       <CampusSection />
       <GoogleReviewsSection reviews={googleReviews} />
-      <PremiumFAQSection id="questions-frequentes" theme="gold" badge="FAQ" title="Questions fréquentes" description="Formations, financements, lieux et inscriptions : des réponses concrètes et les liens utiles pour préparer votre projet." items={globalFaq} contactHref="/contact" />
+      <FaqDirectoryLink embedded id="questions-frequentes" theme="gold" />
     </div>
   );
 }

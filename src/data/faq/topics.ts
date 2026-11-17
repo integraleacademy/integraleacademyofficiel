@@ -28,6 +28,14 @@ export const faqTopics = [
 
 export type FaqTopic = (typeof faqTopics)[number]['id'];
 
-export function faqHref(topic?: FaqTopic) {
-  return topic ? `/faq?formation=${topic}` : '/faq';
+export function findFaqTopic(value?: string | null) {
+  return faqTopics.find(topic => topic.id === value)?.id;
+}
+
+export function faqHref(topic?: FaqTopic, query = '') {
+  const params = new URLSearchParams();
+  if (topic) params.set('formation', topic);
+  if (query.trim()) params.set('q', query.trim());
+  const search = params.toString();
+  return search ? `/faq?${search}` : '/faq';
 }

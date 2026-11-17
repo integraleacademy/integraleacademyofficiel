@@ -2,13 +2,8 @@ import { createPageMetadata } from '@/lib/seo';
 import { seoPages } from '@/data/seo-pages';
 import { notFound } from "next/navigation";
 import { bts } from "@/data/site";
-import {
-  Button,
-  ConversionStrip,
-  FeatureCard,
-  Highlight,
-  PremiumFAQSection,
-} from "@/components/ui";
+import { Button, ConversionStrip, FeatureCard, Highlight } from "@/components/ui";
+import { FaqDirectoryLink } from '@/components/FaqDirectoryLink';
 import { BtsMosReferencePage } from "@/components/BtsMosReferencePage";
 import { BtsMcoReferencePage } from "@/components/BtsMcoReferencePage";
 import { BtsCiReferencePage } from "@/components/BtsCiReferencePage";
@@ -461,14 +456,7 @@ export default async function Page({
           ))}
         </div>
       </BtsSection>
-      <PremiumFAQSection theme="gold"
-        badge={`FAQ BTS ${label}`}
-        title={`Vos questions sur le BTS ${label}`}
-        description="Retrouvez les réponses fréquentes sur le déroulement, la candidature, l’alternance, le financement et l’examen."
-        items={f.faq}
-        contactHref={`/contact?formation=${contactSlug}`}
-        contactLabel="Demander des informations"
-      />
+      <FaqDirectoryLink embedded theme="gold" />
     </main>
   );
 }

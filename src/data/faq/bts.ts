@@ -1,7 +1,7 @@
 export const btsMosFaq = [
-  { q: 'Puis-je m’inscrire juste après le bac ?', a: 'Oui. Le BTS MOS est accessible après un baccalauréat ou un titre équivalent, sous réserve de l’étude de votre dossier. Aurélie, responsable des BTS, vous accompagne pour vérifier les prérequis et préparer votre inscription.' },
+  { q: 'Puis-je m’inscrire juste après le bac ?', a: 'Oui. Le BTS MOS est accessible après un baccalauréat ou un titre équivalent, sous réserve de l’étude de votre dossier. Aurélie, Responsable des BTS, vous accompagne pour vérifier les prérequis et préparer votre inscription.' },
   { q: 'Puis-je m’inscrire sans avoir trouvé d’entreprise ?', a: 'Oui, vous pouvez commencer par votre candidature. L’équipe vous accompagne dans la préparation de votre recherche d’entreprise et vous explique les étapes du contrat d’apprentissage.' },
-  { q: 'Comment m’inscrire en BTS MOS ?', a: 'Vous avez deux possibilités : remplir notre dossier de pré-inscription en ligne ou candidater directement sur Parcoursup en choisissant la fiche présentiel ou 100 % à distance. Les candidatures sur Parcoursup suivent le calendrier de la plateforme. Pour une candidature en cours d’année, utilisez le dossier en ligne et échangez avec Aurélie, responsable des BTS.' },
+  { q: 'Comment m’inscrire en BTS MOS ?', a: 'Vous avez deux possibilités : remplir notre dossier de pré-inscription en ligne ou candidater directement sur Parcoursup en choisissant la fiche présentiel ou 100 % à distance. Les candidatures sur Parcoursup suivent le calendrier de la plateforme. Pour une candidature en cours d’année, utilisez le dossier en ligne et échangez avec Aurélie, Responsable des BTS.' },
   { q: 'Faut-il une carte professionnelle CNAPS pour intégrer le BTS MOS ?', a: 'Pour intégrer notre parcours BTS MOS en alternance dans la sécurité privée, vous devrez être titulaire de la carte professionnelle CNAPS correspondant aux missions de surveillance humaine et de gardiennage avant votre entrée en formation. Si vous possédez déjà cette carte en cours de validité, vous êtes dispensé de la formation APS préalable. Si vous avez obtenu le bac pro « Métiers de la sécurité », vous pouvez demander cette carte au CNAPS sans suivre de formation APS supplémentaire. Notre équipe vous accompagne pour préparer votre demande, dont la validation reste soumise au CNAPS. Si vous ne disposez ni de la carte ni d’un diplôme reconnu pour la demander, notre équipe vérifie votre situation et vous oriente vers une session APS. Lorsqu’elle est nécessaire, cette formation APS est proposée au tarif spécial futurs étudiants BTS MOS de 950 €, à la charge de l’apprenti et distinct du financement du BTS. Vous pouvez commencer votre dossier de pré-inscription pour préparer ces étapes avec nous.' },
   { q: 'Combien coûte le BTS en alternance ?', a: 'La formation est sans frais de scolarité pour l’apprenti lorsque le contrat d’alternance et sa prise en charge sont validés. Le financement s’organise avec l’entreprise et son OPCO.' },
   { q: 'Comment se déroulent les cours à distance ?', a: 'Ce sont des cours en live, 100 % à distance en visioconférence ZOOM. Vous vous connectez aux horaires prévus à l’emploi du temps et suivez les cours en direct avec vos formateurs et votre promotion. Vous pouvez poser vos questions et participer aux échanges. Les épreuves finales sont organisées en présentiel par l’Académie de Nice, dans le centre indiqué sur votre convocation.' },
@@ -37,7 +37,7 @@ export const btsMcoFaq = [
   },
   {
     q: 'Qui contacter pour parler du BTS ?',
-    a: 'Aurélie BAYARD-CHAUSSEZ, chargée des relations clients Intégrale Academy et responsable des BTS, répond à vos questions au 04 87 83 06 15, au 07 69 39 04 57 ou par e-mail à aurelie@integraleacademy.com.',
+    a: 'Aurélie BAYARD-CHAUSSEZ, chargée des relations clients Intégrale Academy et Responsable des BTS, répond à vos questions au 04 87 83 06 15, au 07 69 39 04 57 ou par e-mail à aurelie@integraleacademy.com.',
   },
 ];
 
@@ -76,7 +76,7 @@ export const btsNdrcFaq = [
   },
   {
     q: 'Qui contacter pour parler du BTS ?',
-    a: 'Aurélie BAYARD-CHAUSSEZ, chargée des relations clients Intégrale Academy et responsable des BTS, répond à vos questions au 04 87 83 06 15, au 07 69 39 04 57 ou par e-mail à aurelie@integraleacademy.com.',
+    a: 'Aurélie BAYARD-CHAUSSEZ, chargée des relations clients Intégrale Academy et Responsable des BTS, répond à vos questions au 04 87 83 06 15, au 07 69 39 04 57 ou par e-mail à aurelie@integraleacademy.com.',
   },
 ];
 
@@ -111,7 +111,7 @@ export const btsCiFaq = [
   },
   {
     q: 'Qui contacter pour parler du BTS ?',
-    a: 'Aurélie BAYARD-CHAUSSEZ, chargée des relations clients Intégrale Academy et responsable des BTS, répond à vos questions au 04 87 83 06 15, au 07 69 39 04 57 ou par e-mail à aurelie@integraleacademy.com.',
+    a: 'Aurélie BAYARD-CHAUSSEZ, chargée des relations clients Intégrale Academy et Responsable des BTS, répond à vos questions au 04 87 83 06 15, au 07 69 39 04 57 ou par e-mail à aurelie@integraleacademy.com.',
   },
 ];
 
@@ -150,7 +150,7 @@ export const btsPiFaq = [
   },
   {
     q: 'Qui contacter pour parler du BTS ?',
-    a: 'Aurélie BAYARD-CHAUSSEZ, chargée des relations clients Intégrale Academy et responsable des BTS, répond à vos questions au 04 87 83 06 15, au 07 69 39 04 57 ou par e-mail à aurelie@integraleacademy.com.',
+    a: 'Aurélie BAYARD-CHAUSSEZ, chargée des relations clients Intégrale Academy et Responsable des BTS, répond à vos questions au 04 87 83 06 15, au 07 69 39 04 57 ou par e-mail à aurelie@integraleacademy.com.',
   },
 ];
 
@@ -189,6 +189,6 @@ export const btsCgFaq = [
   },
   {
     q: 'Qui contacter pour parler du BTS ?',
-    a: 'Aurélie BAYARD-CHAUSSEZ, chargée des relations clients Intégrale Academy et responsable des BTS, répond à vos questions au 04 87 83 06 15, au 07 69 39 04 57 ou par e-mail à aurelie@integraleacademy.com.',
+    a: 'Aurélie BAYARD-CHAUSSEZ, chargée des relations clients Intégrale Academy et Responsable des BTS, répond à vos questions au 04 87 83 06 15, au 07 69 39 04 57 ou par e-mail à aurelie@integraleacademy.com.',
   },
 ];

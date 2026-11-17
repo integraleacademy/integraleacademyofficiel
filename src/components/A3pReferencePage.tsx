@@ -8,7 +8,7 @@ import { serializeCourseJsonLd } from '@/lib/seo';
 import Link from 'next/link';
 import { TrainingHeroSessionCard } from '@/components/TrainingHero';
 import { MissionAnimation } from '@/components/MissionAnimation';
-import { PremiumFAQSection } from '@/components/ui';
+import { FaqDirectoryLink } from '@/components/FaqDirectoryLink';
 import { CourseFilm } from '@/components/CourseFilm';
 import { TrainingSectionNavigation } from '@/components/TrainingSectionNavigation';
 import { TrainingDatesPricingSection } from '@/components/TrainingDatesPricingSection';
@@ -17,17 +17,7 @@ import styles from './A3pReferencePage.module.css';
 import { IntegraleWelcomePack } from '@/components/IntegraleWelcomePack';
 import { ManualArtwork } from '@/components/ManualArtwork';
 import { a3pArtwork, a3pPracticeArtwork } from '@/data/manualIllustrations';
-import {
-  a3pConfig,
-  a3pContact,
-  a3pEmployerSectors,
-  a3pEnrollmentSteps,
-  a3pFaq,
-  a3pInsertionStats,
-  a3pPrerequisites,
-  a3pProgram,
-  a3pWorkConditions,
-} from '@/data/a3p';
+import { a3pConfig, a3pContact, a3pEmployerSectors, a3pEnrollmentSteps, a3pInsertionStats, a3pPrerequisites, a3pProgram, a3pWorkConditions } from '@/data/a3p';
 
 type CTAStyle = 'dark' | 'green' | 'light' | 'outline';
 
@@ -119,7 +109,6 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
       '@context': 'https://schema.org',
       '@graph': [
         { '@type': 'Course', name: 'Formation A3P : devenez agent de protection rapprochée', description: `Formation officielle TFP A3P à Puget-sur-Argens, ${a3pConfig.durationHours}, RNCP niveau 4.`, provider: { '@type': 'Organization', name: 'Intégrale Academy', telephone: a3pConfig.advisor.phone } },
-        { '@type': 'FAQPage', mainEntity: a3pFaq.map((item) => ({ '@type': 'Question', name: item.q, acceptedAnswer: { '@type': 'Answer', text: item.a } })) },
         { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Accueil', item: '/' }, { '@type': 'ListItem', position: 2, name: 'Formations sécurité', item: '/formations-securite' }, { '@type': 'ListItem', position: 3, name: 'A3P APR', item: a3pConfig.pageUrl }] },
       ],
     }, "/formations-securite/a3p-apr") }} />
@@ -326,10 +315,10 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
 
     <TrainingCourseTestimonials category="A3P" />
 
-    <div id="faq-a3p"><PremiumFAQSection theme="green" badge="12 — FAQ A3P" title="Tout savoir avant de vous inscrire" description="Retrouvez les réponses aux questions les plus fréquentes sur la formation A3P, les prérequis CNAPS, le financement, l’hébergement et l’examen." items={a3pFaq} contactHref={a3pContact('question-faq-a3p')} /></div>
+    <div id="faq-a3p"><FaqDirectoryLink embedded theme="green" /></div>
 
     <TrainingReferenceContact
-      description="Cassandre, responsable commercial, vérifie vos prérequis, vous présente les prochaines dates et étudie les solutions de financement adaptées à votre situation."
+      description="Cassandre, Responsable commercial, vérifie vos prérequis, vous présente les prochaines dates et étudie les solutions de financement adaptées à votre situation."
       href={a3pContact('rdv-telephonique')}
     />
     <TrainingReferenceMobileBar href={a3pContact('mobile-dossier-a3p')} label="Recevoir le dossier" />

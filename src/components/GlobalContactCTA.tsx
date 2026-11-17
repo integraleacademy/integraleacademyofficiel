@@ -35,7 +35,7 @@ export function GlobalContactCTA() {
   const pathname = usePathname();
   const isFinancingPage = pathname?.replace(/\/+$/, '') === '/financements';
   const isBts = pathname?.startsWith('/bts') || pathname === '/dossiersbts';
-  const contactName = isBts ? 'Aurélie, responsable des BTS' : 'Cassandre, responsable commercial';
+  const contactName = isBts ? 'Aurélie, Responsable des BTS' : 'Cassandre, Responsable commercial';
   const contactFullName = isBts ? 'Aurélie BAYARD-CHAUSSEZ' : 'Cassandre';
   const contactRole = isBts
     ? 'Chargée des relations clients — Responsable des BTS'
@@ -83,7 +83,7 @@ export function GlobalContactCTA() {
     });
   }
 
-  if (isCertificationProjectPath(pathname) || ['/formations-securite/ssiap-1', '/formations-securite/ssiap-2', '/formations-securite/ssiap-3', '/formations-securite/aps', '/formations-securite/a3p-apr', '/formations-securite/sst', '/formations-securite/desp-initial', '/formations-securite/desp-vae', '/dirigeant', '/vaedirigeant'].includes(pathname?.replace(/\/+$/, '') || '') || pathname === '/bts/mos' || pathname === '/ecole' || pathname === '/entreprises' || pathname === '/contact' || pathname === '/planning' || isFinancingPage || hiddenPathPrefixes.some((prefix) => pathname?.startsWith(prefix))) {
+  if (isCertificationProjectPath(pathname) || ['/formations-securite/ssiap-1', '/formations-securite/ssiap-2', '/formations-securite/ssiap-3', '/formations-securite/aps', '/formations-securite/a3p-apr', '/formations-securite/sst', '/formations-securite/desp-initial', '/formations-securite/desp-vae', '/dirigeant', '/vaedirigeant'].includes(pathname?.replace(/\/+$/, '') || '') || pathname === '/bts/mos' || pathname === '/ecole' || pathname === '/entreprises' || pathname === '/contact' || pathname === '/faq' || pathname === '/planning' || isFinancingPage || hiddenPathPrefixes.some((prefix) => pathname?.startsWith(prefix))) {
     return null;
   }
 
@@ -108,7 +108,7 @@ export function GlobalContactCTA() {
                 </h2>
                 <p className={`${styles.revealItem} mt-5 max-w-2xl text-base font-medium leading-8 text-academy-muted sm:text-lg`} style={{ '--delay': '280ms' } as CSSProperties}>
                   {isBts
-                    ? 'Aurélie, responsable des BTS, vous accompagne pour choisir votre BTS, préparer votre candidature et comprendre toutes les étapes de l’alternance.'
+                    ? 'Aurélie, Responsable des BTS, vous accompagne pour choisir votre BTS, préparer votre candidature et comprendre toutes les étapes de l’alternance.'
                     : 'Notre équipe vous accompagne pour choisir la formation adaptée à votre projet et vous aider à concrétiser votre avenir professionnel.'}
                 </p>
                 <div className={styles.supportPills}><span>Choisir son parcours</span><span>Préparer son dossier</span><span>Étudier son financement</span></div>
@@ -147,8 +147,8 @@ export function GlobalContactCTA() {
                 <div className={`${styles.revealItem} mt-6 grid gap-3 xl:grid-cols-[1.18fr_.82fr]`} style={{ '--delay': '480ms' } as CSSProperties}>
                   <a href={primaryContactHref} className={`${styles.primaryButton} focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-academy-gold`}>
                     {isBts ? <EmailIcon /> : <CalendarIcon />}
-                    <span className={styles.longLabel}>{isBts ? 'Écrire à Aurélie, responsable des BTS' : 'Réserver un rendez-vous téléphonique'}</span>
-                    <span className={styles.shortLabel}>{isBts ? 'Écrire à Aurélie, responsable des BTS' : 'Réserver un rendez-vous téléphonique'}</span>
+                    <span className={styles.longLabel}>{isBts ? 'Écrire à Aurélie, Responsable des BTS' : 'Réserver un rendez-vous téléphonique'}</span>
+                    <span className={styles.shortLabel}>{isBts ? 'Écrire à Aurélie, Responsable des BTS' : 'Réserver un rendez-vous téléphonique'}</span>
                     <span className={styles.arrow} aria-hidden="true">→</span>
                   </a>
                   <a href={directPhoneHref} className={`${styles.secondaryButton} focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-academy-gold`}>

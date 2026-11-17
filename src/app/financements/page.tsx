@@ -1,7 +1,6 @@
-import { fundingFaq } from '@/data/faq/practical';
 import { PageSectionNavigation } from '@/components/PageSectionNavigation';
 import navigation from '@/components/PageSectionNavigation.module.css';
-import { PremiumFAQSection } from '@/components/FAQ';
+import { FaqDirectoryLink } from '@/components/FaqDirectoryLink';
 import { TeamPortrait } from '@/components/TeamPortrait';
 import { createPageMetadata } from '@/lib/seo';
 import FinancingSimulator from '@/components/FinancingSimulator';
@@ -124,17 +123,12 @@ export default function FinancementsPage() {
       </div>
     </section>
 
-    <PremiumFAQSection theme="gold"
-      id="questions-frequentes" badge="Les réponses utiles" title={<>Encore une question ?</>}
-      description="Quelques repères avant de vous lancer."
-      items={fundingFaq}
-      contactHref="#contact-financement" contactLabel="Parlons-en ensemble"
-    />
+    <FaqDirectoryLink embedded id="questions-frequentes" theme="gold" />
 
     <section id="contact-financement" className={styles.contactSection} aria-labelledby="contact-title">
       <div className={styles.container}>
         <div className={styles.contactPanel}>
-          <div><span className={styles.eyebrow}>Le prochain pas, ensemble</span><h2 id="contact-title">Votre projet mérite<br /><em>une conversation</em></h2><p>Expliquez-nous votre situation. Cassandre, responsable commercial, vous accompagne pour faire le point sur les possibilités de financement.</p></div>
+          <div><span className={styles.eyebrow}>Le prochain pas, ensemble</span><h2 id="contact-title">Votre projet mérite<br /><em>une conversation</em></h2><p>Expliquez-nous votre situation. Cassandre, Responsable commercial, vous accompagne pour faire le point sur les possibilités de financement.</p></div>
           <div className={styles.contactDetails}>
             <div className={styles.contactPerson}><span className={styles.contactInitial} aria-hidden="true"><TeamPortrait person="cassandre" size={48} /></span><div><strong>Cassandre</strong><span>Responsable commercial</span></div></div>
             <Link href={appointmentFormUrl} className={styles.primaryButton}>Parler de mon financement <Icon name="arrow" /></Link>

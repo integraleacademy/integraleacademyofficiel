@@ -1,4 +1,3 @@
-import { btsPiFaq } from '@/data/faq/bts';
 import { CourseTeamBanner } from '@/components/CourseTeamBanner';
 import { CourseBrochureCard } from '@/components/CourseBrochureCard';
 import { ManualArtwork } from '@/components/ManualArtwork';
@@ -13,7 +12,7 @@ import { BtsCompleteInformation, BtsStudentBenefits } from '@/components/BtsExpa
 import { BtsSectionNavigation } from '@/components/BtsSectionNavigation';
 import { MissionAnimation } from '@/components/MissionAnimation';
 import { TrainingIllustratedCards, type TrainingIllustratedCard } from '@/components/TrainingIllustratedCards';
-import { PremiumFAQSection } from '@/components/ui';
+import { FaqDirectoryLink } from '@/components/FaqDirectoryLink';
 
 const applicationUrl = 'https://admissions.integraleconnect.com/';
 const aurelieEmail = 'aurelie@integraleacademy.com';
@@ -228,14 +227,6 @@ export function BtsPiReferencePage() {
                 },
               },
               {
-                '@type': 'FAQPage',
-                mainEntity: btsPiFaq.map((item) => ({
-                  '@type': 'Question',
-                  name: item.q,
-                  acceptedAnswer: { '@type': 'Answer', text: item.a },
-                })),
-              },
-              {
                 '@type': 'BreadcrumbList',
                 itemListElement: [
                   { '@type': 'ListItem', position: 1, name: 'Accueil', item: '/' },
@@ -266,7 +257,7 @@ export function BtsPiReferencePage() {
               </p>
               <div className="mt-6 flex flex-col gap-3 sm:flex-row">
                 <CTA href={applicationUrl} variant="gold" external>Admissions 2027 →</CTA>
-                <CTA href={aurelieDirectHref} variant="outline">Parler à Aurélie, responsable des BTS</CTA>
+                <CTA href={aurelieDirectHref} variant="outline">Parler à Aurélie, Responsable des BTS</CTA>
               </div>
               <div className="mt-6 flex flex-wrap gap-2 text-xs font-bold text-white/75">
                 <span className="rounded-full border border-white/15 bg-white/7 px-3 py-2">✓ Sans frais de scolarité pour l’apprenti*</span>
@@ -332,7 +323,7 @@ export function BtsPiReferencePage() {
                 <p key={item} className="flex items-center gap-3 rounded-2xl bg-academy-bg p-4 font-bold"><span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-bts-500 text-xs text-white">✓</span>{item}</p>
               ))}
             </div>
-            <CTA href={contactHref('Question d’un parent sur le BTS Professions Immobilières')} variant="light" className="mt-6">Poser une question à Aurélie, responsable des BTS →</CTA>
+            <CTA href={contactHref('Question d’un parent sur le BTS Professions Immobilières')} variant="light" className="mt-6">Poser une question à Aurélie, Responsable des BTS →</CTA>
           </article>
         </div>
       </Section>
@@ -417,19 +408,19 @@ export function BtsPiReferencePage() {
             <p className="mt-5 text-7xl font-black tracking-[-.08em]">0 €*</p>
             <h3 className="mt-5 text-3xl font-black tracking-[-.04em]">de frais de scolarité pour l’apprenti</h3>
             <p className="mt-4 leading-7 text-bts-950/70">La formation est prise en charge dans le cadre du contrat d’alternance et de l’accord de l’entreprise avec son OPCO.</p>
-            <CTA href={contactHref('Question sur le financement du BTS Professions Immobilières')} variant="dark" className="mt-6">Poser ma question à Aurélie, responsable des BTS →</CTA>
+            <CTA href={contactHref('Question sur le financement du BTS Professions Immobilières')} variant="dark" className="mt-6">Poser ma question à Aurélie, Responsable des BTS →</CTA>
             <p className="mt-4 text-[.62rem] font-semibold text-bts-950/55">* Sous réserve de la conclusion et de la prise en charge du contrat.</p>
           </article>
         </div>
         <article className="mt-5 rounded-[2rem] border border-academy-line bg-academy-bg p-6 shadow-soft">
           <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
             <div><Eyebrow>Le coin des parents</Eyebrow><h3 className="mt-3 text-2xl font-black">Ce qui compte vraiment pour vous rassurer</h3></div>
-            <CTA href={aurelieDirectHref} variant="light">Appeler Aurélie, responsable des BTS →</CTA>
+            <CTA href={aurelieDirectHref} variant="light">Appeler Aurélie, Responsable des BTS →</CTA>
           </div>
           <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {[
               ['Diplôme officiel', 'Diplôme national de niveau 5 — RNCP 38380.'],
-              ['Équipe identifiée', 'Aurélie, responsable des BTS, répond aux questions du jeune et de sa famille.'],
+              ['Équipe identifiée', 'Aurélie, Responsable des BTS, répond aux questions du jeune et de sa famille.'],
               ['Parcours encadré', 'Un suivi pédagogique pendant les deux années.'],
               ['Expérience utile', 'Des missions valorisables dès la sortie.'],
             ].map(([title, text]) => <div key={title} className="rounded-2xl border border-academy-line bg-white p-4"><p className="font-black">{title}</p><p className="mt-2 text-xs leading-5 text-academy-muted">{text}</p></div>)}
@@ -499,24 +490,15 @@ export function BtsPiReferencePage() {
             <article className="rounded-[2rem] bg-gradient-to-br from-bts-300 to-bts-200 p-6 text-bts-950 shadow-gold">
               <Eyebrow>Votre avenir commence ici</Eyebrow>
               <h3 className="mt-3 text-3xl font-black">Prêt à ouvrir la porte de l’immobilier ?</h3>
-              <p className="mt-4 text-sm font-semibold leading-6 opacity-70">Déposez votre candidature et échangez avec Aurélie, responsable des BTS, avant toute décision définitive.</p>
-              <CTA href={aurelieDirectHref} variant="dark" className="mt-5">Parler à Aurélie, responsable des BTS →</CTA>
+              <p className="mt-4 text-sm font-semibold leading-6 opacity-70">Déposez votre candidature et échangez avec Aurélie, Responsable des BTS, avant toute décision définitive.</p>
+              <CTA href={aurelieDirectHref} variant="dark" className="mt-5">Parler à Aurélie, Responsable des BTS →</CTA>
             </article>
           </div>
         </div>
       </section>
 
       <div id="faq-pi">
-        <PremiumFAQSection theme="bts"
-          badge="FAQ BTS Professions Immobilières"
-          title="Tout comprendre avant de vous lancer"
-          description="Admission, alternance, métiers, entreprise, visioconférence, coût ou diplôme : Aurélie, responsable des BTS, répond aux questions du jeune comme à celles de sa famille."
-          items={btsPiFaq}
-          contactHref={contactHref('Question sur le BTS Professions Immobilières')}
-          contactLabel="Écrire à Aurélie, responsable des BTS"
-          callHref={aurelieDirectHref}
-          callLabel="Appeler Aurélie, responsable des BTS"
-        />
+        <FaqDirectoryLink embedded theme="bts" />
       </div>
 
       <section className="bg-[#FFFDF8] px-4 py-8">
@@ -529,7 +511,7 @@ export function BtsPiReferencePage() {
 
       <div data-fixed-actions="course" className="fixed inset-x-0 bottom-0 z-50 border-t border-academy-line bg-[#FFFDF8]/96 p-3 pb-[calc(.75rem+env(safe-area-inset-bottom))] shadow-[0_-12px_40px_rgba(0,0,0,.12)] backdrop-blur lg:hidden">
         <div className="mx-auto flex max-w-lg gap-2">
-          <CTA href={aurelieDirectHref} variant="light" className="min-w-0 flex-1 px-3">Appeler Aurélie, responsable des BTS</CTA>
+          <CTA href={aurelieDirectHref} variant="light" className="min-w-0 flex-1 px-3">Appeler Aurélie, Responsable des BTS</CTA>
           <CTA href={applicationUrl} variant="gold" className="min-w-0 flex-[1.2] px-3" external>Je candidate</CTA>
         </div>
       </div>

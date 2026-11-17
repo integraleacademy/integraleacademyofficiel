@@ -8,8 +8,8 @@ import { TrainingDatesPricingSection, type TrainingDatesPricingSession } from '@
 import { VaeEligibilityModal } from '@/components/VaeEligibilityModal';
 import { ManualArtwork } from '@/components/ManualArtwork';
 import { despArtwork } from '@/data/manualIllustrations';
-import { Button, ConversionStrip, PremiumFAQSection, Hero, SectionTitle } from '@/components/ui';
-import { formationFaq } from '@/data/faq';
+import { Button, ConversionStrip, Hero, SectionTitle } from '@/components/ui';
+import { FaqDirectoryLink } from '@/components/FaqDirectoryLink';
 
 function sessionHref(session: TrainingDatesPricingSession) {
   return session.id
@@ -249,7 +249,7 @@ export function DespChoiceReferencePage({ sessions }: { sessions: TrainingDatesP
       />
       <ConversionStrip theme="orange" />
 
-      <PremiumFAQSection badge="FAQ formation" title="Vos questions sur la formation DESP" description="Les réponses utiles avant de choisir votre parcours." items={formationFaq} theme="orange" contactHref="/contact?formation=desp" />
+      <FaqDirectoryLink embedded theme="orange" />
     </main>
   );
 }

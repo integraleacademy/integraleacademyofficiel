@@ -15,7 +15,6 @@
 [aria-selected='true'] > .selectionMark { background: rgb(var(--accent)); border-color: rgb(var(--accent)); color: rgb(var(--accent-text)); }
 .journey { display: grid; grid-template-columns: .86fr 1.14fr; align-items: center; gap: 40px; margin-top: 46px; }
 .journeyCopy { padding-block: 25px; }
-.chapterLabel { color: var(--gold); font-size: 12px; font-weight: 750; letter-spacing: .015em; }
 .steps { margin-top: 19px; }
 .steps > button { position: relative; display: flex; width: 100%; gap: 22px; padding: 26px 0; border: 0; border-bottom: 1px solid var(--line); background: transparent; color: var(--ink); text-align: left; }
 .steps > button:last-child { border-bottom: 0; }
@@ -39,6 +38,9 @@
 .phoneHeader img { flex-shrink: 0; }
 .phoneHeader strong { display: block; font-size: 12px; font-weight: 800; line-height: 1.4; }
 .phoneHeader span { display: block; margin-top: 3px; color: #6b6256; font-size: 9px; line-height: 1.4; }
+.exchangeNote { display: flex; align-items: center; justify-content: center; gap: 9px; margin: 14px 5px 0; padding: 10px 8px; border: 1px solid #dfcfa7; border-radius: 12px; background: #f8efd9; color: #544125; font-size: 11px; line-height: 1.35; }
+.exchangeNote svg { width: 22px; height: 22px; padding: 4px; border-radius: 50%; color: #fff; background: #71603d; }
+.exchangeNote strong { display: block; color: #42351c; font-weight: 750; }
 .phoneScreen { min-height: 340px; padding: 19px 6px 10px; }
 .screenLabel { display: block; margin-bottom: 15px; color: #706657; font-size: 9px; font-weight: 650; text-align: center; }
 .userBubble { margin-left: 22px; padding: 14px 16px; border-radius: 17px 17px 4px 17px; background: #efd18d; color: #302719; font-size: 12px; font-weight: 550; line-height: 1.6; animation: bubbleIn .55s both; }
