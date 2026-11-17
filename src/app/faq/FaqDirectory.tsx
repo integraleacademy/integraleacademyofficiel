@@ -20,6 +20,7 @@ export function FaqDirectory({ initialFormation, initialQuery, questions }: Prop
   const [query, setQuery] = useState(initialQuery);
   const groups = useMemo(() => findFaqGroups(questions, formation, query), [questions, formation, query]);
   const total = groups.reduce((count, group) => count + group.items.length, 0);
+  const resultCount = total === 0 ? 'Aucun résultat' : `${total} résultat${total > 1 ? 's' : ''}`;
   const selected = faqTopics.find(topic => topic.id === formation);
   const searching = Boolean(query.trim());
 
@@ -73,14 +74,14 @@ export function FaqDirectory({ initialFormation, initialQuery, questions }: Prop
     <section className={styles.results} aria-label="Résultats de la FAQ">
       <div className={styles.resultsHeader}>
         <h2 aria-live="polite" aria-atomic="true">{searching
-          ? `${total} résultat${total === 1 ? '' : 's'}${selected ? ` · ${selected.label}` : ''}`
+          ? `${resultCount}${selected ? ` · ${selected.label}` : ''}`
           : selected?.label ?? 'Toutes les questions'}</h2>
         {(searching || selected) && <a href="/faq" onClick={event => {
           if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
           event.preventDefault(); update(undefined, '', true);
         }}>{searching ? 'Réinitialiser la recherche' : 'Effacer le filtre'} <span aria-hidden="true">×</span></a>}
       </div>
-      {!groups.length && <p className={styles.empty}>Essayez un autre mot, comme « inscription » ou « financement »{selected ? ', ou choisissez une autre formation.' : '.'}</p>}
+      {!groups.length && <p className={styles.empty}>Essayez un autre mot, comme « inscription » ou « financement ».{selected && ' Vous pouvez aussi choisir une autre formation.'}</p>}
       {groups.map(({ topic, items }) => selected
         ? <FAQ key={topic.id} theme="gold" items={items} />
         : <details key={`${topic.id}-${searching ? 'search' : 'all'}`} className={styles.group} open={searching || topic.id === 'general'}>
