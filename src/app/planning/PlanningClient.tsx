@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
-import { formatSessionDate, formatSessionPeriod, formatSplitInPersonPeriod, hasDetailedDeliveryPeriods, inPersonPeriods, parisDateKey } from '@/lib/public-sessions';
+import { formatSessionDate, formatSessionPeriod, formatSplitInPersonPeriod, hasDetailedDeliveryPeriods } from '@/lib/public-sessions';
 import { getSessionSeatAvailability, resolveSessionSeatCapacity } from '@/lib/session-seat-availability';
 import { directorPlanningLocations, sessionLocationFilters, sessionMatchesLocation, type DirectorLocationFilterKey, type SessionLocationFilterKey } from '@/lib/session-location-filter';
 import { formatTrainingPrice } from '@/lib/training-price';
@@ -11,9 +11,11 @@ import { planningFormationHref } from '@/lib/planning-data';
 import { planningSsiapCourse, ssiapPlanningCourses, ssiapPlanningGroups, ssiapPlanningContactHref, type SsiapPlanningCourse } from '@/lib/planning-ssiap';
 import { SsiapCourseChoices } from './SsiapCourseChoices';
 import { DirectorLocationChoices } from './DirectorLocationChoices';
-import { formatVtcDeadline, formatVtcExamDate, vtcCourse, vtcDeadlineTimeLabel } from '@/data/vtc';
+import { formatVtcDeadline, formatVtcExamDate, vtcCourse } from '@/data/vtc';
 import styles from './planning.module.css';
 import { PlanningPreview, type PlanningFormationKey } from './PlanningPreview';
+import { NextSessionSummary } from '@/components/NextSessionSummary';
+import { PlanningIcon as Icon, type PlanningIconName as IconName } from '@/components/PlanningIcon';
 import { PlanningCalendar } from './PlanningCalendar';
 import { PlanningRegistration } from './PlanningRegistration';
 
@@ -31,17 +33,6 @@ const planningThemeClasses: Record<PlanningAccent, string> = {
   violet: 'planning-theme-violet',
   gold: 'planning-theme-gold',
 };
-
-type IconName =
-  | 'arrow'
-  | 'calendar'
-  | 'check'
-  | 'clock'
-  | 'location'
-  | 'people'
-  | 'search'
-  | 'screen'
-  | 'sparkles';
 
 const formationFilters: {
   key: Exclude<FormationFilterKey, 'all'>;
@@ -142,45 +133,6 @@ const alertOptions: {
   },
 
 ];
-
-function Icon({ name, className = 'h-5 w-5' }: { name: IconName; className?: string }) {
-  const common = {
-    className,
-    fill: 'none',
-    stroke: 'currentColor',
-    strokeLinecap: 'round' as const,
-    strokeLinejoin: 'round' as const,
-    strokeWidth: 1.8,
-    viewBox: '0 0 24 24',
-    'aria-hidden': true,
-  };
-
-  if (name === 'arrow') {
-    return <svg {...common}><path d="M5 12h14M13 6l6 6-6 6" /></svg>;
-  }
-  if (name === 'calendar') {
-    return <svg {...common}><rect x="3" y="5" width="18" height="16" rx="3" /><path d="M8 3v4M16 3v4M3 10h18" /></svg>;
-  }
-  if (name === 'check') {
-    return <svg {...common}><path d="m5 12 4 4L19 6" /></svg>;
-  }
-  if (name === 'clock') {
-    return <svg {...common}><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></svg>;
-  }
-  if (name === 'location') {
-    return <svg {...common}><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z" /><circle cx="12" cy="10" r="2.5" /></svg>;
-  }
-  if (name === 'people') {
-    return <svg {...common}><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" /></svg>;
-  }
-  if (name === 'search') {
-    return <svg {...common}><circle cx="11" cy="11" r="7" /><path d="m20 20-4-4" /></svg>;
-  }
-  if (name === 'screen') {
-    return <svg {...common}><rect x="3" y="4" width="18" height="13" rx="2.5" /><path d="M8 21h8M12 17v4" /></svg>;
-  }
-  return <svg {...common}><path d="m12 3 1.4 4.1L18 8.5l-4.6 1.4L12 14l-1.4-4.1L6 8.5l4.6-1.4L12 3ZM5 15l.8 2.2L8 18l-2.2.8L5 21l-.8-2.2L2 18l2.2-.8L5 15ZM19 13l.8 2.2L22 16l-2.2.8L19 19l-.8-2.2L16 16l2.2-.8L19 13Z" /></svg>;
-}
 
 function planningThemeClass(accent: PlanningAccent = 'gold') {
   return planningThemeClasses[accent];
@@ -308,92 +260,14 @@ function deliveryPeriodRows(session: Session): { label: string; value: string; i
   ];
 }
 
-const previewDate = new Intl.DateTimeFormat('fr-FR', {
-  day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Europe/Paris',
-});
-const previewDayMonth = new Intl.DateTimeFormat('fr-FR', {
-  day: 'numeric', month: 'long', timeZone: 'Europe/Paris',
-});
-
-function SessionDateMark({ value, label }: { value: Date; label: string }) {
-  const parts = previewDate.formatToParts(value);
-  return <div className={styles.dateMark}>
-    <span className={styles.dateLabel}>{label}</span>
-    <time dateTime={parisDateKey(value)} aria-label={previewDate.format(value)}>
-      <b>{formatDayParis.format(value)}</b>
-      <span>{parts.find(part => part.type === 'month')?.value}<small>{parts.find(part => part.type === 'year')?.value}</small></span>
-    </time>
-  </div>;
-}
-
-function previewPeriod(from: string | Date, to: string | Date) {
-  const start = new Date(from);
-  const end = new Date(to);
-  if (!(end >= start)) return formatSessionPeriod(from, to);
-  const startKey = parisDateKey(start);
-  const endKey = parisDateKey(end);
-  if (startKey === endKey) return previewDate.format(start);
-  let first = previewDate.format(start);
-  if (startKey.slice(0, 7) === endKey.slice(0, 7)) first = String(Number(startKey.slice(8)));
-  else if (startKey.slice(0, 4) === endKey.slice(0, 4)) first = previewDayMonth.format(start);
-  return `Du ${first} au ${previewDate.format(end)}`;
-}
-
-function NextSessionSummary({ session }: { session: Session }) {
-  const isVtc = session.scheduleKind === 'vtc-exam';
-  const start = new Date(isVtc ? session.vtcDates?.deadline || session.startDate : session.startDate);
-  const end = !isVtc && session.endDate ? new Date(session.endDate) : null;
-  const hasEnd = end && end > start && parisDateKey(end) !== parisDateKey(start);
-  const availability = isVtc ? null : planningSeatAvailability(session);
-  const details: { label: string; value: string; icon: IconName }[] = [];
-  if (isVtc) {
-    details.push(
-      { label: 'Examen théorique', value: formatVtcExamDate(session.vtcDates?.theory), icon: 'screen' },
-      { label: 'Examen pratique', value: formatVtcExamDate(session.vtcDates?.practical), icon: 'check' },
-    );
-  } else {
-    if (hasDetailedDeliveryPeriods(session)) {
-      if (session.remoteStartDate && session.remoteEndDate) {
-        details.push({ label: 'À distance', value: previewPeriod(session.remoteStartDate, session.remoteEndDate), icon: 'screen' });
-      }
-      const onSite = inPersonPeriods(session);
-      if (onSite.length) details.push({
-        label: 'En présentiel', value: onSite.map(period => previewPeriod(period.start, period.end)).join('\n'), icon: 'people',
-      });
-    }
-    if (session.examDate) details.push({ label: 'Examen', value: formatSessionDate(session.examDate), icon: 'check' });
-  }
-  if (session.location) details.push({ label: 'Lieu', value: session.location.replace(/^Paris\s*·\s*(?=\d.*\bParis\b)/i, ''), icon: 'location' });
-
-  return <>
-    <div className={styles.sessionDates}>
-      <SessionDateMark value={start} label={isVtc ? 'Date limite d’inscription' : hasEnd ? 'Du' : 'Date de formation'} />
-      {hasEnd && <>
-        <span className={styles.dateConnector} aria-hidden="true"><Icon name="arrow" /></span>
-        <SessionDateMark value={end} label="Au" />
-      </>}
-      {isVtc && <span className={styles.deadlineTime}><Icon name="clock" />{vtcDeadlineTimeLabel}</span>}
-    </div>
-    {details.length > 0 && <dl className={styles.sessionDetails}>{details.map(({ label, value, icon }) => (
-      <div key={label}><dt><Icon name={icon} />{label}</dt><dd>{value}</dd></div>
-    ))}</dl>}
-    <dl className={styles.sessionOffer}>
-      <div><dt>Tarif</dt><dd>{displayPrice(session)}</dd></div>
-      {availability && <div><dt className="sr-only">Disponibilité</dt><dd className={styles.seatStatus} data-tone={availability.tone}>{availability.label}</dd></div>}
-    </dl>
-  </>;
-}
-
 function SessionCard({
   session,
   isNext,
   selected,
-  onSelect,
 }: {
   session: Session;
   isNext: boolean;
   selected: boolean;
-  onSelect: (session: Session) => void;
 }) {
   const date = shortDate(session.startDate);
   const seatAvailability = planningSeatAvailability(session);
@@ -484,7 +358,6 @@ function SessionCard({
         </div>
 
         <div className="flex flex-wrap gap-2 lg:flex-col">
-          <button type="button" onClick={() => onSelect(session)} aria-haspopup="dialog" aria-label={'Découvrir la session ' + sessionTitle(session)} className={styles.sessionInterest}>{selected ? 'Session sélectionnée' : 'Cette session m’intéresse'} <Icon name="arrow" className="h-4 w-4" /></button>
           <Link
             href={planningFormationHref(session)}
             className="planning-neutral-action inline-flex flex-1 items-center justify-center gap-2 rounded-full px-5 py-3.5 text-sm font-black transition hover:-translate-y-0.5"
@@ -734,7 +607,7 @@ export function PlanningClient({ initialSessions, initialLocation = 'all', reque
             </div>
           </div>
 
-          <PlanningPreview key={`${activeFormation}-${activeSsiapCourse}-${selectedDirectorLocation?.key}`} formations={previewFormations} initialFormation={activeFormation} initialSsiapCourse={activeSsiapCourse} initialDirectorLocation={selectedDirectorLocation?.key} onChoose={showFormationDates} renderSession={session => <NextSessionSummary session={session} />} />
+          <PlanningPreview key={`${activeFormation}-${activeSsiapCourse}-${selectedDirectorLocation?.key}`} formations={previewFormations} initialFormation={activeFormation} initialSsiapCourse={activeSsiapCourse} initialDirectorLocation={selectedDirectorLocation?.key} onChoose={showFormationDates} renderSession={session => <NextSessionSummary session={session} price={displayPrice(session)} availability={planningSeatAvailability(session)} />} />
         </div>
       </section>
 
@@ -849,7 +722,7 @@ export function PlanningClient({ initialSessions, initialLocation = 'all', reque
             <>
               <div className="mt-6 grid gap-4">
                 {visibleSessions.map((session, index) => (
-                  <div key={session.id} className={styles.sessionEnter} style={{ '--session-delay': `${Math.min(index, 5) * 45}ms` } as CSSProperties}><SessionCard session={session} isNext={index === 0} selected={selectedSessionId === session.id} onSelect={selectSession} /></div>
+                  <div key={session.id} className={styles.sessionEnter} style={{ '--session-delay': `${Math.min(index, 5) * 45}ms` } as CSSProperties}><SessionCard session={session} isNext={index === 0} selected={selectedSessionId === session.id} /></div>
                 ))}
               </div>
               {nextOnly || filteredSessions.length > visibleSessions.length ? (

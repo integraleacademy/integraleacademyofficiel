@@ -3,6 +3,7 @@ import { SITE_ORIGIN } from '@/lib/site-urls';
 import { SITE_NAME, SOCIAL_IMAGE } from '@/lib/seo';
 import { seoPages } from '@/data/seo-pages';
 import { OrganizationSeo } from '@/components/OrganizationSeo';
+import { FaqDirectoryLink } from '@/components/FaqDirectoryLink';
 import { PageSeo } from '@/components/PageSeo';
 import './globals.css';
 import './global-contact-cta-continuous.css';
@@ -25,4 +26,4 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="fr" style={{ colorScheme: 'light' }}><body className="bg-academy-bg text-academy-ink"><OrganizationSeo/><Header/><main>{children}</main><PageSeo/><GlobalContactCTA/><GoogleRatingBadge/><Footer/><GlobalMobileCTA/></body></html>}
+export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="fr" style={{ colorScheme: 'light' }}><body className="bg-academy-bg text-academy-ink"><OrganizationSeo/><Header/><main>{children}<FaqDirectoryLink /></main><PageSeo/><GlobalContactCTA/><GoogleRatingBadge/><Footer/><GlobalMobileCTA/></body></html>}

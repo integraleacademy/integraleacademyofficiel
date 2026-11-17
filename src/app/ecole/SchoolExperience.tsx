@@ -83,7 +83,7 @@ export function SchoolCampuses() {
           <h3>{schoolVisitCampuses[selected]}<span>{isPuget ? 'Var · 83' : 'Paris · 75'}</span></h3>
           <div className={styles.campusTags}>{location.tags.map(tag => <span key={tag}>{tag}</span>)}</div>
           <address>{location.address}</address>
-          <p className={styles.campusDescription}>{isPuget ? '400 m² pour apprendre, pratiquer et échanger avec l’équipe.' : location.detail}</p>
+          {isPuget && <p className={styles.campusDescription}>400 m² pour apprendre, pratiquer et échanger avec l’équipe.</p>}
           <Link href={`/planning?lieu=${isPuget ? 'cote-azur' : 'paris'}#sessions`} className={`${school.button} ${styles.campusDates}`}>{isPuget ? 'Voir les dates dans ce centre' : 'Voir les sessions programmées à Paris'} <Arrow /></Link>
           <SchoolVisitButton campus={selected} className={school.textLink} label={isPuget ? 'Organiser ma visite' : 'Préparer ma venue'} />
           <div className={school.access}>{(isPuget ? ['À 500 m de l’A8', 'Parking gratuit', 'Bus 4 · Général de Gaulle'] : ['Accueil selon les sessions', 'Venue à convenir avec l’équipe']).map(item => <span key={item}>{item}</span>)}</div>
@@ -145,5 +145,5 @@ function VisitDialog({ campus, onClose }: { campus: SchoolVisitCampus; onClose: 
 }
 
 export function SchoolVisitAdviser() {
-  return <div className={styles.visitAdviser}><TeamPortrait person="cassandre" size={82} /><div><strong>Cassandre MENARD</strong><span>Votre premier contact pour préparer votre venue.</span></div></div>;
+  return <div className={styles.visitAdviser}><TeamPortrait person="cassandre" size={82} /><div><strong>Cassandre MENARD</strong><span>Responsable commercial · Votre premier contact pour préparer votre venue.</span></div></div>;
 }

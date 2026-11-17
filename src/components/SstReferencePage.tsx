@@ -1,3 +1,4 @@
+import { sstFaq } from '@/data/faq/security';
 import { CourseBrochureCard } from '@/components/CourseBrochureCard';
 import type { ReactNode } from 'react';
 import { TrainingReferencePage, TrainingReferenceHero, TrainingReferenceSection as Section, TrainingReferenceMissions, TrainingReferenceCampus, TrainingReferenceContact, TrainingReferenceMobileBar } from '@/components/TrainingReferenceLayout';
@@ -87,17 +88,6 @@ const trustCards = [
   ['Centre de formation', 'Puget-sur-Argens'],
 ];
 
-const faq = [
-  { q: 'À qui s’adresse la formation SST ?', a: 'Aux salariés, candidats sécurité et entreprises souhaitant acquérir les gestes de secours au travail et contribuer à la prévention des risques professionnels.' },
-  { q: 'Y a-t-il des prérequis ?', a: 'Non. Aucun prérequis n’est exigé pour suivre la formation initiale SST.' },
-  { q: 'Combien de temps dure la formation ?', a: 'La formation initiale dure au minimum 14 heures, généralement réparties sur deux journées en présentiel.' },
-  { q: 'Combien de temps le certificat est-il valable ?', a: 'Le certificat SST est valable 24 mois. Il est reconnu au niveau national dans le cadre du dispositif Assurance Maladie – Risques professionnels / INRS.' },
-  { q: 'Quand faut-il suivre le MAC SST ?', a: 'Le maintien et l’actualisation des compétences doit être réalisé tous les 24 mois. Le MAC SST dure au minimum 7 heures en présentiel.' },
-  { q: 'Comment se déroule l’évaluation ?', a: 'Les compétences sont évaluées pendant la formation au moyen d’une mise en situation d’accident du travail et d’un questionnement portant sur la prévention.' },
-  { q: 'Le certificat SST donne-t-il une équivalence PSC1 ?', a: 'Oui. Le certificat SST en cours de validité donne l’équivalence à l’unité d’enseignement PSC1.' },
-  { q: 'Comment financer la formation ?', a: 'Un financement par l’employeur ou son OPCO, un financement personnel ou une intégration dans un parcours sécurité peuvent être étudiés selon le dossier.' },
-  { q: 'Peut-on organiser une formation pour une équipe ?', a: 'Oui, notre équipe étudie votre effectif, votre environnement de travail, les dates souhaitées et les modalités d’organisation avant de vous transmettre un devis.' },
-];
 
 function sessionHref(session?: TrainingDatesPricingSession | null) {
   return session?.id ? `/contact?formation=sst&session=${encodeURIComponent(String(session.id))}` : contactHref('prochaines dates');
@@ -123,7 +113,7 @@ export function SstReferencePage({ sessions }: { sessions: TrainingDatesPricingS
   return <TrainingReferencePage theme="green">
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeCourseJsonLd({ '@context': 'https://schema.org', '@graph': [
       { '@type': 'Course', name: 'Formation Sauveteur Secouriste du Travail SST', description: 'Formation initiale SST de 14 heures en présentiel à Puget-sur-Argens, prévention des risques et premiers secours en entreprise.', provider: { '@type': 'Organization', name: 'Intégrale Academy', telephone: '04 22 47 07 68' } },
-      { '@type': 'FAQPage', mainEntity: faq.map(item => ({ '@type': 'Question', name: item.q, acceptedAnswer: { '@type': 'Answer', text: item.a } })) },
+      { '@type': 'FAQPage', mainEntity: sstFaq.map(item => ({ '@type': 'Question', name: item.q, acceptedAnswer: { '@type': 'Answer', text: item.a } })) },
       { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Accueil', item: '/' }, { '@type': 'ListItem', position: 2, name: 'Formations sécurité', item: '/formations-securite' }, { '@type': 'ListItem', position: 3, name: 'SST', item: '/formations-securite/sst' }] },
     ] }, "/formations-securite/sst") }} />
 
@@ -189,16 +179,16 @@ export function SstReferencePage({ sessions }: { sessions: TrainingDatesPricingS
 
     <TrainingDatesPricingSection sessions={sessions} seatCapacity={10} defaultPrice="Tarif sur devis" defaultLocation="Puget-sur-Argens" priceDescription="Formation initiale SST · 2 jours · 14 heures · Habilitation INRS H34836/2020/SST-1/O/07" registrationHref={sessionHref} benefits={['Employeur / OPCO', 'Financement personnel', 'Parcours sécurité', 'Conseiller dédié']} priceAction={{ href: contactHref('financement SST'), label: 'Étudier mon financement →' }} emptyAction={{ href: contactHref('alerte planning SST'), label: 'Recevoir les prochaines dates →' }} />
 
-    <Section id="entreprises-sst" eyebrow="04 — Entreprises" title={<>Vous formez une équipe&nbsp;?</>} intro={<>Nous étudions avec vous une session adaptée à vos effectifs et à votre environnement de travail.</>} tone="dark"><div className="grid gap-5 lg:grid-cols-[1.05fr_.95fr]"><article className="rounded-[2rem] border border-white/10 bg-white/7 p-6 lg:p-8"><div className="grid gap-3 sm:grid-cols-3">{[['01', 'Besoin analysé', 'avec votre équipe'], ['02', 'Scénarios contextualisés', 'selon votre environnement'], ['03', 'Organisation simplifiée', 'devis et dates étudiés']].map(([number, title, text]) => <div key={number} className="rounded-2xl border border-white/10 bg-white/6 p-5"><span className="text-xs font-black text-emerald-300">{number}</span><h3 className="mt-3 text-lg font-black">{title}</h3><p className="mt-2 text-sm font-semibold text-white/55">{text}</p></div>)}</div><p className="mt-5 text-sm font-semibold text-white/45">Modalités selon votre projet et les disponibilités.</p></article><article className="rounded-[2rem] bg-[#FFFDF8] p-6 text-academy-ink shadow-card lg:p-8"><Eyebrow>Votre demande</Eyebrow><h3 className="mt-3 text-3xl font-black">Construisons votre session SST</h3><p className="mt-3 font-semibold leading-7 text-academy-muted">Effectif, secteur, contraintes de planning et financement : Cassandre centralise votre besoin et prépare la suite avec l’équipe pédagogique.</p><CTA href={contactHref('devis entreprise SST')} variant="gold" className="mt-5 w-full">Demander un devis entreprise →</CTA></article></div></Section>
+    <Section id="entreprises-sst" eyebrow="04 — Entreprises" title={<>Vous formez une équipe&nbsp;?</>} intro={<>Nous étudions avec vous une session adaptée à vos effectifs et à votre environnement de travail.</>} tone="dark"><div className="grid gap-5 lg:grid-cols-[1.05fr_.95fr]"><article className="rounded-[2rem] border border-white/10 bg-white/7 p-6 lg:p-8"><div className="grid gap-3 sm:grid-cols-3">{[['01', 'Besoin analysé', 'avec votre équipe'], ['02', 'Scénarios contextualisés', 'selon votre environnement'], ['03', 'Organisation simplifiée', 'devis et dates étudiés']].map(([number, title, text]) => <div key={number} className="rounded-2xl border border-white/10 bg-white/6 p-5"><span className="text-xs font-black text-emerald-300">{number}</span><h3 className="mt-3 text-lg font-black">{title}</h3><p className="mt-2 text-sm font-semibold text-white/55">{text}</p></div>)}</div><p className="mt-5 text-sm font-semibold text-white/45">Modalités selon votre projet et les disponibilités.</p></article><article className="rounded-[2rem] bg-[#FFFDF8] p-6 text-academy-ink shadow-card lg:p-8"><Eyebrow>Votre demande</Eyebrow><h3 className="mt-3 text-3xl font-black">Construisons votre session SST</h3><p className="mt-3 font-semibold leading-7 text-academy-muted">Effectif, secteur, contraintes de planning et financement : Cassandre, responsable commercial, centralise votre besoin et prépare la suite avec l’équipe pédagogique.</p><CTA href={contactHref('devis entreprise SST')} variant="gold" className="mt-5 w-full">Demander un devis entreprise →</CTA></article></div></Section>
 
     <Section eyebrow="05 — Intégrale Academy" title={<>Un cadre sérieux pour apprendre à agir</>} intro={<>Une formation courte ne doit pas être une formation superficielle : chaque compétence est démontrée, pratiquée et évaluée.</>}><div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{trustCards.map(([title, text], index) => <article key={title} className="rounded-[1.7rem] border border-academy-line bg-[#FFFDF8] p-5 shadow-soft"><span className={`grid h-11 w-11 place-items-center rounded-2xl font-black ${index === 0 ? 'bg-emerald-100 text-emerald-800' : index === 1 ? 'bg-[#FFE7E3] text-[#D73F30]' : 'bg-academy-gold-soft text-yellow-800'}`}>✓</span><h3 className="mt-4 text-lg font-black">{title}</h3><p className="mt-2 text-sm font-semibold leading-6 text-academy-muted">{text}</p></article>)}</div></Section>
 
     <TrainingCourseTestimonials category="SST" />
 
-    <div id="faq-sst"><PremiumFAQSection theme="green" badge="FAQ SST" title="Vos questions sur la formation SST" description="Public, durée, certificat, maintien des compétences, financement et organisation en entreprise : retrouvez les réponses essentielles." items={faq} contactHref={contactHref('question SST')} /></div>
+    <div id="faq-sst"><PremiumFAQSection theme="green" badge="FAQ SST" title="Vos questions sur la formation SST" description="Public, durée, certificat, maintien des compétences, financement et organisation en entreprise : retrouvez les réponses essentielles." items={sstFaq} contactHref={contactHref('question SST')} /></div>
 
     <TrainingReferenceContact
-      description="Cassandre vous aide à choisir la bonne session, étudier l’organisation pour votre entreprise et préparer votre inscription."
+      description="Cassandre, responsable commercial, vous aide à choisir la bonne session, étudier l’organisation pour votre entreprise et préparer votre inscription."
       href={contactHref('rendez-vous téléphonique avec Cassandre')}
     />
     <TrainingReferenceMobileBar href={sessionHref(next)} label="Demander un devis" />

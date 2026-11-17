@@ -1,3 +1,4 @@
+import { ssiapOverviewFaq } from '@/data/faq/security';
 import { TrainingReferenceCampus } from '@/components/TrainingReferenceLayout';
 import { CourseBrochureCard } from '@/components/CourseBrochureCard';
 import compactHeroStyles from '@/components/CompactHero.module.css';
@@ -66,32 +67,6 @@ const steps = [
   ['Je suis déjà diplômé', 'Maintien des acquis', 'Je dois recycler ou remettre à niveau ma qualification.', '/formations-securite/recyclage-remise-a-niveau-ssiap'],
 ];
 
-const faq = [
-  {
-    q: 'Que signifie SSIAP ?',
-    a: 'SSIAP signifie Service de sécurité incendie et d’assistance à personnes. Les trois niveaux correspondent aux fonctions d’agent, de chef d’équipe et de chef de service.',
-  },
-  {
-    q: 'Quelle différence entre SSIAP 1, SSIAP 2 et SSIAP 3 ?',
-    a: 'Le SSIAP 1 prépare au métier d’agent, le SSIAP 2 à l’encadrement d’une équipe et le SSIAP 3 à la direction complète d’un service de sécurité incendie.',
-  },
-  {
-    q: 'Les formations se déroulent-elles à distance ?',
-    a: 'Les parcours SSIAP présentés sont organisés en présentiel, avec des exercices, manipulations et mises en situation réglementaires.',
-  },
-  {
-    q: 'Le secourisme doit-il être à jour ?',
-    a: 'Oui. Les conditions exactes dépendent du parcours, mais une qualification de secourisme valide est exigée pour les formations et le maintien des connaissances SSIAP.',
-  },
-  {
-    q: 'À quelle fréquence faut-il recycler son diplôme ?',
-    a: 'Le maintien des connaissances SSIAP est triennal. Le secourisme doit également rester à jour.',
-  },
-  {
-    q: 'Comment savoir si je dois faire un recyclage ou une remise à niveau ?',
-    a: 'L’équipe vérifie la date du diplôme, la dernière attestation et l’activité exercée. Si les conditions du recyclage ne sont pas remplies, une remise à niveau peut être nécessaire.',
-  },
-];
 
 export default function SsiapCataloguePage() {
   return (
@@ -159,7 +134,7 @@ export default function SsiapCataloguePage() {
       </section>
 
       <TrainingReferenceCampus compact />
-      <PremiumFAQSection theme="red" badge="FAQ SSIAP" title="Comprendre les parcours SSIAP" description="Niveaux, prérequis, durée, recyclage et remise à niveau : les repères essentiels pour choisir sans vous tromper." items={faq} contactHref="/contact?formation=ssiap&objet=question" />
+      <PremiumFAQSection theme="red" badge="FAQ SSIAP" title="Comprendre les parcours SSIAP" description="Niveaux, prérequis, durée, recyclage et remise à niveau : les repères essentiels pour choisir sans vous tromper." items={ssiapOverviewFaq} contactHref="/contact?formation=ssiap&objet=question" />
 
       <section className="bg-academy-bg px-4 pb-20 pt-8"><div className="page-container rounded-[2.4rem] border border-academy-line bg-[#FFFDF8] p-7 shadow-card sm:p-10 lg:flex lg:items-center lg:justify-between lg:gap-12 lg:p-12"><div><p className="text-xs font-black uppercase tracking-[.24em] text-red-700">Votre projet</p><h2 className="mt-4 max-w-3xl text-4xl font-black tracking-[-.05em] sm:text-5xl">Choisissez votre parcours SSIAP avec un conseiller</h2><p className="mt-5 max-w-2xl text-lg leading-8 text-academy-muted">Nous vérifions le niveau, les prérequis, les dates et les solutions de financement adaptées.</p></div><div className="mt-7 flex shrink-0 flex-col gap-3 lg:mt-0"><Link href="/contact?formation=ssiap&objet=rendez-vous" className="inline-flex min-h-12 items-center justify-center rounded-full bg-red-600 px-6 py-3 text-center text-sm font-black text-white transition hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-300/55">Réserver un rendez-vous téléphonique →</Link><a href="tel:0422470768" className="inline-flex min-h-12 items-center justify-center rounded-full border border-red-200 bg-white px-6 py-3 text-center text-sm font-black text-red-700 transition hover:border-red-400">04 22 47 07 68</a></div></div></section>
     </main>

@@ -45,10 +45,11 @@ test('Institutional pages use gold; each training retains its own colour', () =>
     'src/components/DespChoiceReferencePage.tsx': 'orange',
     'src/app/formations-securite/desp-initial/page.tsx': 'orange',
     'src/app/formations-securite/desp-vae/page.tsx': 'orange',
-    'src/app/faq/page.tsx': 'gold',
     'src/app/bts/[slug]/page.tsx': 'gold',
     ...Object.fromEntries(['Mos', 'Mco', 'Ndrc', 'Ci', 'Pi', 'Cg'].map(course => [`src/components/Bts${course}ReferencePage.tsx`, 'bts'])),
   };
+  const directory = read('src/app/faq/page.tsx');
+  assert.match(directory, /<FAQ\b[^>]*theme="gold"/);
   for (const [path, expectedTheme] of Object.entries(expected)) {
     const nodes = faqNodes(path);
     assert.ok(nodes.length, `${path}: no FAQ`);

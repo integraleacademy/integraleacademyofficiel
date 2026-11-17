@@ -170,9 +170,9 @@ export const seoPages: Record<string, SeoPage> = {
     label: 'Contact et admissions', type: 'ContactPage',
   },
   '/faq': {
-    title: 'FAQ BTS – Admission, alternance et financement',
-    description: 'Retrouvez les réponses à vos questions sur les BTS Intégrale Academy : candidature, alternance, financement, rythme des cours et accompagnement.',
-    label: 'Questions sur les BTS', parent: '/bts',
+    title: 'Questions fréquentes sur nos formations',
+    description: 'Consultez les questions fréquentes d’Intégrale Academy et filtrez les réponses par formation, de l’admission au financement et à l’examen.',
+    label: 'Questions fréquentes', parent: '/',
   },
   '/dossiersfc': {
     noindex: true,

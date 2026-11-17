@@ -16,8 +16,8 @@ export const metadata = createPageMetadata('/ecole');
 export const dynamic = 'force-dynamic';
 
 const team = [
-  { portrait: 'cassandre' as const, name: 'Cassandre MENARD', role: 'Responsable commerciale', mission: 'Votre interlocutrice pour choisir votre formation, préparer votre admission et trouver le financement adapté.', specialty: 'Pour choisir votre formation' },
-  { portrait: 'aurelie' as const, name: 'Aurélie BAYARD-CHAUSSEZ', role: 'Relations clients · Responsable BTS', mission: 'Le lien entre les apprenants, les entreprises et l’école, pour un parcours bien accompagné.', specialty: 'Pour votre BTS et votre alternance' },
+  { portrait: 'cassandre' as const, name: 'Cassandre MENARD', role: 'Responsable commercial', mission: 'Votre interlocutrice pour choisir votre formation, préparer votre admission et trouver le financement adapté.', specialty: 'Pour choisir votre formation' },
+  { portrait: 'aurelie' as const, name: 'Aurélie BAYARD-CHAUSSEZ', role: 'Responsable des BTS · Relations clients', mission: 'Le lien entre les apprenants, les entreprises et l’école, pour un parcours bien accompagné.', specialty: 'Pour votre BTS et votre alternance' },
   { portrait: 'elsa' as const, name: 'Elsa DUQUESNE', role: 'Assistante de direction', mission: 'Un suivi administratif attentif et une organisation quotidienne au service de votre formation.', specialty: 'Pour préparer et suivre votre dossier' },
   { portrait: 'yannice' as const, name: 'Yannice LIBAULT', role: 'Coordinateur pédagogique · Azzera Academy', mission: 'La coordination des programmes et des intervenants, avec une attention portée au suivi pédagogique.', specialty: 'Pour votre suivi pédagogique' },
 ];
@@ -65,7 +65,7 @@ export default async function Page() {
       <div className={styles.container}>
         <div className={styles.sectionHeading}>
           <div><p className={styles.eyebrow}>01 / Les lieux pour apprendre</p><h2 id="campus-title">De la Côte d’Azur<br /><em>à Paris</em></h2></div>
-          <p>Notre école principale est à Puget-sur-Argens, sur la Côte d’Azur. À Paris, vous pouvez préparer le DESP. Nos deux mastères en intelligence artificielle y ouvriront prochainement.</p>
+          <p>Retrouvez l’adresse de chaque centre de formation et les prochaines sessions sur la carte.</p>
         </div>
         <SchoolCampuses />
         <div className={styles.campusFacilities}>

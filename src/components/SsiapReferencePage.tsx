@@ -1,3 +1,4 @@
+import { ssiap1Faq } from '@/data/faq/security';
 import { CourseTeamBanner } from '@/components/CourseTeamBanner';
 import { CourseBrochureCard } from '@/components/CourseBrochureCard';
 import { TeamPortrait } from '@/components/TeamPortrait';
@@ -84,17 +85,6 @@ const examSteps = [
 const jobs = ['Agent SSIAP 1', 'Agent de sécurité incendie', 'Équipier de sécurité incendie', 'Opérateur de poste de sécurité incendie'];
 const workplaces = ['Centres commerciaux', 'Hôpitaux', 'Hôtels', 'Immeubles de grande hauteur', 'Musées et cinémas', 'Gares et sites administratifs'];
 
-const faq = [
-  { q: 'Que signifie SSIAP 1 ?', a: 'SSIAP signifie Service de sécurité incendie et d’assistance à personnes. Le niveau 1 correspond à la fonction d’agent.' },
-  { q: 'Combien de temps dure la formation ?', a: 'La formation dure 67 heures minimum, hors examen et déplacements, généralement réparties sur environ deux semaines.' },
-  { q: 'Le SST est-il obligatoire ?', a: 'Vous devez posséder un PSC ou PSC 1 de moins de deux ans, un SST valide ou un PSE 1 valide. Une formule SSIAP 1 + SST est proposée si nécessaire.' },
-  { q: 'Faut-il un certificat médical ?', a: 'Oui. Un certificat médical conforme au modèle réglementaire et datant de moins de trois mois est nécessaire.' },
-  { q: 'Comment se déroule l’examen ?', a: 'L’examen comprend un QCM de 30 questions et une ronde pratique avec anomalies, découverte d’un sinistre et renseignement de la main courante.' },
-  { q: 'Peut-on suivre le SSIAP 1 sans APS ?', a: 'Oui. L’APS n’est pas un prérequis au SSIAP 1. Ce sont deux qualifications distinctes.' },
-  { q: 'Le SSIAP 1 est-il éligible au CPF ?', a: 'Une mobilisation du CPF peut être possible selon l’offre et la certification actives au moment de l’inscription. Notre équipe vérifie votre situation.' },
-  { q: 'Combien de temps le diplôme reste-t-il valable ?', a: 'Le titulaire doit effectuer un recyclage tous les trois ans et maintenir sa qualification de secourisme à jour.' },
-  { q: 'Peut-on évoluer vers le SSIAP 2 ?', a: 'Oui, après avoir acquis l’expérience professionnelle réglementaire requise pour accéder à la formation de chef d’équipe SSIAP 2.' },
-];
 
 
 function CTA({ href, children, variant = 'red', className = '' }: { href: string; children: ReactNode; variant?: 'dark' | 'red' | 'light' | 'outline'; className?: string }) {
@@ -127,7 +117,7 @@ function Section({ id, eyebrow, title, intro, children, tone = 'cream', enhanced
 export function SsiapReferencePage({ sessions }: { sessions: any[] }) {
   const next = sessions[0];
   const includesSst = ssiapSessionFormula(next?.title) === 'ssiap-1-sst';
-  const faqSchema = faq.map(item => ({ '@type': 'Question', name: item.q, acceptedAnswer: { '@type': 'Answer', text: item.a } }));
+  const faqSchema = ssiap1Faq.map(item => ({ '@type': 'Question', name: item.q, acceptedAnswer: { '@type': 'Answer', text: item.a } }));
 
   return <div className={`${styles.page} ${mos.page} relative overflow-x-clip`} data-ssiap-experience="mos-v4">
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeCourseJsonLd({ '@context': 'https://schema.org', '@graph': [
@@ -224,8 +214,8 @@ export function SsiapReferencePage({ sessions }: { sessions: any[] }) {
       priceLabel: session.priceLabel, priceCents: session.priceCents,
     }))}>
     <section id="contact-ssiap" className={`${styles.contact} ${mos.adviser}`} aria-labelledby="ssiap-contact-title"><div className={`${mos.container} ${styles.contactGrid} ${mos.adviserGrid}`}>
-      <div><p className={styles.eyebrow}>Une question sur votre projet ?</p><h2 id="ssiap-contact-title" className={styles.sectionTitle}>Faites le premier pas<br /><em>vers votre futur métier</em></h2><p className={styles.intro}>Cassandre vous aide à vérifier vos prérequis, choisir votre session et trouver la solution de financement adaptée.</p><p className={styles.small}>Notre équipe vous accompagne pour choisir la formation adaptée à votre projet et vous aider à concrétiser votre avenir professionnel.</p><div className={styles.supportPills}><span>Choisir son parcours</span><span>Préparer son dossier</span><span>Étudier son financement</span></div><Link href="/ecole#equipe" className={styles.textLink}>Rencontrer les personnes qui vous accompagnent ↗</Link></div>
-      <div className={`${styles.contactCard} ${mos.adviserCard}`}><TeamPortrait person="cassandre" size={240} alt="Memoji de Cassandre, responsable commerciale Intégrale Academy" className={styles.portrait} /><p className={styles.eyebrow}>Votre conseillère · Contactez Cassandre</p><h3>Cassandre</h3><p>Responsable commerciale — Intégrale Academy</p><a className={styles.phone} href="tel:0422470768">04 22 47 07 68</a><CTA href={contactHref('rendez-vous téléphonique avec Cassandre')}>Réserver un rendez-vous téléphonique →</CTA><a className={styles.textLink} href="tel:0422470768">Appeler Cassandre</a><small>Échange gratuit et sans engagement</small></div>
+      <div><p className={styles.eyebrow}>Une question sur votre projet ?</p><h2 id="ssiap-contact-title" className={styles.sectionTitle}>Faites le premier pas<br /><em>vers votre futur métier</em></h2><p className={styles.intro}>Cassandre, responsable commercial, vous aide à vérifier vos prérequis, choisir votre session et trouver la solution de financement adaptée.</p><p className={styles.small}>Notre équipe vous accompagne pour choisir la formation adaptée à votre projet et vous aider à concrétiser votre avenir professionnel.</p><div className={styles.supportPills}><span>Choisir son parcours</span><span>Préparer son dossier</span><span>Étudier son financement</span></div><Link href="/ecole#equipe" className={styles.textLink}>Rencontrer les personnes qui vous accompagnent ↗</Link></div>
+      <div className={`${styles.contactCard} ${mos.adviserCard}`}><TeamPortrait person="cassandre" size={240} alt="Memoji de Cassandre, responsable commercial d’Intégrale Academy" className={styles.portrait} /><p className={styles.eyebrow}>Votre interlocutrice</p><h3>Cassandre</h3><p>Responsable commercial — Intégrale Academy</p><a className={styles.phone} href="tel:0422470768">04 22 47 07 68</a><CTA href={contactHref('rendez-vous téléphonique avec Cassandre')}>Réserver un rendez-vous téléphonique →</CTA><a className={styles.textLink} href="tel:0422470768">Appeler Cassandre, responsable commercial</a><small>Échange gratuit et sans engagement</small></div>
     </div></section>
     </SsiapBooking>
 
@@ -269,7 +259,7 @@ export function SsiapReferencePage({ sessions }: { sessions: any[] }) {
 
     <SsiapTestimonials />
 
-    <div id="faq-ssiap"><PremiumFAQSection theme="red" badge="FAQ SSIAP 1" title="Vos questions sur la formation SSIAP 1" description="Prérequis, examen, financement, validité et évolution : retrouvez les réponses essentielles avant votre inscription." items={faq} contactHref={contactHref('question SSIAP 1')} /></div>
+    <div id="faq-ssiap"><PremiumFAQSection theme="red" badge="FAQ SSIAP 1" title="Vos questions sur la formation SSIAP 1" description="Prérequis, examen, financement, validité et évolution : retrouvez les réponses essentielles avant votre inscription." items={ssiap1Faq} contactHref={contactHref('question SSIAP 1')} /></div>
 
 
 

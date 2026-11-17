@@ -24,7 +24,7 @@ const contactChapters = [
 ] as const;
 
 const projectLinks = [
-  { title: 'Les formations', text: 'Sécurité, incendie, VTC et BTS.', href: '/ecole#pedagogie' },
+  { title: 'Les formations', text: 'Sécurité, incendie, VTC et BTS.', href: '/#formations' },
   { title: 'Les prochaines dates', text: 'Sessions, lieux et disponibilités.', href: '/planning' },
   { title: 'Les financements', text: 'Les solutions selon votre situation.', href: '/financements' },
   { title: 'Les entreprises', text: 'Recrutement, alternance et formation.', href: '/entreprises' },
@@ -62,7 +62,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<Rec
             <h1 id="contact-title">Une question ?<br /><em>Parlons de<br /> votre avenir</em></h1>
             <p className={school.intro}>Choisir une formation, préparer votre financement ou venir découvrir l’école : notre équipe vous accompagne dès le premier échange.</p>
             <div className={school.heroActions}>
-              <a href="#demande" className={school.button}>Parler de mon projet <Arrow /></a>
+              <a href={requestHref} className={school.button}>Parler de mon projet <Arrow /></a>
               <a href={phoneHref} className={school.textLink}>{contact.phone} <Arrow diagonal /></a>
             </div>
             <p className={school.heroTrust}><span aria-hidden="true">✦</span> Un premier échange gratuit et sans engagement.</p>
@@ -142,7 +142,13 @@ export default async function Page({ searchParams }: { searchParams: Promise<Rec
             <p>Parcourez les formations, consultez les dates ou découvrez les solutions pour financer votre projet.</p>
           </div>
           <div className={styles.quickLinks} data-contact-reveal>
-            {projectLinks.map((item, index) => <Link href={item.href} className={styles.quickLink} key={item.href}><span className={styles.linkNumber}>0{index + 1}</span><h3>{item.title}</h3><p>{item.text}</p><span className={styles.linkAction}>Découvrir <Arrow diagonal /></span></Link>)}
+            {projectLinks.map((item, index) => {
+              const ProjectLink = item.href.includes('#') ? 'a' : Link;
+              return <ProjectLink key={item.href} href={item.href} className={styles.quickLink}>
+                <span className={styles.linkNumber}>0{index + 1}</span><h3>{item.title}</h3><p>{item.text}</p>
+                <span className={styles.linkAction}>Découvrir <Arrow diagonal /></span>
+              </ProjectLink>;
+            })}
           </div>
         </div>
       </section>

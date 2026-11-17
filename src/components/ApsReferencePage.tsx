@@ -1,3 +1,4 @@
+import { apsCourseFaq } from '@/data/faq/security';
 import { CourseBrochureCard } from '@/components/CourseBrochureCard';
 import type { ReactNode } from 'react';
 import editorial from './ApsEditorial.module.css';
@@ -152,19 +153,6 @@ const nationalStats = [
   ['2019', '7 487 certifiés', '94 %', '87 %', '76 %'],
 ];
 
-const faq = [
-  { q: 'Faut-il une autorisation CNAPS (ministère de l’Intérieur) avant d’entrer en formation ?', a: 'Oui, sauf si vous possédez déjà une carte professionnelle en cours de validité pour l’activité concernée. Intégrale Academy vous accompagne dans la préparation et le dépôt de la demande.' },
-  { q: 'La formation APS est-elle entièrement à distance ?', a: 'Non. Sur les 175 heures, 51 heures sont réalisées à distance et 124 heures se déroulent en présentiel à Puget-sur-Argens. L’examen est obligatoirement organisé en présentiel.' },
-  { q: 'Quelle est la part de pratique ?', a: 'Le programme prévoit 63,5 heures de pratique et 60,5 heures de théorie en présentiel. Les 51 heures restantes sont réalisées à distance.' },
-  { q: 'Le e-learning est-il obligatoire ?', a: 'Oui lorsqu’il est prévu dans le calendrier de la session. Il représente 51 heures, doit être suivi et validé, et la progression est contrôlée par l’équipe pédagogique.' },
-  { q: 'Comment se déroule l’examen APS ?', a: 'L’examen associe des QCU contextualisés organisés électroniquement et deux mises en situation professionnelles individuelles, notamment autour de la ronde et du poste de contrôle.' },
-  { q: 'La formation permet-elle d’obtenir directement la carte professionnelle ?', a: 'La réussite permet d’obtenir le TFP APS, qui justifie l’aptitude professionnelle. Vous devez ensuite déposer une demande de carte professionnelle auprès du CNAPS (ministère de l’Intérieur).' },
-  { q: 'Quelles conditions concernent les ressortissants étrangers ?', a: 'Pour les ressortissants hors Union européenne et Espace économique européen, la réglementation prévoit un titre de séjour en cours de validité autorisant à travailler, détenu depuis au moins cinq ans pour demander l’autorisation préalable. Un justificatif de français B1 minimum est demandé aux ressortissants étrangers, y compris européens. Notre équipe vérifie les pièces adaptées à votre situation.' },
-  { q: 'Quel est le prix de la formation ?', a: 'Le tarif 2027 est de 1 700 € TTC. Retrouvez le prix dans la carte Tarif et les dates et places disponibles dans les cartes de session.' },
-  { q: 'Puis-je financer la formation avec mon CPF ?', a: 'Oui, selon votre éligibilité et l’offre active. France Travail, un employeur, un OPCO ou un paiement personnel peuvent également être étudiés.' },
-  { q: 'Le SST est-il inclus ?', a: 'Oui. Le parcours comprend la préparation au certificat Sauveteur Secouriste du Travail.' },
-  { q: 'Une expérience dans la sécurité est-elle obligatoire ?', a: 'Non. La formation est accessible aux débutants qui remplissent les conditions administratives et linguistiques réglementaires.' },
-];
 
 const formatMonthDayYearParis = new Intl.DateTimeFormat('fr-FR', { timeZone: 'Europe/Paris', day: '2-digit', month: 'short', year: 'numeric' });
 
@@ -264,7 +252,7 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
   return <TrainingReferencePage theme="blue">
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeCourseJsonLd({ '@context': 'https://schema.org', '@graph': [
       { '@type': 'Course', name: 'Formation Agent de Prévention et de Sécurité APS', description: 'Formation TFP APS de 175 heures à Puget-sur-Argens : 124 heures en présentiel, dont 63,5 heures de pratique et 60,5 heures de théorie, et 51 heures à distance.', provider: { '@type': 'Organization', name: 'Intégrale Academy', telephone: '04 22 47 07 68' } },
-      { '@type': 'FAQPage', mainEntity: faq.map(item => ({ '@type': 'Question', name: item.q, acceptedAnswer: { '@type': 'Answer', text: item.a } })) },
+      { '@type': 'FAQPage', mainEntity: apsCourseFaq.map(item => ({ '@type': 'Question', name: item.q, acceptedAnswer: { '@type': 'Answer', text: item.a } })) },
       { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Accueil', item: '/' }, { '@type': 'ListItem', position: 2, name: 'Formations sécurité', item: '/formations-securite' }, { '@type': 'ListItem', position: 3, name: 'APS', item: '/formations-securite/aps' }] },
     ] }, "/formations-securite/aps") }} />
 
@@ -422,11 +410,11 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
 
     <TrainingCourseTestimonials category="APS" layout="home" />
 
-    <div id="faq-aps"><PremiumFAQSection theme="blue" badge="FAQ APS" title="Les réponses avant de vous lancer" description="CNAPS (ministère de l’Intérieur), e-learning, examen, carte professionnelle et financement : retrouvez les informations indispensables avant votre inscription." items={faq} contactHref={apsContact('question APS')} /></div>
+    <div id="faq-aps"><PremiumFAQSection theme="blue" badge="FAQ APS" title="Les réponses avant de vous lancer" description="CNAPS (ministère de l’Intérieur), e-learning, examen, carte professionnelle et financement : retrouvez les informations indispensables avant votre inscription." items={apsCourseFaq} contactHref={apsContact('question APS')} /></div>
 
     <TrainingReferenceContact
       schoolStyle
-      description="Cassandre vérifie votre éligibilité, votre dossier CNAPS (ministère de l’Intérieur) et votre financement. Vous repartez avec des réponses claires et les prochaines étapes adaptées à votre situation."
+      description="Cassandre, responsable commercial, vérifie votre éligibilité, votre dossier CNAPS (ministère de l’Intérieur) et votre financement. Vous repartez avec des réponses claires et les prochaines étapes adaptées à votre situation."
       href={apsRegistrationFormUrl}
       assurances={['Sans engagement', 'Étude personnalisée', 'Réponse sur le CNAPS (ministère de l’Intérieur) et le financement']}
     />

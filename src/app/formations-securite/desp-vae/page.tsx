@@ -176,7 +176,7 @@ export default async function DespVaePage(){
     <TrainingCourseTestimonials category="VAE DESP" />
     <div id="faq-desp-vae"><PremiumFAQSection theme="orange" badge="FAQ DESP VAE" title="Vos questions sur la VAE DESP" description="Retrouvez les réponses essentielles sur l’éligibilité, la recevabilité, le dossier de preuves, le jury, les financements et l’accompagnement." items={[...formationFaq, ...despVaeFaq]} contactHref="/contact?formation=desp-vae" contactLabel="Poser une question VAE"/></div>
     <TrainingReferenceContact
-      description={<><p className="font-bold">Cassandre vous accompagne dans votre choix</p><p>Cassandre étudie votre expérience, vous aide à choisir entre le DESP initial et la VAE et vous présente les modalités d’accompagnement et de financement.</p></>}
+      description={<><p className="font-bold">Cassandre, responsable commercial, vous accompagne dans votre choix</p><p>Elle étudie votre expérience, vous aide à choisir entre le DESP initial et la VAE et vous présente les modalités d’accompagnement et de financement.</p></>}
       href="/contact?formation=desp-vae&objet=rendez-vous"
       additionalActions={<><VaeEligibilityModal label="Tester mon éligibilité"/><Button href="/contact?formation=desp-vae" variant="orange">Recevoir un devis VAE</Button></>}
     />
