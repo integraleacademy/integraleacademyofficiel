@@ -1,3 +1,4 @@
+import { TrainingActionLink } from '@/components/TrainingActionLink';
 import viewportStyles from './TrainingHeroViewport.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -56,7 +57,7 @@ export function TrainingHero({
         <p className={`${styles.heroTagline} mt-5 max-w-3xl text-2xl font-black tracking-[-.035em] sm:text-3xl`}>{tagline} <span className={styles.heroTitleAccent}>{taglineAccent}</span></p>
         <div className="mt-5 max-w-2xl space-y-4 text-lg font-medium leading-8 text-white/80 sm:text-xl">{description}</div>
         <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-          <Link href={primaryAction.href} className={`${styles.action} ${styles.primaryAction}`}>{primaryAction.label}</Link>
+          <TrainingActionLink href={primaryAction.href} className={`${styles.action} ${styles.primaryAction}`}>{primaryAction.label}</TrainingActionLink>
           <Link href="tel:0422470768" className={`${styles.action} ${styles.secondaryAction}`}>Parler à un conseiller</Link>
           {additionalAction}
         </div>
@@ -122,7 +123,7 @@ export function TrainingHeroSessionCard({
     <TrainingSessionSummary facts={facts} location={session?.location || defaultLocation} locationNote={locationNote} />
     <div data-session-actions className={styles.sessionActions}>
     <p className={styles.sessionPrice}><span>{label === 'Votre parcours VAE' ? 'Tarif de l’accompagnement' : 'Tarif de la session'}</span><strong>{formatTrainingPrice(session, defaultPrice)}</strong>{priceNote && <small>{priceNote}</small>}</p>
-    <Link href={registrationHref || trainingRegistrationUrl} className={`${styles.action} ${full ? styles.waitingAction : styles.primaryAction} mt-5 w-full`}>{full ? 'Être alerté de la prochaine session' : session ? 'Réserver ma place →' : emptyActionLabel}</Link>
+    <TrainingActionLink href={registrationHref || trainingRegistrationUrl} className={`${styles.action} ${full ? styles.waitingAction : styles.primaryAction} mt-5 w-full`}>{full ? 'Être alerté de la prochaine session' : session ? 'Réserver ma place →' : emptyActionLabel}</TrainingActionLink>
     <p className="mt-3 text-center text-xs font-semibold leading-5 text-academy-muted">Un conseiller vérifie votre dossier avant validation.</p>
     <div className="mt-3"><OrientationAssistant initialFormationKey={assistantKey} hideInfoAction variant="modalTrigger" /></div>
     </div>

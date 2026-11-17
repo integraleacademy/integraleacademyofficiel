@@ -1,3 +1,4 @@
+import { TrainingActionLink } from '@/components/TrainingActionLink';
 import { CourseTeamBanner } from './CourseTeamBanner';
 import editorial from './ApsEditorial.module.css';
 import type { ReactNode } from 'react';
@@ -23,7 +24,7 @@ export function TrainingReferencePage({ children, theme, enabled = true }: { chi
 export function TrainingReferenceAction({ href, children, outline = false, newTab = false }: { href: string; children: ReactNode; outline?: boolean; newTab?: boolean }) {
   const className = `${styles.action} ${outline ? styles.outline : styles.primary}`;
   if (newTab) return <a href={href} target="_blank" rel="noopener noreferrer" className={className}>{children}</a>;
-  return <Link href={href} className={className}>{children}</Link>;
+  return <TrainingActionLink href={href} className={className}>{children}</TrainingActionLink>;
 }
 
 export function TrainingReferenceHero({ id, badge, heading, accent, title, tagline, description, illustration, caption, primaryAction, secondaryAction = { href: 'tel:0422470768', label: 'Parler à un conseiller' }, additionalAction, highlights = [], facts = [], children, extendedCopy = false, className = '' }: {

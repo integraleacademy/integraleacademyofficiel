@@ -5,6 +5,8 @@
 .list .summary { padding: 16px; gap: 12px; font-size: .95rem; font-weight: 900; line-height: 24px; }
 .list .summary::-webkit-details-marker { display: none; }
 .list .answer { margin: 0; padding: 12px 0 0; font-size: .95rem; font-weight: 500; line-height: 28px; }
+.answer p { max-width: 80ch; margin: 0; }
+.answer p + p { margin-top: .85em; }
 .answerLinks { display: flex; flex-wrap: wrap; gap: 4px 24px; margin: 12px 0 0; padding: 0; list-style: none; }
 .answerLinks li { min-width: 0; max-width: 100%; }
 .answerLinks a { display: inline-flex; min-height: 44px; align-items: center; gap: 10px; padding-block: 6px; color: var(--faq-focus, rgb(var(--accent-strong))); font-size: .95rem; font-weight: 750; line-height: 1.5; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }

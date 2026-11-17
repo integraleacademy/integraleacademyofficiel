@@ -1,5 +1,6 @@
 'use client';
 
+import { TrainingActionLink } from '@/components/TrainingActionLink';
 import Link from 'next/link';
 import Image from 'next/image';
 import { INFORMATION_REQUEST_URL } from '@/lib/contact-request';
@@ -36,7 +37,6 @@ type AssistantFormation = {
 };
 
 const calendlyDirigeantUrl = 'https://calendly.com/integraleacademy/dirigeant';
-const quoteRequestUrl = INFORMATION_REQUEST_URL;
 const apsFormation = securityFormations.find(formation => formation.slug === '/formations-securite/aps');
 
 const formations: AssistantFormation[] = [
@@ -248,12 +248,12 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
             <span className={styles.choiceDescription}>Durée, financement et <br />prochaines sessions.</span>
             <span className={styles.choiceAction}>Consulter ma formation <AssistantIcon name="arrow" /></span>
           </button>
-          <a href={INFORMATION_REQUEST_URL} className={`${styles.choice} ${styles.enroll}`}>
+          <TrainingActionLink href={INFORMATION_REQUEST_URL} className={`${styles.choice} ${styles.enroll}`}>
             <span className={styles.optionIcon}><AssistantIcon name="calendar" /></span>
             <span className={styles.choiceTitle}>Préparer mon inscription</span>
             <span className={styles.choiceDescription}>Être accompagné pour <br />rejoindre la formation.</span>
             <span className={styles.choiceAction}>Accéder au formulaire <AssistantIcon name="arrow" /></span>
-          </a>
+          </TrainingActionLink>
         </div>}
 
 
@@ -277,7 +277,7 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
           <span className={styles.optionIcon}><AssistantIcon name="calendar" /></span>
           <h3>Faisons le point ensemble</h3>
           <p>Notre équipe vous accompagne pour vérifier votre projet, vos financements possibles et les prochaines dates disponibles.</p>
-          <div className={styles.actions}><Link href={selectedFormation.rdvUrl} className={styles.primaryAction}>Réserver un rendez-vous téléphonique <AssistantIcon name="arrow" /></Link>{!shouldHideInfoAction && <Link href={selectedFormation.infoUrl} className={styles.secondaryAction}>Voir d’abord les informations</Link>}</div>
+          <div className={styles.actions}><TrainingActionLink href={selectedFormation.rdvUrl} className={styles.primaryAction}>Réserver un rendez-vous téléphonique <AssistantIcon name="arrow" /></TrainingActionLink>{!shouldHideInfoAction && <Link href={selectedFormation.infoUrl} className={styles.secondaryAction}>Voir d’abord les informations</Link>}</div>
         </div>}
 
       </div>
@@ -365,7 +365,7 @@ function FormationAssistantResult({ formation, sessions, hideInfoAction, onNavig
       <ul>{details.keyPoints.map(point => <li key={point}><AssistantIcon name="check" />{point}</li>)}</ul>
     </details>
     <div className={styles.actions}>
-      <a href={INFORMATION_REQUEST_URL} className={styles.secondaryAction}>Préparer mon inscription <AssistantIcon name="arrow" /></a>
+      <TrainingActionLink href={INFORMATION_REQUEST_URL} className={styles.secondaryAction}>Préparer mon inscription <AssistantIcon name="arrow" /></TrainingActionLink>
       {!hideInfoAction && <Link href={formation.infoUrl} className={styles.secondaryAction}>Découvrir la formation</Link>}
     </div>
   </div>;
@@ -424,7 +424,7 @@ function DespActionGrid({vae=false}:{vae?:boolean}){
     {vae ? <VaeEligibilityModal className="inline-flex min-h-14 items-center justify-center rounded-2xl bg-white px-4 py-3 text-center text-sm font-black text-academy-ink ring-1 ring-academy-line transition hover:-translate-y-0.5 hover:ring-academy-gold" /> : <Link href="/dirigeant" className="inline-flex min-h-14 items-center justify-center rounded-2xl bg-white px-4 py-3 text-center text-sm font-black text-academy-ink ring-1 ring-academy-line transition hover:-translate-y-0.5 hover:ring-academy-gold">En savoir plus sur la formation initiale DESP</Link>}
     {vae && <Link href="/vaedirigeant" className="inline-flex min-h-14 items-center justify-center rounded-2xl bg-white px-4 py-3 text-center text-sm font-black text-academy-ink ring-1 ring-academy-line transition hover:-translate-y-0.5 hover:ring-academy-gold">En savoir plus sur la VAE Dirigeant</Link>}
     <IframeModalButton label="Réserver un rendez-vous téléphonique" url={calendlyDirigeantUrl} title="Réserver un rendez-vous téléphonique" featured />
-    <IframeModalButton label="Demander un devis personnalisé" url={quoteRequestUrl} title="Demander un devis personnalisé" />
+    <TrainingActionLink className="inline-flex min-h-14 items-center justify-center rounded-2xl bg-white px-4 py-3 text-center text-sm font-black text-academy-ink ring-1 ring-academy-line transition hover:-translate-y-0.5 hover:ring-academy-gold">Demander un devis personnalisé</TrainingActionLink>
     <FinancingModalButton />
   </div>;
 }

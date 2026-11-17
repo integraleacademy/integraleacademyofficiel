@@ -1,3 +1,4 @@
+import { TrainingActionLink } from '@/components/TrainingActionLink';
 import { CampusFormationTags } from '@/components/CampusFormationTags';
 import { PageSectionNavigation } from '@/components/PageSectionNavigation';
 import navigation from '@/components/PageSectionNavigation.module.css';
@@ -62,7 +63,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<Rec
             <h1 id="contact-title">Une question ?<br /><em>Parlons de<br /> votre avenir</em></h1>
             <p className={school.intro}>Choisir une formation, préparer votre financement ou venir découvrir l’école : notre équipe vous accompagne dès le premier échange.</p>
             <div className={school.heroActions}>
-              <a href={requestHref} className={school.button}>Parler de mon projet <Arrow /></a>
+              <TrainingActionLink href={requestHref} className={school.button}>Parler de mon projet <Arrow /></TrainingActionLink>
               <a href={phoneHref} className={school.textLink}>{contact.phone} <Arrow diagonal /></a>
             </div>
             <p className={school.heroTrust}><span aria-hidden="true">✦</span> Un premier échange gratuit et sans engagement.</p>

@@ -1,5 +1,6 @@
 'use client';
 
+import { TrainingActionLink } from '@/components/TrainingActionLink';
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { navigation } from '@/data/navigation';
@@ -47,7 +48,7 @@ export function MobileHeaderMenu({ appointmentFormUrl }: { appointmentFormUrl: s
       <div className="mt-3 grid gap-2">
         <Link className="inline-flex items-center justify-center rounded-full bg-white px-5 py-3 text-sm font-bold text-academy-ink ring-1 ring-academy-line transition hover:-translate-y-0.5 hover:bg-stone-50" href="tel:0422470768" onClick={closeMenu}>Appeler</Link>
         <Link className="inline-flex items-center justify-center rounded-full bg-academy-ink px-5 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-black" href="/contact" onClick={closeMenu}>Demander des informations</Link>
-        <Link className="group inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-academy-gold via-academy-gold to-academy-gold px-5 py-3 text-sm font-black text-academy-gold-text shadow-gold ring-1 ring-academy-gold/70 transition hover:-translate-y-0.5 hover:brightness-105 focus:outline-none focus:ring-2 focus:ring-academy-gold focus:ring-offset-2" href={appointmentFormUrl} onClick={closeMenu}><span>Prendre un rendez-vous téléphonique</span><span className="transition group-hover:translate-x-0.5" aria-hidden="true">→</span></Link>
+        <TrainingActionLink className="group inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-academy-gold via-academy-gold to-academy-gold px-5 py-3 text-sm font-black text-academy-gold-text shadow-gold ring-1 ring-academy-gold/70 transition hover:-translate-y-0.5 hover:brightness-105 focus:outline-none focus:ring-2 focus:ring-academy-gold focus:ring-offset-2" href={appointmentFormUrl} onClick={closeMenu}><span>Prendre un rendez-vous téléphonique</span><span className="transition group-hover:translate-x-0.5" aria-hidden="true">→</span></TrainingActionLink>
       </div>
     </div> : null}
   </div>;

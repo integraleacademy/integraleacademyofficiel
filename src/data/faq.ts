@@ -1,7 +1,8 @@
 export const globalFaq = [
   {
     q: 'Quelles formations propose Intégrale Academy ?',
-    a: 'Nous vous formons aux métiers de la sécurité privée, de la sécurité incendie, de la protection rapprochée et de la direction d’une entreprise de sécurité. Nous proposons également la formation chauffeur VTC et six BTS en alternance. Notre catalogue présente aussi les bachelors, les mastères en intelligence artificielle et les titres professionnels à venir.',
+    a: 'Intégrale Academy forme aux métiers de la sécurité privée, de la protection rapprochée, de la sécurité incendie et du transport de personnes. Vous pouvez par exemple préparer l’APS pour travailler dans la surveillance, l’A3P pour la protection de personnes, le DESP pour diriger une entreprise de sécurité ou l’examen de chauffeur VTC.\n\n' +
+      'Le catalogue rassemble aussi six spécialités de BTS en alternance. Si vous visez une poursuite d’études, les fiches des bachelors, mastères et titres professionnels indiquent leur statut. Le planning permet de distinguer les parcours déjà programmés et les formations annoncées pour une prochaine rentrée.',
     links: [
       { href: '/formations-securite', label: 'Les métiers de la sécurité' },
       { href: '/vtc', label: 'La formation chauffeur VTC' },
@@ -10,12 +11,16 @@ export const globalFaq = [
   },
   {
     q: 'Quelle formation choisir pour devenir agent de sécurité privée ?',
-    a: 'La formation APS prépare aux missions de prévention et de surveillance : accueil, contrôle d’accès, rondes, gestion des situations et intervention dans le cadre du métier. La page dédiée détaille les compétences travaillées, l’examen, les prérequis et les démarches à préparer avant l’entrée en formation.',
-    links: [{ href: '/formations-securite/aps', label: 'Découvrir la formation APS' }],
+    a: 'Pour exercer des missions de surveillance et de gardiennage, choisissez le titre à finalité professionnelle d’agent de prévention et de sécurité, le TFP APS. À Puget-sur-Argens, le parcours comprend 175 heures réparties entre apprentissage à distance et formation en centre. Vous travaillez notamment l’accueil, le contrôle d’accès, la prévention des incidents et la rédaction de comptes rendus.\n\n' +
+      'Avant de choisir une session, faites vérifier votre situation auprès du Conseil national des activités privées de sécurité (CNAPS). Selon votre dossier, une autorisation d’entrée en formation est à obtenir. Après la réussite au titre, la carte professionnelle correspondant à l’activité est nécessaire pour exercer.',
+    links: [
+      { href: '/formations-securite/aps', label: 'Découvrir la formation APS' },
+    ],
   },
   {
     q: 'Comment se former aux métiers de la sécurité incendie ?',
-    a: 'Le SSIAP 1 prépare aux fonctions d’agent de sécurité incendie, le SSIAP 2 à celles de chef d’équipe et le SSIAP 3 à celles de chef de service. Le niveau adapté dépend de votre projet, de votre expérience et des prérequis du parcours. Notre équipe vous aide à vérifier votre dossier.',
+    a: 'Le SSIAP 1 prépare au métier d’agent de sécurité incendie, le SSIAP 2 à l’encadrement d’une équipe et le SSIAP 3 à la direction d’un service. Si vous débutez et souhaitez travailler dans un établissement recevant du public, commencez par regarder le programme du SSIAP 1. Si vous visez l’encadrement, consultez les conditions d’accès propres au niveau visé.\n\n' +
+      'Vous êtes déjà diplômé ? Indiquez à l’école votre niveau, la date de votre dernier diplôme ou recyclage et vos périodes d’activité. Ces éléments servent à déterminer si vous relevez d’un recyclage ou d’une remise à niveau et à choisir la session correspondante.',
     links: [
       { href: '/formations-securite/ssiap-1', label: 'SSIAP 1 · Agent' },
       { href: '/formations-securite/ssiap-2', label: 'SSIAP 2 · Chef d’équipe' },
@@ -24,12 +29,16 @@ export const globalFaq = [
   },
   {
     q: 'Quelle formation suivre pour travailler dans la protection rapprochée ?',
-    a: 'La formation A3P, également appelée APR, est consacrée à la protection physique des personnes. Elle associe connaissances professionnelles et mises en situation pour préparer les missions de protection rapprochée. Retrouvez le programme, les conditions d’accès, les modalités d’examen et les prochaines sessions sur sa page.',
-    links: [{ href: '/formations-securite/a3p-apr', label: 'Découvrir la formation A3P / APR' }],
+    a: 'Le parcours A3P prépare au titre à finalité professionnelle d’agent de protection physique des personnes, un métier également appelé agent de protection rapprochée (APR). La formation se déroule en présentiel à Puget-sur-Argens et compte 328 heures hors examen. Elle porte notamment sur le cadre juridique de la profession, la communication au sein d’une équipe et la relation avec le client.\n\n' +
+      'Consultez les différentes périodes d’une même session pour organiser votre disponibilité. Avant l’entrée, l’école vérifie notamment votre situation auprès du CNAPS et votre compréhension du français. Si vous venez de loin, demandez en même temps les disponibilités du dortoir proposé sur réservation.',
+    links: [
+      { href: '/formations-securite/a3p-apr', label: 'Découvrir la formation A3P / APR' },
+    ],
   },
   {
     q: 'Comment préparer un projet de direction d’entreprise de sécurité ?',
-    a: 'Deux voies sont présentées pour le DESP : la formation initiale et la validation des acquis de l’expérience (VAE). Le choix dépend de votre parcours et de l’expérience que vous pouvez faire reconnaître. Nous faisons le point avec vous pour identifier la voie adaptée et les étapes du dossier.',
+    a: 'Le DESP prépare à la création, à la reprise ou à la direction d’une entreprise de sécurité privée. La formation initiale compte 245 heures, dont 175 à distance et 70 en centre. Elle permet de travailler le pilotage de l’activité, la gestion, le suivi des équipes et la relation avec les clients.\n\n' +
+      'Si vous exercez déjà ces responsabilités, la validation des acquis de l’expérience (VAE) peut convenir. Pour comparer les deux voies, préparez quelques exemples de décisions que vous avez prises et de documents que vous avez produits, comme un planning, une proposition commerciale ou un tableau de suivi. L’école pourra apprécier avec vous leur lien avec les compétences du titre.',
     links: [
       { href: '/despvaeouinitial', label: 'Comparer les deux voies DESP' },
       { href: '/vaedirigeant', label: 'Comprendre la VAE dirigeant' },
@@ -37,7 +46,8 @@ export const globalFaq = [
   },
   {
     q: 'Que comprend la formation chauffeur VTC tout inclus ?',
-    a: 'Notre formation associe la préparation théorique en ligne et la conduite en présentiel. La formule présentée comprend également le livre, les frais d’examen et la mise à disposition du véhicule à double commande pour l’épreuve pratique, selon les modalités précisées dans votre convention. La page VTC détaille chaque étape de la préparation.',
+    a: 'L’offre complète à 1 500 € prévoit une préparation individualisée de 105 heures estimées. Après la finalisation de l’inscription, vous accédez aux cours de théorie en ligne, aux quiz corrigés et aux annales. Le livre est envoyé par courrier et la conduite se prépare en présentiel avec un formateur sur la Côte d’Azur.\n\n' +
+      'Les frais d’examen et la mise à disposition du véhicule à double commande pour l’épreuve pratique sont inclus dans cette formule. Sur la fiche VTC, le calendrier distingue la date limite de dépôt du dossier, l’épreuve théorique et la période prévue pour la pratique. Votre convocation fixe votre rendez-vous d’examen.',
     links: [
       { href: '/vtc#formule', label: 'Voir la formule VTC tout inclus' },
       { href: '/vtc#examen', label: 'Comprendre l’examen VTC' },
@@ -45,12 +55,16 @@ export const globalFaq = [
   },
   {
     q: 'Quels BTS peut-on préparer en alternance ?',
-    a: 'Vous pouvez choisir parmi six BTS : Management Opérationnel de la Sécurité (MOS), Management Commercial Opérationnel (MCO), Négociation et Digitalisation de la Relation Client (NDRC), Commerce International, Professions Immobilières et Comptabilité et Gestion. Les pages de chaque diplôme présentent les enseignements, le rythme d’alternance, les débouchés et l’inscription.',
-    links: [{ href: '/bts#formations-bts', label: 'Découvrir et comparer nos six BTS' }],
+    a: 'Le catalogue présente six spécialités. Le BTS Management opérationnel de la sécurité (MOS) prépare à l’encadrement en sécurité, le BTS Management commercial opérationnel (MCO) à l’activité d’un point de vente et le BTS Négociation et digitalisation de la relation client (NDRC) à la vente et au suivi commercial sur plusieurs canaux.\n\n' +
+      'Le BTS Commerce international (CI) porte sur les échanges avec l’étranger, le BTS Professions immobilières (PI) sur la transaction et la gestion immobilières, et le BTS Comptabilité et gestion (CG) sur le suivi comptable. Consultez la fiche du diplôme puis vérifiez auprès d’Aurélie, Responsable des BTS, les promotions et modalités proposées pour votre rentrée.',
+    links: [
+      { href: '/bts#formations-bts', label: 'Découvrir et comparer nos six BTS' },
+    ],
   },
   {
     q: 'Peut-on suivre les cours de BTS à distance ?',
-    a: 'Nos BTS sont proposés en présentiel ou 100 % en ligne, à distance, selon les modalités du diplôme choisi. Les cours à distance se déroulent en visioconférence. Les périodes en entreprise font partie de l’alternance dans les deux cas : consultez la page du BTS qui vous intéresse pour connaître son organisation.',
+    a: 'Oui, des BTS peuvent être suivis en visioconférence en direct. Vous retrouvez la classe et les formateurs sur les créneaux de cours prévus au calendrier. Vous pouvez ainsi rester dans votre région tout en préparant le diplôme, si la modalité à distance est proposée pour la promotion choisie.\n\n' +
+      'Les périodes en entreprise font partie du contrat d’alternance, y compris lorsque vous suivez les cours depuis chez vous. Avant de candidater, comparez les semaines d’école et d’entreprise avec votre employeur, vérifiez vos disponibilités pour les cours en direct et consultez les modalités d’examen propres au diplôme.',
     links: [
       { href: '/bts', label: 'Voir les modalités de nos BTS' },
       { href: '/financements/alternance', label: 'Comprendre l’alternance' },
@@ -58,7 +72,8 @@ export const globalFaq = [
   },
   {
     q: 'Où se déroulent les formations ?',
-    a: 'Notre école principale se situe à Puget-sur-Argens, dans le Var. Notre centre de Paris accueille le DESP (dirigeant d’entreprise de sécurité privée) et proposera prochainement deux mastères en intelligence artificielle. L’APS et l’A3P se préparent sur la Côte d’Azur. Pour le VTC, la théorie se suit en ligne et la pratique est organisée dans les secteurs de Nice, Cannes, Toulon ou Fréjus. Le lieu exact est indiqué sur la session choisie.',
+    a: 'Le campus de la Côte d’Azur se trouve au 54 chemin du Carreou, à Puget-sur-Argens (83480). Il accueille notamment les formations APS, A3P et SSIAP ainsi que des cours de BTS. Pour le VTC, la théorie est accessible en ligne et les temps de conduite sont organisés dans les secteurs de Nice, Cannes, Fréjus ou Toulon selon la session.\n\n' +
+      'Pour le DESP, le planning permet de choisir le lieu du présentiel parmi les sessions publiées à Puget-sur-Argens ou à Paris, au 34 rue Poissonnière (75002). Avant de réserver un trajet, repérez séparément les dates à distance, les journées en centre et le lieu indiqué pour votre examen.',
     links: [
       { href: '/ecole', label: 'Découvrir notre école et nos implantations' },
       { href: '/planning', label: 'Voir les lieux des prochaines sessions' },
@@ -66,7 +81,8 @@ export const globalFaq = [
   },
   {
     q: 'Comment financer ma formation ?',
-    a: 'Les possibilités dépendent de la formation et de votre situation : CPF, France Travail, entreprise, OPCO, alternance ou financement personnel. Notre équipe vous aide à identifier les dispositifs envisageables et à préparer votre demande. Une prise en charge reste soumise aux conditions du dispositif et à l’accord du financeur.',
+    a: 'Commencez par votre situation. Salarié, vous pouvez vérifier vos droits sur Mon Compte Formation et vous renseigner auprès de votre employeur. Demandeur d’emploi, présentez le projet à votre conseiller France Travail. En apprentissage, les frais pédagogiques s’inscrivent dans le financement du contrat conclu avec l’entreprise.\n\n' +
+      'Avec l’intitulé du parcours et la session souhaitée, l’école peut fournir le programme et un devis. Comparez le prix, le montant confirmé par chaque financeur et l’éventuel reste à payer avant de vous engager. Si vous financez personnellement votre formation, demandez quelles modalités de règlement sont proposées pour ce parcours.',
     links: [
       { href: '/financements', label: 'Explorer les solutions de financement' },
       { href: '/financements/cpf', label: 'Se renseigner sur le CPF' },
@@ -75,7 +91,8 @@ export const globalFaq = [
   },
   {
     q: 'Où trouver les prochaines dates, les durées et les tarifs ?',
-    a: 'Le planning permet de consulter les sessions publiées et leurs lieux. La page de chaque formation précise sa durée, son organisation et son tarif lorsqu’il est affiché. Si vous hésitez entre plusieurs dates ou avez besoin d’un devis, contactez-nous pour faire le point sur les disponibilités et votre projet.',
+    a: 'Dans le planning, filtrez par formation et par lieu, puis ouvrez la session qui vous intéresse. La fiche permet de repérer la période à distance, les dates de présence en centre et la date d’examen lorsqu’elle est publiée. Pour le VTC, le calendrier indique des échéances d’examen, tandis que la préparation théorique peut commencer dès la finalisation de l’inscription.\n\n' +
+      'La page de formation précise le volume d’heures et le tarif présenté pour le parcours. Si vous hésitez entre deux sessions, communiquez-nous leurs dates et le lieu souhaité pour vérifier les disponibilités ou obtenir le devis correspondant à votre demande de financement.',
     links: [
       { href: '/planning', label: 'Consulter le planning des formations' },
       { href: '/contact', label: 'Vérifier une date ou demander un devis' },
@@ -83,7 +100,8 @@ export const globalFaq = [
   },
   {
     q: 'Quels sont les prérequis avant de s’inscrire ?',
-    a: 'Ils varient selon la formation : niveau d’études, expérience professionnelle, permis de conduire ou démarches administratives peuvent être demandés. Les conditions d’accès sont détaillées sur chaque page de formation. Avant de confirmer votre inscription, nous vérifions votre situation et vous indiquons les pièces à préparer.',
+    a: 'Commencez par la rubrique des conditions d’accès de la formation choisie. Pour un BTS, vérifiez le niveau scolaire demandé et les modalités de candidature. Pour certaines formations de sécurité privée, votre situation auprès du CNAPS est examinée. Pour le VTC, l’ancienneté du permis B compte. En SSIAP, les prérequis varient notamment avec le niveau visé.\n\n' +
+      'Pour votre premier échange, notez les diplômes ou cartes que vous possédez, leurs dates de validité et les expériences liées au métier. L’équipe pourra vous indiquer les justificatifs utiles pour votre cas ainsi que les démarches à prévoir avant de retenir une date d’entrée.',
     links: [
       { href: '/formations-securite', label: 'Consulter les formations en sécurité' },
       { href: '/contact', label: 'Faire vérifier mon dossier' },
@@ -91,7 +109,8 @@ export const globalFaq = [
   },
   {
     q: 'Comment s’inscrire ou demander des informations ?',
-    a: 'Choisissez la formation qui vous intéresse, puis utilisez le bouton d’inscription ou de demande d’informations de sa page. Vous pouvez aussi contacter directement notre équipe pour préciser votre projet, les dates et le financement. Pour les BTS, la page du diplôme vous guide vers les démarches de candidature et d’inscription.',
+    a: 'Sur la page du parcours, ouvrez le formulaire de demande d’informations. Indiquez le métier ou la formation qui vous intéresse, votre ville et, si vous la connaissez, la session envisagée. L’équipe pourra alors vous répondre sur les conditions d’entrée, le calendrier et le financement, puis vous expliquer comment constituer votre dossier.\n\n' +
+      'Pour un BTS, partez de la fiche du diplôme et de la modalité souhaitée, sur le campus ou à distance. Vous y retrouverez le parcours de candidature et les accès Parcoursup lorsqu’ils sont proposés. Si vous préférez échanger d’abord, le standard répond au 04 22 47 07 68 du lundi au vendredi, de 9 h à 17 h.',
     links: [
       { href: '/contact', label: 'Contacter l’équipe Intégrale Academy' },
       { href: '/bts', label: 'Préparer mon inscription en BTS' },
@@ -99,16 +118,11 @@ export const globalFaq = [
   },
   {
     q: 'Je ne sais pas quelle formation choisir : pouvez-vous m’aider ?',
-    a: 'Oui. L’assistant d’orientation vous donne un premier aperçu des formations qui vous intéressent. Pour aller plus loin, échangez avec notre équipe sur votre expérience, votre objectif professionnel et vos contraintes. Nous vous aidons à comparer les possibilités et à choisir les prochaines étapes.',
+    a: 'Oui. L’assistant formation de l’accueil permet d’explorer les métiers et de comparer leurs prochaines sessions. Si deux parcours vous intéressent, partez de ce que vous aimeriez faire au quotidien. Accueillir et surveiller un site, accompagner un client en déplacement ou coordonner une équipe correspondent par exemple à des formations différentes.\n\n' +
+      'Pour un avis sur votre situation, préparez votre objectif, votre expérience, la région où vous pouvez suivre les cours et vos disponibilités. Le premier échange est gratuit et sans engagement. Le standard au 04 22 47 07 68 vous oriente vers Aurélie, Responsable des BTS, ou Cassandre, Responsable commercial, selon votre projet.',
     links: [
       { href: '/#assistant-orientation', label: 'Utiliser l’assistant d’orientation' },
       { href: '/contact', label: 'Parler de mon projet avec un conseiller' },
     ],
   },
-];
-
-export const formationFaq = [
-  { q: 'Comment s’inscrire ?', a: 'Utilisez le formulaire de contact ou le bouton “Demander des informations”. Un conseiller vous recontacte pour valider le projet, les prérequis et le financement.' },
-  { q: 'Où se déroulent les formations ?', a: 'Notre école principale se trouve à Puget-sur-Argens. À Paris, le centre accueille le DESP et proposera prochainement nos deux mastères en intelligence artificielle. Certains cours se suivent à distance selon le parcours.' },
-  { q: 'Comment sont validés les prérequis ?', a: 'Les prérequis sont étudiés avec l’équipe admissions avant l’entrée en formation afin de sécuriser le dossier candidat.' },
 ];

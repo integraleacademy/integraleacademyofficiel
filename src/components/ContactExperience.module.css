@@ -27,7 +27,7 @@
 .steps > button[aria-selected='true'] .stepNumber svg { opacity: 1; transform: none; }
 .steps > button[aria-selected='true'] .stepCopy strong { color: var(--ink); }
 
-.scene { position: relative; isolation: isolate; display: grid; justify-items: center; min-width: 0; padding: 42px 22px 22px; border: 1px solid rgb(var(--border) / .65); border-radius: 36px; background: linear-gradient(140deg, rgb(var(--surface)), rgb(var(--accent) / .07)); }
+.scene { position: relative; isolation: isolate; container-type: inline-size; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: center; justify-items: center; gap: 20px 12px; min-width: 0; padding: clamp(14px, 2.4vw, 28px); border: 1px solid rgb(var(--border) / .65); border-radius: 36px; background: linear-gradient(140deg, rgb(var(--surface)), rgb(var(--accent) / .07)); }
 .sceneHalo { position: absolute; z-index: -1; width: 400px; max-width: 88%; aspect-ratio: 1; top: 13%; border: 1px solid rgb(var(--accent) / .25); border-radius: 50%; background: radial-gradient(circle, rgb(var(--accent) / .19), transparent 70%); }
 .sceneHalo::before { content: ''; position: absolute; inset: 26px; border: 1px dashed rgb(var(--accent) / .24); border-radius: inherit; }
 .phone { position: relative; width: 278px; max-width: 100%; padding: 10px 10px 13px; border: 5px solid #26303a; border-radius: 43px; background: #fffaf2; color: #152438; box-shadow: 8px 18px 34px rgb(18 30 44 / .14), inset 0 0 0 1px #fff; }
@@ -38,9 +38,12 @@
 .phoneHeader img { flex-shrink: 0; }
 .phoneHeader strong { display: block; font-size: 12px; font-weight: 800; line-height: 1.4; }
 .phoneHeader span { display: block; margin-top: 3px; color: #6b6256; font-size: 9px; line-height: 1.4; }
-.exchangeNote { display: flex; align-items: center; justify-content: center; gap: 9px; margin: 14px 5px 0; padding: 10px 8px; border: 1px solid #dfcfa7; border-radius: 12px; background: #f8efd9; color: #544125; font-size: 11px; line-height: 1.35; }
-.exchangeNote svg { width: 22px; height: 22px; padding: 4px; border-radius: 50%; color: #fff; background: #71603d; }
-.exchangeNote strong { display: block; color: #42351c; font-weight: 750; }
+/* The first exchange label sits beside the handset, like the adviser’s nameplate. */
+.exchangeNote { grid-area: 1 / 1; justify-self: start; display: flex; align-items: center; gap: 10px; padding: 13px 15px; border-radius: 15px; background: #172c40; color: #fffaf0; box-shadow: 0 10px 24px -12px #1b344c77; }
+.exchangeNote svg { width: 23px; height: 23px; color: #f1ca82; }
+.exchangeNote span { font-size: 12px; font-weight: 550; line-height: 1.4; }
+.exchangeNote strong { display: block; margin-top: 2px; color: #f7d999; font-size: 14px; font-weight: 750; }
+.phone { grid-area: 2 / 1 / 3 / -1; }
 .phoneScreen { min-height: 340px; padding: 19px 6px 10px; }
 .screenLabel { display: block; margin-bottom: 15px; color: #706657; font-size: 9px; font-weight: 650; text-align: center; }
 .userBubble { margin-left: 22px; padding: 14px 16px; border-radius: 17px 17px 4px 17px; background: #efd18d; color: #302719; font-size: 12px; font-weight: 550; line-height: 1.6; animation: bubbleIn .55s both; }
@@ -69,13 +72,13 @@
 .homeIndicator { width: 80px; height: 4px; margin: 17px auto 0; border-radius: 99px; background: #26303a; }
 .avatar { display: grid; width: 44px; height: 44px; flex: 0 0 auto; overflow: hidden; place-items: center; border: 1px solid #e0c892; border-radius: 50%; background: linear-gradient(140deg, #253a50, #132334); color: #f1cd80; font-size: 16px; font-weight: 750; }
 .avatar img { width: 100%; height: 100%; object-fit: cover; }
-.floatingAdviser { position: absolute; z-index: 1; top: 31px; right: 17px; display: flex; align-items: center; gap: 10px; padding: 12px 14px; border: 1px solid #e1d4bf; border-radius: 18px; background: #fffdf6; box-shadow: 0 12px 25px rgb(52 42 23 / .08); color: #223248; animation: floatIn .65s both; }
+.floatingAdviser { grid-area: 1 / 2; justify-self: end; z-index: 1; display: flex; align-items: center; gap: 10px; padding: 12px 14px; border: 1px solid #e1d4bf; border-radius: 18px; background: #fffdf6; box-shadow: 0 12px 25px rgb(52 42 23 / .08); color: #223248; animation: floatIn .65s both; }
 .floatingAdviser > span:nth-child(2) { display: block; line-height: 1.4; }
 .floatingAdviser strong { display: block; font-size: 13px; font-weight: 800; }
 .floatingAdviser small { display: block; margin-top: 3px; color: #746654; font-size: 10px; }
 .floatingAdviser > svg { width: 16px; height: 16px; margin-left: 8px; color: #99712f; }
 
-.scene .sceneCaption { margin-top: 21px; color: var(--muted); font-size: 10px; line-height: 1.6; text-align: center; }
+.scene .sceneCaption { grid-area: 3 / 1 / 4 / -1; margin: 0; color: var(--muted); font-size: 10px; line-height: 1.6; text-align: center; }
 
 .directContact { display: flex; align-items: stretch; gap: 10px; margin-top: 22px; }
 .directContact > a { display: flex; flex: 1; align-items: center; gap: 12px; min-width: 0; min-height: 58px; padding: 10px 14px; border: 1px solid var(--line); border-radius: 16px; background: var(--paper); }
@@ -98,7 +101,7 @@
   .interests small { font-size: 10px; }
   .selectionMark { display: none; }
   .journey { gap: 28px; }
-  .floatingAdviser { right: 8px; padding: 9px; }
+  .floatingAdviser { padding: 9px; }
 }
 @media (max-width: 800px) {
   .interests { grid-template-columns: 1fr 1fr; gap: 12px; }
@@ -115,8 +118,8 @@
   .stepCopy strong { margin-top: 10px; font-size: 19px; }
   .stepCopy > span { font-size: 11px; line-height: 1.65; }
 
-  .scene { width: 100%; max-width: 570px; justify-self: center; padding-top: 35px; }
-  .floatingAdviser { right: 20px; top: 26px; padding: 12px; }
+  .scene { width: 100%; max-width: 570px; justify-self: center; }
+  .floatingAdviser { padding: 12px; }
 }
 @media (max-width: 480px) {
   .interests { gap: 9px; }
@@ -129,16 +132,26 @@
   .steps > button { padding-block: 12px; }
   .stepCopy strong { font-size: 16px; line-height: 1.3; }
   .stepCopy > span { display: none; }
-  .scene { padding: 79px 12px 20px; border-radius: 26px; }
-  .floatingAdviser { top: 15px; right: 16px; padding: 8px 12px; border-radius: 14px; }
+  .scene { padding: 14px 12px 20px; border-radius: 26px; }
+  .floatingAdviser { gap: 6px; padding: 8px; border-radius: 14px; }
+  .floatingAdviser > svg { display: none; }
+  .exchangeNote { padding: 10px; gap: 7px; }
+  .exchangeNote svg { width: 19px; height: 19px; }
+  .exchangeNote span, .exchangeNote strong { font-size: 12px; }
   .floatingAdviser .avatar { width: 34px; height: 34px; font-size: 13px; }
   .floatingAdviser small { font-size: 9px; }
 
-  .scene .sceneCaption { margin-top: 13px; }
+
   .phone { width: min(278px, 100%); }
 
   .directContact > a { gap: 9px; padding-inline: 11px; }
   .directContact > a > span { font-size: 15px; }
+}
+@container (min-width: 480px) {
+  .phone { grid-area: 1 / 1 / 2 / -1; margin-inline-start: 80px; }
+  .exchangeNote { align-self: end; margin-bottom: 68px; max-width: min(195px, calc((100cqw - 198px) / 2 - 18px)); }
+  .floatingAdviser { position: absolute; top: 8px; right: 0; }
+  .scene .sceneCaption { grid-area: 2 / 1 / 3 / -1; }
 }
 @media (prefers-reduced-motion: reduce) {
   .experience *, .experience *::before { animation: none !important; transition: none !important; }

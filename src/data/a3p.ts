@@ -194,25 +194,115 @@ export const a3pEnrollmentSteps = [
 ];
 
 export const a3pFaq = [
-  ['Quelle est la différence entre A3P, APR et garde du corps ?', 'A3P signifie agent de protection physique des personnes. APR signifie agent de protection rapprochée. « Garde du corps » est une appellation courante. Le TFP Agent de protection physique des personnes est l’intitulé officiel de la certification.'],
-  ['La formation A3P permet-elle de travailler immédiatement ?', 'La réussite à la certification justifie l’aptitude professionnelle. Pour exercer, le diplômé doit ensuite demander et obtenir auprès du CNAPS la carte professionnelle correspondant à l’activité de protection physique des personnes.'],
-  ['Faut-il avoir été militaire ou policier ?', 'Non. Cette expérience peut être utile, mais elle n’est pas obligatoire. Le candidat doit remplir les prérequis réglementaires et être en capacité de suivre les exercices pratiques.'],
-  ['Ai-je besoin d’une autorisation du CNAPS ?', 'Oui, sauf situation particulière prévue par la réglementation. Avant l’entrée en formation, le candidat doit obtenir une autorisation préalable correspondant à l’activité ou détenir une carte professionnelle en cours de validité permettant l’accès à la formation.'],
-  ['Intégrale Academy fait-elle la demande CNAPS à ma place ?', 'La demande est personnelle. Intégrale Academy fournit les documents de préinscription et explique les étapes de la démarche.'],
-  ['Combien de temps dure la formation ?', 'Le programme réglementaire comprend 328 heures hors examen, dont 92 heures et 50 minutes de pratique : 41 heures de socle de base et 287 heures de spécialité A3P.'],
-  ['Comment se déroule l’examen ?', 'Les connaissances sont évaluées par des QCU contextualisés. Une note d’au moins 12/20 valide l’UV ; de 8 à moins de 12/20, le candidat est ajourné et peut se représenter ; sous 8/20, il doit suivre à nouveau le module. Les compétences pratiques sont évaluées apte ou inapte, avec une mission complète, un dossier et une soutenance devant jury.'],
-  ['Le titre est-il découpé en blocs capitalisables ?', 'Non. Il s’agit d’un bloc unique lié à l’exercice d’un métier réglementé. La fiche RNCP38002 ne prévoit ni capitalisation ni équivalence de blocs de compétences.'],
-  ['Jusqu’à quand le RNCP38002 est-il enregistré ?', 'L’échéance d’enregistrement publiée sur la fiche France Compétences est fixée au 20 septembre 2028.'],
-  ['Où se déroule la formation ?', 'La formation se déroule en présentiel à Puget-sur-Argens, dans le Var, entre Cannes et Saint-Tropez.'],
-  ['Peut-on être hébergé sur place ?', 'Un hébergement collectif peut être proposé sur place, sous réserve de disponibilité et de réservation préalable. Le tarif 2027 est de 350 € TTC pour la totalité de la formation.'],
-  ['La formation est-elle éligible au CPF ?', 'Une prise en charge CPF peut être possible lorsque l’offre et la session correspondantes sont publiées comme éligibles. Un conseiller peut vérifier votre situation et l’éventuel reste à charge.'],
-  ['France Travail peut-il financer la formation ?', 'Une demande de financement peut être présentée à France Travail. L’acceptation dépend de la situation du candidat, de son projet professionnel et de la décision de son conseiller.'],
-  ['Peut-on payer la formation en plusieurs fois ?', 'Des facilités de paiement peuvent être proposées après étude du dossier. Contactez l’équipe pour connaître les solutions disponibles.'],
-  ['Est-ce une formation armée ?', 'Non. Le TFP A3P présenté ici concerne la protection physique des personnes non armée. Les activités armées relèvent d’autorisations, de cartes professionnelles et de formations spécifiques.'],
-  ['La formation est-elle physiquement difficile ?', 'Elle comporte des déplacements, des techniques professionnelles, du secourisme et des mises en situation. Il faut pouvoir participer aux exercices, mais le parcours n’est pas un stage militaire.'],
-  ['Le permis de conduire est-il obligatoire ?', 'Le permis B ne figure pas parmi les prérequis d’entrée de la fiche RNCP38002. Il peut néanmoins être utile pour certaines missions et certains emplois, notamment la conduite de sécurité.'],
-  ['Quel niveau de français est demandé ?', 'Le niveau minimum attendu est B1 : comprendre les enseignements et les consignes, communiquer clairement et produire un compte rendu oral et écrit. Pour les ressortissants étrangers, le test B1 défini par l’arrêté du 31 mars 2022 est obligatoire et le test de branche ne peut pas être utilisé.'],
-  ['Quelles règles concernent les ressortissants étrangers ?', 'La fiche RNCP38002 précise qu’ils doivent détenir un titre de séjour depuis au moins cinq ans pour demander l’autorisation préalable, sous réserve des exceptions légales applicables, et justifier leur niveau B1 selon les modalités réglementaires.'],
-  ['Puis-je travailler à l’international après cette formation ?', 'La certification prépare d’abord à l’exercice réglementé en France. Pour exercer à l’étranger, il faut vérifier la réglementation du pays, les autorisations, les conditions d’emploi et les qualifications complémentaires éventuelles.'],
-  ['La formation garantit-elle un emploi ?', 'Non. La certification est indispensable pour justifier l’aptitude professionnelle, mais le recrutement dépend aussi de l’expérience, du réseau, de la mobilité, des langues et du profil du candidat.'],
-].map(([q, a]) => ({ q, a }));
+  {
+    q: 'Quelle est la différence entre A3P, APR et garde du corps ?',
+    a: 'A3P est l’abréviation d’« agent de protection physique des personnes », l’intitulé du titre à finalité professionnelle enregistré au niveau 4 sous le numéro RNCP38002. « Agent de protection rapprochée » (APR) et « garde du corps » sont des appellations que vous pouvez rencontrer dans les offres d’emploi.\n\n' +
+      'Ces termes renvoient à la protection d’un client, par exemple lors de ses déplacements privés ou professionnels. Si vous comparez deux formations, recherchez l’intitulé de la certification et son numéro RNCP pour identifier le titre préparé et l’activité professionnelle visée.',
+  },
+  {
+    q: 'La formation A3P permet-elle de travailler immédiatement ?',
+    a: 'Pour exercer en France, il faut avoir obtenu du CNAPS une carte professionnelle couvrant la protection physique des personnes. La réussite du TFP A3P vous donne le justificatif d’aptitude professionnelle à joindre à la demande.\n\n' +
+      'Si vous travaillez déjà dans la surveillance ou le gardiennage, vérifiez les activités mentionnées sur votre carte. Si la protection physique des personnes en est absente, demandez l’extension correspondant à cette activité et attendez sa délivrance avant d’accepter une mission de protection rapprochée.',
+  },
+  {
+    q: 'Faut-il avoir été militaire ou policier ?',
+    a: 'Vous pouvez candidater en venant d’un autre métier ou dans le cadre d’une reconversion. L’Académie accueille aussi bien des candidats découvrant le secteur que des agents de sécurité expérimentés. L’expérience dans la police ou les armées n’est pas un prérequis du TFP A3P.\n\n' +
+      'Votre admission porte sur les conditions d’accès au métier, le français de niveau B1 et votre capacité à prendre part aux exercices. Le premier échange permet aussi de vérifier que vous êtes disponible pour environ neuf semaines en présentiel et pour les épreuves de certification.',
+  },
+  {
+    q: 'Ai-je besoin d’une autorisation du CNAPS ?',
+    a: 'Avant d’entrer en formation A3P, vous devez présenter une autorisation préalable du CNAPS portant sur la protection physique des personnes, ou une carte professionnelle en cours de validité permettant l’entrée sur ce parcours. Si vous possédez déjà une carte de sécurité privée, présentez-la au centre pour examiner votre situation.\n\n' +
+      'Pour une première demande, l’école fournit le justificatif de préinscription. Le CNAPS étudie votre dossier et effectue l’enquête administrative relevant de sa compétence. L’autorisation accordée à ce stade donne accès à la formation. Le droit d’exercer fera l’objet d’une demande après la certification.',
+  },
+  {
+    q: 'Intégrale Academy fait-elle la demande CNAPS à ma place ?',
+    a: 'Vous déposez et suivez vous-même votre demande auprès du CNAPS. Intégrale Academy vous remet les éléments de préinscription nécessaires et vous explique quelles pièces réunir en fonction de votre situation. La décision appartient au CNAPS.\n\n' +
+      'Conservez la référence de votre demande pour suivre son avancement. Dès réception de la décision, communiquez-la à l’équipe admissions pour vérifier l’activité mentionnée et sa période de validité avant le début de la session. Si vous disposez déjà d’une carte professionnelle, indiquez-le dès la préinscription.',
+  },
+  {
+    q: 'Combien de temps dure la formation ?',
+    a: 'La formation complète représente 328 heures de cours hors examen, soit environ neuf semaines en présentiel. Elle comprend 41 heures de socle commun aux métiers de la sécurité privée et 287 heures de spécialité consacrées à la protection physique des personnes. Les 92 heures et 50 minutes de pratique sont comprises dans ces 328 heures.\n\n' +
+      'Le planning précise les différentes périodes de chaque session et la date d’examen. Pour organiser vos absences et vos déplacements, relevez toutes les périodes indiquées sur la session que vous choisissez.',
+  },
+  {
+    q: 'Comment se déroule l’examen ?',
+    a: 'La théorie est évaluée par des questions à choix unique (QCU) portant sur des situations professionnelles. Pour une unité évaluée par questionnaire, une note de 12/20 ou plus la valide. Entre 8/20 inclus et 12/20 exclu, une nouvelle présentation est possible. En dessous de 8/20, il faut suivre à nouveau le module concerné.\n\n' +
+      'La partie pratique donne lieu à une appréciation « apte » ou « inapte ». Elle comprend la préparation et la réalisation d’une mission complète en formation. Vous présentez votre dossier au jury et répondez à ses questions sur votre travail et vos choix professionnels.',
+  },
+  {
+    q: 'Le titre est-il découpé en blocs capitalisables ?',
+    a: 'La certification A3P vise un métier réglementé et se valide dans son ensemble. La fiche RNCP38002 ne prévoit ni capitalisation de blocs de compétences indépendants ni équivalence de blocs avec une autre certification.\n\n' +
+      'Les neuf unités de valeur organisent l’apprentissage et les épreuves du parcours. En cas d’ajournement à une unité, appuyez-vous sur votre relevé de résultats pour identifier l’épreuve à représenter ou le module à refaire. La délivrance du titre complet permet ensuite d’engager la demande de carte professionnelle A3P.',
+    links: [
+      { href: 'https://www.francecompetences.fr/recherche/rncp/38002/', label: 'Consulter la certification A3P' },
+    ],
+  },
+  {
+    q: 'Jusqu’à quand le RNCP38002 est-il enregistré ?',
+    a: 'France compétences fixe au 20 septembre 2028 l’échéance d’enregistrement du TFP « Agent de protection physique des personnes » sous le numéro RNCP38002. La fiche officielle permet de vérifier le niveau 4, l’identité du certificateur, les modalités d’évaluation et les métiers visés.\n\n' +
+      'Cette date concerne l’enregistrement de la certification. Pour votre calendrier personnel, distinguez-la de la date d’examen de votre session et de la date de validité figurant ensuite sur votre propre carte professionnelle délivrée par le CNAPS.',
+    links: [
+      { href: 'https://www.francecompetences.fr/recherche/rncp/38002/', label: 'Consulter la certification A3P' },
+    ],
+  },
+  {
+    q: 'Où se déroule la formation ?',
+    a: 'Le parcours A3P se déroule en présentiel au centre Côte d’Azur d’Intégrale Academy, au 54 chemin du Carreou, 83480 Puget-sur-Argens, dans le Var. Vous y suivez les enseignements et retrouvez votre groupe pour les exercices encadrés.\n\n' +
+      'Un stationnement gratuit est disponible sur le site. Avant de réserver vos trajets, relevez dans le planning les différentes périodes de cours et la date d’examen propres à votre session. Votre convocation précise les modalités de rendez-vous.',
+  },
+  {
+    q: 'Peut-on être hébergé sur place ?',
+    a: 'Oui, vous pouvez demander une place en dortoir collectif au centre de Puget-sur-Argens. Pour 2027, cet hébergement coûte 350 € TTC pour la totalité de la formation A3P. Les résidents disposent d’une cuisine équipée, d’une salle de bain avec douche, d’un lave-linge, d’un sèche-linge et d’espaces communs.\n\n' +
+      'Les couchages sont proposés sur réservation, sous réserve de disponibilité. Indiquez la session A3P souhaitée au moment de votre demande et faites confirmer les périodes couvertes et les modalités d’arrivée avant d’organiser votre séjour.',
+  },
+  {
+    q: 'La formation est-elle éligible au CPF ?',
+    a: 'Le financement par le CPF dépend de l’offre publiée pour votre session. Sur Mon Compte Formation, recherchez « Agent de protection physique des personnes » et vérifiez le nom de l’organisme et les dates à Puget-sur-Argens. Le tarif de référence A3P pour 2027 est de 4 250 € TTC.\n\n' +
+      'Votre espace personnel donne le montant de vos droits et le reste éventuel à régler. Si vous envisagez un complément, demandez au centre les références de la session ou son devis. Vous pourrez présenter à votre financeur le même parcours que celui sélectionné sur la plateforme.',
+  },
+  {
+    q: 'France Travail peut-il financer la formation ?',
+    a: 'Si vous êtes inscrit à France Travail, vous pouvez présenter un projet de formation A3P à votre conseiller. Une demande de prise en charge individuelle ou de complément peut être examinée selon votre situation, vos droits et la cohérence du parcours avec votre retour à l’emploi.\n\n' +
+      'Avant la session, demandez le programme, les dates et un devis au centre. Décrivez le poste que vous visez et, si vous en avez, les pistes de recrutement repérées. France Travail examine ces éléments et décide du montant éventuellement accordé. Attendez sa réponse pour arrêter votre budget.',
+  },
+  {
+    q: 'Peut-on payer la formation en plusieurs fois ?',
+    a: 'Un paiement échelonné peut être étudié pour la part que vous financez personnellement. Le tarif de référence 2027 du parcours A3P est de 4 250 € TTC. Si vous avez un financement partiel, commencez par déterminer la somme qui restera à votre charge.\n\n' +
+      'Indiquez au centre la session envisagée et le montant que vous devez financer. Avant de confirmer votre inscription, demandez une proposition écrite précisant les échéances, leurs dates et les modalités de règlement applicables à votre dossier.',
+  },
+  {
+    q: 'Est-ce une formation armée ?',
+    a: 'Le TFP A3P proposé à Puget-sur-Argens prépare aux missions de protection physique des personnes non armée. Le programme porte notamment sur le cadre juridique de la profession, la communication en équipe, la prévention des risques et la relation avec le client.\n\n' +
+      'À l’issue du parcours, le titre vous permet de justifier votre aptitude pour demander la carte professionnelle correspondant à cette activité. Une activité armée relève d’un cadre distinct et de qualifications et d’autorisations spécifiques.',
+  },
+  {
+    q: 'La formation est-elle physiquement difficile ?',
+    a: 'Le parcours est intensif et demande de pouvoir participer régulièrement aux exercices pendant environ neuf semaines. Il comprend notamment du travail en équipe, des déplacements à pied, des mises en situation professionnelles et du secourisme. Le programme annonce 92 heures et 50 minutes de pratique sur les 328 heures de cours.\n\n' +
+      'Si une limitation ou un handicap peut avoir une incidence sur votre participation, décrivez à l’école les exercices ou les déplacements qui vous posent difficulté avant l’inscription. L’équipe pourra étudier avec vous les aménagements possibles au regard des objectifs du parcours et de l’examen.',
+  },
+  {
+    q: 'Le permis de conduire est-il obligatoire ?',
+    a: 'Le permis B ne figure pas dans les conditions d’entrée de la certification RNCP38002. Vous pouvez donc prendre contact avec l’école pour présenter votre candidature si vous n’avez pas le permis. L’autorisation ou la carte professionnelle permettant l’entrée en formation et les conditions de français restent à vérifier.\n\n' +
+      'Pour l’emploi, les exigences varient selon le poste. Un recruteur qui recherche un conducteur de sécurité peut demander le permis et une expérience de conduite. Regardez les annonces correspondant aux missions que vous souhaitez exercer pour anticiper ces critères.',
+  },
+  {
+    q: 'Quel niveau de français est demandé ?',
+    a: 'Le niveau attendu est B1 dans le cadre européen de référence pour les langues. Vous devez notamment pouvoir comprendre une consigne, échanger avec un client ou un collègue, expliquer oralement un événement et rédiger un compte rendu compréhensible.\n\n' +
+      'Pour les ressortissants étrangers, y compris européens, le dossier individuel doit comporter un justificatif de français admis par la réglementation, par exemple le diplôme national du brevet ou une attestation de test recevable. Le seul test de positionnement de la branche ne suffit pas. Faites vérifier votre justificatif avant de vous inscrire à un nouveau test.',
+  },
+  {
+    q: 'Quelles règles concernent les ressortissants étrangers ?',
+    a: 'Les pièces à fournir au CNAPS dépendent de votre nationalité et de votre situation de séjour. Pour les personnes soumises à la condition de durée de séjour, il faut justifier d’au moins cinq ans de détention d’un titre, ainsi que du droit de travailler en France. L’équipe peut vous aider à identifier les pièces correspondant à votre statut avant le dépôt de votre demande.\n\n' +
+      'La preuve d’un français de niveau B1 concerne aussi les ressortissants de l’Union européenne et de l’Espace économique européen. Préparez votre pièce d’identité et un diplôme ou une attestation recevable. La validation du dossier d’entrée appartient au CNAPS pour son autorisation.',
+  },
+  {
+    q: 'Puis-je travailler à l’international après cette formation ?',
+    a: 'Le TFP A3P est une certification française qui justifie l’aptitude professionnelle lors de votre demande de carte auprès du CNAPS. Il peut être présenté à un recruteur international pour attester votre formation en protection physique des personnes.\n\n' +
+      'Avant toute mission dans un autre pays, renseignez-vous sur les conditions d’exercice auprès de l’autorité locale compétente et de l’employeur. Une reconnaissance du titre, une autorisation de travail ou une qualification locale peuvent être nécessaires. Les langues demandées et les conditions de déplacement dépendent également du poste.',
+  },
+  {
+    q: 'La formation garantit-elle un emploi ?',
+    a: 'Le TFP A3P atteste de votre niveau de qualification. Une fois la carte professionnelle correspondante obtenue, vous pouvez candidater à des postes d’agent de protection physique des personnes, notamment auprès d’entreprises de sécurité ou d’agences de protection rapprochée. Chaque employeur décide de son recrutement.\n\n' +
+      'Pour préparer vos candidatures, précisez sur votre CV votre titre, les activités couvertes par votre carte, les langues que vous pratiquez et votre mobilité. Selon les postes, la disponibilité pour des déplacements, l’expérience en relation avec un client et les références professionnelles peuvent peser dans le choix du recruteur.',
+  },
+];

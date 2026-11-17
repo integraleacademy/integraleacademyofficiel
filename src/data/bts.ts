@@ -20,10 +20,26 @@ export type BtsFormation = {
 };
 
 export const commonBtsFaq = [
-  { q: 'Où peut-on suivre les cours du BTS ?', a: 'Les cours ont lieu à Puget-sur-Argens, sur la Côte d’Azur, ou en visioconférence.' },
-  { q: 'Le BTS est-il en alternance ?', a: 'Oui. Les BTS sont proposés en alternance, avec une organisation entre centre de formation et entreprise.' },
-  { q: 'La formation est-elle finançable ?', a: 'En contrat d’apprentissage ou de professionnalisation, la prise en charge est étudiée avec l’entreprise et l’OPCO.' },
-  { q: 'Comment candidater ?', a: 'Vous pouvez contacter Intégrale Academy, demander un rappel ou compléter une demande d’informations afin d’être accompagné dans votre dossier.' },
+  {
+    q: 'Où peut-on suivre les cours du BTS ?',
+    a: 'Les cours en présentiel se déroulent au campus de Puget-sur-Argens, dans le Var, au 54 chemin du Carreou. L’école propose aussi des cours en direct sur Zoom. Vous retrouvez votre promotion et vos formateurs aux heures de l’emploi du temps, avec la possibilité de poser vos questions et de participer aux travaux de groupe.\n\n' +
+      'Si vous habitez loin du campus, indiquez le BTS et la rentrée qui vous intéressent. L’équipe pourra vous préciser le format disponible, le rythme à communiquer à votre employeur et les déplacements à prévoir pour les examens.',
+  },
+  {
+    q: 'Le BTS est-il en alternance ?',
+    a: 'Oui. Les BTS d’Intégrale Academy se préparent en deux ans. Vous alternez les journées de formation avec des périodes chez un employeur, où vous exercez des missions en rapport avec votre spécialité.\n\n' +
+      'Pour le BTS MOS, comptez 15 jours à l’école, puis 15 jours en entreprise. Pour les BTS MCO, NDRC, CI, PI et CG, le rythme prévu est de deux jours de cours et trois jours en entreprise par semaine. Si un employeur souhaite vous accueillir, vous pouvez lui transmettre le calendrier de votre promotion pour organiser vos périodes de présence.',
+  },
+  {
+    q: 'La formation est-elle finançable ?',
+    a: 'En contrat d’apprentissage, vous avez 0 € de frais de scolarité pour le BTS. L’employeur prépare avec l’école le dossier de prise en charge auprès de son opérateur de compétences, appelé OPCO. En contrat de professionnalisation, la formation est également gratuite pour le salarié.\n\n' +
+      'Vous pouvez contacter l’école dès qu’une entreprise envisage de vous recruter. Indiquez le BTS choisi, le type de contrat envisagé et le nom de l’entreprise pour que l’équipe vous précise les documents à préparer.',
+  },
+  {
+    q: 'Comment candidater ?',
+    a: 'Depuis la fiche du BTS qui vous intéresse, ouvrez le dossier de pré-inscription et indiquez votre parcours, la rentrée souhaitée et le format de cours que vous recherchez. Vous pouvez commencer vos démarches même si vous cherchez encore une entreprise.\n\n' +
+      'Si vous hésitez entre deux spécialités, demandez à échanger avec Aurélie, Responsable des BTS, au 04 22 47 07 68. Un exemple de mission que vous aimeriez exercer aide à vous orienter, comme accueillir des clients en magasin, suivre des comptes ou organiser le travail d’une équipe de sécurité.',
+  },
 ];
 
 export const btsFormations: BtsFormation[] = [
