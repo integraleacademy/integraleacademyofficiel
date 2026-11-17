@@ -142,7 +142,13 @@ export default async function Page({ searchParams }: { searchParams: Promise<Rec
             <p>Parcourez les formations, consultez les dates ou découvrez les solutions pour financer votre projet.</p>
           </div>
           <div className={styles.quickLinks} data-contact-reveal>
-            {projectLinks.map((item, index) => <Link href={item.href} className={styles.quickLink} key={item.href}><span className={styles.linkNumber}>0{index + 1}</span><h3>{item.title}</h3><p>{item.text}</p><span className={styles.linkAction}>Découvrir <Arrow diagonal /></span></Link>)}
+            {projectLinks.map((item, index) => {
+              const ProjectLink = item.href.includes('#') ? 'a' : Link;
+              return <ProjectLink key={item.href} href={item.href} className={styles.quickLink}>
+                <span className={styles.linkNumber}>0{index + 1}</span><h3>{item.title}</h3><p>{item.text}</p>
+                <span className={styles.linkAction}>Découvrir <Arrow diagonal /></span>
+              </ProjectLink>;
+            })}
           </div>
         </div>
       </section>
