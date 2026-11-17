@@ -1,4 +1,3 @@
-import { ssiap1Faq } from '@/data/faq/security';
 import { CourseTeamBanner } from '@/components/CourseTeamBanner';
 import { CourseBrochureCard } from '@/components/CourseBrochureCard';
 import { TeamPortrait } from '@/components/TeamPortrait';
@@ -14,7 +13,7 @@ import { TrainingReferenceHero } from '@/components/TrainingReferenceLayout';
 import { TrainingSectionNavigation } from '@/components/TrainingSectionNavigation';
 import type { ReactNode } from 'react';
 import { MissionAnimation } from '@/components/MissionAnimation';
-import { PremiumFAQSection } from '@/components/ui';
+import { FaqDirectoryLink } from '@/components/FaqDirectoryLink';
 import Image from 'next/image';
 import { SsiapBooking } from './SsiapBooking';
 import { SsiapManualPreview, SsiapPracticeQuestion } from './SsiapDiscovery';
@@ -117,12 +116,10 @@ function Section({ id, eyebrow, title, intro, children, tone = 'cream', enhanced
 export function SsiapReferencePage({ sessions }: { sessions: any[] }) {
   const next = sessions[0];
   const includesSst = ssiapSessionFormula(next?.title) === 'ssiap-1-sst';
-  const faqSchema = ssiap1Faq.map(item => ({ '@type': 'Question', name: item.q, acceptedAnswer: { '@type': 'Answer', text: item.a } }));
 
   return <div className={`${styles.page} ${mos.page} relative overflow-x-clip`} data-ssiap-experience="mos-v4">
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeCourseJsonLd({ '@context': 'https://schema.org', '@graph': [
       { '@type': 'Course', name: 'Formation SSIAP 1 – Agent de sécurité incendie', description: 'Formation réglementaire SSIAP 1 de 67 heures à Puget-sur-Argens.', provider: { '@type': 'Organization', name: 'Intégrale Academy', telephone: '04 22 47 07 68' } },
-      { '@type': 'FAQPage', mainEntity: faqSchema },
       { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Accueil', item: '/' }, { '@type': 'ListItem', position: 2, name: 'Formations sécurité', item: '/formations-securite' }, { '@type': 'ListItem', position: 3, name: 'SSIAP 1', item: '/formations-securite/ssiap-1' }] },
     ] }, "/formations-securite/ssiap-1") }} />
 
@@ -214,8 +211,8 @@ export function SsiapReferencePage({ sessions }: { sessions: any[] }) {
       priceLabel: session.priceLabel, priceCents: session.priceCents,
     }))}>
     <section id="contact-ssiap" className={`${styles.contact} ${mos.adviser}`} aria-labelledby="ssiap-contact-title"><div className={`${mos.container} ${styles.contactGrid} ${mos.adviserGrid}`}>
-      <div><p className={styles.eyebrow}>Une question sur votre projet ?</p><h2 id="ssiap-contact-title" className={styles.sectionTitle}>Faites le premier pas<br /><em>vers votre futur métier</em></h2><p className={styles.intro}>Cassandre, responsable commercial, vous aide à vérifier vos prérequis, choisir votre session et trouver la solution de financement adaptée.</p><p className={styles.small}>Notre équipe vous accompagne pour choisir la formation adaptée à votre projet et vous aider à concrétiser votre avenir professionnel.</p><div className={styles.supportPills}><span>Choisir son parcours</span><span>Préparer son dossier</span><span>Étudier son financement</span></div><Link href="/ecole#equipe" className={styles.textLink}>Rencontrer les personnes qui vous accompagnent ↗</Link></div>
-      <div className={`${styles.contactCard} ${mos.adviserCard}`}><TeamPortrait person="cassandre" size={240} alt="Memoji de Cassandre, responsable commercial d’Intégrale Academy" className={styles.portrait} /><p className={styles.eyebrow}>Votre interlocutrice</p><h3>Cassandre</h3><p>Responsable commercial — Intégrale Academy</p><a className={styles.phone} href="tel:0422470768">04 22 47 07 68</a><CTA href={contactHref('rendez-vous téléphonique avec Cassandre')}>Réserver un rendez-vous téléphonique →</CTA><a className={styles.textLink} href="tel:0422470768">Appeler Cassandre, responsable commercial</a><small>Échange gratuit et sans engagement</small></div>
+      <div><p className={styles.eyebrow}>Une question sur votre projet ?</p><h2 id="ssiap-contact-title" className={styles.sectionTitle}>Faites le premier pas<br /><em>vers votre futur métier</em></h2><p className={styles.intro}>Cassandre, Responsable commercial, vous aide à vérifier vos prérequis, choisir votre session et trouver la solution de financement adaptée.</p><p className={styles.small}>Notre équipe vous accompagne pour choisir la formation adaptée à votre projet et vous aider à concrétiser votre avenir professionnel.</p><div className={styles.supportPills}><span>Choisir son parcours</span><span>Préparer son dossier</span><span>Étudier son financement</span></div><Link href="/ecole#equipe" className={styles.textLink}>Rencontrer les personnes qui vous accompagnent ↗</Link></div>
+      <div className={`${styles.contactCard} ${mos.adviserCard}`}><TeamPortrait person="cassandre" size={240} alt="Memoji de Cassandre, Responsable commercial d’Intégrale Academy" className={styles.portrait} /><p className={styles.eyebrow}>Votre interlocutrice</p><h3>Cassandre</h3><p>Responsable commercial — Intégrale Academy</p><a className={styles.phone} href="tel:0422470768">04 22 47 07 68</a><CTA href={contactHref('rendez-vous téléphonique avec Cassandre')}>Réserver un rendez-vous téléphonique →</CTA><a className={styles.textLink} href="tel:0422470768">Appeler Cassandre, Responsable commercial</a><small>Échange gratuit et sans engagement</small></div>
     </div></section>
     </SsiapBooking>
 
@@ -259,7 +256,7 @@ export function SsiapReferencePage({ sessions }: { sessions: any[] }) {
 
     <SsiapTestimonials />
 
-    <div id="faq-ssiap"><PremiumFAQSection theme="red" badge="FAQ SSIAP 1" title="Vos questions sur la formation SSIAP 1" description="Prérequis, examen, financement, validité et évolution : retrouvez les réponses essentielles avant votre inscription." items={ssiap1Faq} contactHref={contactHref('question SSIAP 1')} /></div>
+    <div id="faq-ssiap"><FaqDirectoryLink embedded theme="red" /></div>
 
 
 

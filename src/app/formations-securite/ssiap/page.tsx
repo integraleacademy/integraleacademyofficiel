@@ -1,4 +1,3 @@
-import { ssiapOverviewFaq } from '@/data/faq/security';
 import { TrainingReferenceCampus } from '@/components/TrainingReferenceLayout';
 import { CourseBrochureCard } from '@/components/CourseBrochureCard';
 import compactHeroStyles from '@/components/CompactHero.module.css';
@@ -6,7 +5,7 @@ import { ManualArtwork } from '@/components/ManualArtwork';
 import { ssiapArtwork, ssiapLeadershipArtwork } from '@/data/manualIllustrations';
 import { createPageMetadata, serializeJsonLd } from '@/lib/seo';
 import Link from 'next/link';
-import { PremiumFAQSection } from '@/components/ui';
+import { FaqDirectoryLink } from '@/components/FaqDirectoryLink';
 import { ssiapOfficialReference } from '@/data/ssiap-catalogue';
 
 export const metadata = createPageMetadata('/formations-securite/ssiap');
@@ -134,7 +133,7 @@ export default function SsiapCataloguePage() {
       </section>
 
       <TrainingReferenceCampus compact />
-      <PremiumFAQSection theme="red" badge="FAQ SSIAP" title="Comprendre les parcours SSIAP" description="Niveaux, prérequis, durée, recyclage et remise à niveau : les repères essentiels pour choisir sans vous tromper." items={ssiapOverviewFaq} contactHref="/contact?formation=ssiap&objet=question" />
+      <FaqDirectoryLink embedded theme="red" />
 
       <section className="bg-academy-bg px-4 pb-20 pt-8"><div className="page-container rounded-[2.4rem] border border-academy-line bg-[#FFFDF8] p-7 shadow-card sm:p-10 lg:flex lg:items-center lg:justify-between lg:gap-12 lg:p-12"><div><p className="text-xs font-black uppercase tracking-[.24em] text-red-700">Votre projet</p><h2 className="mt-4 max-w-3xl text-4xl font-black tracking-[-.05em] sm:text-5xl">Choisissez votre parcours SSIAP avec un conseiller</h2><p className="mt-5 max-w-2xl text-lg leading-8 text-academy-muted">Nous vérifions le niveau, les prérequis, les dates et les solutions de financement adaptées.</p></div><div className="mt-7 flex shrink-0 flex-col gap-3 lg:mt-0"><Link href="/contact?formation=ssiap&objet=rendez-vous" className="inline-flex min-h-12 items-center justify-center rounded-full bg-red-600 px-6 py-3 text-center text-sm font-black text-white transition hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-300/55">Réserver un rendez-vous téléphonique →</Link><a href="tel:0422470768" className="inline-flex min-h-12 items-center justify-center rounded-full border border-red-200 bg-white px-6 py-3 text-center text-sm font-black text-red-700 transition hover:border-red-400">04 22 47 07 68</a></div></div></section>
     </main>

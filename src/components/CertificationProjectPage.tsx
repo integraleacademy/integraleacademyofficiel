@@ -1,11 +1,10 @@
-import { certificationProjectFaq } from '@/data/certification-projects';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import type { CertificationProject } from '@/data/certification-projects';
 import { TrainingReferencePage, TrainingReferenceHero, TrainingReferenceSection as Section, TrainingReferenceMissions, TrainingReferenceCampus, TrainingReferenceContact, TrainingReferenceAction, TrainingReferenceMobileBar } from '@/components/TrainingReferenceLayout';
 import { TrainingSectionNavigation, type TrainingSectionNavigationItem } from '@/components/TrainingSectionNavigation';
 import { TrainingProgramExplorer } from '@/components/TrainingProgramExplorer';
-import { PremiumFAQSection } from '@/components/FAQ';
+import { FaqDirectoryLink } from '@/components/FaqDirectoryLink';
 import experience from './ApsExperience.module.css';
 import styles from './CertificationProjectPage.module.css';
 
@@ -87,7 +86,6 @@ export function CertificationProjectPage({ project }: { project: CertificationPr
     description: block.summary,
     delivery: `Évaluation prévue : ${project.assessments[index]}`,
   }));
-  const faq = certificationProjectFaq(project);
 
   return <article className={styles.project} data-certification-project={project.slug}>
     <TrainingReferencePage theme={theme}>
@@ -158,7 +156,7 @@ export function CertificationProjectPage({ project }: { project: CertificationPr
         <div className={styles.careers}><div><h3>Les emplois visés</h3><ul className={styles.jobs}>{project.jobs.map(job => <li key={job}><span aria-hidden="true">↗</span>{job}</li>)}</ul>{project.employmentNote && <p className={styles.employmentNote}>{project.employmentNote}</p>}</div><aside className={styles.sectors}><p className={styles.kicker}>Les environnements de travail</p><h3>Où exercer ?</h3><p>Dans les organisations qui conçoivent, intègrent ou exploitent des produits et services fondés sur l’IA.</p><ul><li>Éditeurs de logiciels et plateformes numériques</li><li>ESN et cabinets de conseil</li><li>Industrie, services et commerce</li><li>Finance et santé, selon les exigences du secteur</li><li>Administrations et organisations publiques</li></ul></aside></div>
       </Section>
 
-      <PremiumFAQSection id="faq-projet" badge={`Questions fréquentes · ${project.acronym}`} title={<>Des réponses pour<br /><em>préparer votre projet</em></>} description="Niveau, admission, durée et statut du projet : les informations à connaître avant d’aller plus loin." items={faq} theme={project.slug === 'cpiaa' ? 'blue' : 'violet'} contactHref={emailHref} contactLabel="Poser ma question" callLabel="Appeler l’équipe" />
+      <FaqDirectoryLink embedded id="faq-projet" theme={project.slug === 'cpiaa' ? 'blue' : 'violet'} />
 
       <div id="contact"><TrainingReferenceContact href="/contact#demande" title={`Parlons de votre projet ${project.acronym}`} description="Notre équipe vous renseigne sur les compétences visées, les prérequis et les modalités envisagées. Cet échange permet aussi de faire le point sur votre parcours." additionalActions={<a href={emailHref} className={styles.emailLink}>Nous écrire au sujet de {project.acronym} →</a>} /></div>
       <div className={styles.legal}><p>Organisme porteur : Intégrale Sécurité Formations · Nom commercial : Intégrale Academy.</p><p>Projet de certification — demande d’enregistrement au RNCP en préparation. Le niveau 7 demandé reste soumis à la décision de France compétences.</p></div>

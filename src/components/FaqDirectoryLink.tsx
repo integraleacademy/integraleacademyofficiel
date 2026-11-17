@@ -1,25 +1,36 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { faqHref, faqTopics } from '@/data/faq/topics';
+import type { FAQTheme } from './FAQ';
 import styles from './FaqDirectoryLink.module.css';
 
-export function FaqDirectoryLink({ embedded = false }: { embedded?: boolean }) {
-  const path = usePathname()?.replace(/\/+$/, '') || '/';
-  if (path === '/faq' || path === '/gestion' || path.startsWith('/admin/')) return null;
-  const topic = faqTopics.find(item => item.path === path);
-  const hasFaqSection = Boolean(topic && topic.id !== 'bts');
-  if (embedded !== hasFaqSection) return null;
+type Props = { embedded?: boolean; id?: string; theme?: FAQTheme };
 
-  const related = topic ?? (path.startsWith('/financements/') ? faqTopics.find(item => item.id === 'financements')
-    : path === '/dossiersbts' ? faqTopics.find(item => item.id === 'bts') : undefined);
-  const heading = related && related.id !== 'general' ? related.label : 'Questions fréquentes';
-  return <aside className={embedded ? styles.embedded : styles.section} aria-label="Accès aux questions fréquentes">
-    <Link className={styles.card} href={faqHref(related?.id === 'general' ? undefined : related?.id)}>
-      <span className={styles.icon} aria-hidden="true">?</span>
-      <span className={styles.copy}><strong>{heading}</strong><span>Consulter la FAQ {related && related.id !== 'general' ? 'de cette rubrique' : 'par formation'}</span></span>
-      <span className={styles.arrow} aria-hidden="true">→</span>
-    </Link>
+export function FaqDirectoryLink({ embedded = false, id, theme = 'gold' }: Props) {
+  const path = usePathname()?.replace(/\/+$/, '') || '/';
+  if (path === '/faq' || path === '/gestion' || path.startsWith('/admin')) return null;
+  const topic = faqTopics.find(item => item.path === path);
+  if (!embedded && topic && topic.id !== 'bts') return null;
+
+  const related = topic?.id ?? (path.startsWith('/financements/') ? 'financements' : path === '/dossiersbts' ? 'bts' : undefined);
+  const filter = related === 'general' ? undefined : related;
+  const label = faqTopics.find(item => item.id === filter)?.label;
+
+  return <aside id={id} className={styles.section} data-entry-theme={theme} aria-label="Accès aux questions fréquentes">
+    <div className={styles.inner}>
+      <div className={styles.artwork}>
+        <Image src="/images/illustrations-2026/bts-tablette.webp" width={360} height={240} sizes="(max-width: 650px) 100vw, 240px" alt="" />
+      </div>
+      <div className={styles.copy}>
+        <h2 className={styles.title}>Questions <em>fréquentes</em></h2>
+        <p>{label ? <>Retrouvez les réponses concernant <strong>{label}</strong>.</> : 'Inscription, financement, déroulement des cours… Retrouvez les réponses qui vous concernent.'}</p>
+      </div>
+      <Link href={faqHref(filter)} className={styles.action} aria-label={label ? `Consulter la FAQ · ${label}` : 'Consulter la FAQ'}>
+        Consulter la FAQ <span aria-hidden="true">→</span>
+      </Link>
+    </div>
   </aside>;
 }

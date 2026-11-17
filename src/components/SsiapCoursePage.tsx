@@ -9,7 +9,7 @@ import { IntegraleWelcomePack } from '@/components/IntegraleWelcomePack';
 import { serializeCourseJsonLd } from '@/lib/seo';
 import Link from 'next/link';
 
-import { PremiumFAQSection } from '@/components/ui';
+import { FaqDirectoryLink } from '@/components/FaqDirectoryLink';
 import { TrainingHeroSessionCard, trainingRegistrationUrl } from '@/components/TrainingHero';
 import { TrainingSectionNavigation } from '@/components/TrainingSectionNavigation';
 import { TrainingDatesPricingSection, type TrainingDatesPricingSession } from '@/components/TrainingDatesPricingSection';
@@ -405,28 +405,21 @@ export function SsiapCoursePage({ config, sessions = [], datesSection }: {
       {heroKey && <TrainingCourseTestimonials category={config.label} />}
 
       <div id="faq-ssiap">
-        <PremiumFAQSection
-          badge={`FAQ ${config.label}`}
-          title={`Vos questions sur ${config.label}`}
-          description="Prérequis, durée, programme, validation et maintien des acquis : les réponses essentielles avant votre inscription."
-          items={config.faq}
-          contactHref={contactHref(config, 'question')}
-          theme="red"
-        />
+        <FaqDirectoryLink embedded theme="red" />
       </div>
 
       {heroKey ? <>
         <TrainingReferenceContact
           title="Faites vérifier votre parcours avant de vous inscrire"
-          description="Cassandre, responsable commercial, vous aide à choisir le bon niveau, contrôler les justificatifs et préparer votre financement."
+          description="Cassandre, Responsable commercial, vous aide à choisir le bon niveau, contrôler les justificatifs et préparer votre financement."
           href={contactHref(config, 'rendez-vous téléphonique avec Cassandre')}
         />
         <TrainingReferenceMobileBar label="Recevoir les dates" />
       </> : <>
       <section className="bg-academy-bg px-4 pb-20 pt-8">
         <div className="page-container overflow-hidden rounded-[2.4rem] border border-academy-line bg-[#FFFDF8] p-7 shadow-card sm:p-10 lg:flex lg:items-center lg:justify-between lg:gap-12 lg:p-12">
-          <div><Eyebrow>Votre projet SSIAP</Eyebrow><h2 className="mt-4 max-w-3xl text-4xl font-black tracking-[-.05em] sm:text-5xl">Faites vérifier votre parcours avant de vous inscrire</h2><p className="mt-5 max-w-2xl text-lg leading-8 text-academy-muted">Cassandre, responsable commercial, vous aide à choisir le bon niveau, contrôler les justificatifs et préparer votre financement.</p></div>
-          <div className="mt-7 flex shrink-0 flex-col gap-3 lg:mt-0"><CTA href={contactHref(config, 'rendez-vous téléphonique avec Cassandre')}>Réserver un rendez-vous téléphonique →</CTA><CTA href="tel:0422470768" variant="light">Appeler Cassandre, responsable commercial</CTA></div>
+          <div><Eyebrow>Votre projet SSIAP</Eyebrow><h2 className="mt-4 max-w-3xl text-4xl font-black tracking-[-.05em] sm:text-5xl">Faites vérifier votre parcours avant de vous inscrire</h2><p className="mt-5 max-w-2xl text-lg leading-8 text-academy-muted">Cassandre, Responsable commercial, vous aide à choisir le bon niveau, contrôler les justificatifs et préparer votre financement.</p></div>
+          <div className="mt-7 flex shrink-0 flex-col gap-3 lg:mt-0"><CTA href={contactHref(config, 'rendez-vous téléphonique avec Cassandre')}>Réserver un rendez-vous téléphonique →</CTA><CTA href="tel:0422470768" variant="light">Appeler Cassandre, Responsable commercial</CTA></div>
         </div>
       </section>
 

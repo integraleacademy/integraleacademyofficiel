@@ -13,7 +13,7 @@ export function ProjectTrainingPopup() {
   const pathname = usePathname();
   const isFinancingPage = pathname?.replace(/\/+$/, '') === '/financements';
   const isBts = pathname?.startsWith('/bts');
-  const contactName = isBts ? 'Aurélie, responsable des BTS' : 'Cassandre, responsable commercial';
+  const contactName = isBts ? 'Aurélie, Responsable des BTS' : 'Cassandre, Responsable commercial';
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -58,7 +58,7 @@ export function ProjectTrainingPopup() {
         <div className="flex items-start gap-4 pr-10">
           <div
             className="relative grid h-16 w-16 shrink-0 place-items-center overflow-hidden rounded-full bg-gradient-to-br from-academy-gold via-yellow-200 to-white text-xl font-black text-academy-gold-text shadow-gold ring-4 ring-white"
-            aria-label={isBts ? 'Aurélie BAYARD-CHAUSSEZ, responsable des BTS' : 'Cassandre M., responsable commercial d’Intégrale Academy'}
+            aria-label={isBts ? 'Aurélie BAYARD-CHAUSSEZ, Responsable des BTS' : 'Cassandre M., Responsable commercial d’Intégrale Academy'}
           >
             <TeamPortrait person={isBts ? 'aurelie' : 'cassandre'} size={64} className="h-full w-full" />
           </div>
@@ -74,8 +74,8 @@ export function ProjectTrainingPopup() {
 
         <p className="mt-4 text-sm leading-6 text-stone-600">
           {isBts
-            ? 'Aurélie BAYARD-CHAUSSEZ, chargée des relations clients et responsable des BTS, répond à vos questions sur la candidature et l’alternance.'
-            : 'Réservez un rendez-vous téléphonique avec Cassandre, responsable commercial d’Intégrale Academy.'}
+            ? 'Aurélie BAYARD-CHAUSSEZ, chargée des relations clients et Responsable des BTS, répond à vos questions sur la candidature et l’alternance.'
+            : 'Réservez un rendez-vous téléphonique avec Cassandre, Responsable commercial d’Intégrale Academy.'}
         </p>
 
         {isBts && (

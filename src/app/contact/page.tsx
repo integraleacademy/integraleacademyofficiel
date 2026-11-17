@@ -15,7 +15,7 @@ import styles from './contact.module.css';
 export const metadata = createPageMetadata('/contact');
 
 const email = 'ecole@integraleacademy.com';
-const phoneHref = 'tel:+33422470768';
+const phoneHref = contact.phoneHref;
 const emailHref = `mailto:${email}?subject=Contact%20site%20internet`;
 
 const contactChapters = [
@@ -98,9 +98,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<Rec
         </div>
       </section>
 
-      <SsiapContactChoice params={params} />
-
-      <ContactExperience initialInterest={initialInterest} requestLinks={{ general: generalHref, security: hasSecurityFormation ? requestHref : generalHref, vtc: informationRequestHref({ ...params, formation: 'vtc' }) }} hours={contact.hours} />
+      <ContactExperience securityChoice={<SsiapContactChoice params={params} />} initialInterest={initialInterest} requestLinks={{ general: generalHref, security: hasSecurityFormation ? requestHref : generalHref, vtc: informationRequestHref({ ...params, formation: 'vtc' }) }} hours={contact.hours} />
 
       <section id="venir" className={`${school.section} ${school.campusSection}`} aria-labelledby="visit-title">
         <div className={school.container}>

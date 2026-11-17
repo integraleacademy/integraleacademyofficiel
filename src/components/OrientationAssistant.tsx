@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import { INFORMATION_REQUEST_URL } from '@/lib/contact-request';
 import { NextSessionSummary } from './NextSessionSummary';
 import { nextSessionForLocation, sessionMatchesLocation } from '@/lib/session-location-filter';
 import { planningSsiapCourse } from '@/lib/planning-ssiap';
@@ -35,7 +36,7 @@ type AssistantFormation = {
 };
 
 const calendlyDirigeantUrl = 'https://calendly.com/integraleacademy/dirigeant';
-const quoteRequestUrl = 'https://assistance-alw9.onrender.com/demande-informations-formations';
+const quoteRequestUrl = INFORMATION_REQUEST_URL;
 const apsFormation = securityFormations.find(formation => formation.slug === '/formations-securite/aps');
 
 const formations: AssistantFormation[] = [
@@ -247,12 +248,12 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
             <span className={styles.choiceDescription}>Durée, financement et <br />prochaines sessions.</span>
             <span className={styles.choiceAction}>Consulter ma formation <AssistantIcon name="arrow" /></span>
           </button>
-          <button type="button" onClick={() => { setIsExpanded(true); setStep(3); }} className={`${styles.choice} ${styles.enroll}`}>
+          <a href={INFORMATION_REQUEST_URL} className={`${styles.choice} ${styles.enroll}`}>
             <span className={styles.optionIcon}><AssistantIcon name="calendar" /></span>
             <span className={styles.choiceTitle}>Préparer mon inscription</span>
             <span className={styles.choiceDescription}>Être accompagné pour <br />rejoindre la formation.</span>
-            <span className={styles.choiceAction}>Préparer mon rendez-vous téléphonique <AssistantIcon name="arrow" /></span>
-          </button>
+            <span className={styles.choiceAction}>Accéder au formulaire <AssistantIcon name="arrow" /></span>
+          </a>
         </div>}
 
 
@@ -364,7 +365,7 @@ function FormationAssistantResult({ formation, sessions, hideInfoAction, onNavig
       <ul>{details.keyPoints.map(point => <li key={point}><AssistantIcon name="check" />{point}</li>)}</ul>
     </details>
     <div className={styles.actions}>
-      <Link href={`/contact?formation=${key}&type=inscription`} className={styles.secondaryAction}>Préparer mon inscription <AssistantIcon name="arrow" /></Link>
+      <a href={INFORMATION_REQUEST_URL} className={styles.secondaryAction}>Préparer mon inscription <AssistantIcon name="arrow" /></a>
       {!hideInfoAction && <Link href={formation.infoUrl} className={styles.secondaryAction}>Découvrir la formation</Link>}
     </div>
   </div>;

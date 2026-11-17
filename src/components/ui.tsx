@@ -299,7 +299,6 @@ export function FormationCard({title,desc,href,tags=[],illustration}:{title:stri
 export function FeatureCard({title,children}:{title:string;children:React.ReactNode}){return <Card><h3 className="text-lg font-black">{title}</h3><p className="mt-3 text-sm leading-6 text-academy-muted">{children}</p></Card>}
 export function StatCard({value,label}:{value:string;label:string}){return <div className="rounded-3xl border border-academy-line bg-academy-surface p-6 text-academy-ink shadow-card dark:border-white/10 dark:bg-academy-ink dark:text-white"><div className="text-3xl font-black text-academy-gold-strong dark:text-academy-gold">{value}</div><p className="mt-2 text-sm font-medium text-academy-muted dark:text-stone-200">{label}</p></div>}
 // All FAQ variants use the APS reference component.
-export { FAQ, PremiumFAQSection } from '@/components/FAQ';
 
 export function LocationCard({name,address,detail,tags}:{name:string;address:string;detail:string;tags:string[]}) {
   return <FeatureCard title={name}>

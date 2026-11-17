@@ -467,3 +467,5 @@
   .heroStats { padding: 16px 0; }
   .heroStats strong { font-size: 28px; }
 }
+
+.brochureWrap { width: min(560px, calc(100% - 2 * var(--site-gutter, 20px))); margin: 0 auto clamp(32px, 5vw, 64px); }

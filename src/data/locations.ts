@@ -15,6 +15,7 @@ export const locations: Location[] = [
 
 export const contactInfo = {
   phone: '04 22 47 07 68',
+  phoneHref: 'tel:+33422470768',
   email: 'Contact par formulaire',
   whatsapp: '07 44 30 45 27',
   whatsappHref: 'https://wa.me/33744304527',

@@ -44,7 +44,7 @@ export function HomeContactCTA() {
             <p className={styles.cardEyebrow}>Un contact, un vrai accompagnement</p>
             <div className={styles.person}>
               <div className={styles.portraitFrame}>
-                <TeamPortrait person="cassandre" size={120} sizes="(max-width: 600px) 88px, 112px" alt="Cassandre, responsable commercial" className={styles.portrait} />
+                <TeamPortrait person="cassandre" size={120} sizes="(max-width: 600px) 88px, 112px" alt="Cassandre, Responsable commercial" className={styles.portrait} />
               </div>
               <div>
                 <h3>Cassandre</h3>
@@ -64,7 +64,7 @@ export function HomeContactCTA() {
               <p className={styles.reassurance}><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m4.5 10.4 3.2 3.1 7.8-8" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" /></svg> Gratuit <span aria-hidden="true">·</span> Sans engagement</p>
             </div>
 
-            <a href="tel:+33422470768" className={styles.phoneLink} aria-label="Appeler Cassandre, responsable commercial, au 04 22 47 07 68">
+            <a href="tel:+33422470768" className={styles.phoneLink} aria-label="Appeler Cassandre, Responsable commercial, au 04 22 47 07 68">
               <span className={styles.phoneIcon}><PhoneIcon /></span>
               <span><small>Vous préférez appeler ?</small><strong>04 22 47 07 68</strong></span>
               <ArrowIcon />

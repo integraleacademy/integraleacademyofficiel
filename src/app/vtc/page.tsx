@@ -1,4 +1,3 @@
-import { vtcFaq } from '@/data/faq/practical';
 import { CourseTeamBanner } from '@/components/CourseTeamBanner';
 import { CourseBrochureCard } from '@/components/CourseBrochureCard';
 import { TeamPortrait } from '@/components/TeamPortrait';
@@ -11,7 +10,7 @@ import { vtcArtwork, vtcPracticeArtwork } from '@/data/manualIllustrations';
 import { VtcAutonomousEnrollmentBanner } from '@/components/VtcAutonomousEnrollmentBanner';
 import { TrainingIllustratedCards, type TrainingIllustratedCard } from '@/components/TrainingIllustratedCards';
 import { TrainingSectionNavigation } from '@/components/TrainingSectionNavigation';
-import { PremiumFAQSection } from '@/components/ui';
+import { FaqDirectoryLink } from '@/components/FaqDirectoryLink';
 import { formatVtcDeadline, formatVtcExamDate, getUpcomingVtcExamSessions, vtcCourse } from '@/data/vtc';
 import styles from './vtc.module.css';
 
@@ -297,12 +296,12 @@ export default function VtcPage() {
     <section className={styles.contact}>
       <div className={styles.container}>
         <div className={styles.contactCard}>
-          <div><span>UNE QUESTION SUR VOTRE PROJET ?</span><h2>Faites le premier pas<br/>vers votre <em>future activité</em></h2><p>Cassandre, responsable commercial, vérifie votre éligibilité, vous explique le calendrier et vous aide à choisir le financement adapté.</p></div>
-          <aside><TeamPortrait person="cassandre" size={96} alt="Cassandre, responsable commercial d’Intégrale Academy"/><div><span>VOTRE CONSEILLÈRE</span><h3>Cassandre</h3><p>Responsable commercial</p></div><a href="tel:0422470768">04 22 47 07 68</a><CTA href={contactHref('Être rappelé au sujet de la formation VTC')}>Réserver un échange</CTA></aside>
+          <div><span>UNE QUESTION SUR VOTRE PROJET ?</span><h2>Faites le premier pas<br/>vers votre <em>future activité</em></h2><p>Cassandre, Responsable commercial, vérifie votre éligibilité, vous explique le calendrier et vous aide à choisir le financement adapté.</p></div>
+          <aside><TeamPortrait person="cassandre" size={96} alt="Cassandre, Responsable commercial d’Intégrale Academy"/><div><span>VOTRE CONSEILLÈRE</span><h3>Cassandre</h3><p>Responsable commercial</p></div><a href="tel:0422470768">04 22 47 07 68</a><CTA href={contactHref('Être rappelé au sujet de la formation VTC')}>Réserver un échange</CTA></aside>
         </div>
       </div>
     </section>
 
-    <div id="faq-vtc"><PremiumFAQSection theme="violet" badge="11 — FAQ VTC" title="Vos questions avant de prendre le volant" description="Tarif, financement, prérequis, examen et organisation : toutes les réponses utiles avant de démarrer." items={vtcFaq} contactHref={contactHref('Question sur la formation VTC')} contactLabel="Poser ma question" /></div>
+    <div id="faq-vtc"><FaqDirectoryLink embedded theme="violet" /></div>
   </main>;
 }

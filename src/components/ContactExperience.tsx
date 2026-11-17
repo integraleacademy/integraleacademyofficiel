@@ -1,9 +1,10 @@
 'use client';
 
+import { contactInfo } from '@/data/locations';
 import { TeamPortrait } from '@/components/TeamPortrait';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRef, useState, type KeyboardEvent } from 'react';
+import { useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
 import school from '@/app/ecole/ecole.module.css';
 import styles from './ContactExperience.module.css';
 
@@ -17,8 +18,8 @@ const interests = [
 ] as const;
 
 const advisers = {
-  security: { name: 'Cassandre', role: 'responsable commercial', phone: '04 87 83 06 16', tel: 'tel:+33487830616' },
-  bts: { name: 'Aurélie', role: 'responsable des BTS', phone: '04 87 83 06 15', tel: 'tel:+33487830615' },
+  security: { name: 'Cassandre', role: 'Responsable commercial' },
+  bts: { name: 'Aurélie', role: 'Responsable des BTS' },
 } as const;
 
 const steps = [
@@ -47,7 +48,8 @@ function Avatar({ bts, large = false }: { bts: boolean; large?: boolean }) {
   return <span className={`${styles.avatar} ${large ? styles.largeAvatar : ''}`} aria-hidden="true"><TeamPortrait person={bts ? 'aurelie' : 'cassandre'} size={large ? 176 : 48} sizes={large ? '176px' : '48px'} /></span>;
 }
 
-export function ContactExperience({ initialInterest = 'undecided', requestLinks, hours }: {
+export function ContactExperience({ initialInterest = 'undecided', requestLinks, hours, securityChoice }: {
+  securityChoice?: ReactNode;
   initialInterest?: ContactInterest;
   requestLinks: { general: string; security: string; vtc: string };
   hours: string;
@@ -59,7 +61,8 @@ export function ContactExperience({ initialInterest = 'undecided', requestLinks,
   const selected = interests.find(item => item.id === interest) ?? interests[3];
   const isBts = interest === 'bts';
   const adviser = isBts ? advisers.bts : advisers.security;
-  const mailHref = isBts ? 'mailto:aurelie@integraleacademy.com?subject=Question%20sur%20un%20BTS' : 'mailto:ecole@integraleacademy.com?subject=Mon%20projet%20de%20formation';
+  const visibleAdvisers = interest === 'undecided' ? [advisers.security, advisers.bts] : [adviser];
+  const schoolEmailHref = 'mailto:ecole@integraleacademy.com?subject=Mon%20projet%20de%20formation';
   const requestHref = interest === 'vtc' ? requestLinks.vtc : interest === 'security' ? requestLinks.security : requestLinks.general;
 
   function navigateTabs(event: KeyboardEvent<HTMLButtonElement>, index: number, total: number, select: (index: number) => void, refs: (HTMLButtonElement | null)[]) {
@@ -90,9 +93,9 @@ export function ContactExperience({ initialInterest = 'undecided', requestLinks,
     </div>
 
     <div id="contact-interest-panel" role="tabpanel" tabIndex={0} aria-labelledby={`contact-interest-${interest}`}>
+      {interest === 'security' && securityChoice}
       <div className={`${school.container} ${styles.journey}`} data-contact-reveal>
         <div className={styles.journeyCopy}>
-          <p className={styles.chapterLabel}>Un premier échange gratuit et sans engagement</p>
           <div className={styles.steps} role="tablist" aria-label="Les étapes de votre échange" aria-orientation="vertical">
             {steps.map((item, index) => <button type="button" role="tab" key={item.title} id={`contact-step-${index}`} aria-selected={step === index} aria-controls="contact-phone-panel" tabIndex={step === index ? 0 : -1} ref={element => { stepRefs.current[index] = element; }} onClick={() => setStep(index)} onKeyDown={event => navigateTabs(event, index, steps.length, setStep, stepRefs.current)}>
               <span className={styles.stepNumber}>0{index + 1}<Icon name="arrow" /></span>
@@ -100,9 +103,9 @@ export function ContactExperience({ initialInterest = 'undecided', requestLinks,
             </button>)}
           </div>
           <div className={styles.adviserLinks} aria-label="Parler avec notre équipe">
-            {Object.entries(advisers).map(([key, person]) => (
-              <a key={key} href={person.tel}>
-                <Avatar bts={key === 'bts'} />
+            {visibleAdvisers.map(person => (
+              <a key={person.name} href={contactInfo.phoneHref} aria-label={`Parler avec ${person.name}, ${person.role}, via le standard`}>
+                <Avatar bts={person === advisers.bts} />
                 <span><strong>Parler avec {person.name}</strong><small>{person.role}</small></span>
                 <Icon name="phone" />
               </a>
@@ -116,6 +119,7 @@ export function ContactExperience({ initialInterest = 'undecided', requestLinks,
           <div className={styles.phone}>
             <div className={styles.phoneStatus} aria-hidden="true"><span>9:41</span><i /><span>▰</span></div>
             <div className={styles.phoneHeader}><Image src="/images/academy-a-icon.svg" alt="" width={35} height={35} /><div><strong>Intégrale Academy</strong><span>Votre projet de formation</span></div></div>
+            <div className={styles.exchangeNote}><Icon name="check" /><span>Premier échange <strong>gratuit et sans engagement</strong></span></div>
             <div className={styles.phoneScreen} key={`${interest}-${step}`}>
               <span className={styles.screenLabel}>{['Faisons connaissance', 'Une équipe pour vous guider', 'Construisons la suite'][step]}</span>
               {step < 2 && <div className={styles.userBubble}>{selected.message}</div>}
@@ -153,14 +157,14 @@ export function ContactExperience({ initialInterest = 'undecided', requestLinks,
             <span className={styles.projectBadge}><Icon name={selected.icon} />{selected.label}</span>
             <h3>{selected.next}</h3>
             <p>{selected.description}</p>
-            <a href={isBts ? mailHref : requestHref} className={`${school.button} ${styles.primaryAction}`}>
-              {isBts ? 'Écrire à Aurélie, responsable des BTS' : 'Parler de mon projet'}<Icon name="arrow" />
+            <a href={isBts ? contactInfo.phoneHref : requestHref} className={`${school.button} ${styles.primaryAction}`}>
+              {isBts ? 'Parler avec Aurélie, Responsable des BTS' : 'Parler de mon projet'}<Icon name="arrow" />
             </a>
             <div className={styles.directContact}>
-              <a href={adviser.tel} aria-label={`Appeler ${adviser.name}, ${adviser.role}, au ${adviser.phone}`}>
-                <Icon name="phone" /><span><small>Ligne directe</small>{adviser.phone}</span><Icon name="diagonal" />
+              <a href={contactInfo.phoneHref} aria-label={`Appeler le standard au ${contactInfo.phone}`}>
+                <Icon name="phone" /><span><small>Standard Intégrale Academy</small>{contactInfo.phone}</span><Icon name="diagonal" />
               </a>
-              {!isBts && <a href={mailHref} aria-label="Écrire à l’équipe par e-mail" className={styles.mailButton}><Icon name="mail" /></a>}
+              {!isBts && <a href={schoolEmailHref} aria-label="Écrire à l’équipe par e-mail" className={styles.mailButton}><Icon name="mail" /></a>}
             </div>
             <p className={styles.hours}>{hours}</p>
           </div>

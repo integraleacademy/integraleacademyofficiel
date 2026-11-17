@@ -9,7 +9,7 @@ function faqNodes(path) {
   const result = [];
   const source = ts.createSourceFile(path, read(path), ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
   function visit(node) {
-    if ((ts.isJsxSelfClosingElement(node) || ts.isJsxOpeningElement(node)) && node.tagName.getText(source) === 'PremiumFAQSection') {
+    if ((ts.isJsxSelfClosingElement(node) || ts.isJsxOpeningElement(node)) && node.tagName.getText(source) === 'FaqDirectoryLink' && node.attributes.properties.some(a => a.name?.text === 'embedded')) {
       result.push({ node, source, theme: node.attributes.properties.find(a => ts.isJsxAttribute(a) && a.name.getText(source) === 'theme') });
     }
     ts.forEachChild(node, visit);
@@ -18,7 +18,7 @@ function faqNodes(path) {
   return result;
 }
 
-test('All site FAQ sections choose their page palette explicitly', () => {
+test('Contextual links to the FAQ use the training palette', () => {
   let count = 0;
   for (const path of files('src')) {
     for (const { theme } of faqNodes(path)) {
@@ -48,7 +48,7 @@ test('Institutional pages use gold; each training retains its own colour', () =>
     'src/app/bts/[slug]/page.tsx': 'gold',
     ...Object.fromEntries(['Mos', 'Mco', 'Ndrc', 'Ci', 'Pi', 'Cg'].map(course => [`src/components/Bts${course}ReferencePage.tsx`, 'bts'])),
   };
-  const directory = read('src/app/faq/page.tsx');
+  const directory = read('src/app/faq/FaqDirectory.tsx');
   assert.match(directory, /<FAQ\b[^>]*theme="gold"/);
   for (const [path, expectedTheme] of Object.entries(expected)) {
     const nodes = faqNodes(path);
@@ -59,7 +59,7 @@ test('Institutional pages use gold; each training retains its own colour', () =>
 
 test('New FAQ defaults and keyboard focus cannot force blue onto every page', () => {
   const component = read('src/components/FAQ.tsx');
-  assert.equal(component.match(/theme = 'gold'/g)?.length, 2);
+  assert.equal(component.match(/theme = 'gold'/g)?.length, 1);
   assert.doesNotMatch(component, /theme = 'blue'/);
   assert.match(component, /data-faq-list data-faq-theme=\{theme\}/);
   const css = read('src/components/FAQ.module.css');
