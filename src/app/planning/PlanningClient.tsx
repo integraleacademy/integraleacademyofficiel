@@ -289,7 +289,7 @@ function SessionCard({
         <div className="flex items-center gap-3 lg:block">
           <div className="planning-neutral-action grid h-[4.6rem] w-[4.6rem] shrink-0 place-items-center rounded-2xl text-center">
             <span>
-              {isVtcExam && <span className="mb-1 block text-[9px] font-bold">Semaine du</span>}
+              {isVtcExam && <span className="mb-1 block text-[9px] font-bold">{session.endDate ? 'Semaine du' : 'Inscription'}</span>}
               <span className="block text-2xl font-black leading-none">{date.day}</span>
               <span className="mt-1 block text-[10px] font-black uppercase tracking-[.12em] text-white/58">{date.month}</span>
             </span>

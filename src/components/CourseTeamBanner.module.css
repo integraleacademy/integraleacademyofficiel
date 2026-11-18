@@ -114,3 +114,8 @@
   .name { font-size: .9rem; }
   .role { font-size: .78rem; }
 }
+@media (max-width: 360px) {
+  .inner { width: calc(100% - .75rem); }
+  .people { column-gap: .3rem; }
+  .role { font-size: .71rem; }
+}
