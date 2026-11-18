@@ -34,7 +34,7 @@
 .page a { text-decoration: none; }
 .page a:focus-visible, .page summary:focus-visible { outline: 3px solid var(--gold); outline-offset: 5px; }
 .page section[id], .diagnosticCard[id] { scroll-margin-top: calc(var(--site-header-height) + 100px); }
-.container { position: relative; width: min(1240px, calc(100% - 112px)); margin: 0 auto; }
+.container { position: relative; width: var(--site-content-width); margin: 0 auto; }
 .hero { position: relative; isolation: isolate; overflow: hidden; background: var(--cream); }
 .honeycomb { position: absolute; z-index: -1; inset: 0; background: radial-gradient(circle at 88% 15%, transparent 130px, #ffffff55 132px, #ffffff55 168px, transparent 170px), radial-gradient(circle at 15% 92%, transparent 180px, #ffffff55 182px, #ffffff55 226px, transparent 228px); opacity: .7; pointer-events: none; }
 .hero::before { content: ''; position: absolute; width: 1000px; height: 1000px; left: -380px; top: -470px; background: var(--paper); border-radius: 50%; z-index: -1; opacity: .75; }
@@ -96,7 +96,7 @@
 .solutionTop { display: flex; align-items: center; justify-content: space-between; color: var(--device); }
 .solutionTop > svg { width: 32px; height: 32px; }
 .solutionLabel { font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
-.solutionCard h3 { min-height: 96px; margin-top: 23px; font-family: inherit; font-weight: 800; letter-spacing: -.025em; font-size: 27px; line-height: 1.2; }
+.solutionCard h3 { min-height: 2.45em; margin-top: 18px; font-family: inherit; font-weight: 800; letter-spacing: -.025em; font-size: 27px; line-height: 1.2; }
 .solutionFigure { min-height: 135px; border-bottom: 1px solid color-mix(in srgb,var(--device) 20%,transparent); padding-bottom: 24px; }
 .solutionFigure strong { color: var(--device); font-family: inherit; font-weight: 900; letter-spacing: -.04em; font-size: 57px; line-height: 1; }
 .solutionFigure p { max-width: 265px; font-size: 13px; line-height: 1.7; color: var(--muted); margin-top: 8px; }
@@ -260,7 +260,7 @@
   .visualCard { left: 0; bottom: 0; padding: 15px; }
   .visualFootnote { display: none; }
   .sectionNav > div { gap: 22px; }
-  .solutionCard { padding: 22px; }.solutionCard h3 { font-size: 25px; min-height: 112px; }
+  .solutionCard { padding: 22px; }.solutionCard h3 { font-size: 25px; min-height: 3.6em; }
   .detailHero { gap: 40px; }.qualificationGrid { gap: 12px; }.qualificationGrid article { padding: 17px; }
   .sessionNote { flex-wrap: wrap; }.sessionNote p { flex: 1; }.sessionNote a { width: 100%; margin-left: 38px; justify-content: flex-start; }
   .faqLayout { gap: 45px; }.diagnosticCard { padding: 30px; }
@@ -399,12 +399,12 @@
 .brochureCard > .primaryButton { margin-top: 22px; }
 .contactsSection { padding: 65px 0 75px; background: var(--cream); }
 .contactsGrid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 23px; margin-top: 36px; }
-.contactCard { min-width: 0; padding: 26px; background: var(--white); border: 1px solid var(--line); border-radius: 18px; }
+.contactCard { display: flex; flex-direction: column; min-width: 0; padding: 26px; background: var(--white); border: 1px solid var(--line); border-radius: 18px; }
 .contactCard .contactPerson { align-items: flex-start; padding: 0 0 22px; min-height: 100px; }
 .contactCard .contactAvatar { width: 44px; height: 44px; font-size: 16px; }
 .contactCard h3 { font-size: 17px; font-weight: 850; line-height: 1.3; letter-spacing: -.025em; }
 .contactCard .contactPerson span { margin-top: 7px; }
-.contactCard .primaryButton { width: 100%; font-size: 13px; padding: 12px 14px; }
+.contactCard .primaryButton { margin-top: auto; width: 100%; font-size: 13px; padding: 12px 14px; }
 .contactFooter { display: flex; flex-wrap: wrap; gap: 15px 30px; align-items: center; margin-top: 30px; font-size: 12px; color: var(--muted); }
 .contactFooter a { color: var(--ink); font-weight: 650; }
 @media (max-width: 1100px) {
@@ -468,4 +468,13 @@
   .heroStats strong { font-size: 28px; }
 }
 
-.brochureWrap { width: min(560px, calc(100% - 2 * var(--site-gutter, 20px))); margin: 0 auto clamp(32px, 5vw, 64px); }
+.brochureWrap { width: var(--site-content-width); margin: clamp(2.5rem, 5vw, 4.5rem) auto; scroll-margin-top: calc(var(--site-header-height) + var(--section-nav-height, 70px) + 1rem); }
+.brochurePanel { display: grid; grid-template-columns: minmax(0, .7fr) minmax(0, 1.3fr); gap: clamp(1.4rem, 4vw, 4rem); align-items: center; padding: clamp(1.25rem, 3vw, 3rem); background: var(--cream); border: 1px solid var(--line); border-radius: 1.4rem; }
+.coverLink { display: block; width: 100%; max-width: 23rem; margin-inline: auto; }
+.coverLink img { display: block; width: 100%; height: auto; border-radius: .6rem; }
+.brochureText h2 { font-size: clamp(1.65rem, 3vw, 2.65rem); }
+.brochureText p { max-width: 48ch; margin: .8rem 0 1.25rem; line-height: 1.6; color: var(--muted); }
+@media (max-width: 620px) {
+  .brochurePanel { grid-template-columns: minmax(0, 1fr); }
+  .coverLink { max-width: 15rem; }
+}

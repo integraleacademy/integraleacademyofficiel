@@ -1,6 +1,18 @@
+import { CampusSection } from '@/components/CampusSection';
+import { CatalogueHero } from '@/components/CatalogueHero';
 import { createPageMetadata } from '@/lib/seo';
-import { Hero, LocationCard, SectionTitle } from '@/components/ui';
-import { contact } from '@/data/site';
-import { PARIS_TRAINING_SUMMARY } from '@/data/locations';
-export const metadata=createPageMetadata('/centres');
-export default function Page(){return <><Hero badge="Centres" title="Nos centres de formation" subtitle={`Retrouvez nos formations à Puget-sur-Argens, sur la Côte d’Azur. ${PARIS_TRAINING_SUMMARY}`}/><section className="page-container py-12"><SectionTitle title="Implantations"/><div className="grid gap-5 md:grid-cols-2">{contact.locations.map(l=><LocationCard key={l.name} {...l}/>)}</div></section></>}
+
+export const metadata = createPageMetadata('/centres');
+
+export default function CentresPage() {
+  return <>
+    <CatalogueHero
+      id="centres-title"
+      title={<>Nos centres sur la Côte d’Azur <em>et à Paris</em></>}
+      description="Retrouvez les formations, les dates et les informations d’accès de chaque centre. Notre école principale se situe à Puget-sur-Argens. À Paris, nous vous accueillons pour le DESP en formation initiale ou par la VAE."
+      artwork={{ src: '/images/campus/accueil-centre.webp', alt: 'L’accueil du centre Intégrale Academy à Puget-sur-Argens.' }}
+      actions={[{ label: 'Centre Côte d’Azur', href: '#centre-cote-azur' }, { label: 'Centre de Paris', href: '#centre-paris' }]}
+    />
+    <CampusSection showDirections />
+  </>;
+}

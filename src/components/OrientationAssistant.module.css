@@ -12,8 +12,8 @@
 .expanded { max-height: calc(100dvh - 32px); }
 .panel :is(button, a, summary):focus-visible { outline: 3px solid #956e26; outline-offset: 2px; }
 .panel svg { width: 18px; height: 18px; flex: none; }
-.topline { position: relative; isolation: isolate; flex-shrink: 0; padding: 22px 36% 18px 27px; border-bottom: 1px solid #e3d9c6; background: #f4efe3; }
-.headerArt { position: absolute; z-index: -1; inset: 0 0 0 auto; width: 36%; max-width: 260px; mask-image: linear-gradient(90deg, transparent, #000 27%); pointer-events: none; }
+.topline { position: relative; isolation: isolate; flex-shrink: 0; padding: 22px calc(clamp(76px, 17vw, 145px) + 83px) 18px 27px; border-bottom: 1px solid #e3d9c6; background: #f4efe3; }
+.headerArt { position: absolute; inset: 12px 65px 12px auto; width: clamp(76px, 17vw, 145px); overflow: hidden; border: 1px solid #dcd5c7; border-radius: 12px; pointer-events: none; }
 .headerArt img { object-fit: cover; object-position: center 23%; }
 .brand { display: flex; align-items: center; gap: 8px; margin: 0; font-size: 10px; font-weight: 800; line-height: 1.35; letter-spacing: .14em; text-transform: uppercase; color: #79551a; }
 .brand::before { content: ''; width: 18px; height: 2px; background: #b9862d; }
@@ -61,7 +61,8 @@
 @media (max-width: 600px) {
   .dialog { width: calc(100% - 20px); }
   .dialog, .expanded { max-height: calc(100dvh - 20px); }
-  .topline { padding: 16px 37% 13px 16px; }
+  .topline { padding: 16px 120px 13px 16px; }
+  .headerArt { inset: 15px 53px auto auto; width: 57px; height: 60px; border-radius: 9px; }
   .topline h2 { font-size: 25px; }
   .close { top: 7px; right: 7px; }
   .back { min-height: 44px; }

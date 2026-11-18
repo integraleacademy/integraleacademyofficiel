@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getPrisma } from '@/lib/db';
 import { loadPlanningSessions } from '@/lib/planning-sessions';
 import { planningRegistrationAction, validatePlanningRequest } from '@/lib/planning-registration';
-import { formatVtcDeadline } from '@/data/vtc';
+import { formatVtcExamDate, vtcRegistrationMessage } from '@/data/vtc';
 import { formatSessionDate, formatSessionPeriod } from '@/lib/public-sessions';
 
 export const runtime = 'nodejs';
@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
     const action = planningRegistrationAction(session);
     const purpose = action.kind === 'waiting-list' ? 'Demande de liste d’attente' : action.kind === 'opening' ? 'Renseignements sur une ouverture prochaine' : 'Demande d’inscription';
     const dates = session.scheduleKind === 'vtc-exam'
-      ? 'Date limite d’inscription : ' + formatVtcDeadline(session.startDate) + ' · Théorie à partir du ' + formatSessionDate(session.endDate) + (session.examDate ? ' · Pratique à partir du ' + formatSessionDate(session.examDate) : '')
+      ? vtcRegistrationMessage(session.startDate, session.endDate) + ' Examen pratique · ' + formatVtcExamDate(session.examDate)
       : formatSessionPeriod(session.startDate, session.endDate) + (session.examDate ? ' · Examen le ' + formatSessionDate(session.examDate) : '');
     await prisma.chatLead.upsert({
       where: { id: 'planning-' + data.requestId },

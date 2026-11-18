@@ -23,3 +23,7 @@
 @media (prefers-reduced-motion: reduce) {
   .caption a span { transition: none; }
 }
+
+.directions { padding: .65rem 0; margin-bottom: .4rem; border-block: 1px solid #ded7c8; }
+.directions p { margin: 0; }
+.directions a { font-size: .88rem; }

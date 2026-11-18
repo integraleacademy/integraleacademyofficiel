@@ -355,6 +355,11 @@ function formatTrainingName(value?: string) {
 function buildLocalDynamicAnswer(question: string, dynamicContext: string) {
   if (!dynamicContext) return '';
   const q = question.toLowerCase();
+  const vtcDeadline = lineValue(dynamicContext, 'Échéance VTC');
+  if (vtcDeadline && /vtc|chauffeur/.test(q) && /quand|prochaine|date|début|examen|inscri/.test(q)) {
+    const practical = lineValue(dynamicContext, 'Examen pratique');
+    return [vtcDeadline, practical && 'Examen pratique · ' + practical + '.', 'Votre convocation précise le jour et l’heure de passage.'].filter(Boolean).join(' ');
+  }
   const training = formatTrainingName(lineValue(dynamicContext, 'Formation'));
   const price = lineValue(dynamicContext, 'Tarif')?.replace(/\s*\(\d+ centimes\)/, '');
   const dates = lineValue(dynamicContext, 'Dates');

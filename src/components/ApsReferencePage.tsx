@@ -412,7 +412,7 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
 
     <TrainingReferenceContact
       schoolStyle
-      description="Cassandre, Responsable commercial, vérifie votre éligibilité, votre dossier CNAPS (ministère de l’Intérieur) et votre financement. Vous repartez avec des réponses claires et les prochaines étapes adaptées à votre situation."
+      description="Cassandre, Responsable commerciale, vérifie votre éligibilité, votre dossier CNAPS (ministère de l’Intérieur) et votre financement. Vous repartez avec des réponses claires et les prochaines étapes adaptées à votre situation."
       href={apsRegistrationFormUrl}
       assurances={['Sans engagement', 'Étude personnalisée', 'Réponse sur le CNAPS (ministère de l’Intérieur) et le financement']}
     />

@@ -27,7 +27,7 @@ export async function listPublicGoogleReviews(): Promise<PublicGoogleReview[]> {
       orderBy: [{ featured: 'desc' }, { reviewedAt: 'desc' }, { id: 'asc' }],
       select: { id: true, author: true, rating: true, excerpt: true, categories: true, sourceUrl: true, reviewedAt: true },
     });
-    return rows.map(row => ({ ...row, reviewedAt: row.reviewedAt?.toISOString() ?? null }));
+    return rows.map(row => ({ ...row, excerpt: row.excerpt.replace(/(Merci à Lia, )Yanis\b/gi, '$1Yannice'), reviewedAt: row.reviewedAt?.toISOString() ?? null }));
   } catch (error) {
     console.error('Lecture des avis Google indisponible.', error instanceof Error ? error.name : 'Erreur');
     return [];

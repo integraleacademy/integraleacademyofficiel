@@ -145,5 +145,5 @@ function VisitDialog({ campus, onClose }: { campus: SchoolVisitCampus; onClose: 
 }
 
 export function SchoolVisitAdviser() {
-  return <div className={styles.visitAdviser}><TeamPortrait person="cassandre" size={82} /><div><strong>Cassandre MENARD</strong><span>Responsable commercial · Votre premier contact pour préparer votre venue.</span></div></div>;
+  return <div className={styles.visitAdviser}><TeamPortrait person="cassandre" size={82} /><div><strong>Cassandre MENARD</strong><span>Responsable commerciale · Votre premier contact pour préparer votre venue.</span></div></div>;
 }

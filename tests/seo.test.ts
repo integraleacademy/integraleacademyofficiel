@@ -12,7 +12,8 @@ test('toutes les formations et les pages publiques possèdent des métadonnées 
     assert.ok(seoPages[formation.slug], `Page absente : ${formation.slug}`);
   }
   const pages = Object.entries(seoPages).filter(([, page]) => !page.noindex);
-  assert.equal(pages.length, 37);
+  assert.deepEqual(pages.map(([path]) => path).filter(path => path.startsWith('/financements')), ['/financements']);
+  assert.equal(pages.length, 31);
   assert.equal(new Set(pages.map(([, page]) => page.title)).size, pages.length);
   assert.equal(new Set(pages.map(([, page]) => page.description)).size, pages.length);
   for (const [path, page] of pages) {

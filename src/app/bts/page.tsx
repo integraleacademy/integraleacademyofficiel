@@ -1,97 +1,53 @@
-import { TrainingReferenceCampus } from '@/components/TrainingReferenceLayout';
-import { btsArtworkForPath } from '@/data/btsIllustrations';
-import { originalArtwork } from '@/data/originalArtwork';
-import { btsRhythms } from '@/data/btsRhythms';
+import Link from 'next/link';
+import { BtsTrainingComparisonModal } from '@/components/BtsTrainingComparisonModal';
+import { BtsTrainingGrid } from '@/components/BtsTrainingGrid';
+import { CatalogueHero } from '@/components/CatalogueHero';
 import { CourseJourney } from '@/components/CourseJourney';
+import { TrainingReferenceCampus } from '@/components/TrainingReferenceLayout';
+import { btsHighlights } from '@/data/bts-highlights';
+import { btsRhythms } from '@/data/btsRhythms';
+import { originalArtwork } from '@/data/originalArtwork';
 import { createPageMetadata } from '@/lib/seo';
-import { bts } from "@/data/site";
-import { VisualSection, VisualTimeline } from "@/components/visuals";
-import {
-  Button,
-  ChatGptAgentBanner,
-  FeatureCard,
-  FormationCard,
-  Hero,
-  SectionTitle,
-  ArtDirectionVisual,
-  Highlight,
-} from "@/components/ui";
+import carousel from '@/components/TrainingCarousel.module.css';
+import styles from './bts.module.css';
+
 export const metadata = createPageMetadata('/bts');
-export default function Page() {
-  return (
-    <>
-      <Hero
-        badge="Alternance"
-        title={
-          <>
-            BTS en <Highlight>alternance</Highlight>, en présentiel ou à
-            distance
-          </>
-        }
-        subtitle="BTS MOS, MCO, NDRC, Commerce International, Professions Immobilières et Comptabilité et Gestion."
-        actions={
-          <>
-            <Button href="https://admissions.integraleconnect.com/">
-              Candidature / pré-inscription
-            </Button>
-            <Button href="/financements/alternance" variant="secondary">
-              Comprendre l’alternance
-            </Button>
-          </>
-        }
-        visual={<ArtDirectionVisual world="bts" illustration={originalArtwork['bts-ndrc-parcours']} />}
-      />
-      <CourseJourney course="bts-overview">
-        <ChatGptAgentBanner />
-        <VisualSection tone="bts">
-          <section id="alternance-bts" className="page-container scroll-mt-36 py-12">
-            <div className="grid gap-5 md:grid-cols-3">
-              <FeatureCard title="Rythme">
-                BTS MOS : {btsRhythms.MOS.description}<br />
-                BTS MCO, NDRC, CI, PI et CG : {btsRhythms.MCO.description}<br />
-                Les cours sont proposés en présentiel ou en visioconférence,
-                selon les modalités du parcours.
-              </FeatureCard>
-              <FeatureCard title="Accompagnement admissions">
-                Candidature et pré-inscription sur la plateforme BTS dédiée, étude
-                du dossier, puis accompagnement vers l’entreprise et le contrat
-                d’apprentissage.
-              </FeatureCard>
-              <FeatureCard title="Candidature en BTS">
-                Dossier de pré-inscription, étude de candidature, dossier
-                d’inscription, confirmation officielle puis signature du contrat
-                d’apprentissage.
-              </FeatureCard>
-            </div>
-            <VisualTimeline tone="bts" />
-          </section>
-        </VisualSection>
-      </CourseJourney>
-      <VisualSection tone="bts">
-        <section id="formations-bts" className="page-container scroll-mt-36 py-12">
-          <SectionTitle
-            title={
-              <>
-                Tous les BTS : diplôme et{" "}
-                <Highlight variant="subtle">prise en charge</Highlight>
-              </>
-            }
-          />
-          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {bts.map((x) => (
-              <FormationCard
-                key={x.slug}
-                title={x.title}
-                desc={x.desc}
-                href={x.slug}
-                tags={x.tags}
-                illustration={btsArtworkForPath(x.slug)}
-              />
-            ))}
+const admissionsUrl = 'https://admissions.integraleconnect.com/';
+
+export default function BtsPage() {
+  return <>
+    <CatalogueHero
+      id="bts-title"
+      title={<>Choisissez votre BTS <em>en alternance</em></>}
+      description="De la sécurité au commerce, de l’immobilier à la comptabilité, préparez un diplôme d’État de niveau bac +2 en deux ans. Suivez les cours à Puget-sur-Argens ou en visioconférence selon le parcours."
+      artwork={originalArtwork['bts-ndrc-parcours']}
+      actions={[{ label: 'Découvrir les six BTS', href: '#formations-bts' }, { label: 'Déposer ma candidature', href: admissionsUrl }]}
+    />
+    <section id="formations-bts" aria-labelledby="catalogue-bts-title" className={carousel.section}>
+      <div className="page-container">
+        <div className={carousel.heading}>
+          <h2 id="catalogue-bts-title">Quel BTS vous correspond ?</h2>
+          <p>Explorez les six spécialités et comparez leurs débouchés.</p>
+        </div>
+        <BtsTrainingGrid items={btsHighlights} />
+        <div className={carousel.footer}>
+          <p className={carousel.formats}>Une question sur la prise en charge ? <Link href="/financements#alternance">Financer mon BTS <span aria-hidden="true">→</span></Link></p>
+          <div className={carousel.actions}><BtsTrainingComparisonModal items={btsHighlights} className={carousel.secondary} /></div>
+        </div>
+      </div>
+    </section>
+    <CourseJourney course="bts-overview">
+      <section id="alternance-bts" className={styles.alternance} aria-labelledby="alternance-title">
+        <div className="page-container">
+          <h2 id="alternance-title">Entre l’école <em>et l’entreprise</em></h2>
+          <div className={styles.rhythms}>
+            <article><h3>BTS MOS</h3><p>{btsRhythms.MOS.description}</p></article>
+            <article><h3>BTS MCO, NDRC, CI, PI et CG</h3><p>{btsRhythms.MCO.description}</p></article>
+            <article><h3>Votre candidature</h3><p>L’équipe admissions étudie votre dossier et vous accompagne dans la recherche d’une entreprise et la préparation du contrat.</p><Link href={admissionsUrl}>Commencer mon dossier <span aria-hidden="true">→</span></Link></article>
           </div>
-        </section>
-      </VisualSection>
-      <TrainingReferenceCampus compact />
-    </>
-  );
+        </div>
+      </section>
+    </CourseJourney>
+    <TrainingReferenceCampus compact />
+  </>;
 }

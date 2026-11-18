@@ -1,7 +1,7 @@
 import { formatSessionDate, formatSessionPeriod, hasDetailedDeliveryPeriods, inPersonPeriods, parisDateKey } from '@/lib/public-sessions';
 import type { toPublicSession } from '@/lib/public-session-data';
 import type { SessionSeatAvailability } from '@/lib/session-seat-availability';
-import { formatVtcExamDate, vtcDeadlineTimeLabel } from '@/data/vtc';
+import { formatVtcExamDate, vtcRegistrationMessage } from '@/data/vtc';
 import { PlanningIcon as Icon, type PlanningIconName as IconName } from './PlanningIcon';
 import styles from '@/app/planning/planning.module.css';
 
@@ -42,7 +42,7 @@ export function NextSessionSummary({ session, price, availability }: {
   availability: SessionSeatAvailability;
 }) {
   const isVtc = session.scheduleKind === 'vtc-exam';
-  const start = new Date(isVtc ? session.vtcDates?.deadline || session.startDate : session.startDate);
+  const start = new Date(session.startDate);
   const end = !isVtc && session.endDate ? new Date(session.endDate) : null;
   const hasEnd = end && end > start && parisDateKey(end) !== parisDateKey(start);
   const details: { label: string; value: string; icon: IconName }[] = [];
@@ -66,20 +66,26 @@ export function NextSessionSummary({ session, price, availability }: {
   if (session.location) details.push({ label: 'Lieu', value: session.location.replace(/^Paris\s*·\s*(?=\d.*\bParis\b)/i, ''), icon: 'location' });
 
   return <>
-    <div className={styles.sessionDates}>
-      <SessionDateMark value={start} label={isVtc ? 'Date limite d’inscription' : hasEnd ? 'Du' : 'Date de formation'} />
-      {hasEnd && <>
-        <span className={styles.dateConnector} aria-hidden="true"><Icon name="arrow" /></span>
-        <SessionDateMark value={end} label="Au" />
-      </>}
-      {isVtc && <span className={styles.deadlineTime}><Icon name="clock" />{vtcDeadlineTimeLabel}</span>}
+    <div className={styles.sessionHeading}>
+      <h3>{isVtc ? 'Prochain examen VTC' : 'Prochaine formation'}</h3>
+      {!isVtc && <span className={styles.seatStatus} data-tone={availability.tone} title={availability.estimated ? 'Disponibilité estimée, à confirmer auprès de l’école.' : undefined}>
+        {availability.estimated ? `Env. ${availability.label}` : availability.label}
+      </span>}
     </div>
+    {isVtc ? <p className={styles.vtcRegistration}>{vtcRegistrationMessage(start, session.vtcDates?.theory)}</p> : (
+      <div className={styles.sessionDates}>
+        <SessionDateMark value={start} label={hasEnd ? 'Du' : 'Date de formation'} />
+        {hasEnd && <>
+          <span className={styles.dateConnector} aria-hidden="true"><Icon name="arrow" /></span>
+          <SessionDateMark value={end} label="Au" />
+        </>}
+      </div>
+    )}
     {details.length > 0 && <dl className={styles.sessionDetails}>{details.map(({ label, value, icon }) => (
       <div key={label}><dt><Icon name={icon} />{label}</dt><dd>{value}</dd></div>
     ))}</dl>}
     <dl className={styles.sessionOffer}>
       <div><dt>Tarif</dt><dd>{price}</dd></div>
-      {!isVtc && <div><dt className="sr-only">Disponibilité</dt><dd className={styles.seatStatus} data-tone={availability.tone}>{availability.label}</dd></div>}
     </dl>
   </>;
 }

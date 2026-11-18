@@ -43,7 +43,18 @@ export function formatVtcDeadline(value?: string | Date | null) {
 }
 
 export function formatVtcExamDate(value?: string | Date | null) {
-  return value ? 'À partir du ' + formatSessionDate(value) : 'À confirmer';
+  return value ? 'Semaine du ' + formatSessionDate(value) : 'À confirmer';
+}
+
+export function vtcRegistrationMessage(deadline?: string | Date | null, theory?: string | Date | null) {
+  const exam = theory ? `l’examen théorique la semaine du ${formatSessionDate(theory)}` : 'la prochaine épreuve théorique';
+  return deadline
+    ? `Pour passer ${exam}, inscrivez-vous en formation avant le ${formatSessionDate(deadline)} à 12 h.`
+    : `Contactez-nous pour connaître la date limite d’inscription en formation pour ${exam}.`;
+}
+
+export function vtcSessionTitle(theory?: string | Date | null) {
+  return theory ? `Chauffeur VTC · Examen théorique la semaine du ${formatSessionDate(theory)}` : 'Chauffeur VTC · Examen théorique';
 }
 
 export function getUpcomingVtcExamSessions(referenceDate = new Date()) {

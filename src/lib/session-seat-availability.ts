@@ -1,5 +1,5 @@
 import { computedSeats } from '@/lib/public-sessions';
-import { resolveSessionSeatCapacity } from '@/lib/session-capacity';
+import { normalizeSeatCount, resolveSessionSeatCapacity } from '@/lib/session-capacity';
 export { resolveSessionSeatCapacity } from '@/lib/session-capacity';
 
 export type SessionSeatAvailabilityTone = 'available' | 'moderate' | 'low' | 'critical' | 'full';
@@ -15,6 +15,7 @@ type SessionSeatAvailabilitySource = {
 
 export type SessionSeatAvailability = {
   count: number | null;
+  estimated?: boolean;
   label: string;
   tone: SessionSeatAvailabilityTone;
   badgeClassName: string;
@@ -53,6 +54,7 @@ export function getSessionSeatAvailability(
     return { count: 0, label: 'COMPLET', tone: 'full', badgeClassName: badgeStyles.full };
   }
 
+  const recordedCount = normalizeSeatCount(session.seatsLeft);
   const occupancyRatio = count / safeCapacity;
   const tone: SessionSeatAvailabilityTone = count <= 3
     ? 'critical'
@@ -64,6 +66,7 @@ export function getSessionSeatAvailability(
 
   return {
     count,
+    estimated: recordedCount === null || recordedCount > safeCapacity,
     label: count === 1 ? '1 place restante' : `${count} places restantes`,
     tone,
     badgeClassName: badgeStyles[tone],

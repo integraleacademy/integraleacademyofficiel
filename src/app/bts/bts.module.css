@@ -1,0 +1,9 @@
+.alternance { padding-block: clamp(2.75rem, 5.5vw, 5rem); background: rgb(var(--surface)); scroll-margin-top: var(--site-header-height); }
+.alternance h2 { font-size: clamp(1.9rem, 3.5vw, 3rem); line-height: 1.12; font-weight: 780; letter-spacing: -.045em; }
+.alternance h2 em { color: rgb(var(--accent-strong)); font: italic 400 1.04em Georgia, serif; }
+.rhythms { display: grid; grid-template-columns: 1fr 1fr 1.3fr; gap: clamp(1.2rem, 3vw, 3rem); margin-top: 1.8rem; }
+.rhythms article { padding-top: 1rem; border-top: 1px solid rgb(var(--border)); }
+.rhythms h3 { font-size: 1.12rem; font-weight: 750; }
+.rhythms p { max-width: 42ch; margin: .55rem 0; color: rgb(var(--text-muted)); line-height: 1.6; }
+.rhythms a { display: inline-flex; gap: .5rem; align-items: center; min-height: 44px; font-weight: 700; text-decoration: underline; text-underline-offset: .25rem; }
+@media (max-width: 700px) { .rhythms { grid-template-columns: 1fr; } }

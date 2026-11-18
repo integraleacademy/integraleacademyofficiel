@@ -11,7 +11,7 @@ import { planningFormationHref } from '@/lib/planning-data';
 import { planningSsiapCourse, ssiapPlanningCourses, ssiapPlanningGroups, ssiapPlanningContactHref, type SsiapPlanningCourse } from '@/lib/planning-ssiap';
 import { SsiapCourseChoices } from './SsiapCourseChoices';
 import { DirectorLocationChoices } from './DirectorLocationChoices';
-import { formatVtcDeadline, formatVtcExamDate, vtcCourse } from '@/data/vtc';
+import { formatVtcExamDate, vtcCourse, vtcRegistrationMessage } from '@/data/vtc';
 import styles from './planning.module.css';
 import { PlanningPreview, type PlanningFormationKey } from './PlanningPreview';
 import { NextSessionSummary } from '@/components/NextSessionSummary';
@@ -269,7 +269,8 @@ function SessionCard({
   isNext: boolean;
   selected: boolean;
 }) {
-  const date = shortDate(session.startDate);
+  const cardDate = session.scheduleKind === 'vtc-exam' && session.endDate ? session.endDate : session.startDate;
+  const date = shortDate(cardDate);
   const seatAvailability = planningSeatAvailability(session);
   const showDeliveryPeriods = hasDetailedDeliveryPeriods(session);
   const isVtcExam = session.scheduleKind === 'vtc-exam';
@@ -288,12 +289,13 @@ function SessionCard({
         <div className="flex items-center gap-3 lg:block">
           <div className="planning-neutral-action grid h-[4.6rem] w-[4.6rem] shrink-0 place-items-center rounded-2xl text-center">
             <span>
+              {isVtcExam && <span className="mb-1 block text-[9px] font-bold">Semaine du</span>}
               <span className="block text-2xl font-black leading-none">{date.day}</span>
               <span className="mt-1 block text-[10px] font-black uppercase tracking-[.12em] text-white/58">{date.month}</span>
             </span>
           </div>
           <p className="text-[10px] font-black uppercase tracking-[.14em] text-academy-muted lg:mt-2 lg:text-center">
-            {new Date(session.startDate).getUTCFullYear()}
+            {new Date(cardDate).getUTCFullYear()}
           </p>
         </div>
 
@@ -307,10 +309,9 @@ function SessionCard({
             </span> : null}
           </div>
           {isVtcExam ? <div className="mt-4">
-            <p className="text-sm font-semibold leading-6 text-academy-muted">{vtcCourse.startDescription}</p>
-            <dl className="mt-3 grid gap-2 sm:grid-cols-3">
+            <p className="text-sm font-semibold leading-6 text-academy-muted">{vtcRegistrationMessage(session.startDate, session.endDate)}</p>
+            <dl className="mt-3 grid gap-2 sm:grid-cols-2">
               {[
-                ['Date limite d’inscription', formatVtcDeadline(session.vtcDates.deadline)],
                 ['Examen théorique', formatVtcExamDate(session.vtcDates.theory)],
                 ['Examen pratique', formatVtcExamDate(session.vtcDates.practical)],
               ].map(([label, value]) => <div key={label} className="rounded-2xl border border-academy-line/60 bg-academy-bg/55 px-3 py-3 dark:border-white/10 dark:bg-white/5">
@@ -318,7 +319,7 @@ function SessionCard({
                 <dd className="mt-1 text-sm font-black text-academy-ink dark:text-white">{value}</dd>
               </div>)}
             </dl>
-            <p className="mt-3 text-xs font-semibold leading-5 text-academy-muted">Hybride : théorie en ligne et pratique en présentiel. Frais d’examen et véhicule double commande inclus.</p>
+            <p className="mt-3 text-xs font-semibold leading-5 text-academy-muted">{vtcCourse.startDescription} La pratique se déroule en présentiel. Frais d’examen et véhicule double commande inclus.</p>
             <p className="mt-2 text-xs leading-5 text-academy-muted">{vtcCourse.examNotice}</p>
           </div> : showDeliveryPeriods ? <div className="mt-4 grid gap-2 sm:grid-cols-2">
             {deliveryPeriodRows(session).map((period, periodIndex) => <div key={period.label || 'dates'} className={`flex items-start gap-3 rounded-[1rem] border px-3.5 py-3 ${periodIndex === 0 ? 'planning-accent-soft sm:col-span-2' : 'border-academy-line/60 bg-academy-bg/55 dark:border-white/10 dark:bg-white/5'}`}>
@@ -387,7 +388,7 @@ function SessionDetails({ session, onClose, onRequest }: { session: Session; onC
     <h2 id="planning-session-title">{sessionTitle(session)}</h2>
     {!isVtc ? <span className={'session-seats-badge mt-4 inline-block rounded-full border px-3 py-1 text-xs font-bold ' + availability.badgeClassName}>{availability.label}</span> : null}
     <div className={styles.dialogDates}>
-      {isVtc ? <><p>{vtcCourse.startDescription}</p><dl>{[['Date limite d’inscription', formatVtcDeadline(session.startDate)], ['Examen théorique', formatVtcExamDate(session.endDate)], ['Examen pratique', formatVtcExamDate(session.examDate)]].map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl><p className={styles.examNotice}>{vtcCourse.examNotice}</p></> : <><p className={styles.dialogPeriod}>{formatSessionPeriod(session.startDate, session.endDate)}</p>{hasDetailedDeliveryPeriods(session) ? <dl>{deliveryPeriodRows(session).slice(1).map(period => <div key={period.label}><dt>{period.label}</dt><dd>{period.value}</dd></div>)}</dl> : null}{session.examDate ? <p>Examen le <strong>{formatSessionDate(session.examDate)}</strong></p> : null}</>}
+      {isVtc ? <><p>{vtcRegistrationMessage(session.startDate, session.endDate)}</p><dl>{[['Examen théorique', formatVtcExamDate(session.endDate)], ['Examen pratique', formatVtcExamDate(session.examDate)]].map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl><p className={styles.examNotice}>{vtcCourse.examNotice}</p></> : <><p className={styles.dialogPeriod}>{formatSessionPeriod(session.startDate, session.endDate)}</p>{hasDetailedDeliveryPeriods(session) ? <dl>{deliveryPeriodRows(session).slice(1).map(period => <div key={period.label}><dt>{period.label}</dt><dd>{period.value}</dd></div>)}</dl> : null}{session.examDate ? <p>Examen le <strong>{formatSessionDate(session.examDate)}</strong></p> : null}</>}
     </div>
     <p className={styles.dialogLocation}><Icon name="location" />{session.location || 'Centre à confirmer'}</p>
     <dl className={styles.dialogFacts}><div><dt>Tarif</dt><dd>{displayPrice(session)}</dd></div><div><dt>Durée</dt><dd>{displayDuration(session)}</dd></div></dl>

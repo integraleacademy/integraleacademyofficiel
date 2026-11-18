@@ -8,7 +8,7 @@
   max-width: 80rem;
   margin-inline: auto;
   display: grid;
-  grid-template-columns: minmax(14rem, .72fr) minmax(0, 1.28fr);
+  grid-template-columns: minmax(12rem, .28fr) minmax(0, 1fr);
   align-items: center;
   gap: clamp(1.5rem, 4vw, 4rem);
   padding-block: clamp(1.8rem, 3.3vw, 3.3rem);
@@ -43,15 +43,16 @@
 .intro a:hover { color: #151b16; }
 .intro a:focus-visible { outline: 2px solid #895c21; outline-offset: 3px; }
 .people {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: clamp(.25rem, .85vw, .85rem);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.2rem clamp(.45rem, 1vw, 1rem);
   align-items: start;
   padding: 0;
   margin: 0;
   list-style: none;
 }
-.people li { min-width: 0; }
+.people li { flex: 1 1 8.6rem; min-width: max-content; max-width: 11rem; }
 .profile {
   min-width: 0;
   display: flex;
@@ -76,9 +77,7 @@
   font-size: .82rem;
   font-weight: 500;
   line-height: 1.35;
-  text-wrap: balance;
-  hyphens: auto;
-  overflow-wrap: anywhere;
+  white-space: nowrap;
 }
 .portrait {
   display: block;
@@ -99,20 +98,17 @@
   .portrait { transition: filter .25s ease, transform .25s ease, box-shadow .25s ease; }
   .profile:is(:hover, :focus-visible) .portrait { transform: translateY(-3px) scale(1.035); }
 }
-@media (max-width: 900px) {
-  .inner { grid-template-columns: minmax(0, 1fr); gap: .85rem; }
+@media (max-width: 1180px) {
+  .inner { grid-template-columns: minmax(0, 1fr); gap: 1rem; }
   .intro { text-align: center; }
   .intro a { margin-top: 0; }
-  .people { width: min(100%, 39rem); margin-inline: auto; }
+  .people { width: min(100%, 58rem); margin-inline: auto; }
   .portrait { width: min(100%, 4.7rem); border-width: 2px; }
 }
-@media (max-width: 520px) {
-  .inner { width: calc(100% - 1.25rem); }
-  .name { font-size: clamp(.7rem, 3vw, .86rem); }
-  .role { font-size: clamp(.65rem, 2.7vw, .77rem); }
-}
-@media (max-width: 360px) {
-  .inner { width: calc(100% - .75rem); }
-  .people { grid-template-columns: .8fr .9fr repeat(3, 1.1fr); gap: 2px; }
-  .portrait { width: min(100%, 15vw); }
+@media (max-width: 600px) {
+  .inner { width: calc(100% - 1.5rem); }
+  .people { max-width: 29rem; gap: 1rem .5rem; }
+  .people li { flex: 0 1 calc(50% - .25rem); max-width: none; }
+  .name { font-size: .9rem; }
+  .role { font-size: .78rem; }
 }

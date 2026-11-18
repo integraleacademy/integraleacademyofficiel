@@ -9,6 +9,16 @@ import { getVtcPlanningSessions, isBtsTraining, planningSsiapCourse } from '../s
 import { ssiapPlanningCourses, ssiapPlanningContactHref } from '../src/lib/planning-ssiap';
 import { directorPlanningLocations, sessionMatchesLocation } from '../src/lib/session-location-filter';
 
+import { formatVtcExamDate, vtcRegistrationMessage } from '../src/data/vtc';
+
+test('la date limite de formation VTC correspond à la semaine de la théorie, y compris au changement d’année', () => {
+  const [session] = getVtcPlanningSessions(new Date('2026-11-18T09:15:00Z'));
+  assert.equal(session.title, 'Chauffeur VTC · Examen théorique la semaine du 8 décembre 2026');
+  assert.equal(vtcRegistrationMessage(session.startDate, session.endDate), 'Pour passer l’examen théorique la semaine du 8 décembre 2026, inscrivez-vous en formation avant le 20 novembre 2026 à 12 h.');
+  assert.equal(formatVtcExamDate(session.examDate), 'Semaine du 4 janvier 2027');
+  assert.equal(formatVtcExamDate(null), 'À confirmer');
+});
+
 test('le planning public propose Paris et la Côte d’Azur et masque les anciennes sessions', () => {
   assert.deepEqual(directorPlanningLocations.map(item => item.key), ['paris', 'cote-azur']);
   for (const location of ['Aurillac · 14 avenue du Garric', 'Terres d’Auvergne']) {

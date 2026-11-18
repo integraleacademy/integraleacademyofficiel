@@ -9,6 +9,7 @@ const referenceDate = new Date('2026-09-05T12:00:00.000Z');
 test('le badge affiche toujours le nombre exact de places restantes', () => {
   assert.equal(getSessionSeatAvailability({ seatsLeft: 12 }, 12).label, '12 places restantes');
   assert.equal(getSessionSeatAvailability({ seatsLeft: 1 }, 12).label, '1 place restante');
+  assert.equal(getSessionSeatAvailability({ seatsLeft: 1 }, 12).estimated, false);
   assert.equal(getSessionSeatAvailability({ seatsLeft: 4, status: 'FULL' }, 12).label, 'COMPLET');
 });
 
@@ -16,6 +17,7 @@ test('une ancienne valeur supérieure à 12 laisse la règle automatique reprend
   const availability = getSessionSeatAvailability({ seatsLeft: 25, startDate: '2026-11-03T00:00:00.000Z' }, 12, referenceDate);
   assert.equal(availability.label, '6 places restantes');
   assert.equal(availability.count, 6);
+  assert.equal(availability.estimated, true);
 });
 
 test('la couleur devient plus urgente à mesure que les places diminuent', () => {

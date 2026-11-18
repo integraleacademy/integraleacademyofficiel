@@ -19,7 +19,7 @@ const interests = [
 ] as const;
 
 const advisers = {
-  security: { name: 'Cassandre', role: 'Responsable commercial' },
+  security: { name: 'Cassandre', role: 'Responsable commerciale' },
   bts: { name: 'Aurélie', role: 'Responsable des BTS' },
 } as const;
 

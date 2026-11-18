@@ -1,4 +1,7 @@
 [
+  { "source": "/financements/cpf", "destination": "/financements#cpf" },
+  { "source": "/financements/france-travail", "destination": "/financements#france-travail" },
+  { "source": "/financements/alternance", "destination": "/financements#alternance" },
   { "source": "/tarifs", "destination": "/financements" },
   { "source": "/formations-securite/desp-initial", "destination": "/dirigeant" },
   { "source": "/formations-securite/desp", "destination": "/despvaeouinitial" },
@@ -15,7 +18,7 @@
   { "source": "/btsndrc", "destination": "/bts/ndrc" },
   { "source": "/commerceinternational", "destination": "/bts/commerce-international" },
   { "source": "/btsprofessionsimmobilieres", "destination": "/bts/professions-immobilieres" },
-  { "source": "/alternance", "destination": "/financements/alternance" },
+  { "source": "/alternance", "destination": "/financements#alternance" },
   { "source": "/mentions-légales", "destination": "/mentions-legales" },
   { "source": "/mentions-l%C3%A9gales", "destination": "/mentions-legales" },
   { "source": "/formations-vtc", "destination": "/vtc" },
