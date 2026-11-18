@@ -1,5 +1,4 @@
-import { getUpcomingVtcExamSessions, isVtcRegistrationOpen, vtcCourse } from '@/data/vtc';
-import { formatSessionDate } from '@/lib/public-sessions';
+import { getUpcomingVtcExamSessions, isVtcRegistrationOpen, vtcCourse, vtcSessionTitle } from '@/data/vtc';
 import { canonicalSiteHref } from '@/lib/site-urls';
 
 export function isBtsTraining(slug = '', category?: string | null) {
@@ -29,6 +28,7 @@ export function getVtcPlanningSessions(referenceDate = new Date(), managedSessio
     .filter((session) => session.training?.isActive && session.status !== 'HIDDEN' && session.startDate && isVtcRegistrationOpen(session.startDate, referenceDate))
     .map((session) => ({
       ...session,
+      title: session.title?.replace(/à partir du/gi, 'la semaine du') || vtcSessionTitle(session.endDate),
       scheduleKind: 'vtc-exam',
       showSeatsLeft: false,
       durationLabel: session.durationLabel || vtcCourse.durationHours + ' heures',
@@ -36,7 +36,7 @@ export function getVtcPlanningSessions(referenceDate = new Date(), managedSessio
     }));
   return getUpcomingVtcExamSessions(referenceDate).map((dates) => ({
     id: 'vtc-exam-' + dates.theory,
-    title: 'Chauffeur VTC — examen théorique à partir du ' + formatSessionDate(dates.theory),
+    title: vtcSessionTitle(dates.theory),
     scheduleKind: 'vtc-exam',
     startDate: dates.deadline,
     endDate: dates.theory,

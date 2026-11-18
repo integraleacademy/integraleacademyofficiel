@@ -80,16 +80,16 @@ export const seoPages: Record<string, SeoPage> = {
   '/despvaeouinitial': {
     title: 'DESP : formation initiale ou VAE ?',
     description: 'Vous souhaitez diriger une entreprise de sécurité privée ? Comparez le DESP en formation initiale et la VAE selon votre expérience, votre projet et vos besoins.',
-    label: 'Dirigeant de sécurité privée', parent: '/formations-securite', type: 'CollectionPage',
+    label: 'Dirigeant d’entreprise de sécurité privée', parent: '/formations-securite', type: 'CollectionPage',
   },
   '/dirigeant': {
-    title: 'Formation DESP initial – Dirigeant sécurité privée',
+    title: 'Formation DESP initial – Dirigeant d’entreprise de sécurité privée',
     description: 'Préparez le titre de dirigeant d’entreprise de sécurité privée avec le DESP initial : formation à distance et en présentiel, gestion, réglementation et management.',
     label: 'DESP en formation initiale', parent: '/despvaeouinitial',
     courseName: 'Formation DESP initial – Dirigeant d’entreprise de sécurité privée',
   },
   '/vaedirigeant': {
-    title: 'VAE DESP – Dirigeant de sécurité privée',
+    title: 'VAE DESP – Dirigeant d’entreprise de sécurité privée',
     description: 'Faites reconnaître votre expérience avec la VAE DESP : étude de recevabilité, dossier de preuves, accompagnement et préparation au jury de certification.',
     label: 'DESP par la VAE', parent: '/despvaeouinitial',
     serviceName: 'Accompagnement à la VAE DESP',
@@ -144,21 +144,6 @@ export const seoPages: Record<string, SeoPage> = {
     description: 'Étudiez les solutions pour financer votre formation : CPF, France Travail, alternance, employeur ou financement personnel. Intégrale Academy vous accompagne.',
     label: 'Financer sa formation', type: 'CollectionPage',
   },
-  '/financements/cpf': {
-    title: 'Financer sa formation avec le CPF',
-    description: 'Préparez votre financement CPF : vérification de vos droits, choix d’une formation éligible et démarches sur Mon Compte Formation avec Intégrale Academy.',
-    label: 'Financement CPF', parent: '/financements',
-  },
-  '/financements/france-travail': {
-    title: 'Financement de formation avec France Travail',
-    description: 'Construisez votre projet de formation avec France Travail : choix du parcours, devis, demande de financement et validation de votre dossier avec votre conseiller.',
-    label: 'Financement France Travail', parent: '/financements',
-  },
-  '/financements/alternance': {
-    title: 'Financement et inscription en BTS en alternance',
-    description: 'Découvrez le fonctionnement de l’alternance chez Intégrale Academy : candidature en BTS, recherche d’entreprise, contrat et prise en charge de la formation.',
-    label: 'Financement en alternance', parent: '/financements',
-  },
   '/entreprises': {
     title: 'Recrutement et formation en sécurité privée',
     description: 'Recrutez et formez vos équipes avec Intégrale Academy : alternance, BTS MOS et parcours adaptés aux besoins des entreprises de sécurité privée.',
@@ -208,7 +193,7 @@ export const seoPages: Record<string, SeoPage> = {
   },
   '/rdvconfirmedirigeant': {
     title: 'Demande de rappel dirigeant confirmée',
-    description: 'Confirmation de votre demande de rappel concernant le parcours dirigeant de sécurité privée Intégrale Academy.',
+    description: 'Confirmation de votre demande de rappel concernant le parcours dirigeant d’entreprise de sécurité privée Intégrale Academy.',
     label: 'Confirmation de rappel dirigeant', noindex: true,
   },
 };

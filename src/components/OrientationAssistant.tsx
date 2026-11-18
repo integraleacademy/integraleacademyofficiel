@@ -42,7 +42,7 @@ const apsFormation = securityFormations.find(formation => formation.slug === '/f
 const formations: AssistantFormation[] = [
   { key: 'aps', label: 'Agent de sécurité privée (APS)', artwork: '/images/planning-metiers/aps.webp', infoUrl: '/formations-securite/aps', rdvUrl: 'https://assistance-alw9.onrender.com/demande-informations-formations', homeTitle: 'Agent de sécurité', homeSubtitle: 'APS · surveillance' },
   { key: 'a3p', label: 'Agent de protection physique des personnes (A3P)', artwork: '/images/planning-metiers/a3p.webp', infoUrl: '/formations-securite/a3p-apr', rdvUrl: '/contact?formation=a3p&type=rdv', homeTitle: 'Agent de protection', homeSubtitle: 'A3P · APR' },
-  { key: 'desp', label: 'Dirigeant d’entreprise de sécurité (DESP)', artwork: '/images/planning-metiers/dirigeant.webp', infoUrl: '/despvaeouinitial', rdvUrl: '/contact?formation=desp&type=rdv', homeTitle: 'Dirigeant sécurité', homeSubtitle: 'Initial · VAE' },
+  { key: 'desp', label: 'Dirigeant d’entreprise de sécurité (DESP)', artwork: '/images/planning-metiers/dirigeant.webp', infoUrl: '/despvaeouinitial', rdvUrl: '/contact?formation=desp&type=rdv', homeTitle: 'Dirigeant d’entreprise', homeSubtitle: 'Initial · VAE' },
   { key: 'vtc', label: 'Chauffeur VTC', artwork: '/images/planning-metiers/vtc.webp', infoUrl: '/vtc', rdvUrl: '/contact?formation=vtc&type=rdv', homeTitle: 'Chauffeur VTC', homeSubtitle: 'Théorie · pratique' },
   { key: 'bts', label: 'Un BTS en alternance', artwork: '/images/planning-metiers/bts.webp', infoUrl: '/bts', rdvUrl: '/contact?formation=bts&type=rdv', homeTitle: 'Étudiant en BTS', homeSubtitle: 'Alternance · diplôme' },
 ];
@@ -218,7 +218,7 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
   const assistantPanel = <aside ref={isExpanded ? undefined : inlinePanelRef} className={`orientation-assistant ${styles.panel} ${isExpanded ? styles.expanded : styles.embedded}`} aria-label="Assistant d’orientation formation">
       <header className={styles.topline}>
         <div className={styles.headerArt} aria-hidden="true">
-          <Image src={selectedFormation?.artwork ?? '/images/illustrations-2026/campus-accompagnement.webp'} alt="" fill sizes="(max-width: 600px) 36vw, 230px" />
+          <Image src={selectedFormation?.artwork ?? '/images/illustrations-2026/campus-accompagnement.webp'} alt="" fill sizes="(max-width: 600px) 57px, 145px" />
         </div>
         <p className={styles.brand}>Votre assistant formation</p>
         <h2 id={`${dialogId}-title`}>{assistantTitle}</h2>
@@ -354,6 +354,7 @@ function FormationAssistantResult({ formation, sessions, hideInfoAction, onNavig
     <section aria-label="Prochaine session" className={styles.session}>
       {next ? <NextSessionSummary session={next} price={price} availability={getSessionSeatAvailability(next, details.capacity ?? 12)} /> :
         <>
+          <div className={planning.sessionHeading}><h3>{key === 'vtc' ? 'Prochain examen VTC' : 'Prochaine formation'}</h3></div>
           <p className={styles.sessionNote} role="status">{sessions === null ? 'Chargement de la prochaine date…' : 'Contactez notre équipe pour connaître la prochaine date.'}</p>
           <dl className={planning.sessionOffer}><div><dt>Tarif</dt><dd>{details.price}</dd></div></dl>
         </>}

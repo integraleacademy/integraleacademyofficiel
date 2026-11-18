@@ -92,7 +92,7 @@ const galleries: Record<TrainingMotionGalleryVariant, {
   despInitial: {
     eyebrow: 'DESP initial en mouvement',
     title: 'Diriger une entreprise, en images',
-    intro: 'Du projet à l’agrément, visualisez les responsabilités clés d’un dirigeant de sécurité privée.',
+    intro: 'Du projet à l’agrément, visualisez les responsabilités clés d’un dirigeant d’entreprise de sécurité privée.',
     theme: 'orange',
     stories: [
       ['business', 'Construire le projet', 'Animation d’un projet de création ou de reprise d’entreprise qui prend forme'],

@@ -118,7 +118,7 @@ export default async function DespVaePage(){
   const sessions = await getSessions();
   const includedEntries = Object.entries(despVaeAdmin.included).filter(([,value])=>Boolean(value));
   return <TrainingReferencePage theme="orange">
-    <DespHero variant="vae" title="Dirigeant de sécurité privée par la VAE" subtitle={<p>Valorisez votre expérience en gestion, management ou direction. Nous vous accompagnons pour constituer votre dossier de preuves et préparer le jury du titre DESP.</p>} stats={[["Format","VAE","accompagnement individualisé"],["Durée","Variable","selon dossier et jury"],["Tarif 2027",despVaeAdmin.price,"TTC"],["Lieu","Distance","jury selon convocation"],["RNCP",despVaeAdmin.rncp,despVaeAdmin.level],["Objectif","Titre DESP","validation totale visée"]]} sessions={sessions}/>
+    <DespHero variant="vae" title="Dirigeant d’entreprise de sécurité privée par la VAE" subtitle={<p>Valorisez votre expérience en gestion, management ou direction. Nous vous accompagnons pour constituer votre dossier de preuves et préparer le jury du titre DESP.</p>} stats={[["Format","VAE","accompagnement individualisé"],["Durée","Variable","selon dossier et jury"],["Tarif 2027",despVaeAdmin.price,"TTC"],["Lieu","Distance","jury selon convocation"],["RNCP",despVaeAdmin.rncp,despVaeAdmin.level],["Objectif","Titre DESP","validation totale visée"]]} sessions={sessions}/>
     <TrainingSectionNavigation
       mark="DESP"
       title="DESP en VAE"
@@ -176,7 +176,7 @@ export default async function DespVaePage(){
     <TrainingCourseTestimonials category="VAE DESP" />
     <div id="faq-desp-vae"><FaqDirectoryLink embedded theme="orange" /></div>
     <TrainingReferenceContact
-      description={<><p className="font-bold">Cassandre, Responsable commercial, vous accompagne dans votre choix</p><p>Elle étudie votre expérience, vous aide à choisir entre le DESP initial et la VAE et vous présente les modalités d’accompagnement et de financement.</p></>}
+      description={<><p className="font-bold">Cassandre, Responsable commerciale, vous accompagne dans votre choix</p><p>Elle étudie votre expérience, vous aide à choisir entre le DESP initial et la VAE et vous présente les modalités d’accompagnement et de financement.</p></>}
       href="/contact?formation=desp-vae&objet=rendez-vous"
       additionalActions={<><VaeEligibilityModal label="Tester mon éligibilité"/><Button href="/contact?formation=desp-vae" variant="orange">Recevoir un devis VAE</Button></>}
     />

@@ -1,4 +1,0 @@
-import { createPageMetadata } from '@/lib/seo';
-import { Hero, FeatureCard, ConversionStrip } from '@/components/ui';
-export const metadata=createPageMetadata('/financements/cpf');
-export default function Page(){return <><Hero badge="Financement" title="Financement CPF" subtitle="Mobilisez votre Compte Personnel de Formation lorsque la formation et votre situation sont éligibles."/><ConversionStrip/><section className="page-container py-12"><div className="grid gap-5 md:grid-cols-3"><FeatureCard title="Principe">Le CPF peut financer certaines formations certifiantes selon leur éligibilité.</FeatureCard><FeatureCard title="Accompagnement">Intégrale Academy accompagne la vérification du dossier et les étapes administratives.</FeatureCard><FeatureCard title="Dossier CPF">Le conseiller vous accompagne sur l’éligibilité, le reste à charge éventuel, les délais, l’identité numérique et les justificatifs.</FeatureCard></div></section></>}

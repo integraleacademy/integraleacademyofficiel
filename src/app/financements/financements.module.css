@@ -236,3 +236,5 @@
 .heroCopy > p:not(.heroNote) { max-width: 58ch; font-size: var(--site-body-size); }
 .textLink { font-size: .875rem; min-height: 44px; }
 @media (min-width: 1024px) { .heroCopy h1 { font-size: var(--site-title-size); } }
+
+.fundingCard[id], .personalRow[id], .identityCard h3[id] { scroll-margin-top: calc(var(--site-header-height, 80px) + var(--section-nav-height, 70px) + 20px); }

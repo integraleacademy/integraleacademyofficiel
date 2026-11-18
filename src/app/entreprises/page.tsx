@@ -1,3 +1,5 @@
+import { CatalogueHero } from '@/components/CatalogueHero';
+import { PageSectionNavigation } from '@/components/PageSectionNavigation';
 import { FaqDirectoryLink } from '@/components/FaqDirectoryLink';
 import { TeamPortrait } from '@/components/TeamPortrait';
 import { INFORMATION_REQUEST_URL } from '@/lib/contact-request';
@@ -56,19 +58,19 @@ const challenges = [
 
 const solutions = [
   {
-    id: 'alternance', tone: 'Cyan', label: 'Dispositif 01', icon: 'shield' as const,
+    id: 'alternance', tone: 'Cyan', label: 'Alternance', icon: 'shield' as const,
     title: 'Parcours sécurité en alternance', value: '≈ 4 €/h', valueLabel: 'Coût employeur indicatif, charges et aides incluses',
     points: ['Parcours d’un an', 'APS + A3P + SSIAP 1', 'Environ 1 100 h réelles travaillées', 'OPCO AKTO et aides mobilisables'],
     ideal: 'Agent polyvalent, événementiel, sites sensibles et protection rapprochée.', cta: 'Voir le parcours alternance',
   },
   {
-    id: 'poei', tone: 'Green', label: 'Dispositif 02', icon: 'briefcase' as const,
+    id: 'poei', tone: 'Green', label: 'Préparation à l’embauche', icon: 'briefcase' as const,
     title: 'POEI sécurité privée', value: '100 %', valueLabel: 'Formation pré-embauche financée, sous réserve d’accord',
     points: ['450 h de formation intensive', 'APS + SSIAP 1 et modules métier', 'Présélection des candidats', 'CDI ou CDD de 6 mois minimum à l’issue'],
     ideal: 'Recrutement rapide, besoins massifs et agents formés avant la prise de poste.', cta: 'Découvrir la POEI',
   },
   {
-    id: 'bts-mos', tone: 'Mauve', label: 'Dispositif 03', icon: 'school' as const,
+    id: 'bts-mos', tone: 'Mauve', label: 'Diplôme d’État', icon: 'school' as const,
     title: 'BTS Management opérationnel de la sécurité', value: `${euro(btsHours, 0)} h`, valueLabel: 'Présence réelle en entreprise sur deux ans',
     points: ['15 jours entreprise / 15 jours école', 'Été en entreprise, hors examens', 'Formation financée par OPCO AKTO', 'Futur chef d’équipe ou superviseur'],
     ideal: 'Encadrement, exploitation, évolution interne et préparation de vos futurs managers.', cta: 'Explorer le BTS MOS',
@@ -114,9 +116,9 @@ const siteSkills = [
 ];
 
 const contacts = [
-  { portrait: 'cassandre' as const, contactLabel: 'Cassandre, Responsable commercial', name: 'Cassandre MENARD', role: 'Responsable commercial', email: 'cassandre@integraleacademy.com', phone: '04 87 83 06 16', phoneHref: '+33487830616', mobile: '07 43 58 22 64', mobileHref: '+33743582264' },
-  { portrait: 'aurelie' as const, contactLabel: 'Aurélie, Responsable des BTS', name: 'Aurélie BAYARD-CHAUSSEZ', role: 'Responsable des BTS · Relations clients', email: 'aurelie@integraleacademy.com', phone: '04 87 83 06 15', phoneHref: '+33487830615', mobile: '07 69 39 04 57', mobileHref: '+33769390457' },
-  { portrait: 'clement' as const, contactLabel: 'Clément', name: 'Clément VAILLANT', role: 'Directeur général', email: 'clement@integraleacademy.com', phone: '04 87 83 06 14', phoneHref: '+33487830614', mobile: '06 65 24 52 71', mobileHref: '+33665245271' },
+  { portrait: 'cassandre' as const, name: 'Cassandre MENARD', role: 'Responsable commerciale', email: 'cassandre@integraleacademy.com', phone: '04 87 83 06 16', phoneHref: '+33487830616', mobile: '07 43 58 22 64', mobileHref: '+33743582264' },
+  { portrait: 'aurelie' as const, name: 'Aurélie BAYARD-CHAUSSEZ', role: 'Responsable des BTS · Relations clients', email: 'aurelie@integraleacademy.com', phone: '04 87 83 06 15', phoneHref: '+33487830615', mobile: '07 69 39 04 57', mobileHref: '+33769390457' },
+  { portrait: 'clement' as const, name: 'Clément VAILLANT', role: 'Directeur général', email: 'clement@integraleacademy.com' },
 ];
 
 const poeiProgram = [
@@ -151,60 +153,21 @@ const catalog = [
 
 export default function EntreprisesPage() {
   return <div className={styles.page}>
-    <section className={styles.hero} data-page-hero aria-labelledby="entreprises-title">
-      <div className={styles.honeycomb} aria-hidden="true" />
-      <div className={styles.container}>
-        <div className={styles.heroInner}>
-          <div className={styles.heroCopy}>
-            <span className={styles.eyebrow}><span /> Solutions entreprises · Sécurité privée</span>
-            <h1 id="entreprises-title">Recruter, former et faire évoluer vos futurs professionnels de la <em>sécurité privée</em></h1>
-            <p>Des solutions clés en main pour renforcer vos équipes. Nous trouvons les candidats, nous les formons, nous vous accompagnons.</p>
-            <div className={styles.heroActions}>
-              <Link href="#solutions" className={styles.primaryButton}>Découvrir les 3 solutions <Icon name="arrow" /></Link>
-              <a href="#contact-entreprises" className={styles.secondaryButton}>Parlons de vos besoins <Icon name="arrow" /></a>
-            </div>
-            <a className={styles.brochureLink} href={INFORMATION_REQUEST_URL} target="_blank" rel="noopener noreferrer"><Icon name="document" /> Consulter la brochure entreprises · PDF, 20 pages<span className="sr-only"> (nouvel onglet)</span></a>
-            <div className={styles.heroTags}><span><Icon name="check" />Sourcing candidats</span><span><Icon name="check" />Gestion administrative</span><span><Icon name="check" />Suivi CNAPS</span></div>
-          </div>
-          <figure className={styles.heroArtwork}>
-            <img src="/images/aps/manuel/equipe.webp" alt="Deux agents de sécurité coordonnent leurs missions sur un site logistique." width="1536" height="1024" fetchPriority="high" />
-            <figcaption><strong>Vos équipes de demain.</strong><span>Un seul partenaire, du recrutement à la montée en compétences.</span><div className={styles.artworkTags}><span>Alternance</span><span>POEI</span><span>BTS MOS</span></div></figcaption>
-          </figure>
-        </div>
-        <div className={styles.heroStats}>
-          <div><strong>+1 200</strong><span>stagiaires formés en 5 ans</span></div>
-          <div><strong>3 dispositifs</strong><span>pour vos besoins de recrutement</span></div>
-          <div><strong>12 max.</strong><span>stagiaires maximum par session</span></div>
-          <div><strong>Qualiopi</strong><span>organisme certifié</span></div>
-        </div>
-      </div>
-    </section>
-
-    <nav className={styles.sectionNav} aria-label="Les solutions entreprises">
-      <div className={styles.container}>
-        <Link href="#alternance"><i className={styles.dotCyan} />Alternance sécurité</Link>
-        <Link href="#poei"><i className={styles.dotGreen} />POEI</Link>
-        <Link href="#bts-mos"><i className={styles.dotMauve} />BTS MOS</Link>
-        <Link href="#accompagnement">Notre accompagnement</Link>
-        <a href={INFORMATION_REQUEST_URL} target="_blank" rel="noopener noreferrer">La brochure<span className="sr-only"> (nouvel onglet)</span></a>
-        <Link href="#contact-entreprises">Votre projet <Icon name="arrow" /></Link>
-      </div>
-    </nav>
-
-    <section className={styles.challengesSection} aria-labelledby="challenges-title">
-      <div className={styles.container}>
-        <div className={styles.sectionHeading}><span className={styles.sectionEyebrow}>Vos enjeux, notre mission</span><h2 id="challenges-title">Des problématiques concrètes.<br /><em>Des solutions immédiates</em></h2><p>Recrutement difficile, turn-over, manque de profils qualifiés… Construisons ensemble une équipe qui répond aux réalités de votre terrain.</p></div>
-        <div className={styles.challengesGrid}>{challenges.map((challenge) => <article key={challenge.title} className={styles.challengeCard}>
-          <span className={styles.challengeIcon}><Icon name={challenge.icon} /></span><div><h3>{challenge.title}</h3><p>{challenge.text}</p></div>
-        </article>)}</div>
-        <div className={styles.expertiseStrip} aria-label="Nos professionnels formés">{expertise.map((item) => <div key={item.label}><strong>{item.count}</strong><span>{item.label}</span></div>)}</div>
-        <p className={styles.schoolLocation}>Notre siège : <strong>54, chemin du Carreou, 83480 Puget-sur-Argens</strong>. Entre Cannes et Saint-Tropez, avec un accès direct par l’autoroute A8.</p>
-      </div>
-    </section>
+    <CatalogueHero
+      id="entreprises-title"
+      title={<>Recrutez et formez <em>vos équipes de sécurité</em></>}
+      description="Vous recrutez un agent, préparez une embauche ou formez un futur chef d’équipe ? Comparez nos trois parcours et échangez avec l’équipe qui accompagne votre entreprise."
+      artwork={{ src: '/images/aps/manuel/equipe.webp', alt: 'Deux agents de sécurité coordonnent le contrôle des accès à un site.' }}
+      actions={[{ label: 'Comparer les trois solutions', href: '#solutions' }, { label: 'Parler de mon recrutement', href: '#contact-entreprises' }]}
+    />
+    <PageSectionNavigation label="Entreprises" ariaLabel="Les solutions entreprises" chapters={[
+      ['solutions', 'Les solutions'], ['alternance', 'Alternance'], ['poei', 'POEI'], ['bts-mos', 'BTS MOS'],
+      ['accompagnement', 'Accompagnement'], ['brochure-entreprises', 'Brochure'], ['contact-entreprises', 'Vos contacts'],
+    ]} />
 
     <section id="solutions" className={styles.solutionsSection} aria-labelledby="solutions-title">
       <div className={styles.container}>
-        <div className={styles.sectionHeading}><span className={styles.sectionEyebrow}>À chaque besoin, sa solution</span><h2 id="solutions-title">Trois façons de faire<br /><em>grandir vos équipes</em></h2><p>Un agent polyvalent, un recrutement avant embauche ou un futur chef d’équipe : choisissez le dispositif adapté à votre projet.</p></div>
+        <div className={styles.sectionHeading}><span className={styles.sectionEyebrow}>À chaque besoin, sa solution</span><h2 id="solutions-title">Quelle solution pour <em>votre recrutement ?</em></h2><p>Un agent polyvalent, un recrutement avant embauche ou un futur chef d’équipe : choisissez le dispositif adapté à votre projet.</p></div>
         <div className={styles.solutionsGrid}>{solutions.map((solution) => <article key={solution.id} className={`${styles.solutionCard} ${styles[`solution${solution.tone}`]}`}>
           <div className={styles.solutionTop}><span className={styles.solutionLabel}>{solution.label}</span><Icon name={solution.icon} /></div>
           <h3>{solution.title}</h3>
@@ -288,6 +251,17 @@ export default function EntreprisesPage() {
       </div>
     </section>
 
+    <section className={styles.challengesSection} aria-labelledby="challenges-title">
+      <div className={styles.container}>
+        <div className={styles.sectionHeading}><span className={styles.sectionEyebrow}>Vos enjeux, notre mission</span><h2 id="challenges-title">Des problématiques concrètes.<br /><em>Des solutions immédiates</em></h2><p>Recrutement difficile, turn-over, manque de profils qualifiés… Construisons ensemble une équipe qui répond aux réalités de votre terrain.</p></div>
+        <div className={styles.challengesGrid}>{challenges.map((challenge) => <article key={challenge.title} className={styles.challengeCard}>
+          <span className={styles.challengeIcon}><Icon name={challenge.icon} /></span><div><h3>{challenge.title}</h3><p>{challenge.text}</p></div>
+        </article>)}</div>
+        <div className={styles.expertiseStrip} aria-label="Nos professionnels formés">{expertise.map((item) => <div key={item.label}><strong>{item.count}</strong><span>{item.label}</span></div>)}</div>
+        <p className={styles.schoolLocation}>Notre siège : <strong>54, chemin du Carreou, 83480 Puget-sur-Argens</strong>. Entre Cannes et Saint-Tropez, avec un accès direct par l’autoroute A8.</p>
+      </div>
+    </section>
+
     <section id="accompagnement" className={styles.supportSection} aria-labelledby="support-title">
       <div className={styles.container}>
         <div className={styles.sectionHeading}><span className={styles.sectionEyebrow}>Un accompagnement de A à Z</span><h2 id="support-title">Vous vous concentrez sur le terrain.<br /><em>Nous simplifions le reste</em></h2><p>Depuis 2020, Intégrale Academy accompagne les entreprises de sécurité privée dans le recrutement, la formation et la montée en compétences de leurs équipes.</p></div>
@@ -300,14 +274,18 @@ export default function EntreprisesPage() {
     </section>
 
     <FaqDirectoryLink embedded id="diagnostic" theme="gold" />
-    <div className={styles.brochureWrap}>
-      <aside id="brochure-entreprises" className={`${styles.diagnosticCard} ${styles.brochureCard}`} aria-labelledby="brochure-title">
-          <span className={styles.ribbon}>Le dossier entreprises</span><h3 id="brochure-title">Toutes nos solutions,<br />à portée de main</h3>
-          <a href={INFORMATION_REQUEST_URL} target="_blank" rel="noopener noreferrer" className={styles.brochureCover}><img src="/images/entreprises/brochure-entreprises-2026-10.webp" alt="Couverture de la brochure entreprises Intégrale Academy : recruter, former et faire évoluer vos futurs professionnels de la sécurité privée." width="1050" height="799" loading="lazy" /><span className="sr-only"> (nouvel onglet)</span></a>
-          <p>Les trois dispositifs, les programmes, les calendriers et les simulations pour préparer votre prochain recrutement.</p>
-          <a href={INFORMATION_REQUEST_URL} target="_blank" rel="noopener noreferrer" className={styles.primaryButton} data-academy-action="brochure">Recevoir la brochure <Icon name="document" /><span className="sr-only"> (nouvel onglet)</span></a><small>La demande s’effectue via notre formulaire, dans un nouvel onglet.</small>
-        </aside>
-    </div>
+    <aside id="brochure-entreprises" className={styles.brochureWrap} aria-labelledby="brochure-title">
+      <div className={styles.brochurePanel}>
+        <a href={INFORMATION_REQUEST_URL} target="_blank" rel="noopener noreferrer" className={styles.coverLink} aria-label="Demander la brochure entreprises (nouvel onglet)">
+          <img src="/images/entreprises/brochure-entreprises-2026-10.webp" alt="Couverture de la brochure entreprises Intégrale Academy." width="1050" height="799" loading="lazy" />
+        </a>
+        <div className={styles.brochureText}>
+          <h2 id="brochure-title">La brochure entreprises</h2>
+          <p>Retrouvez les programmes, les calendriers et les simulations de coût des trois dispositifs dans un PDF de 20 pages.</p>
+          <a href={INFORMATION_REQUEST_URL} target="_blank" rel="noopener noreferrer" className={styles.primaryButton} data-academy-action="brochure">Recevoir la brochure <Icon name="document" /><span className="sr-only"> (nouvel onglet)</span></a>
+        </div>
+      </div>
+    </aside>
 
     <section id="contact-entreprises" className={styles.contactsSection} aria-labelledby="contacts-title">
       <div className={styles.container}>
@@ -315,11 +293,11 @@ export default function EntreprisesPage() {
         <div className={styles.contactsGrid}>{contacts.map((contact) => <article key={contact.email} className={styles.contactCard}>
           <div className={styles.contactPerson}><div className={styles.contactAvatar} aria-hidden="true"><TeamPortrait person={contact.portrait} size={61} className={styles.contactPortrait} /></div><div><h3>{contact.name}</h3><span>{contact.role}</span></div></div>
           <address className={styles.contactDetails}>
-            <a href={`tel:${contact.phoneHref}`}><Icon name="phone" /><span><small>Ligne directe</small><strong>{contact.phone}</strong></span></a>
-            <a href={`tel:${contact.mobileHref}`}><Icon name="phone" /><span><small>Portable</small><strong>{contact.mobile}</strong></span></a>
+            {contact.phoneHref && <a href={`tel:${contact.phoneHref}`}><Icon name="phone" /><span><small>Ligne directe</small><strong>{contact.phone}</strong></span></a>}
+            {contact.mobileHref && <a href={`tel:${contact.mobileHref}`}><Icon name="phone" /><span><small>Portable</small><strong>{contact.mobile}</strong></span></a>}
             <a href={`mailto:${contact.email}`}><Icon name="email" /><span><small>E-mail</small><strong>{contact.email}</strong></span></a>
           </address>
-          <a href={`mailto:${contact.email}?subject=Projet%20de%20recrutement%20en%20entreprise`} className={styles.primaryButton}>Écrire à {contact.contactLabel} <Icon name="arrow" /></a>
+          <a href={`mailto:${contact.email}?subject=Projet%20de%20recrutement%20en%20entreprise`} className={styles.primaryButton}>Écrire à {contact.name.split(' ')[0]} <Icon name="arrow" /></a>
         </article>)}</div>
         <div className={styles.contactFooter}><span>Premier échange gratuit et sans engagement</span><a href="tel:+33422470768">Accueil : 04 22 47 07 68</a><a href="mailto:ecole@integraleacademy.com">ecole@integraleacademy.com</a></div>
       </div>

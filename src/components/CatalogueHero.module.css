@@ -1,0 +1,13 @@
+.hero {
+  padding-block: clamp(2rem, 4.6vw, 4.6rem);
+  background: rgb(var(--background));
+  color: rgb(var(--text-main));
+}
+.hero[data-page-hero] { min-height: 0; }
+.hero h1 { margin: 0; }
+.hero h1 em { animation: none; }
+.artwork { overflow: hidden; border-radius: 1.25rem 1.25rem 1.25rem clamp(2.8rem, 5vw, 5rem); background: rgb(var(--surface)); }
+.artwork img { display: block; width: 100%; height: clamp(16rem, 25vw, 23rem); object-fit: cover; object-position: center 43%; }
+@media (max-width: 900px) {
+  .artwork img { height: clamp(11rem, 42vw, 20rem); }
+}

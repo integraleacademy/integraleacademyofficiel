@@ -36,11 +36,11 @@ export function GlobalContactCTA() {
   const pathname = usePathname();
   const isFinancingPage = pathname?.replace(/\/+$/, '') === '/financements';
   const isBts = pathname?.startsWith('/bts') || pathname === '/dossiersbts';
-  const contactName = isBts ? 'Aurélie, Responsable des BTS' : 'Cassandre, Responsable commercial';
+  const contactName = isBts ? 'Aurélie, Responsable des BTS' : 'Cassandre, Responsable commerciale';
   const contactFullName = isBts ? 'Aurélie BAYARD-CHAUSSEZ' : 'Cassandre';
   const contactRole = isBts
     ? 'Chargée des relations clients — Responsable des BTS'
-    : 'Responsable commercial — Intégrale Academy';
+    : 'Responsable commerciale — Intégrale Academy';
   const directPhoneHref = isBts ? 'tel:+33487830615' : 'tel:+33422470768';
   const directPhoneLabel = isBts ? '04 87 83 06 15' : '04 22 47 07 68';
   const primaryContactHref = isBts ? 'mailto:aurelie@integraleacademy.com?subject=Question%20sur%20un%20BTS' : appointmentFormUrl;

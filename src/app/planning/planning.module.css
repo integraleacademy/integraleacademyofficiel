@@ -178,12 +178,13 @@
   z-index: -1;
   inset: 0 0 0 auto;
   width: 48%;
-  mask-image: linear-gradient(90deg, transparent, #000 43%);
+  overflow: hidden;
+  border-start-start-radius: 20px;
 }
 .summaryArt img { object-fit: cover; object-position: center 50%; }
 .summaryArt[data-course] {
   max-width: 15rem;
-  mask-image: linear-gradient(90deg, transparent, #000 27%);
+
 }
 .summaryArt[data-course] img { object-position: center top; }
 .preview[data-summary] .eyebrow {
@@ -216,6 +217,10 @@
   padding: 22px 27px;
 }
 .previewSummary > p { grid-column: 1 / -1; color: #505761; }
+.sessionHeading { grid-column: 1 / -1; display: flex; align-items: center; gap: .5rem .65rem; }
+.sessionHeading .seatStatus { flex: none; white-space: nowrap; }
+.sessionHeading h3 { min-width: 0; margin: 0; color: #172638; font-size: clamp(1.12rem, 4cqi, 1.4rem); font-weight: 750; line-height: 1.2; letter-spacing: -.035em; }
+.vtcRegistration { grid-column: 1 / -1; margin: 0; padding: .8rem 1rem; border-left: 3px solid #9576a9; background: #f6f2f7; color: #352840; font-size: 1rem; line-height: 1.5; }
 .sessionDates {
   display: flex;
   align-items: center;
@@ -458,4 +463,13 @@
   .resultEnter, .sessionEnter, .countEnter { animation: none !important; }
   .previewChoices button, .formationImage > img, .formationCheck, .calendarRow, .formationCard, .sessionCard { transition: none; }
   .formationCard:hover, .previewChoices button:hover, .sessionCard:hover, .formationCard:hover .formationImage > img { transform: none; }
+}
+
+.calendarLegend .vtcLegend { flex-basis: 100%; }
+.examMarker[data-milestone='I'] { background: #f4e5ca; color: #5a421e; }
+.examMarker[data-milestone='T'], .examMarker[data-milestone='P'] { background: #ede6f4; color: #4d3762; }
+
+@container (max-width: 360px) {
+  .sessionHeading h3 { font-size: 1rem; }
+  .sessionHeading .seatStatus { padding: 4px 7px; font-size: .68rem; }
 }

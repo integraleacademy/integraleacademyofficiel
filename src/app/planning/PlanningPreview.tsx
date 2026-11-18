@@ -70,7 +70,7 @@ export function PlanningPreview({ formations, initialFormation, initialSsiapCour
           <Image src={locationKey ? destinationArtwork[locationKey].src : formation.image} alt="" fill sizes="(max-width: 600px) 42vw, 290px" />
         </div>}
         <div>
-          <p className={styles.eyebrow}>{showSession ? 'Prochaine session' : 'La formation'}</p>
+          <p className={styles.eyebrow}>La formation</p>
           <h2 ref={heading} tabIndex={-1}>{title}</h2>
         </div>
         {formation && <form action="/planning#prochaine-session" method="get" onSubmit={event => { event.preventDefault(); goBack(); }}>

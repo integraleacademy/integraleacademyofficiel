@@ -44,7 +44,7 @@ export const originalArtwork = {
   "sst-parcours": { src: "/images/formation-scenes-manuel/sst-parcours.webp", alt: "Une salariée apprend à repérer un danger avec le référent prévention." },
   "sst-pedagogie": { src: "/images/formation-scenes-manuel/sst-pedagogie.webp", alt: "Des stagiaires SST participent à plusieurs ateliers pratiques encadrés." },
   "vtc-parcours": { src: "/images/formation-scenes-manuel/vtc-parcours.webp", alt: "Une future chauffeuse VTC prépare sa journée avec un formateur près du véhicule." },
-  "desp-initial-parcours": { src: "/images/formation-scenes-manuel/desp-initial-parcours.webp", alt: "Un futur dirigeant de sécurité construit son projet avec une formatrice." },
+  "desp-initial-parcours": { src: "/images/formation-scenes-manuel/desp-initial-parcours.webp", alt: "Un futur dirigeant d’entreprise de sécurité privée construit son projet avec une formatrice." },
   "desp-initial-mission": { src: "/images/formation-scenes-manuel/desp-initial-mission.webp", alt: "Une dirigeante échange avec son responsable d’exploitation sur le développement de l’entreprise." },
   "desp-initial-agrement": { src: "/images/formation-scenes-manuel/desp-initial-agrement.webp", alt: "Un futur dirigeant prépare les pièces de son dossier administratif." },
   "desp-initial-appel-offres": { src: "/images/formation-scenes-manuel/desp-initial-appel-offres.webp", alt: "Une dirigeante prépare une réponse à un appel d’offres avec son équipe." },

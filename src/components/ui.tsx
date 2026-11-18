@@ -219,8 +219,8 @@ export function Header(){
 }
 export function Footer(){
   const footerLinks=[
-    {title:'Formations',links:[['Agent de sécurité','/formations-securite/aps'],['Sécurité incendie','/formations-securite/ssiap'],['Protection rapprochée','/formations-securite/a3p-apr'],['Dirigeant de sécurité','/despvaeouinitial'],['Chauffeur VTC','/vtc'],['BTS en alternance','/bts']]},
-    {title:'Financements',links:[['CPF','/financements/cpf'],['France Travail','/financements/france-travail'],['Alternance','/financements/alternance'],['Toutes les solutions','/financements']]},
+    {title:'Formations',links:[['Agent de sécurité','/formations-securite/aps'],['Sécurité incendie','/formations-securite/ssiap'],['Protection rapprochée','/formations-securite/a3p-apr'],['Dirigeant d’entreprise de sécurité privée','/despvaeouinitial'],['Chauffeur VTC','/vtc'],['BTS en alternance','/bts']]},
+    {title:'Financements',links:[['Financer ma formation','/financements'],['Estimer mon reste à charge','/financements#simulateur']]},
     {title:'L’école',links:[['Notre école','/ecole'],['Nos centres','/centres'],['Planning','/planning'],['Entreprises','/entreprises'],['Questions fréquentes','/faq']]},
   ];
 
@@ -271,8 +271,8 @@ export function Footer(){
         </div>
         <div className={footerStyles.credential}>
           <div className={footerStyles.fundingLogos}>
-            <Link href="/financements/france-travail" aria-label="Financer sa formation avec France Travail"><Image src="/images/financements/france-travail.svg" alt="France Travail" width={386} height={358} className={footerStyles.franceTravailLogo}/></Link>
-            <Link href="/entreprises" aria-label="Financement entreprise et OPCO AKTO"><Image src="/images/financements/akto.svg" alt="AKTO" width={179} height={46} className={footerStyles.aktoLogo}/></Link>
+            <Link href="/financements#france-travail" aria-label="Financer sa formation avec France Travail"><Image src="/images/financements/france-travail.svg" alt="France Travail" width={386} height={358} className={footerStyles.franceTravailLogo}/></Link>
+            <Link href="/financements#entreprise-opco" aria-label="Financement entreprise et OPCO AKTO"><Image src="/images/financements/akto.svg" alt="AKTO" width={179} height={46} className={footerStyles.aktoLogo}/></Link>
           </div>
           <Link href="/financements" className={footerStyles.proofLink}>Les financements <span aria-hidden="true">↗</span></Link>
         </div>

@@ -47,7 +47,7 @@ export const globalFaq = [
   {
     q: 'Que comprend la formation chauffeur VTC tout inclus ?',
     a: 'L’offre complète à 1 500 € prévoit une préparation individualisée de 105 heures estimées. Après la finalisation de l’inscription, vous accédez aux cours de théorie en ligne, aux quiz corrigés et aux annales. Le livre est envoyé par courrier et la conduite se prépare en présentiel avec un formateur sur la Côte d’Azur.\n\n' +
-      'Les frais d’examen et la mise à disposition du véhicule à double commande pour l’épreuve pratique sont inclus dans cette formule. Sur la fiche VTC, le calendrier distingue la date limite de dépôt du dossier, l’épreuve théorique et la période prévue pour la pratique. Votre convocation fixe votre rendez-vous d’examen.',
+      'Les frais d’examen et la mise à disposition du véhicule à double commande pour l’épreuve pratique sont inclus dans cette formule. Sur la fiche VTC, chaque semaine d’examen théorique est associée à une date limite d’inscription en formation et à une semaine d’examen pratique. Votre convocation fixe votre rendez-vous d’examen.',
     links: [
       { href: '/vtc#formule', label: 'Voir la formule VTC tout inclus' },
       { href: '/vtc#examen', label: 'Comprendre l’examen VTC' },
@@ -67,7 +67,7 @@ export const globalFaq = [
       'Les périodes en entreprise font partie du contrat d’alternance, y compris lorsque vous suivez les cours depuis chez vous. Avant de candidater, comparez les semaines d’école et d’entreprise avec votre employeur, vérifiez vos disponibilités pour les cours en direct et consultez les modalités d’examen propres au diplôme.',
     links: [
       { href: '/bts', label: 'Voir les modalités de nos BTS' },
-      { href: '/financements/alternance', label: 'Comprendre l’alternance' },
+      { href: '/financements#alternance', label: 'Comprendre l’alternance' },
     ],
   },
   {
@@ -85,8 +85,8 @@ export const globalFaq = [
       'Avec l’intitulé du parcours et la session souhaitée, l’école peut fournir le programme et un devis. Comparez le prix, le montant confirmé par chaque financeur et l’éventuel reste à payer avant de vous engager. Si vous financez personnellement votre formation, demandez quelles modalités de règlement sont proposées pour ce parcours.',
     links: [
       { href: '/financements', label: 'Explorer les solutions de financement' },
-      { href: '/financements/cpf', label: 'Se renseigner sur le CPF' },
-      { href: '/financements/france-travail', label: 'Préparer une demande France Travail' },
+      { href: '/financements#cpf', label: 'Se renseigner sur le CPF' },
+      { href: '/financements#france-travail', label: 'Préparer une demande France Travail' },
     ],
   },
   {
@@ -119,7 +119,7 @@ export const globalFaq = [
   {
     q: 'Je ne sais pas quelle formation choisir : pouvez-vous m’aider ?',
     a: 'Oui. L’assistant formation de l’accueil permet d’explorer les métiers et de comparer leurs prochaines sessions. Si deux parcours vous intéressent, partez de ce que vous aimeriez faire au quotidien. Accueillir et surveiller un site, accompagner un client en déplacement ou coordonner une équipe correspondent par exemple à des formations différentes.\n\n' +
-      'Pour un avis sur votre situation, préparez votre objectif, votre expérience, la région où vous pouvez suivre les cours et vos disponibilités. Le premier échange est gratuit et sans engagement. Le standard au 04 22 47 07 68 vous oriente vers Aurélie, Responsable des BTS, ou Cassandre, Responsable commercial, selon votre projet.',
+      'Pour un avis sur votre situation, préparez votre objectif, votre expérience, la région où vous pouvez suivre les cours et vos disponibilités. Le premier échange est gratuit et sans engagement. Le standard au 04 22 47 07 68 vous oriente vers Aurélie, Responsable des BTS, ou Cassandre, Responsable commerciale, selon votre projet.',
     links: [
       { href: '/#assistant-orientation', label: 'Utiliser l’assistant d’orientation' },
       { href: '/contact', label: 'Parler de mon projet avec un conseiller' },

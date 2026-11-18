@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { calendarExtent, calendarMonth, calendarPosition, sessionCalendarPosition, sessionInCalendarWindow } from '@/lib/planning-calendar';
 import { formatSessionDate, formatSessionPeriod, inPersonPeriods } from '@/lib/public-sessions';
-import { formatVtcDeadline, formatVtcExamDate } from '@/data/vtc';
+import { formatVtcDeadline, formatVtcExamDate, vtcRegistrationMessage } from '@/data/vtc';
 import styles from './planning.module.css';
 
 const formatMonthYearUtc = new Intl.DateTimeFormat('fr-FR', { month: 'long', year: 'numeric', timeZone: 'UTC' });
@@ -37,7 +37,8 @@ export function PlanningCalendar({ sessions, onSelect, selectedId, themeForSessi
       </div>
     </div>
     <div className={styles.calendarLegend} aria-label="Légende du calendrier">
-      <span><i className={styles.remoteKey} />À distance</span><span><i className={styles.inPersonKey} />En présentiel</span><span><i className={styles.courseKey} />Formation / échéances VTC</span><span><i className={styles.examKey}>E</i>Examen</span>
+      <span><i className={styles.remoteKey} />À distance</span><span><i className={styles.inPersonKey} />En présentiel</span><span><i className={styles.courseKey} />Formation</span><span><i className={styles.examKey}>E</i>Examen</span>
+      {visible.some(session => session.scheduleKind === 'vtc-exam') && <span className={styles.vtcLegend}>VTC · I = inscription en formation, T = semaine de théorie, P = semaine de pratique</span>}
     </div>
     <div key={start} className={`${styles.calendarSheet} ${styles.resultEnter}`}>
       <div className={styles.calendarHeader}>
@@ -53,17 +54,26 @@ export function PlanningCalendar({ sessions, onSelect, selectedId, themeForSessi
             label: 'En présentiel', from: period.start, to: period.end, className: styles.inPersonPhase,
           })),
         ].filter(phase => phase.from && phase.to);
-        const exam = calendarPosition(session.examDate, session.examDate, start, end);
-        return <button key={session.id} type="button" onClick={() => onSelect(session)} className={`${styles.calendarRow} ${themeForSession(session)}`} data-selected={selectedId === session.id || undefined} aria-label={`Voir la session ${title}, ${isVtc ? 'date limite d’inscription : ' + formatVtcDeadline(session.startDate) : formatSessionPeriod(session.startDate, session.endDate)}`} aria-haspopup="dialog">
-          <span className={styles.calendarLabel}><strong><i />{title}</strong><small>{isVtc ? 'Inscription → examens' : formatSessionPeriod(session.startDate, session.endDate)}</small></span>
+        const milestones = isVtc ? [
+          { code: 'I', date: session.startDate, label: 'Inscription en formation · ' + formatVtcDeadline(session.startDate) },
+          { code: 'T', date: session.endDate, label: 'Examen théorique · ' + formatVtcExamDate(session.endDate) },
+          { code: 'P', date: session.examDate, label: 'Examen pratique · ' + formatVtcExamDate(session.examDate) },
+        ] : [{ code: 'E', date: session.examDate, label: 'Examen le ' + formatSessionDate(session.examDate) }];
+        return <button key={session.id} type="button" onClick={() => onSelect(session)} className={`${styles.calendarRow} ${themeForSession(session)}`} data-selected={selectedId === session.id || undefined} aria-label={`Voir la session ${title}, ${isVtc ? vtcRegistrationMessage(session.startDate, session.endDate) : formatSessionPeriod(session.startDate, session.endDate)}`} aria-haspopup="dialog">
+          <span className={styles.calendarLabel}><strong><i />{title}</strong><small>{isVtc ? 'Inscription en formation · ' + formatVtcDeadline(session.startDate) : formatSessionPeriod(session.startDate, session.endDate)}</small></span>
           <span className={styles.calendarTrack}>
             {months.map(month => <i key={month.date} className={styles.monthLine} style={{ left: month.left + '%' }} />)}
-            <span className={styles.courseBar} style={positionStyle(whole)} />
+            {!isVtc && <span className={styles.courseBar} style={positionStyle(whole)} />}
             {phases.map(phase => {
               const position = calendarPosition(phase.from, phase.to, start, end);
               return position ? <span key={phase.label + String(phase.from)} title={`${phase.label} · ${formatSessionPeriod(phase.from, phase.to)}`} className={`${styles.phase} ${phase.className}`} style={positionStyle(position)} /> : null;
             })}
-            {exam ? <span className={styles.examMarker} style={{ left: `clamp(14px, ${exam.left + exam.width / 2}%, calc(100% - 14px))` }} title={isVtc ? 'Examen pratique · ' + formatVtcExamDate(session.examDate) : 'Examen le ' + formatSessionDate(session.examDate)}>E</span> : null}
+            {milestones.map(({ code, date, label }) => {
+              const position = calendarPosition(date, date, start, end);
+              if (!position) return null;
+              const left = `clamp(14px, ${position.left + position.width / 2}%, calc(100% - 14px))`;
+              return <span key={code} className={styles.examMarker} data-milestone={code} style={{ left }} title={label}>{code}</span>;
+            })}
           </span>
           <span className={styles.calendarRowArrow}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12" /></svg></span>
         </button>;

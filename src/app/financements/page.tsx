@@ -36,11 +36,11 @@ const financingChapters = [
   ['contact-financement', 'Parlons-en'],
 ] as const;
 
-const fundingOptions: { icon: IconName; audience: string; title: string; description: string; href: string; cta: string; logo?: { src: string; alt: string } }[] = [
-  { icon: 'cpf', logo: { src: '/images/mon-compte-formation.svg', alt: 'Mon Compte Formation (CPF)' }, audience: 'Vos droits à la formation', title: 'Le CPF', description: 'Utilisez vos droits disponibles pour une formation éligible. Nous vous aidons à vérifier les possibilités et le reste à charge.', href: '/financements/cpf', cta: 'Comprendre le CPF' },
-  { icon: 'briefcase', logo: { src: '/images/financements/france-travail.svg', alt: 'France Travail' }, audience: 'Demandeurs d’emploi', title: 'France Travail', description: 'Présentez votre projet à votre conseiller. Le programme et le devis permettent d’étudier une éventuelle prise en charge.', href: '/financements/france-travail', cta: 'Préparer ma demande' },
-  { icon: 'school', audience: 'Un BTS, une expérience en entreprise', title: 'L’alternance', description: 'Associez formation et emploi, avec une prise en charge liée à votre contrat et une rémunération selon les règles applicables.', href: '/financements/alternance', cta: 'Découvrir l’alternance' },
-  { icon: 'building', logo: { src: '/images/financements/akto.svg', alt: 'AKTO, opérateur de compétences' }, audience: 'Salariés & employeurs', title: 'Entreprise & OPCO', description: 'Construisez votre projet avec votre employeur. AKTO ou votre OPCO peut étudier une prise en charge selon votre branche et les critères applicables.', href: '/entreprises', cta: 'Étudier cette solution' },
+const fundingOptions: { id: string; icon: IconName; audience: string; title: string; description: string; href: string; cta: string; logo?: { src: string; alt: string } }[] = [
+  { id: 'cpf', icon: 'cpf', logo: { src: '/images/mon-compte-formation.svg', alt: 'Mon Compte Formation (CPF)' }, audience: 'Vos droits à la formation', title: 'Le CPF', description: 'Consultez vos droits sur Mon Compte Formation. Pour une formation éligible, notre équipe vous aide à vérifier le montant mobilisable, le reste à charge et les démarches d’identité numérique avant de valider votre dossier.', href: '#identity-title', cta: 'Préparer ma connexion' },
+  { id: 'france-travail', icon: 'briefcase', logo: { src: '/images/financements/france-travail.svg', alt: 'France Travail' }, audience: 'Demandeurs d’emploi', title: 'France Travail', description: 'Parlez de votre projet à votre conseiller avant l’inscription. Nous vous fournissons le programme et le devis de la session choisie. France Travail étudie la demande et vous communique sa décision.', href: '#contact-financement', cta: 'Demander un devis' },
+  { id: 'alternance', icon: 'school', audience: 'Études et emploi', title: 'L’alternance', description: 'Choisissez votre BTS et déposez votre candidature. Une fois l’entreprise d’accueil trouvée, le CFA vous accompagne dans la préparation du contrat et du dossier de prise en charge auprès de l’OPCO.', href: '/bts#formations-bts', cta: 'Choisir mon BTS' },
+  { id: 'entreprise-opco', icon: 'building', logo: { src: '/images/financements/akto.svg', alt: 'AKTO, opérateur de compétences' }, audience: 'Salariés et employeurs', title: 'Entreprise et OPCO', description: 'Demandez un devis pour la formation souhaitée. Votre employeur peut financer le parcours ou solliciter son OPCO, dont AKTO selon la branche. La prise en charge dépend des critères de l’organisme.', href: '#contact-financement', cta: 'Préparer le dossier entreprise' },
 ];
 
 
@@ -78,7 +78,7 @@ export default function FinancementsPage() {
           <p>Découvrez les principaux dispositifs. Nous vérifions ensuite avec vous ceux qui correspondent à votre situation.</p>
         </div>
         <div className={styles.fundingGrid}>
-          {fundingOptions.map((option) => <article className={styles.fundingCard} key={option.title}>
+          {fundingOptions.map((option) => <article id={option.id} className={styles.fundingCard} key={option.id}>
             <div className={styles.fundingHeading}>
               {option.logo ? <div className={styles.fundingBrand}><img src={option.logo.src} alt={option.logo.alt} width="180" height="66" loading="lazy" /></div> : <div className={styles.fundingBrandIcon}><Icon name={option.icon} /></div>}
               <span>{option.audience}</span>
@@ -87,7 +87,7 @@ export default function FinancementsPage() {
             <Link href={option.href}>{option.cta}<Icon name="arrow" /></Link>
           </article>)}
         </div>
-        <div className={styles.personalRow}>
+        <div id="personnel" className={styles.personalRow}>
           <Icon name="wallet" />
           <div><h3>Vous financez vous-même votre formation ?</h3><p>Des facilités de règlement peuvent être étudiées selon la formation et les conditions applicables.</p></div>
           <Link href="#simulateur">Estimer mon budget <Icon name="arrow" /></Link>
@@ -129,9 +129,9 @@ export default function FinancementsPage() {
     <section id="contact-financement" className={styles.contactSection} aria-labelledby="contact-title">
       <div className={styles.container}>
         <div className={styles.contactPanel}>
-          <div><span className={styles.eyebrow}>Le prochain pas, ensemble</span><h2 id="contact-title">Votre projet mérite<br /><em>une conversation</em></h2><p>Expliquez-nous votre situation. Cassandre, Responsable commercial, vous accompagne pour faire le point sur les possibilités de financement.</p></div>
+          <div><span className={styles.eyebrow}>Le prochain pas, ensemble</span><h2 id="contact-title">Votre projet mérite<br /><em>une conversation</em></h2><p>Expliquez-nous votre situation. Cassandre, Responsable commerciale, vous accompagne pour faire le point sur les possibilités de financement.</p></div>
           <div className={styles.contactDetails}>
-            <div className={styles.contactPerson}><span className={styles.contactInitial} aria-hidden="true"><TeamPortrait person="cassandre" size={48} /></span><div><strong>Cassandre</strong><span>Responsable commercial</span></div></div>
+            <div className={styles.contactPerson}><span className={styles.contactInitial} aria-hidden="true"><TeamPortrait person="cassandre" size={48} /></span><div><strong>Cassandre</strong><span>Responsable commerciale</span></div></div>
             <TrainingActionLink href={appointmentFormUrl} className={styles.primaryButton}>Parler de mon financement <Icon name="arrow" /></TrainingActionLink>
             <a href="tel:+33422470768" className={styles.phone}>04 22 47 07 68</a>
             <p>Échange gratuit et sans engagement</p>

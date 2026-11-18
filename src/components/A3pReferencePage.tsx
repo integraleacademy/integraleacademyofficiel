@@ -318,7 +318,7 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
     <div id="faq-a3p"><FaqDirectoryLink embedded theme="green" /></div>
 
     <TrainingReferenceContact
-      description="Cassandre, Responsable commercial, vérifie vos prérequis, vous présente les prochaines dates et étudie les solutions de financement adaptées à votre situation."
+      description="Cassandre, Responsable commerciale, vérifie vos prérequis, vous présente les prochaines dates et étudie les solutions de financement adaptées à votre situation."
       href={a3pContact('rdv-telephonique')}
     />
     <TrainingReferenceMobileBar href={a3pContact('mobile-dossier-a3p')} label="Recevoir le dossier" />

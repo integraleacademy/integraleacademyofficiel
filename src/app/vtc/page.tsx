@@ -11,7 +11,8 @@ import { VtcAutonomousEnrollmentBanner } from '@/components/VtcAutonomousEnrollm
 import { TrainingIllustratedCards, type TrainingIllustratedCard } from '@/components/TrainingIllustratedCards';
 import { TrainingSectionNavigation } from '@/components/TrainingSectionNavigation';
 import { FaqDirectoryLink } from '@/components/FaqDirectoryLink';
-import { formatVtcDeadline, formatVtcExamDate, getUpcomingVtcExamSessions, vtcCourse } from '@/data/vtc';
+import { formatVtcDeadline, formatVtcExamDate, vtcCourse } from '@/data/vtc';
+import { loadPlanningSessions } from '@/lib/planning-sessions';
 import styles from './vtc.module.css';
 
 export const dynamic = 'force-dynamic';
@@ -121,8 +122,11 @@ const prerequisites = [
 ];
 
 
-export default function VtcPage() {
-  const examDates = getUpcomingVtcExamSessions();
+export default async function VtcPage() {
+  const examDates = (await loadPlanningSessions())
+    .filter(session => session.scheduleKind === 'vtc-exam' && session.vtcDates)
+    .map(session => session.vtcDates!)
+    .sort((a, b) => +new Date(a.deadline) - +new Date(b.deadline));
   return <main className={styles.page}>
     <section className={`${styles.hero} isolate`} data-page-hero>
       <div className={styles.heroGlow}/><div className={styles.heroGrid}/>
@@ -211,11 +215,17 @@ export default function VtcPage() {
 
     <section id="dates-tarifs" className={styles.dates}>
       <div className={styles.container}>
-        <div className={styles.datesHeading}><div><span>04 — Prochaines échéances</span><h2>Votre calendrier<br/><em>jusqu’à l’examen</em></h2></div><p>La théorie démarre dès la finalisation de votre inscription. Ces échéances vous permettent ensuite d’organiser votre passage aux épreuves.</p></div>
+        <div className={styles.datesHeading}><div><span>04 — Prochaines échéances</span><h2>Votre calendrier<br/><em>jusqu’à l’examen</em></h2></div><p>Choisissez la semaine de votre examen théorique. Pour y participer, inscrivez-vous en formation avant la date et l’heure indiquées sur la même ligne. Vous pouvez commencer les cours en ligne dès votre inscription.</p></div>
         <div className={styles.dateTable}>
-          <div className={styles.dateHeader}><span>Date limite d’inscription</span><span>Examen théorique</span><span>Examen pratique</span></div>
-          {examDates.map(({deadline,theory,practical},index)=><div className={styles.dateRow} key={deadline}><span><small>Session {index+1} · Date limite d’inscription</small><strong>{formatVtcDeadline(deadline)}</strong></span><span><small>Admissibilité</small><strong>{formatVtcExamDate(theory)}</strong></span><span><small>Admission</small><strong>{formatVtcExamDate(practical)}</strong></span></div>)}
-          {!examDates.length ? <p>Les prochaines dates d’examen seront communiquées prochainement.</p> : null}
+          <div className={styles.dateHeader}><span>Pour passer l’examen théorique</span><span>Inscrivez-vous en formation au plus tard le</span><span>Examen pratique</span></div>
+          {examDates.map(({deadline, theory, practical}) => (
+            <div className={styles.dateRow} key={String(deadline)}>
+              <span><small>Examen théorique</small><strong>{formatVtcExamDate(theory)}</strong></span>
+              <span><small>Inscription en formation au plus tard le</small><strong>{formatVtcDeadline(deadline)}</strong></span>
+              <span><small>Examen pratique</small><strong>{formatVtcExamDate(practical)}</strong></span>
+            </div>
+          ))}
+          {examDates.length === 0 && <p className="p-5">Contactez l’équipe pour connaître les prochaines semaines d’examen.</p>}
         </div>
         <p className={styles.dateNote}>{vtcCourse.examNotice} <a className="underline" href="https://www.cmar-paca.fr/galerie/1/0a500ccd55a994cd8ef5b03c77af67b9.pdf">Calendrier officiel CMA PACA 2027 (PDF)</a></p>
       </div>
@@ -296,8 +306,8 @@ export default function VtcPage() {
     <section className={styles.contact}>
       <div className={styles.container}>
         <div className={styles.contactCard}>
-          <div><span>UNE QUESTION SUR VOTRE PROJET ?</span><h2>Faites le premier pas<br/>vers votre <em>future activité</em></h2><p>Cassandre, Responsable commercial, vérifie votre éligibilité, vous explique le calendrier et vous aide à choisir le financement adapté.</p></div>
-          <aside><TeamPortrait person="cassandre" size={96} alt="Cassandre, Responsable commercial d’Intégrale Academy"/><div><span>VOTRE CONSEILLÈRE</span><h3>Cassandre</h3><p>Responsable commercial</p></div><a href="tel:0422470768">04 22 47 07 68</a><CTA href={contactHref('Être rappelé au sujet de la formation VTC')}>Réserver un échange</CTA></aside>
+          <div><span>UNE QUESTION SUR VOTRE PROJET ?</span><h2>Faites le premier pas<br/>vers votre <em>future activité</em></h2><p>Cassandre, Responsable commerciale, vérifie votre éligibilité, vous explique le calendrier et vous aide à choisir le financement adapté.</p></div>
+          <aside><TeamPortrait person="cassandre" size={96} alt="Cassandre, Responsable commerciale d’Intégrale Academy"/><div><span>VOTRE CONSEILLÈRE</span><h3>Cassandre</h3><p>Responsable commerciale</p></div><a href="tel:0422470768">04 22 47 07 68</a><CTA href={contactHref('Être rappelé au sujet de la formation VTC')}>Réserver un échange</CTA></aside>
         </div>
       </div>
     </section>

@@ -1,4 +1,6 @@
 import { isPublishedCampus } from '@/lib/session-location-filter';
+import { formatVtcExamDate, vtcRegistrationMessage, vtcCourse } from '@/data/vtc';
+import { getVtcPlanningSessions } from '@/lib/planning-data';
 import { PARIS_SESSION_LOCATION } from '@/data/locations';
 import 'server-only';
 import { getSessionSeatAvailability, resolveSessionSeatCapacity } from '@/lib/session-seat-availability';
@@ -61,12 +63,21 @@ export async function listPublicSessions() { return (await listSessions()).filte
 export async function dashboardStats(){const [t,s,l]=await Promise.all([listTrainings(),listSessions(),listLeads()]); return {activeTrainings:t.filter((x:any)=>x.isActive).length,openSessions:s.filter((x:any)=>x.status==='OPEN').length,leadCount:l.length,lastLead:l[0]||null};}
 export async function getRelevantDynamicTrainingData(question:string){
   const slugs=detectTrainingSlugs(question);
-  const sessions=(await listSessions()).filter((s:any)=>isPublishedCampus(s) && s.status!=='HIDDEN' && (!slugs.length || slugs.includes(s.training?.slug))).sort((a:any,b:any)=> (a.status==='OPEN'?-2:a.status==='COMING_SOON'?-1:0) - (b.status==='OPEN'?-2:b.status==='COMING_SOON'?-1:0) || +new Date(a.startDate)- +new Date(b.startDate));
+  const allSessions = await listSessions();
+  const vtc = getVtcPlanningSessions(new Date(), allSessions.filter(s => s.training?.slug === 'vtc'));
+  const sessions=[...allSessions.filter(s => s.training?.slug !== 'vtc'), ...vtc].filter((s:any)=>isPublishedCampus(s) && s.status!=='HIDDEN' && (!slugs.length || slugs.includes(s.training?.slug))).sort((a:any,b:any)=> (a.status==='OPEN'?-2:a.status==='COMING_SOON'?-1:0) - (b.status==='OPEN'?-2:b.status==='COMING_SOON'?-1:0) || +new Date(a.startDate)- +new Date(b.startDate));
   const trainings=(await listTrainings()).filter((t:any)=>!slugs.length || slugs.includes(t.slug));
   const formatDate=(value:any)=>value?new Date(value).toLocaleDateString('fr-FR'):'non précisée';
   const formatPeriod=(start:any,end:any)=>start&&end?`du ${formatDate(start)} au ${formatDate(end)}`:start?`à partir du ${formatDate(start)}`:end?`jusqu’au ${formatDate(end)}`:'non précisée';
   const context=sessions.map((s:any)=>{
     const slug=String(s.training?.slug||'');
+    if (s.scheduleKind === 'vtc-exam') {
+      return [
+        'Formation: Chauffeur VTC', 'Page: /vtc', `Session: ${s.title}`,
+        'Échéance VTC: ' + vtcRegistrationMessage(s.startDate, s.endDate), `Examen pratique: ${formatVtcExamDate(s.examDate)}`,
+        vtcCourse.startDescription, vtcCourse.examNotice, `Tarif: ${s.priceLabel || vtcCourse.priceLabel}`, `Lieu: ${s.location || vtcCourse.location}`,
+      ].join('\n');
+    }
     const hasDeliveryPeriods=slug==='aps'||slug.startsWith('desp-');
     const deliveryPeriods=hasDeliveryPeriods?`\nPrésentiel: ${formatSplitInPersonPeriod(s) ?? formatPeriod(s.inPersonStartDate,s.inPersonEndDate)}\nDistanciel: ${formatPeriod(s.remoteStartDate,s.remoteEndDate)}`:'';
     return `Formation: ${s.training?.name} (${s.training?.title})\nPage: ${s.training?.pageUrl}\nSession: ${s.title}\nDates: du ${formatDate(s.startDate)} au ${formatDate(s.endDate)}${deliveryPeriods}\nExamen: ${s.examDate?formatDate(s.examDate):'non précisé'}\nTarif: ${s.priceLabel} (${s.priceCents} centimes)\nLieu: ${s.location}\nStatut: ${s.status}\nPlaces restantes: ${getSessionSeatAvailability(s).label}\nCapacité maximale de la session: ${resolveSessionSeatCapacity(s)}\nInscription: ${s.registrationUrl}\nFinancement: ${s.fundingNotes||'à vérifier avec l’équipe'}\nNotes publiques: ${s.publicNotes}`;
