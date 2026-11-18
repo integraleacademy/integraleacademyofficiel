@@ -1,14 +1,15 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { BtsTrainingComparisonModal } from '@/components/BtsTrainingComparisonModal';
-import { BtsTrainingGrid } from '@/components/BtsTrainingGrid';
 import { CatalogueHero } from '@/components/CatalogueHero';
 import { CourseJourney } from '@/components/CourseJourney';
 import { TrainingReferenceCampus } from '@/components/TrainingReferenceLayout';
 import { btsHighlights } from '@/data/bts-highlights';
-import { btsRhythms } from '@/data/btsRhythms';
+import { btsArtwork } from '@/data/btsIllustrations';
+import { btsRhythms, type BtsCode } from '@/data/btsRhythms';
 import { originalArtwork } from '@/data/originalArtwork';
 import { createPageMetadata } from '@/lib/seo';
-import carousel from '@/components/TrainingCarousel.module.css';
+import identity from '@/components/BtsIdentity.module.css';
 import styles from './bts.module.css';
 
 export const metadata = createPageMetadata('/bts');
@@ -23,18 +24,36 @@ export default function BtsPage() {
       artwork={originalArtwork['bts-ndrc-parcours']}
       actions={[{ label: 'Découvrir les six BTS', href: '#formations-bts' }, { label: 'Déposer ma candidature', href: admissionsUrl }]}
     />
-    <section id="formations-bts" aria-labelledby="catalogue-bts-title" className={carousel.section}>
-      <div className="page-container">
-        <div className={carousel.heading}>
-          <h2 id="catalogue-bts-title">Quel BTS vous correspond ?</h2>
-          <p>Explorez les six spécialités et comparez leurs débouchés.</p>
-        </div>
-        <BtsTrainingGrid items={btsHighlights} />
-        <div className={carousel.footer}>
-          <p className={carousel.formats}>Une question sur la prise en charge ? <Link href="/financements#alternance">Financer mon BTS <span aria-hidden="true">→</span></Link></p>
-          <div className={carousel.actions}><BtsTrainingComparisonModal items={btsHighlights} className={carousel.secondary} /></div>
-        </div>
-      </div>
+    <section id="formations-bts" aria-labelledby="catalogue-bts-title" className={styles.catalogue}>
+      <header className={styles.catalogueHeading}>
+        <h2 id="catalogue-bts-title">Quel BTS vous correspond ?</h2>
+        <BtsTrainingComparisonModal items={btsHighlights} className={styles.compare} />
+      </header>
+      {btsHighlights.map((bts) => {
+        const artwork = btsArtwork[bts.visual];
+        const rhythm = btsRhythms[bts.visual.toUpperCase() as BtsCode];
+        return (
+          <article key={bts.slug} id={`bts-${bts.visual}`} aria-labelledby={`titre-${bts.visual}`}
+            className={`${styles.band} ${identity.identity}`} data-bts={bts.visual}>
+            <div className={styles.bandInner}>
+              <div className={styles.bandCopy}>
+                <h3 id={`titre-${bts.visual}`}>{bts.shortTitle} <em>{bts.title}</em></h3>
+                <p>{bts.description}</p>
+                <dl className={styles.bandRhythm}>
+                  <dt>Rythme d’alternance</dt><dd>{rhythm.description}</dd>
+                </dl>
+                <Link href={bts.slug} className={styles.discover} data-academy-action="training">
+                  Découvrir le {bts.shortTitle} <span aria-hidden="true">→</span>
+                </Link>
+              </div>
+              <Link href={bts.slug} className={styles.bandArt} aria-label={`Voir la fiche du ${bts.shortTitle}`}>
+                <Image src={artwork.src} alt={artwork.alt} width={960} height={640}
+                  sizes="(max-width: 700px) 94vw, (max-width: 1400px) 45vw, 600px" />
+              </Link>
+            </div>
+          </article>
+        );
+      })}
     </section>
     <CourseJourney course="bts-overview">
       <section id="alternance-bts" className={styles.alternance} aria-labelledby="alternance-title">
@@ -45,6 +64,7 @@ export default function BtsPage() {
             <article><h3>BTS MCO, NDRC, CI, PI et CG</h3><p>{btsRhythms.MCO.description}</p></article>
             <article><h3>Votre candidature</h3><p>L’équipe admissions étudie votre dossier et vous accompagne dans la recherche d’une entreprise et la préparation du contrat.</p><Link href={admissionsUrl}>Commencer mon dossier <span aria-hidden="true">→</span></Link></article>
           </div>
+          <Link className={styles.funding} href="/financements#alternance">Financer mon BTS <span aria-hidden="true">→</span></Link>
         </div>
       </section>
     </CourseJourney>
