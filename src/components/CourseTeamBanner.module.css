@@ -52,7 +52,7 @@
   margin: 0;
   list-style: none;
 }
-.people li { flex: 1 1 8.6rem; min-width: max-content; max-width: 11rem; }
+.people li { flex: 1 1 9.8rem; min-width: 0; max-width: 11rem; }
 .profile {
   min-width: 0;
   display: flex;
@@ -81,7 +81,8 @@
 }
 .portrait {
   display: block;
-  width: min(100%, 5.9rem);
+  width: 5.9rem;
+  max-width: 100%;
   height: auto;
   aspect-ratio: 1;
   border: 3px solid #fffcf5;
@@ -103,12 +104,13 @@
   .intro { text-align: center; }
   .intro a { margin-top: 0; }
   .people { width: min(100%, 58rem); margin-inline: auto; }
-  .portrait { width: min(100%, 4.7rem); border-width: 2px; }
+  .portrait { width: 4.7rem; border-width: 2px; }
 }
 @media (max-width: 600px) {
   .inner { width: calc(100% - 1.5rem); }
-  .people { max-width: 29rem; gap: 1rem .5rem; }
-  .people li { flex: 0 1 calc(50% - .25rem); max-width: none; }
+  .people { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 29rem; gap: 1rem .5rem; }
+  .people li { max-width: none; }
+  .people li:last-child { grid-column: 1 / -1; justify-self: center; }
   .name { font-size: .9rem; }
   .role { font-size: .78rem; }
 }
