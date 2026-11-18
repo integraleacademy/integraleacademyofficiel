@@ -1,3 +1,100 @@
+.catalogue {
+  background: rgb(var(--surface));
+  scroll-margin-top: var(--site-header-height);
+}
+.catalogueHeading, .bandInner {
+  width: var(--site-content-width);
+  margin-inline: auto;
+}
+.catalogueHeading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem 2rem;
+  padding-block: clamp(1.8rem, 3.5vw, 3.25rem);
+}
+.catalogueHeading h2 {
+  font-size: clamp(1.8rem, 3.5vw, 3rem);
+  font-weight: 780;
+  line-height: 1.1;
+  letter-spacing: -.045em;
+}
+.compare, .discover {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .8rem;
+  min-height: 46px;
+  padding: .7rem 1.35rem;
+  border-radius: 2rem;
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+.compare { border: 1px solid currentColor; color: rgb(var(--text-main)); }
+.compare:hover { background: rgb(var(--background)); }
+.band {
+  color: #1c2834;
+  background: rgb(var(--bts-50));
+  border-block-start: 1px solid rgb(var(--bts-200));
+  scroll-margin-top: var(--site-header-height);
+}
+.bandInner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: 'copy art';
+  align-items: center;
+  gap: clamp(2rem, 6vw, 6.5rem);
+  padding-block: clamp(2.25rem, 4.4vw, 4.5rem);
+}
+.band:nth-of-type(even) .bandInner { grid-template-areas: 'art copy'; }
+.bandCopy { grid-area: copy; min-width: 0; }
+.bandCopy h3 {
+  margin: 0;
+  font-size: clamp(2.5rem, 4.2vw, 3.85rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -.045em;
+}
+.bandCopy h3 em {
+  display: block;
+  margin-top: .3rem;
+  color: rgb(var(--bts-800));
+  font: italic 400 clamp(1.55rem, 2.6vw, 2.4rem)/1.12 Georgia, serif;
+  letter-spacing: -.035em;
+  text-wrap: balance;
+}
+.bandCopy > p, .bandRhythm dd {
+  max-width: 52ch;
+  color: #3b4b56;
+  font-size: 1.05rem;
+  line-height: 1.55;
+}
+.bandCopy > p { margin-block: 1rem; }
+.bandRhythm { margin-block: 0 1.35rem; }
+.bandRhythm dt { font-weight: 700; }
+.bandRhythm dd { margin: .15rem 0 0; }
+.discover { background: rgb(var(--bts-800)); color: #fff; }
+.discover:hover { background: rgb(var(--bts-950)); }
+.bandArt {
+  grid-area: art;
+  display: block;
+  overflow: hidden;
+  border-radius: 1.15rem 1.15rem 1.15rem clamp(2.25rem, 4vw, 4rem);
+}
+.bandArt img { display: block; width: 100%; height: auto; aspect-ratio: 1.65; object-fit: cover; }
+.catalogue :is(a, button):focus-visible { outline: 3px solid currentColor; outline-offset: 4px; }
+.catalogue .discover:focus-visible { outline-color: #1c2834; }
+.funding { display: inline-block; margin-top: 1.5rem; font-weight: 700; text-decoration: underline; text-underline-offset: .25rem; }
+@media (max-width: 700px) {
+  .band .bandInner, .band:nth-of-type(even) .bandInner {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: 'copy' 'art';
+    gap: 1.5rem;
+  }
+}
+
 .alternance { padding-block: clamp(2.75rem, 5.5vw, 5rem); background: rgb(var(--surface)); scroll-margin-top: var(--site-header-height); }
 .alternance h2 { font-size: clamp(1.9rem, 3.5vw, 3rem); line-height: 1.12; font-weight: 780; letter-spacing: -.045em; }
 .alternance h2 em { color: rgb(var(--accent-strong)); font: italic 400 1.04em Georgia, serif; }

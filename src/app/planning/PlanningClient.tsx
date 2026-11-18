@@ -95,9 +95,9 @@ const formationFilters: {
     key: 'vtc',
     image: '/images/planning-metiers/vtc.webp',
     filterImage: '/images/formation-scenes-manuel/vtc-parcours.webp',
-    label: 'VTC',
+    label: vtcCourse.label,
     eyebrow: 'Transport de personnes',
-    description: 'Préparer le métier et l’examen VTC',
+    description: 'Préparer les épreuves théorique et pratique',
     category: 'vtc',
     slugs: ['vtc'],
     accent: 'violet',
@@ -123,7 +123,7 @@ const alertOptions: {
     accent: 'orange',
   },
   {
-    title: 'Chauffeur VTC',
+    title: vtcCourse.label,
     label: 'Mobilité',
     description: 'Préparer l’examen et structurer son projet professionnel.',
     category: 'vtc',
@@ -281,7 +281,7 @@ function SessionCard({
       <span aria-hidden="true" className="planning-accent-indicator absolute inset-y-0 left-0 w-1" />
       {isNext ? (
         <span className="absolute left-4 top-0 rounded-b-xl bg-[#101a29] px-3 py-1 text-[9px] font-black uppercase tracking-[.14em] text-white sm:left-5">
-          {isVtcExam ? 'Prochaine échéance VTC' : 'Prochaine session'}
+          {isVtcExam ? vtcCourse.nextExamLabel : 'Prochaine session'}
         </span>
       ) : null}
 
@@ -594,7 +594,7 @@ export function PlanningClient({ initialSessions, initialLocation = 'all', reque
               <em className="text-[#b9820a]">trouvez votre formation</em>
             </h1>
             <p className="mt-6 max-w-2xl text-base font-semibold leading-8 text-[#5f625f] sm:text-lg">
-              Consultez les prochaines sessions en sécurité privée, en sécurité incendie et en VTC. Choisissez votre centre et vérifiez les places disponibles.
+              Retrouvez les prochaines formations en sécurité privée et en sécurité incendie, ainsi que les dates d’examen de chauffeur VTC. Choisissez votre centre et vérifiez les places disponibles.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <a href="#choisir-formation" className="inline-flex items-center justify-center gap-2 rounded-full bg-[#111b2a] px-6 py-4 text-sm font-black text-white transition hover:-translate-y-0.5">

@@ -4,6 +4,8 @@ export { vtcFormation } from './formations';
 export type { Formation } from './formations';
 
 export const vtcCourse = {
+  label: 'Chauffeur VTC',
+  nextExamLabel: 'Prochain examen de chauffeur VTC',
   durationHours: 105,
   priceCents: 150000,
   priceLabel: '1 500 €',

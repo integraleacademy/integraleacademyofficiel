@@ -17,6 +17,7 @@ import { VaeEligibilityModal } from './VaeEligibilityModal';
 import { usePathname } from 'next/navigation';
 import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { securityFormations } from '@/data/formations';
+import { vtcCourse } from '@/data/vtc';
 import { ssiap2Config, ssiap3Config } from '@/data/ssiap-catalogue';
 import { despVaeAdmin } from '@/data/despVae';
 import { createPortal } from 'react-dom';
@@ -43,7 +44,7 @@ const formations: AssistantFormation[] = [
   { key: 'aps', label: 'Agent de sécurité privée (APS)', artwork: '/images/planning-metiers/aps.webp', infoUrl: '/formations-securite/aps', rdvUrl: 'https://assistance-alw9.onrender.com/demande-informations-formations', homeTitle: 'Agent de sécurité', homeSubtitle: 'APS · surveillance' },
   { key: 'a3p', label: 'Agent de protection physique des personnes (A3P)', artwork: '/images/planning-metiers/a3p.webp', infoUrl: '/formations-securite/a3p-apr', rdvUrl: '/contact?formation=a3p&type=rdv', homeTitle: 'Agent de protection', homeSubtitle: 'A3P · APR' },
   { key: 'desp', label: 'Dirigeant d’entreprise de sécurité (DESP)', artwork: '/images/planning-metiers/dirigeant.webp', infoUrl: '/despvaeouinitial', rdvUrl: '/contact?formation=desp&type=rdv', homeTitle: 'Dirigeant d’entreprise', homeSubtitle: 'Initial · VAE' },
-  { key: 'vtc', label: 'Chauffeur VTC', artwork: '/images/planning-metiers/vtc.webp', infoUrl: '/vtc', rdvUrl: '/contact?formation=vtc&type=rdv', homeTitle: 'Chauffeur VTC', homeSubtitle: 'Théorie · pratique' },
+  { key: 'vtc', label: vtcCourse.label, artwork: '/images/planning-metiers/vtc.webp', infoUrl: '/vtc', rdvUrl: '/contact?formation=vtc&type=rdv', homeTitle: vtcCourse.label, homeSubtitle: 'Théorie · pratique' },
   { key: 'bts', label: 'Un BTS en alternance', artwork: '/images/planning-metiers/bts.webp', infoUrl: '/bts', rdvUrl: '/contact?formation=bts&type=rdv', homeTitle: 'Étudiant en BTS', homeSubtitle: 'Alternance · diplôme' },
 ];
 
@@ -79,7 +80,7 @@ const formationDetails: Record<FormationKey, AssistantFormationDetails> = {
   aps: { title: 'Formation Agent de sécurité privée (APS)', shortLabel: 'APS', sessionSlugs: ['aps'], price: apsFormation?.price || 'Tarif sur demande', keyPoints: ['Format : Hybride (Distanciel + Présentiel) · 51 h à distance + 124 h en présentiel', `Durée : ${apsFormation?.duration || '175 heures au total'}`, `Lieu : ${apsFormation?.locations || 'Puget-sur-Argens, Côte d’Azur'}`, `Certification : ${apsFormation?.certification || 'TFP APS · RNCP n°36648 · niveau 3'}`, 'Examen final en présentiel : QCU contextualisés + deux mises en situation individuelles', `Financements : ${apsFormation?.financing || 'CPF, France Travail ou paiement en plusieurs fois'}`] },
   a3p: { title: 'Formation Agent de protection physique des personnes (A3P)', shortLabel: 'A3P', sessionSlugs: ['a3p', 'a3p-apr', 'apr'], price: '4 250 € TTC', keyPoints: ['Formation en présentiel orientée protection rapprochée', 'Durée : 9 semaines · 328 heures hors examen, dont 92 h 50 de pratique', 'Lieu : Puget-sur-Argens · hébergement collectif possible sur demande', 'Certification : TFP A3P · RNCP n°38002 · CNAPS', 'Évaluations théoriques et mises en situation professionnelles', 'Financements : CPF, France Travail et facilités de paiement selon dossier'] },
   desp: { title: 'Formation Dirigeant d’entreprise de sécurité privée (DESP)', shortLabel: 'DESP', sessionSlugs: ['desp', 'desp-dssp', 'desp-initial'], price: '4 350 € TTC initial · 3 850 € TTC VAE', keyPoints: ['Deux parcours : formation initiale ou validation des acquis de l’expérience (VAE)', 'Durée : initial 7 semaines · 245 heures ; VAE environ 1 mois', 'Lieux : distanciel + Paris ou Puget-sur-Argens selon les sessions', 'Certification : DESP · RNCP n°40385 · agrément dirigeant CNAPS', 'Évaluation : QCU, mises en situation et jury professionnel', 'Financements : CPF, France Travail et facilités de paiement selon dossier'] },
-  vtc: { title: 'Formation Chauffeur VTC', shortLabel: 'VTC', sessionSlugs: ['vtc'], price: '1 500 € tout inclus', keyPoints: ['Formation mixte : théorie en e-learning et pratique en présentiel', 'Durée : 105 heures', 'Pratique : Nice, Cannes, Toulon ou Fréjus', 'Certification : RS n°5637 · agrément préfectoral VTC-26-001', 'Le tarif inclut le livre, la pratique, le véhicule et les frais d’examen', 'Financement CPF selon éligibilité avec accompagnement administratif'] },
+  vtc: { title: 'Formation Chauffeur VTC', shortLabel: vtcCourse.label, sessionSlugs: ['vtc'], price: '1 500 € tout inclus', keyPoints: ['Formation mixte : théorie en e-learning et pratique en présentiel', 'Durée : 105 heures', 'Pratique : Nice, Cannes, Toulon ou Fréjus', 'Certification : RS n°5637 · agrément préfectoral VTC-26-001', 'Le tarif inclut le livre, la pratique, le véhicule et les frais d’examen', 'Financement CPF selon éligibilité avec accompagnement administratif'] },
   bts: { title: 'BTS en alternance', shortLabel: 'BTS', sessionSlugs: ['bts-mos', 'bts-mco'], price: 'Sans frais pour l’apprenti', keyPoints: ['Parcours : MOS, MCO, NDRC, Commerce international, Professions immobilières et Comptabilité-Gestion', 'Durée habituelle : 2 ans en alternance', 'Modalités : présentiel ou distanciel selon le BTS et le dossier', 'Certification : diplôme national de niveau 5 délivré par le Ministère de l’Éducation nationale', 'Admission : niveau bac ou titre équivalent et projet d’alternance', 'Financement : prise en charge par l’entreprise et son OPCO selon le contrat'] },
 };
 
@@ -354,7 +355,7 @@ function FormationAssistantResult({ formation, sessions, hideInfoAction, onNavig
     <section aria-label="Prochaine session" className={styles.session}>
       {next ? <NextSessionSummary session={next} price={price} availability={getSessionSeatAvailability(next, details.capacity ?? 12)} /> :
         <>
-          <div className={planning.sessionHeading}><h3>{key === 'vtc' ? 'Prochain examen VTC' : 'Prochaine formation'}</h3></div>
+          <div className={planning.sessionHeading}><h3>{key === 'vtc' ? vtcCourse.nextExamLabel : 'Prochaine formation'}</h3></div>
           <p className={styles.sessionNote} role="status">{sessions === null ? 'Chargement de la prochaine date…' : 'Contactez notre équipe pour connaître la prochaine date.'}</p>
           <dl className={planning.sessionOffer}><div><dt>Tarif</dt><dd>{details.price}</dd></div></dl>
         </>}

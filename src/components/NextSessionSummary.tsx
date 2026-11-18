@@ -1,7 +1,7 @@
 import { formatSessionDate, formatSessionPeriod, hasDetailedDeliveryPeriods, inPersonPeriods, parisDateKey } from '@/lib/public-sessions';
 import type { toPublicSession } from '@/lib/public-session-data';
 import type { SessionSeatAvailability } from '@/lib/session-seat-availability';
-import { formatVtcExamDate, vtcRegistrationMessage } from '@/data/vtc';
+import { formatVtcExamDate, vtcCourse, vtcRegistrationMessage } from '@/data/vtc';
 import { PlanningIcon as Icon, type PlanningIconName as IconName } from './PlanningIcon';
 import styles from '@/app/planning/planning.module.css';
 
@@ -67,7 +67,7 @@ export function NextSessionSummary({ session, price, availability }: {
 
   return <>
     <div className={styles.sessionHeading}>
-      <h3>{isVtc ? 'Prochain examen VTC' : 'Prochaine formation'}</h3>
+      <h3>{isVtc ? vtcCourse.nextExamLabel : 'Prochaine formation'}</h3>
       {!isVtc && <span className={styles.seatStatus} data-tone={availability.tone} title={availability.estimated ? 'Disponibilité estimée, à confirmer auprès de l’école.' : undefined}>
         {availability.estimated ? `Env. ${availability.label}` : availability.label}
       </span>}

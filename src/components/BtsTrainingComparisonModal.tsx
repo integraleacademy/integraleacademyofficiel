@@ -233,7 +233,7 @@ export function BtsTrainingComparisonModal({ items, className = '' }: { items: B
             <footer className={styles.dialogFooter}>
               <span className={styles.footerMark} aria-hidden="true">?</span>
               <p><strong>Vous hésitez entre plusieurs BTS&nbsp;?</strong> Notre assistant vous aide à identifier le parcours le plus adapté.</p>
-              <Link href="#assistant-orientation" onClick={() => setOpen(false)} className={styles.orientationLink}>
+              <Link href="/#assistant-orientation" onClick={() => setOpen(false)} className={styles.orientationLink}>
                 Être orienté en 2 minutes <span aria-hidden="true">→</span>
               </Link>
             </footer>
