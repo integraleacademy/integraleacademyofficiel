@@ -276,3 +276,24 @@
 @media (max-width: 550px) {
   .phases, .audience ul, .jobList { grid-template-columns: minmax(0, 1fr); }
 }
+
+.landscapeArt { position:relative; width:100%; height:100%; min-width:0; aspect-ratio:3 / 2; }
+.landscapeArt img { object-fit:cover; }
+.missionSteps { display:flex; gap:.5rem 1rem; flex-wrap:wrap; margin-top:.65rem; font-size:.8rem; }
+.missionSteps li { display:flex; align-items:center; gap:.4rem; }
+.missionSteps span { color:var(--course-pale); font-weight:750; }
+.course [id='examen'] h2 em { color:var(--course-pale); }
+.accessibility { display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center; gap:1.5rem; margin-top:2rem; padding:1.4rem 0; border-top:1px solid #cbd8ce; }
+.accessibility h3 { margin-top:.4rem; font-size:1.18rem; font-weight:750; }
+.accessibility div > p:last-child { max-width:78ch; margin-top:.45rem; color:#435667; line-height:1.65; }
+.course .dualTitle { color:var(--course-accent); }
+.course .dualProtection { background:#ecf7ef; border-color:#bddbc7; }
+.dualProtection > span { background:var(--course-accent); }
+.dualImage { width:100%; height:auto; aspect-ratio:3 / 2; margin-block:1rem; border-radius:.9rem; }
+.offerPrice { display:flex; justify-content:center; align-items:baseline; gap:.4rem; flex-wrap:wrap; }
+.offerPrice strong { font-size:1.85rem; color:var(--course-accent); font-weight:800; }
+.offerPrice del { font-size:.9rem; color:#53615a; }
+@media (max-width:700px) {
+  .accessibility { grid-template-columns:minmax(0,1fr); }
+  .accessibility a { justify-self:start; }
+}

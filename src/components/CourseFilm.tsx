@@ -13,7 +13,9 @@ const videos = {
   neo: { id: 'sGZbgi0unGY', duration: '1 min 14', credit: 'Néo · Sacrés Français' },
 } as const;
 
-type Props = { film: keyof typeof videos; title: string; titleAccent?: string; description: string };
+type Props = { film: keyof typeof videos; title: string; titleAccent?: string; description: string; followPageSound?: boolean };
+// Both films in a course share a visitor's choice for the lifetime of that page.
+const pageSound = new WeakMap<Element, { muted: boolean }>();
 let activePlayer: YouTubePlayer | null = null;
 
 function claimPlayer(player: YouTubePlayer) {
@@ -26,7 +28,7 @@ function enableSound(player: YouTubePlayer) {
   player.unMute();
 }
 
-export function CourseFilm({ film, title, titleAccent, description }: Props) {
+export function CourseFilm({ film, title, titleAccent, description, followPageSound = false }: Props) {
   const video = videos[film];
   const portrait = film === 'neo';
   const fullTitle = titleAccent ? `${title} ${titleAccent}` : title;
@@ -43,6 +45,11 @@ export function CourseFilm({ film, title, titleAccent, description }: Props) {
     if (!mount.current || !stage.current) return;
     const host = mount.current;
     const screen = stage.current;
+    const page = screen.closest('[data-course-design]') ?? screen;
+    const preference = (followPageSound && pageSound.get(page)) || { muted: false };
+    if (followPageSound) pageSound.set(page, preference);
+    let waitingForSound = false;
+    let wasAudible = false;
     let frame: HTMLIFrameElement | undefined;
     let player: YouTubePlayer | undefined;
     let ready = false;
@@ -61,7 +68,20 @@ export function CourseFilm({ film, title, titleAccent, description }: Props) {
 
     function updateSoundControl() {
       if (!player || !ready || disposed || failed) return;
-      setSound(!needsPlayGesture && !player.isMuted() && player.getVolume() > 0 ? 'on' : 'off');
+      const audible = !player.isMuted() && player.getVolume() > 0;
+      if (followPageSound && player.getPlayerState() === 1) {
+        if (audible) {
+          waitingForSound = false;
+          preference.muted = false;
+        } else if (wasAudible && !waitingForSound) {
+          // The visitor can also mute the film with YouTube’s own controls.
+          preference.muted = true;
+        } else if (!preference.muted) {
+          waitingForSound = true;
+        }
+        wasAudible = audible;
+      }
+      setSound(!needsPlayGesture && audible ? 'on' : 'off');
     }
 
     function stopWatchingVolume() {
@@ -80,6 +100,9 @@ export function CourseFilm({ film, title, titleAccent, description }: Props) {
       if (disposed || failed) return;
       if (document.hidden || (visibleRatio === 0 && !manual)) {
         stopWatchingVolume();
+        if (followPageSound && frame && !ready) {
+          frame.contentWindow?.postMessage(JSON.stringify({ event: 'command', func: 'pauseVideo', args: [] }), 'https://www.youtube-nocookie.com');
+        }
         if (ready && player && (playRequested || [1, 3].includes(player.getPlayerState()))) {
           playRequested = false;
           pausedOffscreen = true;
@@ -97,6 +120,7 @@ export function CourseFilm({ film, title, titleAccent, description }: Props) {
         frame = document.createElement('iframe');
         const url = new URL(`https://www.youtube-nocookie.com/embed/${video.id}`);
         url.search = new URLSearchParams({
+          ...(followPageSound ? { autoplay: '1', mute: preference.muted ? '1' : '0' } : {}),
           enablejsapi: '1', origin: window.location.origin, playsinline: '1', controls: '1', rel: '0', hl: 'fr',
         }).toString();
         frame.title = fullTitle;
@@ -113,7 +137,8 @@ export function CourseFilm({ film, title, titleAccent, description }: Props) {
               if (disposed) return;
               player = target;
               ready = true;
-              enableSound(target);
+              if (preference.muted) target.mute();
+              else enableSound(target);
               sync();
             },
             onStateChange: ({ target, data }) => {
@@ -133,12 +158,15 @@ export function CourseFilm({ film, title, titleAccent, description }: Props) {
                 resume = true;
               } else if (data === 0 || (data === 2 && !pausedOffscreen)) {
                 resume = false;
+                if (!needsPlayGesture) waitingForSound = false;
               }
             },
             onAutoplayBlocked: ({ target }) => {
               if (disposed || failed) return;
               playRequested = false;
               needsPlayGesture = true;
+              waitingForSound = !preference.muted;
+              wasAudible = false;
               setSound('off');
               if (document.hidden || (!manual && visibleRatio <= .5)) return;
               if (triedMutedPlayback) {
@@ -163,12 +191,35 @@ export function CourseFilm({ film, title, titleAccent, description }: Props) {
           // The native iframe still provides its own play, sound and fullscreen controls.
         });
       } else if (ready && player && !playRequested && ![1, 3].includes(player.getPlayerState())) {
+        if (followPageSound) {
+          if (preference.muted) player.mute();
+          else if (pausedOffscreen && !waitingForSound) enableSound(player);
+        }
         requestPlayback(player);
       }
     }
 
+    function retrySound(event: Event) {
+      if (!event.isTrusted || !waitingForSound || preference.muted || !ready || !player || disposed || failed) return;
+      if (document.hidden || visibleRatio <= .5 || (activePlayer && activePlayer !== player)) return;
+      if (event.target instanceof Element && event.target.closest('[data-film-control]')) return;
+      if (event instanceof KeyboardEvent && (event.repeat || event.metaKey || event.ctrlKey || event.altKey || event.key === 'Escape')) return;
+      // Browsers can require a fresh, trusted gesture in order to upgrade muted autoplay.
+      waitingForSound = false;
+      triedMutedPlayback = false;
+      needsPlayGesture = false;
+      resume = true;
+      enableSound(player);
+      requestPlayback(player);
+    }
+
     changeSound.current = enable => {
       if (!player || !ready || failed) return;
+      if (followPageSound) {
+        preference.muted = !enable;
+        waitingForSound = false;
+        wasAudible = false;
+      }
       if (enable) {
         manual = visibleRatio === 0 && player.getPlayerState() !== 1;
         resume = true;
@@ -188,6 +239,10 @@ export function CourseFilm({ film, title, titleAccent, description }: Props) {
     }, { threshold: [0, .51, 1] });
     observer?.observe(screen);
     document.addEventListener('visibilitychange', sync);
+    if (followPageSound) {
+      document.addEventListener('click', retrySound);
+      document.addEventListener('keydown', retrySound);
+    }
     return () => {
       disposed = true;
       startManually.current = null;
@@ -195,11 +250,13 @@ export function CourseFilm({ film, title, titleAccent, description }: Props) {
       stopWatchingVolume();
       observer?.disconnect();
       document.removeEventListener('visibilitychange', sync);
+      document.removeEventListener('click', retrySound);
+      document.removeEventListener('keydown', retrySound);
       if (activePlayer === player) activePlayer = null;
       player?.destroy();
       host.replaceChildren();
     };
-  }, [video.id, fullTitle]);
+  }, [video.id, fullTitle, followPageSound]);
 
   function playFromPoster(event: MouseEvent<HTMLAnchorElement>) {
     if (display === 'unavailable' || !startManually.current || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
@@ -209,7 +266,7 @@ export function CourseFilm({ film, title, titleAccent, description }: Props) {
 
   const playIcon = <svg aria-hidden="true" width="18" height="18" viewBox="0 0 20 20" fill="currentColor"><path d="M5 3.5v13L16 10z" /></svg>;
   const soundButton = sound !== null && (
-    <button type="button" className={styles.soundButton} aria-pressed={sound === 'on'} onClick={() => changeSound.current?.(sound !== 'on')}>
+    <button type="button" data-film-control="sound" className={styles.soundButton} aria-pressed={sound === 'on'} onClick={() => changeSound.current?.(sound !== 'on')}>
       <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <path d="M11 5 6 9H3v6h3l5 4z" />
         {sound === 'on' ? <path d="M15 9a4 4 0 0 1 0 6m3-9a8 8 0 0 1 0 12" /> : <path d="m16 9 6 6m0-6-6 6" />}

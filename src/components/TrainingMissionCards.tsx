@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import type { ManualIllustration } from '@/data/manualIllustrations';
 
 import { TrainingReferenceMissions } from '@/components/TrainingReferenceLayout';
@@ -8,7 +9,9 @@ export type TrainingMissionCard = {
   description: string;
   illustration: ManualIllustration;
   featured?: boolean;
+  body?: ReactNode;
   imagePosition?: string;
+  landscapeFocus?: string;
 };
 
 export function TrainingMissionCards({ items }: { items: readonly TrainingMissionCard[] }) {

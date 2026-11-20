@@ -6,6 +6,7 @@ const formationCodes: Record<string, string> = {
   aps: 'APS',
   a3p: 'A3P',
   'a3p-apr': 'A3P',
+  'aps-a3p': 'A3P',
   vtc: 'VTC',
   desp: 'DESP_INIT',
   'desp-initial': 'DESP_INIT',

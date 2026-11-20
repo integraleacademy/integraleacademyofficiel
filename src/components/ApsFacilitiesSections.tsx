@@ -1,4 +1,4 @@
-import { TrainingCampusVisit } from './TrainingCampusVisit';
+import { TrainingSchoolWelcome } from './TrainingCampusVisit';
 import { CourseTeamBanner } from './CourseTeamBanner';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -70,10 +70,8 @@ export async function ApsFacilitiesSections({ course = 'aps', children }: { cour
       </div>
     </section>
     <CourseTeamBanner />
-    <TrainingCampusVisit id={schoolId} heading={<>
-      <div><p className={styles.eyebrow}>Votre école sur la Côte d’Azur</p><h2 id={`${schoolId}-title`}>Bienvenue chez<br /><em>Intégrale Academy</em></h2></div><div><p>{isMos ? 'Depuis 2018, notre équipe vous accueille à Puget-sur-Argens. En BTS MOS, vous retrouvez votre promotion dans une école à taille humaine : des salles de cours, des espaces pour travailler ensemble et une équipe qui suit votre projet pendant les deux années. Le parcours 100 % en ligne conserve ses cours en direct en visioconférence.' : 'Depuis 2018, notre équipe vous accueille à Puget-sur-Argens. Des salles de cours aux espaces de pratique, vous apprenez dans une école à taille humaine.'}</p><Link className={styles.schoolLink} href="/ecole">Entrez, on vous fait visiter <span aria-hidden="true">↗</span></Link></div>
-    </>} photos={schoolPhotos} footer={<>
-      <dl><div><dt>Espaces de formation</dt><dd>400 m²</dd></div><div><dt>Pour apprendre & pratiquer</dt><dd>4 salles</dd></div><div><dt>{isMos ? 'Votre parcours BTS' : 'Par session APS'}</dt><dd>{isMos ? '2 ans' : '12 maximum'}</dd></div></dl><Link href="/ecole#equipe">Rencontrer l’équipe <span aria-hidden="true">↗</span></Link>{isMos && <a href="#experience">L’iPad et Londres <span aria-hidden="true">↓</span></a>}
-    </>} />
+    <TrainingSchoolWelcome id={schoolId} photos={schoolPhotos} description={isMos ? 'Depuis 2018, notre équipe vous accueille à Puget-sur-Argens. En BTS MOS, vous retrouvez votre promotion dans une école à taille humaine : des salles de cours, des espaces pour travailler ensemble et une équipe qui suit votre projet pendant les deux années. Le parcours 100 % en ligne conserve ses cours en direct en visioconférence.' : 'Depuis 2018, notre équipe vous accueille à Puget-sur-Argens. Des salles de cours aux espaces de pratique, vous apprenez dans une école à taille humaine.'}
+      groupLabel={isMos ? 'Votre parcours BTS' : 'Par session APS'} groupSize={isMos ? '2 ans' : '12 maximum'}
+      extraFooter={isMos && <a href="#experience">L’iPad et Londres <span aria-hidden="true">↓</span></a>} />
   </>;
 }

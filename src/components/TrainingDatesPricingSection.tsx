@@ -45,6 +45,7 @@ type TrainingDatesPricingSectionProps = {
   intro?: ReactNode;
   benefits?: string[];
   showDeliveryPeriods?: boolean;
+  deliveryMode?: 'hybrid' | 'in-person';
   remotePeriodFallback?: string;
   inPersonPeriodFallback?: string;
   initialSessionLimit?: number;
@@ -201,6 +202,7 @@ export function TrainingDatesPricingSection({
   intro = 'Les dates, examens, tarifs et places restantes proviennent des informations enregistrées par l’administration.',
   benefits = defaultBenefits,
   showDeliveryPeriods = false,
+  deliveryMode,
   remotePeriodFallback = 'Dates à confirmer',
   inPersonPeriodFallback = 'Dates à confirmer',
   initialSessionLimit = 2,
@@ -239,6 +241,7 @@ export function TrainingDatesPricingSection({
         theme={theme}
         sessionTheme={sessionTheme}
         showDeliveryPeriods={showDeliveryPeriods}
+        deliveryMode={deliveryMode}
         remotePeriodFallback={remotePeriodFallback}
         inPersonPeriodFallback={inPersonPeriodFallback}
         defaultLocation={defaultLocation}

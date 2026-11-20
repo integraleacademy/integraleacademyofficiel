@@ -2,7 +2,7 @@
 
 import { TrainingActionLink } from '@/components/TrainingActionLink';
 import { useMemo, useState } from 'react';
-import { formatSessionPeriod, formatSplitInPersonPeriod } from '@/lib/public-sessions';
+import { formatSessionPeriod, formatSplitInPersonPeriod, inPersonPeriods } from '@/lib/public-sessions';
 import { getSessionSeatAvailability, resolveSessionSeatCapacity } from '@/lib/session-seat-availability';
 import { sessionLocationFilters, sessionMatchesLocation, type SessionLocationFilterKey } from '@/lib/session-location-filter';
 import { formatTrainingPrice } from '@/lib/training-price';
@@ -52,6 +52,7 @@ type TrainingSessionCardsProps = {
   theme: TrainingTheme;
   sessionTheme: SessionTheme;
   showDeliveryPeriods: boolean;
+  deliveryMode?: 'hybrid' | 'in-person';
   remotePeriodFallback: string;
   inPersonPeriodFallback: string;
   defaultLocation: string;
@@ -114,7 +115,7 @@ function formatDate(value?: string | null) {
   }).format(date).replace(/^0/, '');
 }
 
-function formatPublicPeriod(startDate?: string | null, endDate?: string | null, fallback = 'Dates à confirmer') {
+function formatPublicPeriod(startDate?: string | Date | null, endDate?: string | Date | null, fallback = 'Dates à confirmer') {
   if (!startDate || !endDate) return fallback;
   const period = formatSessionPeriod(startDate, endDate);
   return period.includes('administration') ? fallback : period;
@@ -141,6 +142,7 @@ function SessionCard({
   theme,
   sessionTheme,
   showDeliveryPeriods,
+  deliveryMode,
   remotePeriodFallback,
   inPersonPeriodFallback,
   defaultLocation,
@@ -156,6 +158,7 @@ function SessionCard({
   theme: TrainingTheme;
   sessionTheme: SessionTheme;
   showDeliveryPeriods: boolean;
+  deliveryMode?: 'hybrid' | 'in-person';
   remotePeriodFallback: string;
   inPersonPeriodFallback: string;
   defaultLocation: string;
@@ -177,7 +180,15 @@ function SessionCard({
     { label: 'À distance', value: formatPublicPeriod(session.remoteStartDate, session.remoteEndDate, remotePeriodFallback), icon: 'screen' as const, confirmed: Boolean(session.remoteStartDate && session.remoteEndDate) },
     { label: 'En présentiel', value: formatSplitInPersonPeriod(session) ?? formatPublicPeriod(session.inPersonStartDate, session.inPersonEndDate, inPersonPeriodFallback), icon: 'location' as const, confirmed: Boolean(session.inPersonStartDate && session.inPersonEndDate) },
   ];
-  const [mainPeriod, ...detailPeriods] = deliveryPeriods;
+  const [mainPeriod, ...hybridPeriods] = deliveryPeriods;
+  const onSite = deliveryMode === 'in-person';
+  const periods = inPersonPeriods(session);
+  const detailPeriods = onSite ? (
+    periods.length ? periods.map(({ start, end }, i) => ({
+      label: periods.length > 1 ? `Présentiel · période ${i + 1}` : 'En présentiel',
+      value: formatPublicPeriod(start, end), icon: 'location' as const, confirmed: true,
+    })) : [{ label: 'En présentiel', value: inPersonPeriodFallback, icon: 'location' as const, confirmed: false }]
+  ) : hybridPeriods;
 
   if (compact) return <article data-next-session={index === 0 ? "true" : undefined} aria-label={`${index === 0 ? "Prochaine session" : "Session suivante"} : ${mainPeriod.value}`} className="rounded-[1.5rem] border border-academy-line bg-[#FFFDF8] p-6">
     <div className="flex flex-wrap items-center justify-between gap-3"><p className={`text-[.65rem] font-black uppercase tracking-[.14em] ${sessionTheme.detailIcon}`}>{index === 0 ? 'Prochaine session' : 'Session suivante'}</p><span className={`rounded-full border px-3 py-1.5 text-xs font-bold ${seatAvailability.badgeClassName}`}>{seatAvailability.label}</span></div>
@@ -185,7 +196,7 @@ function SessionCard({
     <p className="mt-4 text-xl font-black leading-snug tracking-tight text-academy-ink">{mainPeriod.value}</p>
     <p className="mt-3 text-sm text-academy-muted">Examen : <strong>{formatDate(session.examDate)}</strong></p>
     <p className="mt-2 text-xs text-academy-muted">{String(session.location || defaultLocation).replace(/\s*\/\s*(?=Côte d[’']Azur)/g, ' · ')}</p>
-    {showDeliveryPeriods && <details className="group/periods mt-5 border-t border-academy-line pt-4"><summary className={`flex min-h-10 cursor-pointer list-none items-center justify-between gap-4 text-xs font-bold ${sessionTheme.detailIcon} [&::-webkit-details-marker]:hidden`}><span>Calendrier à distance & en présentiel</span><span className="text-lg transition group-open/periods:rotate-45" aria-hidden="true">+</span></summary><dl className="mt-3 grid gap-4 sm:grid-cols-2">{detailPeriods.map(period => <div key={period.label}><dt className="text-[.65rem] font-bold uppercase tracking-wider text-academy-muted">{period.label}</dt><dd className="mt-1 text-sm font-bold leading-relaxed text-academy-ink">{period.value}</dd></div>)}</dl></details>}
+    {showDeliveryPeriods && <details className="group/periods mt-5 border-t border-academy-line pt-4"><summary className={`flex min-h-10 cursor-pointer list-none items-center justify-between gap-4 text-xs font-bold ${sessionTheme.detailIcon} [&::-webkit-details-marker]:hidden`}><span>{onSite ? 'Calendrier en présentiel' : 'Calendrier à distance & en présentiel'}</span><span className="text-lg transition group-open/periods:rotate-45" aria-hidden="true">+</span></summary><dl className="mt-3 grid gap-4 sm:grid-cols-2">{detailPeriods.map(period => <div key={period.label}><dt className="text-[.65rem] font-bold uppercase tracking-wider text-academy-muted">{period.label}</dt><dd className="mt-1 text-sm font-bold leading-relaxed text-academy-ink">{period.value}</dd></div>)}</dl></details>}
     <div className="mt-5 flex flex-wrap items-center justify-between gap-4">{showSessionPrice && <strong className="text-2xl">{formatTrainingPrice(session, defaultPrice)}</strong>}<ActionLink action={{ href: session.registrationHref, label: actionLabel }} variant={full ? 'light' : theme} /></div>
   </article>;
 
@@ -231,6 +242,7 @@ export function TrainingSessionCards({
   theme,
   sessionTheme,
   showDeliveryPeriods,
+  deliveryMode,
   remotePeriodFallback,
   inPersonPeriodFallback,
   defaultLocation,
@@ -265,6 +277,7 @@ export function TrainingSessionCards({
     theme,
     sessionTheme,
     showDeliveryPeriods,
+    deliveryMode,
     remotePeriodFallback,
     inPersonPeriodFallback,
     defaultLocation,

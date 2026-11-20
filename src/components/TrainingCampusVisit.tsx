@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import Image from 'next/image';
 import type { ReactNode } from 'react';
 import styles from './ApsFacilitiesSections.module.css';
@@ -26,4 +27,14 @@ export function TrainingCampusVisit({ id, heading, photos, footer }: {
       <div className={styles.schoolFooter}>{footer}</div>
     </div>
   </section>;
+}
+
+export function TrainingSchoolWelcome({ id, description, photos, groupLabel, groupSize, extraFooter }: {
+  id: string; description: ReactNode; photos: readonly CampusPhoto[]; groupLabel: string; groupSize: string; extraFooter?: ReactNode;
+}) {
+  return <TrainingCampusVisit id={id} heading={<>
+      <div><p className={styles.eyebrow}>Votre école sur la Côte d’Azur</p><h2 id={`${id}-title`}>Bienvenue chez<br /><em>Intégrale Academy</em></h2></div><div><p>{description}</p><Link className={styles.schoolLink} href="/ecole">Entrez, on vous fait visiter <span aria-hidden="true">↗</span></Link></div>
+    </>} photos={photos} footer={<>
+      <dl><div><dt>Espaces de formation</dt><dd>400 m²</dd></div><div><dt>Pour apprendre & pratiquer</dt><dd>4 salles</dd></div><div><dt>{groupLabel}</dt><dd>{groupSize}</dd></div></dl><Link href="/ecole#equipe">Rencontrer l’équipe <span aria-hidden="true">↗</span></Link>{extraFooter}
+    </>} />;
 }
