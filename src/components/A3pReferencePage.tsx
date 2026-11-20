@@ -1,18 +1,23 @@
 import { CourseBrochureCard } from '@/components/CourseBrochureCard';
-import { TrainingCourseSections, TrainingReferencePage, TrainingReferenceHero, TrainingReferenceSection as Section, TrainingReferenceMissions, TrainingReferenceCampus, TrainingReferenceContact, TrainingReferenceMobileBar } from '@/components/TrainingReferenceLayout';
+import { TrainingCourseSections, TrainingReferencePage, TrainingReferenceHero, TrainingReferenceSection as Section, TrainingReferenceCampus, TrainingReferenceContact, TrainingReferenceMobileBar } from '@/components/TrainingReferenceLayout';
 import { TrainingCourseTestimonials } from '@/components/TrainingCourseTestimonials';
 
 import { originalArtwork } from '@/data/originalArtwork';
 import { CourseJourney } from '@/components/CourseJourney';
 import { serializeCourseJsonLd } from '@/lib/seo';
+import { informationRequestHref } from '@/lib/contact-request';
 import Link from 'next/link';
 import { TrainingHeroSessionCard } from '@/components/TrainingHero';
-import { MissionAnimation } from '@/components/MissionAnimation';
+import { TrainingMissionCards } from './TrainingMissionCards';
+import { TrainingPracticeCards } from './TrainingPracticeCards';
+import { TrainingAdmission, TrainingExamExperience, TrainingOfficialReferences } from './ApsExperienceSections';
+import { TrainingFundingOptions } from './TrainingFundingOptions';
+import reference from './ApsReferencePage.module.css';
+import Image from 'next/image';
 import { FaqDirectoryLink } from '@/components/FaqDirectoryLink';
 import { CourseFilm } from '@/components/CourseFilm';
 import { TrainingSectionNavigation } from '@/components/TrainingSectionNavigation';
 import { TrainingDatesPricingSection } from '@/components/TrainingDatesPricingSection';
-import { TrainingMotionIllustration } from '@/components/TrainingMotionGallery';
 import styles from './A3pReferencePage.module.css';
 import experience from './ApsExperience.module.css';
 import editorial from './ApsEditorial.module.css';
@@ -76,14 +81,14 @@ const programPhases = [
 ];
 
 const practices = [
-  { title: 'Préparation de mission', text: 'Recueillir les informations, définir les moyens et préparer les itinéraires pour organiser une mission complète.', scene: 'mission-map', visualDescription: 'Animation d’un itinéraire préparé avant une mission de protection rapprochée' },
-  { title: 'Analyse des risques', text: 'Identifier les menaces et les vulnérabilités, puis adapter le dispositif à la personne protégée et à son environnement.', scene: 'risk-radar', visualDescription: 'Animation d’un radar identifiant les risques autour de la personne protégée' },
-  { title: 'Reconnaissance de sites', text: 'Étudier les accès, les zones d’arrivée, les cheminements et les solutions de repli avant le déroulement de la mission.', scene: 'site-check', visualDescription: 'Animation d’un site dont les accès et les zones de repli sont vérifiés' },
-  { title: 'Déplacements pédestres', text: 'Travailler les positionnements, les déplacements en équipe et la communication autour de la personne protégée.', scene: 'close-protection', visualDescription: 'Animation d’un dispositif rapproché autour d’une personne protégée' },
-  { title: 'Dispositifs véhiculés', text: 'Préparer les trajets, les arrivées et les départs, puis coordonner les déplacements avec les autres membres du dispositif.', scene: 'secure-vehicle', visualDescription: 'Animation d’un véhicule suivant un itinéraire sécurisé' },
-  { title: 'Scénarios professionnels', text: 'Réagir à une situation imprévue, reconnaître une anomalie et coordonner une réponse adaptée pendant les exercices encadrés.', scene: 'hazard', visualDescription: 'Animation d’une zone présentant un danger à identifier et à sécuriser pendant un scénario professionnel' },
-  { title: 'Secours aux personnes', text: 'S’entraîner aux gestes de secours, à l’alerte et à la coordination de l’intervention dans le cadre des séquences de secourisme.', scene: 'cpr', visualDescription: 'Animation de compressions thoraciques sur une personne allongée pendant un exercice de secours' },
-  { title: 'Briefings & débriefings', text: 'Partager les consignes, répartir les rôles, rendre compte de la mission et analyser les décisions avec le formateur.', scene: 'briefing', visualDescription: 'Animation d’un briefing d’équipe suivi d’un compte rendu de mission' },
+  { title: 'Préparation de mission', text: 'Recueillir les informations, définir les moyens et préparer les itinéraires pour organiser une mission complète.', scene: 'mission-map', icon: '▤', focus: '36%' },
+  { title: 'Analyse des risques', text: 'Identifier les menaces et les vulnérabilités, puis adapter le dispositif à la personne protégée et à son environnement.', scene: 'risk-radar', icon: '◎', focus: '50%' },
+  { title: 'Reconnaissance de sites', text: 'Étudier les accès, les zones d’arrivée, les cheminements et les solutions de repli avant le déroulement de la mission.', scene: 'site-check', icon: '⌖', focus: '36%' },
+  { title: 'Déplacements pédestres', text: 'Travailler les positionnements, les déplacements en équipe et la communication autour de la personne protégée.', scene: 'close-protection', icon: '↗', focus: '34%' },
+  { title: 'Dispositifs véhiculés', text: 'Préparer les trajets, les arrivées et les départs, puis coordonner les déplacements avec les autres membres du dispositif.', scene: 'secure-vehicle', icon: '⇄', focus: '39%' },
+  { title: 'Scénarios professionnels', text: 'Réagir à une situation imprévue, reconnaître une anomalie et coordonner une réponse adaptée pendant les exercices encadrés.', scene: 'hazard', icon: '◇', focus: '36%' },
+  { title: 'Secours aux personnes', text: 'S’entraîner aux gestes de secours, à l’alerte et à la coordination de l’intervention dans le cadre des séquences de secourisme.', scene: 'cpr', icon: '✚', focus: '36%' },
+  { title: 'Briefings & débriefings', text: 'Partager les consignes, répartir les rôles, rendre compte de la mission et analyser les décisions avec le formateur.', scene: 'briefing', icon: '☏', focus: '42%' },
 ] as const;
 
 const examSteps = [
@@ -95,14 +100,15 @@ const examSteps = [
 
 const jobs = ['Agent de protection rapprochée', 'Agent de protection physique des personnes', 'Garde du corps', 'Conducteur de sécurité', 'Agent privé de protection'];
 const salaryFactors = ['Niveau de risque', 'Durée', 'Horaires', 'Mobilité', 'Conduite', 'Langues', 'Expérience', 'Réputation'];
-const registrationFormUrl = 'https://assistance-alw9.onrender.com/demande-informations-formations';
+const registrationFormUrl = informationRequestHref({ formation: a3pConfig.slug });
 const a3pNavigationItems = [
   { label: 'Métier', href: '#metier' },
+  { label: 'Admission', href: '#admission' },
   { label: 'Immersion', href: '#pedagogie' },
   { label: 'Programme', href: '#programme' },
-  { label: 'Examen', href: '#certification' },
+  { label: 'Examen', href: '#examen' },
   { label: 'Dates & tarifs', href: '#dates-tarifs' },
-  { label: 'Inscriptions', href: '#inscription' },
+  { label: 'Inscriptions', href: '#inscription-financement' },
   { label: 'Débouchés', href: '#debouches' },
   { label: 'FAQ', href: '#faq-a3p' },
 ] as const;
@@ -148,59 +154,51 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
     />
 
 
-    <CourseFilm film="a3p" title="Se former à la protection rapprochée"
+    <CourseFilm film="a3p" followPageSound title="Se former à la protection rapprochée"
       description="Découvrez la formation A3P d’Intégrale Academy à Puget-sur-Argens, sur la Côte d’Azur." />
 
     <CourseJourney course="a3p">
       <Section id="metier" label="01 — Le métier" title={<>Protéger, anticiper, <span className="decoration-emerald-500 decoration-[.16em] underline underline-offset-[-.03em]">décider</span></>} intro="L’agent de protection physique des personnes assure la sécurité de dirigeants, personnalités, artistes ou toute personne exposée. Son rôle : préparer la mission, analyser les risques et protéger avec efficacité, proportionnalité et discrétion."
         fullWidthFooter={
-          <CourseFilm film="neo" title="C’est quoi, le métier" titleAccent="de garde du corps ?"
+          <CourseFilm film="neo" followPageSound title="C’est quoi, le métier" titleAccent="de garde du corps ?"
             description="Après vingt ans en protection rapprochée, Véronique forme les futurs gardes du corps chez Intégrale Academy. Au micro de Néo, elle raconte son métier." />
         }>
-        <TrainingReferenceMissions items={métierCards.map(([, title, description], index) => ({ title, description, illustration: [originalArtwork['a3p-mission-preparation'], originalArtwork['a3p-mission-trajets'], a3pArtwork.discretion][index] }))} />
-        <MissionAnimation variant="a3p" className="mt-5" illustration={originalArtwork['a3p-mission-ensemble']} />
-        <div className="mt-5 grid items-center gap-6 rounded-[2rem] bg-[#0D1725] p-6 text-white shadow-card lg:grid-cols-[.8fr_1.2fr]">
-          <div><Label light>Une mission, cinq temps forts</Label><h3 className="mt-3 text-2xl font-black">De la préparation au débriefing</h3><p className="mt-2 text-sm text-white/60">Une lecture concrète du métier avant le détail du programme.</p></div>
-          <div className="flex items-start justify-between gap-2 overflow-x-auto">{['Briefing', 'Reconnaissance', 'Dispositif', 'Déplacement', 'Débriefing'].map((step, index) => <div key={step} className="flex min-w-[5.5rem] flex-1 items-center gap-2"><div className="text-center"><span className="mx-auto grid h-9 w-9 place-items-center rounded-full border border-emerald-300/35 bg-white/[.07] text-xs font-black text-emerald-300">0{index + 1}</span><p className="mt-2 text-[.65rem] font-black">{step}</p></div>{index < 4 && <span className="mb-5 text-emerald-300">→</span>}</div>)}</div>
-        </div>
-        <article className={styles.audience}>
-          <div>
-            <Label>À qui s’adresse la formation ?</Label>
-            <h2>Un parcours ouvert à plusieurs profils</h2>
-          </div>
-          <ul>{audiences.map(audience => <li key={audience}>{audience}</li>)}</ul>
+        <TrainingMissionCards items={[
+          ...métierCards.map(([, title, description], index) => ({
+            title, description, illustration: [originalArtwork['a3p-mission-preparation'], originalArtwork['a3p-mission-trajets'], a3pArtwork.discretion][index],
+            landscapeFocus: '50% 32%',
+          })),
+          { title: 'De la préparation au débriefing', description: 'Une lecture concrète du métier avant le détail du programme.',
+            illustration: originalArtwork['a3p-mission-ensemble'], body: <>
+              <p><strong>Protection en mouvement</strong> · Reconnaître · encadrer · sécuriser</p>
+              <p className="mt-2 text-sm">Mission simulée · Dispositif actif</p>
+              <p className="mt-4 font-bold">Une mission, cinq temps forts</p>
+              <ol className={styles.missionSteps}>{['Briefing', 'Reconnaissance', 'Dispositif', 'Déplacement', 'Débriefing'].map((step, index) => <li key={step}><span>{String(index + 1).padStart(2, '0')}</span>{step}</li>)}</ol>
+            </> },
+        ]} />
+        <article className={`${reference.liftCard} mt-8 grid gap-5 rounded-[2rem] border border-academy-line bg-white p-6 shadow-soft lg:grid-cols-[.7fr_1.3fr] lg:p-8`}>
+          <div><Label>À qui s’adresse la formation ?</Label><h3 className="mt-3 text-3xl font-black">Un parcours ouvert à plusieurs profils</h3></div>
+          <ul className="grid gap-3 sm:grid-cols-2">{audiences.map(audience => <li key={audience} className="flex items-center gap-3 rounded-2xl bg-academy-bg p-4 font-bold">
+            <span aria-hidden="true" className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-emerald-100 text-xs font-black text-emerald-800">✓</span>{audience}
+          </li>)}</ul>
         </article>
       </Section>
     </CourseJourney>
 
     <TrainingCourseSections
       admission={
-        <Section id="admission" label="02 — Admission" title={<>Êtes-vous éligible à la formation A3P&nbsp;?</>}
+        <Section id="admission" label="02 — Admission" title={<>Votre dossier est-il prêt pour l’A3P&nbsp;?</>}
           intro="L’activité est réglementée. L’autorisation ou la carte CNAPS, l’honorabilité, le niveau B1 et, le cas échéant, la situation administrative sont vérifiés avant la rentrée." tone="stone">
-          <div className={experience.admission}>
-            <aside className={experience.admissionLead}>
-              <Label>Candidature personnalisée</Label>
-              <h3>Votre profil est étudié individuellement</h3>
-              <p>Une expérience militaire ou policière est un atout, mais elle n’est pas obligatoire. Nous vérifions votre projet avant l’inscription.</p>
-              <CTA href={a3pContact('etude-profil')}>Faire le point →</CTA>
-            </aside>
-            <div className={experience.requirements}>
-              {a3pPrerequisites.map((item, index) => (
-                <details key={item.title} className={experience.requirement}>
-                  <summary>
-                    <span aria-hidden="true">{index === a3pPrerequisites.length - 1 ? '→' : '✓'}</span>
-                    <h3>{item.title}</h3>
-                    <span className={experience.plus} aria-hidden="true">+</span>
-                  </summary>
-                  <div className={styles.requirementCopy}>
-                    {item.body.map(paragraph => <p key={paragraph}>{paragraph}</p>)}
-                    {item.note && <p><strong>{item.note}</strong></p>}
-                  </div>
-                </details>
-              ))}
-              <CTA href={a3pContact('verification-prerequis')} variant="green" className="mt-6">Vérifier mes prérequis →</CTA>
-            </div>
-          </div>
+          <TrainingAdmission course="a3p" action={a3pContact('etude-profil')} actionLabel="Faire le point"
+            lead={<><h3>Votre projet.<br />Votre dossier.<br /><em>On s’en occupe ensemble</em></h3>
+              <p className={experience.admissionSupport}><strong>Êtes-vous éligible à la formation A3P ?</strong></p>
+              <p><strong>Candidature personnalisée · Votre profil est étudié individuellement</strong></p>
+              <p>Une expérience militaire ou policière est un atout, mais elle n’est pas obligatoire. Nous vérifions votre projet avant l’inscription.</p></>}
+            points={a3pPrerequisites.map(item => ({ title: item.title, content: <div className={styles.requirementCopy}>
+              {item.body.map(paragraph => <p key={paragraph}>{paragraph}</p>)}{item.note && <p><strong>{item.note}</strong></p>}
+            </div> }))}
+            afterPoints={<CTA href={a3pContact('verification-prerequis')} className="mt-6">Vérifier mes prérequis →</CTA>}
+          />
         </Section>
       }
       immersion={
@@ -221,21 +219,20 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
             </div>
           </Section>
           <Section id="pedagogie" label="05 — Immersion & pédagogie" title={<>Un terrain d’entraînement qui <span className="text-emerald-300">ressemble au vrai</span></>} intro="Zones urbaines, axes routiers et environnements variés permettent de construire des exercices réalistes entre Cannes et Saint-Tropez." tone="dark">
-            <div className="grid gap-5 md:grid-cols-2">
-              {practices.map((practice, index) => <article key={practice.title} className={styles.practiceCard}>
-                <span className={styles.practiceNumber}>0{index + 1}</span>
-                <h3>{practice.title}</h3>
-                <p>{practice.text}</p>
-                <div className={`${styles.practiceVisual} ${a3pPracticeArtwork[practice.scene] ? styles.naturalVisual : ''}`}>
-                  <TrainingMotionIllustration kind={practice.scene} theme="green" description={practice.visualDescription} illustration={a3pPracticeArtwork[practice.scene]} natural />
-                </div>
-              </article>)}
+            <TrainingPracticeCards items={practices.map(practice => ({
+              title: practice.title, text: practice.text, icon: practice.icon,
+              visuals: [{ kind: practice.scene, illustration: <div className={styles.landscapeArt}>
+                <Image {...a3pPracticeArtwork[practice.scene]} fill sizes="(max-width: 767px) 90vw, 540px" style={{ objectPosition: `50% ${practice.focus}` }} />
+              </div> }],
+            }))} />
+            <div className="mt-7 grid gap-4 rounded-[1.7rem] border border-emerald-300/25 bg-emerald-400/10 p-6 lg:grid-cols-[auto_1fr] lg:items-center">
+              <span aria-hidden="true" className="grid h-14 w-14 place-items-center rounded-2xl bg-emerald-300 text-2xl font-black text-emerald-950">✓</span>
+              <div><Label light>École de Puget-sur-Argens</Label><h3 className="mt-2 text-xl font-black text-emerald-200">Entraînez-vous dans des configurations variées</h3><p className="mt-2 max-w-4xl leading-7 text-white/70">La progression alterne démonstrations, exercices individuels, travail en équipe, scénarios professionnels et débriefings.</p></div>
             </div>
-            <div className="mt-7 rounded-[1.7rem] border border-emerald-300/25 bg-emerald-400/10 p-6"><Label light>École de Puget-sur-Argens</Label><h3 className="mt-3 text-xl font-black text-emerald-200">Entraînez-vous dans des configurations variées</h3><p className="mt-2 max-w-4xl text-sm font-medium leading-7 text-white/65">La progression alterne démonstrations, exercices individuels, travail en équipe, scénarios professionnels et débriefings.</p></div>
           </Section>
         </>
       }
-      campus={<TrainingReferenceCampus editorialId="ecole-a3p" />}
+      campus={<TrainingReferenceCampus editorialId="ecole-a3p" groupLabel="Par session A3P" />}
       brochure={<CourseBrochureCard course="a3p-apr" />}
       program={
         <Section id="programme" label="04 — Programme" title={<>328 heures pour devenir <em>opérationnel</em></>} intro="Le programme réglementaire comporte neuf unités de valeur : 41 heures de socle de base et 287 heures de spécialité A3P, soit 328 heures hors examen dont 92 heures et 50 minutes de pratique.">
@@ -267,29 +264,36 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
       }
       pack={<IntegraleWelcomePack course="a3p" />}
       exam={
-        <Section id="certification" label="06 — Certification" title={<>Un examen qui valide <em>vos décisions</em></>} intro="L’évaluation vérifie les connaissances réglementaires et votre capacité à préparer puis exécuter une mission de protection physique des personnes." tone="dark">
-          <div className={experience.exam}>
-            {examSteps.map(([title, body], index) => <article key={title} className={styles.examStage}>
-              <span>0{index + 1}</span><h3>{title}</h3><p>{body}</p>
-            </article>)}
-            <div className={experience.examValidation}>
-              <p>Les évaluations pratiques utilisent une grille de critères et conduisent à un résultat « apte » ou « inapte ». La certification est constituée d’un bloc unique : toutes les exigences du métier réglementé doivent être validées.</p>
-            </div>
-          </div>
-          <div className="mt-6 grid gap-3 md:grid-cols-3">{[
-            ['Note ≥ 12/20', 'Unité de valeur acquise', 'bg-emerald-50 text-emerald-900 border-emerald-200'],
-            ['8/20 ≤ note < 12/20', 'Candidat ajourné, nouvelle session d’examen possible', 'bg-amber-50 text-amber-900 border-amber-200'],
-            ['Note < 8/20', 'Module de formation à suivre de nouveau', 'bg-rose-50 text-rose-900 border-rose-200'],
-          ].map(([score, result, colors]) => <article key={score} className={`rounded-2xl border p-5 ${colors}`}><p className="text-xl font-black">{score}</p><p className="mt-2 text-xs font-bold leading-6">{result}</p></article>)}</div>
-          <div className={styles.afterExam}>
-            <Label light>Après réussite</Label>
-            <p><strong>TFP A3P → Demande CNAPS → Carte professionnelle → Exercer</strong></p>
-            <p>La certification permet de justifier l’aptitude professionnelle nécessaire à la demande de carte. La délivrance de la carte reste une décision du CNAPS.</p>
-          </div>
-        </Section>
+        <div id="certification">
+          <Section id="examen" label="06 — Examen" title={<>Un examen qui valide <em>vos décisions</em></>} intro="L’évaluation vérifie les connaissances réglementaires et votre capacité à préparer puis exécuter une mission de protection physique des personnes." tone="dark">
+            <TrainingExamExperience metric="9" suffix=" UV" label="Unités de valeur" description="À valider pour le TFP A3P"
+              theory={<><p className={experience.kicker}>01 · Les connaissances</p><h3>QCU<span>{examSteps[0][0]}</span></h3>
+                <p>{examSteps[0][1]}</p><ul>{[
+                  ['Note ≥ 12/20', 'Unité de valeur acquise'],
+                  ['8/20 ≤ note < 12/20', 'Candidat ajourné, nouvelle session d’examen possible'],
+                  ['Note < 8/20', 'Module de formation à suivre de nouveau'],
+                ].map(([score, result]) => <li key={score}><span><strong>{score}</strong><br />{result}</span></li>)}</ul></>}
+              practice={<><Image src="/images/formation-scenes-manuel/desp-vae-jury.webp" alt="Une candidate présente son dossier devant un jury professionnel." width={1536} height={1024} sizes="(max-width: 800px) 92vw, 740px" />
+                <div><p className={experience.kicker}>02 · La pratique</p><h3>{examSteps[1][0]}</h3>
+                  <div className={experience.examSituations}><p><strong>{examSteps[2][0]}</strong><span>{examSteps[2][1]}</span></p><p><strong>Évaluation en situation</strong><span>{examSteps[1][1]}</span></p></div>
+                </div></>}
+              validation={<><div><p className={experience.kicker}>03 · {examSteps[3][0]}</p><p>{examSteps[3][1]}</p></div><strong>TFP A3P<small>{a3pConfig.level} · {a3pConfig.rncp}</small></strong></>}>
+              <details className={experience.examMore}><summary>Les modalités de l’examen et la suite du parcours <span className={experience.plus} aria-hidden="true">+</span></summary>
+                <div className={experience.examMoreGrid}>
+                  <article><h4>Validation des épreuves</h4><p>Les évaluations pratiques utilisent une grille de critères et conduisent à un résultat « apte » ou « inapte ». La certification est constituée d’un bloc unique : toutes les exigences du métier réglementé doivent être validées.</p></article>
+                  <article><h4>Après réussite</h4><p><strong>TFP A3P → Demande CNAPS → Carte professionnelle → Exercer</strong></p>
+                    <p>La certification permet de justifier l’aptitude professionnelle nécessaire à la demande de carte. La délivrance de la carte reste une décision du CNAPS.</p></article>
+                </div><a href={a3pConfig.rncpUrl} target="_blank" rel="noopener noreferrer">Consulter la fiche officielle du TFP A3P ↗</a>
+              </details>
+            </TrainingExamExperience>
+          </Section>
+        </div>
       }
       dates={
         <TrainingDatesPricingSection
+          compact showDeliveryPeriods deliveryMode="in-person" initialSessionLimit={2}
+          showSessionTitle showSessionPrice={false} underlineDisclosure={false}
+          inPersonPeriodFallback="328 h à l’école · calendrier détaillé à confirmer"
           priceYear={2027}
           id="dates-tarifs"
           eyebrow="08 — Dates & tarifs"
@@ -299,7 +303,6 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
           defaultPrice={a3pConfig.priceLabel}
           defaultLocation={a3pConfig.location}
           priceDescription={`Formation complète de ${a3pConfig.durationHours} · examen final`}
-          benefits={['CPF', 'France Travail', 'Paiement échelonné', 'Hébergement possible']}
           registrationHref={sessionRegistrationHref}
           priceAction={{ href: a3pContact('financement-a3p'), label: 'Étudier mon financement →' }}
           emptyAction={{ href: a3pContact('alerte-session'), label: 'Recevoir les prochaines dates →' }}
@@ -307,21 +310,34 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
       }
       enrollment={
         <>
-          <section id="inscription" className={editorial.enrollment}>
-            <div className={editorial.wrap}>
-              <p className={editorial.kicker}>09 — Inscription</p>
+          <section id="inscription-financement" className={editorial.enrollment}>
+            <div id="inscription" className={editorial.wrap}>
+              <p className={editorial.kicker}>09 — Inscription &amp; financement</p>
               <header className={editorial.intro}><div>
-                <h2>Un parcours vérifié avant la rentrée</h2>
-                <p>L’admission tient compte des délais de financement et d’instruction CNAPS. Il est recommandé d’engager les démarches dès que votre projet est confirmé.</p>
-              </div></header>
+                <h2><span>Du premier appel à votre entrée en formation.</span><span>Nous vous accompagnons de A à Z</span></h2>
+                <p><strong>Un parcours vérifié avant la rentrée</strong><br />L’admission tient compte des délais de financement et d’instruction CNAPS. Il est recommandé d’engager les démarches dès que votre projet est confirmé.</p>
+              </div><CTA href={registrationFormUrl}>Commencer mon inscription →</CTA></header>
               <ol className={editorial.steps}>{a3pEnrollmentSteps.map(([number, title, body]) => (
-                <li key={number}><span className={editorial.stepNumber}>{number}</span><div><h3>{title}</h3><p>{body}</p></div></li>
+                <li key={number}><span className={editorial.stepNumber}>{number.padStart(2, '0')}</span><div><h3>{title}</h3><p>{body}</p>
+                  {number === '1' && <a href={a3pConfig.advisor.phoneHref}>Appeler le {a3pConfig.advisor.phone} →</a>}
+                  {number === '3' && <a href={a3pContact('financement-a3p')}>Étudier mon financement →</a>}
+                </div></li>
               ))}</ol>
-              <div className={editorial.funding}>
-                <div><p className={editorial.kicker}>Accessibilité et handicap</p><h3>Anticipez vos besoins d’aménagement</h3></div>
-                <div className={editorial.identity}><p>Signalez votre situation avant l’inscription. L’équipe étudie avec vous les adaptations possibles au regard des objectifs, des exercices pratiques et des exigences de certification ; si nécessaire, elle vous oriente vers une solution adaptée.</p></div>
-                <div className={editorial.fundingActions}><CTA href={a3pContact('accessibilite-handicap')} variant="outline">Étudier mes besoins →</CTA></div>
-              </div>
+              <article className={editorial.funding}>
+                <div className={editorial.fundingTitle}><p className={editorial.kicker}>Votre financement</p><h3>Préparez votre financement</h3><p className="mt-3 text-sm text-white/80">Simulez votre reste à charge. Estimez le montant restant après vos aides et votre CPF.</p></div>
+                <div className={editorial.identity}><p>Vous envisagez d’utiliser votre CPF ?</p><p>Pour valider votre inscription sur Mon Compte Formation, préparez votre accès FranceConnect+.</p>
+                  <a href="https://www.moncompteformation.gouv.fr/espace-public/france-connect-comment-vous-inscrire-votre-formation" target="_blank" rel="noopener noreferrer">Consulter les démarches sur Mon Compte Formation →</a></div>
+                <div className={editorial.fundingActions}><CTA href={a3pContact('financement-a3p')}>Faire étudier mon financement</CTA><CTA href="/financements#simulateur" variant="light">Ouvrir le simulateur →</CTA></div>
+              </article>
+              <TrainingFundingOptions options={[
+                ['CPF', 'Selon éligibilité, mobilisez les droits disponibles sur votre compte.'],
+                ['France Travail', 'Votre conseiller étudie votre demande de prise en charge selon votre projet.'],
+                ['Employeur ou OPCO', 'Présentez votre projet de formation à votre employeur pour étudier le financement.'],
+                ['Financement personnel', 'Paiement échelonné selon votre dossier. L’équipe vous présente les modalités.'],
+              ]} />
+              <aside className={styles.accessibility}><div><Label>Accessibilité et handicap</Label><h3>Anticipez vos besoins d’aménagement</h3>
+                <p>Signalez votre situation avant l’inscription. L’équipe étudie avec vous les adaptations possibles au regard des objectifs, des exercices pratiques et des exigences de certification ; si nécessaire, elle vous oriente vers une solution adaptée.</p>
+              </div><CTA href={a3pContact('accessibilite-handicap')} variant="light">Étudier mes besoins →</CTA></aside>
             </div>
           </section>
           <Section id="hebergement" label="Hébergement" title="Restez sur place pendant votre formation" intro="Une solution collective peut être proposée à l’école, sous réserve de disponibilité et de réservation préalable." tone="paper">
@@ -336,15 +352,39 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
         </>
       }
       outcomes={
-        <Section id="debouches" label="10 — Débouchés" title="Après le TFP A3P" intro="La certification ne garantit pas un emploi. Le recrutement dépend aussi de l’expérience, du réseau, de la mobilité et des compétences complémentaires." tone="paper">
-          <div className={styles.outcomes}>
-            <ul className={styles.jobList}>{jobs.map(job => <li key={job}>{job}</li>)}</ul>
-            <article className={styles.offer}>
-              <Label light>Parcours recommandé</Label><h2>Double compétence APS + A3P</h2>
-              <p>Élargissez les missions accessibles et renforcez votre polyvalence.</p>
-              <strong>{a3pConfig.apsA3pOffer.priceLabel}</strong>
-              <p>Tarifs individuels 2027 : {a3pConfig.apsA3pOffer.oldPriceLabel} · {a3pConfig.apsA3pOffer.discountLabel}</p>
-              <CTA href={a3pConfig.apsA3pOffer.href} variant="light">Découvrir le parcours →</CTA>
+        <Section id="debouches" label="10 — Débouchés & emploi" title="Après le TFP A3P" intro="La certification ne garantit pas un emploi. Le recrutement dépend aussi de l’expérience, du réseau, de la mobilité et des compétences complémentaires." tone="paper">
+          <div className="mb-8 grid gap-4 md:grid-cols-3">{[
+            ['Les employeurs', 'Travailler en agence', 'Les agences de protection rapprochée et les entreprises de sécurité privée font partie des employeurs du secteur.', 'border-emerald-200 bg-emerald-50'],
+            ['Les missions', 'Accompagner différents clients', 'Dirigeants, personnalités et clients privés peuvent solliciter un accompagnement lors de leurs déplacements.', 'border-sky-200 bg-sky-50'],
+            ['Votre parcours', 'Élargir vos possibilités', 'La double compétence permet aussi de candidater à des missions de prévention et de surveillance.', 'border-yellow-300 bg-yellow-50'],
+          ].map(([label, title, body, color]) => <article key={title} className={`${reference.outcomeCard} rounded-[1.7rem] border p-6 ${color}`}><Label>{label}</Label><h3 className="mt-3 text-2xl font-black">{title}</h3><p className="mt-3 leading-7 text-academy-muted">{body}</p></article>)}</div>
+          <ol className="grid gap-4 md:grid-cols-4">{[
+            ['Réussir le TFP A3P', 'Valider les épreuves'], ['Recevoir le titre de niveau 4', 'Obtenir la certification'],
+            ['Demander la carte CNAPS', 'Constituer le dossier'], ['Commencer à exercer', 'Après délivrance de la carte'],
+          ].map(([title, body], index) => <li key={title} className={`${reference.examCard} rounded-[1.7rem] border border-academy-line bg-white p-5 text-center`}>
+            <span className="mx-auto grid h-11 w-11 place-items-center rounded-full bg-academy-gold font-black">0{index + 1}</span><h3 className="mt-6 text-lg font-black">{title}</h3><p className="mt-2 text-sm text-academy-muted">{body}</p>
+          </li>)}</ol>
+          <div className="mt-5 rounded-[1.4rem] border border-yellow-300 bg-yellow-50 p-4 font-bold text-yellow-900">La délivrance de la carte professionnelle relève du CNAPS.</div>
+          <div className="mt-8 grid gap-5 lg:grid-cols-2">
+            <article className="rounded-[2rem] border border-academy-line bg-white p-6"><Label>Débouchés</Label><h3 className="mt-3 text-3xl font-black">Les métiers accessibles</h3>
+              <ul className="mt-5 grid gap-3 sm:grid-cols-2">{jobs.map((job, index) => <li key={job} className={reference.jobCard}><span className={reference.jobIcon} aria-hidden="true">{['◎', '◉', '◇', '⇄', '⌖'][index]}</span><span className="text-sm font-black leading-5">{job}</span></li>)}</ul>
+            </article>
+            <article id="double-competence" className={reference.dualSkill}>
+              <Label>Parcours recommandé</Label><h3>Double compétence <span className={styles.dualTitle}>A3P + APS</span></h3>
+              <p className={reference.dualIntro}>Élargissez les missions accessibles et renforcez votre polyvalence.</p>
+              <div className={reference.dualPanels}>
+                <div className={styles.dualProtection}><span className={reference.dualLabel}>TFP A3P</span>
+                  <ManualArtwork illustration={{ src: '/images/planning-metiers/a3p.webp', alt: 'Un agent accompagne une cliente lors de son déplacement.' }} className={styles.dualImage} />
+                  <h4>Protéger une personne</h4><p>Accompagner un client dans ses déplacements privés ou professionnels.</p></div>
+                <span aria-hidden="true" className={reference.dualPlus}>+</span>
+                <div className={reference.dualSecurity}><span className={reference.dualLabel}>TFP APS</span>
+                  <ManualArtwork illustration={originalArtwork['aps-metier-site']} className={styles.dualImage} />
+                  <h4>Prévenir &amp; surveiller</h4><p>Rondes, contrôle d’accès, protection des personnes et des biens.</p>
+                  <Link href="/formations-securite/aps" className="mt-2 inline-block text-xs font-bold text-blue-800 underline underline-offset-4">Voir la formation APS ↗</Link></div>
+              </div>
+              <div className={reference.dualFooter}><div className={styles.offerPrice}><strong>{a3pConfig.apsA3pOffer.priceLabel}</strong> TTC <del>{a3pConfig.apsA3pOffer.oldPriceLabel}</del></div>
+                <p>Tarifs individuels 2027 : {a3pConfig.apsA3pOffer.oldPriceLabel} · {a3pConfig.apsA3pOffer.discountLabel}</p>
+                <CTA href={a3pConfig.apsA3pOffer.href} className="mt-4 w-full">Découvrir le parcours →</CTA></div>
             </article>
           </div>
           <article className={experience.workplaces}>
@@ -359,45 +399,22 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
       }
       references={
         <>
-          <Section id="references-rncp" label="07 — Repères officiels" title="Certification, conditions d’exercice et données d’insertion" intro={<>Ces informations complètent la présentation commerciale avec les repères figurant dans la fiche RNCP38002 fournie.</>}>
-            <div className={experience.referenceOverview}>
-              <article className={experience.certificateCard}>
-                <div className={experience.certificateHeading}><div><Label>Identification</Label><h3>TFP A3P · niveau 4</h3></div></div>
-                <dl className={experience.certificationData}>{[
-                  ['Répertoire', a3pConfig.rncp],
-                  ['Certificateurs', 'CPNE / ADEF'],
-                  ['Code ROME', 'K2503'],
-                  ['Code NSF', '344'],
-                  ['Formacode', '42812'],
-                  ['Échéance RNCP', a3pConfig.rncpExpiry],
-                ].map(([term, value]) => <div key={term}><dt>{term}</dt><dd>{value}</dd></div>)}</dl>
-                <a href={a3pConfig.rncpUrl} target="_blank" rel="noopener noreferrer" className={experience.certificateLink}>Consulter la fiche France compétences →</a>
-              </article>
-              <article className={experience.professionCard}>
-                <Label>Réalités du métier</Label>
-                <h3>Des conditions qui varient selon la mission</h3>
-                <ul className={experience.conditions}>{a3pWorkConditions.map(item => <li key={item}>{item}</li>)}</ul>
-              </article>
-            </div>
-            <article className={experience.insertionPanel}>
-              <div className={experience.insertionHeading}><div><Label>Insertion nationale</Label><h3 className="mt-3 text-3xl font-black">Données historiques de la certification</h3></div><p className="max-w-xl">Statistiques nationales France compétences figurant dans la fiche de certification. Elles concernent la certification, pas les résultats propres à Intégrale Academy.</p></div>
-              <div className={experience.statsScroll} tabIndex={0} role="region" aria-label="Données historiques de la certification">
-                <table>
-                  <thead><tr>{['Année', 'Certifiés', 'Insertion globale à 6 mois', 'Métier visé à 6 mois', 'Métier visé à 2 ans'].map(label => <th key={label} scope="col">{label}</th>)}</tr></thead>
-                  <tbody>{a3pInsertionStats.map(row => <tr key={row.year}><th scope="row">{row.year}</th><td>{row.certified}</td><td>{row.global}</td><td>{row.targetJob}</td><td>{row.targetJobTwoYears}</td></tr>)}</tbody>
-                </table>
-              </div>
-              <div className={experience.referenceDetails}><details>
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-black"><span>Autres informations de la fiche RNCP</span><span className={experience.plus} aria-hidden="true">+</span></summary>
-                <div className="mt-5 grid gap-3 border-t border-academy-line pt-5 md:grid-cols-3">
-                  <div className="rounded-2xl bg-academy-bg p-4"><p className="text-xs font-black uppercase tracking-[.12em] text-academy-muted">Voies d’accès recensées</p><p className="mt-2 text-sm font-bold leading-6">Apprentissage, formation continue, contrat de professionnalisation, candidature individuelle et VAE.</p></div>
-                  <div className="rounded-2xl bg-academy-bg p-4"><p className="text-xs font-black uppercase tracking-[.12em] text-academy-muted">Blocs et correspondances</p><p className="mt-2 text-sm font-bold leading-6">{a3pConfig.certificationStructure}. Aucune correspondance déclarée avec une autre certification.</p></div>
-                  <div className="rounded-2xl bg-academy-bg p-4"><p className="text-xs font-black uppercase tracking-[.12em] text-academy-muted">Historique</p><p className="mt-2 text-sm font-bold leading-6">La certification RNCP38002 remplace la certification antérieure RNCP35098.</p></div>
-                </div>
-                <p className="mt-4 text-xs font-semibold leading-5 text-academy-muted">Ces voies sont celles de la certification nationale ; leur disponibilité chez Intégrale Academy doit être confirmée avec l’équipe admissions.</p>
-              </details></div>
-            </article>
-          </Section>
+          <TrainingOfficialReferences course="a3p" number="07" alias="references-rncp"
+            title={<>Un titre reconnu.<br /><em>Des repères concrets</em></>}
+            intro="Certification, conditions d’exercice et données d’insertion"
+            certificateLabel="Identification" qualification="TFP A3P" level={a3pConfig.level} name="Agent de protection physique des personnes"
+            rncp={a3pConfig.rncp} url={a3pConfig.rncpUrl}
+            facts={[['Répertoire', a3pConfig.rncp], ['Certificateurs', 'CPNE / ADEF'], ['Code ROME', 'K2503'], ['Code NSF', '344'], ['Formacode', '42812'], ['Échéance RNCP', a3pConfig.rncpExpiry]]}
+            conditionsLabel="Réalités du métier" profession="Des conditions qui varient selon la mission" conditions={a3pWorkConditions}
+            professionNote="Ces informations complètent la présentation commerciale avec les repères figurant dans la fiche RNCP38002 fournie."
+            statsTitle="Données historiques de la certification" statsNote="Statistiques nationales France compétences figurant dans la fiche de certification. Elles concernent la certification, pas les résultats propres à Intégrale Academy."
+            stats={a3pInsertionStats.map(row => [row.year, row.certified, row.global, row.targetJob, row.targetJobTwoYears])}
+            caption="Promotions 2020 à 2022 — source : fiche RNCP38002" detailsTitle="Autres informations de la fiche RNCP"
+            details={<><p><strong>Voies d’accès recensées</strong><br />Apprentissage, formation continue, contrat de professionnalisation, candidature individuelle et VAE.</p>
+              <p><strong>Blocs et correspondances</strong><br />{a3pConfig.certificationStructure}. Aucune correspondance déclarée avec une autre certification.</p>
+              <p><strong>Historique</strong><br />La certification RNCP38002 remplace la certification antérieure RNCP35098.</p>
+              <p>Ces voies sont celles de la certification nationale ; leur disponibilité chez Intégrale Academy doit être confirmée avec l’équipe admissions.</p></>}
+          />
           <Section label="11 — Intégrale Academy" title="Un cadre sérieux pour un métier exigeant" intro="Des éléments concrets et vérifiables, directement liés au parcours A3P." tone="stone">
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{[
               ['Agrément', 'Centre agréé ADEF A3P', `N° ${a3pConfig.adefApproval}`],
@@ -412,7 +429,7 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
       }
     />
 
-    <TrainingCourseTestimonials category="A3P" layout="editorial" />
+    <div id="course-reviews-title"><TrainingCourseTestimonials category="A3P" layout="home" /></div>
 
     <div id="faq-a3p"><FaqDirectoryLink embedded theme="green" /></div>
 

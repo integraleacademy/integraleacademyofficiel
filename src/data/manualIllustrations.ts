@@ -23,7 +23,7 @@ export const a3pArtwork = {
   secours: artwork('a3p', 'secours', 'Illustration du manuel A3P : préparation et coordination d’une intervention de secours.', manualRevision),
 };
 
-export const a3pPracticeArtwork: ManualIllustrationMap = {
+export const a3pPracticeArtwork = {
   'mission-map': a3pArtwork.preparation,
   'risk-radar': originalArtwork['a3p-galerie-risques'],
   'site-check': a3pArtwork.reconnaissance,
@@ -32,7 +32,7 @@ export const a3pPracticeArtwork: ManualIllustrationMap = {
   hazard: a3pArtwork.techniques,
   cpr: a3pArtwork.secours,
   briefing: a3pArtwork.briefing,
-};
+} satisfies ManualIllustrationMap;
 
 export const ssiapArtwork = {
   prevention: artwork('ssiap-1', 'prevention', 'Illustration du manuel SSIAP 1 : un agent explique le plan de sécurité incendie.'),

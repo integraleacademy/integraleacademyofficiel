@@ -11,6 +11,11 @@ const apsStyles = readFileSync(
   'utf8',
 );
 
+const fundingOptionsSection = readFileSync(
+  new URL('../src/components/TrainingFundingOptions.tsx', import.meta.url),
+  'utf8',
+);
+
 const datesStart = apsPage.indexOf('<TrainingDatesPricingSection');
 const datesEnd = apsPage.indexOf('    />', datesStart);
 const enrollmentStart = apsPage.indexOf('<section id="inscription-financement"');
@@ -26,10 +31,12 @@ test('le parcours inscription APS devient une section dédiée après les dates 
 });
 
 test('les étapes, les actions de financement et les solutions ont des espaces indépendants', () => {
-  for (const area of ['intro', 'steps', 'funding', 'fundingActions', 'options', 'optionGrid']) {
+  for (const area of ['intro', 'steps', 'funding', 'fundingActions']) {
     assert.ok(enrollmentSection.includes('editorial.' + area));
   }
-  assert.ok(enrollmentSection.indexOf('editorial.fundingActions') < enrollmentSection.indexOf('editorial.options'));
+  assert.match(enrollmentSection, /<TrainingFundingOptions options=\{financingOptions\}/);
+  assert.ok(enrollmentSection.indexOf('editorial.fundingActions') < enrollmentSection.indexOf('<TrainingFundingOptions'));
+  for (const area of ['options', 'optionGrid']) assert.ok(fundingOptionsSection.includes('editorial.' + area));
   assert.match(apsStyles, /@media\(max-width:640px\)/);
   assert.doesNotMatch(apsStyles, /white-space:\s*nowrap/);
 });
@@ -49,7 +56,7 @@ test('les cinq étapes et les quatre solutions de financement sont conservées',
     assert.ok(financingBlock.includes(`['${title}'`), `financement manquant : ${title}`);
   }
   assert.ok(enrollmentSection.includes('enrollmentSteps.map'));
-  assert.ok(enrollmentSection.includes('financingOptions.map'));
+  assert.ok(fundingOptionsSection.includes('options.map'));
 });
 
 test('le parcours reprend précisément les cinq étapes du support commercial', () => {

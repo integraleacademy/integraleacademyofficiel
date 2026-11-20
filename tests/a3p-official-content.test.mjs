@@ -46,11 +46,17 @@ test('les identifiants RNCP, les prérequis étrangers et les statistiques certi
 });
 
 test('les repères officiels A3P reprennent la structure visuelle de la page APS', () => {
-  assert.match(component, /title="Certification, conditions d’exercice et données d’insertion"/);
-  assert.match(component, /Réalités du métier/);
-  assert.match(component, /TFP A3P · niveau 4/);
-  assert.match(component, /Insertion nationale/);
-  assert.match(component, /Métier visé à 2 ans/);
+  const shared = read('src/components/ApsExperienceSections.tsx');
+  const aps = read('src/components/ApsReferencePage.tsx');
+  assert.match(component, /<TrainingOfficialReferences course="a3p"/);
+  assert.match(aps, /<ApsOfficialReferences/);
+  assert.match(shared, /<TrainingOfficialReferences course="aps"/);
+  assert.match(component, /intro="Certification, conditions d’exercice et données d’insertion"/);
+  assert.match(component, /conditionsLabel="Réalités du métier"/);
+  assert.match(component, /qualification="TFP A3P" level=\{a3pConfig.level\}/);
+  assert.match(data, /level: 'Niveau 4'/);
+  assert.match(shared, /Insertion nationale/);
+  assert.match(shared, /Métier visé à 2 ans/);
   assert.match(component, /Autres informations de la fiche RNCP/);
   assert.match(data, /targetJobTwoYears: '20 %'/);
   assert.match(data, /Déplacements possibles partout en France et à l’international/);

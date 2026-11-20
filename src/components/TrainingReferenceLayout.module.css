@@ -34,6 +34,7 @@
 .section h2 :global(span[class*='decoration-']) { font-family:Georgia,serif; color:var(--course-accent); font-style:italic; font-weight:400; text-decoration:none; }
 .mission .missionImage { display:grid; align-items:center; background:#eaf0f3; }
 .mission .missionImage img { height:auto; min-height:0; aspect-ratio:3 / 2; object-fit:contain; }
+.framedMission { position:relative; width:100%; aspect-ratio:3 / 2; overflow:hidden; }
 .mission:nth-child(2n) { background:#17212b; color:#fff; border-color:#17212b; }
 .mission:nth-child(2n) .missionImage { order:2; }
 .mission:nth-child(2n) p { color:#c2cbd2; }
@@ -124,3 +125,7 @@
 @media (max-width: 700px) {
   .campusWelcomeHead { grid-template-columns: 1fr; gap: 12px; }
 }
+
+.page div:has(> .galleryCredit) { flex-wrap:wrap; }
+.galleryCredit { display:flex; flex-basis:100%; flex-wrap:wrap; gap:.4rem 1rem; color:#70634f; font-size:.75rem; }
+.galleryCredit a { color:#765214; font-weight:700; text-underline-offset:4px; text-decoration:underline; }

@@ -1,6 +1,5 @@
 import { TrainingActionLink } from '@/components/TrainingActionLink';
-import { TrainingCampusVisit } from './TrainingCampusVisit';
-import facilities from './ApsFacilitiesSections.module.css';
+import { TrainingSchoolWelcome } from './TrainingCampusVisit';
 import { CourseTeamBanner } from './CourseTeamBanner';
 import editorial from './ApsEditorial.module.css';
 import type { ReactNode } from 'react';
@@ -101,9 +100,11 @@ export function TrainingReferenceSection({ id, eyebrow, label, title, intro, ton
   </section>;
 }
 
-export function TrainingReferenceMissions({ items, label = 'Mission' }: { items: ReadonlyArray<{ title: string; description: string; illustration?: ManualIllustration; visual?: ReactNode; body?: ReactNode }>; label?: string }) {
+export function TrainingReferenceMissions({ items, label = 'Mission' }: { items: ReadonlyArray<{ title: string; description: string; illustration?: ManualIllustration; visual?: ReactNode; body?: ReactNode; landscapeFocus?: string }>; label?: string }) {
   return <div className={reference.missions}>{items.map((item, index) => <article key={item.title} className={`${reference.mission} ${styles.mission}`}>
-    <div className={`${reference.missionImage} ${styles.missionImage}`}>{item.visual || (item.illustration && <ManualArtwork illustration={item.illustration} natural sizes="(max-width: 700px) 92vw, 590px" />)}</div>
+    <div className={`${reference.missionImage} ${styles.missionImage}`}>{item.visual || (item.illustration && (item.landscapeFocus
+      ? <div className={styles.framedMission}><Image {...item.illustration} fill style={{ objectFit: 'cover', objectPosition: item.landscapeFocus }} sizes="(max-width: 700px) 92vw, 590px" /></div>
+      : <ManualArtwork illustration={item.illustration} natural sizes="(max-width: 700px) 92vw, 590px" />))}</div>
     <div className={reference.missionCopy}><span className={reference.missionNumber}>{label} {String(index + 1).padStart(2, '0')}</span><h3>{item.title}</h3>{item.description && <p>{item.description}</p>}{item.body && <div className={styles.missionDetails}>{item.body}</div>}</div>
   </article>)}</div>;
 }
@@ -119,15 +120,13 @@ export function TrainingReferenceCampus({
   description = 'Les espaces de l’école à Puget-sur-Argens accompagnent les cours, les échanges et la vie de votre groupe.',
   compact = false,
   editorialId,
-}: { title?: string; description?: string; compact?: boolean; editorialId?: string }) {
+  groupLabel = 'Par session',
+}: { title?: string; description?: string; compact?: boolean; editorialId?: string; groupLabel?: string }) {
   if (editorialId) return <>
     <CourseTeamBanner />
-    <TrainingCampusVisit id={editorialId} heading={<>
-      <div><p className={facilities.eyebrow}>Bienvenue chez Intégrale Academy</p><h2 id={`${editorialId}-title`}>{title}</h2></div>
-      <p>{description}</p>
-    </>} photos={campusPhotos} footer={<>
-      <span>Photos du centre Intégrale Academy · Puget-sur-Argens</span><Link href="/ecole#photos">Découvrir tous les espaces ↗</Link>
-    </>} />
+    <TrainingSchoolWelcome id={editorialId} photos={campusPhotos}
+      description={<><strong>{title}</strong><br />{description}</>} groupLabel={groupLabel} groupSize="12 maximum"
+      extraFooter={<p className={styles.galleryCredit}>Photos du centre Intégrale Academy · Puget-sur-Argens <Link href="/ecole#photos">Découvrir tous les espaces ↗</Link></p>} />
   </>;
   return <>
     <CourseTeamBanner />

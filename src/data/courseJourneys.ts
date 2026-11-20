@@ -50,7 +50,7 @@ const professionalJourneys = {
       { title: 'Préparer une mission', text: 'Analyser, organiser puis débriefer un scénario.' },
     ], note: 'Des mises en situation encadrées, au plus près du métier.' },
     outcome: { heading: ['Votre engagement.', 'Une nouvelle trajectoire'], code: 'A3P', role: 'Agent de protection physique des personnes', milestones: [
-      { label: '01 · CERTIFICATION', title: 'Le TFP A3P', text: 'Préparer et réussir les évaluations', href: '#certification' },
+      { label: '01 · CERTIFICATION', title: 'Le TFP A3P', text: 'Préparer et réussir les évaluations', href: '#examen' },
       { label: '02 · EXERCICE', title: 'La carte pro', text: 'Déposer votre demande au CNAPS', href: '#references-rncp' },
     ], note: 'Le titre et la carte professionnelle sont deux étapes distinctes.' },
   },

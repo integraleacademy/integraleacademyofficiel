@@ -1,3 +1,5 @@
+import { TrainingPracticeCards } from './TrainingPracticeCards';
+import { TrainingFundingOptions } from './TrainingFundingOptions';
 import { TrainingActionLink } from '@/components/TrainingActionLink';
 import { CourseBrochureCard } from '@/components/CourseBrochureCard';
 import type { ReactNode } from 'react';
@@ -16,7 +18,7 @@ import { ApsTrainingSummary } from '@/components/ApsTrainingSummary';
 import { ApsFacilitiesSections } from '@/components/ApsFacilitiesSections';
 import { ApsProgramExplorer } from '@/components/ApsProgramExplorer';
 import { TrainingProgramDownload } from '@/components/TrainingProgramDownload';
-import { ApsAdmission, ApsHybridExperience, ApsExamExperience, ApsFundingLogo, ApsWorkplaces, ApsOfficialReferences } from '@/components/ApsExperienceSections';
+import { ApsAdmission, ApsHybridExperience, ApsExamExperience, ApsWorkplaces, ApsOfficialReferences } from '@/components/ApsExperienceSections';
 import { ApsJourney } from '@/components/ApsJourney';
 import { IntegraleWelcomePack } from '@/components/IntegraleWelcomePack';
 import { OrientationAssistant } from '@/components/OrientationAssistant';
@@ -287,18 +289,10 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
       }
       immersion={
         <Section id="pratique" eyebrow="03 — Immersion terrain" title={<>Vous ne regardez pas seulement&nbsp;: vous pratiquez</>} intro={<>La formation vous place dans des situations proches du réel. Chaque geste est expliqué, répété, observé puis débriefé avec le formateur.</>} tone="dark">
-          <div className="grid gap-5 md:grid-cols-2">
-            {practicalExercises.map(([icon,title,text,visuals],index) => <article key={title} className={`${styles.practicalCard} rounded-[1.5rem] border border-white/10 bg-white/7 p-5`}>
-              <div className="relative z-10 flex min-w-0 flex-1 flex-col">
-                <div className="flex items-start justify-between gap-3"><span className={`${styles.practicalIcon} grid h-10 w-10 place-items-center rounded-xl bg-academy-gold font-black text-academy-gold-text`}>{icon}</span><span className="text-[.58rem] font-black tracking-[.16em] text-white/30">0{index+1}</span></div>
-                <h3 className="mt-4 text-lg font-black">{title}</h3>
-                <p className="mt-2 text-sm leading-6 text-white/60">{text}</p>
-                <div className={styles.practicalVisuals} data-visual-count={visuals.length}>
-                  {visuals.map(kind => <div key={kind} className={styles.practicalVisual} data-visual={kind}><ApsPracticalVisual kind={kind} /></div>)}
-                </div>
-              </div>
-            </article>)}
-          </div><div className="mt-7 grid gap-4 rounded-[1.7rem] border border-blue-300/25 bg-blue-400/10 p-6 lg:grid-cols-[auto_1fr] lg:items-center"><span className="grid h-14 w-14 place-items-center rounded-2xl bg-blue-300 text-2xl font-black text-blue-950">✓</span><div><p className="text-xl font-black text-blue-200">L’objectif : transformer les connaissances en réflexes professionnels.</p><p className="mt-2 max-w-4xl leading-7 text-white/68">Observation, positionnement, communication, respect du cadre légal, compte rendu et choix d’une réponse adaptée sont analysés après chaque scénario.</p></div></div></Section>
+          <TrainingPracticeCards items={practicalExercises.map(([icon, title, text, visuals]) => ({
+            icon, title, text, visuals: visuals.map(kind => ({ kind, illustration: <ApsPracticalVisual kind={kind} /> })),
+          }))} />
+          <div className="mt-7 grid gap-4 rounded-[1.7rem] border border-blue-300/25 bg-blue-400/10 p-6 lg:grid-cols-[auto_1fr] lg:items-center"><span className="grid h-14 w-14 place-items-center rounded-2xl bg-blue-300 text-2xl font-black text-blue-950">✓</span><div><p className="text-xl font-black text-blue-200">L’objectif : transformer les connaissances en réflexes professionnels.</p><p className="mt-2 max-w-4xl leading-7 text-white/68">Observation, positionnement, communication, respect du cadre légal, compte rendu et choix d’une réponse adaptée sont analysés après chaque scénario.</p></div></div></Section>
       }
       campus={<ApsFacilitiesSections />}
       brochure={<CourseBrochureCard course="aps" />}
@@ -382,19 +376,7 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
                   <CTA href={apsContact('étude de financement APS')} variant="light">Faire étudier mon financement</CTA>
               </div>
             </article>
-            <article className={editorial.options}>
-              <header><p className={editorial.kicker}>Solutions possibles</p>
-                <h3>Quatre voies, un accompagnement personnalisé</h3>
-              </header>
-              <div className={editorial.optionGrid}>
-                {financingOptions.map(([title, text]) => (
-                  <div className={editorial.option} key={title}>
-                    <div className={editorial.logo}><ApsFundingLogo title={title} /></div>
-                    <div><h4>{title}</h4><p>{text}</p></div>
-                  </div>
-                ))}
-              </div>
-            </article>
+            <TrainingFundingOptions options={financingOptions} />
           </div>
         </section>
       }
