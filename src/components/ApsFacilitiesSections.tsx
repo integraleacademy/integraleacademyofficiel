@@ -1,3 +1,4 @@
+import { TrainingCampusVisit } from './TrainingCampusVisit';
 import { CourseTeamBanner } from './CourseTeamBanner';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -26,14 +27,6 @@ function EquipmentIcon({ kind }: { kind: typeof equipment[number][0] }) {
   </svg>;
 }
 
-function PhotoGallery({ photos }: { photos: ApsPhoto[] }) {
-  return <div className={styles.gallery} data-count={photos.length} role="group" aria-label="Photos de l’école Intégrale Academy">
-    {photos.map(photo => <figure key={photo.id} className={styles.photo}>
-      <Image src={photo.src} alt={photo.caption} fill sizes="(max-width: 700px) 90vw, (max-width: 1100px) 60vw, 700px" unoptimized={photo.src.startsWith('/api/')} />
-      <figcaption>{photo.caption}</figcaption>
-    </figure>)}
-  </div>;
-}
 
 export async function ApsFacilitiesSections({ course = 'aps', children }: { course?: 'aps' | 'bts-mos'; children?: ReactNode } = {}) {
   const isMos = course === 'bts-mos';
@@ -77,12 +70,10 @@ export async function ApsFacilitiesSections({ course = 'aps', children }: { cour
       </div>
     </section>
     <CourseTeamBanner />
-    <section id={schoolId} aria-labelledby={`${schoolId}-title`} className={`${styles.section} ${styles.school}`}>
-      <div className="page-container">
-        <div className={styles.heading}><div><p className={styles.eyebrow}>Votre école sur la Côte d’Azur</p><h2 id={`${schoolId}-title`}>Bienvenue chez<br /><em>Intégrale Academy</em></h2></div><div><p>{isMos ? 'Depuis 2018, notre équipe vous accueille à Puget-sur-Argens. En BTS MOS, vous retrouvez votre promotion dans une école à taille humaine : des salles de cours, des espaces pour travailler ensemble et une équipe qui suit votre projet pendant les deux années. Le parcours 100 % en ligne conserve ses cours en direct en visioconférence.' : 'Depuis 2018, notre équipe vous accueille à Puget-sur-Argens. Des salles de cours aux espaces de pratique, vous apprenez dans une école à taille humaine.'}</p><Link className={styles.schoolLink} href="/ecole">Entrez, on vous fait visiter <span aria-hidden="true">↗</span></Link></div></div>
-        <PhotoGallery photos={schoolPhotos} />
-        <div className={styles.schoolFooter}><dl><div><dt>Espaces de formation</dt><dd>400 m²</dd></div><div><dt>Pour apprendre & pratiquer</dt><dd>4 salles</dd></div><div><dt>{isMos ? 'Votre parcours BTS' : 'Par session APS'}</dt><dd>{isMos ? '2 ans' : '12 maximum'}</dd></div></dl><Link href="/ecole#equipe">Rencontrer l’équipe <span aria-hidden="true">↗</span></Link>{isMos && <a href="#experience">L’iPad et Londres <span aria-hidden="true">↓</span></a>}</div>
-      </div>
-    </section>
+    <TrainingCampusVisit id={schoolId} heading={<>
+      <div><p className={styles.eyebrow}>Votre école sur la Côte d’Azur</p><h2 id={`${schoolId}-title`}>Bienvenue chez<br /><em>Intégrale Academy</em></h2></div><div><p>{isMos ? 'Depuis 2018, notre équipe vous accueille à Puget-sur-Argens. En BTS MOS, vous retrouvez votre promotion dans une école à taille humaine : des salles de cours, des espaces pour travailler ensemble et une équipe qui suit votre projet pendant les deux années. Le parcours 100 % en ligne conserve ses cours en direct en visioconférence.' : 'Depuis 2018, notre équipe vous accueille à Puget-sur-Argens. Des salles de cours aux espaces de pratique, vous apprenez dans une école à taille humaine.'}</p><Link className={styles.schoolLink} href="/ecole">Entrez, on vous fait visiter <span aria-hidden="true">↗</span></Link></div>
+    </>} photos={schoolPhotos} footer={<>
+      <dl><div><dt>Espaces de formation</dt><dd>400 m²</dd></div><div><dt>Pour apprendre & pratiquer</dt><dd>4 salles</dd></div><div><dt>{isMos ? 'Votre parcours BTS' : 'Par session APS'}</dt><dd>{isMos ? '2 ans' : '12 maximum'}</dd></div></dl><Link href="/ecole#equipe">Rencontrer l’équipe <span aria-hidden="true">↗</span></Link>{isMos && <a href="#experience">L’iPad et Londres <span aria-hidden="true">↓</span></a>}
+    </>} />
   </>;
 }

@@ -30,7 +30,9 @@ test('le programme officiel contient 9 UV et totalise 328 heures hors examen', (
 test('le PDF consultable dans un nouvel onglet est exactement le programme transmis', () => {
   assert.match(data, /programPdfUrl: '\/documents\/programme-a3p\.pdf'/);
   assert.equal(createHash('sha256').update(programPdf).digest('hex'), '29fcbd897b800edb6f29e4277a396feedc22404fe3df34fb5ea8a22a7fe155e5');
-  assert.match(component, /href=\{a3pConfig\.programPdfUrl\} target="_blank" rel="noopener noreferrer"/);
+  assert.match(component, /<TrainingProgramDownload href=\{a3pConfig\.programPdfUrl\} course="A3P"/);
+  const download = read('src/components/TrainingProgramDownload.tsx');
+  assert.match(download, /target="_blank"\s+rel="noopener noreferrer"/);
 });
 
 test('les identifiants RNCP, les prérequis étrangers et les statistiques certificateur sont publiés', () => {

@@ -6,10 +6,11 @@ const themes: Record<ProgramTheme, string> = {
   red: 'bg-red-700 hover:bg-red-800 focus-visible:ring-red-300',
 };
 
-export function TrainingProgramDownload({ href, course, theme, className = '' }: {
+export function TrainingProgramDownload({ href, course, theme, detailLabel, className = '' }: {
   href: string;
   course: string;
   theme: ProgramTheme;
+  detailLabel?: string;
   className?: string;
 }) {
   return <a
@@ -24,7 +25,7 @@ export function TrainingProgramDownload({ href, course, theme, className = '' }:
     </svg>
     <span className="min-w-0">
       <span className="block">Consulter le programme de formation</span>
-      <span className="mt-1 block text-xs font-semibold text-white/85">{course} · PDF · Nouvel onglet</span>
+      <span className="mt-1 block text-xs font-semibold text-white/85">{detailLabel ?? `${course} · PDF · Nouvel onglet`}</span>
     </span>
   </a>;
 }
