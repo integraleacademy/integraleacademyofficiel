@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useRef, useState, type KeyboardEvent } from 'react';
+import { useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
 import type { ManualIllustration } from '@/data/manualIllustrations';
 import styles from './ApsExperience.module.css';
 
@@ -10,11 +10,36 @@ export type TrainingProgramUnit = {
   description?: string; items?: readonly string[]; illustration?: ManualIllustration;
 };
 
-export function TrainingProgramExplorer({ units, idPrefix, hours, unitLabel = 'h', overview, subtitle, facts, menuTitle, tabListLabel, illustration, nextLabel, restartLabel }: {
-  units: readonly TrainingProgramUnit[]; idPrefix: string; hours: string; unitLabel?: string; overview: string;
-  subtitle: string; facts: ReadonlyArray<readonly [string, string]>; menuTitle: string;
-  tabListLabel: string; illustration: ManualIllustration; nextLabel: string; restartLabel: string;
-}) {
+type ProgramTabsProps = {
+  units: readonly TrainingProgramUnit[];
+  idPrefix: string;
+  menuTitle: string;
+  tabListLabel: string;
+  nextLabel?: string;
+  restartLabel?: string;
+};
+
+type ProgramSummaryProps = {
+  hours: string;
+  unitLabel?: string;
+  overview: string;
+  subtitle: string;
+  facts: ReadonlyArray<readonly [string, string]>;
+  illustration: ManualIllustration;
+};
+
+function ProgramOverview({ hours, unitLabel = 'h', overview, subtitle, facts, illustration }: ProgramSummaryProps) {
+  return <div className={styles.programOverview}>
+      <div className={styles.programSummary}>
+        <div className={styles.programHours}><strong>{hours}<span>{unitLabel}</span></strong><p>{overview}<br /><span>{subtitle}</span></p></div>
+        <dl>{facts.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>
+      </div>
+      <Image className={styles.programImage} src={illustration.src} alt={illustration.alt} width={1536} height={1024} sizes="(max-width: 550px) 90vw, 260px" />
+    </div>;
+}
+
+export function TrainingProgramExplorer(props: ProgramTabsProps & (ProgramSummaryProps | { children: ReactNode })) {
+  const { units, idPrefix, menuTitle, tabListLabel, nextLabel, restartLabel } = props;
   const [active, setActive] = useState(0);
   const buttons = useRef<(HTMLButtonElement | null)[]>([]);
   const tabList = useRef<HTMLDivElement | null>(null);
@@ -43,17 +68,11 @@ export function TrainingProgramExplorer({ units, idPrefix, hours, unitLabel = 'h
     event.preventDefault(); select(next, true);
   }
   return <div className={styles.program} data-program-explorer={idPrefix}>
-    <div className={styles.programOverview}>
-      <div className={styles.programSummary}>
-        <div className={styles.programHours}><strong>{hours}<span>{unitLabel}</span></strong><p>{overview}<br /><span>{subtitle}</span></p></div>
-        <dl>{facts.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>
-      </div>
-      <Image className={styles.programImage} src={illustration.src} alt={illustration.alt} width={1536} height={1024} sizes="(max-width: 550px) 90vw, 260px" />
-    </div>
+    {'children' in props ? props.children : <ProgramOverview {...props} />}
     <p className="sr-only" role="status" aria-live="polite">Unité {active + 1} sur {units.length} : {units[active]?.title}</p>
     <div className={styles.programBody}>
       <div className={styles.programMenu}>
-        <p className={styles.kicker}>{menuTitle} <span>Sélectionnez une unité ↓</span></p>
+        <p className={styles.kicker}>{menuTitle} {nextLabel && <span>Sélectionnez une unité ↓</span>}</p>
         <div ref={tabList} className={styles.programTabs} role="tablist" aria-label={tabListLabel} aria-orientation="vertical">
           {units.map(({ number, title, duration }, index) => <button key={number} ref={node => { buttons.current[index] = node; }} type="button" role="tab" id={`${idPrefix}-tab-${index}`} aria-controls={`${idPrefix}-panel-${index}`} aria-selected={active === index} tabIndex={active === index ? 0 : -1} onClick={() => select(index)} onKeyDown={event => navigate(event, index)}><span>{number}</span><strong>{title}</strong><small>{duration}</small><span aria-hidden="true">↗</span></button>)}
         </div>
@@ -61,11 +80,11 @@ export function TrainingProgramExplorer({ units, idPrefix, hours, unitLabel = 'h
       <div className={styles.programDetail}>
         {units.map(({ number, title, duration, delivery, description, items, illustration: unitArt }, index) => <article key={number} id={`${idPrefix}-panel-${index}`} role="tabpanel" aria-labelledby={`${idPrefix}-tab-${index}`} hidden={active !== index} aria-hidden={active !== index} inert={active !== index} tabIndex={0} className={styles.programPanel}>
           {unitArt && active === index && <Image className={styles.unitArt} src={unitArt.src} alt={unitArt.alt} width={750} height={430} sizes="(max-width: 720px) 90vw, 540px" />}
-          <div className={styles.unitHeading}><p className={styles.kicker}>{number} · Ce que vous allez apprendre</p>{duration && <span>{duration}</span>}</div>
+          <div className={styles.unitHeading}><p className={styles.kicker}>{number}{nextLabel && ' · Ce que vous allez apprendre'}</p>{duration && <span>{duration}</span>}</div>
           <h3>{title}</h3>{description && <p>{description}</p>}
           {items && <ul className={styles.programTopics}>{items.map(item => <li key={item}><span aria-hidden="true">✓</span>{item}</li>)}</ul>}
           <div className={styles.delivery}>{delivery}</div>
-          <div className={styles.panelNavigation}><span>{index + 1} / {units.length}</span><button type="button" onClick={() => select((index + 1) % units.length, true)}>{index === units.length - 1 ? restartLabel : nextLabel} <span aria-hidden="true">→</span></button></div>
+          <div className={styles.panelNavigation}><span>{index + 1} / {units.length}</span><button type="button" onClick={() => select((index + 1) % units.length, true)}>{(index === units.length - 1 ? restartLabel : nextLabel) ?? units[(index + 1) % units.length].number} <span aria-hidden="true">→</span></button></div>
         </article>)}
       </div>
     </div>
