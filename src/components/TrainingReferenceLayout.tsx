@@ -158,11 +158,11 @@ export function TrainingReferenceCampus({
   </>;
 }
 
-export function TrainingReferenceContact({ description, title, href, additionalActions, assurances = [], portraitMedallion = false, schoolStyle = false }: { description: ReactNode; title?: string; href: string; additionalActions?: ReactNode; assurances?: readonly string[]; portraitMedallion?: boolean; schoolStyle?: boolean }) {
+export function TrainingReferenceContact({ description, title, href, headingEnd = 'vers votre futur métier', appointmentLabel = 'Réserver un rendez-vous téléphonique →', additionalActions, assurances = [], portraitMedallion = false, schoolStyle = false }: { description: ReactNode; title?: string; href: string; headingEnd?: string; appointmentLabel?: string; additionalActions?: ReactNode; assurances?: readonly string[]; portraitMedallion?: boolean; schoolStyle?: boolean }) {
   const heading = <>
     <p className={schoolStyle ? editorial.schoolLabel : reference.eyebrow}>Une question sur votre projet ?</p>
     <h2 id="course-contact-title" className={schoolStyle ? editorial.schoolTitle : reference.sectionTitle}>
-      Faites le premier pas<br /><em>vers votre futur métier</em>
+      Faites le premier pas<br /><em>{headingEnd}</em>
     </h2>
   </>;
   const intro = <>
@@ -179,7 +179,7 @@ export function TrainingReferenceContact({ description, title, href, additionalA
     <h3>Cassandre</h3>
     <p className={schoolStyle ? editorial.adviserRole : undefined}>Responsable commerciale — Intégrale Academy</p>
   </>;
-  const appointment = <TrainingReferenceAction href={href}>Réserver un rendez-vous téléphonique →</TrainingReferenceAction>;
+  const appointment = <TrainingReferenceAction href={href}>{appointmentLabel}</TrainingReferenceAction>;
   const reassurance = <small>Échange gratuit et sans engagement</small>;
 
   if (schoolStyle) return (

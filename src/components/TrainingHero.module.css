@@ -22,6 +22,14 @@
   --hero-rgb: 16, 185, 129;
 }
 
+[data-theme='violet'].hero,
+[data-theme='violet'].sessionCard {
+  --hero-accent: #d8b4fe;
+  --hero-strong: #6d28ab;
+  --hero-end: #8544bd;
+  --hero-rgb: 120, 65, 163;
+}
+
 .hero { position: relative; isolation: isolate; display: flex; flex-direction: column; overflow: clip; padding-bottom: 2rem; background: #08111d; }
 .heroPhoto { z-index: -3; object-fit: cover; object-position: center; filter: saturate(.92) contrast(1.04); transform: scale(1.015); animation: heroDrift 16s ease-in-out infinite alternate; }
 .heroOverlay { position: absolute; inset: 0; z-index: -2; background: linear-gradient(90deg, rgba(4,10,18,.98) 0%, rgba(6,14,24,.92) 31%, rgba(7,16,27,.52) 57%, rgba(7,15,25,.12) 82%), linear-gradient(0deg, rgba(6,13,22,.82) 0%, transparent 38%, rgba(5,11,19,.2) 100%); }

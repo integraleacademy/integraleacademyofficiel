@@ -11,7 +11,7 @@ import styles from './TrainingHero.module.css';
 import { ManualArtwork } from '@/components/ManualArtwork';
 import { TrainingSessionSummary, type TrainingSessionFact } from '@/components/TrainingSessionSummary';
 
-type HeroTheme = 'orange' | 'red' | 'green';
+type HeroTheme = 'orange' | 'red' | 'green' | 'violet';
 type HeroFacts = ReadonlyArray<ReadonlyArray<string>>;
 
 export const trainingRegistrationUrl = 'https://assistance-alw9.onrender.com/demande-informations-formations';
@@ -86,7 +86,7 @@ export function TrainingHeroSessionCard({
   emptyTitle = 'Prochaines dates à confirmer',
   emptyDescription = 'Contactez-nous pour recevoir les prochaines dates et préparer votre inscription.',
   emptyActionLabel = 'Recevoir les prochaines dates →', examLabel = 'Examen le', registrationHref, priceNote,
-  approval, locationNote, overviewControls, emptyBadgeLabel = 'Dates à confirmer',
+  approval, locationNote, overviewControls, timing, emptyBadgeLabel = 'Dates à confirmer',
 }: {
   session?: TrainingDatesPricingSession | null;
   theme: HeroTheme;
@@ -105,6 +105,7 @@ export function TrainingHeroSessionCard({
   approval?: string;
   locationNote?: string;
   overviewControls?: ReactNode;
+  timing?: { badge: string; title: string; description: ReactNode };
   emptyBadgeLabel?: string;
 }) {
   const availability = session ? getSessionSeatAvailability(session, capacity) : null;
@@ -113,11 +114,11 @@ export function TrainingHeroSessionCard({
     <div data-session-overview className={styles.sessionOverview}>
     <div className="flex flex-wrap items-center gap-2">
       <span className={styles.sessionLabel}>{label}</span>
-      <span className={`rounded-full border px-3 py-1.5 text-[.68rem] font-black ${availability?.badgeClassName || 'border-stone-200 bg-stone-100 text-stone-700'}`}>{availability?.label || emptyBadgeLabel}</span>
+      <span className={`rounded-full border px-3 py-1.5 text-[.68rem] font-black ${availability?.badgeClassName || 'border-stone-200 bg-stone-100 text-stone-700'}`}>{timing?.badge ?? availability?.label ?? emptyBadgeLabel}</span>
     </div>
     {overviewControls}
-    <h2 className="mt-5 text-3xl font-black tracking-[-.04em] sm:text-4xl">{session ? <>{formatDate(session.startDate)} <span className={styles.sessionAccent}>→</span><br />{formatDate(session.endDate)}</> : emptyTitle}</h2>
-    <p className="mt-2 text-sm font-extrabold text-academy-muted">{session?.examDate ? `${examLabel} ${formatDate(session.examDate)}` : emptyDescription}</p>
+    <h2 className="mt-5 text-3xl font-black tracking-[-.04em] sm:text-4xl">{timing?.title ?? (session ? <>{formatDate(session.startDate)} <span className={styles.sessionAccent}>→</span><br />{formatDate(session.endDate)}</> : emptyTitle)}</h2>
+    <p className="mt-2 text-sm font-extrabold text-academy-muted">{timing?.description ?? (session?.examDate ? `${examLabel} ${formatDate(session.examDate)}` : emptyDescription)}</p>
     {approval && <p className={styles.sessionApproval}>{approval}</p>}
     </div>
     <TrainingSessionSummary facts={facts} location={session?.location || defaultLocation} locationNote={locationNote} />
