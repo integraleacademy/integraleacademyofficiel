@@ -2,6 +2,7 @@ export const faqTopics = [
   { id: 'general', label: 'Questions générales', family: 'Informations pratiques', path: '/' },
   { id: 'financements', label: 'Financements', family: 'Informations pratiques', path: '/financements' },
   { id: 'entreprises', label: 'Entreprises et recrutement', family: 'Informations pratiques', path: '/entreprises' },
+  { id: 'parcours-alternance', label: 'Parcours sécurité en alternance', family: 'Sécurité', path: '/parcoursalternance' },
   { id: 'aps', label: 'APS · Agent de sécurité privée', family: 'Sécurité', path: '/formations-securite/aps' },
   { id: 'a3p', label: 'A3P · Protection rapprochée', family: 'Sécurité', path: '/formations-securite/a3p-apr' },
   { id: 'cpsp', label: 'CPSP · Chef de poste en sécurité privée', family: 'Sécurité', path: '/formations-securite/cpsp' },

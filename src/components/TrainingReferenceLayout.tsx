@@ -206,6 +206,8 @@ export function TrainingReferenceContact({ description, title, href, headingEnd 
   </section>;
 }
 
-export function TrainingReferenceMobileBar({ href = '#dates-tarifs', label = 'Voir les dates & tarifs' }: { href?: string; label?: string }) {
-  return <div data-fixed-actions="course" className={styles.mobileBar}><a href="tel:0422470768" className={styles.action}>Appeler</a><TrainingReferenceAction href={href}>{label}</TrainingReferenceAction></div>;
+export function TrainingReferenceMobileBar({
+  href = '#dates-tarifs', label = 'Voir les dates & tarifs', phoneHref = 'tel:0422470768', phoneLabel = 'Appeler',
+}: { href?: string; label?: string; phoneHref?: string; phoneLabel?: string }) {
+  return <div data-fixed-actions="course" className={styles.mobileBar}><a href={phoneHref} className={styles.action}>{phoneLabel}</a><TrainingReferenceAction href={href}>{label}</TrainingReferenceAction></div>;
 }

@@ -80,12 +80,13 @@ export default async function Home() {
           <div className="page-container">
             <div className={carouselStyles.heading}>
               <h2 id="security-heading">Les métiers de la sécurité</h2>
-              <p>5 parcours pour se former et évoluer</p>
+              <p>5 formations et un parcours en alternance</p>
             </div>
             <SecurityTrainingGrid items={securityHighlights} />
             <div className={carouselStyles.footer}>
               <p className={carouselStyles.formats}>Un projet à préciser ? <Link href="#assistant-orientation">Être orienté <span aria-hidden="true">→</span></Link></p>
               <div className={carouselStyles.actions}>
+                <Link href="/parcoursalternance" className={carouselStyles.secondary}>Parcours sécurité en alternance <span aria-hidden="true">→</span></Link>
                 <SecurityTrainingComparisonModal items={securityHighlights} className={carouselStyles.secondary} />
                 <Link href="/planning" className={carouselStyles.secondary}>Voir le planning <span aria-hidden="true">→</span></Link>
               </div>

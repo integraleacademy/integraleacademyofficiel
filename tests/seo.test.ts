@@ -13,7 +13,7 @@ test('toutes les formations et les pages publiques possèdent des métadonnées 
   }
   const pages = Object.entries(seoPages).filter(([, page]) => !page.noindex);
   assert.deepEqual(pages.map(([path]) => path).filter(path => path.startsWith('/financements')), ['/financements']);
-  assert.equal(pages.length, 31);
+  assert.equal(pages.length, 32);
   assert.equal(new Set(pages.map(([, page]) => page.title)).size, pages.length);
   assert.equal(new Set(pages.map(([, page]) => page.description)).size, pages.length);
   for (const [path, page] of pages) {
@@ -65,6 +65,7 @@ test('les fils d’Ariane remontent jusqu’à l’accueil sans boucle ni lien r
     }
   }
   assert.deepEqual(pageBreadcrumbs('/dirigeant').map((item) => item.path), ['/', '/formations-securite', '/despvaeouinitial', '/dirigeant']);
+  assert.deepEqual(pageBreadcrumbs('/parcoursalternance').map((item) => item.path), ['/', '/formations-securite', '/parcoursalternance']);
   assert.deepEqual(pageBreadcrumbs('/bts/mos').map((item) => item.path), ['/', '/bts', '/bts/mos']);
 });
 

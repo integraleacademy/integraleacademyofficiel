@@ -219,7 +219,7 @@ export function Header(){
 }
 export function Footer(){
   const footerLinks=[
-    {title:'Formations',links:[['Agent de sécurité','/formations-securite/aps'],['Sécurité incendie','/formations-securite/ssiap'],['Protection rapprochée','/formations-securite/a3p-apr'],['Dirigeant d’entreprise de sécurité privée','/despvaeouinitial'],['Chauffeur VTC','/vtc'],['BTS en alternance','/bts']]},
+    {title:'Formations',links:[['Agent de sécurité','/formations-securite/aps'],['Sécurité incendie','/formations-securite/ssiap'],['Protection rapprochée','/formations-securite/a3p-apr'],['Dirigeant d’entreprise de sécurité privée','/despvaeouinitial'],['Chauffeur VTC','/vtc'],['BTS en alternance','/bts'],['Parcours sécurité en alternance','/parcoursalternance']]},
     {title:'Financements',links:[['Financer ma formation','/financements'],['Estimer mon reste à charge','/financements#simulateur']]},
     {title:'L’école',links:[['Notre école','/ecole'],['Nos centres','/centres'],['Planning','/planning'],['Entreprises','/entreprises'],['Questions fréquentes','/faq']]},
   ];

@@ -23,6 +23,7 @@ export const coreTrainingNavigation: TrainingMenuFamily[] = [
       { label: 'DESP – Dirigeant d’entreprise de sécurité privée', shortLabel: 'direction (DESP)', href: '/despvaeouinitial' },
       { label: 'SSIAP – Sécurité incendie', shortLabel: 'sécurité incendie (SSIAP)', href: '/formations-securite/ssiap' },
       { label: 'SST – Sauveteur secouriste du travail', shortLabel: 'secourisme (SST)', href: '/formations-securite/sst' },
+      { label: 'Parcours sécurité en alternance', href: '/parcoursalternance' },
     ],
   },
   {

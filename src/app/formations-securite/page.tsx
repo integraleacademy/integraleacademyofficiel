@@ -41,6 +41,12 @@ export default function Page() {
         <section className="page-container py-12">
           <SectionTitle title={<>Choisissez votre parcours sécurité et votre <Highlight variant="subtle">inscription</Highlight></>} />
           <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+            <FormationCard
+              title="Parcours sécurité en alternance"
+              desc="Prépare l’APS, l’A3P et le SSIAP 1 en un an, entre l’école et ton entreprise."
+              href="/parcoursalternance"
+              tags={['1 an en apprentissage', 'Puget-sur-Argens']}
+            />
             {items.map((formation) => (
               <FormationCard
                 key={formation.slug}

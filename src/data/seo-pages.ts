@@ -31,6 +31,11 @@ export const seoPages: Record<string, SeoPage> = {
     description: 'Découvrez les formations APS, A3P, DESP, SSIAP et SST : programmes, prérequis, dates et financements pour préparer votre métier dans la sécurité.',
     label: 'Formations sécurité', type: 'CollectionPage',
   },
+  '/parcoursalternance': {
+    title: 'Parcours sécurité en alternance à Puget-sur-Argens',
+    description: 'Prépare l’APS, l’A3P et le SSIAP 1 en un an à Puget-sur-Argens. Découvre le calendrier 2027, la rémunération et les conditions pour candidater en apprentissage.',
+    label: 'Parcours sécurité en alternance', parent: '/formations-securite', courseName: 'Parcours sécurité en alternance',
+  },
   '/formations-securite/aps': {
     title: 'Formation APS à Puget-sur-Argens (Var)',
     description: 'Préparez le métier d’agent de prévention et de sécurité avec la formation APS à Puget-sur-Argens : programme, distanciel, pratique, examen et financement.',
