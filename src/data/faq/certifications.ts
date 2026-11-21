@@ -1,7 +1,7 @@
 export const cpiaaFaq = [
   {
     q: 'La certification est-elle déjà enregistrée au RNCP ?',
-    a: 'Intégrale Academy prépare la demande d’enregistrement au Répertoire national des certifications professionnelles pour le projet « Chef de produit en intelligence artificielle et automatisation ». L’enregistrement et le niveau visé dépendent d’une décision de France compétences. Aucun numéro RNCP n’est annoncé pour ce projet.\n\n' +
+    a: 'La demande d’enregistrement au Répertoire national des certifications professionnelles pour le projet « Chef de produit en intelligence artificielle et automatisation » est en cours d’instruction par France compétences. L’enregistrement et le niveau visé dépendent d’une décision de France compétences. Aucun numéro RNCP n’est annoncé pour ce projet.\n\n' +
       'La fiche de l’école permet déjà d’examiner le métier préparé. Il s’agit de transformer un besoin utilisateur en produit, de décider des priorités, de coordonner sa réalisation puis d’en mesurer les résultats. Pour un dossier professionnel ou de financement, vérifiez le statut de la certification au moment de votre démarche.',
   },
   {
@@ -34,7 +34,7 @@ export const cpiaaFaq = [
 export const eiagFaq = [
   {
     q: 'La certification est-elle déjà enregistrée au RNCP ?',
-    a: 'Le parcours « Expert en ingénierie de l’intelligence artificielle générative » est un projet d’Intégrale Academy. Sa demande d’enregistrement au Répertoire national des certifications professionnelles est en préparation. L’école n’annonce actuellement ni enregistrement acquis ni numéro RNCP pour ce projet.\n\n' +
+    a: 'Le parcours « Expert en ingénierie de l’intelligence artificielle générative » est un projet d’Intégrale Academy. Sa demande d’enregistrement au Répertoire national des certifications professionnelles est en cours d’instruction par France compétences. L’école n’annonce actuellement ni enregistrement acquis ni numéro RNCP pour ce projet.\n\n' +
       'Vous pouvez déjà consulter les compétences envisagées, de la conception d’une architecture à l’exploitation d’un système génératif. Si vous devez justifier d’une qualification reconnue auprès d’un employeur ou d’un financeur, vérifiez le statut sur la fiche de l’école et dans le répertoire de France compétences au moment de constituer votre dossier.',
   },
   {

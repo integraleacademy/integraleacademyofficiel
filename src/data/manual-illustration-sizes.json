@@ -810,5 +810,221 @@
   "/images/illustrations-2026/bts-tablette.webp": [
     1536,
     1024
+  ],
+  "/images/fiches-diplomes/cpiaa/examen.webp": [
+    621,
+    414
+  ],
+  "/images/fiches-diplomes/cpiaa/hero.webp": [
+    1404,
+    936
+  ],
+  "/images/fiches-diplomes/cpiaa/mission-1.webp": [
+    621,
+    414
+  ],
+  "/images/fiches-diplomes/cpiaa/mission-2.webp": [
+    621,
+    414
+  ],
+  "/images/fiches-diplomes/cpiaa/pratique-1.webp": [
+    621,
+    414
+  ],
+  "/images/fiches-diplomes/cpiaa/pratique-2.webp": [
+    621,
+    414
+  ],
+  "/images/fiches-diplomes/dms/examen.webp": [
+    762,
+    508
+  ],
+  "/images/fiches-diplomes/dms/hero.webp": [
+    1404,
+    936
+  ],
+  "/images/fiches-diplomes/dms/pratique-1.webp": [
+    762,
+    508
+  ],
+  "/images/fiches-diplomes/dms/pratique-2.webp": [
+    762,
+    508
+  ],
+  "/images/fiches-diplomes/eiag/examen.webp": [
+    621,
+    414
+  ],
+  "/images/fiches-diplomes/eiag/hero.webp": [
+    1404,
+    936
+  ],
+  "/images/fiches-diplomes/eiag/mission-1.webp": [
+    621,
+    414
+  ],
+  "/images/fiches-diplomes/eiag/mission-2.webp": [
+    621,
+    414
+  ],
+  "/images/fiches-diplomes/eiag/pratique-1.webp": [
+    621,
+    414
+  ],
+  "/images/fiches-diplomes/eiag/pratique-2.webp": [
+    621,
+    414
+  ],
+  "/images/fiches-diplomes/eirc/examen.webp": [
+    621,
+    414
+  ],
+  "/images/fiches-diplomes/eirc/hero.webp": [
+    1404,
+    936
+  ],
+  "/images/fiches-diplomes/eirc/mission-1.webp": [
+    621,
+    414
+  ],
+  "/images/fiches-diplomes/eirc/mission-2.webp": [
+    621,
+    414
+  ],
+  "/images/fiches-diplomes/eirc/pratique-1.webp": [
+    621,
+    414
+  ],
+  "/images/fiches-diplomes/eirc/pratique-2.webp": [
+    621,
+    414
+  ],
+  "/images/fiches-tp/assistant-ressources-humaines/examen.webp": [
+    612,
+    408
+  ],
+  "/images/fiches-tp/assistant-ressources-humaines/hero.webp": [
+    612,
+    408
+  ],
+  "/images/fiches-tp/assistant-ressources-humaines/mission-1.webp": [
+    612,
+    408
+  ],
+  "/images/fiches-tp/assistant-ressources-humaines/mission-2.webp": [
+    612,
+    408
+  ],
+  "/images/fiches-tp/assistant-ressources-humaines/pratique-1.webp": [
+    612,
+    408
+  ],
+  "/images/fiches-tp/assistant-ressources-humaines/pratique-2.webp": [
+    612,
+    408
+  ],
+  "/images/fiches-tp/charge-accueil-gestion-administrative/examen.webp": [
+    612,
+    408
+  ],
+  "/images/fiches-tp/charge-accueil-gestion-administrative/hero.webp": [
+    612,
+    408
+  ],
+  "/images/fiches-tp/charge-accueil-gestion-administrative/mission-1.webp": [
+    612,
+    408
+  ],
+  "/images/fiches-tp/charge-accueil-gestion-administrative/mission-2.webp": [
+    612,
+    408
+  ],
+  "/images/fiches-tp/charge-accueil-gestion-administrative/pratique-1.webp": [
+    612,
+    408
+  ],
+  "/images/fiches-tp/charge-accueil-gestion-administrative/pratique-2.webp": [
+    612,
+    408
+  ],
+  "/images/fiches-tp/gestionnaire-de-paie/examen.webp": [
+    612,
+    408
+  ],
+  "/images/fiches-tp/gestionnaire-de-paie/hero.webp": [
+    612,
+    408
+  ],
+  "/images/fiches-tp/gestionnaire-de-paie/mission-1.webp": [
+    612,
+    408
+  ],
+  "/images/fiches-tp/gestionnaire-de-paie/mission-2.webp": [
+    612,
+    408
+  ],
+  "/images/fiches-tp/gestionnaire-de-paie/pratique-1.webp": [
+    612,
+    408
+  ],
+  "/images/fiches-tp/gestionnaire-de-paie/pratique-2.webp": [
+    612,
+    408
+  ],
+  "/images/fiches-tp/operateur-videoprotection-telesurveillance/examen.webp": [
+    750,
+    500
+  ],
+  "/images/fiches-tp/operateur-videoprotection-telesurveillance/hero.webp": [
+    750,
+    500
+  ],
+  "/images/fiches-tp/operateur-videoprotection-telesurveillance/mission-1.webp": [
+    750,
+    500
+  ],
+  "/images/fiches-tp/operateur-videoprotection-telesurveillance/mission-2.webp": [
+    750,
+    500
+  ],
+  "/images/fiches-tp/operateur-videoprotection-telesurveillance/pratique-1.webp": [
+    750,
+    500
+  ],
+  "/images/fiches-tp/operateur-videoprotection-telesurveillance/pratique-2.webp": [
+    750,
+    500
+  ],
+  "/images/fiches-tp/secretaire-assistant-medico-administratif/examen.webp": [
+    621,
+    414
+  ],
+  "/images/fiches-tp/secretaire-assistant-medico-administratif/hero.webp": [
+    621,
+    414
+  ],
+  "/images/fiches-tp/secretaire-assistant-medico-administratif/mission-1.webp": [
+    621,
+    414
+  ],
+  "/images/fiches-tp/secretaire-assistant-medico-administratif/mission-2.webp": [
+    621,
+    414
+  ],
+  "/images/fiches-tp/secretaire-assistant-medico-administratif/pratique-1.webp": [
+    621,
+    414
+  ],
+  "/images/fiches-tp/secretaire-assistant-medico-administratif/pratique-2.webp": [
+    621,
+    414
+  ],
+  "/images/formations-annoncees/dms-prestation.webp": [
+    1152,
+    768
+  ],
+  "/images/formations-annoncees/dms-prevention.webp": [
+    791,
+    527
   ]
 }

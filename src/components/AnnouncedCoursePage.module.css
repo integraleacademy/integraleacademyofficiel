@@ -2,8 +2,11 @@
   --hero-rgb: var(--course-rgb);
   --hero-strong: var(--course-accent);
   --hero-accent: var(--course-pale);
+  --experience-accent: var(--course-accent);
+  --experience-pale: var(--course-pale);
+  --experience-tint: rgba(var(--course-rgb),.08);
 }
-.course h1 { overflow-wrap: anywhere; }
+.course h1 { overflow-wrap: break-word; hyphens: auto; }
 .course .summary {
   grid-template-columns: minmax(10rem,.76fr) minmax(18rem,1.65fr) minmax(10rem,.8fr);
   background: #fffdf8;
@@ -23,13 +26,33 @@
   line-height: 1.16;
   letter-spacing: -.045em;
 }
-.intake h2 { margin: .55rem 0; }
+.intake h2 { margin: .55rem 0; text-wrap: balance; }
 .intake > p:last-child:not(:first-child) { color: #52657a; }
 .summaryAction { display: grid; gap: .65rem; text-align: center; }
 .summaryAction > a { justify-self: stretch; }
+.course .instruction {
+  padding: .8rem 1rem;
+  border-left: .2rem solid var(--course-pale);
+  background: rgba(255,255,255,.07);
+  color: white;
+  line-height: 1.45;
+  font-size: .9375rem;
+}
+.journeyCard {
+  display: grid; align-content: center; gap: clamp(.85rem,1.7vw,1.45rem);
+  padding: clamp(1.25rem,3vw,2.5rem); background: #fffaf1; color: #172638;
+  border: 1px solid #d4cabb; border-radius: 1.6rem;
+}
+.journeyCard h4 { font-size: clamp(1.5rem,2.5vw,2.35rem); letter-spacing: -.035em; line-height: 1.15; font-weight: 780; }
+.journeyCard ul { display: grid; }
+.journeyCard li { padding: .65rem 0; border-top: 1px solid #dfd6c8; font-size: 1rem; line-height: 1.45; }
+.journeyCard a { justify-self: start; color: var(--course-accent); font-weight: 750; text-decoration: underline; text-underline-offset: .22em; }
+.journeyCard a:focus-visible, .paris a:focus-visible, .sheetHead:focus-visible, .calendar summary:focus-visible { outline: 3px solid currentColor; outline-offset: 3px; border-radius: .25rem; }
 .paris, .outcomes { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: clamp(1.2rem,3vw,3rem); }
 .paris { align-items: center; overflow: hidden; border: 1px solid #dbd3c5; border-radius: 1.6rem; background: #fffdf9; }
-.paris img { width: 100%; height: auto; }
+.paris address { display: grid; align-content: center; gap: .55rem; min-height: 100%; padding: clamp(1.5rem,3.2vw,2.75rem); background: #172b3a; color: #fffaf0; font-style: normal; }
+.paris address .kicker { color: var(--course-pale); }
+.paris address strong { font-size: clamp(1.8rem,3.2vw,3rem); line-height: 1.08; font-weight: 750; letter-spacing: -.045em; }
 .paris > div { padding: 1.5rem; }
 .paris h3, .outcomes h3, .calendar h3 { font-size: clamp(1.35rem,2vw,2rem); font-weight: 800; letter-spacing: -.045em; line-height: 1.15; }
 .paris p, .outcomes p, .calendar p { margin-top: .8rem; line-height: 1.65; }
@@ -38,6 +61,11 @@
 .sheetHead { display: flex; align-items: center; justify-content: space-between; gap: .6rem; padding: .6rem 0; font-size: 1rem; font-weight: 750; cursor: pointer; }
 .caseSheet[open] .sheetHead span { transform: rotate(45deg); }
 .course .examHeading { font-size: clamp(1.75rem, 3.6vw, 3.15rem); line-height: 1.1; letter-spacing: -.04em; }
+.examSkills { border-top: 1px solid #ffffff38; margin-top: 1.5rem; padding-top: 1.1rem; }
+.examSkills > p { color: var(--course-pale); font-weight: 750; }
+.examSkills ul { margin-top: .7rem; }
+.examText, .examItems { margin-top: .8rem; color: #dbe3e9; font-size: 1rem; line-height: 1.65; }
+.examItems { padding-left: 1.1rem; list-style: disc; }
 .caseSheet dl > div { display: grid; grid-template-columns: minmax(5.4rem,.7fr) minmax(0,1.55fr); gap: .45rem; align-items: baseline; padding: .48rem 0; border-top: 1px solid #d9d0c3; font-size: .9rem; }
 .caseSheet dt { color: #52616d; }
 .caseSheet dd { font-weight: 650; }
@@ -65,4 +93,9 @@
   .summaryAction { justify-content: stretch; }
   .calendar li { gap: .2rem; }
   .paris { gap: 0; }
+}
+
+@media (max-width: 380px) {
+  .caseSheet dl > div { grid-template-columns: minmax(0,1fr); gap: .12rem; }
+  .caseSheet dd { min-width: 0; overflow-wrap: break-word; }
 }

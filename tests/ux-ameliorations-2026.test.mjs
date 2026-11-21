@@ -43,7 +43,9 @@ test('les sessions, les programmes et les vrais avis gardent leurs éléments ex
 
 test('les masters et bachelors en projet sont présentés sans garantie de certification', () => {
   const data = read('src/data/upcoming-trainings.ts');
-  assert.equal((data.match(/enregistrement en cours auprès de France compétences/g) || []).length, 3);
+  const status = read('src/data/certification-status.ts');
+  assert.match(status, /en cours d’instruction par France compétences/);
+  assert.equal((data.match(/certificationStatus: `Niveau [67] visé\. \$\{RNCP_REVIEW_STATUS\}/g) || []).length, 3);
   assert.match(data, /jobs: \['Coordinateur de prestations de sécurité'/);
   const carousel = read('src/components/TrainingCarousel.tsx');
   assert.match(carousel, /certificationStatus/);

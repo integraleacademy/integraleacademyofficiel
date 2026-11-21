@@ -1,3 +1,5 @@
+import { RNCP_REVIEW_STATUS } from './certification-status';
+
 export type CertificationProject = {
   slug: 'cpiaa' | 'eiag';
   acronym: string;
@@ -16,13 +18,13 @@ export type CertificationProject = {
 };
 
 // Public descriptions derived from the controlled RNCP drafts dated 11 November 2026.
-// These projects have not been submitted or registered. Their case numbers are not RNCP codes.
+// The applications are under review by France compétences. Project case numbers are not RNCP codes.
 export const certificationProjects = {
   cpiaa: {
     slug: 'cpiaa',
     acronym: 'CPIAA',
     title: 'Chef de produit en intelligence artificielle et automatisation',
-    description: 'Présentation du projet CPIAA d’Intégrale Academy : objectifs, compétences, prérequis et évaluations. Demande d’enregistrement au RNCP en préparation.',
+    description: `Projet CPIAA d’Intégrale Academy. ${RNCP_REVIEW_STATUS} Niveau 7 visé.`,
     introduction: 'Définir un produit utile, coordonner sa réalisation et mesurer sa valeur : un projet de certification consacré au pilotage des produits d’IA et d’automatisation.',
     objective: 'Le projet CPIAA vise la maîtrise du cycle de vie d’un produit ou d’un service intégrant l’intelligence artificielle et des processus automatisés. Il prépare à transformer un besoin utilisateur en proposition de valeur, à construire les décisions d’investissement, à coordonner la réalisation et à suivre les résultats en exploitation.',
     role: 'Le chef de produit travaille avec les utilisateurs, les métiers, les équipes de développement et de données, ainsi que les fonctions de sécurité et juridiques. Il articule utilité, viabilité économique, faisabilité technique et maîtrise des risques dans les limites de ses responsabilités.',
@@ -75,7 +77,7 @@ export const certificationProjects = {
     slug: 'eiag',
     acronym: 'EIAG',
     title: 'Expert en ingénierie de l’intelligence artificielle générative',
-    description: 'Présentation du projet EIAG d’Intégrale Academy : objectifs, compétences, prérequis et évaluations. Demande d’enregistrement au RNCP en préparation.',
+    description: `Projet EIAG d’Intégrale Academy. ${RNCP_REVIEW_STATUS} Niveau 7 visé.`,
     introduction: 'Concevoir, développer et fiabiliser des systèmes génératifs : un projet de certification consacré à l’ingénierie de l’IA, de l’architecture à l’exploitation.',
     objective: 'Le projet EIAG vise la conception, le développement, la qualification et l’exploitation de systèmes intégrant l’intelligence artificielle générative. Il prépare à traduire un besoin métier en architecture justifiée, à développer les composants, à démontrer leur fiabilité et à organiser leur fonctionnement dans la durée.',
     role: 'L’expert intervient au sein d’équipes de développement, de données ou d’architecture. En lien avec les responsables produit, les métiers, l’exploitation, la sécurité et les fonctions juridiques, il défend des choix techniques fondés sur des essais reproductibles et organise la résolution de problèmes complexes.',

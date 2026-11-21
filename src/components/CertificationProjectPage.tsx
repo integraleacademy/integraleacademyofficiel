@@ -1,3 +1,4 @@
+import { RNCP_REVIEW_STATUS } from '@/data/certification-status';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import type { CertificationProject } from '@/data/certification-projects';
@@ -101,7 +102,7 @@ export function CertificationProjectPage({ project }: { project: CertificationPr
             <div><dt>Accès prévu</dt><dd>Sur positionnement</dd></div>
             <div><dt>Durée</dt><dd>Après positionnement</dd></div>
           </dl>
-          <div className={styles.status}><span className={styles.statusLabel}>En préparation</span><h2>Demande d’enregistrement au RNCP</h2><p>Projet non enregistré à ce jour. Le niveau demandé reste soumis à la décision de France compétences.</p></div>
+          <div className={styles.status}><span className={styles.statusLabel}>Demande d’enregistrement au RNCP</span><h2>En cours d’instruction par France compétences</h2><p>Le niveau 7 visé reste soumis à la décision de France compétences.</p></div>
         </aside>
       </TrainingReferenceHero>
 
@@ -129,7 +130,7 @@ export function CertificationProjectPage({ project }: { project: CertificationPr
       </Section>
 
       <Section id="competences" eyebrow="Le référentiel du projet" title={<>Quatre blocs pour<br /><em>maîtriser le métier</em></>} intro="Explorez les compétences et les productions prévues pour chaque bloc. Les intitulés reprennent le référentiel du projet de certification." tone="paper">
-        <div className={styles.program}><TrainingProgramExplorer units={units} idPrefix={project.slug} hours="4" unitLabel="blocs" overview="Un parcours de compétences capitalisables" subtitle="Référentiel du projet · demande RNCP en préparation" facts={[["Niveau demandé", "7"], ["Évaluation", "1 épreuve / bloc"], ["Oral", "45 min / bloc"]]} menuTitle="Les blocs de compétences" tabListLabel={`Blocs de compétences ${project.acronym}`} illustration={{ src: `/images/certifications/${project.slug}.webp`, alt: `Logo de la certification en projet ${project.acronym}` }} nextLabel="Bloc suivant" restartLabel="Revenir au premier bloc" /></div>
+        <div className={styles.program}><TrainingProgramExplorer units={units} idPrefix={project.slug} hours="4" unitLabel="blocs" overview="Un parcours de compétences capitalisables" subtitle="Référentiel du projet soumis à France compétences" facts={[["Niveau demandé", "7"], ["Évaluation", "1 épreuve / bloc"], ["Oral", "45 min / bloc"]]} menuTitle="Les blocs de compétences" tabListLabel={`Blocs de compétences ${project.acronym}`} illustration={{ src: `/images/certifications/${project.slug}.webp`, alt: `Logo de la certification en projet ${project.acronym}` }} nextLabel="Bloc suivant" restartLabel="Revenir au premier bloc" /></div>
       </Section>
 
       <Section id="evaluation" eyebrow="Les évaluations prévues" title={<>Présenter son travail.<br /><em>Démontrer sa maîtrise</em></>} intro="Quatre épreuves individuelles, une par bloc, à partir d’un contexte professionnel réel ou reconstitué." tone="dark" className={styles.evaluation}>
@@ -159,7 +160,7 @@ export function CertificationProjectPage({ project }: { project: CertificationPr
       <FaqDirectoryLink embedded id="faq-projet" theme={project.slug === 'cpiaa' ? 'blue' : 'violet'} />
 
       <div id="contact"><TrainingReferenceContact href="/contact#demande" title={`Parlons de votre projet ${project.acronym}`} description="Notre équipe vous renseigne sur les compétences visées, les prérequis et les modalités envisagées. Cet échange permet aussi de faire le point sur votre parcours." additionalActions={<a href={emailHref} className={styles.emailLink}>Nous écrire au sujet de {project.acronym} →</a>} /></div>
-      <div className={styles.legal}><p>Organisme porteur : Intégrale Sécurité Formations · Nom commercial : Intégrale Academy.</p><p>Projet de certification — demande d’enregistrement au RNCP en préparation. Le niveau 7 demandé reste soumis à la décision de France compétences.</p></div>
+      <div className={styles.legal}><p>Organisme porteur : Intégrale Sécurité Formations · Nom commercial : Intégrale Academy.</p><p>{RNCP_REVIEW_STATUS} Le niveau demandé est le niveau 7.</p></div>
       <TrainingReferenceMobileBar href="#contact" label="Nous contacter" />
     </TrainingReferencePage>
   </article>;

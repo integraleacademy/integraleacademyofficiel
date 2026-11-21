@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import { AnnouncedCoursePage } from '@/components/AnnouncedCoursePage';
+import { announcedCourseArt } from '@/data/announced-course-art';
 import { upcomingCoursePages } from '@/data/upcoming-trainings';
 import { createPageMetadata } from '@/lib/seo';
 
@@ -17,7 +18,8 @@ async function resolveCourse({ params }: Route) {
 export async function generateMetadata(route: Route) {
   const entry = await resolveCourse(route);
   const metadata = createPageMetadata(entry.path);
-  const image = { url: entry.course.imageSrc, alt: entry.course.imageAlt };
+  const { src, alt } = announcedCourseArt[entry.course.anchorId].hero;
+  const image = { url: src, alt };
   return { ...metadata, openGraph: { ...metadata.openGraph, images: [image] }, twitter: { ...metadata.twitter, images: [image] } };
 }
 
