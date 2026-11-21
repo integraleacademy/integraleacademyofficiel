@@ -18,7 +18,7 @@ type Action = { href: string; label: ReactNode; newTab?: boolean };
 
 /** The SSIAP 1 visual language, with each course's own content and accent. */
 export function TrainingReferencePage({ children, theme, enabled = true, className = '' }: { children: ReactNode; theme: CourseTheme; enabled?: boolean; className?: string }) {
-  if (!enabled) return <div className="relative overflow-hidden">{children}</div>;
+  if (!enabled) return <div className="relative overflow-x-clip">{children}</div>;
   return <div className={[reference.page, styles.page, className].filter(Boolean).join(' ')} data-course-design="ssiap-reference" data-course-theme={theme}>{children}</div>;
 }
 
