@@ -1,0 +1,92 @@
+.facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem 2rem;
+  color: white;
+  border-top: 1px solid #ffffff40;
+  padding-top: 1.2rem;
+}
+.facts dt, .contact address span {
+  font-size: .8rem;
+  font-weight: 600;
+}
+.facts dt { color: #c1d4e7; }
+.facts dd { margin-top: .25rem; font-size: clamp(1rem, 1.5vw, 1.35rem); font-weight: 750; }
+
+.courses { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; }
+.course {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid #d9dde0;
+  border-radius: 1.25rem;
+}
+.course > img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
+.courseBody { display: flex; flex: 1; flex-direction: column; gap: .85rem; padding: clamp(1.15rem, 2vw, 1.75rem); }
+.courseHeading, .actions, .person { display: flex; align-items: center; gap: 1rem; }
+.courseHeading { justify-content: space-between; }
+.courseHeading h3 { font-size: 1.65rem; font-weight: 800; line-height: 1.1; }
+.courseHeading span { color: var(--course-accent); font-weight: 750; white-space: nowrap; }
+.courseBody > p, .details dt, .steps h3, .calendar h3, .person h3 { font-weight: 750; line-height: 1.35; }
+.courseBody ul { padding-left: 1.15rem; list-style-type: disc; }
+.courseBody ul, .details dd, .calendar p, .steps p, .pay p, .person p, .disclosure > p { color: #475665; line-height: 1.65; }
+.courseBody li + li { margin-top: .3rem; }
+.courseBody li::marker, .steps li::marker { color: var(--course-accent); }
+.courseBody > a { margin-top: auto; padding-top: .5rem; }
+.textLink { color: var(--course-accent); font-weight: 700; text-decoration: underline; text-underline-offset: .2em; }
+.textLink:hover, .contact a:hover { text-decoration-thickness: 2px; }
+.textLink:focus-visible, .disclosure summary:focus-visible, .contact a:focus-visible { outline: 3px solid var(--course-accent); outline-offset: 4px; }
+.note { max-width: 85ch; margin: 1.25rem 0 .5rem; color: #53606e; font-size: .95rem; line-height: 1.65; }
+
+.calendar { max-width: 64rem; }
+.calendar li { display: grid; grid-template-columns: minmax(11rem, .65fr) 2fr; gap: 1.5rem; border-top: 1px solid #d6dde3; padding: 1.1rem 0; }
+.calendar li:last-child { border-bottom: 1px solid #d6dde3; }
+.calendar li > span { color: var(--course-accent); font-weight: 750; }
+.calendar h3, .details dt, .steps h3 { font-size: 1.12rem; }
+.calendar p, .details dd, .steps p, .person p { margin-top: .35rem; }
+
+.funding { display: grid; grid-template-columns: 1fr 1.4fr; gap: clamp(1.5rem, 4vw, 4rem); align-items: start; }
+.price { padding: clamp(1.5rem, 3vw, 3rem); background: #172c43; color: #fff; border-radius: 1.25rem; }
+.price h3, .pay caption, .person h3 { font-size: 1.3rem; font-weight: 750; }
+.price > strong { display: block; padding: .5rem 0 .8rem; color: #c6e3ff; font-size: clamp(3.8rem, 7vw, 5.5rem); line-height: 1; letter-spacing: -.045em; }
+.price p { line-height: 1.7; }
+.pay table { width: 100%; border-collapse: collapse; }
+.pay caption, .pay th, .pay td { text-align: left; }
+.pay caption { padding-bottom: .8rem; }
+.pay td, .pay th { vertical-align: top; border-bottom: 1px solid #d6dde3; padding: .65rem .6rem .65rem 0; }
+.pay tbody th { white-space: nowrap; }
+.pay p { margin: .9rem 0 .5rem; }
+
+.details, .steps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.3rem 2rem; }
+.details > div, .steps li { border-top: 1px solid #c8d4df; padding-top: .9rem; }
+.steps { list-style: decimal inside; }
+.steps h3 { display: inline; }
+.steps li::marker { font-weight: 800; }
+.disclosure { margin-top: 1rem; padding: 0 1.1rem; border: 1px solid #d4dce3; border-radius: .85rem; background: #fff; overflow-wrap: anywhere; }
+.disclosure summary { padding: 1rem 0; font-weight: 750; cursor: pointer; }
+.disclosure > dl, .disclosure > p { padding-bottom: 1.1rem; }
+.disclosure a, .contact a { text-decoration: underline; text-underline-offset: .18em; }
+.actions { margin: 1.5rem 0; flex-wrap: wrap; gap: .8rem 1.5rem; }
+.contact {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 3rem; align-items: center;
+  padding: clamp(1.25rem, 3vw, 2.5rem); background: #fff; border: 1px solid #d4dce3; border-radius: 1.25rem;
+}
+.person img { flex: 0 0 auto; width: clamp(4rem, 9vw, 6.5rem); height: auto; }
+.contact address { display: grid; font-style: normal; min-width: 0; }
+.contact address a { display: grid; grid-template-columns: 6rem 1fr; align-items: baseline; gap: .4rem; padding: .5rem 0; color: var(--course-accent); overflow-wrap: anywhere; font-weight: 700; }
+.contact address span { color: #52606d; }
+
+@media (max-width: 760px) {
+  .courses, .funding, .contact { grid-template-columns: minmax(0, 1fr); }
+  .courses { gap: 1rem; }
+  .course > img { max-height: 16rem; }
+  .facts, .details, .steps { gap: .9rem; }
+  .calendar li { grid-template-columns: minmax(0, 1fr); gap: .2rem; }
+}
+@media (max-width: 520px) {
+  .facts, .details, .steps { grid-template-columns: minmax(0, 1fr); }
+  .facts > div { display: flex; align-items: baseline; justify-content: space-between; gap: .8rem; }
+  .facts dd { margin: 0; text-align: right; }
+  .contact address a { grid-template-columns: minmax(0, 1fr); gap: 0; }
+}

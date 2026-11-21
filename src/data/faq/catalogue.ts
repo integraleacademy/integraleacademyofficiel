@@ -1,4 +1,5 @@
 import { globalFaq } from '../faq';
+import { alternanceFaq } from '../parcours-alternance';
 import { commonBtsFaq } from '../bts';
 import { a3pFaq } from '../a3p';
 import { despInitialFaq } from '../despInitial';
@@ -16,6 +17,7 @@ export const questionsByTopic: Record<FaqTopic, readonly CatalogueQuestion[]> = 
   general: globalFaq,
   financements: fundingFaq,
   entreprises: businessFaq,
+  'parcours-alternance': alternanceFaq,
   aps: apsCourseFaq,
   a3p: a3pFaq,
   cpsp: cpspFaq,

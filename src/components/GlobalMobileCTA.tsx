@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const dedicatedSecurityPages = new Set([
+  '/parcoursalternance',
   '/formations-securite/aps',
   '/formations-securite/ssiap-1',
   '/formations-securite/ssiap-2',

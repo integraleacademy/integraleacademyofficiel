@@ -193,6 +193,7 @@ export default function EntreprisesPage() {
           <article><span className={styles.a3pIcon}><Icon name="people" /></span><div><strong>Protection physique des personnes</strong><small>TFP A3P · 328 h</small></div></article>
           <article><span className={styles.fireIcon}><Icon name="fire" /></span><div><strong>Agent de sécurité incendie</strong><small>SSIAP 1 · Formation et examen</small></div></article>
         </div>
+        <p className="mt-4"><Link href="/parcoursalternance" className="font-bold underline underline-offset-4">Découvrir le parcours et la candidature des apprentis <span aria-hidden="true">→</span></Link></p>
         <div className={styles.timelineHeading}><span className={styles.ribbon}>Deux rentrées pour recruter en 2027</span><h3>La formation et le terrain<br />pour monter en compétences</h3><p>Une même architecture pédagogique, avec deux calendriers pour organiser vos recrutements.</p></div>
         <div className={styles.sessionGrid}>{alternanceSessions.map((session) => <article key={session.name} className={styles.sessionCard}>
           <header><span>{session.name}</span><h4>{session.period}</h4></header>
