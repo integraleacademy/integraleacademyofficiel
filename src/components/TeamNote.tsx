@@ -19,7 +19,7 @@ export function TeamNote({ id, person, children, action }: TeamNoteProps) {
         <strong>{name}</strong><span>Le mot de l’équipe</span>
       </p>
       <p className={styles.message}>{children}</p>
-      {action && <a className={styles.action} href={action.href}>{action.label}<span aria-hidden="true">↗</span></a>}
+      {action && <a className={styles.action} href={action.href}>{action.label}<span aria-hidden="true">→</span></a>}
     </div>
   </aside>;
 }
