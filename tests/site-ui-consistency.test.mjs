@@ -16,10 +16,14 @@ test('School, Contact and Financements use the same chapter navigation', () => {
 
 test('Shared chapter navigation tracks scrolling, resizing and accessible anchor state', () => {
   const source = read('src/components/PageSectionNavigation.tsx');
-  for (const value of ['ResizeObserver', "addEventListener('scroll'", "addEventListener('hashchange'", 'aria-current', 'cancelAnimationFrame', '--section-nav-height']) assert.ok(source.includes(value), value);
-  assert.match(source, /<ResponsiveSectionLinks\b/);
+  for (const value of ['ResizeObserver', "addEventListener('scroll'", "addEventListener('hashchange'", 'cancelAnimationFrame', '--section-nav-height']) assert.ok(source.includes(value), value);
+  assert.match(source, /<ResponsiveSectionLinks\b[\s\S]*activeHref=\{`#\$\{active\}`\}/);
+  const links = read('src/components/ResponsiveSectionLinks.tsx');
+  assert.match(links, /aria-current=\{active \? 'location' : undefined\}/);
+  assert.match(links, /<details\b[\s\S]*<summary\b[^>]*data-section-toggle/);
   const css = read('src/components/PageSectionNavigation.module.css');
-  for (const value of ['position: sticky', 'flex-wrap: wrap', 'scroll-margin-top:', 'prefers-reduced-motion', "[aria-current='location']"]) assert.ok(css.includes(value), value);
+  assert.doesNotMatch(css, /flex-wrap:\s*wrap/);
+  for (const value of ['position: sticky', 'scroll-margin-top:', 'prefers-reduced-motion', "[aria-current='location']"]) assert.ok(css.includes(value), value);
 });
 
 test('Only the FAQ directory renders the native question accordions', () => {

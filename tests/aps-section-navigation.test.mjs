@@ -18,6 +18,10 @@ const sharedNavigation = readFileSync(
   new URL('../src/components/TrainingSectionNavigation.tsx', import.meta.url),
   'utf8',
 );
+const responsiveLinks = readFileSync(
+  new URL('../src/components/ResponsiveSectionLinks.tsx', import.meta.url),
+  'utf8',
+);
 const sharedNavigationStyles = readFileSync(
   new URL('../src/components/TrainingSectionNavigation.module.css', import.meta.url),
   'utf8',
@@ -73,7 +77,8 @@ test('la section active est annoncée et mise à jour pendant le défilement', (
   assert.match(navigation, /import \{ TrainingSectionNavigation \}/);
   assert.match(sharedNavigation, /^'use client';/);
   assert.match(sharedNavigation, /IntersectionObserver/);
-  assert.match(sharedNavigation, /aria-current=\{active \? 'location' : undefined\}/);
+  assert.match(sharedNavigation, /activeHref=\{activeHref\}/);
+  assert.match(responsiveLinks, /aria-current=\{active \? 'location' : undefined\}/);
   assert.match(sharedNavigation, /setActiveHref/);
   assert.match(sharedNavigationStyles, /prefers-reduced-motion: reduce/);
   assert.match(sharedNavigation, /style\.scrollMarginTop/);
@@ -83,11 +88,11 @@ test('la navigation reste lisible et utilisable sur ordinateur comme sur mobile'
   assert.match(page, /<main className=\{`\$\{styles\.page\} relative pb-24 lg:pb-0`\}>/);
   assert.doesNotMatch(page, /styles\.page\} relative overflow-hidden/);
   assert.match(styles, /\.page\s*\{[^}]*overflow-x:\s*clip;/s);
-  assert.match(sharedNavigationStyles, /\.courseNav\s*\{[^}]*position:\s*sticky;[^}]*top:\s*55px;[^}]*backdrop-filter:\s*blur\(18px\);/s);
-  assert.match(sharedNavigationStyles, /@media \(min-width: 1280px\)[\s\S]*\.courseNav\s*\{[^}]*top:\s*75px;/);
+  assert.match(sharedNavigationStyles, /\.courseNav\s*\{[^}]*position:\s*sticky;[^}]*top:\s*var\(--site-header-height, 55px\);[^}]*backdrop-filter:\s*blur\(18px\);/s);
+  assert.match(sharedNavigationStyles, /\.courseNavShell\s*\{[^}]*grid-template-columns:\s*fit-content\([^)]+\) minmax\(0, 1fr\) auto;/);
   assert.match(sharedNavigation, /<ResponsiveSectionLinks /);
-  assert.match(sharedNavigationStyles, /\.courseNavLink\s*\{[^}]*font-size:\s*\.75rem;/s);
-  assert.match(sharedNavigationStyles, /\.courseNavLinkActive[\s\S]*background:\s*#0d1725;/);
-  assert.match(sharedNavigationStyles, /@media \(max-width: 1180px\)[\s\S]*\.courseNavChapters\s*\{[^}]*grid-row:\s*2;/);
+  assert.match(sharedNavigationStyles, /\.courseNavLink\s*\{[^}]*font-size:\s*\.8125rem;/s);
+  assert.match(sharedNavigationStyles, /\.courseNavLinkActive::after[\s\S]*transform:\s*scaleX\(1\);/);
+  assert.doesNotMatch(sharedNavigationStyles, /grid-row:\s*2/);
   assert.doesNotMatch(sharedNavigationStyles, /\.courseNav\s*\{[^}]*display:\s*none;/s);
 });

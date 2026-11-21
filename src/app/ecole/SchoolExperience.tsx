@@ -21,7 +21,7 @@ const chapters = [
 ] as const;
 
 export function SchoolNavigation() {
-  return <PageSectionNavigation chapters={chapters} label="Faisons connaissance" ariaLabel="Découvrir notre école" />;
+  return <PageSectionNavigation shortcutIds={['campus', 'equipe', 'pedagogie']} chapters={chapters} label="Faisons connaissance" ariaLabel="Découvrir notre école" />;
 }
 
 const approaches = [

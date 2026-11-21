@@ -1,41 +1,67 @@
-.scope { --section-nav-height: 70px; }
+.scope { --section-nav-height: 56px; }
 .scope.scope :is(section, div, details, button)[id] { scroll-margin-top: calc(var(--site-header-height, 80px) + var(--section-nav-height) + 24px); }
-.navigation { position: sticky; top: var(--site-header-height, 80px); z-index: 30; border-block: 1px solid rgb(var(--border) / .75); background: rgb(var(--background) / .96); color: rgb(var(--text-main)); backdrop-filter: blur(16px); }
-.inner { width: var(--site-content-width); margin-inline: auto; display: flex; align-items: center; gap: 20px; min-height: 70px; }
+.navigation {
+  position: sticky;
+  top: var(--site-header-height, 80px);
+  z-index: 30;
+  border-bottom: 1px solid rgb(var(--border) / .85);
+  background: rgb(var(--background) / .97);
+  color: rgb(var(--text-main));
+  backdrop-filter: blur(16px);
+}
+.inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: var(--site-content-width);
+  min-height: 54px;
+  gap: clamp(.75rem,2vw,2rem);
+  margin-inline: auto;
+}
+.inner > span {
+  flex: none;
+  max-width: 24%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: .775rem;
+  font-weight: 730;
+  color: rgb(var(--text-muted));
+}
 .sectionLinks { min-width: 0; flex: 1; }
-.links { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0 14px; }
-.inner > span { flex-shrink: 0; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: rgb(var(--text-muted)); }
-.inner a { position: relative; display: inline-flex; align-items: center; gap: 8px; align-self: stretch; padding-block: 17px; white-space: nowrap; font-size: 12px; font-weight: 800; }
-.inner a > span { color: rgb(var(--accent-strong)); font-size: 11px; }
-.inner a::after { position: absolute; content: ''; inset: auto 0 0; height: 3px; border-radius: 3px 3px 0 0; background: rgb(var(--accent)); transform: scaleX(0); transform-origin: left; transition: transform .2s; }
-.inner a[aria-current='location']::after { transform: scaleX(1); }
-.inner a:hover { color: rgb(var(--accent-strong)); }
-.inner a:focus-visible { outline: 3px solid rgb(var(--accent-strong)); outline-offset: -3px; }
-@media (max-width: 1100px) {
-  .inner { gap: 14px; }
-  .inner > span { display: none; }
+.sectionLinks:global([data-section-links]) { justify-content: center; }
+.sectionLinks :global([data-section-shortcuts]) > a {
+  display: inline-flex;
+  position: relative;
+  align-items: center;
+  gap: .35rem;
+  min-height: 44px;
+  padding-inline: clamp(.3rem,.65vw,.75rem);
+  text-decoration: none;
+  white-space: nowrap;
+  font-size: .8125rem;
+  font-weight: 630;
+  color: rgb(var(--text-muted));
 }
+.sectionLinks a > span[aria-hidden] { font-size: .7rem; font-variant-numeric: tabular-nums; color: rgb(var(--accent-strong)); }
+.sectionLinks :global([data-section-shortcuts]) > a::after {
+  content: '';
+  position: absolute;
+  inset: auto .45rem .1rem;
+  height: 2px;
+  background: rgb(var(--accent-strong));
+  transform: scaleX(0);
+  transition: transform .18s ease;
+}
+.sectionLinks :global([data-section-shortcuts]) > a:is(:hover,[aria-current='location'])::after { transform: scaleX(1); }
+.sectionLinks a:is(:hover,[aria-current='location']) { color: rgb(var(--text-main)); }
+.sectionLinks a[aria-current='location'] { font-weight: 750; }
+.sectionLinks a:focus-visible { outline: 2px solid rgb(var(--accent-strong)); outline-offset: 1px; }
 @media (max-width: 800px) {
-  .scope { --section-nav-height: 58px; }
-  .inner { min-height: 54px; }
-  .inner a { padding-block: 10px; white-space: normal; }
+  .inner { min-height: 52px; }
+  .inner > span { display: none; }
+  .sectionLinks:global([data-section-links]) { justify-content: flex-start; }
 }
-@media (prefers-reduced-motion: reduce) { .inner a::after { transition: none; } }
-
-/* Shared responsive scale: readable at 100%, with natural content height. */
-
-.inner a { min-height: 44px; font-size: .875rem; }
-.inner > span { font-size: .75rem; }
-@media (min-width: 1024px) {
-  .scope { --section-nav-height: 58px; }
-  .inner { min-height: 56px; }
-  .inner a { padding-block: 10px; }
-}
-
-
-/* Keep the École/Contact section marker visually consistent with course menus. */
-.inner a:hover::after { transform: scaleX(.6); }
-.inner a[aria-current='location']:hover::after { transform: scaleX(1); }
 @media (prefers-reduced-motion: reduce) {
-  .inner a::after { transition: none; }
+  .sectionLinks :global([data-section-shortcuts]) > a::after { transition: none; }
 }

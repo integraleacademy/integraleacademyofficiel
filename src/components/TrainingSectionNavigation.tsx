@@ -14,6 +14,7 @@ type TrainingSectionNavigationProps = {
   mark: string;
   title: string;
   items: readonly TrainingSectionNavigationItem[];
+  shortcutHrefs?: readonly string[];
   registrationHref: string;
   registrationLabel?: string;
   eyebrowLabel?: string;
@@ -26,6 +27,7 @@ export function TrainingSectionNavigation({
   mark,
   title,
   items,
+  shortcutHrefs,
   registrationHref,
   registrationLabel = 'Je m’inscris',
   eyebrowLabel = 'Votre formation',
@@ -36,7 +38,6 @@ export function TrainingSectionNavigation({
   const firstHref = items[0]?.href ?? '#top';
   const [activeHref, setActiveHref] = useState<string>(firstHref);
   const navRef = useRef<HTMLElement>(null);
-  const activeLabel = items.find(item => item.href === activeHref)?.label ?? items[0]?.label ?? '';
 
   useEffect(() => {
     const nav = navRef.current;
@@ -172,23 +173,9 @@ export function TrainingSectionNavigation({
           </span>
         </a>
 
-        <ResponsiveSectionLinks activeLabel={activeLabel} className={styles.courseNavChapters} linksClassName={styles.courseNavLinks}>
-          {items.map((item) => {
-            const active = activeHref === item.href;
-            return (
-              <a
-                key={item.href}
-                href={item.href}
-                data-section={item.href.slice(1)}
-                aria-current={active ? 'location' : undefined}
-                className={`${styles.courseNavLink} ${active ? styles.courseNavLinkActive : ''}`}
-                onClick={() => setActiveHref(item.href)}
-              >
-                {item.label}
-              </a>
-            );
-          })}
-        </ResponsiveSectionLinks>
+        <ResponsiveSectionLinks items={items} shortcutHrefs={shortcutHrefs ?? [firstHref, '#programme', '#dates-tarifs']}
+          activeHref={activeHref} onNavigate={setActiveHref} className={styles.courseNavChapters}
+          linkClassName={styles.courseNavLink} activeClassName={styles.courseNavLinkActive} />
 
         <TrainingActionLink
           href={registrationHref}
