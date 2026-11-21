@@ -1,5 +1,6 @@
 'use client';
 
+import { ResponsiveSectionLinks } from './ResponsiveSectionLinks';
 import { TrainingActionLink } from '@/components/TrainingActionLink';
 import { useEffect, useRef, useState } from 'react';
 import styles from './TrainingSectionNavigation.module.css';
@@ -35,7 +36,7 @@ export function TrainingSectionNavigation({
   const firstHref = items[0]?.href ?? '#top';
   const [activeHref, setActiveHref] = useState<string>(firstHref);
   const navRef = useRef<HTMLElement>(null);
-  const scrollerRef = useRef<HTMLDivElement>(null);
+  const activeLabel = items.find(item => item.href === activeHref)?.label ?? items[0]?.label ?? '';
 
   useEffect(() => {
     const nav = navRef.current;
@@ -160,16 +161,6 @@ export function TrainingSectionNavigation({
     };
   }, [items]);
 
-  useEffect(() => {
-    const scroller = scrollerRef.current;
-    const activeLink = scroller?.querySelector<HTMLElement>(`[data-section="${activeHref.slice(1)}"]`);
-    if (!scroller || !activeLink) return;
-
-    const targetLeft = activeLink.offsetLeft - (scroller.clientWidth - activeLink.offsetWidth) / 2;
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    scroller.scrollTo({ left: Math.max(0, targetLeft), behavior: reduceMotion ? 'auto' : 'smooth' });
-  }, [activeHref]);
-
   return (
     <nav ref={navRef} aria-label={ariaLabel} className={styles.courseNav} data-theme={theme}>
       <div className={`${styles.courseNavShell} page-container`}>
@@ -181,25 +172,23 @@ export function TrainingSectionNavigation({
           </span>
         </a>
 
-        <div ref={scrollerRef} className={styles.courseNavScroller}>
-          <div className={styles.courseNavLinks}>
-            {items.map((item) => {
-              const active = activeHref === item.href;
-              return (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  data-section={item.href.slice(1)}
-                  aria-current={active ? 'location' : undefined}
-                  className={`${styles.courseNavLink} ${active ? styles.courseNavLinkActive : ''}`}
-                  onClick={() => setActiveHref(item.href)}
-                >
-                  {item.label}
-                </a>
-              );
-            })}
-          </div>
-        </div>
+        <ResponsiveSectionLinks activeLabel={activeLabel} className={styles.courseNavChapters} linksClassName={styles.courseNavLinks}>
+          {items.map((item) => {
+            const active = activeHref === item.href;
+            return (
+              <a
+                key={item.href}
+                href={item.href}
+                data-section={item.href.slice(1)}
+                aria-current={active ? 'location' : undefined}
+                className={`${styles.courseNavLink} ${active ? styles.courseNavLinkActive : ''}`}
+                onClick={() => setActiveHref(item.href)}
+              >
+                {item.label}
+              </a>
+            );
+          })}
+        </ResponsiveSectionLinks>
 
         <TrainingActionLink
           href={registrationHref}

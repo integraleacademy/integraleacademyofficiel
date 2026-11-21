@@ -17,8 +17,9 @@ test('School, Contact and Financements use the same chapter navigation', () => {
 test('Shared chapter navigation tracks scrolling, resizing and accessible anchor state', () => {
   const source = read('src/components/PageSectionNavigation.tsx');
   for (const value of ['ResizeObserver', "addEventListener('scroll'", "addEventListener('hashchange'", 'aria-current', 'cancelAnimationFrame', '--section-nav-height']) assert.ok(source.includes(value), value);
+  assert.match(source, /<ResponsiveSectionLinks\b/);
   const css = read('src/components/PageSectionNavigation.module.css');
-  for (const value of ['position: sticky', 'overflow-x: auto', 'scroll-margin-top:', 'prefers-reduced-motion', "[aria-current='location']"]) assert.ok(css.includes(value), value);
+  for (const value of ['position: sticky', 'flex-wrap: wrap', 'scroll-margin-top:', 'prefers-reduced-motion', "[aria-current='location']"]) assert.ok(css.includes(value), value);
 });
 
 test('Only the FAQ directory renders the native question accordions', () => {

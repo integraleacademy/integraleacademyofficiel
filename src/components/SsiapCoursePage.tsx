@@ -43,6 +43,8 @@ const navigationItems = [
   { label: 'FAQ', href: '#faq-ssiap' },
 ] as const;
 
+const refresherNavigationItems = navigationItems.filter(item => item.href !== '#pedagogie');
+
 function contactHref(config: SsiapCourseConfig, subject = 'inscription') {
   return `/contact?formation=${config.slug}&objet=${encodeURIComponent(subject)}`;
 }
@@ -261,28 +263,13 @@ export function SsiapCoursePage({ config, sessions = [], datesSection }: {
       </section>
       )}
 
-      {heroKey ? <TrainingSectionNavigation
+      <TrainingSectionNavigation
         mark="SSIAP"
         title={config.label}
-        items={navigationItems}
-        registrationHref="#dates-tarifs"
+        items={heroKey ? navigationItems : refresherNavigationItems}
+        registrationHref={heroKey ? '#dates-tarifs' : contactHref(config, 'inscription')}
         theme="red"
-      /> : <nav aria-label="Sommaire de la formation" className="sticky top-0 z-30 hidden border-b border-academy-line bg-[#FFFDF8]/95 px-4 py-3 backdrop-blur lg:block">
-        <div className="page-container flex items-center justify-between gap-5">
-          <span className="text-xs font-black">{config.label}</span>
-          <div className="flex items-center gap-5 text-xs font-extrabold text-academy-muted">
-            {[
-              ['Missions', '#missions'],
-              ['Admission', '#admission'],
-              ['Programme', '#programme'],
-              ['Validation', '#validation'],
-              ['Dates & tarifs', '#dates-tarifs'],
-              ['FAQ', '#faq-ssiap'],
-            ].map(([label, href]) => <Link key={href} href={href} className="transition hover:text-academy-ink">{label}</Link>)}
-          </div>
-          <CTA href={contactHref(config, 'inscription')} variant="red" className="min-h-10 px-4 py-2">Je m’inscris</CTA>
-        </div>
-      </nav>}
+      />
 
 
       {heroKey ? <CourseJourney course={heroKey}>{missions}</CourseJourney> : missions}

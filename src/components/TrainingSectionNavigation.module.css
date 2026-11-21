@@ -57,14 +57,14 @@
 
 .courseNavShell {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-columns: fit-content(22%) minmax(0, 1fr) auto;
   gap: .75rem;
   align-items: center;
 }
 
 .courseNavIdentity {
   display: flex;
-  min-width: max-content;
+  min-width: 0;
   align-items: center;
   gap: .65rem;
   border-right: 1px solid rgba(13, 23, 37, .1);
@@ -110,25 +110,7 @@
   line-height: 1.1;
 }
 
-.courseNavScroller {
-  min-width: 0;
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-  scrollbar-width: none;
-}
-
-.courseNavScroller::-webkit-scrollbar {
-  display: none;
-}
-
-.courseNavLinks {
-  display: flex;
-  width: max-content;
-  min-width: 100%;
-  gap: .3rem;
-  align-items: center;
-  justify-content: center;
-}
+.courseNavLinks { justify-content: flex-start; }
 
 .courseNavLink {
   display: inline-flex;
@@ -143,7 +125,7 @@
   font-weight: 850;
   line-height: 1;
   text-decoration: none;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
   transition: color .2s ease, background .2s ease, border-color .2s ease, transform .2s ease;
 }
 
@@ -165,7 +147,7 @@
 .courseNavCta {
   display: inline-flex;
   min-height: 2.65rem;
-  min-width: max-content;
+  min-width: 0;
   align-items: center;
   justify-content: center;
   gap: .65rem;
@@ -217,7 +199,7 @@
     border-right: 0;
   }
 
-  .courseNavScroller {
+  .courseNavChapters {
     grid-column: 1 / -1;
     grid-row: 2;
   }
@@ -279,11 +261,10 @@
 .courseNavKicker { font-size: .625rem; line-height: 1.3; }
 .courseNavTitle { font-size: .9375rem; }
 .courseNavIdentity, .courseNavIdentityCopy { min-width: 0; }
-.courseNavTitle { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.courseNavTitle { overflow-wrap: anywhere; }
 @media (min-width: 1024px) {
   .courseNav { padding-block: .35rem; }
 }
-@media (max-width: 1180px) { .courseNavLinks { justify-content: flex-start; } }
 @media (max-width: 767px) {
   .courseNav { padding-block: .5rem; }
   .courseNavShell { gap: .4rem; }

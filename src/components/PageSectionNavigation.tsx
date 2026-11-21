@@ -1,11 +1,12 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { ResponsiveSectionLinks } from './ResponsiveSectionLinks';
 import styles from './PageSectionNavigation.module.css';
 
 export type PageChapter = readonly [id: string, label: string];
 
-/** The École chapter navigation, shared by École, Contact and Financements. */
+/** Sticky chapters shared by the school, contact, company and funding pages. */
 export function PageSectionNavigation({ chapters, label, ariaLabel }: {
   chapters: readonly PageChapter[];
   label: string;
@@ -52,24 +53,16 @@ export function PageSectionNavigation({ chapters, label, ariaLabel }: {
     };
   }, [chapters]);
 
-  // Reveal the active link on narrow screens without moving the page vertically.
-  useEffect(() => {
-    const inner = nav.current?.firstElementChild as HTMLElement | null;
-    const link = inner?.querySelector<HTMLElement>('[aria-current="location"]');
-    if (!inner || !link || inner.scrollWidth <= inner.clientWidth) return;
-    const bounds = inner.getBoundingClientRect();
-    const target = link.getBoundingClientRect();
-    const displayScale = parseFloat(getComputedStyle(document.documentElement).zoom) || 1;
-    if (target.left < bounds.left + 16) inner.scrollLeft += (target.left - bounds.left - 16) / displayScale;
-    else if (target.right > bounds.right - 16) inner.scrollLeft += (target.right - bounds.right + 16) / displayScale;
-  }, [active]);
+  const activeLabel = chapters.find(([id]) => id === active)?.[1] ?? chapters[0]?.[1] ?? label;
 
   return <nav ref={nav} className={styles.navigation} aria-label={ariaLabel} data-page-section-navigation>
     <div className={styles.inner}>
       <span>{label}</span>
-      {chapters.map(([id, title], index) => <a key={id} href={`#${id}`} aria-current={active === id ? 'location' : undefined}>
-        <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>{title}
-      </a>)}
+      <ResponsiveSectionLinks activeLabel={activeLabel} className={styles.sectionLinks} linksClassName={styles.links}>
+        {chapters.map(([id, title], index) => <a key={id} href={`#${id}`} aria-current={active === id ? 'location' : undefined}>
+          <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>{title}
+        </a>)}
+      </ResponsiveSectionLinks>
     </div>
   </nav>;
 }
