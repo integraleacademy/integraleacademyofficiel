@@ -1,3 +1,8 @@
+import { RNCP_REVIEW_STATUS } from './certification-status';
+
+export const PROFESSIONAL_TITLE_ADMISSIONS_URL = 'https://admissions.integraleconnect.com/';
+export const PROFESSIONAL_TITLE_INTAKE = 'À partir de septembre 2027';
+
 export type TrainingStatus = 'PROCHAINEMENT' | 'SEPTEMBRE 2027';
 
 export type UpcomingCourse = {
@@ -35,7 +40,7 @@ export const upcomingFamilies: UpcomingFamily[] = [
         status: 'PROCHAINEMENT',
         topics: ['Évaluer la fiabilité des sources qui signalent une menace.', 'Reconstituer la chronologie d’un incident à partir des traces disponibles.', 'Rédiger une synthèse pour les équipes chargées de protéger l’organisation.'],
         jobs: ['Analyste en renseignement sur les cybermenaces', 'Chargé de veille en cybersécurité', 'Analyste d’investigation numérique'],
-        certificationStatus: 'Certification de niveau 6 : enregistrement en cours auprès de France compétences.',
+        certificationStatus: `Niveau 6 visé. ${RNCP_REVIEW_STATUS}`,
       },
       {
         anchorId: 'bachelor-dms', shortTitle: 'DMS', title: 'Direction et management de la sécurité', tabLabel: 'DMS',
@@ -59,7 +64,7 @@ export const upcomingFamilies: UpcomingFamily[] = [
         status: 'PROCHAINEMENT',
         topics: ['Choisir un usage de l’IA à partir des difficultés rencontrées par les utilisateurs.', 'Tester un prototype et arbitrer les fonctionnalités à développer.', 'Mesurer l’adoption du produit et décider des améliorations prioritaires.'],
         jobs: ['Chef de produit en IA', 'Product owner de solutions IA', 'Chef de projet automatisation'],
-        certificationStatus: 'Certification de niveau 7 : enregistrement en cours auprès de France compétences.',
+        certificationStatus: `Niveau 7 visé. ${RNCP_REVIEW_STATUS}`,
       },
       {
         anchorId: 'mastere-ingenierie-ia-generative', shortTitle: 'Expert en ingénierie', title: 'de l’IA générative', tabLabel: 'IA générative',
@@ -69,7 +74,7 @@ export const upcomingFamilies: UpcomingFamily[] = [
         status: 'PROCHAINEMENT',
         topics: ['Choisir un modèle et préparer les données adaptées à l’usage visé.', 'Intégrer les composants et tester la fiabilité des résultats.', 'Déployer le système et suivre sa qualité en conditions réelles.'],
         jobs: ['Ingénieur en IA générative', 'Développeur d’applications IA', 'Architecte de solutions IA'],
-        certificationStatus: 'Certification de niveau 7 : enregistrement en cours auprès de France compétences.',
+        certificationStatus: `Niveau 7 visé. ${RNCP_REVIEW_STATUS}`,
       },
     ],
   },
@@ -81,7 +86,7 @@ export const upcomingFamilies: UpcomingFamily[] = [
         description: 'Traduire les heures travaillées, les absences et les primes en bulletins de paie, puis contrôler les montants à verser.',
         imageSrc: '/images/formations-annoncees/tp-gestionnaire-de-paie.webp',
         imageAlt: 'Une gestionnaire de paie vérifie un bulletin de salaire à partir du relevé d’heures, une calculatrice à portée de main.',
-        status: 'PROCHAINEMENT',
+        status: 'SEPTEMBRE 2027',
         topics: ['Recueillir les éléments variables auprès des équipes.', 'Établir et vérifier les bulletins de salaire.', 'Contrôler les données transmises aux organismes sociaux.'],
       },
       {
@@ -89,7 +94,7 @@ export const upcomingFamilies: UpcomingFamily[] = [
         description: 'Accompagner les salariés dès leur arrivée et assurer le suivi administratif de leur parcours dans l’entreprise.',
         imageSrc: '/images/formations-annoncees/tp-assistant-rh.webp',
         imageAlt: 'Un assistant ressources humaines remet son badge à une nouvelle salariée.',
-        status: 'PROCHAINEMENT',
+        status: 'SEPTEMBRE 2027',
         topics: ['Mettre à jour les dossiers du personnel.', 'Participer au recrutement et à l’accueil des nouveaux salariés.', 'Organiser le suivi des formations et des entretiens.'],
       },
       {
@@ -97,7 +102,7 @@ export const upcomingFamilies: UpcomingFamily[] = [
         description: 'Accueillir les patients, organiser les rendez-vous et assurer le suivi administratif en lien avec les professionnels de santé.',
         imageSrc: '/images/formations-annoncees/tp-secretariat-medical.webp',
         imageAlt: 'Au secrétariat médical, une secrétaire montre à une patiente la date de son prochain rendez-vous sur un calendrier.',
-        status: 'PROCHAINEMENT',
+        status: 'SEPTEMBRE 2027',
         topics: ['Orienter le patient vers le bon interlocuteur.', 'Gérer les agendas et préparer les documents avant un rendez-vous.', 'Tenir le dossier patient à jour en respectant la confidentialité.'],
       },
       {
@@ -105,7 +110,7 @@ export const upcomingFamilies: UpcomingFamily[] = [
         description: 'Être le premier contact des visiteurs et assurer les tâches administratives qui facilitent le travail de l’équipe.',
         imageSrc: '/images/formations-annoncees/tp-accueil-administratif.webp',
         imageAlt: 'Un chargé d’accueil indique le couloir à suivre à un visiteur qui tient une enveloppe.',
-        status: 'PROCHAINEMENT',
+        status: 'SEPTEMBRE 2027',
         topics: ['Accueillir et orienter les visiteurs et les appels.', 'Traiter le courrier et mettre en forme les documents courants.', 'Classer les dossiers et suivre les demandes jusqu’à leur traitement.'],
       },
       {
@@ -113,7 +118,7 @@ export const upcomingFamilies: UpcomingFamily[] = [
         description: 'Repérer un événement sur les écrans, vérifier une alerte et transmettre les informations aux intervenants depuis le poste de surveillance.',
         imageSrc: '/images/formations-annoncees/tp-videoprotection.webp',
         imageAlt: 'Un opérateur surveille quatre vues de caméras et consigne un événement dans sa main courante.',
-        status: 'PROCHAINEMENT',
+        status: 'SEPTEMBRE 2027',
         topics: ['Observer les images et identifier une situation inhabituelle.', 'Traiter les signaux d’alarme selon les consignes du site.', 'Alerter les interlocuteurs concernés et consigner les événements.'],
       },
     ],

@@ -11,14 +11,25 @@ export type SeoPage = {
   serviceName?: string;
 };
 
+const projectSummaries: Record<string, string> = {
+  'bachelor-eirc': 'Bachelor EIRC, investigation numérique et cybermenaces.',
+  'mastere-chef-de-produit-ia': 'Mastère en pilotage de produits IA et automatisation à Paris.',
+  'mastere-ingenierie-ia-generative': 'Mastère en conception d’applications d’IA générative à Paris.',
+};
+
 /** Editorial metadata for canonical pages. Historic addresses stay in url-redirects.json. */
 export const seoPages: Record<string, SeoPage> = {
   ...Object.fromEntries(upcomingCoursePages.map(({ family, course, path }) => {
     const name = upcomingCourseName(family, course);
     const title = `${family.singular} ${name}`;
-    const description = course.anchorId === 'bachelor-dms'
-      ? 'Bachelor DMS à Puget-sur-Argens. Préparez le DESP et le SSIAP 3 en alternance dès septembre 2027. Retrouvez les prérequis, le calendrier et la brochure.'
-      : `${course.description} Formation à venir${family.location ? ` à ${family.location}` : ''}.`;
+    let description = course.description;
+    if (family.id === 'titres-professionnels') {
+      description = `${name} en alternance à Puget-sur-Argens à partir de septembre 2027. Programme, épreuves et candidature en ligne.`;
+    } else if (course.anchorId === 'bachelor-dms') {
+      description = 'Bachelor DMS à Puget-sur-Argens. Préparez le DESP et le SSIAP 3 en alternance dès septembre 2027. Retrouvez les prérequis, le calendrier et la brochure.';
+    } else if (course.certificationStatus) {
+      description = `${projectSummaries[course.anchorId] ?? title} ${course.certificationStatus}`;
+    }
     return [path, { title, description, label: title, courseName: title }];
   })),
   '/': {
