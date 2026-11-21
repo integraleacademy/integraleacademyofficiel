@@ -17,6 +17,7 @@ type ProgramTabsProps = {
   tabListLabel: string;
   nextLabel?: string;
   restartLabel?: string;
+  hourDistribution?: boolean;
 };
 
 type ProgramSummaryProps = {
@@ -39,7 +40,7 @@ function ProgramOverview({ hours, unitLabel = 'h', overview, subtitle, facts, il
 }
 
 export function TrainingProgramExplorer(props: ProgramTabsProps & (ProgramSummaryProps | { children: ReactNode })) {
-  const { units, idPrefix, menuTitle, tabListLabel, nextLabel, restartLabel } = props;
+  const { units, idPrefix, menuTitle, tabListLabel, nextLabel, restartLabel, hourDistribution } = props;
   const [active, setActive] = useState(0);
   const buttons = useRef<(HTMLButtonElement | null)[]>([]);
   const tabList = useRef<HTMLDivElement | null>(null);
@@ -69,6 +70,9 @@ export function TrainingProgramExplorer(props: ProgramTabsProps & (ProgramSummar
   }
   return <div className={styles.program} data-program-explorer={idPrefix}>
     {'children' in props ? props.children : <ProgramOverview {...props} />}
+    {hourDistribution && <div className={styles.hourDistribution} role="group" aria-label={`Répartition des ${'hours' in props ? props.hours : ''} heures`}>
+      {units.map(({ number, title, duration }, index) => <button key={number} type="button" style={{ flexGrow: parseInt(duration ?? '1', 10) }} aria-label={`Explorer ${title}, ${duration}`} aria-pressed={active === index} onClick={() => select(index, true)}>{duration}</button>)}
+    </div>}
     <p className="sr-only" role="status" aria-live="polite">Unité {active + 1} sur {units.length} : {units[active]?.title}</p>
     <div className={styles.programBody}>
       <div className={styles.programMenu}>

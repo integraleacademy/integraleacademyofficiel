@@ -6,8 +6,8 @@ import styles from './ApsExperience.module.css';
 
 type AdmissionPoint = { title: string; content: ReactNode };
 
-export function TrainingAdmission({ course, points, lead, action, actionLabel = 'Faire vérifier mon dossier', afterPoints }: {
-  course: string; points: AdmissionPoint[]; lead: ReactNode; action: string; actionLabel?: string; afterPoints?: ReactNode;
+export function TrainingAdmission({ course, points, lead, action, actionLabel = 'Faire vérifier mon dossier', afterPoints, note, steps }: {
+  course: string; points: AdmissionPoint[]; lead: ReactNode; action: string; actionLabel?: string; afterPoints?: ReactNode; note?: ReactNode; steps?: ReactNode;
 }) {
   return <div className={styles.admission}>
     <aside className={styles.admissionLead}>
@@ -15,7 +15,7 @@ export function TrainingAdmission({ course, points, lead, action, actionLabel = 
       <p className={styles.kicker}>Votre entrée en formation</p>
       {lead}
       <Link className={styles.primaryLink} href={action}>{actionLabel} <span aria-hidden="true">↗</span></Link>
-      <p className={styles.small}>L’autorisation préalable est nécessaire avant l’entrée en formation, sauf carte professionnelle valide.</p>
+      <p className={styles.small}>{note ?? 'L’autorisation préalable est nécessaire avant l’entrée en formation, sauf carte professionnelle valide.'}</p>
     </aside>
     <div className={styles.requirements}>
       <p className={styles.kicker}>Les points à vérifier avec nous</p>
@@ -23,7 +23,7 @@ export function TrainingAdmission({ course, points, lead, action, actionLabel = 
         <summary><span>{String(index + 1).padStart(2, '0')}</span><h3>{title}</h3><span className={styles.plus} aria-hidden="true">+</span></summary>
         {content}
       </details>)}
-      <p className={styles.admissionSteps}>Échange conseiller <span>→</span> Vérification du dossier <span>→</span> Demande CNAPS (ministère de l’Intérieur) <span>→</span> Admission confirmée</p>
+      <p className={styles.admissionSteps}>{steps ?? <>Échange conseiller <span>→</span> Vérification du dossier <span>→</span> Demande CNAPS (ministère de l’Intérieur) <span>→</span> Admission confirmée</>}</p>
       {afterPoints}
     </div>
   </div>;
@@ -50,7 +50,7 @@ export function ApsHybridExperience() {
 }
 
 export function TrainingExamExperience({ metric, suffix, label, description, theory, practice, validation, children }: {
-  metric: string; suffix?: string; label: string; description: string; theory: ReactNode; practice: ReactNode; validation: ReactNode; children: ReactNode;
+  metric: string; suffix?: string; label: string; description: string; theory: ReactNode; practice: ReactNode; validation: ReactNode; children?: ReactNode;
 }) {
   return <>
     <div className={styles.examSuccess} aria-label={`${label} : ${metric}${suffix ?? ''}. ${description}`}>
@@ -92,9 +92,9 @@ export function ApsWorkplaces({ places }: { places: string[] }) {
 
 type OfficialReferencesProps = {
   course: string; number: string; title: ReactNode; intro: string; qualification: string; name: string;
-  level: string; rncp: string; url: string; facts: string[][]; conditions: string[];
-  profession: string; professionNote: string; stats: string[][]; caption: string;
-  statsNote: string; detailsTitle: string; details: ReactNode;
+  level?: string; registryCode: string; registryLabel?: string; id?: string; url: string; facts: string[][]; conditions: string[];
+  profession: string; professionNote: string; stats?: string[][]; caption?: string; supplement?: ReactNode;
+  statsNote?: string; detailsTitle: string; details: ReactNode;
   certificateLabel?: string; conditionsLabel?: string; statsTitle?: string; alias?: string;
 };
 
@@ -106,13 +106,13 @@ function CertificateSeal() {
 
 export function TrainingOfficialReferences(props: OfficialReferencesProps) {
   const headingId = `${props.course}-references-title`;
-  return <section id="reperes-rncp" aria-labelledby={headingId} className={styles.references}>
+  return <section id={props.id ?? "reperes-rncp"} aria-labelledby={headingId} className={styles.references}>
     <div className="page-container" id={props.alias}>
       <div className={styles.referencesHeading}><div><p className={styles.kicker}>{props.number} — Repères officiels</p><h2 id={headingId}>{props.title}</h2></div><p>{props.intro}</p></div>
       <div className={styles.referenceOverview}>
         <article className={styles.certificateCard}>
-          <div className={styles.certificateHeading}><span className={styles.certificateSeal}><CertificateSeal /></span><div><p className={styles.kicker}>{props.certificateLabel ?? 'Certification professionnelle'}</p><h3>{props.qualification}</h3></div><span className={styles.level}>{props.level}</span></div>
-          <p className={styles.certificateName}>{props.name}</p><p className={styles.certificateNumber}>Enregistré au Répertoire national des certifications professionnelles <strong>{props.rncp}</strong></p>
+          <div className={styles.certificateHeading}><span className={styles.certificateSeal}><CertificateSeal /></span><div><p className={styles.kicker}>{props.certificateLabel ?? 'Certification professionnelle'}</p><h3>{props.qualification}</h3></div>{props.level && <span className={styles.level}>{props.level}</span>}</div>
+          <p className={styles.certificateName}>{props.name}</p><p className={styles.certificateNumber}>{props.registryLabel ?? 'Enregistré au Répertoire national des certifications professionnelles'} <strong>{props.registryCode}</strong></p>
           <dl className={styles.certificationData}>{props.facts.map(([term,value]) => <div key={term}><dt>{term}</dt><dd>{value}</dd></div>)}</dl>
           <a className={styles.certificateLink} href={props.url} target="_blank" rel="noopener noreferrer">Consulter la fiche France compétences <span aria-hidden="true">↗</span></a>
         </article>
@@ -120,13 +120,14 @@ export function TrainingOfficialReferences(props: OfficialReferencesProps) {
           <ul className={styles.conditions}>{props.conditions.map(condition => <li key={condition}>{condition}</li>)}</ul>
           <p className={styles.professionNote}>{props.professionNote}</p></article>
       </div>
-      <article className={styles.insertionPanel}>
+      {props.supplement}
+      {props.stats && <article className={styles.insertionPanel}>
         <div className={styles.insertionHeading}><div><p className={styles.kicker}>Insertion nationale</p><h3>{props.statsTitle ?? 'Que deviennent les certifiés ?'}</h3></div><p>{props.statsNote}</p></div>
         <div className={styles.statsScroll} tabIndex={0} role="region" aria-label="Tableau des données nationales d’insertion, défilement horizontal sur mobile">
           <table><caption>{props.caption}</caption><thead><tr>{['Année', 'Certifiés', 'Insertion globale à 6 mois', 'Métier visé à 6 mois', 'Métier visé à 2 ans'].map(title => <th key={title} scope="col">{title}</th>)}</tr></thead>
             <tbody>{props.stats.map(([year,...values]) => <tr key={year}><th scope="row">{year}</th>{values.map((value,index) => <td key={index}>{value}</td>)}</tr>)}</tbody></table>
         </div>
-      </article>
+      </article>}
       <div className={styles.referenceDetails}><details><summary><span>{props.detailsTitle}</span><span className={styles.plus} aria-hidden="true">+</span></summary><div className={styles.referenceContent}>{props.details}</div></details></div>
     </div>
   </section>;
@@ -135,7 +136,7 @@ export function TrainingOfficialReferences(props: OfficialReferencesProps) {
 export function ApsOfficialReferences({ conditions, stats }: { conditions: string[]; stats: string[][] }) {
   return <TrainingOfficialReferences course="aps" number="10" title={<>Un titre reconnu.<br /><em>Des repères concrets</em></>}
     intro="La certification que vous préparez, les réalités du métier et les données nationales pour situer votre projet."
-    qualification="TFP APS" name="Agent de prévention et de sécurité" level="Niveau 3" rncp="RNCP 36648"
+    qualification="TFP APS" name="Agent de prévention et de sécurité" level="Niveau 3" registryCode="RNCP 36648"
     url="https://www.francecompetences.fr/recherche/rncp/36648/"
     facts={[['Certificateurs','CPNE / ADEF'],['Échéance RNCP','1er juillet 2027'],['Code ROME','K2503'],['Code NSF','344'],['Formacode','42854'],['Certification précédente','RNCP34054']]}
     conditions={conditions} profession="Le quotidien d’un agent APS" professionNote="Disponibilité, ponctualité, maîtrise de soi et qualité du compte rendu font partie des qualités recherchées par les employeurs."

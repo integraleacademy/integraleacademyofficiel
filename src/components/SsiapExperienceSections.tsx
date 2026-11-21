@@ -2,7 +2,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Fragment } from 'react';
 import { courseJourneys } from '@/data/courseJourneys';
-import { ManualArtwork } from './ManualArtwork';
+import { TrainingExamExperience } from './ApsExperienceSections';
+import reference from './ApsExperience.module.css';
 import { ssiapEditorialArtwork } from '@/data/siteIllustrations';
 import styles from './SsiapExperience.module.css';
 import { SsiapJourneyDisclosure } from './SsiapExperienceInteractions';
@@ -34,9 +35,13 @@ export function SsiapAdmissionDossier({ prerequisites, enrollment }: { prerequis
 }
 
 export function SsiapExamExperience({ steps }: { steps: string[][] }) {
-  return <div className={styles.examExperience}>
-    <div className={styles.examTheory}><p className={styles.eyebrow}>01 · {steps[0][1]}</p><div className={styles.examMetrics}><div><strong>30</strong><span>questions</span></div><span aria-hidden="true">/</span><div><strong>30</strong><span>minutes</span></div></div><p>{steps[0][2]}</p><div className={styles.examThreshold}><strong>12<span>/20</span></strong><span>La note minimale<br />attendue au QCM</span></div></div>
-    <div className={styles.examPractice}><ManualArtwork illustration={ssiapEditorialArtwork.exam} natural sizes="(max-width: 800px) 90vw, 600px" /><div><p className={styles.eyebrow}>02 · {steps[1][1]}</p><h3>Vos réflexes, en situation</h3><p>{steps[1][2]}</p></div></div>
-    <div className={styles.examValidation}><span className={styles.validationMark} aria-hidden="true">✓</span><div><p className={styles.eyebrow}>03 · {steps[2][1]}</p><p>{steps[2][2]}</p></div><span className={styles.diploma}>SSIAP 1<small>Diplôme · RS7845 (parcours 2027)</small></span></div>
-  </div>;
+  return <TrainingExamExperience metric="2" label="Épreuves à valider" description="Une épreuve théorique et une épreuve pratique en présentiel"
+    theory={<><p className={reference.kicker}>01 · {steps[0][1]}</p><h3>QCM<span>30 questions · 30 minutes</span></h3><p>{steps[0][2]}</p>
+      <p className={reference.examNote}><strong>12/20</strong> · La note minimale attendue au QCM</p>
+      <a className="mt-4 inline-block text-sm font-bold underline underline-offset-4" href="#mise-en-situation">Reprendre la mise en situation →</a></>}
+    practice={<><Image {...ssiapEditorialArtwork.exam} width={1536} height={1024} sizes="(max-width: 800px) 92vw, 740px" />
+      <div><p className={reference.kicker}>02 · {steps[1][1]}</p><h3>Vos réflexes, en situation</h3><p>{steps[1][2]}</p></div></>}
+    validation={<><div><p className={reference.kicker}>03 · {steps[2][1]}</p><p>{steps[2][2]}</p></div>
+      <strong>SSIAP 1<small>Diplôme · RS7845 (parcours 2027)</small></strong></>}
+  />;
 }

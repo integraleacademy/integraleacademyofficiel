@@ -403,7 +403,7 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
             title={<>Un titre reconnu.<br /><em>Des repères concrets</em></>}
             intro="Certification, conditions d’exercice et données d’insertion"
             certificateLabel="Identification" qualification="TFP A3P" level={a3pConfig.level} name="Agent de protection physique des personnes"
-            rncp={a3pConfig.rncp} url={a3pConfig.rncpUrl}
+            registryCode={a3pConfig.rncp} url={a3pConfig.rncpUrl}
             facts={[['Répertoire', a3pConfig.rncp], ['Certificateurs', 'CPNE / ADEF'], ['Code ROME', 'K2503'], ['Code NSF', '344'], ['Formacode', '42812'], ['Échéance RNCP', a3pConfig.rncpExpiry]]}
             conditionsLabel="Réalités du métier" profession="Des conditions qui varient selon la mission" conditions={a3pWorkConditions}
             professionNote="Ces informations complètent la présentation commerciale avec les repères figurant dans la fiche RNCP38002 fournie."

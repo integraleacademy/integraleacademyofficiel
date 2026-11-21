@@ -274,3 +274,24 @@
 .reviewMore[open] .reviewReadMore::after { content: ' (réduire)'; }
 .reviewMore blockquote { padding: .75rem 0 0; }
 .reviewMore summary:focus-visible { outline: 2px solid #8a631f; outline-offset: 3px; }
+
+.ssiapCourse {
+  --experience-accent: var(--course-accent);
+  --experience-pale: var(--course-pale);
+  --experience-tint: #f9e6e3;
+}
+.ssiapCourse [id='pedagogie'] h2 em, .ssiapCourse [id='examen'] h2 em { color: var(--course-pale); }
+.fieldLesson { margin-top:2rem; display:grid; grid-template-columns:1fr 1fr; align-items:center; gap:clamp(1.25rem,3vw,3rem); padding:clamp(1.25rem,3vw,2rem); border:1px solid #ffffff25; border-radius:1.6rem; }
+.fieldLesson h3 { margin:.5rem 0; font-size:1.65rem; font-weight:750; }
+.fieldLesson h3 + p { color:#d9e1e7; line-height:1.65; }
+.fieldLesson ul { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.5rem 1rem; margin-top:1rem; }
+.fieldLesson li span { margin-right:.5rem; color:var(--course-pale); font-variant-numeric:tabular-nums; }
+.fieldLesson li { padding:.5rem 0; border-top:1px solid #ffffff42; font-size:.88rem; line-height:1.5; }
+.practicePanel { scroll-margin-top:8rem; margin-top:1.5rem; padding:clamp(1.3rem,3vw,2rem); border-radius:1.5rem; background:#faf7f0; color:#17212b; }
+.practicePanel .practiceQuestion { margin:0; border:0; padding:0; }
+.schoolCredit { font-size:.78rem; line-height:1.6; color:#655849; }
+.schoolCredit a { display:block; font-weight:700; text-decoration:underline; text-underline-offset:3px; }
+.ssiapCourse .dualArtwork { width:100%; height:auto; aspect-ratio:3 / 2; margin-block:1rem; border-radius:.9rem; }
+@media (max-width:700px) {
+  .fieldLesson { grid-template-columns:minmax(0,1fr); }
+}

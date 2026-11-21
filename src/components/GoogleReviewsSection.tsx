@@ -57,7 +57,9 @@ function ReviewCard({ review, featured = false }: { review: PublicGoogleReview; 
   </article>;
 }
 
-export function GoogleReviewsSection({ reviews, audience = 'stagiaires' }: { reviews: PublicGoogleReview[]; audience?: 'stagiaires' | 'étudiants' }) {
+export type ReviewSectionCopy = { headingId: string; title: string; eyebrow: string; empty: string; sourceLabel: string };
+
+export function GoogleReviewsSection({ reviews, audience = 'stagiaires', copy }: { copy?: ReviewSectionCopy; reviews: PublicGoogleReview[]; audience?: 'stagiaires' | 'étudiants' }) {
   const [activeFilter, setActiveFilter] = useState('Tous');
   const publicReviews = useMemo(() => reviews.filter(review => review.rating === 5), [reviews]);
   const categories = useMemo(() => REVIEW_CATEGORIES.filter(category => publicReviews.some(r => r.categories.includes(category))), [publicReviews]);
@@ -69,9 +71,9 @@ export function GoogleReviewsSection({ reviews, audience = 'stagiaires' }: { rev
   return <section id="avis-google" className="relative isolate scroll-mt-24 px-4 py-20">
     <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_18%_12%,rgba(230,176,58,.14),transparent_28%),linear-gradient(180deg,rgb(var(--surface-elevated)),rgb(var(--background))_76%)]" aria-hidden="true" />
     <div className="page-container max-w-6xl"><div className="mx-auto max-w-3xl text-center">
-      <span className="inline-flex rounded-full bg-white/80 px-4 py-2 text-xs font-black uppercase tracking-[.2em] text-academy-gold-text shadow-sm dark:bg-white/5">★ Avis Google</span>
-      <h2 className="mt-6 text-3xl font-black tracking-tight text-academy-ink md:text-5xl">Ce sont nos {audience} qui en parlent le mieux</h2>
-      <p className="mt-4 text-sm font-bold text-academy-muted">{publicReviews.length > 0 ? `${publicReviews.length} avis à découvrir` : `Retrouvez les témoignages de nos ${audience} sur Google.`}</p>
+      <span className="inline-flex rounded-full bg-white/80 px-4 py-2 text-xs font-black uppercase tracking-[.2em] text-academy-gold-text shadow-sm dark:bg-white/5">★ Avis Google{copy && ` · ${copy.eyebrow}`}</span>
+      <h2 id={copy?.headingId} className="mt-6 text-3xl font-black tracking-tight text-academy-ink md:text-5xl">{copy?.title ?? `Ce sont nos ${audience} qui en parlent le mieux`}</h2>
+      <p className="mt-4 text-sm font-bold text-academy-muted">{publicReviews.length > 0 ? `${publicReviews.length} avis à découvrir` : copy?.empty ?? `Retrouvez les témoignages de nos ${audience} sur Google.`}</p>
       {publicReviews.length > 0 && <div className="mt-7 flex flex-wrap justify-center gap-2" aria-label="Filtrer les avis par formation">{['Tous', ...categories].map(category => <button key={category} type="button" aria-pressed={activeFilter === category} onClick={() => setActiveFilter(category)} className={`rounded-full px-4 py-2 text-sm font-bold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-academy-gold ${activeFilter === category ? 'bg-academy-ink text-white dark:bg-white dark:text-academy-ink' : 'bg-white/70 text-academy-muted ring-1 ring-academy-ink/10 dark:bg-white/5 dark:ring-white/10'}`}>{category} <span className="ml-1 opacity-70">{category === 'Tous' ? publicReviews.length : publicReviews.filter(r => r.categories.includes(category)).length}</span></button>)}</div>}
     </div>
     <p className="mt-6 text-center text-sm text-academy-muted" role="status">{publicReviews.length > 0 && `${filtered.length} avis${activeFilter !== 'Tous' ? ` · ${activeFilter}` : ''}`}</p>
@@ -87,7 +89,7 @@ export function GoogleReviewsSection({ reviews, audience = 'stagiaires' }: { rev
       </summary>
       <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{moreReviews.map(review => <ReviewCard key={review.id} review={review} />)}</div>
     </details>}
-    <div className="mx-auto mt-8 max-w-2xl text-center"><p className="text-xs leading-6 text-academy-muted">Sélection d’avis notés 5 étoiles. Extraits abrégés et orthographe corrigée, sans modification du sens.</p><a href={GOOGLE_REVIEWS_URL} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex rounded-full border border-academy-line px-5 py-3 text-sm font-bold text-academy-ink">Consulter tous les avis sur Google ↗︎</a></div>
+    <div className="mx-auto mt-8 max-w-2xl text-center"><p className="text-xs leading-6 text-academy-muted">Sélection d’avis notés 5 étoiles. Extraits abrégés et orthographe corrigée, sans modification du sens.</p><a href={GOOGLE_REVIEWS_URL} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex rounded-full border border-academy-line px-5 py-3 text-sm font-bold text-academy-ink">{copy?.sourceLabel ?? 'Consulter tous les avis sur Google ↗︎'}</a></div>
     </div>
   </section>;
 }
