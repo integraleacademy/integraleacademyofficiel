@@ -1,6 +1,7 @@
 import { TrainingActionLink } from '@/components/TrainingActionLink';
 import { TrainingSchoolWelcome } from './TrainingCampusVisit';
 import { CourseTeamBanner } from './CourseTeamBanner';
+import { AdviserCallBanner } from './AdviserCallBanner';
 import editorial from './ApsEditorial.module.css';
 import type { ReactNode } from 'react';
 import type { ManualIllustration } from '@/data/manualIllustrations';
@@ -161,7 +162,21 @@ export function TrainingReferenceCampus({
 type CourseAdviser = { person: TeamMemberId; name: string; role: string; phone: string; phoneHref: string };
 const defaultAdviser: CourseAdviser = { person: 'cassandre', name: 'Cassandre', role: 'Responsable commerciale', phone: '04 22 47 07 68', phoneHref: 'tel:0422470768' };
 
-export function TrainingReferenceContact({ description, title, href, headingEnd = 'vers votre futur métier', appointmentLabel = 'Réserver un rendez-vous téléphonique →', additionalActions, assurances = [], portraitMedallion = false, schoolStyle = false, adviser = defaultAdviser }: { description: ReactNode; title?: string; href: string; headingEnd?: string; appointmentLabel?: string; additionalActions?: ReactNode; assurances?: readonly string[]; portraitMedallion?: boolean; schoolStyle?: boolean; adviser?: CourseAdviser }) {
+type TrainingReferenceContactProps = {
+  description: ReactNode;
+  title?: string;
+  href: string;
+  headingEnd?: string;
+  appointmentLabel?: string;
+  additionalActions?: ReactNode;
+  assurances?: readonly string[];
+  portraitMedallion?: boolean;
+  schoolStyle?: boolean;
+  adviser?: CourseAdviser;
+  callBanner?: { illustration: string; message: string };
+};
+
+export function TrainingReferenceContact({ description, title, href, headingEnd = 'vers votre futur métier', appointmentLabel = 'Réserver un rendez-vous téléphonique →', additionalActions, assurances = [], portraitMedallion = false, schoolStyle = false, adviser = defaultAdviser, callBanner }: TrainingReferenceContactProps) {
   const heading = <>
     <p className={schoolStyle ? editorial.schoolLabel : reference.eyebrow}>Une question sur votre projet ?</p>
     <h2 id="course-contact-title" className={schoolStyle ? editorial.schoolTitle : reference.sectionTitle}>
@@ -192,11 +207,13 @@ export function TrainingReferenceContact({ description, title, href, headingEnd 
           <header>{heading}</header>
           <div>{intro}</div>
         </div>
-        <div className={editorial.adviser}>
+        {callBanner ? <AdviserCallBanner {...callBanner} adviser={adviser} href={href} label={appointmentLabel}>
+          {additionalActions}{reassurance}
+        </AdviserCallBanner> : <div className={editorial.adviser}>
           <div className={editorial.person}>{portrait}{identity}</div>
           <a className={editorial.call} href={adviser.phoneHref}><span>Appeler {adviser.name}, {adviser.role}</span><strong>{adviser.phone}</strong></a>
           <div className={editorial.appointment}>{appointment}{additionalActions}{reassurance}</div>
-        </div>
+        </div>}
       </div>
     </section>
   );
