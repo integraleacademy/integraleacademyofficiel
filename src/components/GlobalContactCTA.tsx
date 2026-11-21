@@ -1,5 +1,6 @@
 'use client';
 
+import { isUpcomingCoursePath } from '@/data/upcoming-trainings';
 import { TrainingActionLink } from '@/components/TrainingActionLink';
 import { isCertificationProjectPath } from '@/lib/certification-project-paths';
 
@@ -84,7 +85,7 @@ export function GlobalContactCTA() {
     });
   }
 
-  if (isCertificationProjectPath(pathname) || ['/parcoursalternance', '/formations-securite/ssiap-1', '/formations-securite/ssiap-2', '/formations-securite/ssiap-3', '/formations-securite/aps', '/formations-securite/a3p-apr', '/formations-securite/sst', '/formations-securite/desp-initial', '/formations-securite/desp-vae', '/dirigeant', '/vaedirigeant'].includes(pathname?.replace(/\/+$/, '') || '') || pathname === '/bts/mos' || pathname === '/ecole' || pathname === '/entreprises' || pathname === '/contact' || pathname === '/faq' || pathname === '/planning' || isFinancingPage || hiddenPathPrefixes.some((prefix) => pathname?.startsWith(prefix))) {
+  if (isUpcomingCoursePath(pathname) || isCertificationProjectPath(pathname) || ['/parcoursalternance', '/formations-securite/ssiap-1', '/formations-securite/ssiap-2', '/formations-securite/ssiap-3', '/formations-securite/aps', '/formations-securite/a3p-apr', '/formations-securite/sst', '/formations-securite/desp-initial', '/formations-securite/desp-vae', '/dirigeant', '/vaedirigeant'].includes(pathname?.replace(/\/+$/, '') || '') || pathname === '/bts/mos' || pathname === '/ecole' || pathname === '/entreprises' || pathname === '/contact' || pathname === '/faq' || pathname === '/planning' || isFinancingPage || hiddenPathPrefixes.some((prefix) => pathname?.startsWith(prefix))) {
     return null;
   }
 

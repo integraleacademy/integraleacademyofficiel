@@ -1,8 +1,9 @@
-type BrochureCardContent = { title: string; category: string; cover: string };
+type BrochureCardContent = { title: string; category: string; cover: string; file?: string };
 
 const cover = (index: number) => '/images/dossiers/cover-' + String(index).padStart(2, '0') + '.png';
 
 export const courseBrochures: Record<string, BrochureCardContent | undefined> = {
+  'bachelor-dms': { title: 'Direction et management de la sécurité', category: 'Bachelor DMS · Promotion 2027–2028', cover: '/images/formations-annoncees/dms-brochure.webp', file: '/documents/brochure-bachelor-dms-2027.pdf' },
   'aps': { title: 'Agent de prévention et de sécurité', category: 'TFP APS', cover: cover(3) },
   'a3p-apr': { title: 'Agent de protection physique des personnes', category: 'A3P', cover: cover(1) },
   'cpsp': { title: 'Chef de poste en sécurité privée', category: 'CPSP', cover: '/images/aps/experience/atelier-pc-securite.webp' },

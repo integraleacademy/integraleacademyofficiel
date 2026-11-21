@@ -1,5 +1,6 @@
 'use client';
 
+import { isUpcomingCoursePath } from '@/data/upcoming-trainings';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { faqHref, faqTopics } from '@/data/faq/topics';
@@ -10,7 +11,7 @@ type Props = { embedded?: boolean; id?: string; theme?: FAQTheme };
 
 export function FaqDirectoryLink({ embedded = false, id, theme = 'gold' }: Props) {
   const path = usePathname()?.replace(/\/+$/, '') || '/';
-  if (path === '/faq' || path === '/gestion' || path.startsWith('/admin')) return null;
+  if ((!embedded && isUpcomingCoursePath(path)) || path === '/faq' || path === '/gestion' || path.startsWith('/admin')) return null;
   const topic = faqTopics.find(item => item.path === path);
   if (!embedded && topic && topic.id !== 'bts') return null;
 

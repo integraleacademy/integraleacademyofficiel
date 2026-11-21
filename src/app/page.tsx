@@ -6,7 +6,7 @@ import { AcademyJourney } from '@/components/AcademyExperience';
 import { BtsTrainingGrid } from '@/components/BtsTrainingGrid';
 import { BtsTrainingComparisonModal } from '@/components/BtsTrainingComparisonModal';
 import { TrainingCarousel } from '@/components/TrainingCarousel';
-import { upcomingFamilies, upcomingCourseName, upcomingDiscoveryLabel } from '@/data/upcoming-trainings';
+import { upcomingFamilies, upcomingCoursePath, upcomingDiscoveryLabel } from '@/data/upcoming-trainings';
 import { btsCommon, btsHighlights } from '@/data/bts-highlights';
 import { locations } from '@/data/locations';
 import { CampusSection } from '@/components/CampusSection';
@@ -143,10 +143,7 @@ export default async function Home() {
                 items={family.items.map(course => ({
                   ...course,
                   ctaLabel: upcomingDiscoveryLabel(family, course),
-                  preview: {
-                    name: upcomingCourseName(family, course),
-                    family: family.singular, level: family.level, location: family.location,
-                  },
+                  slug: upcomingCoursePath(family, course),
                 }))}
               />
             </div>
