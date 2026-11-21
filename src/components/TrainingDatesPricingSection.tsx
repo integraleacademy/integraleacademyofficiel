@@ -58,9 +58,14 @@ type TrainingDatesPricingSectionProps = {
   theme?: TrainingTheme;
   priceAction: Action;
   emptyAction?: Action;
+  emptyBadgeLabel?: string;
+  emptyTitle?: string;
+  emptyDescription?: string;
+  assessmentLabel?: string;
   children?: ReactNode;
   sessionControls?: ReactNode;
   compact?: boolean;
+  showCompactBenefits?: boolean;
 };
 
 type TrainingTheme = 'blue' | 'green' | 'violet' | 'orange' | 'red' | 'gold';
@@ -216,9 +221,11 @@ export function TrainingDatesPricingSection({
   theme = 'green',
   priceAction,
   emptyAction,
+  emptyBadgeLabel, emptyTitle, emptyDescription, assessmentLabel,
   children,
   sessionControls,
   compact = false,
+  showCompactBenefits = false,
 }: TrainingDatesPricingSectionProps) {
   const sessionTheme = themeStyles[theme];
   const serializedSessions = sessions.map((session) => serializeSession(session, registrationHref));
@@ -256,11 +263,13 @@ export function TrainingDatesPricingSection({
         showOverallPeriodLabel={showOverallPeriodLabel}
         seatCapacity={seatCapacity}
         underlineDisclosure={underlineDisclosure}
-        emptyAction={emptyAction}
+        emptyAction={emptyAction} emptyBadgeLabel={emptyBadgeLabel} emptyTitle={emptyTitle} emptyDescription={emptyDescription} assessmentLabel={assessmentLabel}
       />
 
       {compact ? <div className="mt-7 flex flex-wrap items-center justify-between gap-6 border-t border-academy-line pt-7">
-        <div><p className={`text-[.65rem] font-bold uppercase tracking-[.15em] ${sessionTheme.eyebrow}`}>Tarif{priceYear ? ` ${priceYear}` : ''}</p><p className="mt-2 text-3xl font-black">{displayedPrice}</p><p className="mt-2 text-xs text-academy-muted">{priceDescription}</p></div>
+        <div><p className={`text-[.65rem] font-bold uppercase tracking-[.15em] ${sessionTheme.eyebrow}`}>Tarif{priceYear ? ` ${priceYear}` : ''}</p><p className="mt-2 text-3xl font-black">{displayedPrice}</p><p className="mt-2 text-xs text-academy-muted">{priceDescription}</p>
+          {showCompactBenefits && <ul className="mt-3 flex flex-wrap gap-2">{benefits.map(item => <li key={item} className="rounded-full border border-academy-line bg-white px-3 py-1 text-xs font-semibold">{item}</li>)}</ul>}
+        </div>
         <div className="flex flex-wrap items-center gap-5"><ActionLink action={priceAction} variant={theme} /><Link href="/financements#simulateur" className={`text-sm font-bold underline underline-offset-4 ${sessionTheme.eyebrow}`}>Simuler mon financement ↗</Link></div>
       </div> : <div className="mt-7 grid gap-5 lg:grid-cols-2">
         <article className="rounded-[2rem] border border-academy-line bg-white p-6 shadow-soft">

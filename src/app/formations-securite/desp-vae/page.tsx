@@ -1,8 +1,15 @@
+import Image from 'next/image';
+import { TrainingAdmission, TrainingExamExperience } from '@/components/ApsExperienceSections';
+import { TrainingProgramExplorer } from '@/components/TrainingProgramExplorer';
+import { TrainingEnrollmentSection } from '@/components/TrainingEnrollmentSection';
+import { DespOfficialReferences } from '@/components/DespOfficialReferences';
+import { DespCareerPaths } from '@/components/DespCareerPaths';
+import layout from '@/components/TrainingReferenceLayout.module.css';
+import experience from '@/components/ApsExperience.module.css';
 import { CourseFilm } from '@/components/CourseFilm';
-import { CourseTeamBanner } from '@/components/CourseTeamBanner';
 import { CourseBrochureCard } from '@/components/CourseBrochureCard';
-import { TrainingReferencePage, TrainingReferenceSection, TrainingReferenceContact, TrainingReferenceMobileBar } from '@/components/TrainingReferenceLayout';
-import { TrainingCourseTestimonials } from '@/components/TrainingCourseTestimonials';
+import { TrainingReferenceMissions, TrainingCourseSections, TrainingReferencePage, TrainingReferenceSection, TrainingReferenceCampus, TrainingReferenceContact, TrainingReferenceMobileBar } from '@/components/TrainingReferenceLayout';
+import { TrainingCourseTestimonials, courseReviewCopy } from '@/components/TrainingCourseTestimonials';
 import { originalArtwork } from '@/data/originalArtwork';
 import { CourseJourney } from '@/components/CourseJourney';
 import { TrainingWelcomePack } from '@/components/TrainingWelcomePack';
@@ -16,7 +23,6 @@ import { DespIllustratedCards, type DespIllustratedCard } from '@/components/Des
 import { Button, ConversionStrip, FeatureCard } from '@/components/ui';
 import { FaqDirectoryLink } from '@/components/FaqDirectoryLink';
 import { DespHero } from '@/components/DespHero';
-import { MissionAnimation } from '@/components/MissionAnimation';
 import { listPublicSessions as listSessions } from '@/lib/training-data';
 import { despVaeAdmin } from '@/data/despVae';
 
@@ -24,7 +30,6 @@ export const dynamic = 'force-dynamic';
 
 export const metadata = createPageMetadata('/vaedirigeant');
 
-const registrationFormUrl = 'https://assistance-alw9.onrender.com/demande-informations-formations';
 const navigationItems = [
   { label: 'La VAE', href: '#vae' },
   { label: 'Éligibilité', href: '#eligibilite' },
@@ -32,7 +37,9 @@ const navigationItems = [
   { label: 'Preuves', href: '#preuves' },
   { label: 'Jury', href: '#jury' },
   { label: 'Dates & tarifs', href: '#dates-tarifs' },
+  { label: 'Inscription', href: '#inscription-financement' },
   { label: 'Débouchés', href: '#debouches' },
+  { label: 'Repères', href: '#reperes-rncp' },
   { label: 'FAQ', href: '#faq-desp-vae' },
 ] as const;
 
@@ -108,7 +115,7 @@ const proofs = [
   ['Gestion financière et administrative', ['budgets', 'tableaux de bord', 'factures', 'éléments comptables', 'suivi de trésorerie', 'contrats', 'attestations d’assurance']],
   ['Développement commercial', ['propositions commerciales', 'devis', 'réponses à des appels d’offres', 'plans de prospection', 'supports de communication', 'suivi de clientèle']],
   ['Management', ['organigrammes', 'plannings', 'fiches de poste', 'processus de recrutement', 'entretiens', 'évaluations', 'plans de formation', 'procédures disciplinaires']],
-];
+] as const;
 const juryTopics = ['son projet d’entreprise', 'la réglementation de la sécurité privée', 'les démarches CNAPS', 'ses choix financiers', 'la gestion administrative', 'les ressources humaines', 'la stratégie commerciale', 'les appels d’offres', 'la gestion des clients', 'les situations difficiles rencontrées'];
 const afterValidation = ['Obtention du titre RNCP40385 de niveau 5', 'Demande d’agrément dirigeant auprès du CNAPS', 'Demande d’autorisation d’exercice de l’entreprise', 'Démarrage de l’activité après obtention des autorisations nécessaires'];
 
@@ -117,7 +124,7 @@ async function getSessions(){return (await listSessions()).filter((session:any)=
 export default async function DespVaePage(){
   const sessions = await getSessions();
   const includedEntries = Object.entries(despVaeAdmin.included).filter(([,value])=>Boolean(value));
-  return <TrainingReferencePage theme="orange">
+  return <TrainingReferencePage theme="orange" className={layout.editorialCourse}>
     <DespHero variant="vae" title="Dirigeant d’entreprise de sécurité privée par la VAE" subtitle={<p>Valorisez votre expérience en gestion, management ou direction. Nous vous accompagnons pour constituer votre dossier de preuves et préparer le jury du titre DESP.</p>} stats={[["Format","VAE","accompagnement individualisé"],["Durée","Variable","selon dossier et jury"],["Tarif 2027",despVaeAdmin.price,"TTC"],["Lieu","Distance","jury selon convocation"],["RNCP",despVaeAdmin.rncp,despVaeAdmin.level],["Objectif","Titre DESP","validation totale visée"]]} sessions={sessions}/>
     <TrainingSectionNavigation
       mark="DESP"
@@ -128,25 +135,74 @@ export default async function DespVaePage(){
     />
 
 
-    <CourseFilm film="desp" title="Le métier visé par la VAE"
+    <CourseFilm film="desp" followPageSound title="Le métier visé par la VAE"
       description="Cette présentation du DESP donne un aperçu des responsabilités du dirigeant. Lesquelles exercez-vous déjà dans votre entreprise ?" />
 
     <CourseJourney course="desp-vae">
-      <section className="page-container py-10"><MissionAnimation variant="despVae" className="mb-8" illustration={originalArtwork['desp-vae-accompagnement']} /><div className="grid gap-4 md:grid-cols-3"><FeatureCard title="Durée">{despVaeAdmin.duration}<br/><br/>{despVaeAdmin.durationNote}</FeatureCard><FeatureCard title="Public concerné">Profils expérimentés en sécurité, encadrement, gestion, création ou direction d’entreprise.</FeatureCard><FeatureCard title="Prérequis">Expérience justifiée en management, création, gestion d’entreprise ou responsabilités proches du référentiel DESP.</FeatureCard><FeatureCard title="Lieux">Accompagnement VAE possible en visioconférence ; jury selon convocation. L’accompagnement peut être réalisé à distance selon l’organisation convenue. Le lieu, la date et le format du jury dépendent de la convocation du certificateur.</FeatureCard><FeatureCard title="Financement">CPF, entreprise, OPCO, France Travail ou financement personnel selon dossier.</FeatureCard><FeatureCard title="Certification / examen">Titre RNCP Dirigeant d’entreprise de sécurité privée – niveau 5<br/><br/>La certification permet de justifier de l’aptitude professionnelle nécessaire à la demande d’agrément dirigeant. L’agrément est ensuite délivré séparément par le CNAPS après étude du dossier.<br/><br/>{despVaeAdmin.rncp} · {despVaeAdmin.level} · Certificateur : {despVaeAdmin.certifier} · Échéance actuelle : {despVaeAdmin.deadline}<br/>Tarif actuel de l’accompagnement : {despVaeAdmin.price}</FeatureCard></div></section>
+      <TrainingReferenceSection id="vae" eyebrow="01 — La VAE" title="Obtenir le DESP grâce à votre expérience" tone="paper">
+        <TrainingReferenceMissions label="Parcours" items={[{
+          title: 'De l’expérience au titre', description: 'La Validation des acquis de l’expérience permet de faire reconnaître officiellement les compétences acquises au cours de votre parcours professionnel ou extra-professionnel.',
+          illustration: originalArtwork['desp-vae-accompagnement'], landscapeFocus: '50% 41%',
+          body: <><p>Elle ne consiste pas à suivre les 245 heures de la formation initiale. Le candidat doit démontrer, à l’aide de situations réelles et de preuves, qu’il maîtrise les compétences attendues d’un dirigeant d’entreprise de sécurité privée.</p><p className="mt-4 text-sm font-bold">Dossier VAE · Preuves structurées<br />Identifier · démontrer · présenter</p></>,
+        }]} />
+        <Note>La VAE n’est ni une équivalence automatique, ni un raccourci fondé uniquement sur le nombre d’années d’expérience. La décision appartient au jury de certification.</Note>
+        <details className={layout.chapterNotes}><summary>La VAE DESP en bref</summary>
+          <div className="grid gap-4 md:grid-cols-3"><FeatureCard title="Durée">{despVaeAdmin.duration}<br/><br/>{despVaeAdmin.durationNote}</FeatureCard><FeatureCard title="Public concerné">Profils expérimentés en sécurité, encadrement, gestion, création ou direction d’entreprise.</FeatureCard><FeatureCard title="Prérequis">Expérience justifiée en management, création, gestion d’entreprise ou responsabilités proches du référentiel DESP.</FeatureCard><FeatureCard title="Lieux">Accompagnement VAE possible en visioconférence ; jury selon convocation. L’accompagnement peut être réalisé à distance selon l’organisation convenue. Le lieu, la date et le format du jury dépendent de la convocation du certificateur.</FeatureCard><FeatureCard title="Financement">CPF, entreprise, OPCO, France Travail ou financement personnel selon dossier.</FeatureCard><FeatureCard title="Certification / examen">Titre RNCP Dirigeant d’entreprise de sécurité privée – niveau 5<br/><br/>La certification permet de justifier de l’aptitude professionnelle nécessaire à la demande d’agrément dirigeant. L’agrément est ensuite délivré séparément par le CNAPS après étude du dossier.<br/><br/>{despVaeAdmin.rncp} · {despVaeAdmin.level} · Certificateur : {despVaeAdmin.certifier} · Échéance actuelle : {despVaeAdmin.deadline}<br/>Tarif actuel de l’accompagnement : {despVaeAdmin.price}</FeatureCard></div>
+        </details>
+      </TrainingReferenceSection>
     </CourseJourney>
-
-    <section id="eligibilite" className="page-container scroll-mt-36 py-8"><div className="rounded-[2rem] border border-orange-300/50 bg-gradient-to-br from-orange-100 via-orange-300 to-orange-100 p-7 text-orange-950 shadow-soft"><p className="text-xs font-black uppercase tracking-[.22em] text-academy-muted">Test rapide</p><h2 className="mt-3 text-3xl font-black">Tester mon éligibilité à la VAE</h2><p className="mt-4 leading-7 font-semibold text-orange-950/85">Répondez à quelques questions pour savoir si votre profil semble compatible avec une démarche VAE DESP.</p><div className="mt-7"><VaeEligibilityModal/></div></div></section>
-    <TextBlock id="vae" eyebrow="Comprendre" title="Obtenir le DESP grâce à votre expérience"><p>La Validation des acquis de l’expérience permet de faire reconnaître officiellement les compétences acquises au cours de votre parcours professionnel ou extra-professionnel.</p><p>Elle ne consiste pas à suivre les 245 heures de la formation initiale. Le candidat doit démontrer, à l’aide de situations réelles et de preuves, qu’il maîtrise les compétences attendues d’un dirigeant d’entreprise de sécurité privée.</p><Note>La VAE n’est ni une équivalence automatique, ni un raccourci fondé uniquement sur le nombre d’années d’expérience. La décision appartient au jury de certification.</Note></TextBlock>
-    <Info title="À qui s’adresse la VAE DESP ?" items={profiles}/><TextBlock title="Recevabilité"><p>Il n’existe pas de durée minimale générale d’expérience pour engager une VAE. La recevabilité dépend avant tout du lien direct entre les activités réellement exercées et le référentiel du titre.</p></TextBlock>
-    <Info title="Les cinq domaines à maîtriser" intro="Le candidat doit pouvoir démontrer une expérience significative dans les domaines suivants :" items={domains}/><TextBlock title="Point de vigilance"><p>Une expérience limitée à l’activité opérationnelle d’agent de sécurité ne suffit généralement pas à démontrer les compétences de direction, de gestion, de commerce et de management attendues.</p></TextBlock>
-    <CourseBrochureCard course="vaedirigeant" />
-    <section id="parcours" className="page-container scroll-mt-36 py-10 sm:py-14">
-      <div className="mb-8 max-w-3xl"><p className="text-xs font-black uppercase tracking-[.24em] text-orange-600">DESP VAE</p><h2 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl">Le parcours VAE en six étapes</h2></div>
-      <DespIllustratedCards items={steps} variant="vae"/>
-    </section>
-    <section id="preuves" className="page-container scroll-mt-36 py-8"><h2 className="text-2xl font-black">Quelles preuves fournir ?</h2><div className="mt-5 grid gap-4 md:grid-cols-2">{proofs.map(([title,items])=><FeatureCard key={title as string} title={title as string}>{(items as string[]).join(' · ')}</FeatureCard>)}</div><Note>Les preuves doivent être authentiques, compréhensibles et directement liées aux activités décrites.</Note><Note>Les données personnelles, informations sensibles, noms de clients, tarifs confidentiels et éléments relevant du secret des affaires doivent être anonymisés lorsque cela est nécessaire.</Note></section>
-    <section id="comparatif-initial-vae" className="page-container py-8"><h2 className="text-2xl font-black">Comparer DESP initial et DESP VAE</h2><div className="mt-5 grid gap-4 md:grid-cols-2"><FeatureCard title="DESP initial">destiné aux personnes devant acquérir les compétences · 245 heures de formation · cours, études de cas et évaluations · parcours à distance et en présentiel.</FeatureCard><FeatureCard title="DESP VAE">destiné aux personnes maîtrisant déjà les compétences · pas de formation initiale de 245 heures · dossier fondé sur des expériences réelles · accompagnement à l’analyse et à la rédaction · présentation devant un jury.</FeatureCard></div><Note>Lorsque l’expérience ne couvre pas suffisamment les cinq activités du titre, la formation initiale est généralement plus adaptée.</Note><div className="mt-5"><Button href="/contact" variant="orange">Faire étudier mon parcours</Button></div></section>
-    <TrainingDatesPricingSection
+    <TrainingCourseSections
+      admission={
+        <TrainingReferenceSection id="eligibilite" eyebrow="02 — Admission" title="Votre dossier est-il prêt pour la VAE DESP ?" tone="stone">
+          <div id="admission"><TrainingAdmission course="desp-vae" action="/contact?formation=desp-vae" actionLabel="Faire étudier mon parcours"
+            lead={<><p className={experience.kicker}>Test rapide</p><h3>Tester mon <em>éligibilité à la VAE</em></h3><p>Répondez à quelques questions pour savoir si votre profil semble compatible avec une démarche VAE DESP.</p><div className="my-4"><VaeEligibilityModal /></div></>}
+            points={[
+              { title: 'À qui s’adresse la VAE DESP ?', content: <BulletList items={profiles} /> },
+              { title: 'Recevabilité', content: <p>Il n’existe pas de durée minimale générale d’expérience pour engager une VAE. La recevabilité dépend avant tout du lien direct entre les activités réellement exercées et le référentiel du titre.</p> },
+              { title: 'Les cinq domaines à maîtriser', content: <><p>Le candidat doit pouvoir démontrer une expérience significative dans les domaines suivants :</p><BulletList items={domains} /></> },
+            ]}
+            note={<><strong>Point de vigilance</strong><br />Une expérience limitée à l’activité opérationnelle d’agent de sécurité ne suffit généralement pas à démontrer les compétences de direction, de gestion, de commerce et de management attendues.</>}
+            steps={<>Diagnostic du parcours <span>→</span> Dossier de faisabilité <span>→</span> Décision de recevabilité</>} /></div>
+        </TrainingReferenceSection>
+      }
+      immersion={
+        <TrainingReferenceSection id="parcours" eyebrow="03 — Immersion & pédagogie" title="Le parcours VAE en six étapes" tone="dark">
+          <DespIllustratedCards items={steps} variant="vae" />
+        </TrainingReferenceSection>
+      }
+      campus={<TrainingReferenceCampus editorialId="ecole-desp-vae" groupLabel="Accompagnement VAE" groupSize="Individualisé"
+        description="L’accompagnement peut être réalisé à distance selon l’organisation convenue. Le lieu, la date et le format du jury dépendent de la convocation du certificateur." />}
+      brochure={<CourseBrochureCard course="vaedirigeant" />}
+      program={
+        <TrainingReferenceSection id="preuves" eyebrow="04 — Dossier de validation" title="Quelles preuves fournir ?" tone="paper">
+          <TrainingProgramExplorer idPrefix="vae-preuves" menuTitle="Les familles de preuves" tabListLabel="Preuves du dossier VAE"
+            nextLabel="Famille suivante" restartLabel="Revenir à la première famille" hours="5" unitLabel="" overview="Domaines du référentiel" subtitle="Dossier de validation"
+            facts={[['Démarche', 'Expériences réelles'], ['Accompagnement', 'Individualisé'], ['Évaluation', 'Jury de certification']]}
+            units={proofs.map(([title, items], index) => ({ number: String(index + 1).padStart(2, '0'), title, items, delivery: 'Dossier de validation' }))} />
+          <Note>Les preuves doivent être authentiques, compréhensibles et directement liées aux activités décrites.</Note>
+          <Note>Les données personnelles, informations sensibles, noms de clients, tarifs confidentiels et éléments relevant du secret des affaires doivent être anonymisés lorsque cela est nécessaire.</Note>
+        </TrainingReferenceSection>
+      }
+      format={
+        <TrainingReferenceSection id="accompagnement" eyebrow="05 — Accompagnement VAE" title="Accompagnement VAE" tone="stone">
+          <div className="grid gap-6 lg:grid-cols-2"><div><h3 className="mb-4 text-2xl font-black">Objectifs de la formation</h3><BulletList items={objectives} /></div>
+            <div><h3 className="mb-4 text-2xl font-black">Votre accompagnement</h3><BulletList items={accompaniment} /></div></div>
+          <Note><strong>Rôle de l’accompagnateur</strong><br />L’accompagnateur aide le candidat à analyser et présenter son expérience. Il ne rédige pas le dossier à sa place et ne peut pas garantir la décision du jury.</Note>
+        </TrainingReferenceSection>
+      }
+      pack={<TrainingWelcomePack course="desp-vae" />}
+      exam={
+        <TrainingReferenceSection id="jury" eyebrow="06 — Jury VAE" title="Comment se déroule le jury VAE ?" tone="dark">
+          <div id="examen"><TrainingExamExperience metric="3" label="Professionnels" description="Le jury est composé de trois professionnels extérieurs au certificateur, indépendants du parcours et du candidat."
+            theory={<><p className={experience.kicker}>Modalités d’évaluation</p><h3>Dossier<span>de validation</span></h3><p>Le jury étudie le dossier de validation puis échange avec le candidat afin de vérifier que les compétences présentées correspondent à celles du titre DESP.</p><BulletList items={evaluation.slice(0, 2)} /></>}
+            practice={<><Image {...originalArtwork['desp-vae-jury']} width={1536} height={1024} sizes="(max-width: 800px) 92vw, 740px" />
+              <div><p className={experience.kicker}>Entretien avec le jury</p><h3>Présenter votre expérience</h3><p>Le jury peut notamment interroger le candidat sur : {juryTopics.join(', ')}.</p></div></>}
+            validation={<><div><p className={experience.kicker}>Validation</p>{evaluation.slice(2).map(item => <p key={item}>{item}</p>)}</div><strong>DESP<small>Titre de niveau 5</small></strong></>} /></div>
+        </TrainingReferenceSection>
+      }
+      dates={<>
+        <TrainingDatesPricingSection compact showCompactBenefits eyebrow="07 — Dates & tarifs" assessmentLabel="Jury"
+          title={sessions.length ? 'Choisissez votre prochaine session' : 'Votre calendrier de VAE'} intro={despVaeAdmin.duration} emptyBadgeLabel="Calendrier individuel" emptyTitle="Préparez votre parcours VAE" emptyDescription={despVaeAdmin.durationNote}
       priceYear={2027}
       sessions={sessions}
       theme="orange"
@@ -159,23 +215,29 @@ export default async function DespVaePage(){
       priceAction={{ href: '/contact?formation=desp-vae&objet=financement', label: 'Étudier mon financement →' }}
       emptyAction={{ href: '/contact?formation=desp-vae&objet=alerte-jury', label: 'Recevoir les prochaines dates →' }}
     />
-    <ConversionStrip theme="orange"/>
-    <Info title="Objectifs de la formation" items={objectives}/>
-    <Info title="Accompagnement VAE" items={accompaniment}/><TextBlock title="Rôle de l’accompagnateur"><p>L’accompagnateur aide le candidat à analyser et présenter son expérience. Il ne rédige pas le dossier à sa place et ne peut pas garantir la décision du jury.</p></TextBlock>
-    <CourseTeamBanner />
-    <TrainingWelcomePack course="desp-vae" />
-    <section className="page-container py-8"><h2 className="text-2xl font-black">Ce qui est inclus dans les {despVaeAdmin.price}</h2>{includedEntries.length>0 ? <div className="mt-5 grid gap-3">{includedEntries.map(([key,value])=><FeatureCard key={key} title={key}>{String(value)}</FeatureCard>)}</div> : <Note>Un devis détaillé précisant les prestations incluses est remis avant tout engagement.</Note>}</section>
-    <TextBlock id="jury" title="Comment se déroule le jury VAE ?"><p>Le jury étudie le dossier de validation puis échange avec le candidat afin de vérifier que les compétences présentées correspondent à celles du titre DESP.</p><p>Le jury peut notamment interroger le candidat sur : {juryTopics.join(', ')}.</p><p>Le jury est composé de trois professionnels extérieurs au certificateur, indépendants du parcours et du candidat.</p></TextBlock>
-    <Info title="Modalités d’évaluation" items={evaluation}/>
-    <Info id="debouches" title="Débouchés" items={outcomes}/>
-    <Info title="Après la validation du titre" items={afterValidation}/><TextBlock title="Titre, agrément et autorisation"><Note>Le titre DESP, l’agrément personnel du dirigeant et l’autorisation d’exercice de l’entreprise sont trois éléments distincts.</Note><p>La réussite de la VAE ne garantit pas automatiquement l’agrément CNAPS. Le CNAPS vérifie séparément les conditions de nationalité, d’honorabilité, d’aptitude professionnelle et les autres conditions réglementaires.</p></TextBlock>
-    <section className="page-container py-8"><h2 className="text-2xl font-black">Financements</h2><div className="mt-5 grid gap-4 md:grid-cols-3">{despVaeAdmin.financing.map(item=><FeatureCard key={item} title={item}>{item}</FeatureCard>)}</div><Note>Le financement porte sur les prestations prévues au devis. Il ne signifie pas que la recevabilité ou la réussite devant le jury est garantie.</Note><div className="mt-5"><Button href="/contact" variant="orange">Recevoir un devis VAE personnalisé</Button></div></section>
-    <TextBlock title="Accessibilité"><p>Intégrale Academy étudie les besoins d’adaptation de chaque candidat, notamment pour les rendez-vous téléphoniques, les outils numériques et la préparation du jury.</p><p>Référent handicap : {despVaeAdmin.accessibilityReferent.name} · {despVaeAdmin.accessibilityReferent.email} · {despVaeAdmin.accessibilityReferent.phone}</p></TextBlock>
-    <Info title="Pourquoi suivre cette VAE chez Intégrale Academy" items={why}/>
-
-    <TrainingCourseTestimonials category="VAE DESP" />
+        <section className="page-container py-8"><h2 className="text-2xl font-black">Ce qui est inclus dans les {despVaeAdmin.price}</h2>{includedEntries.length>0 ? <div className="mt-5 grid gap-3">{includedEntries.map(([key,value])=><FeatureCard key={key} title={key}>{String(value)}</FeatureCard>)}</div> : <Note>Un devis détaillé précisant les prestations incluses est remis avant tout engagement.</Note>}</section>
+      </>}
+      enrollment={<>
+        <TrainingEnrollmentSection number="08" title="Votre inscription en VAE" steps={['Diagnostic du parcours', 'Étude du financement et devis', 'Dossier de faisabilité', 'Décision de recevabilité', 'Accompagnement individuel']}
+          intro={despVaeAdmin.durationNote} registration={{href:'/contact?formation=desp-vae', label:'Recevoir un devis VAE'}}
+          optionsHeading="Financements" fundingTitle="Simulez votre reste à charge" fundingNote={<><p>Estimez le montant restant après vos aides et votre CPF.</p><p>Le financement porte sur les prestations prévues au devis. Il ne signifie pas que la recevabilité ou la réussite devant le jury est garantie.</p></>}
+          options={despVaeAdmin.financing.map((text, index) => [fundingLabels[index], text])}
+          funding={{href:'/contact', label:'Recevoir un devis VAE personnalisé'}} />
+        <TextBlock title="Accessibilité"><p>Intégrale Academy étudie les besoins d’adaptation de chaque candidat, notamment pour les rendez-vous téléphoniques, les outils numériques et la préparation du jury.</p><p>Référent handicap : {despVaeAdmin.accessibilityReferent.name} · {despVaeAdmin.accessibilityReferent.email} · {despVaeAdmin.accessibilityReferent.phone}</p></TextBlock>
+        <ConversionStrip theme="orange" />
+      </>}
+      outcomes={<>
+        <DespCareerPaths course="vae" outcomes={outcomes} />
+        <Info title="Après la validation du titre" items={afterValidation} />
+        <section id="comparatif-initial-vae" className="page-container py-8"><h2 className="text-2xl font-black">Comparer DESP initial et DESP VAE</h2><div className="mt-5 grid gap-4 md:grid-cols-2"><FeatureCard title="DESP initial">destiné aux personnes devant acquérir les compétences · 245 heures de formation · cours, études de cas et évaluations · parcours à distance et en présentiel.</FeatureCard><FeatureCard title="DESP VAE">destiné aux personnes maîtrisant déjà les compétences · pas de formation initiale de 245 heures · dossier fondé sur des expériences réelles · accompagnement à l’analyse et à la rédaction · présentation devant un jury.</FeatureCard></div><Note>Lorsque l’expérience ne couvre pas suffisamment les cinq activités du titre, la formation initiale est généralement plus adaptée.</Note><div className="mt-5"><Button href="/contact" variant="orange">Faire étudier mon parcours</Button></div></section>
+        <Info title="Pourquoi suivre cette VAE chez Intégrale Academy" items={why}/>
+      </>}
+      references={<DespOfficialReferences course="desp-vae" conditions={afterValidation} note="Le titre DESP, l’agrément personnel du dirigeant et l’autorisation d’exercice de l’entreprise sont trois éléments distincts."
+        detailsTitle="Titre, agrément et autorisation" details={<p>La réussite de la VAE ne garantit pas automatiquement l’agrément CNAPS. Le CNAPS vérifie séparément les conditions de nationalité, d’honorabilité, d’aptitude professionnelle et les autres conditions réglementaires.</p>} />}
+    />
+    <TrainingCourseTestimonials layout="home" copy={courseReviewCopy} category="VAE DESP" />
     <div id="faq-desp-vae"><FaqDirectoryLink embedded theme="orange" /></div>
-    <TrainingReferenceContact
+    <TrainingReferenceContact schoolStyle
       description={<><p className="font-bold">Cassandre, Responsable commerciale, vous accompagne dans votre choix</p><p>Elle étudie votre expérience, vous aide à choisir entre le DESP initial et la VAE et vous présente les modalités d’accompagnement et de financement.</p></>}
       href="/contact?formation=desp-vae&objet=rendez-vous"
       additionalActions={<><VaeEligibilityModal label="Tester mon éligibilité"/><Button href="/contact?formation=desp-vae" variant="orange">Recevoir un devis VAE</Button></>}
@@ -184,6 +246,10 @@ export default async function DespVaePage(){
   </TrainingReferencePage>
 }
 
+const fundingLabels = ['CPF', 'Employeur', 'OPCO', 'France Travail', 'Financement personnel', 'Paiement échelonné'];
+function BulletList({ items }: { items: readonly string[] }) {
+  return <ul className="list-disc space-y-1 pl-5 leading-7">{items.map(item => <li key={item}>{item}</li>)}</ul>;
+}
 function Info({id,title,items,intro}:{id?:string;title:string;items:string[];intro?:string}){return <TrainingReferenceSection id={id} eyebrow="DESP VAE" title={title} intro={intro} tone="paper"><div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">{items.map(i=><div key={i} className="rounded-2xl border border-academy-line bg-academy-surface p-4 shadow-soft"><p className="font-semibold leading-7 text-academy-muted">✓ {i}</p></div>)}</div></TrainingReferenceSection>}
 function TextBlock({id,eyebrow,title,children}:{id?:string;eyebrow?:string;title:string;children:React.ReactNode}){return <TrainingReferenceSection id={id} eyebrow={eyebrow} title={title} tone="stone"><div className="max-w-4xl space-y-4 text-lg leading-8 text-academy-muted">{children}</div></TrainingReferenceSection>}
 function Note({children}:{children:React.ReactNode}){return <p className="mt-5 rounded-2xl border border-orange-300/50 bg-orange-50 p-4 font-bold leading-7 text-academy-ink">{children}</p>}

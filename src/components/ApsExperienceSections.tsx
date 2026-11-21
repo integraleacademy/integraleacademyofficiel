@@ -95,7 +95,7 @@ type OfficialReferencesProps = {
   level?: string; registryCode: string; registryLabel?: string; id?: string; url: string; facts: string[][]; conditions: string[];
   profession: string; professionNote: string; stats?: string[][]; caption?: string; supplement?: ReactNode;
   statsNote?: string; detailsTitle: string; details: ReactNode;
-  certificateLabel?: string; conditionsLabel?: string; statsTitle?: string; alias?: string;
+  certificateLabel?: string; sourceLabel?: string; conditionsLabel?: string; statsTitle?: string; alias?: string;
 };
 
 function CertificateSeal() {
@@ -114,7 +114,7 @@ export function TrainingOfficialReferences(props: OfficialReferencesProps) {
           <div className={styles.certificateHeading}><span className={styles.certificateSeal}><CertificateSeal /></span><div><p className={styles.kicker}>{props.certificateLabel ?? 'Certification professionnelle'}</p><h3>{props.qualification}</h3></div>{props.level && <span className={styles.level}>{props.level}</span>}</div>
           <p className={styles.certificateName}>{props.name}</p><p className={styles.certificateNumber}>{props.registryLabel ?? 'Enregistré au Répertoire national des certifications professionnelles'} <strong>{props.registryCode}</strong></p>
           <dl className={styles.certificationData}>{props.facts.map(([term,value]) => <div key={term}><dt>{term}</dt><dd>{value}</dd></div>)}</dl>
-          <a className={styles.certificateLink} href={props.url} target="_blank" rel="noopener noreferrer">Consulter la fiche France compétences <span aria-hidden="true">↗</span></a>
+          <a className={styles.certificateLink} href={props.url} target="_blank" rel="noopener noreferrer">{props.sourceLabel ?? 'Consulter la fiche France compétences'} <span aria-hidden="true">↗</span></a>
         </article>
         <article className={styles.professionCard}><p className={styles.kicker}>{props.conditionsLabel ?? 'Les conditions d’exercice'}</p><h3>{props.profession}</h3>
           <ul className={styles.conditions}>{props.conditions.map(condition => <li key={condition}>{condition}</li>)}</ul>
