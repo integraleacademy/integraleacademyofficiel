@@ -128,3 +128,19 @@ export function upcomingDiscoveryLabel(family: UpcomingFamily, course: UpcomingC
   const name = family.id === 'bachelors' ? course.shortTitle : upcomingCourseName(family, course);
   return `Découvrir le ${family.singular.toLowerCase()} ${name}`;
 }
+
+export function upcomingCourseSlug(course: UpcomingCourse) {
+  return course.anchorId.replace(/^(bachelor|mastere|tp)-/, '');
+}
+
+export function upcomingCoursePath(family: UpcomingFamily, course: UpcomingCourse) {
+  return `/${family.id}/${upcomingCourseSlug(course)}`;
+}
+
+export const upcomingCoursePages = upcomingFamilies.flatMap(family =>
+  family.items.map(course => ({ family, course, path: upcomingCoursePath(family, course) })),
+);
+
+export function isUpcomingCoursePath(path?: string | null) {
+  return upcomingCoursePages.some(entry => entry.path === path?.replace(/\/+$/, ''));
+}

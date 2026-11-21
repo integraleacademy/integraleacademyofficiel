@@ -8,7 +8,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { ManualArtwork } from '@/components/ManualArtwork';
-import { TeamPortrait } from '@/components/TeamPortrait';
+import { TeamPortrait, type TeamMemberId } from '@/components/TeamPortrait';
 
 import reference from './SsiapReferencePage.module.css';
 import styles from './TrainingReferenceLayout.module.css';
@@ -158,7 +158,10 @@ export function TrainingReferenceCampus({
   </>;
 }
 
-export function TrainingReferenceContact({ description, title, href, headingEnd = 'vers votre futur métier', appointmentLabel = 'Réserver un rendez-vous téléphonique →', additionalActions, assurances = [], portraitMedallion = false, schoolStyle = false }: { description: ReactNode; title?: string; href: string; headingEnd?: string; appointmentLabel?: string; additionalActions?: ReactNode; assurances?: readonly string[]; portraitMedallion?: boolean; schoolStyle?: boolean }) {
+type CourseAdviser = { person: TeamMemberId; name: string; role: string; phone: string; phoneHref: string };
+const defaultAdviser: CourseAdviser = { person: 'cassandre', name: 'Cassandre', role: 'Responsable commerciale', phone: '04 22 47 07 68', phoneHref: 'tel:0422470768' };
+
+export function TrainingReferenceContact({ description, title, href, headingEnd = 'vers votre futur métier', appointmentLabel = 'Réserver un rendez-vous téléphonique →', additionalActions, assurances = [], portraitMedallion = false, schoolStyle = false, adviser = defaultAdviser }: { description: ReactNode; title?: string; href: string; headingEnd?: string; appointmentLabel?: string; additionalActions?: ReactNode; assurances?: readonly string[]; portraitMedallion?: boolean; schoolStyle?: boolean; adviser?: CourseAdviser }) {
   const heading = <>
     <p className={schoolStyle ? editorial.schoolLabel : reference.eyebrow}>Une question sur votre projet ?</p>
     <h2 id="course-contact-title" className={schoolStyle ? editorial.schoolTitle : reference.sectionTitle}>
@@ -173,11 +176,11 @@ export function TrainingReferenceContact({ description, title, href, headingEnd 
     </div>
     <Link href="/ecole#equipe" className={schoolStyle ? editorial.teamLink : reference.textLink}>Rencontrer les personnes qui vous accompagnent <span aria-hidden="true">↗︎</span></Link>
   </>;
-  const portrait = <TeamPortrait person="cassandre" size={240} alt="Memoji de Cassandre, Responsable commerciale d’Intégrale Academy" className={schoolStyle ? editorial.adviserPortrait : `${reference.portrait} ${portraitMedallion ? styles.portraitMedallion : ''}`} />;
+  const portrait = <TeamPortrait person={adviser.person} size={240} alt={`Memoji de ${adviser.name}, ${adviser.role} d’Intégrale Academy`} className={schoolStyle ? editorial.adviserPortrait : `${reference.portrait} ${portraitMedallion ? styles.portraitMedallion : ''}`} />;
   const identity = <>
     <p className={schoolStyle ? editorial.adviserLabel : reference.eyebrow}>Votre interlocutrice</p>
-    <h3>Cassandre</h3>
-    <p className={schoolStyle ? editorial.adviserRole : undefined}>Responsable commerciale — Intégrale Academy</p>
+    <h3>{adviser.name}</h3>
+    <p className={schoolStyle ? editorial.adviserRole : undefined}>{adviser.role} — Intégrale Academy</p>
   </>;
   const appointment = <TrainingReferenceAction href={href}>{appointmentLabel}</TrainingReferenceAction>;
   const reassurance = <small>Échange gratuit et sans engagement</small>;
@@ -191,7 +194,7 @@ export function TrainingReferenceContact({ description, title, href, headingEnd 
         </div>
         <div className={editorial.adviser}>
           <div className={editorial.person}>{portrait}{identity}</div>
-          <a className={editorial.call} href="tel:0422470768"><span>Appeler Cassandre, Responsable commerciale</span><strong>04 22 47 07 68</strong></a>
+          <a className={editorial.call} href={adviser.phoneHref}><span>Appeler {adviser.name}, {adviser.role}</span><strong>{adviser.phone}</strong></a>
           <div className={editorial.appointment}>{appointment}{additionalActions}{reassurance}</div>
         </div>
       </div>
@@ -201,13 +204,13 @@ export function TrainingReferenceContact({ description, title, href, headingEnd 
   return <section className={`${reference.contact} ${styles.contact}`} aria-labelledby="course-contact-title">
     <div className={`${reference.container} ${reference.contactGrid}`}>
       <div>{heading}{intro}</div>
-      <div className={reference.contactCard}>{portrait}{identity}<a className={reference.phone} href="tel:0422470768">04 22 47 07 68</a>{appointment}{additionalActions}<a className={reference.textLink} href="tel:0422470768">Appeler Cassandre, Responsable commerciale</a>{reassurance}</div>
+      <div className={reference.contactCard}>{portrait}{identity}<a className={reference.phone} href={adviser.phoneHref}>{adviser.phone}</a>{appointment}{additionalActions}<a className={reference.textLink} href={adviser.phoneHref}>Appeler {adviser.name}, {adviser.role}</a>{reassurance}</div>
     </div>
   </section>;
 }
 
 export function TrainingReferenceMobileBar({
-  href = '#dates-tarifs', label = 'Voir les dates & tarifs', phoneHref = 'tel:0422470768', phoneLabel = 'Appeler',
+  href = '#dates-tarifs', label = 'Voir les dates & tarifs', phoneHref = defaultAdviser.phoneHref, phoneLabel = 'Appeler',
 }: { href?: string; label?: string; phoneHref?: string; phoneLabel?: string }) {
   return <div data-fixed-actions="course" className={styles.mobileBar}><a href={phoneHref} className={styles.action}>{phoneLabel}</a><TrainingReferenceAction href={href}>{label}</TrainingReferenceAction></div>;
 }

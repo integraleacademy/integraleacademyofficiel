@@ -3,7 +3,7 @@ import type { ManualIllustration } from '@/data/manualIllustrations';
 import type { ReactNode } from 'react';
 import styles from './ApsReferencePage.module.css';
 
-type PracticeCard = { icon: ReactNode; title: string; text: string; visuals: { kind: string; illustration: ReactNode }[] };
+type PracticeCard = { icon: ReactNode; title: string; text: string; afterVisuals?: ReactNode; visuals: { kind: string; illustration: ReactNode }[] };
 
 export function TrainingPracticeArtwork({ illustration, focus = '50% 45%' }: { illustration: ManualIllustration; focus?: string }) {
   return <div className={styles.landscapeArtwork}>
@@ -13,7 +13,7 @@ export function TrainingPracticeArtwork({ illustration, focus = '50% 45%' }: { i
 
 export function TrainingPracticeCards({ items }: { items: PracticeCard[] }) {
   return <div className="grid gap-5 md:grid-cols-2">
-    {items.map(({ icon, title, text, visuals }, index) => (
+    {items.map(({ icon, title, text, visuals, afterVisuals }, index) => (
       <article key={title} className={`${styles.practicalCard} rounded-[1.5rem] border border-white/10 bg-white/7 p-5`}>
         <div className="relative z-10 flex min-w-0 flex-1 flex-col">
           <div className="flex items-start justify-between gap-3">
@@ -25,6 +25,7 @@ export function TrainingPracticeCards({ items }: { items: PracticeCard[] }) {
           <div className={styles.practicalVisuals} data-visual-count={visuals.length}>
             {visuals.map(({ kind, illustration }) => <div key={kind} className={styles.practicalVisual} data-visual={kind}>{illustration}</div>)}
           </div>
+          {afterVisuals}
         </div>
       </article>
     ))}

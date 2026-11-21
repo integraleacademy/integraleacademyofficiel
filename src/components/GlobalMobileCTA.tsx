@@ -1,5 +1,6 @@
 'use client';
 
+import { isUpcomingCoursePath } from '@/data/upcoming-trainings';
 import { isCertificationProjectPath } from '@/lib/certification-project-paths';
 
 import Link from 'next/link';
@@ -30,7 +31,7 @@ export function hasDedicatedMobileCta(pathname: string) {
 export function GlobalMobileCTA() {
   const pathname = usePathname() || '/';
 
-  if (isCertificationProjectPath(pathname) || hasDedicatedMobileCta(pathname)) {
+  if (isUpcomingCoursePath(pathname) || isCertificationProjectPath(pathname) || hasDedicatedMobileCta(pathname)) {
     return null;
   }
 

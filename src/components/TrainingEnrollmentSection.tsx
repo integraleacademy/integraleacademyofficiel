@@ -5,10 +5,10 @@ import editorial from './ApsEditorial.module.css';
 
 type EnrollmentAction = { href: string; label: string };
 
-export function TrainingEnrollmentSection({ number, title, intro, steps, registration, registrationAnchor = 'inscription', fundingTitle, fundingNote, funding, options, optionsHeading = 'Les solutions selon votre projet', children }: {
+export function TrainingEnrollmentSection({ number, title, intro, steps, registration, registrationAnchor = 'inscription', fundingTitle, fundingNote, funding, options, optionsHeading = 'Les solutions selon votre projet', showFundingSimulator = true, children }: {
   number: string; title: string; intro: ReactNode; steps: readonly string[]; registration: EnrollmentAction;
   registrationAnchor?: string | null; fundingTitle: string; fundingNote: ReactNode; funding: EnrollmentAction;
-  optionsHeading?: string; options: ReadonlyArray<readonly [string, string] | string[]>; children?: ReactNode;
+  optionsHeading?: string; showFundingSimulator?: boolean; options: ReadonlyArray<readonly [string, string] | string[]>; children?: ReactNode;
 }) {
   return <section id="inscription-financement" className={editorial.enrollment}><div className={editorial.wrap} id={registrationAnchor ?? undefined}>
     <p className={editorial.kicker}>{number} — Inscription &amp; financement</p>
@@ -18,7 +18,7 @@ export function TrainingEnrollmentSection({ number, title, intro, steps, registr
     <article className={editorial.funding}><div><p className={editorial.kicker}>Votre financement</p><h3>{fundingTitle}</h3></div>
       <div className={editorial.identity}>{fundingNote}</div>
       <div className={editorial.fundingActions}><TrainingReferenceAction href={funding.href}>{funding.label}</TrainingReferenceAction>
-        <TrainingReferenceAction outline href="/financements#simulateur">Ouvrir le simulateur →</TrainingReferenceAction></div></article>
+        {showFundingSimulator && <TrainingReferenceAction outline href="/financements#simulateur">Ouvrir le simulateur →</TrainingReferenceAction>}</div></article>
     <TrainingFundingOptions options={options} heading={optionsHeading} />
     {children}
   </div></section>;

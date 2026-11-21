@@ -1,5 +1,5 @@
 import { btsHighlights } from './bts-highlights';
-import { upcomingCourseName, upcomingFamilies, type TrainingStatus } from './upcoming-trainings';
+import { upcomingCourseName, upcomingCoursePath, upcomingFamilies, type TrainingStatus } from './upcoming-trainings';
 
 export type TrainingMenuCourse = { label: string; href: string; shortLabel?: string; status?: TrainingStatus };
 export type TrainingMenuFamily = {
@@ -44,7 +44,7 @@ export const announcedTrainingNavigation: TrainingMenuFamily[] = upcomingFamilie
   label: family.level ? `${family.label} (${family.level})` : family.label,
   href: `/#${family.id}`, icon: family.id, description: familyDescriptions[family.id],
   courses: family.items.map(course => ({
-    label: upcomingCourseName(family, course), href: `/#${course.anchorId}`, status: course.status,
+    label: upcomingCourseName(family, course), href: upcomingCoursePath(family, course), status: course.status,
   })),
 }));
 

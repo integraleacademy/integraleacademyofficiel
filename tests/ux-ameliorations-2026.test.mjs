@@ -47,7 +47,10 @@ test('les masters et bachelors en projet sont présentés sans garantie de certi
   assert.match(data, /jobs: \['Coordinateur de prestations de sécurité'/);
   const carousel = read('src/components/TrainingCarousel.tsx');
   assert.match(carousel, /certificationStatus/);
-  assert.match(carousel, /Exemples de métiers visés/);
+  assert.match(carousel, /<Link href=\{item\.slug\}/);
+  const coursePage = read('src/components/AnnouncedCoursePage.tsx');
+  assert.match(coursePage, /Exemples de métiers visés/);
+  assert.match(coursePage, /course\.certificationStatus/);
 });
 
 test('l’assistant conserve ses actions et clarifie son parcours', () => {

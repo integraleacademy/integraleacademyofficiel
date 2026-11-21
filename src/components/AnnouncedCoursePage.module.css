@@ -1,0 +1,68 @@
+.course {
+  --hero-rgb: var(--course-rgb);
+  --hero-strong: var(--course-accent);
+  --hero-accent: var(--course-pale);
+}
+.course h1 { overflow-wrap: anywhere; }
+.course .summary {
+  grid-template-columns: minmax(10rem,.76fr) minmax(18rem,1.65fr) minmax(10rem,.8fr);
+  background: #fffdf8;
+  color: #17212b;
+}
+.kicker, .summaryAction > p {
+  color: var(--course-accent);
+  font-size: .75rem;
+  font-weight: 800;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+.intake h2, .summaryAction > strong {
+  display: block;
+  font-size: clamp(1.4rem, 2.7vw, 2.25rem);
+  font-weight: 850;
+  line-height: 1.16;
+  letter-spacing: -.045em;
+}
+.intake h2 { margin: .55rem 0; }
+.intake > p:last-child:not(:first-child) { color: #52657a; }
+.summaryAction { display: grid; gap: .65rem; text-align: center; }
+.summaryAction > a { justify-self: stretch; }
+.paris, .outcomes { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: clamp(1.2rem,3vw,3rem); }
+.paris { align-items: center; overflow: hidden; border: 1px solid #dbd3c5; border-radius: 1.6rem; background: #fffdf9; }
+.paris img { width: 100%; height: auto; }
+.paris > div { padding: 1.5rem; }
+.paris h3, .outcomes h3, .calendar h3 { font-size: clamp(1.35rem,2vw,2rem); font-weight: 800; letter-spacing: -.045em; line-height: 1.15; }
+.paris p, .outcomes p, .calendar p { margin-top: .8rem; line-height: 1.65; }
+.paris a, .outcomes a { display: inline-block; margin-top: 1rem; color: var(--course-accent); font-weight: 700; text-decoration: underline; text-underline-offset: .2em; }
+.caseSheet { width: 100%; margin-top: .85rem; padding: .4rem 1rem; border-radius: .8rem; color: #1f2c36; background: #fffaf1; }
+.sheetHead { display: flex; align-items: center; justify-content: space-between; gap: .6rem; padding: .6rem 0; font-size: 1rem; font-weight: 750; cursor: pointer; }
+.caseSheet[open] .sheetHead span { transform: rotate(45deg); }
+.course .examHeading { font-size: clamp(1.75rem, 3.6vw, 3.15rem); line-height: 1.1; letter-spacing: -.04em; }
+.caseSheet dl > div { display: grid; grid-template-columns: minmax(5.4rem,.7fr) minmax(0,1.55fr); gap: .45rem; align-items: baseline; padding: .48rem 0; border-top: 1px solid #d9d0c3; font-size: .9rem; }
+.caseSheet dt { color: #52616d; }
+.caseSheet dd { font-weight: 650; }
+.outcomes > article { padding: clamp(1.4rem,3vw,2.3rem); border: 1px solid #e0d6c8; border-radius: 1.4rem; background: white; }
+.outcomes > article:last-child { background: #172532; color: #fff; }
+.outcomes > article:last-child a { color: var(--course-pale); }
+.outcomes ul { display: grid; margin-top: .8rem; }
+.outcomes li { padding: .75rem 0; border-bottom: 1px solid #e9e1d6; font-weight: 650; }
+.outcomes li:last-child { border: 0; }
+.calendar { padding: clamp(1.2rem,3vw,2rem); border: 1px solid #decdba; border-radius: 1.2rem; background: #fffaf2; }
+.calendar h3 { margin-top: .35rem; }
+.calendar details { margin: 1.2rem 0; padding: .2rem 1rem; border: 1px solid #ddcfbf; border-radius: .85rem; background: white; }
+.calendar summary { display: flex; align-items: center; justify-content: space-between; gap: .7rem; padding: .8rem 0; color: var(--course-accent); font-weight: 800; cursor: pointer; }
+.calendar summary span { font-size: 1.3rem; }
+.calendar details[open] summary span { transform: rotate(45deg); }
+.calendar li { display: grid; grid-template-columns: minmax(11rem,1fr) minmax(10rem,.9fr) minmax(8rem,1.1fr); gap: .75rem; padding: .75rem 0; border-top: 1px solid #e5dccc; line-height: 1.4; }
+.calendar li span { color: #384b5b; }
+.calendar li small { font-size: .88rem; }
+@media (max-width: 850px) {
+  .course .summary { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .summaryAction { grid-column: 1/-1; justify-content: start; text-align: left; }
+}
+@media (max-width: 650px) {
+  .course .summary, .paris, .outcomes, .calendar li { grid-template-columns: minmax(0,1fr); }
+  .summaryAction { justify-content: stretch; }
+  .calendar li { gap: .2rem; }
+  .paris { gap: 0; }
+}

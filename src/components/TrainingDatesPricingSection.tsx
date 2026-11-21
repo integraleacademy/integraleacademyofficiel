@@ -67,6 +67,7 @@ type TrainingDatesPricingSectionProps = {
   calendar?: ReactNode;
   compact?: boolean;
   showCompactBenefits?: boolean;
+  showFundingSimulator?: boolean;
 };
 
 type TrainingTheme = 'blue' | 'green' | 'violet' | 'orange' | 'red' | 'gold';
@@ -226,6 +227,7 @@ export function TrainingDatesPricingSection({
   children,
   sessionControls,
   calendar,
+  showFundingSimulator = true,
   compact = false,
   showCompactBenefits = false,
 }: TrainingDatesPricingSectionProps) {
@@ -271,7 +273,7 @@ export function TrainingDatesPricingSection({
         <div><p className={`text-[.65rem] font-bold uppercase tracking-[.15em] ${sessionTheme.eyebrow}`}>Tarif{priceYear ? ` ${priceYear}` : ''}</p><p className="mt-2 text-3xl font-black">{displayedPrice}</p><p className="mt-2 text-xs text-academy-muted">{priceDescription}</p>
           {showCompactBenefits && <ul className="mt-3 flex flex-wrap gap-2">{benefits.map(item => <li key={item} className="rounded-full border border-academy-line bg-white px-3 py-1 text-xs font-semibold">{item}</li>)}</ul>}
         </div>
-        <div className="flex flex-wrap items-center gap-5"><ActionLink action={priceAction} variant={theme} /><Link href="/financements#simulateur" className={`text-sm font-bold underline underline-offset-4 ${sessionTheme.eyebrow}`}>Simuler mon financement ↗</Link></div>
+        <div className="flex flex-wrap items-center gap-5"><ActionLink action={priceAction} variant={theme} />{showFundingSimulator && <Link href="/financements#simulateur" className={`text-sm font-bold underline underline-offset-4 ${sessionTheme.eyebrow}`}>Simuler mon financement ↗</Link>}</div>
       </div> : <div className="mt-7 grid gap-5 lg:grid-cols-2">
         <article className="rounded-[2rem] border border-academy-line bg-white p-6 shadow-soft">
           <p className={`text-[.66rem] font-black uppercase tracking-[.24em] ${sessionTheme.eyebrow}`}>Tarif{priceYear ? ` ${priceYear}` : ''}</p>
@@ -285,7 +287,7 @@ export function TrainingDatesPricingSection({
           <p className={`text-[.66rem] font-black uppercase tracking-[.24em] ${sessionTheme.periodLabel}`}>Financement</p>
           <h3 className="mt-3 text-3xl font-black">Simulez votre reste à charge</h3>
           <p className="mt-3 leading-7 text-white/65">Estimez le montant restant après vos aides et votre CPF.</p>
-          <ActionLink action={{ href: '/financements#simulateur', label: 'Ouvrir le simulateur →' }} variant={theme} className="mt-5 w-full" />
+          {showFundingSimulator && <ActionLink action={{ href: '/financements#simulateur', label: 'Ouvrir le simulateur →' }} variant={theme} className="mt-5 w-full" />}
           <div className="mt-5 grid grid-cols-2 gap-3">{fundingOptions.map(([optionTitle, text]) => <div key={optionTitle} className="rounded-2xl border border-white/10 bg-white/7 p-4"><p className="font-black">{optionTitle}</p><p className="mt-1 text-xs text-white/50">{text}</p></div>)}</div>
         </article>
       </div>}

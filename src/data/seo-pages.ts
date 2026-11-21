@@ -1,3 +1,5 @@
+import { upcomingCourseName, upcomingCoursePages } from './upcoming-trainings';
+
 export type SeoPage = {
   title: string;
   description: string;
@@ -11,6 +13,14 @@ export type SeoPage = {
 
 /** Editorial metadata for canonical pages. Historic addresses stay in url-redirects.json. */
 export const seoPages: Record<string, SeoPage> = {
+  ...Object.fromEntries(upcomingCoursePages.map(({ family, course, path }) => {
+    const name = upcomingCourseName(family, course);
+    const title = `${family.singular} ${name}`;
+    const description = course.anchorId === 'bachelor-dms'
+      ? 'Bachelor DMS à Puget-sur-Argens. Préparez le DESP et le SSIAP 3 en alternance dès septembre 2027. Retrouvez les prérequis, le calendrier et la brochure.'
+      : `${course.description} Formation à venir${family.location ? ` à ${family.location}` : ''}.`;
+    return [path, { title, description, label: title, courseName: title }];
+  })),
   '/': {
     title: 'Formations sécurité, VTC et BTS',
     description: 'Préparez votre métier avec Intégrale Academy : formations sécurité privée, incendie, VTC et BTS en alternance, à Puget-sur-Argens et à distance selon le parcours.',

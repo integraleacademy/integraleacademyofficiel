@@ -19,11 +19,10 @@ export type TrainingCarouselItem = {
   details?: ReactNode;
   caption?: ReactNode;
 } & (
-  | { slug: string; ctaLabel: string; category: string; status?: never; anchorId?: never; preview?: never }
+  | { slug: string; ctaLabel: string; category: string; status?: never; anchorId?: never }
   | {
-      status: TrainingStatus; anchorId: string; ctaLabel: string; slug?: never; category?: never;
+      status: TrainingStatus; anchorId: string; ctaLabel: string; slug: string; category?: never;
       topics: string[];
-      preview: { name: string; family: string; level?: string; location?: string };
     }
 );
 
@@ -45,9 +44,6 @@ export function TrainingCarousel({ items, label, tabListLabel, previousLabel, ne
   const tabsRef = useRef<(HTMLButtonElement | null)[]>([]);
   const pointerStart = useRef<{ x: number; y: number; id: number } | null>(null);
   const didSwipe = useRef(false);
-
-  const previewDialog = useRef<HTMLDialogElement>(null);
-  const dialogId = `${carouselId}-preview`;
 
   useEffect(() => {
     if (!items.some(item => item.anchorId)) return;
@@ -125,10 +121,7 @@ export function TrainingCarousel({ items, label, tabListLabel, previousLabel, ne
       >
         {items.map((item, index) => {
           function courseAction(children: ReactNode, className: string, ariaLabel?: string) {
-            return item.slug
-              ? <Link href={item.slug} className={className} data-academy-action={className === styles.discover ? 'training' : undefined} aria-label={ariaLabel}>{children}</Link>
-              : <button type="button" className={className} data-academy-action={className === styles.discover ? 'training' : undefined} aria-label={ariaLabel} aria-haspopup="dialog" aria-controls={dialogId}
-                  onClick={() => previewDialog.current?.showModal()}>{children}</button>;
+            return <Link href={item.slug} className={className} data-academy-action={className === styles.discover ? 'training' : undefined} aria-label={ariaLabel}>{children}</Link>;
           }
           const heading = <><strong>{item.shortTitle}</strong>{' '}<em>{item.title}</em></>;
           const artwork = (
@@ -196,25 +189,7 @@ export function TrainingCarousel({ items, label, tabListLabel, previousLabel, ne
           <button type="button" aria-label={nextLabel} aria-controls={`${carouselId}-slides`} onClick={() => selectSlide(activeIndex + 1, 'next')}><Arrow /></button>
         </div>
       </div>
-      {activeItem.preview && (
-        <dialog ref={previewDialog} id={dialogId} aria-labelledby={`${dialogId}-heading`} className={styles.previewDialog}
-          onClick={event => { if (event.target === event.currentTarget) previewDialog.current?.close(); }}>
-          <div className={styles.previewBody}>
-            <div className={styles.previewTop}>
-              <TrainingStatusBadge status={activeItem.status} />
-              <button type="button" onClick={() => previewDialog.current?.close()} aria-label="Fermer l’aperçu" className={styles.previewClose}>×</button>
-            </div>
-            <p className={styles.previewFamily}>{[activeItem.preview.family, activeItem.preview.level, activeItem.preview.location].filter(Boolean).join(' · ')}</p>
-            <h2 id={`${dialogId}-heading`}>{activeItem.preview.name}</h2>
-            {activeItem.certificationStatus && <p className={styles.previewCertification}>{activeItem.certificationStatus}</p>}
-            <h3>Ce que vous apprendrez</h3>
-            <ul>{activeItem.topics.map(topic => <li key={topic}>{topic}</li>)}</ul>
-            {activeItem.jobs && activeItem.jobs.length > 0 && <div className={styles.previewCareers}><h3>Exemples de métiers visés</h3><ul>{activeItem.jobs.map(job => <li key={job}>{job}</li>)}</ul></div>}
-            <Link href="/contact" onClick={() => previewDialog.current?.close()} className={styles.discover}>Poser une question à l’école <Arrow /></Link>
-          </div>
-        </dialog>
-      )}
-      <p className="sr-only" role="status" aria-live="polite" aria-atomic="true">{activeItem.preview?.name ?? `${activeItem.shortTitle} – ${activeItem.title}`}. {activeItem.status && `${activeItem.status}. `}Formation {activeIndex + 1} sur {items.length}.</p>
+      <p className="sr-only" role="status" aria-live="polite" aria-atomic="true">{`${activeItem.shortTitle} – ${activeItem.title}`}. {activeItem.status && `${activeItem.status}. `}Formation {activeIndex + 1} sur {items.length}.</p>
     </div>
   );
 }
