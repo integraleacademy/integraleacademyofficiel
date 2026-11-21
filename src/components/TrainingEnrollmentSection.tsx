@@ -5,12 +5,12 @@ import editorial from './ApsEditorial.module.css';
 
 type EnrollmentAction = { href: string; label: string };
 
-export function TrainingEnrollmentSection({ number, title, intro, steps, registration, fundingTitle, fundingNote, funding, options, optionsHeading = 'Les solutions selon votre projet', children }: {
+export function TrainingEnrollmentSection({ number, title, intro, steps, registration, registrationAnchor = 'inscription', fundingTitle, fundingNote, funding, options, optionsHeading = 'Les solutions selon votre projet', children }: {
   number: string; title: string; intro: ReactNode; steps: readonly string[]; registration: EnrollmentAction;
-  fundingTitle: string; fundingNote: ReactNode; funding: EnrollmentAction;
+  registrationAnchor?: string | null; fundingTitle: string; fundingNote: ReactNode; funding: EnrollmentAction;
   optionsHeading?: string; options: ReadonlyArray<readonly [string, string] | string[]>; children?: ReactNode;
 }) {
-  return <section id="inscription-financement" className={editorial.enrollment}><div className={editorial.wrap} id="inscription">
+  return <section id="inscription-financement" className={editorial.enrollment}><div className={editorial.wrap} id={registrationAnchor ?? undefined}>
     <p className={editorial.kicker}>{number} — Inscription &amp; financement</p>
     <header className={editorial.intro}><div><h2><span>{title}</span><span>Nous vous accompagnons de A à Z</span></h2><p>{intro}</p></div>
       <TrainingReferenceAction href={registration.href}>{registration.label}</TrainingReferenceAction></header>

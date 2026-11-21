@@ -64,6 +64,7 @@ type TrainingDatesPricingSectionProps = {
   assessmentLabel?: string;
   children?: ReactNode;
   sessionControls?: ReactNode;
+  calendar?: ReactNode;
   compact?: boolean;
   showCompactBenefits?: boolean;
 };
@@ -224,11 +225,11 @@ export function TrainingDatesPricingSection({
   emptyBadgeLabel, emptyTitle, emptyDescription, assessmentLabel,
   children,
   sessionControls,
+  calendar,
   compact = false,
   showCompactBenefits = false,
 }: TrainingDatesPricingSectionProps) {
   const sessionTheme = themeStyles[theme];
-  const serializedSessions = sessions.map((session) => serializeSession(session, registrationHref));
   const displayedPrice = summaryPrice || formatTrainingPrice(
     priceYear ? undefined : sessions.find((session) => (
       session.priceCents !== null && session.priceCents !== undefined
@@ -245,9 +246,9 @@ export function TrainingDatesPricingSection({
       </div>
 
       {sessionControls}
-      <TrainingSessionCards
+      {calendar ?? <TrainingSessionCards
         compact={compact}
-        sessions={serializedSessions}
+        sessions={sessions.map((session) => serializeSession(session, registrationHref))}
         theme={theme}
         sessionTheme={sessionTheme}
         showDeliveryPeriods={showDeliveryPeriods}
@@ -264,7 +265,7 @@ export function TrainingDatesPricingSection({
         seatCapacity={seatCapacity}
         underlineDisclosure={underlineDisclosure}
         emptyAction={emptyAction} emptyBadgeLabel={emptyBadgeLabel} emptyTitle={emptyTitle} emptyDescription={emptyDescription} assessmentLabel={assessmentLabel}
-      />
+      />}
 
       {compact ? <div className="mt-7 flex flex-wrap items-center justify-between gap-6 border-t border-academy-line pt-7">
         <div><p className={`text-[.65rem] font-bold uppercase tracking-[.15em] ${sessionTheme.eyebrow}`}>Tarif{priceYear ? ` ${priceYear}` : ''}</p><p className="mt-2 text-3xl font-black">{displayedPrice}</p><p className="mt-2 text-xs text-academy-muted">{priceDescription}</p>
