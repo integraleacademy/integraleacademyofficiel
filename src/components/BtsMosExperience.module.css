@@ -65,7 +65,6 @@
 .heroBottom > a { margin-left: auto; color: var(--mos-ink); font-weight: 700; display: flex; gap: 16px; align-items: center; min-height: 32px; }
 .navigation { display: contents; }
 .navigation > nav { bottom: auto; box-shadow: 0 4px 16px #10213208; }
-.navigation :global([class*='courseNavScroller']) { position: relative; }
 .mission { border: 1px solid var(--mos-line); border-radius: 24px; overflow: hidden; background: var(--mos-surface); }
 .missionTabs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-bottom: 1px solid var(--mos-line); }
 .missionTabs button { min-height: 76px; display: flex; align-items: center; justify-content: center; gap: 12px; padding: 15px 12px; border: 0; border-right: 1px solid var(--mos-line); background: var(--mos-surface); color: var(--mos-muted); font-size: 14px; font-weight: 700; cursor: pointer; transition: background .2s, color .2s; }
@@ -600,8 +599,8 @@
   .mosHero :global([class*='heroGrid']) { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); }
   .page .mosHero .studySummary { padding-block: 8px; }
   .mosHero .summaryFooter { padding-top: 6px; }
-  .navigation :global([class*='courseNavShell']) { grid-template-columns: auto minmax(0, 1fr) auto; }
-  .navigation :global([class*='courseNavScroller']) { position: relative; grid-column: auto; grid-row: auto; }
+  .navigation :global([class*='courseNavShell']) { grid-template-columns: fit-content(22%) minmax(0, 1fr) auto; }
+  .navigation :global([class*='courseNavChapters']) { grid-column: auto; grid-row: auto; }
 }
 @media (max-width: 600px) {
   .mosHero :global([class*='actions']) > a:not(.heroAdviser) { flex: 1 1 100%; }

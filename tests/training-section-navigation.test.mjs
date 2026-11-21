@@ -6,6 +6,8 @@ const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf
 
 const navigation = read('src/components/TrainingSectionNavigation.tsx');
 const navigationStyles = read('src/components/TrainingSectionNavigation.module.css');
+const responsive = read('src/components/ResponsiveSectionLinks.tsx');
+const responsiveStyles = read('src/components/ResponsiveSectionLinks.module.css');
 const btsNavigation = read('src/components/BtsSectionNavigation.tsx');
 
 const pages = {
@@ -39,8 +41,12 @@ test('le nouveau sommaire reprend le comportement lisible et fixe de la page APS
   assert.doesNotMatch(navigation, /index|padStart\(2/);
   assert.match(navigationStyles, /\.courseNav\s*\{[^}]*position:\s*sticky;[^}]*top:\s*55px;/s);
   assert.match(navigationStyles, /@media \(min-width: 1280px\)[\s\S]*\.courseNav\s*\{[^}]*top:\s*75px;/);
-  assert.match(navigationStyles, /\.courseNavScroller\s*\{[^}]*overflow-x:\s*auto;/s);
-  assert.match(navigationStyles, /@media \(max-width: 1180px\)[\s\S]*\.courseNavScroller\s*\{[^}]*grid-row:\s*2;/);
+  assert.match(navigation, /<ResponsiveSectionLinks /);
+  assert.doesNotMatch(navigation, /offsetLeft|scroller\.scrollTo/);
+  assert.match(responsiveStyles, /\.links\s*\{[^}]*flex-wrap:\s*wrap;/);
+  assert.match(responsive, /aria-expanded=\{open\} aria-controls=\{id\}/);
+  assert.match(responsive, /event.key === 'Escape'/);
+  assert.match(navigationStyles, /@media \(max-width: 1180px\)[\s\S]*\.courseNavChapters\s*\{[^}]*grid-row:\s*2;/);
   assert.doesNotMatch(navigationStyles, /\.courseNav\s*\{[^}]*display:\s*none;/s);
 });
 

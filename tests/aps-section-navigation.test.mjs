@@ -75,7 +75,7 @@ test('la section active est annoncée et mise à jour pendant le défilement', (
   assert.match(sharedNavigation, /IntersectionObserver/);
   assert.match(sharedNavigation, /aria-current=\{active \? 'location' : undefined\}/);
   assert.match(sharedNavigation, /setActiveHref/);
-  assert.match(sharedNavigation, /prefers-reduced-motion: reduce/);
+  assert.match(sharedNavigationStyles, /prefers-reduced-motion: reduce/);
   assert.match(sharedNavigation, /style\.scrollMarginTop/);
 });
 
@@ -85,9 +85,9 @@ test('la navigation reste lisible et utilisable sur ordinateur comme sur mobile'
   assert.match(styles, /\.page\s*\{[^}]*overflow-x:\s*clip;/s);
   assert.match(sharedNavigationStyles, /\.courseNav\s*\{[^}]*position:\s*sticky;[^}]*top:\s*55px;[^}]*backdrop-filter:\s*blur\(18px\);/s);
   assert.match(sharedNavigationStyles, /@media \(min-width: 1280px\)[\s\S]*\.courseNav\s*\{[^}]*top:\s*75px;/);
-  assert.match(sharedNavigationStyles, /\.courseNavScroller\s*\{[^}]*overflow-x:\s*auto;/s);
+  assert.match(sharedNavigation, /<ResponsiveSectionLinks /);
   assert.match(sharedNavigationStyles, /\.courseNavLink\s*\{[^}]*font-size:\s*\.75rem;/s);
   assert.match(sharedNavigationStyles, /\.courseNavLinkActive[\s\S]*background:\s*#0d1725;/);
-  assert.match(sharedNavigationStyles, /@media \(max-width: 1180px\)[\s\S]*\.courseNavScroller\s*\{[^}]*grid-row:\s*2;/);
+  assert.match(sharedNavigationStyles, /@media \(max-width: 1180px\)[\s\S]*\.courseNavChapters\s*\{[^}]*grid-row:\s*2;/);
   assert.doesNotMatch(sharedNavigationStyles, /\.courseNav\s*\{[^}]*display:\s*none;/s);
 });
