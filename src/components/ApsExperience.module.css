@@ -132,7 +132,9 @@
 :global(html.dark) .requirement > p,:global(html.dark) .admissionSteps,:global(html.dark) .remoteCopy > p:not(.kicker),:global(html.dark) .hybridSteps small { color:#c2cbd4; }
 @media(max-width:1000px) { .programOverview { gap:24px; }.programOverview dl { gap:15px; }.programBody { gap:20px; }.programPanel { padding:22px; }.programMenu { padding-block:22px; }.inPerson { grid-template-columns:1fr 1fr; }.hybridSteps { gap:15px; } }
 @media(max-width:800px) {
-  .admission,.hybrid,.exam { grid-template-columns:1fr; }
+  .admission,.hybrid { grid-template-columns:1fr; }
+  .exam { grid-template-columns:minmax(0,1fr); }
+  .examValidation small { white-space:normal; }
   .admissionLead { padding:25px; }.admissionLead h3 br:first-child { display:none; }.admissionLead h3 br:first-child::after { content:' '; }
   .programOverview { grid-template-columns:minmax(0,1fr) 160px; }.programHours { flex-wrap:wrap; gap:12px; }.programBody { grid-template-columns:1fr; }.programMenu { padding:0; }
   .programTabs { display:flex; gap:8px; overflow-x:auto; overflow-y:hidden; max-height:none; padding:3px 3px 12px; scroll-snap-type:x proximity; }
