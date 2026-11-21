@@ -129,3 +129,15 @@
 .page div:has(> .galleryCredit) { flex-wrap:wrap; }
 .galleryCredit { display:flex; flex-basis:100%; flex-wrap:wrap; gap:.4rem 1rem; color:#70634f; font-size:.75rem; }
 .galleryCredit a { color:#765214; font-weight:700; text-underline-offset:4px; text-decoration:underline; }
+
+.editorialCourse {
+  --experience-accent:var(--course-accent);
+  --experience-pale:var(--course-pale);
+  --experience-tint:rgba(var(--course-rgb),.09);
+}
+.editorialCourse .dark h2 em { color:var(--course-pale); }
+.editorialCourse .dark h3 { overflow-wrap:break-word; }
+.editorialCourse [id] { scroll-margin-top:var(--course-anchor-offset,8rem); }
+.chapterNotes { margin-top:1.5rem; border-top:1px solid #c7cdd1; padding-top:1rem; }
+.chapterNotes summary { cursor:pointer; font-size:1rem; font-weight:700; padding:.6rem 0; }
+.chapterNotes > div { margin-top:1rem; }

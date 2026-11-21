@@ -1,7 +1,17 @@
+import { TrainingPracticeCards, TrainingPracticeArtwork } from '@/components/TrainingPracticeCards';
+import { despArtwork } from '@/data/manualIllustrations';
+import Image from 'next/image';
+import { TrainingAdmission, TrainingExamExperience } from '@/components/ApsExperienceSections';
+import { TrainingProgramExplorer } from '@/components/TrainingProgramExplorer';
+import { TrainingEnrollmentSection } from '@/components/TrainingEnrollmentSection';
+import { DespOfficialReferences } from '@/components/DespOfficialReferences';
+import { DespCareerPaths } from '@/components/DespCareerPaths';
+import layout from '@/components/TrainingReferenceLayout.module.css';
+import experience from '@/components/ApsExperience.module.css';
 import { CourseFilm } from '@/components/CourseFilm';
 import { CourseBrochureCard } from '@/components/CourseBrochureCard';
-import { TrainingReferencePage, TrainingReferenceSection, TrainingReferenceCampus, TrainingReferenceContact, TrainingReferenceMobileBar } from '@/components/TrainingReferenceLayout';
-import { TrainingCourseTestimonials } from '@/components/TrainingCourseTestimonials';
+import { TrainingCourseSections, TrainingReferencePage, TrainingReferenceSection, TrainingReferenceCampus, TrainingReferenceContact, TrainingReferenceMobileBar } from '@/components/TrainingReferenceLayout';
+import { TrainingCourseTestimonials, courseReviewCopy } from '@/components/TrainingCourseTestimonials';
 import { originalArtwork } from '@/data/originalArtwork';
 import { CourseJourney } from '@/components/CourseJourney';
 import { IntegraleWelcomePack } from '@/components/IntegraleWelcomePack';
@@ -11,7 +21,7 @@ import { isPublicUpcomingSession } from '@/components/PublicTrainingSessions';
 import { TrainingDatesPricingSection } from '@/components/TrainingDatesPricingSection';
 import { TrainingSectionNavigation } from '@/components/TrainingSectionNavigation';
 import { DespIllustratedCards, type DespIllustratedCard } from '@/components/DespIllustratedCards';
-import { Button, ConversionStrip, FeatureCard } from '@/components/ui';
+import { ConversionStrip, FeatureCard } from '@/components/ui';
 import { FaqDirectoryLink } from '@/components/FaqDirectoryLink';
 import { DespHero } from '@/components/DespHero';
 import { MissionAnimation } from '@/components/MissionAnimation';
@@ -23,15 +33,17 @@ export const dynamic = 'force-dynamic';
 export const metadata = createPageMetadata('/dirigeant');
 
 const contactHref = '/contact?formation=desp-initial';
-const registrationFormUrl = 'https://assistance-alw9.onrender.com/demande-informations-formations';
 const navigationItems = [
   { label: 'Métier', href: '#metier' },
-  { label: 'Format', href: '#format' },
+  { label: 'Admission', href: '#admission' },
+  { label: 'Immersion', href: '#pratique' },
   { label: 'Programme', href: '#programme' },
+  { label: 'Format', href: '#format' },
   { label: 'Examen', href: '#examen' },
   { label: 'Dates & tarifs', href: '#dates-tarifs' },
-  { label: 'Inscriptions', href: '#inscription' },
+  { label: 'Inscriptions', href: '#inscription-financement' },
   { label: 'Débouchés', href: '#debouches' },
+  { label: 'Repères', href: '#reperes-rncp' },
   { label: 'FAQ', href: '#faq-desp-initial' },
 ] as const;
 
@@ -99,7 +111,7 @@ async function getSessions(){return (await listSessions()).filter((session:any)=
 
 export default async function DespInitialPage(){
   const sessions = await getSessions();
-  return <TrainingReferencePage theme="orange">
+  return <TrainingReferencePage theme="orange" className={layout.editorialCourse}>
     <DespHero variant="initial" title="Formation dirigeant d’entreprise de sécurité privée" subtitle={<p>Apprenez à créer, reprendre ou diriger une entreprise de sécurité privée. Préparez le titre DESP avec un parcours hybride, de la réglementation CNAPS au management et à la gestion.</p>} stats={[["Durée","245 h","175 h à distance + 70 h en présentiel"],["Rythme","7 semaines","parcours intensif"],["Tarif 2027",despInitialAdminData.priceLabel,"TTC"],["Lieux","2 sites","Paris ou la Côte d’Azur"],["RNCP",despInitialAdminData.rncpCode,"niveau 5"],["Objectif","CNAPS","préparer l’agrément dirigeant"]]} sessions={sessions}/>
     <TrainingSectionNavigation
       mark="DESP"
@@ -110,28 +122,75 @@ export default async function DespInitialPage(){
     />
 
 
-    <CourseFilm film="desp" title="Préparer son projet d’entreprise"
+    <CourseFilm film="desp" followPageSound title="Préparer son projet d’entreprise"
       description="Créer sa société de sécurité privée, la gérer et encadrer son équipe. Découvrez ce que vous préparez en formation DESP." />
 
     <CourseJourney course="desp-initial">
-      <section className="page-container py-10"><MissionAnimation variant="despInitial" className="mb-8" illustration={originalArtwork['desp-initial-mission']} /><div className="grid gap-4 md:grid-cols-3"><FeatureCard title="Durée">7 semaines · 245 heures</FeatureCard><FeatureCard title="Public concerné">Candidats souhaitant acquérir ou consolider les compétences de dirigeant d’entreprise de sécurité privée.</FeatureCard><FeatureCard title="Prérequis">Niveau 4 ou expérience à valider avec l’équipe admissions ; conditions CNAPS et honorabilité à vérifier.</FeatureCard><FeatureCard title="Lieux">Distanciel + présentiel à Paris ou Puget-sur-Argens selon les sessions.</FeatureCard><FeatureCard title="Financement">CPF, France Travail, entreprise ou facilités de paiement selon dossier.</FeatureCard><FeatureCard title="Certification / examen"><strong>Titre RNCP Dirigeant d’entreprise de sécurité privée – niveau 5</strong><br/>Titre : Dirigeant d’entreprise de sécurité privée · Sigle : DESP · Code : {despInitialAdminData.rncpCode} · Certificateur : Scotia Formation · Échéance actuelle : 28 mars 2027 · Durée : {despInitialAdminData.duration.total} · Tarif actuel : {despInitialAdminData.priceLabel}<br/><span className="mt-2 block">Cette certification permet de justifier de l’aptitude professionnelle nécessaire à la demande d’agrément dirigeant auprès du CNAPS. L’agrément reste délivré séparément par le CNAPS après étude du dossier.</span></FeatureCard></div></section>
+      <TrainingReferenceSection id="metier" eyebrow="01 — Le métier" title="Quel est le rôle d’un dirigeant d’entreprise de sécurité privée ?" intro="Le dirigeant d’entreprise de sécurité privée crée, reprend, dirige ou développe une structure exerçant une ou plusieurs activités réglementées de sécurité privée. Il veille au respect du Livre VI du Code de la sécurité intérieure, pilote la stratégie de l’entreprise, contrôle son équilibre financier, développe son activité commerciale et encadre les équipes." tone="paper">
+        <DespIllustratedCards items={jobMissions} />
+        <Note>Le dirigeant ne réalise pas nécessairement lui-même les missions opérationnelles. S’il exerce personnellement des activités d’agent de sécurité, il doit également détenir la carte professionnelle correspondant à l’activité exercée.</Note>
+        <details className={layout.chapterNotes}><summary>Le DESP initial en bref</summary>
+          <div className="grid gap-4 md:grid-cols-3"><FeatureCard title="Durée">7 semaines · 245 heures</FeatureCard><FeatureCard title="Public concerné">Candidats souhaitant acquérir ou consolider les compétences de dirigeant d’entreprise de sécurité privée.</FeatureCard><FeatureCard title="Prérequis">Niveau 4 ou expérience à valider avec l’équipe admissions ; conditions CNAPS et honorabilité à vérifier.</FeatureCard><FeatureCard title="Lieux">Distanciel + présentiel à Paris ou Puget-sur-Argens selon les sessions.</FeatureCard><FeatureCard title="Financement">CPF, France Travail, entreprise ou facilités de paiement selon dossier.</FeatureCard><FeatureCard title="Certification / examen"><strong>Titre RNCP Dirigeant d’entreprise de sécurité privée – niveau 5</strong><br/>Titre : Dirigeant d’entreprise de sécurité privée · Sigle : DESP · Code : {despInitialAdminData.rncpCode} · Certificateur : Scotia Formation · Échéance actuelle : 28 mars 2027 · Durée : {despInitialAdminData.duration.total} · Tarif actuel : {despInitialAdminData.priceLabel}<br/><span className="mt-2 block">Cette certification permet de justifier de l’aptitude professionnelle nécessaire à la demande d’agrément dirigeant auprès du CNAPS. L’agrément reste délivré séparément par le CNAPS après étude du dossier.</span></FeatureCard></div>
+        </details>
+      </TrainingReferenceSection>
     </CourseJourney>
-
-    <ConversionStrip theme="orange"/>
-    <TrainingReferenceSection id="metier" eyebrow="01 — Le métier" title="Quel est le rôle d’un dirigeant d’entreprise de sécurité privée ?" intro="Le dirigeant d’entreprise de sécurité privée crée, reprend, dirige ou développe une structure exerçant une ou plusieurs activités réglementées de sécurité privée. Il veille au respect du Livre VI du Code de la sécurité intérieure, pilote la stratégie de l’entreprise, contrôle son équilibre financier, développe son activité commerciale et encadre les équipes."><DespIllustratedCards items={jobMissions}/><Note>Le dirigeant ne réalise pas nécessairement lui-même les missions opérationnelles. S’il exerce personnellement des activités d’agent de sécurité, il doit également détenir la carte professionnelle correspondant à l’activité exercée.</Note></TrainingReferenceSection>
-    <Info title="À qui s’adresse la formation ?" items={audience}/><NoteSection>La formation ne s’adresse pas uniquement aux agents de sécurité expérimentés. Une expérience du secteur constitue un avantage, mais l’admission dépend de l’ensemble du profil et des conditions du certificateur.</NoteSection>
-    <TextSection title="Quels sont les prérequis pour entrer en DESP initial ?"><CardGrid items={prerequisites}/><Note>Chaque candidature est étudiée individuellement. Un entretien préalable permet de vérifier le niveau, l’expérience, la cohérence du projet et la capacité à suivre une formation intensive de niveau 5.</Note></TextSection>
-    <TextSection title="Quelles conditions faut-il remplir pour obtenir l’agrément dirigeant ?" intro="Le CNAPS vérifie notamment :"><CardGrid items={cnaps}/><Note>La réussite au titre DESP ne garantit pas automatiquement la délivrance de l’agrément. La décision appartient au CNAPS après enquête administrative.</Note><div className="mt-5"><Button href={contactHref} variant="orange">Faire vérifier mes prérequis</Button></div></TextSection>
-    <TextSection id="format" title="Une formation hybride de 245 heures"><div className="grid gap-4 md:grid-cols-2"><ListCard title="5 semaines à distance – 175 heures" items={['plateforme pédagogique accessible en ligne','cours et ressources numériques','études de cas','travaux individuels','préparation du projet professionnel','accompagnement par l’équipe pédagogique','évaluations et suivi de progression']}/><ListCard title="2 semaines en présentiel – 70 heures" items={['mises en situation','études de cas collectives','entraînements aux évaluations','travail sur la création ou la reprise d’entreprise','gestion financière et commerciale','management','préparation aux soutenances et au jury']}/></div><p className="mt-5 text-sm font-semibold leading-6 text-academy-muted">Lieux possibles selon les sessions administrées : Paris ou Puget-sur-Argens.</p></TextSection>
-    <CourseBrochureCard course="dirigeant" />
-    <ProgramSection/>
-    <TrainingReferenceCampus description="Découvrez notre centre de Puget-sur-Argens. Le parcours DESP propose aussi Paris selon le calendrier des sessions." />
-    <IntegraleWelcomePack course="desp-initial" />
-    <FinancingSection/>
-    <EnrollmentSection/>
-    <TextSection title="Construisez votre véritable projet d’entreprise" intro="La formation ne se limite pas à l’apprentissage de la réglementation. Le candidat travaille sur un projet concret de création, de reprise ou de développement d’une entreprise de sécurité privée."><CardGrid items={project}/><Note>Les travaux réalisés pendant la formation restent pédagogiques et ne remplacent pas les conseils personnalisés d’un avocat, d’un expert-comptable ou d’un professionnel du droit.</Note></TextSection>
-    <TextSection id="examen" title="Modalités d’évaluation"><CardGrid items={evaluation}/><Note>La certification est obtenue lorsque l’ensemble des évaluations obligatoires relatives aux cinq activités est validé. Le référentiel actuel prévoit neuf évaluations portant sur cinq activités. Les durées exactes d’examen ne sont affichées que lorsqu’elles sont confirmées par l’administration.</Note></TextSection>
-    <TrainingDatesPricingSection
+    <ConversionStrip theme="orange" />
+    <TrainingCourseSections
+      admission={
+        <TrainingReferenceSection id="admission" eyebrow="02 — Admission" title="Votre dossier est-il prêt pour le DESP initial ?" tone="stone">
+          <TrainingAdmission course="desp-initial" action={contactHref} actionLabel="Faire vérifier mes prérequis"
+            lead={<><h3>Quels sont les prérequis pour entrer en <em>DESP initial ?</em></h3><p>Chaque candidature est étudiée individuellement. Un entretien préalable permet de vérifier le niveau, l’expérience, la cohérence du projet et la capacité à suivre une formation intensive de niveau 5.</p></>}
+            points={[
+              { title: 'À qui s’adresse la formation ?', content: <><BulletList items={audience} /><p>La formation ne s’adresse pas uniquement aux agents de sécurité expérimentés. Une expérience du secteur constitue un avantage, mais l’admission dépend de l’ensemble du profil et des conditions du certificateur.</p></> },
+              { title: 'Les conditions d’admission', content: <BulletList items={prerequisites} /> },
+              { title: 'Quelles conditions faut-il remplir pour obtenir l’agrément dirigeant ?', content: <><p>Le CNAPS vérifie notamment :</p><BulletList items={cnaps} /></> },
+            ]}
+            note="La réussite au titre DESP ne garantit pas automatiquement la délivrance de l’agrément. La décision appartient au CNAPS après enquête administrative."
+            steps={<>Entretien avec un conseiller <span>→</span> Étude du profil <span>→</span> Choix de la session</>} />
+        </TrainingReferenceSection>
+      }
+      immersion={
+        <TrainingReferenceSection id="pratique" eyebrow="03 — Immersion & pédagogie" title="Construisez votre véritable projet d’entreprise"
+          intro="La formation ne se limite pas à l’apprentissage de la réglementation. Le candidat travaille sur un projet concret de création, de reprise ou de développement d’une entreprise de sécurité privée." tone="dark">
+          <TrainingPracticeCards items={[
+            { icon: '◎', title: 'Étude du marché', text: jobMissions[0].description, artwork: originalArtwork['desp-initial-agrement'] },
+            { icon: '↗', title: 'Prévisionnel financier', text: jobMissions[1].description, artwork: despArtwork.finances },
+            { icon: '◇', title: 'Organisation de l’entreprise', text: jobMissions[3].description, artwork: despArtwork.organisation },
+            { icon: '⇄', title: 'Politique commerciale', text: jobMissions[4].description, artwork: despArtwork.client },
+          ].map(({icon,title,text,artwork}) => ({icon,title,text,visuals:[{kind:title,illustration:<TrainingPracticeArtwork illustration={artwork} />}] }))} />
+          <div className="mt-7 grid items-center gap-6 lg:grid-cols-2">
+            <MissionAnimation variant="despInitial" compact illustration={originalArtwork['desp-initial-mission']} />
+            <div><h3 className="mb-4 text-2xl font-black">Votre projet de création ou de reprise</h3><BulletList items={project} /></div>
+          </div>
+          <Note>Les travaux réalisés pendant la formation restent pédagogiques et ne remplacent pas les conseils personnalisés d’un avocat, d’un expert-comptable ou d’un professionnel du droit.</Note>
+        </TrainingReferenceSection>
+      }
+      campus={<TrainingReferenceCampus editorialId="ecole-desp-initial" groupLabel="Présentiel selon la session" groupSize="Paris ou Côte d’Azur" description="Découvrez notre centre de Puget-sur-Argens. Le parcours DESP propose aussi Paris selon le calendrier des sessions." />}
+      brochure={<CourseBrochureCard course="dirigeant" />}
+      program={
+        <TrainingReferenceSection id="programme" eyebrow="04 — Programme" title="Programme détaillé" tone="paper">
+          <TrainingProgramExplorer idPrefix="desp-programme" menuTitle="Les cinq axes du programme" tabListLabel="Axes du DESP initial"
+            nextLabel="Axe suivant" restartLabel="Revenir au premier axe" hours="245" overview="Une formation hybride" subtitle="7 semaines"
+            facts={[['À distance', '175 heures'], ['En présentiel', '70 heures'], ['Certification', despInitialAdminData.rncpCode]]}
+            units={programAxes.map(([title, items], index) => ({ number: String(index + 1).padStart(2, '0'), title, items, delivery: 'Parcours DESP initial' }))} />
+        </TrainingReferenceSection>
+      }
+      format={
+        <TrainingReferenceSection id="format" eyebrow="05 — Distanciel & présentiel" title="Une formation hybride de 245 heures" tone="stone">
+          <div className="grid gap-4 md:grid-cols-2"><ListCard title="5 semaines à distance – 175 heures" items={['plateforme pédagogique accessible en ligne','cours et ressources numériques','études de cas','travaux individuels','préparation du projet professionnel','accompagnement par l’équipe pédagogique','évaluations et suivi de progression']}/><ListCard title="2 semaines en présentiel – 70 heures" items={['mises en situation','études de cas collectives','entraînements aux évaluations','travail sur la création ou la reprise d’entreprise','gestion financière et commerciale','management','préparation aux soutenances et au jury']}/></div><p className="mt-5 text-sm font-semibold leading-6 text-academy-muted">Lieux possibles selon les sessions administrées : Paris ou Puget-sur-Argens.</p>
+        </TrainingReferenceSection>
+      }
+      pack={<IntegraleWelcomePack course="desp-initial" />}
+      exam={
+        <TrainingReferenceSection id="examen" eyebrow="06 — Examen" title="Modalités d’évaluation" tone="dark">
+          <TrainingExamExperience metric="9" label="Évaluations" description="Cinq activités à valider"
+            theory={<><p className={experience.kicker}>Épreuves écrites</p><h3>QCU<span>et études de cas</span></h3><BulletList items={evaluation.slice(0, 2)} /></>}
+            practice={<><Image {...originalArtwork['desp-vae-jury']} alt="Un candidat présente son travail devant un jury professionnel." width={1536} height={1024} sizes="(max-width: 800px) 92vw, 740px" /><div><p className={experience.kicker}>Épreuves professionnelles</p><h3>Présenter votre projet</h3><BulletList items={evaluation.slice(2)} /></div></>}
+            validation={<><div><p className={experience.kicker}>Validation</p><p>La certification est obtenue lorsque l’ensemble des évaluations obligatoires relatives aux cinq activités est validé. Le référentiel actuel prévoit neuf évaluations portant sur cinq activités. Les durées exactes d’examen ne sont affichées que lorsqu’elles sont confirmées par l’administration.</p></div><strong>DESP<small>Titre de niveau 5</small></strong></>} />
+        </TrainingReferenceSection>
+      }
+      dates={
+        <TrainingDatesPricingSection compact showCompactBenefits eyebrow="07 — Dates & tarifs"
       priceYear={2027}
       sessions={sessions}
       theme="orange"
@@ -146,29 +205,39 @@ export default async function DespInitialPage(){
       priceAction={{ href: `${contactHref}&objet=financement`, label: 'Étudier mon financement →' }}
       emptyAction={{ href: `${contactHref}&objet=alerte-planning`, label: 'Recevoir les prochaines dates →' }}
     />
-    <TextSection title="À l’issue de la formation"><div className="grid gap-3 md:grid-cols-4">{['Valider les évaluations','Obtenir le titre RNCP40385 de niveau 5','Déposer la demande d’agrément dirigeant auprès du CNAPS','Demander l’autorisation d’exercice de l’entreprise créée ou reprise'].map((step,i)=><div key={step} className="rounded-2xl bg-academy-surface p-4 ring-1 ring-academy-line"><span className="grid h-9 w-9 place-items-center rounded-full bg-orange-500 font-black text-orange-950">{i+1}</span><p className="mt-3 font-black text-academy-ink">{step}</p></div>)}</div><Note>Le titre, l’agrément personnel du dirigeant et l’autorisation d’exercice de l’entreprise sont trois éléments distincts. Si le dirigeant réalise lui-même des missions opérationnelles de sécurité, il doit également posséder la carte professionnelle correspondante.</Note></TextSection>
-    <TextSection title="Combien de temps l’agrément dirigeant est-il valable ?" intro="L’agrément dirigeant est valable cinq ans. Son renouvellement doit être demandé auprès du CNAPS au moins trois mois avant son expiration."><Note>Ce renouvellement ne doit pas être confondu avec un MAC APS.</Note></TextSection>
-    <Info id="debouches" title="Débouchés" items={outcomes}/><NoteSection>Le titre ne garantit ni la création effective d’une entreprise, ni la délivrance de l’agrément, ni la rentabilité du projet.</NoteSection>
-    <ActivitiesSection/>
-    <AccessibilitySection/>
-    <Info title="Pourquoi suivre cette formation chez Intégrale Academy" items={why}/>
-
-    <TrainingCourseTestimonials category="DESP" />
+      }
+      enrollment={<>
+        <TrainingEnrollmentSection number="08" title="Étapes d’inscription" steps={despEnrollmentSteps}
+          intro="Préparez votre entrée en DESP initial avec un conseiller."
+          registration={{href: contactHref + '&objet=inscription', label: 'Commencer mon inscription'}}
+          optionsHeading="Financements possibles" fundingTitle="Simulez votre reste à charge" fundingNote={<><p>Estimez le montant restant après vos aides et votre CPF.</p><p>Chaque solution est étudiée selon votre situation, l’offre active et les règles du financeur. Aucun financement n’est automatique.</p></>} options={despFinancingCards}
+          funding={{href: contactHref + '&objet=financement', label: 'Étudier le financement de mon DESP'}} />
+        <AccessibilitySection />
+      </>}
+      outcomes={<>
+        <DespCareerPaths course="initial" outcomes={outcomes} note="Le titre ne garantit ni la création effective d’une entreprise, ni la délivrance de l’agrément, ni la rentabilité du projet." />
+        <TextSection title="À l’issue de la formation"><div className="grid gap-3 md:grid-cols-4">{['Valider les évaluations','Obtenir le titre RNCP40385 de niveau 5','Déposer la demande d’agrément dirigeant auprès du CNAPS','Demander l’autorisation d’exercice de l’entreprise créée ou reprise'].map((step,i)=><div key={step} className="rounded-2xl bg-academy-surface p-4 ring-1 ring-academy-line"><span className="grid h-9 w-9 place-items-center rounded-full bg-orange-500 font-black text-orange-950">{i+1}</span><p className="mt-3 font-black text-academy-ink">{step}</p></div>)}</div><Note>Le titre, l’agrément personnel du dirigeant et l’autorisation d’exercice de l’entreprise sont trois éléments distincts. Si le dirigeant réalise lui-même des missions opérationnelles de sécurité, il doit également posséder la carte professionnelle correspondante.</Note></TextSection>
+        <ActivitiesSection />
+        <Info title="Pourquoi suivre cette formation chez Intégrale Academy" items={why}/>
+      </>}
+      references={<DespOfficialReferences course="desp-initial" conditions={cnaps} note="La réussite au titre DESP ne garantit pas automatiquement la délivrance de l’agrément. La décision appartient au CNAPS après enquête administrative."
+        detailsTitle="Combien de temps l’agrément dirigeant est-il valable ?"
+        details={<><p>L’agrément dirigeant est valable cinq ans. Son renouvellement doit être demandé auprès du CNAPS au moins trois mois avant son expiration.</p><p>Ce renouvellement ne doit pas être confondu avec un MAC APS.</p></>} />}
+    />
+    <TrainingCourseTestimonials layout="home" copy={courseReviewCopy} category="DESP" />
     <div id="faq-desp-initial"><FaqDirectoryLink embedded theme="orange" /></div>
-    <TrainingReferenceContact description="Cassandre, Responsable commerciale, vous aide à préparer votre projet de création ou de reprise, vérifier les prérequis, choisir votre centre et étudier votre financement." href="/contact?formation=desp-initial&objet=rendez-vous" />
+    <TrainingReferenceContact schoolStyle description="Cassandre, Responsable commerciale, vous aide à préparer votre projet de création ou de reprise, vérifier les prérequis, choisir votre centre et étudier votre financement." href="/contact?formation=desp-initial&objet=rendez-vous" />
     <TrainingReferenceMobileBar label="Recevoir les dates" />
   </TrainingReferencePage>
 }
 
+function BulletList({ items }: { items: readonly string[] }) {
+  return <ul className="list-disc space-y-1 pl-5 leading-7">{items.map(item => <li key={item}>{item}</li>)}</ul>;
+}
 function TextSection({id,title,intro,children}:{id?:string;title:string;intro?:string;children?:React.ReactNode}){return <TrainingReferenceSection id={id} eyebrow="DESP initial" title={title} intro={intro}>{children}</TrainingReferenceSection>}
 function CardGrid({items}:{items:string[]}){return <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">{items.map(i=><div key={i} className="reveal rounded-2xl border border-academy-line bg-academy-surface p-4 font-semibold text-academy-muted shadow-soft">✓ {i}</div>)}</div>}
 function ListCard({title,items}:{title:string;items:string[]}){return <div className="rounded-2xl bg-academy-surface p-5 ring-1 ring-academy-line"><h3 className="text-xl font-black text-academy-ink">{title}</h3><ul className="mt-4 space-y-2 text-sm font-semibold leading-6 text-academy-muted">{items.map(i=><li key={i}>✓ {i}</li>)}</ul></div>}
 function Note({children}:{children:React.ReactNode}){return <p className="mt-5 rounded-2xl border border-orange-300/50 bg-orange-50 p-4 font-bold leading-7 text-academy-ink">{children}</p>}
-function NoteSection({children}:{children:React.ReactNode}){return <section className="page-container py-2"><Note>{children}</Note></section>}
-function ProgramSection(){return <TrainingReferenceSection id="programme" eyebrow="Programme" title="Programme détaillé" tone="stone"><div className="space-y-3">{programAxes.map(([title,items],index)=><details key={title} open={index===0} className="group rounded-2xl border border-academy-line bg-academy-elevated p-5 shadow-soft"><summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-black"><span>{title}</span><span className="grid h-8 w-8 place-items-center rounded-full bg-orange-500 text-orange-950 transition group-open:rotate-45">+</span></summary><ul className="mt-4 grid gap-2 text-academy-muted sm:grid-cols-2">{items.map(item=><li key={item} className="flex gap-2 text-sm font-semibold leading-6"><span className="text-orange-600">✓</span><span>{item}</span></li>)}</ul></details>)}</div></TrainingReferenceSection>}
 function Info({id,title,items}:{id?:string;title:string;items:string[]}){return <TrainingReferenceSection id={id} eyebrow="Repères" title={title} tone="paper"><div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">{items.map(i=><div key={i} className="rounded-2xl border border-academy-line bg-academy-surface p-4 shadow-soft"><p className="font-semibold leading-7 text-academy-muted">✓ {i}</p></div>)}</div></TrainingReferenceSection>}
-
-function FinancingSection(){return <TextSection title="Financements possibles" intro="Chaque solution est étudiée selon votre situation, l’offre active et les règles du financeur. Aucun financement n’est automatique."><div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">{despFinancingCards.map(([title,text])=><FeatureCard key={title} title={title}>{text}</FeatureCard>)}</div><div className="mt-6"><Button href="/contact?formation=desp-initial&objet=financement" variant="orange">Étudier le financement de mon DESP</Button></div></TextSection>}
-function EnrollmentSection(){return <TextSection id="inscription" title="Étapes d’inscription"><div className="grid gap-3 md:grid-cols-5">{despEnrollmentSteps.map((step,i)=><div key={step} className="rounded-2xl bg-academy-surface p-4 ring-1 ring-academy-line"><span className="grid h-9 w-9 place-items-center rounded-full bg-orange-500 font-black text-orange-950">{i+1}</span><p className="mt-3 font-black text-academy-ink">{step}</p></div>)}</div><div className="mt-6"><Button href="/contact?formation=desp-initial&objet=inscription" variant="orange">Commencer mon inscription</Button></div></TextSection>}
 function ActivitiesSection(){return <TextSection title="Activités concernées" intro="Les entreprises de sécurité peuvent intervenir, selon leurs autorisations, dans différentes activités réglementées."><CardGrid items={despActivities}/><Note>Chaque activité est soumise à ses propres conditions, qualifications et autorisations. Le titre DESP ne permet pas automatiquement d’exercer toutes ces activités.</Note></TextSection>}
 function AccessibilitySection(){const ref=despInitialAdminData.handicapReferent;return <TextSection title="Accessibilité"><p className="rounded-2xl bg-academy-surface p-5 font-semibold leading-7 text-academy-muted ring-1 ring-academy-line">Intégrale Academy étudie les besoins d’adaptation pédagogique et matérielle de chaque candidat. Contactez le référent handicap avant l’inscription afin d’identifier les aménagements compatibles avec le parcours et les évaluations.</p><div className="mt-5 rounded-2xl border border-academy-line bg-white p-5"><h3 className="font-black">Référent handicap</h3><p className="mt-2 text-academy-muted">{ref.name} · {ref.email} · {ref.phone}</p></div></TextSection>}

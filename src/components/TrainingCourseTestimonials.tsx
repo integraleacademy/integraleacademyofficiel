@@ -4,6 +4,12 @@ import styles from './SsiapReferencePage.module.css';
 import cards from './GoogleReviewsSection.module.css';
 import { GoogleReviewsSection, type ReviewSectionCopy } from './GoogleReviewsSection';
 
+export const courseReviewCopy: ReviewSectionCopy = {
+  headingId: 'course-reviews-title', title: 'Leur formation. Leurs mots', eyebrow: 'Les retours de nos stagiaires',
+  empty: 'Découvrez les expériences de nos stagiaires sur la fiche Google d’Intégrale Academy.',
+  sourceLabel: 'Consulter les avis sur Google ↗',
+};
+
 function ReviewQuote({ text }: { text: string }) {
   if (text.length <= 240) return <blockquote>« {text} »</blockquote>;
   return <details className={styles.reviewMore}>

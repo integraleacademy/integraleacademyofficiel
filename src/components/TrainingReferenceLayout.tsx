@@ -121,11 +121,12 @@ export function TrainingReferenceCampus({
   compact = false,
   editorialId,
   groupLabel = 'Par session',
-}: { title?: string; description?: string; compact?: boolean; editorialId?: string; groupLabel?: string }) {
+  groupSize = '12 maximum',
+}: { title?: string; description?: string; compact?: boolean; editorialId?: string; groupLabel?: string; groupSize?: string }) {
   if (editorialId) return <>
     <CourseTeamBanner />
     <TrainingSchoolWelcome id={editorialId} photos={campusPhotos}
-      description={<><strong>{title}</strong><br />{description}</>} groupLabel={groupLabel} groupSize="12 maximum"
+      description={<><strong>{title}</strong><br />{description}</>} groupLabel={groupLabel} groupSize={groupSize}
       extraFooter={<p className={styles.galleryCredit}>Photos du centre Intégrale Academy · Puget-sur-Argens <Link href="/ecole#photos">Découvrir tous les espaces ↗</Link></p>} />
   </>;
   return <>

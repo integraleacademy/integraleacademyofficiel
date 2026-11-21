@@ -1,53 +1,54 @@
 import type { SceneKind } from '@/components/TrainingMotionGallery';
 import { type TrainingIllustratedCard } from '@/components/TrainingIllustratedCards';
-import { TrainingReferenceMissions } from '@/components/TrainingReferenceLayout';
+import { TrainingPracticeArtwork, TrainingPracticeCards } from './TrainingPracticeCards';
 import { TrainingMotionIllustration } from '@/components/TrainingMotionGallery';
 import { TrainingMissionCards } from '@/components/TrainingMissionCards';
 
-import { despPracticeArtwork, despArtwork, type ManualIllustration } from '@/data/manualIllustrations';
+import { despPracticeArtwork, despArtwork, type ManualIllustration, type ManualIllustrationMap } from '@/data/manualIllustrations';
 import { originalArtwork } from '@/data/originalArtwork';
 
 export type DespIllustratedCard = TrainingIllustratedCard;
 
-// Landscape scenes keep the APS card proportions without cropping portrait artwork.
-const initialMissionArtwork: Partial<Record<SceneKind, { illustration: ManualIllustration; imagePosition?: string }>> = {
+// Keep the people and their working documents in view in the landscape frame.
+const initialMissionArtwork: Partial<Record<SceneKind, { illustration: ManualIllustration; focus?: string }>> = {
   business: { illustration: despArtwork.projet },
   finance: { illustration: originalArtwork['bts-cg-budget'] },
   compliance: { illustration: despArtwork.conformite },
-  team: { illustration: despArtwork.management, imagePosition: 'left center' },
+  team: { illustration: despArtwork.management, focus: '30% 42%' },
   commercial: { illustration: originalArtwork['bts-ndrc-negociation'] },
   evidence: { illustration: originalArtwork['desp-initial-appel-offres'] },
-  'site-check': { illustration: despArtwork.supervision, imagePosition: 'left center' },
+  'site-check': { illustration: despArtwork.supervision, focus: '30% 42%' },
   briefing: {
     illustration: { ...originalArtwork['bts-mos-mission'], alt: 'Une responsable de sécurité fait le point sur la qualité d’une prestation avec le client.' },
   },
 };
 
+const vaeArtwork: ManualIllustrationMap = {
+  ...despPracticeArtwork,
+  'profile-review': originalArtwork['desp-vae-parcours-entretien'],
+  approval: despArtwork.conformite,
+  evidence: originalArtwork['desp-vae-preuves'],
+  jury: despArtwork.organisation,
+};
+
 export function DespIllustratedCards({ items, variant = 'initial' }: { items: readonly DespIllustratedCard[]; variant?: 'initial' | 'vae' }) {
   if (variant === 'initial') {
-    return <TrainingMissionCards items={items.map((item, index) => {
-      const scene = item.scenes[0];
-      const visual = scene && initialMissionArtwork[scene.kind];
+    return <TrainingMissionCards items={items.map(item => {
+      const visual = initialMissionArtwork[item.scenes[0]?.kind];
       return {
-        number: item.number,
-        title: item.title,
-        description: item.description,
+        title: item.title, description: item.description,
         illustration: visual?.illustration ?? despArtwork.direction,
-        imagePosition: visual?.imagePosition,
-        featured: index === 0,
+        landscapeFocus: visual?.focus ?? '50% 42%',
       };
     })} />;
   }
-  const illustrations = variant === 'vae' ? {
-    ...despPracticeArtwork,
-    'profile-review': originalArtwork['desp-vae-parcours-entretien'],
-    approval: despArtwork.conformite,
-    evidence: originalArtwork['desp-vae-preuves'],
-    jury: originalArtwork['desp-vae-jury'],
-  } : despPracticeArtwork;
-  return <TrainingReferenceMissions label="Étape" items={items.map(item => ({
-    title: item.title,
-    description: item.description,
-    visual: <div>{item.scenes.map(scene => <TrainingMotionIllustration key={scene.kind} kind={scene.kind} theme="orange" description={scene.description} illustration={illustrations[scene.kind]} natural />)}</div>,
+  return <TrainingPracticeCards items={items.map((item, index) => ({
+    title: item.title, text: item.description, icon: ['◎', '✎', '✓', '▤', '⇄', '◇'][index],
+    visuals: item.scenes.map(scene => {
+      const artwork = vaeArtwork[scene.kind];
+      return { kind: scene.kind, illustration: artwork
+        ? <TrainingPracticeArtwork illustration={artwork} />
+        : <TrainingMotionIllustration kind={scene.kind} theme="orange" description={scene.description} /> };
+    }),
   }))} />;
 }

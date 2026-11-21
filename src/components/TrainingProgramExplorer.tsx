@@ -26,16 +26,16 @@ type ProgramSummaryProps = {
   overview: string;
   subtitle: string;
   facts: ReadonlyArray<readonly [string, string]>;
-  illustration: ManualIllustration;
+  illustration?: ManualIllustration;
 };
 
 function ProgramOverview({ hours, unitLabel = 'h', overview, subtitle, facts, illustration }: ProgramSummaryProps) {
-  return <div className={styles.programOverview}>
+  return <div className={styles.programOverview} data-illustrated={Boolean(illustration)}>
       <div className={styles.programSummary}>
         <div className={styles.programHours}><strong>{hours}<span>{unitLabel}</span></strong><p>{overview}<br /><span>{subtitle}</span></p></div>
         <dl>{facts.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>
       </div>
-      <Image className={styles.programImage} src={illustration.src} alt={illustration.alt} width={1536} height={1024} sizes="(max-width: 550px) 90vw, 260px" />
+      {illustration && <Image className={styles.programImage} src={illustration.src} alt={illustration.alt} width={1536} height={1024} sizes="(max-width: 550px) 90vw, 260px" />}
     </div>;
 }
 

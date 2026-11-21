@@ -65,6 +65,10 @@ type TrainingSessionCardsProps = {
   seatCapacity?: number;
   underlineDisclosure?: boolean;
   emptyAction?: Action;
+  emptyBadgeLabel?: string;
+  emptyTitle?: string;
+  emptyDescription?: string;
+  assessmentLabel?: string;
   compact?: boolean;
 };
 
@@ -152,6 +156,7 @@ function SessionCard({
   showOverallPeriodLabel,
   seatCapacity,
   compact,
+  assessmentLabel = 'Examen',
 }: {
   session: TrainingSessionCardItem;
   index: number;
@@ -168,6 +173,7 @@ function SessionCard({
   showOverallPeriodLabel: boolean;
   seatCapacity?: number;
   compact?: boolean;
+  assessmentLabel?: string;
 }) {
   const full = isFull(session);
   const comingSoon = session.status === 'COMING_SOON';
@@ -194,7 +200,7 @@ function SessionCard({
     <div className="flex flex-wrap items-center justify-between gap-3"><p className={`text-[.65rem] font-black uppercase tracking-[.14em] ${sessionTheme.detailIcon}`}>{index === 0 ? 'Prochaine session' : 'Session suivante'}</p><span className={`rounded-full border px-3 py-1.5 text-xs font-bold ${seatAvailability.badgeClassName}`}>{seatAvailability.label}</span></div>
     {showSessionTitle && sessionTitle ? <h3 className="mt-4 text-lg font-bold text-academy-ink">{sessionTitle}</h3> : null}
     <p className="mt-4 text-xl font-black leading-snug tracking-tight text-academy-ink">{mainPeriod.value}</p>
-    <p className="mt-3 text-sm text-academy-muted">Examen : <strong>{formatDate(session.examDate)}</strong></p>
+    <p className="mt-3 text-sm text-academy-muted">{assessmentLabel} : <strong>{formatDate(session.examDate)}</strong></p>
     <p className="mt-2 text-xs text-academy-muted">{String(session.location || defaultLocation).replace(/\s*\/\s*(?=Côte d[’']Azur)/g, ' · ')}</p>
     {showDeliveryPeriods && <details className="group/periods mt-5 border-t border-academy-line pt-4"><summary className={`flex min-h-10 cursor-pointer list-none items-center justify-between gap-4 text-xs font-bold ${sessionTheme.detailIcon} [&::-webkit-details-marker]:hidden`}><span>{onSite ? 'Calendrier en présentiel' : 'Calendrier à distance & en présentiel'}</span><span className="text-lg transition group-open/periods:rotate-45" aria-hidden="true">+</span></summary><dl className="mt-3 grid gap-4 sm:grid-cols-2">{detailPeriods.map(period => <div key={period.label}><dt className="text-[.65rem] font-bold uppercase tracking-wider text-academy-muted">{period.label}</dt><dd className="mt-1 text-sm font-bold leading-relaxed text-academy-ink">{period.value}</dd></div>)}</dl></details>}
     <div className="mt-5 flex flex-wrap items-center justify-between gap-4">{showSessionPrice && <strong className="text-2xl">{formatTrainingPrice(session, defaultPrice)}</strong>}<ActionLink action={{ href: session.registrationHref, label: actionLabel }} variant={full ? 'light' : theme} /></div>
@@ -227,7 +233,7 @@ function SessionCard({
       </div> : null}
     </div>
     <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2 border-t border-academy-line/60 pt-3 text-sm font-bold text-academy-muted">
-      <span className="inline-flex items-center gap-2"><PeriodIcon name="calendar" className={`h-4 w-4 ${sessionTheme.detailIcon}`} />Examen : {formatDate(session.examDate)}</span>
+      <span className="inline-flex items-center gap-2"><PeriodIcon name="calendar" className={`h-4 w-4 ${sessionTheme.detailIcon}`} />{assessmentLabel} : {formatDate(session.examDate)}</span>
       <span className="inline-flex items-center gap-2"><PeriodIcon name="location" className={`h-4 w-4 ${sessionTheme.detailIcon}`} />{session.location || defaultLocation}</span>
     </div>
     <div className="mt-auto flex flex-wrap items-end justify-between gap-4 pt-5">
@@ -255,6 +261,10 @@ export function TrainingSessionCards({
   seatCapacity,
   underlineDisclosure = true,
   emptyAction,
+  emptyBadgeLabel = 'Planning en préparation',
+  emptyTitle = 'La prochaine session est en cours de programmation',
+  emptyDescription = 'Laissez-nous vos coordonnées pour recevoir les dates dès leur ouverture.',
+  assessmentLabel,
   compact = false,
 }: TrainingSessionCardsProps) {
   const [locationFilter, setLocationFilter] = useState<SessionLocationFilterKey>('all');
@@ -273,7 +283,7 @@ export function TrainingSessionCards({
   const selectedLocationLabel = sessionLocationFilters.find((filter) => filter.key === locationFilter)?.label ?? 'Tous';
 
   const cardProps = {
-    compact,
+    compact, assessmentLabel,
     theme,
     sessionTheme,
     showDeliveryPeriods,
@@ -333,9 +343,9 @@ export function TrainingSessionCards({
         </div>
       </details> : null}
     </> : <article className="rounded-[1.8rem] border border-dashed border-academy-line bg-[#FFFDF8] p-6 shadow-soft">
-      <span className={`rounded-full border px-3 py-1.5 text-[.64rem] font-black uppercase tracking-[.15em] ${sessionTheme.badge}`}>{showLocationFilter && sessions.length ? `Centre : ${selectedLocationLabel}` : 'Planning en préparation'}</span>
-      <h3 className="mt-5 text-2xl font-black">{showLocationFilter && sessions.length ? `Aucune session disponible actuellement pour ${selectedLocationLabel}` : 'La prochaine session est en cours de programmation'}</h3>
-      <p className="mt-2 font-bold text-academy-muted">Laissez-nous vos coordonnées pour recevoir les dates dès leur ouverture.</p>
+      <span className={`rounded-full border px-3 py-1.5 text-[.64rem] font-black uppercase tracking-[.15em] ${sessionTheme.badge}`}>{showLocationFilter && sessions.length ? `Centre : ${selectedLocationLabel}` : emptyBadgeLabel}</span>
+      <h3 className="mt-5 text-2xl font-black">{showLocationFilter && sessions.length ? `Aucune session disponible actuellement pour ${selectedLocationLabel}` : emptyTitle}</h3>
+      <p className="mt-2 font-bold text-academy-muted">{emptyDescription}</p>
       {emptyAction && <ActionLink action={emptyAction} variant={theme} className="mt-5" />}
     </article>}
   </>;
