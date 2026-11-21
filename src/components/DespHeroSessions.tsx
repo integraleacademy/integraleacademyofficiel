@@ -3,32 +3,26 @@
 import { useState } from 'react';
 import { TrainingHeroSessionCard, trainingRegistrationUrl } from '@/components/TrainingHero';
 import type { TrainingDatesPricingSession } from '@/components/TrainingDatesPricingSection';
-import { nextSessionForLocation } from '@/lib/session-location-filter';
+import { directorPlanningLocations, nextSessionForLocation } from '@/lib/session-location-filter';
 import { despInitialAdminData } from '@/data/despInitial';
 import styles from './TrainingHero.module.css';
-
-const locations = [
-  { key: 'cote-azur', label: 'Côte d’Azur', fallback: 'Puget-sur-Argens / Côte d’Azur' },
-  { key: 'paris', label: 'Paris', fallback: 'Paris' },
-] as const;
 
 export function DespHeroSessions({ sessions, defaultPrice, rncp }: {
   sessions: TrainingDatesPricingSession[];
   defaultPrice: string;
   rncp: string;
 }) {
-  const [selectedLocation, setSelectedLocation] = useState<typeof locations[number]['key']>(() =>
-    locations.find(location => nextSessionForLocation(sessions, location.key))?.key || 'cote-azur'
+  const [location, setLocation] = useState(() =>
+    directorPlanningLocations.find(item => nextSessionForLocation(sessions, item.key)) ?? directorPlanningLocations[0]
   );
-  const location = locations.find(item => item.key === selectedLocation)!;
-  const session = nextSessionForLocation(sessions, selectedLocation);
+  const session = nextSessionForLocation(sessions, location.key);
 
   return <TrainingHeroSessionCard
     session={session} theme="orange" defaultPrice={defaultPrice}
-    defaultLocation={location.fallback} assistantKey="desp"
+    defaultLocation={location.defaultLocation} assistantKey="desp"
     registrationHref={trainingRegistrationUrl}
     overviewControls={<div className={styles.locationChoices} role="group" aria-label="Lieu de la prochaine session DESP">
-      {locations.map(item => <button key={item.key} type="button" aria-pressed={selectedLocation === item.key} onClick={() => setSelectedLocation(item.key)}>{item.label}</button>)}
+      {directorPlanningLocations.map(item => <button key={item.key} type="button" aria-pressed={location.key === item.key} onClick={() => setLocation(item)}>{item.label}</button>)}
     </div>}
     facts={[
       { label: 'Certification', value: 'Titre DESP', details: ['Dirigeant d’entreprise de sécurité privée', `Niveau 5 · ${rncp}`] },
