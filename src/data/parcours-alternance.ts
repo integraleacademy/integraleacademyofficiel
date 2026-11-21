@@ -6,16 +6,18 @@ export const qualifications = [
   {
     id: "formation-aps",
     code: "APS",
+    headline: ["Prévenir.", "Surveiller. Protéger."],
     title: "TFP Agent de prévention et de sécurité",
     duration: "175 h",
-    image: "/images/formation-scenes-manuel/aps-mission-acces.webp",
-    alt: "Un agent de sécurité contrôle les accès à un site professionnel.",
+    image: "/images/formation-scenes-manuel/aps-atelier-radio.webp",
+    alt: "Apprentissage des missions de prévention et de sécurité",
     skills: ["Contrôler les accès et effectuer des rondes.", "Prévenir les incidents.", "Gérer les situations de tension."],
     href: "/formations-securite/aps",
   },
   {
     id: "formation-a3p",
     code: "A3P",
+    headline: ["Anticiper.", "Accompagner. Sécuriser."],
     title: "TFP Agent de protection physique des personnes",
     duration: "328 h",
     image: "/images/a3p/manuel/protection.webp",
@@ -26,6 +28,7 @@ export const qualifications = [
   {
     id: "formation-ssiap",
     code: "SSIAP 1",
+    headline: ["Prévenir.", "Alerter. Intervenir."],
     title: "Diplôme d’agent des services de sécurité incendie et d’assistance à personnes",
     duration: "70 h",
     image: "/images/formation-scenes-manuel/ssiap-1-galerie-ssi.webp",
@@ -37,27 +40,32 @@ export const qualifications = [
 
 export const calendar = [
   {
-    period: "Janvier à février 2027",
+    period: "Janvier → février 2027",
+    theme: "aps",
     title: "Tu prépares l’APS",
     description: "175 h de formation, examen puis demande de carte professionnelle CNAPS.",
   },
   {
-    period: "Mars à juin 2027",
+    period: "Mars → juin 2027",
+    theme: "work",
     title: "Tu passes à l’action en entreprise",
     description: "Tes premières missions de sécurité, après obtention des autorisations nécessaires.",
   },
   {
-    period: "Juin à juillet 2027",
+    period: "Juin → juillet 2027",
+    theme: "a3p",
     title: "Tu prépares l’A3P",
     description: "328 h pour apprendre la protection physique des personnes et le travail en équipe.",
   },
   {
-    period: "Juillet à décembre 2027",
+    period: "Juillet → décembre 2027",
+    theme: "work",
     title: "Tu développes ton expérience",
     description: "Une nouvelle période en entreprise pour gagner en autonomie.",
   },
   {
     period: "Décembre 2027",
+    theme: "ssiap",
     title: "Tu complètes avec le SSIAP 1",
     description: "70 h de formation en sécurité incendie, puis l’examen.",
   },
@@ -165,7 +173,7 @@ export const commitments = [
 export const applicationSteps = [
   {
     title: "Tu candidates en ligne",
-    description: "Tu prépares tes pièces et renseignes tes coordonnées, tes disponibilités et ton projet.",
+    description: "Une question à la fois. Tes coordonnées, tes disponibilités et ton projet.",
   },
   {
     title: "On échange avec toi",
