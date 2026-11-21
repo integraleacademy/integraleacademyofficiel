@@ -3,6 +3,7 @@ import test from 'node:test';
 import { seoPages } from '../src/data/seo-pages';
 import { allFormations } from '../src/data/formations';
 import { btsFormations } from '../src/data/bts';
+import { upcomingCoursePages } from '../src/data/upcoming-trainings';
 import sitemap from '../src/app/sitemap';
 import { SITE_ORIGIN } from '../src/lib/site-urls';
 import { createPageMetadata, pageBreadcrumbs, pageStructuredData, serializeCourseJsonLd, serializeJsonLd, ORGANIZATION_ID, SITE_NAME } from '../src/lib/seo';
@@ -13,7 +14,8 @@ test('toutes les formations et les pages publiques possèdent des métadonnées 
   }
   const pages = Object.entries(seoPages).filter(([, page]) => !page.noindex);
   assert.deepEqual(pages.map(([path]) => path).filter(path => path.startsWith('/financements')), ['/financements']);
-  assert.equal(pages.length, 32);
+  assert.equal(pages.length, 32 + upcomingCoursePages.length);
+  assert.ok(pages.some(([path, page]) => path === '/parcoursalternance' && page.courseName === 'Parcours sécurité en alternance'));
   assert.equal(new Set(pages.map(([, page]) => page.title)).size, pages.length);
   assert.equal(new Set(pages.map(([, page]) => page.description)).size, pages.length);
   for (const [path, page] of pages) {
