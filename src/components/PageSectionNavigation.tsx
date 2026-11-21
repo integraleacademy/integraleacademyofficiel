@@ -7,8 +7,9 @@ import styles from './PageSectionNavigation.module.css';
 export type PageChapter = readonly [id: string, label: string];
 
 /** Sticky chapters shared by the school, contact, company and funding pages. */
-export function PageSectionNavigation({ chapters, label, ariaLabel }: {
+export function PageSectionNavigation({ chapters, shortcutIds, label, ariaLabel }: {
   chapters: readonly PageChapter[];
+  shortcutIds: readonly string[];
   label: string;
   ariaLabel: string;
 }) {
@@ -53,16 +54,12 @@ export function PageSectionNavigation({ chapters, label, ariaLabel }: {
     };
   }, [chapters]);
 
-  const activeLabel = chapters.find(([id]) => id === active)?.[1] ?? chapters[0]?.[1] ?? label;
-
   return <nav ref={nav} className={styles.navigation} aria-label={ariaLabel} data-page-section-navigation>
     <div className={styles.inner}>
       <span>{label}</span>
-      <ResponsiveSectionLinks activeLabel={activeLabel} className={styles.sectionLinks} linksClassName={styles.links}>
-        {chapters.map(([id, title], index) => <a key={id} href={`#${id}`} aria-current={active === id ? 'location' : undefined}>
-          <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>{title}
-        </a>)}
-      </ResponsiveSectionLinks>
+      <ResponsiveSectionLinks items={chapters.map(([id, title]) => ({ href: `#${id}`, label: title }))}
+        shortcutHrefs={shortcutIds.map(id => `#${id}`)} activeHref={`#${active}`}
+        className={styles.sectionLinks} />
     </div>
   </nav>;
 }

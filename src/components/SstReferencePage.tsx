@@ -147,6 +147,7 @@ export function SstReferencePage({ sessions }: { sessions: TrainingDatesPricingS
     </TrainingReferenceHero>
 
     <TrainingSectionNavigation
+      shortcutHrefs={['#role-sst', '#programme-sst', '#dates-tarifs']}
       mark="SST"
       title="Formation SST"
       items={navigationItems}

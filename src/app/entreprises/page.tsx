@@ -160,7 +160,7 @@ export default function EntreprisesPage() {
       artwork={{ src: '/images/aps/manuel/equipe.webp', alt: 'Deux agents de sécurité coordonnent le contrôle des accès à un site.' }}
       actions={[{ label: 'Comparer les trois solutions', href: '#solutions' }, { label: 'Parler de mon recrutement', href: '#contact-entreprises' }]}
     />
-    <PageSectionNavigation label="Entreprises" ariaLabel="Les solutions entreprises" chapters={[
+    <PageSectionNavigation shortcutIds={['solutions', 'alternance', 'contact-entreprises']} label="Entreprises" ariaLabel="Les solutions entreprises" chapters={[
       ['solutions', 'Les solutions'], ['alternance', 'Alternance'], ['poei', 'POEI'], ['bts-mos', 'BTS MOS'],
       ['accompagnement', 'Accompagnement'], ['brochure-entreprises', 'Brochure'], ['contact-entreprises', 'Vos contacts'],
     ]} />

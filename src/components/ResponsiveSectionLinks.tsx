@@ -1,68 +1,105 @@
 'use client';
 
-import { useEffect, useId, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useRef } from 'react';
 import styles from './ResponsiveSectionLinks.module.css';
 
-export function ResponsiveSectionLinks({ activeLabel, children, className, linksClassName }: {
-  activeLabel: string;
-  children: ReactNode;
+type SectionLink = { href: string; label: string };
+
+type SectionLinksProps = {
+  items: readonly SectionLink[];
+  shortcutHrefs: readonly string[];
+  activeHref: string;
+  onNavigate?: (href: string) => void;
   className?: string;
-  linksClassName?: string;
-}) {
-  const id = useId();
-  const root = useRef<HTMLDivElement>(null);
-  const trigger = useRef<HTMLButtonElement>(null);
-  const [compact, setCompact] = useState(false);
-  const [open, setOpen] = useState(false);
+  linkClassName?: string;
+  activeClassName?: string;
+};
+
+export function ResponsiveSectionLinks({
+  items, shortcutHrefs, activeHref, onNavigate, className, linkClassName, activeClassName,
+}: SectionLinksProps) {
+  const disclosure = useRef<HTMLDetailsElement>(null);
+  const summary = useRef<HTMLElement>(null);
+  const shortcuts = items.filter(item => shortcutHrefs.includes(item.href)).slice(0, 3);
+  const activeInPanel = !shortcuts.some(item => item.href === activeHref);
 
   useEffect(() => {
-    const media = window.matchMedia('(max-width: 800px)');
-    function update() {
-      // Before hydration, all section links are available in the wrapped list.
-      const focusedLink = root.current?.querySelector('a:focus');
-      setOpen(media.matches && Boolean(focusedLink));
-      setCompact(media.matches);
+    const menu = disclosure.current;
+    if (!menu) return;
+    const panel = menu.querySelector<HTMLElement>('[data-section-panel]');
+    const nav = menu.closest('nav');
+    if (!panel || !nav) return;
+    const header = document.querySelector<HTMLElement>('.site-header');
+    const fixedActions = document.querySelectorAll<HTMLElement>('[data-fixed-actions]');
+    function positionPanel() {
+      if (!menu?.open || !panel || !nav) return;
+      const bounds = nav.getBoundingClientRect();
+      const scale = bounds.width / nav.offsetWidth || 1;
+      const viewportBottom = Array.from(fixedActions).reduce((bottom, actions) => {
+        const rect = actions.getBoundingClientRect();
+        return rect.height && getComputedStyle(actions).position === 'fixed' ? Math.min(bottom, rect.top) : bottom;
+      }, window.innerHeight);
+      const above = bounds.top - Math.max(0, header?.getBoundingClientRect().bottom ?? 0) - 10;
+      const below = viewportBottom - bounds.bottom - 10;
+      const height = Math.min(panel.scrollHeight * scale, window.innerHeight * .54);
+      const openAbove = below < height && above > below;
+      menu.toggleAttribute('data-above', openAbove);
+      menu.style.setProperty('--panel-room', `${Math.max(0, openAbove ? above : below) / scale}px`);
     }
-    update();
-    media.addEventListener('change', update);
-    return () => media.removeEventListener('change', update);
-  }, []);
-
-  useEffect(() => {
-    if (!open) return;
-    const closeOutside = (event: PointerEvent) => {
-      if (event.target instanceof Node && !root.current?.contains(event.target)) setOpen(false);
+    const close = () => { menu.open = false; };
+    const onPointerDown = (event: PointerEvent) => {
+      if (menu.open && event.target instanceof Node && !menu.contains(event.target)) close();
     };
-    const close = () => setOpen(false);
-    document.addEventListener('pointerdown', closeOutside);
+    const onEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && menu.open) {
+        event.preventDefault();
+        close();
+        summary.current?.focus({ preventScroll: true });
+      }
+    };
+    menu.addEventListener('toggle', positionPanel);
+    window.addEventListener('scroll', positionPanel, { passive: true });
+    window.addEventListener('resize', positionPanel);
+    document.addEventListener('pointerdown', onPointerDown);
+    document.addEventListener('keydown', onEscape);
     window.addEventListener('hashchange', close);
     return () => {
-      document.removeEventListener('pointerdown', closeOutside);
+      menu.removeEventListener('toggle', positionPanel);
+      window.removeEventListener('scroll', positionPanel);
+      window.removeEventListener('resize', positionPanel);
+      document.removeEventListener('pointerdown', onPointerDown);
+      document.removeEventListener('keydown', onEscape);
       window.removeEventListener('hashchange', close);
     };
-  }, [open]);
+  }, []);
 
-  return <div ref={root} className={`${styles.root} ${className ?? ''}`} data-compact={compact || undefined}
-    onBlur={event => { if (!event.currentTarget.contains(event.relatedTarget)) setOpen(false); }}
-    onKeyDown={event => {
-      if (open && event.key === 'Escape') {
-        event.preventDefault();
-        setOpen(false);
-        trigger.current?.focus({ preventScroll: true });
-      }
-    }}>
-    {compact && <button ref={trigger} type="button" data-section-toggle aria-expanded={open} aria-controls={id}
-      className={styles.toggle} onClick={() => setOpen(!open)}>
-      <span>Sommaire</span><strong>{activeLabel}</strong>
-      <svg aria-hidden="true" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="m3 6 5 5 5-5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
-    </button>}
-    <div id={id} className={`${styles.links} ${linksClassName ?? ''}`} hidden={compact && !open}
+  function link(item: SectionLink, panel = false) {
+    const active = item.href === activeHref;
+    return <a key={item.href} href={item.href} data-section={item.href.slice(1)}
+      data-shortcut-copy={panel && shortcuts.includes(item) || undefined}
+      aria-current={active ? 'location' : undefined}
+      className={panel ? styles.panelLink : [linkClassName, active && activeClassName].filter(Boolean).join(' ')}
       onClick={event => {
-        if (compact && event.target instanceof Element && event.target.closest('a[href]') && !event.ctrlKey && !event.metaKey && !event.shiftKey && !event.altKey) {
-          setOpen(false);
-        }
+        if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        if (disclosure.current) disclosure.current.open = false;
+        onNavigate?.(item.href);
+      }}>{item.label}</a>;
+  }
+
+  return <div data-section-links className={[styles.root, className].filter(Boolean).join(' ')}>
+    <div data-section-shortcuts className={styles.shortcuts}>{shortcuts.map(item => link(item))}</div>
+    <details ref={disclosure} className={styles.disclosure}
+      onBlur={event => {
+        if (event.relatedTarget && !event.currentTarget.contains(event.relatedTarget)) event.currentTarget.open = false;
       }}>
-      {children}
-    </div>
+      <summary ref={summary} data-section-toggle data-active-section={activeInPanel || undefined} className={styles.toggle}>
+        <span className={styles.desktopLabel}>Autres rubriques</span>
+        <span className={styles.compactLabel}>Sommaire</span>
+        <svg aria-hidden="true" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="m4 6 4 4 4-4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+      </summary>
+      <div className={styles.panel} data-section-panel>
+        {items.map(item => link(item, true))}
+      </div>
+    </details>
   </div>;
 }

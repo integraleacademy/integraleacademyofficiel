@@ -69,7 +69,7 @@ export default function FinancementsPage() {
       </div>
     </section>
 
-    <PageSectionNavigation chapters={financingChapters} label="Financer votre projet" ariaLabel="Les rubriques de la page Financements" />
+    <PageSectionNavigation shortcutIds={['solutions', 'simulateur', 'contact-financement']} chapters={financingChapters} label="Financer votre projet" ariaLabel="Les rubriques de la page Financements" />
 
     <section id="solutions" className={styles.solutionsSection} aria-labelledby="solutions-title">
       <div className={styles.container}>

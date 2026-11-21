@@ -77,7 +77,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<Rec
 
       </section>
 
-      <PageSectionNavigation chapters={contactChapters} label="Faisons le premier pas" ariaLabel="Les rubriques de la page Contact" />
+      <PageSectionNavigation shortcutIds={['coordonnees', 'demande', 'venir']} chapters={contactChapters} label="Faisons le premier pas" ariaLabel="Les rubriques de la page Contact" />
 
       <section id="coordonnees" className={styles.channels} aria-label="Nos coordonnées">
         <div className={`${school.container} ${styles.channelGrid}`}>

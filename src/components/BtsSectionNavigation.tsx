@@ -27,6 +27,7 @@ export function BtsSectionNavigation({
 
   return (
     <TrainingSectionNavigation
+      shortcutHrefs={['#alternance', '#programme', '#admission']}
       mark={code}
       title={`BTS ${code}`}
       items={items}

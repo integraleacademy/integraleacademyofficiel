@@ -105,7 +105,7 @@ export function BtsMosReferencePage() {
       </aside>
     </TrainingReferenceHero>
 
-    <div className={styles.navigation}><TrainingSectionNavigation mark="MOS" title="BTS MOS" items={navigation} registrationHref="#admission" registrationLabel="Je m’inscris" theme="bts" ariaLabel="Sommaire du BTS MOS" /></div>
+    <div className={styles.navigation}><TrainingSectionNavigation shortcutHrefs={['#alternance', '#programme', '#admission']} mark="MOS" title="BTS MOS" items={navigation} registrationHref="#admission" registrationLabel="Je m’inscris" theme="bts" ariaLabel="Sommaire du BTS MOS" /></div>
 
 
     <CourseJourney course="bts-mos">
