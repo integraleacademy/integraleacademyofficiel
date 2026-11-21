@@ -1,8 +1,8 @@
 export type SessionLocationFilterKey = 'all' | 'paris' | 'cote-azur';
 
 export const directorPlanningLocations = [
-  { key: 'paris', label: 'Paris', detail: 'Centre de Paris' },
-  { key: 'cote-azur', label: 'Côte d’Azur', detail: 'Puget-sur-Argens' },
+  { key: 'paris', label: 'Paris', detail: 'Centre de Paris', defaultLocation: 'Paris' },
+  { key: 'cote-azur', label: 'Côte d’Azur', detail: 'Puget-sur-Argens', defaultLocation: 'Puget-sur-Argens / Côte d’Azur' },
 ] as const;
 
 export type DirectorLocationFilterKey = typeof directorPlanningLocations[number]['key'];
