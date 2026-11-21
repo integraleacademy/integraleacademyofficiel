@@ -94,3 +94,8 @@
   .calendar li { gap: .2rem; }
   .paris { gap: 0; }
 }
+
+@media (max-width: 380px) {
+  .caseSheet dl > div { grid-template-columns: minmax(0,1fr); gap: .12rem; }
+  .caseSheet dd { min-width: 0; overflow-wrap: break-word; }
+}
