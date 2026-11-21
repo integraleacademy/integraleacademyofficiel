@@ -59,6 +59,7 @@ type TrainingDatesPricingSectionProps = {
   priceAction: Action;
   emptyAction?: Action;
   children?: ReactNode;
+  sessionControls?: ReactNode;
   compact?: boolean;
 };
 
@@ -216,6 +217,7 @@ export function TrainingDatesPricingSection({
   priceAction,
   emptyAction,
   children,
+  sessionControls,
   compact = false,
 }: TrainingDatesPricingSectionProps) {
   const sessionTheme = themeStyles[theme];
@@ -235,6 +237,7 @@ export function TrainingDatesPricingSection({
         <div className="max-w-3xl text-base font-medium leading-8 text-academy-muted">{intro}</div>
       </div>
 
+      {sessionControls}
       <TrainingSessionCards
         compact={compact}
         sessions={serializedSessions}

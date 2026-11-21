@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
+import { TrainingProgramExplorer } from './TrainingProgramExplorer';
 import { ManualArtwork } from './ManualArtwork';
 import { ssiapArtwork } from '@/data/manualIllustrations';
 import { ssiapEditorialArtwork } from '@/data/siteIllustrations';
@@ -55,21 +56,17 @@ export function SsiapMissionShowcase({ missions }: { missions: string[][] }) {
 }
 
 export function SsiapProgramExplorer({ parts }: { parts: string[][] }) {
-  const tabs = useTabs(parts.length);
   const scenes = [ssiapEditorialArtwork.fire, ssiapEditorialArtwork.building, ssiapEditorialArtwork.systems, ssiapEditorialArtwork.reporting, ssiapEditorialArtwork.exercise];
-  return <div className={styles.programExplorer}>
-    <div className={styles.programOverview}><div><strong>67<span>h</span></strong><p>5 parties complémentaires<br /><span>Hors examen et déplacements</span></p></div><p>Des fondamentaux<br /><strong>aux situations de terrain.</strong></p></div>
-    <div className={styles.hourRail} aria-label="Répartition des 67 heures">{parts.map(([number, title, hours], index) => <button type="button" key={number} style={{ flex: parseInt(hours, 10) }} data-active={tabs.active === index} onClick={() => { tabs.setActive(index); tabs.buttons.current[index]?.focus({ preventScroll: true }); }} aria-label={`Explorer ${title}, ${hours}`}><span>{hours}</span></button>)}</div>
-    <div className={styles.programBody}>
-      <div className={styles.programTabs} role="tablist" aria-label="Les cinq parties du programme SSIAP 1" aria-orientation="vertical">
-        {parts.map(([number, title, hours], index) => <button key={number} type="button" ref={node => { tabs.buttons.current[index] = node; }} role="tab" id={`program-tab-${index}`} aria-controls={`program-panel-${index}`} aria-selected={tabs.active === index} tabIndex={tabs.active === index ? 0 : -1} onClick={() => tabs.setActive(index)} onKeyDown={event => tabs.onKeyDown(event, index)}><span>{number}</span><strong>{title}</strong><small>{hours}</small><span aria-hidden="true">↗</span></button>)}
-      </div>
-      <div className={styles.programPanels}>{parts.map(([number, title, hours, text], index) => <article key={number} id={`program-panel-${index}`} role="tabpanel" aria-labelledby={`program-tab-${index}`} hidden={tabs.active !== index} tabIndex={0} className={styles.programPanel}>
-        <div className={styles.programImage}><ManualArtwork illustration={scenes[index]} natural sizes="(max-width: 800px) 90vw, 660px" /><span className={styles.hoursBadge}>{hours}<small>Partie {number}</small></span></div>
-        <div className={styles.programCopy}><p className={styles.eyebrow}>Ce que vous allez apprendre</p><h3>{title}</h3><p>{text}</p><div className={styles.panelNavigation}><span>Partie {number} / 05</span><button type="button" onClick={() => { const next = (index + 1) % parts.length; tabs.setActive(next); tabs.buttons.current[next]?.focus({ preventScroll: true }); }}>{index === parts.length - 1 ? 'Revenir au début' : 'Partie suivante'} <span aria-hidden="true">→</span></button></div></div>
-      </article>)}</div>
-    </div>
-  </div>;
+  return <TrainingProgramExplorer
+    idPrefix="program" menuTitle="Les cinq parties" tabListLabel="Les cinq parties du programme SSIAP 1"
+    nextLabel="Partie suivante" restartLabel="Revenir au début" hourDistribution
+    hours="67" overview="5 parties complémentaires" subtitle="Hors examen et déplacements"
+    facts={[['Progression', 'Des fondamentaux aux situations de terrain.'], ['Format', '100 % présentiel']]}
+    illustration={{ src: '/images/ssiap-1/manuel/couverture-ssiap-1.webp', alt: 'Couverture du manuel de formation SSIAP 1 d’Intégrale Academy' }}
+    units={parts.map(([number, title, duration, description], index) => ({
+      number, title, duration, description, delivery: `Partie ${number} / 05`, illustration: scenes[index],
+    }))}
+  />;
 }
 
 const campusPhotos = [

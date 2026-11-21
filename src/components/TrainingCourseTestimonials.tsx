@@ -2,7 +2,7 @@ import { listPublicGoogleReviews } from '@/lib/google-reviews-data';
 import { GOOGLE_REVIEWS_URL } from '@/lib/google-reviews';
 import styles from './SsiapReferencePage.module.css';
 import cards from './GoogleReviewsSection.module.css';
-import { GoogleReviewsSection } from './GoogleReviewsSection';
+import { GoogleReviewsSection, type ReviewSectionCopy } from './GoogleReviewsSection';
 
 function ReviewQuote({ text }: { text: string }) {
   if (text.length <= 240) return <blockquote>« {text} »</blockquote>;
@@ -12,9 +12,9 @@ function ReviewQuote({ text }: { text: string }) {
   </details>;
 }
 
-export async function TrainingCourseTestimonials({ category, layout = 'course', audience = 'stagiaires' }: { category: string; layout?: 'course' | 'home' | 'editorial'; audience?: 'stagiaires' | 'étudiants' }) {
+export async function TrainingCourseTestimonials({ category, layout = 'course', audience = 'stagiaires', copy }: { category: string; copy?: ReviewSectionCopy; layout?: 'course' | 'home' | 'editorial'; audience?: 'stagiaires' | 'étudiants' }) {
   const courseReviews = (await listPublicGoogleReviews()).filter(review => review.categories.includes(category) && review.excerpt.trim());
-  if (layout === 'home') return <GoogleReviewsSection reviews={courseReviews} audience={audience} />;
+  if (layout === 'home') return <GoogleReviewsSection reviews={courseReviews} audience={audience} copy={copy} />;
   const reviews = courseReviews.slice(0, 3);
   if (layout === 'editorial') return <section aria-labelledby="course-reviews-title" className="relative scroll-mt-24 bg-academy-bg px-4 py-20">
     <div className="page-container max-w-6xl">

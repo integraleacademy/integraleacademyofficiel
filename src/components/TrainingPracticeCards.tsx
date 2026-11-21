@@ -1,7 +1,15 @@
+import Image from 'next/image';
+import type { ManualIllustration } from '@/data/manualIllustrations';
 import type { ReactNode } from 'react';
 import styles from './ApsReferencePage.module.css';
 
 type PracticeCard = { icon: ReactNode; title: string; text: string; visuals: { kind: string; illustration: ReactNode }[] };
+
+export function TrainingPracticeArtwork({ illustration, focus = '50% 45%' }: { illustration: ManualIllustration; focus?: string }) {
+  return <div className={styles.landscapeArtwork}>
+    <Image {...illustration} fill style={{ objectPosition: focus }} sizes="(max-width: 767px) 90vw, 540px" />
+  </div>;
+}
 
 export function TrainingPracticeCards({ items }: { items: PracticeCard[] }) {
   return <div className="grid gap-5 md:grid-cols-2">

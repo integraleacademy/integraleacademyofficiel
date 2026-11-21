@@ -1,5 +1,6 @@
 import type { CSSProperties } from 'react';
 import styles from './TrainingMotionGallery.module.css';
+import { TrainingPracticeArtwork, TrainingPracticeCards } from './TrainingPracticeCards';
 import { ManualArtwork } from '@/components/ManualArtwork';
 import type { ManualIllustration, ManualIllustrationMap } from '@/data/manualIllustrations';
 
@@ -398,8 +399,21 @@ function Scene({ kind }: { kind: SceneKind }) {
   </svg>;
 }
 
-export function TrainingMotionGallery({ variant, className = '', illustrations }: { variant: TrainingMotionGalleryVariant; className?: string; illustrations?: ManualIllustrationMap }) {
+export function TrainingMotionGallery({ variant, className = '', illustrations, practiceCards }: { variant: TrainingMotionGalleryVariant; className?: string; illustrations?: ManualIllustrationMap; practiceCards?: Partial<Record<SceneKind, { icon: string; text: string; focus?: string }>> }) {
   const gallery = galleries[variant];
+
+  if (practiceCards) return <div className={className}>
+    <header className="mb-6"><p className="text-xs font-bold uppercase tracking-widest text-white/70">{gallery.eyebrow}</p>
+      <h3 className="mt-2 text-2xl font-bold" id={`${variant}-motion-title`}>{gallery.title}</h3>
+      <p className="mt-2 text-white/75">{gallery.intro}</p></header>
+    <TrainingPracticeCards items={gallery.stories.map(([kind, title, description]) => {
+      const card = practiceCards[kind];
+      const illustration = illustrations?.[kind];
+      return { title, icon: card?.icon, text: card?.text ?? description, visuals: [{ kind,
+        illustration: illustration ? <TrainingPracticeArtwork illustration={illustration} focus={card?.focus} /> : <Scene kind={kind} />,
+      }] };
+    })} />
+  </div>;
 
   return <section className={`${styles.gallery} ${styles[gallery.theme]} ${className}`} aria-labelledby={`${variant}-motion-title`}>
     <div className={styles.intro}>
