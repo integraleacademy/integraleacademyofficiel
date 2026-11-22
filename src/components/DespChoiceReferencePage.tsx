@@ -1,6 +1,5 @@
 import { CourseFilm } from '@/components/CourseFilm';
 import { CourseTeamBanner } from '@/components/CourseTeamBanner';
-import { TeamNote } from '@/components/TeamNote';
 import { CourseBrochureCard } from '@/components/CourseBrochureCard';
 import { PARIS_ADDRESS } from '@/data/locations';
 import { OrientationAssistant } from '@/components/OrientationAssistant';
@@ -181,7 +180,7 @@ export function DespChoiceReferencePage({ sessions }: { sessions: TrainingDatesP
               <p className="mt-5 text-base leading-7 text-academy-muted sm:text-lg">Formation initiale ou VAE : deux chemins différents pour atteindre le même objectif.</p>
             </div>
 
-            <div className="mt-10 grid items-stretch gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(12rem,.55fr)_minmax(0,1fr)]">
+            <div className="mt-10 grid items-stretch gap-3 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:gap-4">
               <DespPathCard
                 tone="light"
                 label="FORMATION INITIALE"
@@ -199,10 +198,10 @@ export function DespChoiceReferencePage({ sessions }: { sessions: TrainingDatesP
                 cta="Voir les infos DESP initial"
                 href="/dirigeant"
               />
-              <div className="mx-auto w-full min-w-0 max-w-2xl self-center">
-                <TeamNote id="mot-de-cassandre" person="cassandre" action={{ href: 'https://calendly.com/integraleacademy/dirigeant', label: 'En parler avec Cassandre' }}>
-                  Vous hésitez entre la formation initiale et la VAE ? <strong>Partons de votre expérience</strong> pour voir quel parcours vous correspond.
-                </TeamNote>
+              <div className="flex items-center justify-center gap-3 text-orange-900 lg:flex-col" aria-label="ou">
+                <span aria-hidden="true" className="h-px w-16 bg-orange-300 lg:h-16 lg:w-px" />
+                <strong className="grid size-16 place-items-center rounded-full border border-orange-300 bg-white text-xl font-black tracking-tight shadow-sm">OU</strong>
+                <span aria-hidden="true" className="h-px w-16 bg-orange-300 lg:h-16 lg:w-px" />
               </div>
               <DespPathCard
                 tone="dark"

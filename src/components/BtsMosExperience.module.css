@@ -622,6 +622,11 @@
 @media (max-width: 800px) {
   .campusResourceSummary, .examHighlights { grid-template-columns: 1fr; gap: 22px; }
 }
+.enrollmentSupport { display: flex; align-items: center; justify-content: space-between; gap: 32px; margin: 0 0 32px; padding: 26px 0; border-block: 1px solid #ffffff26; }
+.enrollmentSupport h3 { margin: 8px 0 10px; color: #b5d8ff; font-size: clamp(24px, 2.8vw, 36px); }
+.enrollmentSupport p:last-child { color: var(--mos-muted); font-size: 14px; }
+.enrollmentSupport .button { flex-shrink: 0; background: #f3c448; color: #17212b; }
+.enrollmentSupport .button:hover { background: #ffda70; }
 .admissionSteps { gap: 16px; }
 .admissionSteps li { border: 1px solid #ffffff26; border-radius: 24px; padding: 24px; background: #ffffff08; margin: 0; }
 .admissionSteps li > span { position: static; display: grid; place-items: center; width: 40px; height: 40px; margin-bottom: 20px; border: 1px solid #93c5fd4d; border-radius: 50%; background: #2563eb; color: #fff; }
@@ -638,6 +643,7 @@
   .summaryFooter .summaryReview { display: inline-flex; }
   .summaryFooter { flex-wrap: wrap; }
   .summaryFact:nth-child(3) { border: 0; padding-left: 0; }
+  .enrollmentSupport { align-items: flex-start; flex-direction: column; gap: 18px; }
 }
 @media (max-width: 600px) {
   .page .studySummary { padding: 22px 18px; gap: 20px 14px; }
@@ -648,6 +654,7 @@
   .summaryFact > strong { font-size: 15px; }
   .summaryFooter { align-items: flex-start; flex-direction: column; gap: 6px; }
   .summaryFooter p { font-size: 11px; }
+  .enrollmentSupport .button { width: 100%; }
   .admissionSteps { gap: 14px; }
   .admissionSteps li { padding: 22px; }
 }
