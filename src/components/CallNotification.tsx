@@ -1,8 +1,8 @@
 'use client';
 
-import Image from 'next/image';
 import { useState } from 'react';
 import { ContactMotion } from './ContactMotion';
+import { TeamPortrait } from './TeamPortrait';
 import styles from './AcademyNotification.module.css';
 
 function PhoneIcon() {
@@ -19,7 +19,7 @@ export function CallNotification({ href }: { href: string }) {
       <p>Proposition d’appel masquée.</p>
       <button type="button" onClick={() => setDismissed(false)}>Afficher la proposition de Cassandre</button>
     </div> : <div id="appel-cassandre" className={styles.call} data-contact-reveal role="group" aria-label="Rendez-vous téléphonique avec Cassandre">
-      <Image className={styles.callerAvatar} src="/images/team/cassandre-telephone.webp" width={256} height={256} sizes="(max-width: 600px) 80px, 140px" alt="" />
+      <TeamPortrait className={styles.callerAvatar} person="cassandre" size={256} sizes="(max-width: 600px) 64px, 140px" />
       <div className={styles.caller}>
         <p className={styles.callerName}>Cassandre</p>
         <p className={styles.callText}>vous propose un appel pour parler de votre projet…</p>
