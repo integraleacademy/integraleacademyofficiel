@@ -35,15 +35,12 @@ export const metadata = createPageMetadata('/dirigeant');
 const contactHref = '/contact?formation=desp-initial';
 const navigationItems = [
   { label: 'Métier', href: '#metier' },
-  { label: 'Admission', href: '#admission' },
   { label: 'Immersion', href: '#pratique' },
   { label: 'Programme', href: '#programme' },
-  { label: 'Format', href: '#format' },
   { label: 'Examen', href: '#examen' },
   { label: 'Dates & tarifs', href: '#dates-tarifs' },
   { label: 'Inscriptions', href: '#inscription-financement' },
   { label: 'Débouchés', href: '#debouches' },
-  { label: 'Repères', href: '#reperes-rncp' },
   { label: 'FAQ', href: '#faq-desp-initial' },
 ] as const;
 

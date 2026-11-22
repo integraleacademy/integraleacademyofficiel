@@ -14,7 +14,6 @@ type TrainingSectionNavigationProps = {
   mark: string;
   title: string;
   items: readonly TrainingSectionNavigationItem[];
-  shortcutHrefs?: readonly string[];
   registrationHref: string;
   registrationLabel?: string;
   eyebrowLabel?: string;
@@ -27,7 +26,6 @@ export function TrainingSectionNavigation({
   mark,
   title,
   items,
-  shortcutHrefs,
   registrationHref,
   registrationLabel = 'Je m’inscris',
   eyebrowLabel = 'Votre formation',
@@ -173,7 +171,7 @@ export function TrainingSectionNavigation({
           </span>
         </a>
 
-        <ResponsiveSectionLinks items={items} shortcutHrefs={shortcutHrefs ?? [firstHref, '#programme', '#dates-tarifs']}
+        <ResponsiveSectionLinks items={items} allLinks
           activeHref={activeHref} onNavigate={setActiveHref} className={styles.courseNavChapters}
           linkClassName={styles.courseNavLink} activeClassName={styles.courseNavLinkActive} />
 

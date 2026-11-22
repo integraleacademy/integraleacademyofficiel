@@ -88,3 +88,17 @@
   .panel { inset-inline-start: 0; width: min(100%, 27rem); }
   .panel > [data-shortcut-copy] { display: flex; }
 }
+
+/* Course navigation uses the complete APS chapter row. */
+.root[data-all-links] { gap: 0; }
+.root[data-all-links] > .shortcuts { gap: .3rem; }
+.root[data-all-links] > .disclosure { display: none; }
+@media (max-width: 1023px) {
+  .root[data-all-links] { position: static; justify-content: flex-start; }
+  .root[data-all-links] > .shortcuts,
+  .root[data-all-links] .desktopLabel { display: none; }
+  .root[data-all-links] > .disclosure,
+  .root[data-all-links] .compactLabel { display: inline; }
+  .root[data-all-links] .panel { inset-inline-start: 0; width: min(100%, 27rem); }
+  .root[data-all-links] .panel > [data-shortcut-copy] { display: flex; }
+}

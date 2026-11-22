@@ -106,7 +106,7 @@ export function CertificationProjectPage({ project }: { project: CertificationPr
         </aside>
       </TrainingReferenceHero>
 
-      <TrainingSectionNavigation shortcutHrefs={['#metier', '#competences', '#evaluation']} mark={project.acronym} title={project.acronym} eyebrowLabel="Projet de certification" theme={theme} items={chapters} registrationHref="#contact" registrationLabel="Nous contacter" ariaLabel={`Sommaire du projet ${project.acronym}`} />
+      <TrainingSectionNavigation mark={project.acronym} title={project.acronym} eyebrowLabel="Projet de certification" theme={theme} items={chapters} registrationHref="#contact" registrationLabel="Nous contacter" ariaLabel={`Sommaire du projet ${project.acronym}`} />
 
       <Section id="metier" eyebrow="Le métier, concrètement" title={<>Des idées aux <em>réalisations</em></>} intro={project.objective}>
         <TrainingReferenceMissions label="Votre métier" items={[{ title: copy.missionTitle, description: copy.missionDescription, illustration: { src: `/images/certifications/${project.slug}-mission.webp?v=manuel-aps-2`, alt: copy.missionAlt }, body: <p className={styles.role}>{project.role}</p> }]} />
