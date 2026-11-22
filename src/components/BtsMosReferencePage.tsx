@@ -9,7 +9,6 @@ import { BtsStudentBenefits } from '@/components/BtsExpandedContent';
 import { BtsMosMission, BtsMosCalendar } from '@/components/BtsMosExperience';
 import { CourseJourney } from '@/components/CourseJourney';
 import { TeamPortrait } from '@/components/TeamPortrait';
-import { TeamNote } from '@/components/TeamNote';
 import { TrainingSectionNavigation } from '@/components/TrainingSectionNavigation';
 import { TrainingReferencePage, TrainingReferenceHero } from '@/components/TrainingReferenceLayout';
 import { FaqDirectoryLink } from '@/components/FaqDirectoryLink';
@@ -224,9 +223,7 @@ export function BtsMosReferencePage() {
     <section id="admission" className={`${styles.section} ${styles.admission}`}>
       <div className={styles.container}>
         <Heading label="06 / Candidature et admission" title={<>Votre inscription en BTS MOS.<br /><span>Deux possibilités</span></>} text="Remplissez votre dossier de pré-inscription en ligne ou candidatez directement sur Parcoursup. L’équipe vous accompagne ensuite jusqu’à l’inscription et au contrat d’apprentissage." />
-        <TeamNote id="mot-daurelie" person="aurelie" action={{ href: '#contact-mos', label: 'Parler à Aurélie, responsable des BTS' }}>
-          Vous avez choisi le BTS MOS et vous cherchez encore une entreprise ? <strong>Parlons de vos premières démarches.</strong>
-        </TeamNote>
+        <div className={styles.enrollmentSupport}><div><p className={styles.eyebrow}>Inscription & financement</p><h3>Nous vous accompagnons de A à Z</h3><p>Du choix de votre parcours à votre rentrée, Aurélie, Responsable des BTS, vous guide dans vos démarches.</p></div><a href="#contact-mos" className={styles.button}>Préparer mon projet avec Aurélie, Responsable des BTS <Arrow /></a></div>
         <div className={styles.applicationChoices}>
           <article className={styles.applicationCard}><p className={styles.eyebrow}>Option 01 · Auprès de l’école</p><h3>Votre dossier<br />de pré-inscription en ligne</h3><p>Présentez votre parcours et votre projet directement à Intégrale Academy. Vous pouvez candidater avant d’avoir trouvé votre entreprise.</p><Apply href={applicationUrl}>S’inscrire en ligne</Apply><p className={styles.small}>L’équipe admissions vous accompagne pour la suite.</p></article>
           <article id="candidature-parcoursup" className={`${styles.applicationCard} ${styles.parcoursupCard}`}><p className={styles.eyebrow}>Option 02 · Sur Parcoursup</p><ParcoursupLogo /><h3>Choisissez votre format<br />et formulez votre vœu</h3><div className={styles.parcoursupLinks}><a href={parcoursup.campus} target="_blank" rel="noopener noreferrer"><span><strong>BTS MOS en présentiel</strong><small>Intégrale Academy · Puget-sur-Argens</small></span><Arrow /></a><a href={parcoursup.remote} target="_blank" rel="noopener noreferrer"><span><strong>BTS MOS 100 % à distance</strong><small>Intégrale Academy Paris · Cours en live sur ZOOM</small></span><Arrow /></a></div><p className={styles.small}>Selon le calendrier Parcoursup. Pour une candidature en cours d’année, utilisez le dossier en ligne ou contactez Aurélie, Responsable des BTS.</p></article>

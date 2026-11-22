@@ -436,12 +436,7 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
     <TrainingReferenceContact
       schoolStyle
       description="Cassandre, Responsable commerciale, vérifie vos prérequis, vous présente les prochaines dates et étudie les solutions de financement adaptées à votre situation."
-      href="https://calendly.com/integraleacademy/apr"
-      appointmentLabel="Choisir mon rendez-vous téléphonique"
-      callBanner={{
-        illustration: '/images/team/cassandre-telephone.webp',
-        message: 'Vous envisagez la protection rapprochée ? On peut regarder ensemble si la formation correspond à votre projet.',
-      }}
+      href={a3pContact('rdv-telephonique')}
     />
     <TrainingReferenceMobileBar href={a3pContact('mobile-dossier-a3p')} label="Recevoir le dossier" />
   </TrainingReferencePage>;

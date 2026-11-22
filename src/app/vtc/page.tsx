@@ -20,7 +20,6 @@ import {
 } from '@/components/TrainingReferenceLayout';
 import { TrainingSectionNavigation } from '@/components/TrainingSectionNavigation';
 import { VtcAutonomousEnrollmentBanner } from '@/components/VtcAutonomousEnrollmentBanner';
-import { TeamNote } from '@/components/TeamNote';
 import { courseJourneys } from '@/data/courseJourneys';
 import { vtcArtwork } from '@/data/manualIllustrations';
 import { formatVtcDeadline, formatVtcExamDate, vtcCourse, vtcFormation } from '@/data/vtc';
@@ -216,9 +215,6 @@ export default async function VtcPage() {
         compact theme="violet" sessions={sessions} registrationHref={() => projectHref} defaultPrice={vtcCourse.priceLabel}
         priceDescription="Prix tout inclus · Finançable par le CPF selon éligibilité" priceAction={{ href: fundingHref, label: 'Étudier mon financement' }}
         calendar={<VtcExamCalendar dates={dates} />}>
-        <TeamNote id="mot-de-cassandre" person="cassandre">
-          Le jour de l’épreuve pratique, on vous prête la voiture. <strong>Les frais d’examen sont aussi inclus.</strong>
-        </TeamNote>
         <p className={styles.calendarNote}>{vtcCourse.examNotice} <a href={cmaCalendar}>Calendrier officiel CMA PACA 2027 (PDF)</a></p>
         <PracticeBooking />
       </TrainingDatesPricingSection>}
