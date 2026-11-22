@@ -29,7 +29,6 @@ const contactHref = (subject = 'inscription') => `/contact?formation=sst&objet=$
 
 const navigationItems = [
   { label: 'Présentation', href: '#role-sst' },
-  { label: 'Admission', href: '#admission' },
   { label: 'Pratique', href: '#pratique' },
   { label: 'Programme', href: '#programme-sst' },
   { label: 'Évaluation', href: '#evaluation-sst' },
@@ -147,7 +146,6 @@ export function SstReferencePage({ sessions }: { sessions: TrainingDatesPricingS
     </TrainingReferenceHero>
 
     <TrainingSectionNavigation
-      shortcutHrefs={['#role-sst', '#programme-sst', '#dates-tarifs']}
       mark="SST"
       title="Formation SST"
       items={navigationItems}

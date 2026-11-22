@@ -103,7 +103,6 @@ const salaryFactors = ['Niveau de risque', 'Durée', 'Horaires', 'Mobilité', 'C
 const registrationFormUrl = informationRequestHref({ formation: a3pConfig.slug });
 const a3pNavigationItems = [
   { label: 'Métier', href: '#metier' },
-  { label: 'Admission', href: '#admission' },
   { label: 'Immersion', href: '#pedagogie' },
   { label: 'Programme', href: '#programme' },
   { label: 'Examen', href: '#examen' },

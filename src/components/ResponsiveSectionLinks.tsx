@@ -7,7 +7,8 @@ type SectionLink = { href: string; label: string };
 
 type SectionLinksProps = {
   items: readonly SectionLink[];
-  shortcutHrefs: readonly string[];
+  shortcutHrefs?: readonly string[];
+  allLinks?: boolean;
   activeHref: string;
   onNavigate?: (href: string) => void;
   className?: string;
@@ -16,11 +17,11 @@ type SectionLinksProps = {
 };
 
 export function ResponsiveSectionLinks({
-  items, shortcutHrefs, activeHref, onNavigate, className, linkClassName, activeClassName,
+  items, shortcutHrefs = [], allLinks = false, activeHref, onNavigate, className, linkClassName, activeClassName,
 }: SectionLinksProps) {
   const disclosure = useRef<HTMLDetailsElement>(null);
   const summary = useRef<HTMLElement>(null);
-  const shortcuts = items.filter(item => shortcutHrefs.includes(item.href)).slice(0, 3);
+  const shortcuts = allLinks ? items : items.filter(item => shortcutHrefs.includes(item.href)).slice(0, 3);
   const activeInPanel = !shortcuts.some(item => item.href === activeHref);
 
   useEffect(() => {
@@ -86,7 +87,7 @@ export function ResponsiveSectionLinks({
       }}>{item.label}</a>;
   }
 
-  return <div data-section-links className={[styles.root, className].filter(Boolean).join(' ')}>
+  return <div data-section-links data-all-links={allLinks || undefined} className={[styles.root, className].filter(Boolean).join(' ')}>
     <div data-section-shortcuts className={styles.shortcuts}>{shortcuts.map(item => link(item))}</div>
     <details ref={disclosure} className={styles.disclosure}
       onBlur={event => {

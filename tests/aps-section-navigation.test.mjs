@@ -88,10 +88,10 @@ test('la navigation reste lisible et utilisable sur ordinateur comme sur mobile'
   assert.match(page, /<main className=\{`\$\{styles\.page\} relative pb-24 lg:pb-0`\}>/);
   assert.doesNotMatch(page, /styles\.page\} relative overflow-hidden/);
   assert.match(styles, /\.page\s*\{[^}]*overflow-x:\s*clip;/s);
-  assert.match(sharedNavigationStyles, /\.courseNav\s*\{[^}]*position:\s*sticky;[^}]*top:\s*var\(--site-header-height, 55px\);[^}]*backdrop-filter:\s*blur\(18px\);/s);
+  assert.match(sharedNavigationStyles, /\.courseNav\s*\{[^}]*position:\s*sticky;[^}]*top:\s*55px;[^}]*backdrop-filter:\s*blur\(18px\);/s);
   assert.match(sharedNavigationStyles, /\.courseNavShell\s*\{[^}]*grid-template-columns:\s*fit-content\([^)]+\) minmax\(0, 1fr\) auto;/);
   assert.match(sharedNavigation, /<ResponsiveSectionLinks /);
-  assert.match(sharedNavigationStyles, /\.courseNavLink\s*\{[^}]*font-size:\s*\.8125rem;/s);
+  assert.match(sharedNavigationStyles, /\.courseNavLink\s*\{[^}]*font-size:\s*\.75rem;/s);
   assert.match(sharedNavigationStyles, /\.courseNavLinkActive::after[\s\S]*transform:\s*scaleX\(1\);/);
   assert.doesNotMatch(sharedNavigationStyles, /grid-row:\s*2/);
   assert.doesNotMatch(sharedNavigationStyles, /\.courseNav\s*\{[^}]*display:\s*none;/s);

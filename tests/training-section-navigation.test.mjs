@@ -40,11 +40,11 @@ test('le nouveau sommaire reprend le comportement lisible et fixe de la page APS
   assert.match(navigation, /activeHref=\{activeHref\} onNavigate=\{setActiveHref\}/);
   assert.match(responsive, /aria-current=\{active \? 'location' : undefined\}/);
   assert.doesNotMatch(navigation, /index|padStart\(2/);
-  assert.match(navigationStyles, /\.courseNav\s*\{[^}]*position:\s*sticky;[^}]*top:\s*var\(--site-header-height, 55px\);/s);
-  assert.match(navigation, /shortcutHrefs=\{shortcutHrefs \?\? \[firstHref, '#programme', '#dates-tarifs'\]\}/);
+  assert.match(navigationStyles, /\.courseNav\s*\{[^}]*position:\s*sticky;[^}]*top:\s*55px;/s);
+  assert.match(navigation, /<ResponsiveSectionLinks items=\{items\} allLinks/);
   assert.match(navigation, /<ResponsiveSectionLinks /);
   assert.doesNotMatch(navigation, /offsetLeft|scroller\.scrollTo/);
-  assert.match(responsive, /shortcuts = items\.filter\(item => shortcutHrefs\.includes\(item\.href\)\)\.slice\(0, 3\)/);
+  assert.match(responsive, /shortcuts = allLinks \? items : items\.filter\(item => shortcutHrefs\.includes\(item\.href\)\)\.slice\(0, 3\)/);
   assert.match(responsive, /items\.map\(item => link\(item, true\)\)/);
   assert.match(responsiveStyles, /\.shortcuts\s*\{[^}]*white-space:\s*nowrap;/);
   assert.match(responsiveStyles, /\.panel\s*\{[^}]*position:\s*absolute;/);

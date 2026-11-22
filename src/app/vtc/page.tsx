@@ -39,13 +39,13 @@ const detailedProgram = 'https://www.canva.com/design/DAFhLhaNPtg/JTpC91OFj5kP1K
 const cmaCalendar = 'https://www.cmar-paca.fr/galerie/1/0a500ccd55a994cd8ef5b03c77af67b9.pdf';
 
 const navigationItems = [
-  { label: 'Le métier', href: '#metier' }, { label: 'Admission', href: '#admission' },
-  { label: 'Pratique', href: '#pratique' }, { label: 'Brochure', href: '#brochure' },
-  { label: 'Programme', href: '#programme' }, { label: 'Formation', href: '#formation' },
-  { label: 'Formule', href: '#formule' }, { label: 'Examen', href: '#examen' },
-  { label: 'Dates & tarifs', href: '#dates-tarifs' }, { label: 'Inscriptions', href: '#inscription' },
-  { label: 'Financement', href: '#inscription-financement' }, { label: 'Parcours', href: '#parcours' },
-  { label: 'Repères officiels', href: '#reperes-officiels' }, { label: 'Avis', href: '#avis-google' },
+  { label: 'Métier', href: '#metier' },
+  { label: 'Immersion', href: '#pratique' },
+  { label: 'Programme', href: '#programme' },
+  { label: 'Examen', href: '#examen' },
+  { label: 'Dates & tarifs', href: '#dates-tarifs' },
+  { label: 'Inscriptions', href: '#inscription-financement' },
+  { label: 'Débouchés', href: '#debouches' },
   { label: 'FAQ', href: '#faq-vtc' },
 ] as const;
 

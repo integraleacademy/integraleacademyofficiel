@@ -28,7 +28,6 @@ const phone = 'tel:+33487830615';
 const email = 'mailto:aurelie@integraleacademy.com?subject=Mon%20projet%20BTS%20MOS';
 const course = btsExpandedCourses.mos;
 const navigation = [
-  { label: 'Votre projet', href: '#parcours-bts-mos' },
   { label: 'Le métier', href: '#metier' },
   { label: 'Alternance', href: '#alternance' },
   { label: 'Formats', href: '#formats' },
@@ -36,7 +35,6 @@ const navigation = [
   { label: 'Programme', href: '#programme' },
   { label: 'À l’école', href: '#experience' },
   { label: 'S’inscrire', href: '#admission' },
-  { label: 'Avis', href: '#avis-google' },
   { label: 'FAQ', href: '#faq-mos' },
 ] as const;
 const generalSubjects = [
@@ -105,7 +103,7 @@ export function BtsMosReferencePage() {
       </aside>
     </TrainingReferenceHero>
 
-    <div className={styles.navigation}><TrainingSectionNavigation shortcutHrefs={['#alternance', '#programme', '#admission']} mark="MOS" title="BTS MOS" items={navigation} registrationHref="#admission" registrationLabel="Je m’inscris" theme="bts" ariaLabel="Sommaire du BTS MOS" /></div>
+    <div className={styles.navigation}><TrainingSectionNavigation mark="MOS" title="BTS MOS" items={navigation} registrationHref="#admission" registrationLabel="Je m’inscris" theme="bts" ariaLabel="Sommaire du BTS MOS" /></div>
 
 
     <CourseJourney course="bts-mos">

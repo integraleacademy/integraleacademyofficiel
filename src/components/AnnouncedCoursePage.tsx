@@ -25,11 +25,14 @@ import styles from './AnnouncedCoursePage.module.css';
 import experience from './ApsExperience.module.css';
 
 const chapters: readonly TrainingSectionNavigationItem[] = [
-  { href: '#parcours', label: 'Parcours' }, { href: '#metier', label: 'Le métier' }, { href: '#admission', label: 'Admission' },
-  { href: '#pratique', label: 'Immersion' }, { href: '#programme', label: 'Programme' },
-  { href: '#examen', label: 'Examen' }, { href: '#dates-tarifs', label: 'Dates & tarifs' },
-  { href: '#inscription-financement', label: 'Inscription' }, { href: '#debouches', label: 'Débouchés' },
-  { href: '#reperes-officiels', label: 'Repères officiels' }, { href: '#avis-google', label: 'Avis' }, { href: '#questions-frequentes', label: 'FAQ' },
+  { label: 'Métier', href: '#metier' },
+  { label: 'Immersion', href: '#pratique' },
+  { label: 'Programme', href: '#programme' },
+  { label: 'Examen', href: '#examen' },
+  { label: 'Dates & tarifs', href: '#dates-tarifs' },
+  { label: 'Inscriptions', href: '#inscription-financement' },
+  { label: 'Débouchés', href: '#debouches' },
+  { label: 'FAQ', href: '#questions-frequentes' },
 ];
 const dmsAdviser = { person: 'aurelie', name: 'Aurélie Bayard-Chaussez', role: 'Chargée des relations clients', phone: '04 87 83 06 15', phoneHref: 'tel:+33487830615' } as const;
 const fireRegulation = 'https://www.legifrance.gouv.fr/loda/article_lc/LEGIARTI000049957989/';

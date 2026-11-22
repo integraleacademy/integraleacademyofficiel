@@ -34,12 +34,10 @@ const navigationItems = [
   { label: 'La VAE', href: '#vae' },
   { label: 'Éligibilité', href: '#eligibilite' },
   { label: 'Parcours', href: '#parcours' },
-  { label: 'Preuves', href: '#preuves' },
   { label: 'Jury', href: '#jury' },
   { label: 'Dates & tarifs', href: '#dates-tarifs' },
   { label: 'Inscription', href: '#inscription-financement' },
   { label: 'Débouchés', href: '#debouches' },
-  { label: 'Repères', href: '#reperes-rncp' },
   { label: 'FAQ', href: '#faq-desp-vae' },
 ] as const;
 
@@ -127,7 +125,6 @@ export default async function DespVaePage(){
   return <TrainingReferencePage theme="orange" className={layout.editorialCourse}>
     <DespHero variant="vae" title="Dirigeant d’entreprise de sécurité privée par la VAE" subtitle={<p>Valorisez votre expérience en gestion, management ou direction. Nous vous accompagnons pour constituer votre dossier de preuves et préparer le jury du titre DESP.</p>} stats={[["Format","VAE","accompagnement individualisé"],["Durée","Variable","selon dossier et jury"],["Tarif 2027",despVaeAdmin.price,"TTC"],["Lieu","Distance","jury selon convocation"],["RNCP",despVaeAdmin.rncp,despVaeAdmin.level],["Objectif","Titre DESP","validation totale visée"]]} sessions={sessions}/>
     <TrainingSectionNavigation
-      shortcutHrefs={['#eligibilite', '#parcours', '#dates-tarifs']}
       mark="DESP"
       title="DESP en VAE"
       items={navigationItems}

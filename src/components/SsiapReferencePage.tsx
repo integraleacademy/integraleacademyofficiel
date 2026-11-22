@@ -37,13 +37,11 @@ const contactHref = (subject = 'inscription') => `/contact?formation=ssiap-1&obj
 
 const navigationItems = [
   { label: 'Métier', href: '#metier' },
-  { label: 'Admission', href: '#admission' },
-  { label: 'Compétences', href: '#competences' },
-  { label: 'Pratique', href: '#pedagogie' },
+  { label: 'Immersion', href: '#pedagogie' },
   { label: 'Programme', href: '#programme' },
   { label: 'Examen', href: '#examen' },
   { label: 'Dates & tarifs', href: '#dates-tarifs' },
-  { label: 'Inscription', href: '#inscription-financement' },
+  { label: 'Inscriptions', href: '#inscription-financement' },
   { label: 'Débouchés', href: '#debouches' },
   { label: 'FAQ', href: '#faq-ssiap' },
 ] as const;
