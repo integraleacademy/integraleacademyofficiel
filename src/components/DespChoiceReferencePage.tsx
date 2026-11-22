@@ -1,5 +1,6 @@
 import { CourseFilm } from '@/components/CourseFilm';
 import { CourseTeamBanner } from '@/components/CourseTeamBanner';
+import { AcademyNotification } from '@/components/AcademyNotification';
 import { CourseBrochureCard } from '@/components/CourseBrochureCard';
 import { PARIS_ADDRESS } from '@/data/locations';
 import { OrientationAssistant } from '@/components/OrientationAssistant';
@@ -180,6 +181,9 @@ export function DespChoiceReferencePage({ sessions }: { sessions: TrainingDatesP
               <p className="mt-5 text-base leading-7 text-academy-muted sm:text-lg">Formation initiale ou VAE : deux chemins différents pour atteindre le même objectif.</p>
             </div>
 
+            <AcademyNotification id="notification-desp" person="cassandre">
+              Vous hésitez entre la formation initiale et la VAE ? <a href="https://calendly.com/integraleacademy/dirigeant"><strong>Votre expérience est notre point de départ.</strong></a>
+            </AcademyNotification>
             <div className="mt-10 grid items-stretch gap-3 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:gap-4">
               <DespPathCard
                 tone="light"

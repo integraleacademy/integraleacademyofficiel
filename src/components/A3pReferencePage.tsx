@@ -1,4 +1,5 @@
 import { CourseBrochureCard } from '@/components/CourseBrochureCard';
+import { CallNotification } from '@/components/CallNotification';
 import { TrainingCourseSections, TrainingReferencePage, TrainingReferenceHero, TrainingReferenceSection as Section, TrainingReferenceCampus, TrainingReferenceContact, TrainingReferenceMobileBar } from '@/components/TrainingReferenceLayout';
 import { TrainingCourseTestimonials } from '@/components/TrainingCourseTestimonials';
 
@@ -436,6 +437,7 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
       schoolStyle
       description="Cassandre, Responsable commerciale, vérifie vos prérequis, vous présente les prochaines dates et étudie les solutions de financement adaptées à votre situation."
       href={a3pContact('rdv-telephonique')}
+      adviserContent={<CallNotification href="https://calendly.com/integraleacademy/apr" />}
     />
     <TrainingReferenceMobileBar href={a3pContact('mobile-dossier-a3p')} label="Recevoir le dossier" />
   </TrainingReferencePage>;
