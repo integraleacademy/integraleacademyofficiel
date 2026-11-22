@@ -199,6 +199,7 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
             </div> }))}
             afterPoints={<CTA href={a3pContact('verification-prerequis')} className="mt-6">Vérifier mes prérequis →</CTA>}
           />
+          <CallNotification href="https://calendly.com/integraleacademy/apr" />
         </Section>
       }
       immersion={
@@ -437,7 +438,6 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
       schoolStyle
       description="Cassandre, Responsable commerciale, vérifie vos prérequis, vous présente les prochaines dates et étudie les solutions de financement adaptées à votre situation."
       href={a3pContact('rdv-telephonique')}
-      adviserContent={<CallNotification href="https://calendly.com/integraleacademy/apr" />}
     />
     <TrainingReferenceMobileBar href={a3pContact('mobile-dossier-a3p')} label="Recevoir le dossier" />
   </TrainingReferencePage>;
