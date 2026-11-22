@@ -29,36 +29,37 @@
 .text a:hover { text-decoration: underline; text-decoration-color: #f6d16f; text-underline-offset: .2em; }
 .text a:focus-visible { outline: 2px solid #f6d16f; outline-offset: 4px; border-radius: .2rem; }
 
-.callFrame { width: 100%; max-width: 66rem; margin: 4rem auto 0; }
+.callFrame { width: 100%; max-width: 42rem; margin: 2.25rem auto 0; }
 .call {
   position: relative;
   display: flex;
   align-items: center;
-  gap: 1.5rem;
-  min-height: 8rem;
-  padding: 1.3rem 1.6rem 1.3rem 10rem;
+  gap: 1rem;
+  min-height: 6rem;
+  padding: .85rem 1rem .85rem 5.75rem;
   border: 1px solid #ffffffad;
   border-radius: 5rem;
   background: #fff;
-  box-shadow: 0 1rem 2.4rem #00132930;
+  box-shadow: 0 .5rem 1.5rem #00132918;
   color: #122139;
   scroll-margin-top: calc(var(--site-header-height, 5rem) + 6rem);
 }
-.callerAvatar { position: absolute; bottom: .65rem; left: .5rem; width: 8.75rem; height: auto; filter: drop-shadow(0 .4rem .6rem #0e1d3524); }
+.callerAvatar { position: absolute; bottom: .5rem; left: .4rem; width: 5rem; height: auto; filter: drop-shadow(0 .25rem .4rem #0e1d351a); }
 .caller { flex: 1; min-width: 0; }
-.callerName { margin: 0 0 .15rem; color: #122139; font-size: 1.55rem; font-weight: 750; line-height: 1.25; }
-.callText { margin: 0; color: #53617b; font-size: clamp(1rem, 1.8vw, 1.45rem); font-weight: 450; line-height: 1.35; }
-.callActions { display: flex; align-items: center; flex-shrink: 0; gap: 1.2rem; }
-.decline, .accept { display: grid; place-items: center; flex-shrink: 0; width: 4rem; height: 4rem; padding: 0; border: 0; border-radius: 50%; color: #fff; cursor: pointer; transition: transform .18s ease, filter .18s ease; }
+.callerName { margin: 0 0 .15rem; color: #122139; font-size: 1.125rem; font-weight: 750; line-height: 1.25; }
+.callText { margin: 0; color: #53617b; font-size: 1rem; font-weight: 450; line-height: 1.35; }
+.callActions { display: flex; align-items: center; flex-shrink: 0; gap: .8rem; }
+.decline, .accept { display: grid; place-items: center; flex-shrink: 0; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; color: #fff; cursor: pointer; transition: transform .18s ease, filter .18s ease; }
+.decline svg, .accept svg { width: 22px; height: 22px; }
 .decline { background: #ff3b30; }
 .decline svg { transform: rotate(135deg); }
-.accept { background: #28c74e; box-shadow: 0 0 0 .65rem #d4f4db; }
+.accept { background: #28c74e; box-shadow: 0 0 0 .35rem #d4f4db; }
 .decline:hover, .accept:hover { filter: brightness(.94); transform: scale(1.06); }
 .decline:focus-visible, .accept:focus-visible { outline: 3px solid #17334b; outline-offset: .8rem; }
-.dismissed { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: .5rem 1rem; min-height: 8rem; color: #e0e8ef; }
+.dismissed { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: .5rem 1rem; min-height: 6rem; color: #53617b; }
 .dismissed p { margin: 0; }
-.dismissed button { min-height: 2.75rem; padding: .5rem; color: #f6d16f; text-decoration: underline; text-underline-offset: .25em; }
-.dismissed button:focus-visible { outline: 2px solid #f6d16f; outline-offset: 3px; }
+.dismissed button { min-height: 2.75rem; padding: .5rem; color: #17334b; text-decoration: underline; text-underline-offset: .25em; }
+.dismissed button:focus-visible { outline: 2px solid #17334b; outline-offset: 3px; }
 
 @media (prefers-reduced-motion: no-preference) {
   .message[data-contact-revealed='true'], .call[data-contact-revealed='true'] { animation: arrive .5s cubic-bezier(.2,.75,.3,1) both; }
@@ -71,14 +72,12 @@
   .sender { gap: .15rem .5rem; font-size: 1rem; }
   .sender span { font-size: .82rem; }
   .text { font-size: 1rem; }
-  .callFrame { margin-top: 3rem; }
-  .call { min-height: 7rem; gap: .55rem; padding: .9rem 1rem .9rem 4.25rem; border-radius: 3.5rem; }
-  .callerAvatar { width: 4rem; left: .15rem; bottom: auto; top: -.35rem; }
-  .callerName { font-size: 1.05rem; }
-  .callText { font-size: .875rem; }
-  .callActions { gap: .65rem; }
-  .decline, .accept { width: 2.75rem; height: 2.75rem; }
-  .decline svg, .accept svg { width: 22px; height: 22px; }
+  .callFrame { margin-top: 1.75rem; }
+  .call { min-height: 6rem; gap: .5rem; padding: .75rem .9rem .75rem 3.5rem; border-radius: 3rem; }
+  .callerAvatar { width: 3rem; left: .2rem; bottom: auto; top: -.2rem; }
+  .callerName { font-size: 1rem; }
+  .callText { font-size: .8125rem; }
+  .callActions { gap: .5rem; }
   .accept { box-shadow: 0 0 0 .3rem #d4f4db; }
 }
 @media (prefers-reduced-motion: reduce) {
