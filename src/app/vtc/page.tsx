@@ -95,8 +95,10 @@ const journey = [
 ] as const;
 
 const onlineFeatures = [
-  '13 séquences correspondant aux matières de l’examen', 'Quiz composés de questions issues des annales',
-  'Score et correction affichés instantanément', 'Quiz recommençables autant de fois que nécessaire', 'Livre officiel envoyé par courrier',
+  `${vtcCourse.onlineLessons} cours illustrés, chacun accompagné d’une vidéo explicative`,
+  '48 dialogues en anglais pour préparer vos échanges avec les passagers',
+  'Des missions pour préparer un itinéraire, établir un devis et facturer une course',
+  'Des annales corrigées et un examen blanc en conditions réelles',
 ];
 
 function PracticeBooking() {
@@ -179,14 +181,15 @@ export default async function VtcPage() {
         <div className={styles.programLink}><TrainingReferenceAction newTab href={detailedProgram}>Consulter le programme détaillé ↗</TrainingReferenceAction></div>
         <TrainingProgramExplorer idPrefix="vtc-programme" menuTitle="Les unités du programme" tabListLabel="Programme chauffeur VTC" units={vtcProgram}
           hours={String(vtcCourse.durationHours)} overview="Parcours complet" subtitle="Théorie et pratique" illustration={vtcArtwork.apprentissage}
-          facts={[[ 'Théorie en e-learning', '100 h' ], [ 'Séquences en ligne', '13' ], [ 'Pratique sur véhicule', '5 h' ]]}
+          facts={[[ 'Théorie dans la formule', '100 h' ], [ 'Modules en ligne', String(vtcCourse.onlineModules) ], [ 'Pratique sur véhicule', '5 h' ]]}
           nextLabel="Rubrique suivante" restartLabel="Revenir au début du programme" />
       </Section>}
 
-      format={<Section id="formation" eyebrow="05 — Votre formation théorique" title="100 h de théorie en e-learning, à votre rythme"
+      format={<Section id="formation" eyebrow="05 — Votre formation théorique" title="Découvrez votre espace e-learning VTC"
         intro="Dès que votre inscription est finalisée, vous recevez vos identifiants par e-mail. Votre espace de formation personnel est accessible 24 h/24 et 7 j/7." tone="paper">
         <div className={experience.hybrid}>
-          <div className={experience.remoteCopy}><p className={experience.kicker}>Votre parcours en ligne</p><h3><strong>13 séquences</strong> pour préparer la théorie</h3>
+          <div className={experience.remoteCopy}><p className={experience.kicker}>Votre parcours en ligne</p><h3><strong>{vtcCourse.onlineModules} modules</strong> pour préparer l’examen</h3>
+            <p>Sept modules couvrent les matières de l’examen théorique. Le huitième vous place dans le rôle du chauffeur, de la réservation à la fin de la course.</p>
             <ul className={styles.checklist}>{onlineFeatures.map(item => <li key={item}>{item}</li>)}</ul>
           </div>
           <VtcElearningPreview />

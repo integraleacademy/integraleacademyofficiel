@@ -1455,9 +1455,13 @@
     "d1a7497ddc98ecab",
     1254
   ],
+  "/images/vtc/experience/parcours.webp": [
+    "d15974e828dffe8f",
+    1600
+  ],
   "/images/vtc/experience/plateforme.webp": [
-    "d138a76357652ad0",
-    1912
+    "9be0b8a01be917bf",
+    1600
   ],
   "/images/vtc/manuel/accueil.webp": [
     "5c3871f71e354257",
@@ -1553,6 +1557,10 @@
   ],
   "/images/welcome-pack/pack-sst-panoramique-sans-ecocup.webp": [
     "b07b188229208073",
+    2172
+  ],
+  "/images/welcome-pack/pack-vtc-panoramique-sans-ecocup.webp": [
+    "71fe5fbabdfa0942",
     2172
   ]
 }

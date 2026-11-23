@@ -7,6 +7,8 @@ export const vtcCourse = {
   label: 'Chauffeur VTC',
   nextExamLabel: 'Prochain examen de chauffeur VTC',
   durationHours: 105,
+  onlineModules: 8,
+  onlineLessons: 96,
   priceCents: 150000,
   priceLabel: '1 500 €',
   location: 'Côte d’Azur',
