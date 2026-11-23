@@ -116,7 +116,6 @@
 }
 
 .wrap { width: min(100% - 2rem, 72rem); margin-inline: auto; }
-.heroSampleLink { display: inline-flex; align-items: center; min-height: 44px; color: inherit; text-decoration: underline; text-underline-offset: .25em; font-weight: 700; }
 .reviewStrip { padding: clamp(1.4rem, 3vw, 2.4rem) 0; background: #f1ebf5; color: #291b39; }
 .reviewStrip header { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: .4rem 1rem; }
 .reviewStrip h2 { font-size: clamp(1.2rem, 2vw, 1.55rem); font-weight: 750; }

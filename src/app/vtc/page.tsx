@@ -41,6 +41,7 @@ export const metadata: Metadata = createPageMetadata('/vtc');
 
 const contactHref = (subject: string) => `/contact?formation=vtc&objet=${encodeURIComponent(subject)}`;
 const fundingHref = contactHref('Étude de financement formation VTC');
+const appointmentAction = { href: vtcAppointmentHref, label: 'Réservez un RDV téléphonique' };
 const practiceBooking = 'https://admissions.integraleconnect.com/vtc';
 const detailedProgram = 'https://www.canva.com/design/DAFhLhaNPtg/JTpC91OFj5kP1K96Zq7LGQ/view?utm_campaign=designshare&utm_content=DAFhLhaNPtg&utm_medium=link&utm_source=editor';
 const cmaCalendar = 'https://www.cmar-paca.fr/galerie/1/0a500ccd55a994cd8ef5b03c77af67b9.pdf';
@@ -139,8 +140,7 @@ export default async function VtcPage() {
       description={<><p>Révisez à votre rythme, puis entraînez-vous sur un véhicule à double commande. <strong>{vtcCourse.priceLabel}, frais d’examen et prêt du véhicule le jour de l’épreuve inclus.</strong></p>
         {theoryDate && <p className={styles.mobileExamDates}><strong>{examHeadline}</strong><span>{deadlineDetails}</span></p>}</>}
       primaryAction={{ href: projectHref, label: sessions.length ? 'Commencer mon inscription VTC' : 'Demander les prochaines dates' }}
-      secondaryAction={{ href: vtcAppointmentHref, label: 'Prendre rendez-vous avec Cassandre' }}
-      additionalAction={<a className={styles.heroSampleLink} href="#extrait-vtc">Tester une question d’examen blanc</a>}
+      secondaryAction={appointmentAction}
       highlights={['Centre agréé', 'Qualiopi', 'CPF selon éligibilité']}>
       <TrainingHeroSessionCard theme="violet" assistantKey="vtc" label="Calendrier VTC" session={sessions[0]}
         defaultPrice={vtcCourse.priceLabel} defaultLocation={vtcCourse.location} registrationHref={sessions[0]?.status === 'FULL' || !sessions.length ? projectHref : '#dates-tarifs'} sessionActionLabel={sessions.length > 1 ? "Choisir une autre date" : "Voir le détail de la session"}
@@ -160,7 +160,6 @@ export default async function VtcPage() {
           <blockquote>« {review.excerpt} »</blockquote><figcaption><a href={review.sourceUrl} target="_blank" rel="noopener noreferrer">{review.author} · Avis Google</a></figcaption>
         </figure>)}</div></div>
     </section>}
-    <VtcLessonSample />
 
     <CourseJourney course="vtc">
       <Section id="metier" eyebrow="01 — Le métier" title="Au volant, chaque détail compte"
@@ -205,7 +204,7 @@ export default async function VtcPage() {
           nextLabel="Rubrique suivante" restartLabel="Revenir au début du programme" />
       </Section>}
 
-      format={<Section id="formation" eyebrow="05 — Votre formation théorique" title="Découvrez votre espace e-learning VTC"
+      format={<><Section id="formation" eyebrow="05 — Votre formation théorique" title="Découvrez votre espace e-learning VTC"
         intro="Dès que votre inscription est finalisée, vous recevez vos identifiants par e-mail. Votre espace de formation personnel est accessible 24 h/24 et 7 j/7." tone="paper">
         <div className={experience.hybrid}>
           <div className={experience.remoteCopy}><p className={experience.kicker}>Votre parcours en ligne</p><h3><strong>{vtcCourse.onlineModules} modules</strong> pour préparer l’examen</h3>
@@ -220,7 +219,7 @@ export default async function VtcPage() {
           <p><strong>Sur la Côte d’Azur</strong><span>À Nice, Cannes, Toulon ou Fréjus. Le lieu et le créneau sont confirmés avec l’équipe.</span></p>
           <a href="#pratique">Voir les mises en situation →</a>
         </div>
-      </Section>}
+      </Section><VtcLessonSample /></>}
 
       pack={<div id="formule"><IntegraleWelcomePack course="vtc" title="Pack Intégrale Academy" /></div>}
 
@@ -302,6 +301,6 @@ export default async function VtcPage() {
       title="Rendez-vous téléphonique avec votre conseillère"
       description="Cassandre, Responsable commerciale, vérifie votre éligibilité, vous explique le calendrier et vous aide à choisir le financement adapté."
       href={vtcAppointmentHref} appointmentLabel="Prendre rendez-vous avec Cassandre" />
-    <TrainingReferenceMobileBar href={projectHref} label={sessions.length ? 'M’inscrire' : 'Demander les dates'} contactAction={{ href: vtcAppointmentHref, label: 'RDV avec Cassandre' }} />
+    <TrainingReferenceMobileBar href={projectHref} label={sessions.length ? 'M’inscrire' : 'Demander les dates'} contactAction={appointmentAction} />
   </TrainingReferencePage>;
 }
