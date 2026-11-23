@@ -23,6 +23,7 @@ test('une seule barre mobile est affichée selon le gabarit de page', () => {
   assert.match(layout, /<GlobalMobileCTA\/>/);
   assert.doesNotMatch(layout, /StickyMobileCTA/);
   assert.match(mobileCta, /normalizedPath === '\/planning'/);
+  assert.match(mobileCta, /'\/vtc'/);
   assert.match(mobileCta, /\^\\\/bts\\\/\[\^\/\]\+\$/);
   for (const slug of ['aps', 'ssiap-1', 'sst', 'a3p-apr']) {
     assert.match(mobileCta, new RegExp(`/formations-securite/${slug}`));

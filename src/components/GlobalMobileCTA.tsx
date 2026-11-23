@@ -6,7 +6,8 @@ import { isCertificationProjectPath } from '@/lib/certification-project-paths';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-const dedicatedSecurityPages = new Set([
+const dedicatedCoursePages = new Set([
+  '/vtc',
   '/parcoursalternance',
   '/formations-securite/aps',
   '/formations-securite/ssiap-1',
@@ -25,7 +26,7 @@ export function hasDedicatedMobileCta(pathname: string) {
 
   return normalizedPath === '/planning'
     || /^\/bts\/[^/]+$/.test(normalizedPath)
-    || dedicatedSecurityPages.has(normalizedPath);
+    || dedicatedCoursePages.has(normalizedPath);
 }
 
 export function GlobalMobileCTA() {
