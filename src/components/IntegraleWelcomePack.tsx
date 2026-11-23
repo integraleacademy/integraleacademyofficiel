@@ -8,9 +8,9 @@ const manuals = {
     alt: 'Le Pack Intégrale présenté avec le manuel APS, le carnet noir et doré et le stylo. Le manuel et le carnet sont présentés fermés et ouverts.',
   },
   vtc: {
-    src: '/images/vtc/manuel/couverture-vtc.webp',
+    src: '/images/welcome-pack/pack-vtc-panoramique-sans-ecocup.webp',
     title: 'Le manuel de formation VTC',
-    alt: 'Couverture du manuel de formation VTC Intégrale Academy',
+    alt: 'Le manuel VTC et le carnet noir et doré, chacun présenté fermé et ouvert, avec le stylo Intégrale Academy.',
   },
   sst: {
     src: '/images/welcome-pack/pack-sst-panoramique-sans-ecocup.webp',
@@ -59,11 +59,7 @@ export function IntegraleWelcomePack({ course, title = 'Pack Intégrale' }: { co
 
       <div className={styles.pack}>
         <div className={styles.overview}>
-          {course === 'vtc' ? <div className={styles.vtcSupplies}>
-            <Image src={manual.src} alt={manual.alt} width={650} height={920} sizes="(max-width: 700px) 20vw, 170px" />
-            <Image src="/images/welcome-pack/carnet-ferme-ouvert.webp" alt="Le carnet Intégrale Academy, fermé et ouvert" width={1536} height={1024} sizes="(max-width: 900px) 48vw, 440px" />
-            <Image src="/images/aps/manuel/stylo.webp" alt="Le stylo Intégrale Academy" width={800} height={800} sizes="(max-width: 700px) 17vw, 140px" />
-          </div> : <div className={styles.visual}>
+          <div className={styles.visual}>
             <Image
               src={manual.src}
               alt={manual.alt}
@@ -72,7 +68,7 @@ export function IntegraleWelcomePack({ course, title = 'Pack Intégrale' }: { co
               sizes="(max-width: 900px) calc(100vw - 40px), calc(75vw - 66px)"
               quality={90}
             />
-          </div>}
+          </div>
           <ul className={styles.contents} role="list" aria-label="Vos supports de formation">
             <li>
               <span className={styles.detailLabel}>Apprendre &amp; réviser</span>

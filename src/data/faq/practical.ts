@@ -80,7 +80,7 @@ export const vtcFaq = [
   },
   {
     q: 'Combien de temps dure la préparation ?',
-    a: 'La préparation complète représente 105 heures estimées, avec une partie théorique à distance et une préparation pratique encadrée en présentiel. L’apprentissage en ligne est individualisé. Les 13 séquences, quiz corrigés et questions d’annales vous permettent de consacrer davantage de temps aux matières sur lesquelles vous hésitez.\n\n' +
+    a: 'La préparation complète représente 105 heures estimées, avec une partie théorique à distance et une préparation pratique encadrée en présentiel. Dans votre espace en ligne, vous pouvez revoir les cours, reprendre les exercices et travailler les questions d’annales des matières qui vous demandent plus de temps.\n\n' +
       'La durée en semaines dépend de votre disponibilité et de la date d’examen choisie. En consultant le planning, repérez d’abord la clôture des inscriptions, puis la théorie et la période de pratique. La préparation en ligne peut commencer dès la finalisation de votre dossier.',
   },
   {
