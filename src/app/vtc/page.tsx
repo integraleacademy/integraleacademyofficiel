@@ -129,12 +129,15 @@ export default async function VtcPage() {
   const next = dates[0];
   const theoryDate = formatSessionNumericDate(next?.theory);
   const deadline = formatSessionNumericDate(next?.deadline);
+  const examHeadline = theoryDate ? `Prochain examen théorique le ${theoryDate}` : 'Prochain examen théorique à confirmer';
+  const deadlineDetails = deadline ? <>Inscription avant le <strong>{deadline} à 12 h</strong>.</> : 'Date limite d’inscription à confirmer.';
 
   return <TrainingReferencePage theme="violet" className={styles.page}>
     <TrainingReferenceHero id="chauffeur-vtc" badge="Formation VTC · Côte d’Azur"
       heading="Devenez chauffeur VTC" accent="sur la Côte d’Azur" title="Chauffeur VTC" caption="Accueil d’un passager"
       tagline="100 h de théorie en ligne et 5 h au volant avec votre formateur" illustration={vtcArtwork.accueil}
-      description={<p>Révisez à votre rythme, puis entraînez-vous sur un véhicule à double commande. <strong>{vtcCourse.priceLabel}, frais d’examen et prêt du véhicule le jour de l’épreuve inclus.</strong></p>}
+      description={<><p>Révisez à votre rythme, puis entraînez-vous sur un véhicule à double commande. <strong>{vtcCourse.priceLabel}, frais d’examen et prêt du véhicule le jour de l’épreuve inclus.</strong></p>
+        {theoryDate && <p className={styles.mobileExamDates}><strong>{examHeadline}</strong><span>{deadlineDetails}</span></p>}</>}
       primaryAction={{ href: projectHref, label: sessions.length ? 'Commencer mon inscription VTC' : 'Demander les prochaines dates' }}
       secondaryAction={{ href: vtcAppointmentHref, label: 'Prendre rendez-vous avec Cassandre' }}
       additionalAction={<a className={styles.heroSampleLink} href="#extrait-vtc">Tester une question d’examen blanc</a>}
@@ -142,8 +145,7 @@ export default async function VtcPage() {
       <TrainingHeroSessionCard theme="violet" assistantKey="vtc" label="Calendrier VTC" session={sessions[0]}
         defaultPrice={vtcCourse.priceLabel} defaultLocation={vtcCourse.location} registrationHref={sessions[0]?.status === 'FULL' || !sessions.length ? projectHref : '#dates-tarifs'} sessionActionLabel={sessions.length > 1 ? "Choisir une autre date" : "Voir le détail de la session"}
         emptyTitle="Prochain examen théorique à confirmer" emptyDescription="Contactez l’équipe pour connaître la prochaine date d’examen et la limite d’inscription."
-        timing={next && { title: theoryDate ? `Prochain examen théorique le ${theoryDate}` : 'Prochain examen théorique à confirmer',
-          description: deadline ? <>Inscription avant le <strong>{deadline} à 12 h</strong>.</> : 'Date limite d’inscription à confirmer.' }}
+        timing={next && { title: examHeadline, description: deadlineDetails }}
         priceNote="Financement possible" locationNote="Nice, Cannes, Toulon ou Fréjus"
         facts={[
           { label: 'Durée', value: `${vtcCourse.durationHours} h`, details: ['Parcours complet'] },
@@ -300,6 +302,6 @@ export default async function VtcPage() {
       title="Rendez-vous téléphonique avec votre conseillère"
       description="Cassandre, Responsable commerciale, vérifie votre éligibilité, vous explique le calendrier et vous aide à choisir le financement adapté."
       href={vtcAppointmentHref} appointmentLabel="Prendre rendez-vous avec Cassandre" />
-    <TrainingReferenceMobileBar href={projectHref} label={sessions.length ? "Commencer mon inscription VTC" : "Contacter Cassandre"} />
+    <TrainingReferenceMobileBar href={projectHref} label={sessions.length ? 'M’inscrire' : 'Demander les dates'} contactAction={{ href: vtcAppointmentHref, label: 'RDV avec Cassandre' }} />
   </TrainingReferencePage>;
 }

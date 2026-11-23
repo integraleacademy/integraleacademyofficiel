@@ -210,7 +210,7 @@ export function TrainingReferenceContact({ description, title, href, headingEnd 
 }
 
 export function TrainingReferenceMobileBar({
-  href = '#dates-tarifs', label = 'Voir les dates & tarifs', phoneHref = defaultAdviser.phoneHref, phoneLabel = 'Appeler',
-}: { href?: string; label?: string; phoneHref?: string; phoneLabel?: string }) {
-  return <div data-fixed-actions="course" className={styles.mobileBar}><a href={phoneHref} className={styles.action}>{phoneLabel}</a><TrainingReferenceAction href={href}>{label}</TrainingReferenceAction></div>;
+  href = '#dates-tarifs', label = 'Voir les dates & tarifs', phoneHref = defaultAdviser.phoneHref, phoneLabel = 'Appeler', contactAction = { href: phoneHref, label: phoneLabel },
+}: { href?: string; label?: string; phoneHref?: string; phoneLabel?: string; contactAction?: Pick<Action, 'href' | 'label'> }) {
+  return <div data-fixed-actions="course" className={styles.mobileBar}><a href={contactAction.href} className={styles.action}>{contactAction.label}</a><TrainingReferenceAction href={href}>{label}</TrainingReferenceAction></div>;
 }

@@ -4,6 +4,12 @@
 }
 .page [data-session-overview] h2 { margin-top: 0; font-size: clamp(1.25rem, 2vw, 1.9rem); line-height: 1.15; }
 .page [data-session-overview] > p { font-size: 1rem; line-height: 1.55; }
+.mobileExamDates { display: none; }
+@media (max-width: 767px) {
+  .page .mobileExamDates { display: grid; gap: .15rem; margin-top: .85rem; padding-inline-start: .8rem; border-inline-start: 3px solid var(--course-pale); color: white; font-size: .94rem; line-height: 1.4; }
+  .page .mobileExamDates > span { color: var(--course-pale); }
+  .page [data-page-hero]:has(.mobileExamDates) [data-session-overview] { display: none; }
+}
 .immersionIcon { background: #ead8ff; color: #48246c; box-shadow: none; }
 .programLink { margin-bottom: 1.5rem; }
 .driving { background: #f2ecf8; }
