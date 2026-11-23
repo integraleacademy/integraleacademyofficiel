@@ -18,7 +18,7 @@ export function CourseBrochureCard({ course }: { course: string }) {
             </svg>;
 
   return (
-    <section id="brochure" className={styles.section} aria-labelledby="brochure-title">
+    <section id="brochure" className={styles.section} data-brochure-course={course} aria-labelledby="brochure-title">
       <div className={styles.band}>
         <div className={styles.copy}>
           <p className={styles.category}>{brochure.category}</p>
