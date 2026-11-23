@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import styles from './VtcAutonomousEnrollmentBanner.module.css';
 
-const enrollmentUrl = 'https://assistance-alw9.onrender.com/inscriptions';
+import { vtcCpfEnrollmentHref } from '@/data/vtc';
 
 export function VtcAutonomousEnrollmentBanner() {
   return (
@@ -18,7 +18,7 @@ export function VtcAutonomousEnrollmentBanner() {
             <span>commence ici</span>
           </h2>
           <p className={styles.description}>
-            Vous avez plus de 1500 euros sur votre compte CPF ? Votre Identité
+            Vous disposez d’au moins 1 500 € sur votre compte CPF ? Votre Identité
             Numérique la Poste fonctionne ? Vous pouvez vous inscrire en formation{' '}
             <strong>Chauffeur VTC</strong> en totale autonomie, grâce à notre parcours
             en ligne qui vous guide pas à pas.
@@ -54,7 +54,7 @@ export function VtcAutonomousEnrollmentBanner() {
 
         <div className={styles.action}>
           <p className={styles.actionPrompt}>À vous de jouer !</p>
-          <a className={styles.cta} href={enrollmentUrl}>
+          <a className={styles.cta} href={vtcCpfEnrollmentHref}>
             <span>M’inscrire avec le CPF</span>
             <span className={styles.ctaArrow} aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14m-6-6 6 6-6 6" /></svg>

@@ -1,3 +1,4 @@
+import { FooterFundingLink } from './FooterFundingLink';
 import { TrainingActionLink } from '@/components/TrainingActionLink';
 import { CampusFormationTags } from './CampusFormationTags';
 import { PARIS_ADDRESS } from '@/data/locations';
@@ -239,7 +240,7 @@ export function Footer(){
         <nav className={footerStyles.navigation} aria-label="Navigation du pied de page">
           {footerLinks.map(group=><div className={footerStyles.navGroup} key={group.title}>
             <h2 className={footerStyles.heading}>{group.title}</h2>
-            <ul>{group.links.map(([label,href])=><li key={href}><Link href={href}>{label}</Link></li>)}</ul>
+            <ul>{group.links.map(([label,href])=><li key={href}>{group.title === 'Financements' ? <FooterFundingLink href={href}>{label}</FooterFundingLink> : <Link href={href}>{label}</Link>}</li>)}</ul>
           </div>)}
         </nav>
 

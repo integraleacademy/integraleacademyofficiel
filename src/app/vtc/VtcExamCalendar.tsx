@@ -1,8 +1,9 @@
-import { formatVtcExamDate } from '@/data/vtc';
+import { formatVtcExamDate, vtcRegistrationHref } from '@/data/vtc';
 import { formatSessionNumericDate } from '@/lib/public-sessions';
 import styles from './vtc.module.css';
 
 type ExamDates = {
+  sessionId: string;
   deadline: string | Date;
   theory?: string | Date | null;
   practical?: string | Date | null;
@@ -16,7 +17,7 @@ function ExamCard({ dates, next }: { dates: ExamDates; next: boolean }) {
       <div><dt>Inscription avant le</dt><dd>{formatSessionNumericDate(dates.deadline)} à 12 h</dd></div>
       <div><dt>Examen pratique</dt><dd>{formatVtcExamDate(dates.practical)}</dd></div>
     </dl>
-    <a className={styles.textLink} href="#inscription">Voir les modalités d’inscription →</a>
+    <a className={styles.textLink} href={vtcRegistrationHref(dates.sessionId)}>Choisir cet examen</a>
   </article>;
 }
 

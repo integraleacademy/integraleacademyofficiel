@@ -2,8 +2,8 @@
 
 import Link from 'next/link';
 import { useEffect, useRef, useState, type FormEvent } from 'react';
-import { formatSessionDate, formatSessionPeriod } from '@/lib/public-sessions';
-import { vtcRegistrationMessage, formatVtcExamDate } from '@/data/vtc';
+import { formatSessionDate, formatSessionNumericDate, formatSessionPeriod } from '@/lib/public-sessions';
+import { formatVtcExamDate, vtcCourse, vtcCpfEnrollmentHref } from '@/data/vtc';
 import type { toPublicSession } from '@/lib/public-session-data';
 import { planningRegistrationAction } from '@/lib/planning-registration';
 
@@ -48,13 +48,13 @@ export function PlanningRegistration({ session, onClose, returnLabel = 'Revenir 
 
   return <dialog ref={dialog} onCancel={onClose} aria-labelledby="registration-title" className="m-auto max-h-[90dvh] w-[calc(100%_-_2rem)] max-w-xl overflow-y-auto rounded-3xl border border-academy-line bg-academy-surface p-5 text-academy-ink shadow-2xl backdrop:bg-black/50 sm:p-7">
     <div className="flex items-start justify-between gap-4">
-      <h2 id="registration-title" className="text-2xl font-black">{success ? 'Votre demande est enregistrée' : action.kind === 'waiting-list' ? 'Demander une place en attente' : action.kind === 'opening' ? 'Se renseigner sur cette session' : 'Votre session sélectionnée'}</h2>
+      <h2 id="registration-title" className="text-2xl font-black">{success ? 'Votre demande est enregistrée' : action.kind === 'waiting-list' ? 'Demander une place en attente' : action.kind === 'opening' ? 'Se renseigner sur cette session' : session.scheduleKind === 'vtc-exam' ? 'Votre inscription en formation VTC' : 'Votre session sélectionnée'}</h2>
       <button type="button" onClick={onClose} aria-label="Fermer" className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border text-xl">×</button>
     </div>
     <div className="my-5 rounded-2xl border border-academy-line bg-academy-bg p-4 text-sm leading-6">
       <p className="font-black">{session.title || session.training?.name}</p>
       <p>{session.location}</p>
-      {session.scheduleKind === 'vtc-exam' ? <><p>{vtcRegistrationMessage(session.startDate, session.endDate)}</p><p>Examen pratique · {formatVtcExamDate(session.examDate)}</p></> : <><p>{formatSessionPeriod(session.startDate, session.endDate)}</p>{session.examDate ? <p>Examen le {formatSessionDate(session.examDate)}</p> : null}</>}
+      {session.scheduleKind === 'vtc-exam' ? <><p>Examen théorique le <strong>{formatSessionNumericDate(session.endDate)}</strong></p><p>Inscription avant le {formatSessionNumericDate(session.startDate)} à 12 h.</p><p>Formation complète · {session.priceLabel || vtcCourse.priceLabel}</p><p>Examen pratique · {formatVtcExamDate(session.examDate)}</p></> : <><p>{formatSessionPeriod(session.startDate, session.endDate)}</p>{session.examDate ? <p>Examen le {formatSessionDate(session.examDate)}</p> : null}</>}
     </div>
     {success ? <div role="status"><p className="leading-7">Votre choix et vos coordonnées ont été transmis à notre équipe. Un conseiller vous recontactera pour vérifier les disponibilités, les prérequis et votre financement.</p><p className="mt-3 text-sm text-academy-muted">Votre inscription sera confirmée avec le centre de formation.</p><button type="button" onClick={onClose} className="mt-6 w-full rounded-full bg-academy-ink px-5 py-3 font-bold text-white">{returnLabel}</button></div> : <form onSubmit={submit} className="grid gap-4">
       <p className="text-sm leading-6 text-academy-muted">Indiquez vos coordonnées pour être recontacté au sujet de cette session. Cette demande est sans engagement.</p>
@@ -68,5 +68,6 @@ export function PlanningRegistration({ session, onClose, returnLabel = 'Revenir 
       {error ? <p role="alert" className="rounded-xl bg-red-50 p-3 text-sm text-red-800">{error}</p> : null}
       <button disabled={sending} className="rounded-full bg-academy-ink px-5 py-3.5 font-bold text-white disabled:opacity-60">{sending ? 'Envoi en cours…' : 'Envoyer ma demande'}</button>
     </form>}
+    {session.scheduleKind === 'vtc-exam' && action.kind === 'registration' && <p className="mt-4 text-sm leading-6"><a className="font-bold underline underline-offset-4" href={vtcCpfEnrollmentHref}>Poursuivre avec mon CPF en autonomie</a></p>}
   </dialog>;
 }

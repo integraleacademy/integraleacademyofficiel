@@ -11,10 +11,11 @@ export default async function Page({ searchParams }: { searchParams: Promise<Rec
   const initialLocation = parseSessionLocationFilter(params.lieu);
   const formation = typeof params.formation === 'string' ? params.formation : undefined;
   const parcours = typeof params.parcours === 'string' ? params.parcours : undefined;
+  const requestedSession = formation === 'vtc' && typeof params.session === 'string' ? params.session : undefined;
   const allDates = params.dates === 'toutes';
   const publicSessions = await loadPlanningSessions();
-  return <PlanningClient key={[initialLocation, formation, parcours, allDates].join('/')}
+  return <PlanningClient key={[initialLocation, formation, parcours, allDates, requestedSession].join('/')}
     initialLocation={initialLocation} requestedFormation={formation} requestedCourse={parcours} allDates={allDates}
-    initialSessions={JSON.parse(JSON.stringify(publicSessions))} />;
+    requestedSession={requestedSession} initialSessions={JSON.parse(JSON.stringify(publicSessions))} />;
 }
 

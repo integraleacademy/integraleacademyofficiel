@@ -4,6 +4,7 @@ import navigation from '@/components/PageSectionNavigation.module.css';
 import { FaqDirectoryLink } from '@/components/FaqDirectoryLink';
 import { TeamPortrait } from '@/components/TeamPortrait';
 import { createPageMetadata } from '@/lib/seo';
+import { vtcCourse } from '@/data/vtc';
 import FinancingSimulator from '@/components/FinancingSimulator';
 import type { Metadata } from 'next';
 import Link from 'next/link';
@@ -44,7 +45,9 @@ const fundingOptions: { id: string; icon: IconName; audience: string; title: str
 ];
 
 
-export default function FinancementsPage() {
+export default async function FinancementsPage({ searchParams }: { searchParams: Promise<{ formation?: string | string[] }> }) {
+  const { formation } = await searchParams;
+  const initialFormation = formation === 'vtc' ? vtcCourse.label : 'APS';
   return <div className={`${styles.page} ${navigation.scope}`}>
     <section className={styles.hero} data-page-hero aria-labelledby="financements-title">
       <div className={styles.container}>
@@ -108,7 +111,7 @@ export default function FinancementsPage() {
       </div>
     </section>
 
-    <FinancingSimulator variant="editorial" />
+    <FinancingSimulator key={initialFormation} variant="editorial" initialFormation={initialFormation} />
 
     <section id="accompagnement" className={styles.supportSection} aria-labelledby="support-title">
       <div className={styles.container}>

@@ -85,7 +85,7 @@ export function TrainingHeroSessionCard({
   capacity = 12, assistantKey, label = 'Prochaine session',
   emptyTitle = 'Prochaines dates à confirmer',
   emptyDescription = 'Contactez-nous pour recevoir les prochaines dates et préparer votre inscription.',
-  emptyActionLabel = 'Recevoir les prochaines dates →', examLabel = 'Examen le', registrationHref, priceNote,
+  emptyActionLabel = 'Recevoir les prochaines dates →', sessionActionLabel = 'Réserver ma place →', examLabel = 'Examen le', registrationHref, priceNote,
   approval, locationNote, overviewControls, timing, emptyBadgeLabel = 'Dates à confirmer',
 }: {
   session?: TrainingDatesPricingSession | null;
@@ -99,6 +99,7 @@ export function TrainingHeroSessionCard({
   emptyTitle?: string;
   emptyDescription?: string;
   emptyActionLabel?: string;
+  sessionActionLabel?: string;
   examLabel?: string;
   registrationHref?: string;
   priceNote?: string;
@@ -124,7 +125,7 @@ export function TrainingHeroSessionCard({
     <TrainingSessionSummary facts={facts} location={session?.location || defaultLocation} locationNote={locationNote} />
     <div data-session-actions className={styles.sessionActions}>
     <p className={styles.sessionPrice}><span>{label === 'Votre parcours VAE' ? 'Tarif de l’accompagnement' : 'Tarif de la session'}</span><strong>{formatTrainingPrice(session, defaultPrice)}</strong>{priceNote && <small>{priceNote}</small>}</p>
-    <TrainingActionLink href={registrationHref || trainingRegistrationUrl} className={`${styles.action} ${full ? styles.waitingAction : styles.primaryAction} mt-5 w-full`}>{full ? 'Être alerté de la prochaine session' : session ? 'Réserver ma place →' : emptyActionLabel}</TrainingActionLink>
+    <TrainingActionLink href={registrationHref || trainingRegistrationUrl} className={`${styles.action} ${full ? styles.waitingAction : styles.primaryAction} mt-5 w-full`}>{full ? 'Être alerté de la prochaine session' : session ? sessionActionLabel : emptyActionLabel}</TrainingActionLink>
     <p className="mt-3 text-center text-xs font-semibold leading-5 text-academy-muted">Un conseiller vérifie votre dossier avant validation.</p>
     <div className="mt-3"><OrientationAssistant initialFormationKey={assistantKey} hideInfoAction variant="modalTrigger" /></div>
     </div>

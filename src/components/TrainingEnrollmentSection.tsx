@@ -6,10 +6,10 @@ import editorial from './ApsEditorial.module.css';
 type EnrollmentAction = { href: string; label: string };
 type EnrollmentStep = string | { title: string; description: ReactNode };
 
-export function TrainingEnrollmentSection({ number, title, intro, steps, registration, registrationAnchor = 'inscription', fundingTitle, fundingNote, funding, options, optionsHeading = 'Les solutions selon votre projet', showFundingSimulator = true, textOnlyOptions = false, children }: {
+export function TrainingEnrollmentSection({ number, title, intro, steps, registration, registrationAnchor = 'inscription', fundingTitle, fundingNote, funding, options, optionsHeading = 'Les solutions selon votre projet', showFundingSimulator = true, fundingSimulatorHref = '/financements#simulateur', textOnlyOptions = false, children }: {
   number: string; title: string; intro: ReactNode; steps: readonly EnrollmentStep[]; registration: EnrollmentAction;
   registrationAnchor?: string | null; fundingTitle: string; fundingNote: ReactNode; funding: EnrollmentAction;
-  optionsHeading?: string; showFundingSimulator?: boolean; textOnlyOptions?: boolean; options: ReadonlyArray<readonly [string, string] | string[]>; children?: ReactNode;
+  optionsHeading?: string; showFundingSimulator?: boolean; fundingSimulatorHref?: string; textOnlyOptions?: boolean; options: ReadonlyArray<readonly [string, string] | string[]>; children?: ReactNode;
 }) {
   return <section id="inscription-financement" className={editorial.enrollment}><div className={editorial.wrap} id={registrationAnchor ?? undefined}>
     <p className={editorial.kicker}>{number} — Inscription &amp; financement</p>
@@ -24,7 +24,7 @@ export function TrainingEnrollmentSection({ number, title, intro, steps, registr
     <article className={editorial.funding}><div><p className={editorial.kicker}>Votre financement</p><h3>{fundingTitle}</h3></div>
       <div className={editorial.identity}>{fundingNote}</div>
       <div className={editorial.fundingActions}><TrainingReferenceAction href={funding.href}>{funding.label}</TrainingReferenceAction>
-        {showFundingSimulator && <TrainingReferenceAction outline href="/financements#simulateur">Ouvrir le simulateur →</TrainingReferenceAction>}</div></article>
+        {showFundingSimulator && <TrainingReferenceAction outline href={fundingSimulatorHref}>Ouvrir le simulateur →</TrainingReferenceAction>}</div></article>
     <TrainingFundingOptions options={options} heading={optionsHeading} textOnly={textOnlyOptions} />
     {children}
   </div></section>;
