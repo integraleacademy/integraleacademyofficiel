@@ -5,6 +5,7 @@ export type SsiapCourseConfig = {
   title: string;
   intro: string;
   duration: string;
+  priceLabel?: string;
   durationDetail: string;
   capacity: string;
   certification: string;
@@ -154,7 +155,7 @@ export const ssiap2Config: SsiapCourseConfig = {
   },
 };
 
-export const ssiap3Config: SsiapCourseConfig = {
+export const ssiap3Config = {
   slug: 'ssiap-3',
   label: 'SSIAP 3',
   role: 'Chef de service de sécurité incendie',
@@ -162,6 +163,7 @@ export const ssiap3Config: SsiapCourseConfig = {
   intro:
     'Maîtrisez la réglementation, l’analyse des risques, le management et le budget nécessaires pour conseiller un chef d’établissement et diriger un service.',
   duration: '216 heures',
+  priceLabel: '3 900 € TTC',
   durationDetail: 'Hors examen et temps de déplacement',
   capacity: '10 stagiaires maximum',
   certification: 'Diplôme SSIAP 3',
@@ -266,7 +268,7 @@ export const ssiap3Config: SsiapCourseConfig = {
     description:
       'Préparez le diplôme SSIAP 3 de chef de service de sécurité incendie : 216 heures, réglementation, risques, management, budget et examen officiel.',
   },
-};
+} satisfies SsiapCourseConfig;
 
 export const ssiapMaintenanceConfig: SsiapCourseConfig = {
   slug: 'recyclage-remise-a-niveau-ssiap',

@@ -37,6 +37,11 @@ type AssistantFormation = {
   homeSubtitle: string;
 };
 
+function enrollmentHref(formation: AssistantFormation) {
+  if (formation.key === 'ssiap-2' || formation.key === 'ssiap-3') return `${formation.infoUrl}#dates-tarifs`;
+  return INFORMATION_REQUEST_URL;
+}
+
 const calendlyDirigeantUrl = 'https://calendly.com/integraleacademy/dirigeant';
 const apsFormation = securityFormations.find(formation => formation.slug === '/formations-securite/aps');
 
@@ -76,7 +81,7 @@ const formationDetails: Record<FormationKey, AssistantFormationDetails> = {
   sst: { title: 'Formation Sauveteur secouriste du travail (SST)', shortLabel: 'SST', sessionSlugs: ['sst'], price: 'Sur devis', capacity: 10, keyPoints: ['Durée : 2 jours · 14 heures en présentiel', 'Lieu : Puget-sur-Argens · Var · Côte d’Azur', 'Aucun prérequis · groupes de 4 à 10 participants', 'Prévention des risques et gestes de premiers secours au travail', 'Certificat SST valable 24 mois', 'Financement employeur / OPCO ou personnel selon dossier'] },
   'ssiap-1': { title: 'Formation Agent de sécurité incendie (SSIAP 1)', shortLabel: 'SSIAP 1', sessionSlugs: ['ssiap-1'], price: '980 €', keyPoints: ['Durée : 67 heures hors examen et déplacements', 'Formation en présentiel à Puget-sur-Argens', 'Effectif : 12 stagiaires maximum', 'Prévention, surveillance des installations et assistance aux personnes', 'Diplôme SSIAP 1 · évaluations théorique et pratique', 'Prérequis et financement vérifiés avec notre équipe'] },
   'ssiap-2': { title: ssiap2Config.title, shortLabel: ssiap2Config.label, sessionSlugs: ['ssiap-2'], price: 'Sur devis', keyPoints: [`Durée : ${ssiap2Config.duration} · ${ssiap2Config.durationDetail}`, 'Formation en présentiel à Puget-sur-Argens', ssiap2Config.capacity, ssiap2Config.intro, ssiap2Config.certification, 'Dossier, prérequis et financement vérifiés avant inscription'] },
-  'ssiap-3': { title: ssiap3Config.title, shortLabel: ssiap3Config.label, sessionSlugs: ['ssiap-3'], price: 'Sur devis', capacity: 10, keyPoints: [`Durée : ${ssiap3Config.duration} · ${ssiap3Config.durationDetail}`, 'Formation en présentiel à Puget-sur-Argens', ssiap3Config.capacity, ssiap3Config.intro, ssiap3Config.certification, 'Dossier, prérequis et financement vérifiés avant inscription'] },
+  'ssiap-3': { title: ssiap3Config.title, shortLabel: ssiap3Config.label, sessionSlugs: ['ssiap-3'], price: ssiap3Config.priceLabel, capacity: 10, keyPoints: [`Durée : ${ssiap3Config.duration} · ${ssiap3Config.durationDetail}`, 'Formation en présentiel à Puget-sur-Argens', ssiap3Config.capacity, ssiap3Config.intro, ssiap3Config.certification, 'Dossier, prérequis et financement vérifiés avant inscription'] },
   aps: { title: 'Formation Agent de sécurité privée (APS)', shortLabel: 'APS', sessionSlugs: ['aps'], price: apsFormation?.price || 'Tarif sur demande', keyPoints: ['Format : Hybride (Distanciel + Présentiel) · 51 h à distance + 124 h en présentiel', `Durée : ${apsFormation?.duration || '175 heures au total'}`, `Lieu : ${apsFormation?.locations || 'Puget-sur-Argens, Côte d’Azur'}`, `Certification : ${apsFormation?.certification || 'TFP APS · RNCP n°36648 · niveau 3'}`, 'Examen final en présentiel : QCU contextualisés + deux mises en situation individuelles', `Financements : ${apsFormation?.financing || 'CPF, France Travail ou paiement en plusieurs fois'}`] },
   a3p: { title: 'Formation Agent de protection physique des personnes (A3P)', shortLabel: 'A3P', sessionSlugs: ['a3p', 'a3p-apr', 'apr'], price: '4 250 € TTC', keyPoints: ['Formation en présentiel orientée protection rapprochée', 'Durée : 9 semaines · 328 heures hors examen, dont 92 h 50 de pratique', 'Lieu : Puget-sur-Argens · hébergement collectif possible sur demande', 'Certification : TFP A3P · RNCP n°38002 · CNAPS', 'Évaluations théoriques et mises en situation professionnelles', 'Financements : CPF, France Travail et facilités de paiement selon dossier'] },
   desp: { title: 'Formation Dirigeant d’entreprise de sécurité privée (DESP)', shortLabel: 'DESP', sessionSlugs: ['desp', 'desp-dssp', 'desp-initial'], price: '4 350 € TTC initial · 3 850 € TTC VAE', keyPoints: ['Deux parcours : formation initiale ou validation des acquis de l’expérience (VAE)', 'Durée : initial 7 semaines · 245 heures ; VAE environ 1 mois', 'Lieux : distanciel + Paris ou Puget-sur-Argens selon les sessions', 'Certification : DESP · RNCP n°40385 · agrément dirigeant CNAPS', 'Évaluation : QCU, mises en situation et jury professionnel', 'Financements : CPF, France Travail et facilités de paiement selon dossier'] },
@@ -249,11 +254,11 @@ export function OrientationAssistant({initialFormationKey, initialStep, hideInfo
             <span className={styles.choiceDescription}>Durée, financement et <br />prochaines sessions.</span>
             <span className={styles.choiceAction}>Consulter ma formation <AssistantIcon name="arrow" /></span>
           </button>
-          <TrainingActionLink href={INFORMATION_REQUEST_URL} className={`${styles.choice} ${styles.enroll}`}>
+          <TrainingActionLink href={enrollmentHref(selectedFormation)} onNavigate={resetAssistantState} className={`${styles.choice} ${styles.enroll}`}>
             <span className={styles.optionIcon}><AssistantIcon name="calendar" /></span>
             <span className={styles.choiceTitle}>Préparer mon inscription</span>
             <span className={styles.choiceDescription}>Être accompagné pour <br />rejoindre la formation.</span>
-            <span className={styles.choiceAction}>Accéder au formulaire <AssistantIcon name="arrow" /></span>
+            <span className={styles.choiceAction}>{selectedFormation.key === 'ssiap-2' || selectedFormation.key === 'ssiap-3' ? 'Dates et inscription' : 'Accéder au formulaire'} <AssistantIcon name="arrow" /></span>
           </TrainingActionLink>
         </div>}
 
@@ -367,7 +372,7 @@ function FormationAssistantResult({ formation, sessions, hideInfoAction, onNavig
       <ul>{details.keyPoints.map(point => <li key={point}><AssistantIcon name="check" />{point}</li>)}</ul>
     </details>
     <div className={styles.actions}>
-      <TrainingActionLink href={INFORMATION_REQUEST_URL} className={styles.secondaryAction}>Préparer mon inscription <AssistantIcon name="arrow" /></TrainingActionLink>
+      <TrainingActionLink href={enrollmentHref(formation)} onNavigate={onNavigate} className={styles.secondaryAction}>Préparer mon inscription <AssistantIcon name="arrow" /></TrainingActionLink>
       {!hideInfoAction && <Link href={formation.infoUrl} className={styles.secondaryAction}>Découvrir la formation</Link>}
     </div>
   </div>;

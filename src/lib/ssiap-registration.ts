@@ -1,6 +1,7 @@
 import type { TrainingDatesPricingSession } from '@/components/TrainingDatesPricingSection';
 import { formatSessionPeriod } from '@/lib/public-sessions';
 
+export type SsiapInitialCourse = 'ssiap-1' | 'ssiap-2' | 'ssiap-3';
 export type SsiapFormula = 'ssiap-1' | 'ssiap-1-sst';
 
 export function ssiapSessionFormula(title?: string | null): SsiapFormula | undefined {
@@ -22,11 +23,11 @@ export function importedSessionPrice(
   return { priceCents, priceLabel };
 }
 
-export function ssiapRegistrationHref(session?: TrainingDatesPricingSession | null, formula?: SsiapFormula) {
-  const params = new URLSearchParams({ formation: 'ssiap-1', objet: 'inscription' });
+export function ssiapRegistrationHref(session?: TrainingDatesPricingSession | null, formula?: SsiapFormula, course: SsiapInitialCourse = 'ssiap-1') {
+  const params = new URLSearchParams({ formation: course, objet: 'inscription' });
   if (session?.id) params.set('session', String(session.id));
   if (session?.startDate && session?.endDate) params.set('periode', formatSessionPeriod(session.startDate, session.endDate));
   const selected = ssiapSessionFormula(session?.title) ?? formula;
-  if (selected) params.set('formule', selected);
+  if (course === 'ssiap-1' && selected) params.set('formule', selected);
   return `/contact?${params.toString()}#choix-ssiap`;
 }

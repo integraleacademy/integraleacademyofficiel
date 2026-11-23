@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useEffect, useId, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import type { SecurityTrainingHighlight, TrainingVisual } from './SecurityTrainingGrid';
+import { ssiap3Config } from '@/data/ssiap-catalogue';
 import styles from './SecurityTrainingComparisonModal.module.css';
 
 type ComparisonDetails = {
@@ -47,7 +48,7 @@ const comparisonDetails: Record<TrainingVisual, ComparisonDetails> = {
     certification: 'Diplôme SSIAP 1, 2 ou 3',
     certificationNote: 'Ou attestation réglementaire de maintien des acquis',
     price: 'Dès 980 €',
-    priceNote: 'SSIAP 1 · autres parcours sur devis',
+    priceNote: `SSIAP 1 dès 980 € · SSIAP 2 sur devis · SSIAP 3 à ${ssiap3Config.priceLabel}`,
     cta: 'Voir les parcours SSIAP',
   },
   sst: {
