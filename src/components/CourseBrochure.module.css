@@ -1,12 +1,23 @@
 .section {
+  --brochure-accent: var(--course-accent, var(--brochure-fallback, #886519));
+  --brochure-ink: color-mix(in srgb, var(--brochure-accent) 55%, #101521);
+  --brochure-pale: color-mix(in srgb, var(--brochure-accent) 22%, white);
   position: relative;
   isolation: isolate;
   overflow: hidden;
   width: 100%;
   border-block: clamp(8px, .85vw, 12px) solid #fff;
-  background: #173844;
-  color: #fffaf0;
+  background: var(--brochure-ink);
+  color: white;
   scroll-margin-top: calc(var(--site-header-height) + 1rem);
+}
+.section[data-brochure-course^='ssiap'],
+.section[data-brochure-course='recyclage-remise-a-niveau-ssiap'] { --brochure-fallback: #b6383d; }
+.section[data-brochure-course='despvaeouinitial'] { --brochure-fallback: #ac4b23; }
+:global([data-bts]) .section {
+  --brochure-accent: rgb(var(--bts-700));
+  --brochure-ink: rgb(var(--bts-950));
+  --brochure-pale: rgb(var(--bts-200));
 }
 .band {
   display: grid;
@@ -15,18 +26,18 @@
   margin-inline: auto;
 }
 .copy { z-index: 1; align-self: center; min-width: 0; padding-block: clamp(2.35rem, 4.6vw, 4.4rem); padding-right: 1.5rem; }
-.category { display: flex; align-items: center; gap: .7rem; margin: 0 0 .85rem; color: #f3cf87; font-size: .78rem; font-weight: 750; letter-spacing: .1em; line-height: 1.45; text-transform: uppercase; }
+.category { display: flex; align-items: center; gap: .7rem; margin: 0 0 .85rem; color: var(--brochure-pale); font-size: .78rem; font-weight: 750; letter-spacing: .1em; line-height: 1.45; text-transform: uppercase; }
 .category::before { content: ''; flex: 0 0 1.8rem; height: 2px; background: currentColor; }
-.copy h2 { margin: 0; color: #fffaf0; font-size: clamp(2.1rem, 3.75vw, 4rem); font-weight: 780; letter-spacing: -.05em; line-height: 1.06; }
-.copy h2 em { display: inline-block; font-family: Georgia, serif; font-style: italic; font-weight: 400; color: #f4d59b; }
-.course { margin: .65rem 0 0; font-size: clamp(1rem, 1.4vw, 1.25rem); line-height: 1.45; color: #e3edef; }
-.details { margin: .5rem 0 0; max-width: 48ch; color: #d3e1e2; font-size: 1rem; line-height: 1.5; }
-.button { display: inline-flex; align-items: center; justify-content: center; gap: .65rem; min-height: 46px; margin-top: 1.35rem; padding: .8rem 1.35rem; border-radius: 999px; background: #f4d59b; color: #192f38; font-size: .98rem; font-weight: 750; text-decoration: none; line-height: 1.3; text-align: center; }
+.copy h2 { margin: 0; color: white; font-size: clamp(2.1rem, 3.75vw, 4rem); font-weight: 780; letter-spacing: -.05em; line-height: 1.06; }
+.copy h2 em { display: inline-block; font-family: Georgia, serif; font-style: italic; font-weight: 400; color: var(--brochure-pale); }
+.course { margin: .65rem 0 0; font-size: clamp(1rem, 1.4vw, 1.25rem); line-height: 1.45; color: white; }
+.details { margin: .5rem 0 0; max-width: 48ch; color: #ffffffe6; font-size: 1rem; line-height: 1.5; }
+.button { display: inline-flex; align-items: center; justify-content: center; gap: .65rem; min-height: 46px; margin-top: 1.35rem; padding: .8rem 1.35rem; border-radius: 999px; background: var(--brochure-pale); color: var(--brochure-ink); font-size: .98rem; font-weight: 750; text-decoration: none; line-height: 1.3; text-align: center; }
 .button svg { flex-shrink: 0; }
-.button:hover { background: #ffe5b5; }
+.button:hover { background: white; }
 .button:focus-visible { outline: 3px solid white; outline-offset: 4px; }
 .art { position: relative; isolation: isolate; align-self: stretch; display: grid; place-items: center; min-width: 0; }
-.art::before { content: ''; position: absolute; z-index: -1; inset: 0 -100vw 0 0; transform: skewX(-13deg); transform-origin: bottom left; background: linear-gradient(115deg, #91b8b0, #d9e4d6 34rem); border-left: 3px solid #e4d09e; }
+.art::before { content: ''; position: absolute; z-index: -1; inset: 0 -100vw 0 0; transform: skewX(-13deg); transform-origin: bottom left; background: linear-gradient(115deg, var(--brochure-accent), var(--brochure-pale) 34rem); }
 .book {
   position: relative;
   width: clamp(7.2rem, 13vw, 11.75rem);
@@ -58,9 +69,9 @@
 @media (hover: hover) and (pointer: fine) {
   .section:hover .book { transform: rotate(5deg) translateY(-3px); box-shadow: 2px 1px #d3cbb9, 4px 2px #fffcf2, 6px 3px #b0aa9c, 8px 5px #f8f3e6, 17px 19px 26px #1c393e50; }
 }
-.formNote { margin: .65rem 0 0; color: #e0e9e8; font-size: .8rem; line-height: 1.5; }
-.related { margin: 1.05rem 0 0; color: #e0e9e8; font-size: .82rem; line-height: 1.55; }
-.related a { display: inline-block; color: #f4d59b; font-weight: 750; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .22em; }
+.formNote { margin: .65rem 0 0; color: #ffffffd9; font-size: .8rem; line-height: 1.5; }
+.related { margin: 1.05rem 0 0; color: #ffffffd9; font-size: .82rem; line-height: 1.55; }
+.related a { display: inline-block; color: var(--brochure-pale); font-weight: 750; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .22em; }
 .related a:hover { color: #fff; }
 .related a:focus-visible { outline: 2px solid white; outline-offset: 3px; }
 @media (prefers-reduced-motion: reduce) { .button, .book { transition: none; } .section:hover .book { transform: rotate(7deg); } }

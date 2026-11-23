@@ -105,17 +105,17 @@ export function TrainingHeroSessionCard({
   approval?: string;
   locationNote?: string;
   overviewControls?: ReactNode;
-  timing?: { badge: string; title: string; description: ReactNode };
+  timing?: { title: string; description: ReactNode };
   emptyBadgeLabel?: string;
 }) {
   const availability = session ? getSessionSeatAvailability(session, capacity) : null;
   const full = availability?.tone === 'full';
   return <aside className={`${styles.sessionCard} rounded-[2rem] border border-white/80 bg-[#FFFDF8] p-5 text-academy-ink sm:p-6 lg:p-7`} data-theme={theme} data-layout="summary" aria-label="Dates et inscription">
     <div data-session-overview className={styles.sessionOverview}>
-    <div className="flex flex-wrap items-center gap-2">
+    {!timing && <div className="flex flex-wrap items-center gap-2">
       <span className={styles.sessionLabel}>{label}</span>
-      <span className={`rounded-full border px-3 py-1.5 text-[.68rem] font-black ${availability?.badgeClassName || 'border-stone-200 bg-stone-100 text-stone-700'}`}>{timing?.badge ?? availability?.label ?? emptyBadgeLabel}</span>
-    </div>
+      <span className={`rounded-full border px-3 py-1.5 text-[.68rem] font-black ${availability?.badgeClassName || 'border-stone-200 bg-stone-100 text-stone-700'}`}>{availability?.label ?? emptyBadgeLabel}</span>
+    </div>}
     {overviewControls}
     <h2 className="mt-5 text-3xl font-black tracking-[-.04em] sm:text-4xl">{timing?.title ?? (session ? <>{formatDate(session.startDate)} <span className={styles.sessionAccent}>→</span><br />{formatDate(session.endDate)}</> : emptyTitle)}</h2>
     <p className="mt-2 text-sm font-extrabold text-academy-muted">{timing?.description ?? (session?.examDate ? `${examLabel} ${formatDate(session.examDate)}` : emptyDescription)}</p>
