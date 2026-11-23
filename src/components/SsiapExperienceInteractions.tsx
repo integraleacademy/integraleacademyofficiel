@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
 import { TrainingProgramExplorer } from './TrainingProgramExplorer';
 import { ManualArtwork } from './ManualArtwork';
-import { ssiapArtwork } from '@/data/manualIllustrations';
+import { ssiapArtwork, type ManualIllustration } from '@/data/manualIllustrations';
 import { ssiapEditorialArtwork } from '@/data/siteIllustrations';
 import styles from './SsiapExperience.module.css';
 
@@ -55,16 +55,19 @@ export function SsiapMissionShowcase({ missions }: { missions: string[][] }) {
   </div>;
 }
 
-export function SsiapProgramExplorer({ parts }: { parts: string[][] }) {
-  const scenes = [ssiapEditorialArtwork.fire, ssiapEditorialArtwork.building, ssiapEditorialArtwork.systems, ssiapEditorialArtwork.reporting, ssiapEditorialArtwork.exercise];
+const agentProgramScenes = [ssiapEditorialArtwork.fire, ssiapEditorialArtwork.building, ssiapEditorialArtwork.systems, ssiapEditorialArtwork.reporting, ssiapEditorialArtwork.exercise];
+
+export function SsiapProgramExplorer({ parts, course = 'ssiap-1', label = 'SSIAP 1', hours = '67', menuTitle = 'Les cinq parties', progression = 'Des fondamentaux aux situations de terrain.', scenes = agentProgramScenes }: {
+  parts: string[][]; course?: string; label?: string; hours?: string; menuTitle?: string; progression?: string; scenes?: readonly ManualIllustration[];
+}) {
   return <TrainingProgramExplorer
-    idPrefix="program" menuTitle="Les cinq parties" tabListLabel="Les cinq parties du programme SSIAP 1"
+    idPrefix="program" menuTitle={menuTitle} tabListLabel={`${menuTitle} du programme ${label}`}
     nextLabel="Partie suivante" restartLabel="Revenir au début" hourDistribution
-    hours="67" overview="5 parties complémentaires" subtitle="Hors examen et déplacements"
-    facts={[['Progression', 'Des fondamentaux aux situations de terrain.'], ['Format', '100 % présentiel']]}
-    illustration={{ src: '/images/ssiap-1/manuel/couverture-ssiap-1.webp', alt: 'Couverture du manuel de formation SSIAP 1 d’Intégrale Academy' }}
+    hours={hours} overview={`${parts.length} parties complémentaires`} subtitle="Hors examen et déplacements"
+    facts={[['Progression', progression], ['Format', '100 % présentiel']]}
+    illustration={{ src: `/images/${course}/manuel/couverture-${course}.webp`, alt: `Couverture du manuel de formation ${label} d’Intégrale Academy` }}
     units={parts.map(([number, title, duration, description], index) => ({
-      number, title, duration, description, delivery: `Partie ${number} / 05`, illustration: scenes[index],
+      number, title, duration, description, delivery: `Partie ${number} / ${String(parts.length).padStart(2, '0')}`, illustration: scenes[index],
     }))}
   />;
 }

@@ -159,7 +159,7 @@ const fireAndFirstAidJourneys = {
     steps: [
       copy('Votre évolution', 'Passez de l’intervention à la coordination', 'Vous êtes agent SSIAP 1 expérimenté et souhaitez encadrer une équipe ? Le SSIAP 2 prépare l’organisation du service, la transmission des consignes et la coordination au poste central de sécurité.', '#admission', 'Vérifier mon admission'),
       copy('Votre formation', '70 heures pour prendre votre place de chef d’équipe', 'Hors examen et déplacements, ce parcours en présentiel associe management, systèmes de sécurité incendie, hygiène et sécurité et gestion du poste central en situation de crise.', '#programme', 'Explorer le programme'),
-      copy('Votre entraînement', 'Savoir décider et faire agir ensemble', 'Vous préparez des séquences pédagogiques, travaillez la coordination des agents et la gestion d’incidents au PC sécurité. Les exercices vous aident à relier consignes, décisions et communication.', '#validation', 'Voir les mises en situation'),
+      copy('Votre entraînement', 'Savoir décider et faire agir ensemble', 'Vous préparez des séquences pédagogiques, travaillez la coordination des agents et la gestion d’incidents au PC sécurité. Les exercices vous aident à relier consignes, décisions et communication.', '#pedagogie', 'Voir les mises en situation'),
       copy('Votre prochain chapitre', 'Préparez le diplôme de chef d’équipe', 'Les épreuves écrite, orale et pratique évaluent les compétences attendues du chef d’équipe SSIAP 2. Notre équipe vérifie vos prérequis et vous accompagne dans l’organisation de votre entrée en formation.', '#dates-tarifs', 'Recevoir les prochaines dates'),
     ],
     opening: { image: originalArtwork['ssiap-2-parcours'].src, kicker: 'LE TERRAIN, L’ÉQUIPE ET LA DÉCISION', heading: ['Faites équipe.', 'Prenez le relais'], text: 'Donnez une nouvelle dimension à votre expérience de la sécurité incendie.', verbs: ['Encadrer', 'Coordonner', 'Transmettre'] },
@@ -173,8 +173,8 @@ const fireAndFirstAidJourneys = {
       { title: 'Former et rendre compte', text: 'Expliquer les gestes et informer la hiérarchie.' },
     ], note: 'Des exercices pour préparer vos responsabilités et les épreuves.' },
     outcome: { heading: ['Votre expertise.', 'La force d’une équipe'], code: 'SSIAP 2', role: 'Chef d’équipe de sécurité incendie', milestones: [
-      { label: '01 · VALIDATION', title: 'Le diplôme', text: 'Écrit, oral et mise en situation', href: '#validation' },
-      { label: '02 · RESPONSABILITÉS', title: 'Le terrain', text: 'Organisation, coordination et management', href: '#missions' },
+      { label: '01 · VALIDATION', title: 'Le diplôme', text: 'Écrit, oral et mise en situation', href: '#examen' },
+      { label: '02 · RESPONSABILITÉS', title: 'Le terrain', text: 'Organisation, coordination et management', href: '#metier' },
     ], note: 'Admission selon vos prérequis ; diplôme après réussite aux épreuves.' },
   },
   'ssiap-3': {
@@ -183,8 +183,8 @@ const fireAndFirstAidJourneys = {
     steps: [
       copy('Votre ambition', 'Prenez la responsabilité d’un service de sécurité incendie', 'Conseiller l’établissement, manager le service et suivre les moyens : le SSIAP 3 prépare une vision d’ensemble de la sécurité incendie. Votre dossier est étudié pour vérifier l’accès à ce niveau.', '#admission', 'Faire étudier mon dossier'),
       copy('Votre formation', 'Une vision technique, réglementaire et managériale', '216 heures hors examen et déplacements pour approfondir la sécurité des bâtiments, la réglementation, la gestion des risques, le management et le budget du service.', '#programme', 'Explorer le programme'),
-      copy('Vos études de cas', 'Analyser, argumenter, conseiller', 'Lecture de plans, notice technique, analyse des risques et préparation des commissions : vous travaillez les situations du chef de service et préparez les attendus des épreuves.', '#validation', 'Découvrir les évaluations'),
-      copy('Votre prochain chapitre', 'Préparez le diplôme SSIAP 3 et vos futures responsabilités', 'Le parcours vous prépare aux épreuves écrites et à l’entretien devant le jury. Vous développez les compétences pour organiser le service et conseiller le chef d’établissement.', '#dates-tarifs', 'Recevoir les prochaines dates'),
+      copy('Vos études de cas', 'Analyser, argumenter, conseiller', 'Lecture de plans, notice technique, analyse des risques et préparation des commissions : vous travaillez les situations du chef de service et préparez les attendus des épreuves.', '#examen', 'Découvrir les évaluations'),
+      copy('Votre prochain chapitre', 'Préparez le diplôme SSIAP 3 et vos futures responsabilités', 'Le parcours vous prépare aux épreuves écrites et à l’entretien devant le jury. Vous développez les compétences pour organiser le service et conseiller le chef d’établissement.', '#dates-tarifs', 'Voir les prochaines dates'),
     ],
     opening: { image: originalArtwork['ssiap-3-parcours'].src, kicker: 'L’EXPERTISE QUI ORIENTE LES DÉCISIONS', heading: ['Prenez de la hauteur.', 'Pilotez la sécurité'], text: 'Reliez réglementation, risques et management pour diriger un service de sécurité incendie.', verbs: ['Analyser', 'Conseiller', 'Piloter'] },
     study: { value: '216', unit: 'HEURES · HORS EXAMEN', heading: ['Une vision globale.', 'Des choix éclairés'], panels: [
@@ -197,8 +197,8 @@ const fireAndFirstAidJourneys = {
       { title: 'Conseiller l’établissement', text: 'Prioriser les risques et organiser les moyens.' },
     ], note: 'Des cas concrets pour relier l’expertise à la décision.' },
     outcome: { heading: ['Votre maîtrise.', 'Une vision d’ensemble'], code: 'SSIAP 3', role: 'Chef de service de sécurité incendie', milestones: [
-      { label: '01 · VALIDATION', title: 'Le diplôme', text: 'Épreuves écrites et entretien', href: '#validation' },
-      { label: '02 · PILOTAGE', title: 'Le service', text: 'Conseil, organisation et gestion des risques', href: '#missions' },
+      { label: '01 · VALIDATION', title: 'Le diplôme', text: 'Épreuves écrites et entretien', href: '#examen' },
+      { label: '02 · PILOTAGE', title: 'Le service', text: 'Conseil, organisation et gestion des risques', href: '#metier' },
     ], note: 'Admission après étude du dossier ; diplôme après réussite aux épreuves.' },
   },
   'sst': {

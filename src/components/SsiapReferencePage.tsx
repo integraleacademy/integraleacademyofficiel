@@ -1,5 +1,4 @@
-import { CourseTeamBanner } from '@/components/CourseTeamBanner';
-import { CourseBrochureCard } from '@/components/CourseBrochureCard';
+import { SsiapInitialNavigation, SsiapInitialSections, SsiapInitialContact, SsiapSkills } from './SsiapInitialSections';
 import { CourseJourney } from '@/components/CourseJourney';
 import { SsiapExamExperience } from './SsiapExperienceSections';
 import { SsiapProgramExplorer } from './SsiapExperienceInteractions';
@@ -8,43 +7,28 @@ import experience from './SsiapExperience.module.css';
 import { serializeCourseJsonLd } from '@/lib/seo';
 import Link from 'next/link';
 import { TrainingHeroSessionCard } from '@/components/TrainingHero';
-import { TrainingCourseSections, TrainingReferencePage, TrainingReferenceHero, TrainingReferenceSection as Section, TrainingReferenceContact, TrainingReferenceMobileBar } from './TrainingReferenceLayout';
-import { TrainingSchoolWelcome } from './TrainingCampusVisit';
+import { TrainingReferencePage, TrainingReferenceHero, TrainingReferenceSection as Section } from './TrainingReferenceLayout';
 import { TrainingMissionCards } from './TrainingMissionCards';
-import { TrainingAdmission, TrainingOfficialReferences } from './ApsExperienceSections';
+import { TrainingAdmission } from './ApsExperienceSections';
 import { TrainingFundingOptions } from './TrainingFundingOptions';
 import reference from './ApsReferencePage.module.css';
 import editorial from './ApsEditorial.module.css';
 import shared from './ApsExperience.module.css';
-import { TrainingSectionNavigation } from '@/components/TrainingSectionNavigation';
 import type { ReactNode } from 'react';
 import { MissionAnimation } from '@/components/MissionAnimation';
 import { FaqDirectoryLink } from '@/components/FaqDirectoryLink';
-import Image from 'next/image';
 import { SsiapBooking } from './SsiapBooking';
-import { SsiapManualPreview, SsiapPracticeQuestion } from './SsiapDiscovery';
+import { SsiapPracticeQuestion } from './SsiapDiscovery';
 import { SsiapTestimonials } from './SsiapTestimonials';
 import { ssiapRegistrationHref, ssiapSessionFormula } from '@/lib/ssiap-registration';
 import styles from './SsiapReferencePage.module.css';
 import { TrainingMotionGallery } from '@/components/TrainingMotionGallery';
-import { IntegraleWelcomePack } from '@/components/IntegraleWelcomePack';
 import { ManualArtwork } from '@/components/ManualArtwork';
 import { ssiapArtwork, ssiapPracticeArtwork } from '@/data/manualIllustrations';
 import { originalArtwork } from '@/data/originalArtwork';
 import { ssiapEditorialArtwork } from '@/data/siteIllustrations';
 
 const contactHref = (subject = 'inscription') => `/contact?formation=ssiap-1&objet=${encodeURIComponent(subject)}`;
-
-const navigationItems = [
-  { label: 'Métier', href: '#metier' },
-  { label: 'Immersion', href: '#pedagogie' },
-  { label: 'Programme', href: '#programme' },
-  { label: 'Examen', href: '#examen' },
-  { label: 'Dates & tarifs', href: '#dates-tarifs' },
-  { label: 'Inscriptions', href: '#inscription-financement' },
-  { label: 'Débouchés', href: '#debouches' },
-  { label: 'FAQ', href: '#faq-ssiap' },
-] as const;
 
 const missions = [
   ['01', 'Prévenir les risques', 'Repérer les situations dangereuses et veiller au respect des règles de sécurité incendie.'],
@@ -137,14 +121,7 @@ export function SsiapReferencePage({ sessions }: { sessions: any[] }) {
       />
     </TrainingReferenceHero>
 
-    <TrainingSectionNavigation
-      mark="SSIAP"
-      title="SSIAP 1"
-      items={navigationItems}
-      registrationHref="#dates-tarifs"
-      theme="red"
-    />
-
+    <SsiapInitialNavigation label="SSIAP 1" />
 
     <CourseJourney course="ssiap-1">
       <Section id="metier" label="01 — Le métier" title={<>Un rôle essentiel dans les <em>ERP et les IGH</em></>}
@@ -164,7 +141,7 @@ export function SsiapReferencePage({ sessions }: { sessions: any[] }) {
       </Section>
     </CourseJourney>
 
-    <TrainingCourseSections admission={
+    <SsiapInitialSections course="ssiap-1" label="SSIAP 1" capacity={12} admission={
       <Section id="admission" label="02 — Admission" title="Votre dossier est-il prêt pour le SSIAP 1 ?" tone="stone"
         intro="Notre équipe vérifie chaque pièce avant l’entrée en formation pour sécuriser votre admission et éviter toute mauvaise surprise le jour de l’examen.">
         <TrainingAdmission course="ssiap-1" action={contactHref('vérification du dossier')}
@@ -180,7 +157,7 @@ export function SsiapReferencePage({ sessions }: { sessions: any[] }) {
       </Section>
     } immersion={<>
       <Section id="competences" label="03 — Compétences" title="Ce que vous saurez faire sur le terrain">
-        <div className="mt-8 grid gap-3 md:grid-cols-2 lg:grid-cols-3">{skills.map(([title, text], index) => <div key={title} className={`rounded-[1.5rem] border p-5 ${index === 0 ? 'border-red-300 bg-red-50 dark:bg-[#39252b]' : 'border-academy-line bg-[#FFFDF8] dark:bg-[#202c39]'}`}><span className="grid h-9 w-9 place-items-center rounded-full bg-[#0D1725] text-sm font-black text-red-300">{String(index + 1).padStart(2, '0')}</span><h3 className="mt-4 text-xl font-black">{title}</h3><p className="mt-2 text-sm leading-6 text-academy-muted">{text}</p></div>)}</div>
+        <SsiapSkills skills={skills} />
       </Section>
       <Section id="pedagogie" label="05 — Immersion & pédagogie" title={<span id="terrain-title">Comprendre en cours.<br /><em>Apprendre en pratiquant</em></span>} tone="dark"
         intro="À Puget-sur-Argens, les connaissances prennent forme dans les exercices. Découvrez votre environnement de formation et les gestes que vous travaillerez.">
@@ -202,17 +179,6 @@ export function SsiapReferencePage({ sessions }: { sessions: any[] }) {
         </div>
       </Section>
     </>}
-    campus={<>
-      <CourseTeamBanner />
-      <TrainingSchoolWelcome id="ecole-ssiap-1" description="Découvrez votre cadre de formation à Puget-sur-Argens." groupLabel="Par session SSIAP 1" groupSize="12 maximum"
-        photos={[
-          { id: 'salle-formation', src: '/images/campus/salle-formation.webp', alt: 'La salle de formation du centre Intégrale Academy à Puget-sur-Argens', caption: 'Votre salle de formation · Puget-sur-Argens' },
-          { id: 'accueil', src: '/images/campus/accueil-centre.webp', alt: 'L’accueil du centre Intégrale Academy', caption: 'Un accueil, une équipe.' },
-          { id: 'detente', src: '/images/campus/espace-detente.webp', alt: 'L’espace détente du centre Intégrale Academy', caption: 'Un espace pour les pauses.' },
-        ]}
-        extraFooter={<p className={styles.schoolCredit}>Photographies de notre centre de formation <Link href="/ecole#photos">Découvrir les autres espaces ↗</Link></p>} />
-    </>}
-    brochure={<CourseBrochureCard course="ssiap-1" />}
     program={
       <Section id="programme" label="04 — Programme" title={<>67 heures pour devenir <em>opérationnel</em></>}
         intro="Un programme réglementaire complet qui progresse des fondamentaux du feu jusqu’aux rondes et mises en situation professionnelles.">
@@ -220,8 +186,6 @@ export function SsiapReferencePage({ sessions }: { sessions: any[] }) {
         <SsiapProgramExplorer parts={program} />
       </Section>
     }
-    pack={<><p className={`${styles.eyebrow} page-container pt-8`}>Vos supports de formation</p>
-      <IntegraleWelcomePack course="ssiap-1" /><SsiapManualPreview /></>}
     exam={
       <Section id="examen" label="06 — Examen" title={<>Un examen officiel, <em>préparé sans zone d’ombre</em></>} tone="dark"
         intro="Vous connaissez les attendus, vous vous entraînez dans les conditions les plus proches de l’épreuve et vous recevez un retour précis sur votre progression.">
@@ -289,25 +253,9 @@ export function SsiapReferencePage({ sessions }: { sessions: any[] }) {
         <article className={shared.workplaces}><div><Eyebrow>Où exercer ?</Eyebrow><h3>Les établissements qui recrutent</h3></div><ul>{workplaces.map(item => <li key={item}>{item}</li>)}</ul></article>
       </Section>
     }
-    references={
-      <TrainingOfficialReferences id="reperes-officiels" course="ssiap-1" number="07" title={<>Le diplôme SSIAP 1 <em>et l’agrément du centre</em></>}
-        intro="Retrouvez la fiche du diplôme, les conditions de maintien des acquis et l’agrément d’Intégrale Academy."
-        certificateLabel="Diplôme de sécurité incendie" qualification="SSIAP 1" name="Agent de service de sécurité incendie et d’assistance à personnes"
-        registryLabel="Répertoire spécifique · parcours 2027" registryCode="RS7845" url="https://www.francecompetences.fr/recherche/rs/7845/"
-        facts={[['Certificateur', 'Ministère de l’Intérieur et des Outre-mer'], ['Début des parcours certifiants', '1er janvier 2027'], ['Échéance de l’enregistrement', '31 décembre 2027'], ['Formacode', '42811']]}
-        conditionsLabel="Maintien des acquis" profession="Recyclage tous les 3 ans"
-        conditions={['Le secourisme doit rester à jour.', 'Une remise à niveau peut être nécessaire selon la date d’expiration et l’activité exercée.']}
-        professionNote="Notre équipe vous accompagne pour choisir la formation adaptée à votre projet."
-        supplement={<a className={styles.accreditation} href="https://www.integraleacademy.com/_files/ugd/008e7b_cc8ed006f785482f9eee3f22e08c323c.pdf" target="_blank" rel="noopener noreferrer"><Image src="/images/certifications/ssiap-apercu.webp" alt="Aperçu de l’agrément SSIAP d’Intégrale Academy" width={130} height={180} /><div><p className={styles.eyebrow}>Un cadre vérifiable</p><h3>Consultez notre agrément SSIAP</h3><p>Agrément n°8323 · arrêté préfectoral n°26/099 du 29 mai 2026</p><strong>Télécharger l’agrément (PDF) ↗</strong></div></a>}
-        detailsTitle="Le centre agréé et le cadre réglementaire"
-        details={<><dl className={experience.credentials}>{[['Centre agréé', 'SSIAP n°8323'], ['Cadre officiel', 'Arrêté n°26/099 du 29 mai 2026'], ['Formation suivie', '12 stagiaires maximum']].map(([title, text]) => <div key={title}><dt>{title}</dt><dd>{text}</dd></div>)}</dl>
-          <a href="https://www.legifrance.gouv.fr/loda/id/JORFTEXT000000448223" target="_blank" rel="noopener noreferrer">Consulter l’arrêté du 2 mai 2005 modifié sur Légifrance ↗</a></>} />
-    } />
+    />
     <SsiapTestimonials />
     <div id="faq-ssiap"><FaqDirectoryLink embedded theme="red" /></div>
-    <div id="contact-ssiap"><TrainingReferenceContact schoolStyle
-      description="Cassandre, Responsable commerciale, vous aide à vérifier vos prérequis, choisir votre session et trouver la solution de financement adaptée."
-      href={contactHref('rendez-vous téléphonique avec Cassandre')} /></div>
-    <TrainingReferenceMobileBar href="#dates-tarifs" label="Réserver ma place" />
+    <SsiapInitialContact href={contactHref('rendez-vous téléphonique avec Cassandre')} />
   </TrainingReferencePage>;
 }

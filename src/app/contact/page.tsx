@@ -49,7 +49,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<Rec
   const requestHref = informationRequestHref(params);
   const formation = (Array.isArray(params.formation) ? params.formation[0] : params.formation)?.toLowerCase();
   const generalHref = informationRequestHref({ ...params, formation: undefined });
-  const hasSecurityFormation = new URL(requestHref).searchParams.has('formation') && formation !== 'vtc';
+  const hasSecurityFormation = formation === 'ssiap-2' || formation === 'ssiap-3' || (new URL(requestHref).searchParams.has('formation') && formation !== 'vtc');
   const initialInterest: ContactInterest = formation === 'vtc' ? 'vtc' : formation?.startsWith('bts') ? 'bts' : hasSecurityFormation ? 'security' : 'undecided';
   const mainLocation = contact.locations.find(location => location.id === 'puget');
   const otherLocations = contact.locations.filter(location => location.id !== 'puget');

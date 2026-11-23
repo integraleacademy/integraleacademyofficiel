@@ -4,9 +4,19 @@ import Link from 'next/link';
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { formatSessionDate, formatSessionPeriod } from '@/lib/public-sessions';
 import { vtcRegistrationMessage, formatVtcExamDate } from '@/data/vtc';
+import type { toPublicSession } from '@/lib/public-session-data';
 import { planningRegistrationAction } from '@/lib/planning-registration';
 
-export function PlanningRegistration({ session, onClose }: { session: any; onClose: () => void }) {
+export function PlanningRegistrationButton({ session, className }: { session: ReturnType<typeof toPublicSession>; className: string }) {
+  const [open, setOpen] = useState(false);
+  const trigger = useRef<HTMLButtonElement>(null);
+  return <>
+    <button ref={trigger} type="button" className={className} aria-haspopup="dialog" onClick={() => setOpen(true)}>Compléter ma demande d’inscription →</button>
+    {open && <PlanningRegistration session={session} returnLabel="Revenir à ma demande" onClose={() => { setOpen(false); trigger.current?.focus(); }} />}
+  </>;
+}
+
+export function PlanningRegistration({ session, onClose, returnLabel = 'Revenir au planning' }: { session: ReturnType<typeof toPublicSession>; onClose: () => void; returnLabel?: string }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const requestId = useRef('');
   const [sending, setSending] = useState(false);
@@ -46,7 +56,7 @@ export function PlanningRegistration({ session, onClose }: { session: any; onClo
       <p>{session.location}</p>
       {session.scheduleKind === 'vtc-exam' ? <><p>{vtcRegistrationMessage(session.startDate, session.endDate)}</p><p>Examen pratique · {formatVtcExamDate(session.examDate)}</p></> : <><p>{formatSessionPeriod(session.startDate, session.endDate)}</p>{session.examDate ? <p>Examen le {formatSessionDate(session.examDate)}</p> : null}</>}
     </div>
-    {success ? <div role="status"><p className="leading-7">Votre choix et vos coordonnées ont été transmis à notre équipe. Un conseiller vous recontactera pour vérifier les disponibilités, les prérequis et votre financement.</p><p className="mt-3 text-sm text-academy-muted">Votre inscription sera confirmée avec le centre de formation.</p><button type="button" onClick={onClose} className="mt-6 w-full rounded-full bg-academy-ink px-5 py-3 font-bold text-white">Revenir au planning</button></div> : <form onSubmit={submit} className="grid gap-4">
+    {success ? <div role="status"><p className="leading-7">Votre choix et vos coordonnées ont été transmis à notre équipe. Un conseiller vous recontactera pour vérifier les disponibilités, les prérequis et votre financement.</p><p className="mt-3 text-sm text-academy-muted">Votre inscription sera confirmée avec le centre de formation.</p><button type="button" onClick={onClose} className="mt-6 w-full rounded-full bg-academy-ink px-5 py-3 font-bold text-white">{returnLabel}</button></div> : <form onSubmit={submit} className="grid gap-4">
       <p className="text-sm leading-6 text-academy-muted">Indiquez vos coordonnées pour être recontacté au sujet de cette session. Cette demande est sans engagement.</p>
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="text-sm font-bold">Prénom<input name="firstName" autoComplete="given-name" required maxLength={80} className="mt-1 w-full rounded-xl border border-academy-line bg-academy-surface p-3 font-normal" /></label>
