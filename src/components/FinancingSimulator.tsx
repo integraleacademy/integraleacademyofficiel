@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useId, useMemo, useState } from 'react';
 import styles from './FinancingSimulator.module.css';
+import { vtcCourse } from '@/data/vtc';
 
 const paymentOptions = [
   { label: 'Paiement comptant', installments: 1 },
@@ -18,7 +19,7 @@ const formationOptions = [
   { label: 'A3P', amount: 4250 },
   { label: 'DESP initial', amount: 4350 },
   { label: 'DESP en VAE', amount: 3850 },
-  { label: 'Chauffeur VTC', amount: 1500 },
+  { label: vtcCourse.label, amount: vtcCourse.priceCents / 100 },
 ];
 
 function clampAmount(value: number, max: number) {
@@ -202,8 +203,8 @@ function EditorialSimulator({
   </section>;
 }
 
-export default function FinancingSimulator({ variant = 'default' }: { variant?: 'default' | 'editorial' }) {
-  const [formation, setFormation] = useState('APS');
+export default function FinancingSimulator({ variant = 'default', initialFormation = 'APS' }: { variant?: 'default' | 'editorial'; initialFormation?: string }) {
+  const [formation, setFormation] = useState(initialFormation);
   const [cpfAmount, setCpfAmount] = useState(0);
   const [installments, setInstallments] = useState(1);
 

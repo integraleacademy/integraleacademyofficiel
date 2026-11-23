@@ -469,11 +469,12 @@ function MissingDates({
   );
 }
 
-export function PlanningClient({ initialSessions, initialLocation = 'all', requestedFormation, requestedCourse, allDates = false }: {
+export function PlanningClient({ initialSessions, initialLocation = 'all', requestedFormation, requestedCourse, requestedSession, allDates = false }: {
   initialSessions: Session[];
   initialLocation?: SessionLocationFilterKey;
   requestedFormation?: string;
   requestedCourse?: string;
+  requestedSession?: string;
   allDates?: boolean;
 }) {
   const sortedSessions = useMemo(
@@ -487,9 +488,12 @@ export function PlanningClient({ initialSessions, initialLocation = 'all', reque
   const [locationFilter, setLocationFilter] = useState<SessionLocationFilterKey>(initialLocation);
   const [view, setView] = useState<ViewMode>('list');
   const [showAll, setShowAll] = useState(allDates || (initialFormation === 'all' && initialLocation !== 'all'));
-  const [selectedSessionId, setSelectedSessionId] = useState<string | null>(null);
+  const linkedSession = requestedSession && initialFormation === 'vtc'
+    ? initialSessions.find(session => session.id === requestedSession && session.scheduleKind === 'vtc-exam') ?? null
+    : null;
+  const [selectedSessionId, setSelectedSessionId] = useState<string | null>(linkedSession?.id ?? null);
   const [detailSession, setDetailSession] = useState<Session | null>(null);
-  const [registrationSession, setRegistrationSession] = useState<Session | null>(null);
+  const [registrationSession, setRegistrationSession] = useState<Session | null>(linkedSession);
   const sessionTrigger = useRef<HTMLElement | null>(null);
 
   const formationSessionCounts = useMemo(
@@ -538,7 +542,14 @@ export function PlanningClient({ initialSessions, initialLocation = 'all', reque
   function closeSessionDialog() {
     setDetailSession(null);
     setRegistrationSession(null);
-    window.requestAnimationFrame(() => sessionTrigger.current?.focus({ preventScroll: true }));
+    if (requestedSession && !sessionTrigger.current) {
+      const url = new URL(window.location.href);
+      url.searchParams.delete('session');
+      window.history.replaceState(window.history.state, '', url);
+      scrollToSessions();
+    } else {
+      window.requestAnimationFrame(() => sessionTrigger.current?.focus({ preventScroll: true }));
+    }
   }
 
   function scrollToSessions() {
@@ -658,6 +669,7 @@ export function PlanningClient({ initialSessions, initialLocation = 'all', reque
         </div>
       </section>
 
+      {requestedSession && !linkedSession && activeFormation === 'vtc' && <p role="status" className="page-container py-4 font-semibold text-academy-ink">Cette session VTC n’est plus ouverte. Choisissez une autre date dans le planning.</p>}
       <section id="sessions" className={activePlanningTheme + ' page-container py-14 sm:py-20'}>
         <div className={isChoosingDetails ? styles.ssiapPickerHeading : styles.filterBar}>
           {isChoosingDirector ? <div>

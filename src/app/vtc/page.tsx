@@ -7,10 +7,14 @@ import { CourseBrochureCard } from '@/components/CourseBrochureCard';
 import { CourseJourney } from '@/components/CourseJourney';
 import { FaqDirectoryLink } from '@/components/FaqDirectoryLink';
 import { IntegraleWelcomePack } from '@/components/IntegraleWelcomePack';
-import { TrainingCourseTestimonials } from '@/components/TrainingCourseTestimonials';
+import { courseReviewCopy } from '@/components/TrainingCourseTestimonials';
+import { GoogleReviewsSection } from '@/components/GoogleReviewsSection';
+import { listPublicGoogleReviews } from '@/lib/google-reviews-data';
+import { VtcLessonSample } from './VtcLessonSample';
+import { VtcFareWorkshop } from './VtcFareWorkshop';
 import { TrainingDatesPricingSection } from '@/components/TrainingDatesPricingSection';
 import { TrainingEnrollmentSection } from '@/components/TrainingEnrollmentSection';
-import { TrainingHeroSessionCard, trainingRegistrationUrl } from '@/components/TrainingHero';
+import { TrainingHeroSessionCard } from '@/components/TrainingHero';
 import { TrainingPracticeArtwork, TrainingPracticeCards } from '@/components/TrainingPracticeCards';
 import { TrainingProgramExplorer } from '@/components/TrainingProgramExplorer';
 import {
@@ -23,7 +27,7 @@ import { VtcAutonomousEnrollmentBanner } from '@/components/VtcAutonomousEnrollm
 import { AcademyNotification } from '@/components/AcademyNotification';
 import { courseJourneys } from '@/data/courseJourneys';
 import { vtcArtwork } from '@/data/manualIllustrations';
-import { vtcCourse, vtcFormation } from '@/data/vtc';
+import { vtcAppointmentHref, vtcCourse, vtcFormation, vtcFundingHref, vtcRegistrationHref } from '@/data/vtc';
 import { loadPlanningSessions } from '@/lib/planning-sessions';
 import { formatSessionNumericDate } from '@/lib/public-sessions';
 import { createPageMetadata } from '@/lib/seo';
@@ -36,7 +40,6 @@ export const dynamic = 'force-dynamic';
 export const metadata: Metadata = createPageMetadata('/vtc');
 
 const contactHref = (subject: string) => `/contact?formation=vtc&objet=${encodeURIComponent(subject)}`;
-const projectHref = contactHref('Je souhaite m’inscrire à la formation VTC');
 const fundingHref = contactHref('Étude de financement formation VTC');
 const practiceBooking = 'https://admissions.integraleconnect.com/vtc';
 const detailedProgram = 'https://www.canva.com/design/DAFhLhaNPtg/JTpC91OFj5kP1K96Zq7LGQ/view?utm_campaign=designshare&utm_content=DAFhLhaNPtg&utm_medium=link&utm_source=editor';
@@ -109,7 +112,11 @@ function PracticeBooking() {
 }
 
 export default async function VtcPage() {
-  const sessions = (await loadPlanningSessions())
+  const [planning, publishedReviews] = await Promise.all([loadPlanningSessions(), listPublicGoogleReviews()]);
+  const reviews = publishedReviews.filter(review => review.categories.includes('VTC') && review.excerpt.trim());
+  const featuredIds = ['google-9e121d833bd0f44ff7754cef', 'google-92dfe365a0ab0bd6aad6c287'];
+  const featured = [...reviews].sort((a, b) => Number(featuredIds.includes(b.id)) - Number(featuredIds.includes(a.id))).slice(0, 2);
+  const sessions = planning
     .filter(session => session.scheduleKind === 'vtc-exam' && session.vtcDates)
     .sort((a, b) => {
       const first = a.vtcDates?.theory;
@@ -117,19 +124,23 @@ export default async function VtcPage() {
       if (!first || !second) return Number(Boolean(second)) - Number(Boolean(first));
       return +new Date(first) - +new Date(second);
     });
-  const dates = sessions.map(session => session.vtcDates!);
+  const dates = sessions.map(session => ({ ...session.vtcDates!, sessionId: session.id }));
+  const projectHref = vtcRegistrationHref(sessions[0]?.id);
   const next = dates[0];
   const theoryDate = formatSessionNumericDate(next?.theory);
   const deadline = formatSessionNumericDate(next?.deadline);
 
   return <TrainingReferencePage theme="violet" className={styles.page}>
     <TrainingReferenceHero id="chauffeur-vtc" badge="Formation VTC · Côte d’Azur"
-      heading="Formation chauffeur VTC" accent="Prenez le volant" title="PRÊT À DÉMARRER" caption="Votre itinéraire vers le métier"
-      tagline="Théorie en ligne 24/7 · Pratique en présentiel" illustration={vtcArtwork.accueil}
-      description={<p>Une préparation complète pour réussir l’examen VTC et démarrer votre activité avec les bons réflexes — pas seulement une plateforme de cours.</p>}
-      primaryAction={{ href: projectHref, label: 'Je démarre mon projet' }} highlights={['Centre agréé', 'Qualiopi', 'CPF selon éligibilité']}>
+      heading="Devenez chauffeur VTC" accent="sur la Côte d’Azur" title="Chauffeur VTC" caption="Accueil d’un passager"
+      tagline="100 h de théorie en ligne et 5 h au volant avec votre formateur" illustration={vtcArtwork.accueil}
+      description={<p>Révisez à votre rythme, puis entraînez-vous sur un véhicule à double commande. <strong>{vtcCourse.priceLabel}, frais d’examen et prêt du véhicule le jour de l’épreuve inclus.</strong></p>}
+      primaryAction={{ href: projectHref, label: sessions.length ? 'Commencer mon inscription VTC' : 'Demander les prochaines dates' }}
+      secondaryAction={{ href: vtcAppointmentHref, label: 'Prendre rendez-vous avec Cassandre' }}
+      additionalAction={<a className={styles.heroSampleLink} href="#extrait-vtc">Tester une question d’examen blanc</a>}
+      highlights={['Centre agréé', 'Qualiopi', 'CPF selon éligibilité']}>
       <TrainingHeroSessionCard theme="violet" assistantKey="vtc" label="Calendrier VTC" session={sessions[0]}
-        defaultPrice={vtcCourse.priceLabel} defaultLocation={vtcCourse.location} registrationHref={projectHref}
+        defaultPrice={vtcCourse.priceLabel} defaultLocation={vtcCourse.location} registrationHref={sessions[0]?.status === 'FULL' || !sessions.length ? projectHref : '#dates-tarifs'} sessionActionLabel={sessions.length > 1 ? "Choisir une autre date" : "Voir le détail de la session"}
         emptyTitle="Prochain examen théorique à confirmer" emptyDescription="Contactez l’équipe pour connaître la prochaine date d’examen et la limite d’inscription."
         timing={next && { title: theoryDate ? `Prochain examen théorique le ${theoryDate}` : 'Prochain examen théorique à confirmer',
           description: deadline ? <>Inscription avant le <strong>{deadline} à 12 h</strong>.</> : 'Date limite d’inscription à confirmer.' }}
@@ -140,7 +151,14 @@ export default async function VtcPage() {
           { label: 'Tout inclus', value: 'Frais d’examen inclus', details: ['Véhicule fourni à l’examen'] },
         ]} />
     </TrainingReferenceHero>
-    <TrainingSectionNavigation mark="VTC" title="Chauffeur VTC" items={navigationItems} registrationHref={trainingRegistrationUrl} theme="violet" />
+    <TrainingSectionNavigation mark="VTC" title="Chauffeur VTC" items={navigationItems} registrationHref={projectHref} theme="violet" />
+    {featured.length > 0 && <section className={styles.reviewStrip} aria-label="Témoignages de stagiaires VTC">
+      <div className={styles.wrap}><header><h2>Ils ont préparé leur examen avec nous</h2><a href="#avis-vtc">Tous les avis VTC</a></header>
+        <div className={styles.featuredReviews}>{featured.map(review => <figure key={review.id}>
+          <blockquote>« {review.excerpt} »</blockquote><figcaption><a href={review.sourceUrl} target="_blank" rel="noopener noreferrer">{review.author} · Avis Google</a></figcaption>
+        </figure>)}</div></div>
+    </section>}
+    <VtcLessonSample />
 
     <CourseJourney course="vtc">
       <Section id="metier" eyebrow="01 — Le métier" title="Au volant, chaque détail compte"
@@ -156,20 +174,20 @@ export default async function VtcPage() {
 
     <TrainingCourseSections
       admission={<Section id="admission" eyebrow="02 — Admission" title="Votre dossier est-il prêt pour la formation VTC ?" tone="stone">
-        <TrainingAdmission course="vtc" action={projectHref} actionLabel="Vérifier mon dossier"
+        <TrainingAdmission course="vtc" action={contactHref('Vérifier mes prérequis VTC')} actionLabel="Vérifier mon dossier"
           lead={<><h3>Les prérequis<br /><em>à vérifier</em></h3><p>Notre équipe contrôle votre situation avec vous avant la constitution définitive du dossier.</p></>}
           note="Avant de vous inscrire, notre équipe vérifie avec vous les pièces de votre dossier."
           steps={<>Échange avec un conseiller <span>→</span> Vérification des prérequis <span>→</span> Inscription</>}
           points={prerequisites.map(([title, text]) => ({ title, content: <p>{text}</p> }))} />
       </Section>}
 
-      immersion={<Section id="pratique" eyebrow="03 — Immersion & pédagogie" title="Préparez une course de bout en bout"
+      immersion={<><Section id="pratique" eyebrow="03 — Immersion & pédagogie" title="Préparez une course de bout en bout"
         intro="Mises en situation réelles avec un formateur spécialisé VTC." tone="dark">
         <TrainingPracticeCards iconClassName={styles.immersionIcon} items={practice.map(([path, title, text, illustration]) => ({
           icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d={path} /></svg>,
           title, text, visuals: [{ kind: title, illustration: <TrainingPracticeArtwork illustration={illustration} /> }],
         }))} />
-      </Section>}
+      </Section><VtcFareWorkshop /></>}
 
       campus={<TrainingReferenceCampus editorialId="ecole-vtc" title="Apprenez là où vous allez conduire"
         description="Les gares, les hôtels, les aéroports, les événements et les exigences d’une clientèle internationale font de notre territoire un cadre idéal pour apprendre le métier."
@@ -219,7 +237,7 @@ export default async function VtcPage() {
 
       dates={<TrainingDatesPricingSection id="dates-tarifs" eyebrow="07 — Dates & tarifs" title="Votre calendrier jusqu’à l’examen"
         intro="Choisissez votre date d’examen théorique et repérez la limite d’inscription correspondante. Vous pouvez commencer les cours en ligne dès que votre inscription est finalisée."
-        compact theme="violet" sessions={sessions} registrationHref={() => projectHref} defaultPrice={vtcCourse.priceLabel}
+        compact theme="violet" sessions={sessions} registrationHref={session => vtcRegistrationHref(session.id)} fundingSimulatorHref={vtcFundingHref} defaultPrice={vtcCourse.priceLabel}
         priceDescription="Prix tout inclus · Finançable par le CPF selon éligibilité" priceAction={{ href: fundingHref, label: 'Étudier mon financement' }}
         calendar={<VtcExamCalendar dates={dates} />}>
         <AcademyNotification id="notification-vtc" person="cassandre">
@@ -230,18 +248,18 @@ export default async function VtcPage() {
       </TrainingDatesPricingSection>}
 
       enrollment={<>
-        <TrainingEnrollmentSection number="08" title="Du premier appel à votre entrée en formation." registrationAnchor={null}
-          intro="Un rendez-vous téléphonique avec notre équipe vous permet de choisir une date d’examen, de vérifier vos prérequis et de préparer le financement de votre formation VTC."
+        <TrainingEnrollmentSection number="08" title="De votre demande à votre entrée en formation." registrationAnchor={null} fundingSimulatorHref={vtcFundingHref}
+          intro="Choisissez votre examen et transmettez votre demande en ligne. Cassandre peut vous accompagner pour vérifier vos prérequis et préparer votre financement."
           steps={[
-            { title: 'Planifiez votre rendez-vous téléphonique', description: <>Choisissez un créneau pour parler de votre projet de chauffeur VTC.<br /><a href="tel:0422470768">Appeler le 04 22 47 07 68 →</a></> },
+            { title: 'Choisissez votre examen', description: <>Envoyez votre demande pour la date souhaitée. Vous pouvez aussi <a href={vtcAppointmentHref}>réserver un appel avec Cassandre</a>.</> },
             { title: 'Préparez votre projet', description: 'Avec votre conseillère, vérifiez votre permis, les pièces du dossier et la date limite d’inscription à l’examen.' },
             { title: 'Choisissez votre financement', description: <>Étudiez vos droits CPF, une demande auprès de France Travail ou un règlement personnel.<br /><a href={identityUrl} target="_blank" rel="noopener noreferrer">Préparer mon Identité Numérique →</a></> },
-            { title: 'Finalisez votre inscription', description: 'Lors du second échange, validez votre dossier et les modalités de règlement avec votre conseillère.' },
+            { title: 'Finalisez votre inscription', description: 'Avec l’équipe, validez votre dossier et les modalités de règlement avec votre conseillère.' },
             { title: 'Commencez la théorie', description: 'Recevez vos identifiants par e-mail, ouvrez votre première séquence et organisez votre préparation pratique avec l’équipe.' },
           ]}
           registration={{ href: projectHref, label: 'Commencer mon inscription →' }} fundingTitle="Préparez votre financement"
           fundingNote={<><p>Vous souhaitez utiliser votre CPF ?</p><p>Vérifiez vos droits disponibles et préparez votre connexion FranceConnect+ pour valider le dossier.</p>
-            <a href="#inscription">Accéder à l’inscription CPF en autonomie →</a><br /><Link href="/financements">Comprendre les financements →</Link></>}
+            <a href="#inscription">Accéder à l’inscription CPF en autonomie →</a><br /><Link href="/financements?formation=vtc">Comprendre les financements →</Link></>}
           funding={{ href: fundingHref, label: 'Étudier mon financement' }}
           options={[
             ['CPF', 'Mobilisez vos droits. Financement possible selon votre éligibilité et les règles applicables à votre dossier.'],
@@ -276,12 +294,12 @@ export default async function VtcPage() {
           <div><dt>Déclaration d’activité</dt><dd><strong>NDA 93830600283</strong><br />Intégrale Sécurité Formations</dd></div></dl>} />}
     />
 
-    <TrainingCourseTestimonials category="VTC" layout="home" />
+    <div id="avis-vtc"><GoogleReviewsSection reviews={reviews} copy={courseReviewCopy} /></div>
     <div id="faq-vtc"><FaqDirectoryLink embedded theme="violet" /></div>
     <TrainingReferenceContact schoolStyle
       title="Rendez-vous téléphonique avec votre conseillère"
       description="Cassandre, Responsable commerciale, vérifie votre éligibilité, vous explique le calendrier et vous aide à choisir le financement adapté."
-      href={contactHref('Être rappelé au sujet de la formation VTC')} />
-    <TrainingReferenceMobileBar href="#dates-tarifs" label="Voir les dates & tarifs" />
+      href={vtcAppointmentHref} appointmentLabel="Prendre rendez-vous avec Cassandre" />
+    <TrainingReferenceMobileBar href={projectHref} label={sessions.length ? "Commencer mon inscription VTC" : "Contacter Cassandre"} />
   </TrainingReferencePage>;
 }

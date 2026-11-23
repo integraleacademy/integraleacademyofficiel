@@ -16,6 +16,15 @@ export const vtcCourse = {
   examNotice: 'La CMA peut ajuster ces dates. Votre convocation précise le jour et l’heure de votre passage.',
 } as const;
 
+export const vtcCpfEnrollmentHref = 'https://assistance-alw9.onrender.com/inscriptions';
+export const vtcFundingHref = '/financements?formation=vtc#simulateur';
+export const vtcAppointmentHref = 'https://calendly.com/integraleacademy/chauffeurvtc';
+
+export function vtcRegistrationHref(sessionId?: string | number | null) {
+  if (!sessionId) return vtcAppointmentHref;
+  return '/planning?formation=vtc&session=' + encodeURIComponent(String(sessionId)) + '#sessions';
+}
+
 // Shared by the VTC page and the planning: these are exam milestones,
 // not fixed start/end dates for the online training.
 // CMA PACA 2027: https://www.cmar-paca.fr/galerie/1/0a500ccd55a994cd8ef5b03c77af67b9.pdf
