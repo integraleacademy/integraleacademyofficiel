@@ -10,7 +10,6 @@ import { informationRequestHref } from '@/lib/contact-request';
 import Link from 'next/link';
 import { TrainingHeroSessionCard } from '@/components/TrainingHero';
 import { TrainingMissionCards } from './TrainingMissionCards';
-import { TrainingPracticeCards } from './TrainingPracticeCards';
 import { TrainingAdmission, TrainingExamExperience, TrainingOfficialReferences } from './ApsExperienceSections';
 import { TrainingFundingOptions } from './TrainingFundingOptions';
 import reference from './ApsReferencePage.module.css';
@@ -26,7 +25,7 @@ import { TrainingProgramDownload } from '@/components/TrainingProgramDownload';
 import { TrainingProgramExplorer } from '@/components/TrainingProgramExplorer';
 import { IntegraleWelcomePack } from '@/components/IntegraleWelcomePack';
 import { ManualArtwork } from '@/components/ManualArtwork';
-import { a3pArtwork, a3pPracticeArtwork } from '@/data/manualIllustrations';
+import { a3pArtwork } from '@/data/manualIllustrations';
 import { a3pConfig, a3pContact, a3pEmployerSectors, a3pEnrollmentSteps, a3pInsertionStats, a3pPrerequisites, a3pProgram, a3pWorkConditions } from '@/data/a3p';
 
 type CTAStyle = 'dark' | 'green' | 'light' | 'outline';
@@ -42,20 +41,14 @@ function CTA({ href, children, variant = 'green', className = '' }: { href: stri
   return <Link href={href} className={`inline-flex min-h-12 items-center justify-center rounded-full px-5 py-3 text-center text-sm font-black transition hover:-translate-y-0.5 focus:outline-none focus:ring-4 focus:ring-emerald-300/55 ${styles[variant]} ${className}`}>{children}</Link>;
 }
 
-function Label({ children, light = false }: { children: React.ReactNode; light?: boolean }) {
-  return <p className={`text-[.66rem] font-black uppercase tracking-[.24em] ${light ? 'text-emerald-300' : 'text-emerald-700'}`}>{children}</p>;
+function Label({ children }: { children: React.ReactNode }) {
+  return <p className="text-[.66rem] font-black uppercase tracking-[.24em] text-emerald-700">{children}</p>;
 }
 
 function sessionRegistrationHref(session: any) {
   if (!session?.id) return a3pContact('prochaine-session');
   return `/contact?formation=a3p-apr&session=${encodeURIComponent(String(session.id))}`;
 }
-
-const métierCards = [
-  ['01', 'Anticiper les risques', 'Identifier les menaces, étudier les vulnérabilités et construire un dispositif adapté au contexte.'],
-  ['02', 'Sécuriser les déplacements', 'Préparer les itinéraires, les arrivées, les départs et les déplacements pédestres ou véhiculés.'],
-  ['03', 'Protéger avec discrétion', 'Préserver l’intégrité et la vie privée de la personne protégée sans perturber ses activités.'],
-];
 
 const audiences = [
   'Reconversion professionnelle',
@@ -67,11 +60,12 @@ const audiences = [
 ];
 
 const skillPillars = [
-  { icon: '◎', title: 'Préparer une mission complète', text: 'Recueillir les informations, analyser les risques, définir les moyens, organiser le dispositif et préserver la confidentialité.', featured: true },
-  { icon: '⌖', title: 'Reconnaître les lieux', text: 'Étudier les accès, itinéraires, zones d’arrivée et solutions de repli.' },
-  { icon: '↗', title: 'Protéger en déplacement', text: 'Adopter les positionnements adaptés à pied ou en véhicule.', dark: true },
-  { icon: '✚', title: 'Réagir à l’urgence', text: 'Gérer le conflit, porter secours et coordonner les intervenants.', dark: true },
-  { icon: '§', title: 'Agir dans le cadre légal', text: 'Communiquer, rendre compte et respecter les limites d’intervention.' },
+  { title: 'Évaluer les risques', text: 'Identifier ce qui peut exposer le client à un danger et expliquer les priorités retenues.', illustration: originalArtwork['a3p-galerie-risques'] },
+  { title: 'Préparer une mission', text: 'Organiser le travail de l’équipe à partir de la demande du client et des moyens disponibles.', illustration: originalArtwork['a3p-mission-preparation'] },
+  { title: 'Reconnaître les lieux', text: 'Vérifier sur place les informations dont l’équipe aura besoin le jour de la mission.', illustration: originalArtwork['a3p-competence-preparer'] },
+  { title: 'Sécuriser un déplacement', text: 'Assurer la continuité de l’accompagnement du client, à pied comme en véhicule.', illustration: originalArtwork['a3p-competence-proteger'] },
+  { title: 'Réagir à une urgence', text: 'Désamorcer un conflit ou, en cas d’accident, donner l’alerte et porter secours.', illustration: originalArtwork['a3p-competence-secours'] },
+  { title: 'Agir dans le cadre légal', text: 'Respecter les limites de son intervention et rendre compte de ses décisions.', illustration: originalArtwork['a3p-competence-cadre'] },
 ];
 
 const programPhases = [
@@ -81,16 +75,13 @@ const programPhases = [
   ['04', 'Certification hors durée', 'QCU contextualisés, évaluations pratiques, dossier de mission complète et soutenance devant le jury.'],
 ];
 
-const practices = [
-  { title: 'Préparation de mission', text: 'Recueillir les informations, définir les moyens et préparer les itinéraires pour organiser une mission complète.', scene: 'mission-map', icon: '▤', focus: '36%' },
-  { title: 'Analyse des risques', text: 'Identifier les menaces et les vulnérabilités, puis adapter le dispositif à la personne protégée et à son environnement.', scene: 'risk-radar', icon: '◎', focus: '50%' },
-  { title: 'Reconnaissance de sites', text: 'Étudier les accès, les zones d’arrivée, les cheminements et les solutions de repli avant le déroulement de la mission.', scene: 'site-check', icon: '⌖', focus: '36%' },
-  { title: 'Déplacements pédestres', text: 'Travailler les positionnements, les déplacements en équipe et la communication autour de la personne protégée.', scene: 'close-protection', icon: '↗', focus: '34%' },
-  { title: 'Dispositifs véhiculés', text: 'Préparer les trajets, les arrivées et les départs, puis coordonner les déplacements avec les autres membres du dispositif.', scene: 'secure-vehicle', icon: '⇄', focus: '39%' },
-  { title: 'Scénarios professionnels', text: 'Réagir à une situation imprévue, reconnaître une anomalie et coordonner une réponse adaptée pendant les exercices encadrés.', scene: 'hazard', icon: '◇', focus: '36%' },
-  { title: 'Secours aux personnes', text: 'S’entraîner aux gestes de secours, à l’alerte et à la coordination de l’intervention dans le cadre des séquences de secourisme.', scene: 'cpr', icon: '✚', focus: '36%' },
-  { title: 'Briefings & débriefings', text: 'Partager les consignes, répartir les rôles, rendre compte de la mission et analyser les décisions avec le formateur.', scene: 'briefing', icon: '☏', focus: '42%' },
-] as const;
+const exerciseSteps = [
+  ['Briefing', 'Le formateur présente le rendez-vous fictif et précise ce qu’il observera pendant la séance.'],
+  ['Découverte du lieu', 'Avec le groupe, vous découvrez l’espace dans lequel vous allez jouer la scène.'],
+  ['Répartition des rôles', 'Un participant joue le client. Les autres prennent leur place dans l’équipe qui l’accompagne.'],
+  ['Mise en situation', 'Le client arrive à son rendez-vous. Le groupe joue la scène sous le regard du formateur.'],
+  ['Débriefing', 'Le participant qui jouait le client partage son ressenti. Avec le formateur, vous revenez sur vos choix et identifiez un point à retravailler.'],
+];
 
 const examSteps = [
   ['QCU contextualisés', 'Les connaissances de chaque UV sont vérifiées dans des situations proches du métier.'],
@@ -158,23 +149,14 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
       description="Découvrez la formation A3P d’Intégrale Academy à Puget-sur-Argens, sur la Côte d’Azur." />
 
     <CourseJourney course="a3p">
-      <Section id="metier" label="01 — Le métier" title={<>Protéger, anticiper, <span className="decoration-emerald-500 decoration-[.16em] underline underline-offset-[-.03em]">décider</span></>} intro="L’agent de protection physique des personnes assure la sécurité de dirigeants, personnalités, artistes ou toute personne exposée. Son rôle : préparer la mission, analyser les risques et protéger avec efficacité, proportionnalité et discrétion."
+      <Section id="metier" label="01 — Le métier" title={<>Le rôle de l’agent auprès de <em>son client</em></>} intro="Un dirigeant, une artiste ou un particulier peut faire appel à un agent de protection rapprochée pour sa sécurité personnelle, dans sa vie professionnelle comme dans sa vie privée."
         fullWidthFooter={
           <CourseFilm film="neo" followPageSound title="C’est quoi, le métier" titleAccent="de garde du corps ?"
             description="Après vingt ans en protection rapprochée, Véronique forme les futurs gardes du corps chez Intégrale Academy. Au micro de Néo, elle raconte son métier." />
         }>
         <TrainingMissionCards items={[
-          ...métierCards.map(([, title, description], index) => ({
-            title, description, illustration: [originalArtwork['a3p-mission-preparation'], originalArtwork['a3p-mission-trajets'], a3pArtwork.discretion][index],
-            landscapeFocus: '50% 32%',
-          })),
-          { title: 'De la préparation au débriefing', description: 'Une lecture concrète du métier avant le détail du programme.',
-            illustration: originalArtwork['a3p-mission-ensemble'], body: <>
-              <p><strong>Protection en mouvement</strong> · Reconnaître · encadrer · sécuriser</p>
-              <p className="mt-2 text-sm">Mission simulée · Dispositif actif</p>
-              <p className="mt-4 font-bold">Une mission, cinq temps forts</p>
-              <ol className={styles.missionSteps}>{['Briefing', 'Reconnaissance', 'Dispositif', 'Déplacement', 'Débriefing'].map((step, index) => <li key={step}><span>{String(index + 1).padStart(2, '0')}</span>{step}</li>)}</ol>
-            </> },
+          { title: 'Accompagner le client au quotidien', description: 'Lors d’un rendez-vous ou d’un événement public, l’agent veille sur son client tout en lui laissant la liberté d’échanger avec son entourage.', illustration: originalArtwork['a3p-mission-ensemble'] },
+          { title: 'Respecter sa vie privée', description: 'Un agent partage parfois des moments personnels et entend des conversations confidentielles. La confiance du client repose sur sa discrétion.', illustration: originalArtwork['a3p-mission-relation'] },
         ]} />
         <article className={`${reference.liftCard} mt-8 grid gap-5 rounded-[2rem] border border-academy-line bg-white p-6 shadow-soft lg:grid-cols-[.7fr_1.3fr] lg:p-8`}>
           <div><Label>À qui s’adresse la formation ?</Label><h3 className="mt-3 text-3xl font-black">Un parcours ouvert à plusieurs profils</h3></div>
@@ -204,12 +186,12 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
       }
       immersion={
         <>
-          <Section id="competences" label="03 — Compétences" title={<>Ce que vous saurez faire <span className="decoration-emerald-500 decoration-[.16em] underline underline-offset-[-.03em]">sur le terrain</span></>} intro="Les compétences du bloc unique sont présentées en cinq piliers métier. Le programme officiel détaillé par unité de valeur figure juste après.">
+          <Section id="competences" label="03 — Compétences" title={<>Ce que vous saurez faire <em>en fin de formation</em></>}>
             <div className={styles.skillsGrid}>
-              {skillPillars.map((skill, index) => (
-                <article key={skill.title} className={`${styles.skillCard} ${skill.featured ? styles.featuredSkill : skill.dark ? styles.darkSkill : ''}`}>
+              {skillPillars.map(skill => (
+                <article key={skill.title} className={styles.skillCard}>
                   <div className={styles.skillArtwork}>
-                    <ManualArtwork illustration={[originalArtwork['a3p-mission-relation'], originalArtwork['a3p-competence-preparer'], originalArtwork['a3p-competence-proteger'], originalArtwork['a3p-competence-secours'], originalArtwork['a3p-competence-cadre']][index]} natural sizes="(max-width: 639px) 92vw, (max-width: 1023px) 46vw, 360px" />
+                    <ManualArtwork illustration={skill.illustration} natural sizes="(max-width: 639px) 92vw, (max-width: 1023px) 46vw, 33vw" />
                   </div>
                   <div className={styles.skillCopy}>
                     <h3>{skill.title}</h3>
@@ -219,17 +201,16 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
               ))}
             </div>
           </Section>
-          <Section id="pedagogie" label="05 — Immersion & pédagogie" title={<>Un terrain d’entraînement qui <span className="text-emerald-300">ressemble au vrai</span></>} intro="Zones urbaines, axes routiers et environnements variés permettent de construire des exercices réalistes entre Cannes et Saint-Tropez." tone="dark">
-            <TrainingPracticeCards items={practices.map(practice => ({
-              title: practice.title, text: practice.text, icon: practice.icon,
-              visuals: [{ kind: practice.scene, illustration: <div className={styles.landscapeArt}>
-                <Image {...a3pPracticeArtwork[practice.scene]} fill sizes="(max-width: 767px) 90vw, 540px" style={{ objectPosition: `50% ${practice.focus}` }} />
-              </div> }],
-            }))} />
-            <div className="mt-7 grid gap-4 rounded-[1.7rem] border border-emerald-300/25 bg-emerald-400/10 p-6 lg:grid-cols-[auto_1fr] lg:items-center">
-              <span aria-hidden="true" className="grid h-14 w-14 place-items-center rounded-2xl bg-emerald-300 text-2xl font-black text-emerald-950">✓</span>
-              <div><Label light>École de Puget-sur-Argens</Label><h3 className="mt-2 text-xl font-black text-emerald-200">Entraînez-vous dans des configurations variées</h3><p className="mt-2 max-w-4xl leading-7 text-white/70">La progression alterne démonstrations, exercices individuels, travail en équipe, scénarios professionnels et débriefings.</p></div>
-            </div>
+          <Section id="pedagogie" label="05 — Immersion & pédagogie" title={<>Comment se déroule <span className="text-emerald-300">un exercice&nbsp;?</span></>} intro="Entre Cannes et Saint-Tropez, les stagiaires s’entraînent en groupe avec leur formateur. Voici un exemple de séance." tone="dark">
+            <article className={styles.exercise}>
+              <div>
+                <h3>Accompagner un client à un rendez-vous</h3>
+                <ManualArtwork illustration={originalArtwork['a3p-mission-trajets']} className={styles.exerciseArtwork} natural sizes="(max-width: 799px) 92vw, 46vw" />
+              </div>
+              <ol className={styles.exerciseSteps}>
+                {exerciseSteps.map(([title, description]) => <li key={title}><strong>{title}</strong><p>{description}</p></li>)}
+              </ol>
+            </article>
           </Section>
         </>
       }

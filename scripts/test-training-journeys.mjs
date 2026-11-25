@@ -28,8 +28,23 @@ try {
     assert.ok(positions.travel > 0, route);
     await page.evaluate(y => scrollTo({ top: y, behavior: 'instant' }), positions.start - 80);
     await page.mouse.move(400, 440);
-    for (const step of [1, 2, 3, 4, 3, 2, 1, 4]) {
-      const y = positions.start + (step - 0.5) * positions.travel / 4;
+    const stepCount = route === '/formations-securite/a3p-apr' ? 2 : 4;
+    assert.equal(await journey.locator('nav button').count(), stepCount, route);
+    if (route === '/formations-securite/a3p-apr') {
+      const skills = page.locator('#competences');
+      const exercise = page.locator('#pedagogie article');
+      assert.equal(await skills.getByRole('heading', { name: 'Évaluer les risques' }).count(), 1);
+      assert.doesNotMatch(await page.locator('#metier').innerText(), /risques/i);
+      assert.doesNotMatch(await journey.locator('header + ol').textContent(), /risques/i);
+      assert.equal(await exercise.count(), 1);
+      assert.doesNotMatch(await exercise.innerText(), /risques/i);
+      assert.equal(await exercise.locator('img').count(), 1);
+      assert.deepEqual(await exercise.locator('ol li strong').allTextContents(),
+        ['Briefing', 'Découverte du lieu', 'Répartition des rôles', 'Mise en situation', 'Débriefing']);
+    }
+    const order = Array.from({ length: stepCount }, (_, index) => index + 1);
+    for (const step of [...order, ...order.slice(0, -1).reverse(), stepCount]) {
+      const y = positions.start + (step - 0.5) * positions.travel / stepCount;
       await page.mouse.wheel(0, y - await page.evaluate(() => scrollY));
       await page.waitForFunction(y => Math.abs(scrollY - y) < 3, y);
       await journey.locator('nav button').nth(step - 1).and(page.locator('[aria-current="step"]')).waitFor();

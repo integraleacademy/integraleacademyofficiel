@@ -67,20 +67,13 @@
 .skillCopy { min-width: 0; padding: 1.25rem; }
 .skillCopy h3 { font-size: 1.125rem; font-weight: 900; line-height: 1.3; letter-spacing: -.035em; text-wrap: balance; }
 .skillCopy p { margin-top: .65rem; color: #5e5749; font-size: .875rem; font-weight: 600; line-height: 1.75; }
-.featuredSkill { grid-column: 1 / -1; border-color: #a7d9c4; background: #ecfdf5; color: #064e3b; }
-.featuredSkill .skillCopy h3 { font-size: clamp(1.4rem, 2vw, 1.75rem); }
-.featuredSkill .skillCopy p { max-width: 46rem; color: #285c4c; }
-.darkSkill { border-color: #0d1725; background: #0d1725; color: #fff; }
-.darkSkill .skillCopy p { color: rgba(255, 255, 255, .72); }
 
 @media (min-width: 640px) {
   .skillsGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .featuredSkill { display: grid; grid-template-columns: minmax(220px, 26%) minmax(0, 1fr); align-items: center; }
-  .featuredSkill .skillCopy { padding: clamp(1.25rem, 3vw, 2.5rem); }
 }
 
 @media (min-width: 1024px) {
-  .skillsGrid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .skillsGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
 @media (min-width: 1024px) {
@@ -277,11 +270,22 @@
   .phases, .audience ul, .jobList { grid-template-columns: minmax(0, 1fr); }
 }
 
-.landscapeArt { position:relative; width:100%; height:100%; min-width:0; aspect-ratio:3 / 2; }
-.landscapeArt img { object-fit:cover; }
-.missionSteps { display:flex; gap:.5rem 1rem; flex-wrap:wrap; margin-top:.65rem; font-size:.8rem; }
-.missionSteps li { display:flex; align-items:center; gap:.4rem; }
-.missionSteps span { color:var(--course-pale); font-weight:750; }
+.exercise {
+  display: grid;
+  align-items: center;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+}
+.exercise h3 { margin-bottom: 1rem; color: #fff; font-size: clamp(1.35rem, 2.2vw, 2rem); font-weight: 750; line-height: 1.2; }
+.exerciseArtwork { border-radius: 1rem; }
+.exerciseSteps { display: grid; gap: .85rem; padding-left: 2rem; list-style: decimal-leading-zero; }
+.exerciseSteps li { border-bottom: 1px solid #ffffff28; padding: 0 0 .85rem .5rem; }
+.exerciseSteps li:last-child { border: 0; padding-bottom: 0; }
+.exerciseSteps li::marker { color: var(--course-pale); font-weight: 750; }
+.exerciseSteps strong { display: block; color: #fff; font-size: 1.05rem; }
+.exerciseSteps p { margin-top: .25rem; color: #d0dedc; line-height: 1.55; }
+@media (min-width: 800px) {
+  .exercise { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
 .course [id='examen'] h2 em { color:var(--course-pale); }
 .accessibility { display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center; gap:1.5rem; margin-top:2rem; padding:1.4rem 0; border-top:1px solid #cbd8ce; }
 .accessibility h3 { margin-top:.4rem; font-size:1.18rem; font-weight:750; }

@@ -9,7 +9,6 @@ const styles = read('src/components/TrainingMotionGallery.module.css');
 const despCards = read('src/components/DespIllustratedCards.tsx');
 const illustratedCards = read('src/components/TrainingIllustratedCards.tsx');
 const pages = {
-  a3p: read('src/components/A3pReferencePage.tsx'),
   ssiap: read('src/components/SsiapReferencePage.tsx'),
   sst: read('src/components/SstReferencePage.tsx'),
   despVae: read('src/app/formations-securite/desp-vae/page.tsx'),
@@ -42,18 +41,6 @@ test('chaque formation affiche ses scènes dans la galerie ou les cartes métier
   const sharedCard = illustratedCards.slice(illustratedCards.indexOf('<article key={item.title}'), illustratedCards.indexOf('</article>'));
   assert.ok(sharedCard.includes('<TrainingMotionIllustration kind={scene.kind} theme={theme} description={scene.description} />'));
   for (const [variant, source] of Object.entries(pages)) {
-    if (variant === 'a3p') {
-      const immersion = source.slice(source.indexOf('<Section id="pedagogie"'), source.indexOf('<Section id="certification"'));
-      const card = immersion.slice(immersion.indexOf('<article key={practice.title}'), immersion.indexOf('</article>'));
-      assert.ok(card.includes('<TrainingMotionIllustration kind={practice.scene} theme="green" description={practice.visualDescription} />'));
-      assert.doesNotMatch(source, /<TrainingMotionGallery variant="a3p"/);
-      const practices = source.slice(source.indexOf('const practices = ['), source.indexOf('const examSteps = ['));
-      for (const scene of ['mission-map', 'risk-radar', 'site-check', 'close-protection', 'secure-vehicle', 'hazard', 'cpr', 'briefing']) {
-        assert.ok(practices.includes(`scene: '${scene}'`), `visuel A3P manquant : ${scene}`);
-      }
-      assert.ok(practices.includes('Secours aux personnes'));
-      continue;
-    }
     if (variant === 'despInitial' || variant === 'despVae') {
       const initial = variant === 'despInitial';
       const sectionId = initial ? 'metier' : 'parcours';
@@ -119,8 +106,7 @@ test('les animations respectent la préférence de mouvement réduit', () => {
   assert.match(styles, /@media \(prefers-reduced-motion: reduce\)[\s\S]*?animation:\s*none !important;/);
 });
 
-test('A3P et SSIAP conservent leur scène principale en plus des cartes détaillées', () => {
-  assert.match(pages.a3p, /<MissionAnimation variant="a3p"/);
+test('SSIAP conserve sa scène principale en plus des cartes détaillées', () => {
   assert.match(pages.ssiap, /<MissionAnimation variant="ssiap"/);
 });
 

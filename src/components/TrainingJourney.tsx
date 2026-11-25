@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
+import { useCallback, useEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 import styles from './TrainingJourney.module.css';
 
 export type TrainingJourneyStep = {
@@ -221,7 +221,7 @@ export function TrainingJourney({ id, name, eyebrow, title, steps, continuationH
   );
 
   return (
-    <section id={id} ref={trackRef} className={styles.journey} data-enhanced={enhanced} data-theme={theme} data-navigation-only="true" data-visual-format="landscape" aria-labelledby={`${id}-title`}>
+    <section id={id} ref={trackRef} className={styles.journey} style={{ '--journey-step-count': steps.length } as CSSProperties} data-enhanced={enhanced} data-theme={theme} data-navigation-only="true" data-visual-format="landscape" aria-labelledby={`${id}-title`}>
       <div ref={pinnedRef} className={styles.trackContent}>
         <div className={styles.surface}>{stage}</div>
         <div ref={continuationRef} className={styles.continuationTarget} data-journey-continuation id={continuationHref ? undefined : `${id}-suite`}>

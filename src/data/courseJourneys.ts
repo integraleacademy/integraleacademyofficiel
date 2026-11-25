@@ -10,46 +10,41 @@ type Panel = { label: string; value: string; unit: string; detail: string };
 type PracticeRow = { title: string; text: string };
 type Milestone = { label: string; title: string; text: string; href: string };
 
-export type CourseJourneyConfig = {
+type JourneyOverview = {
   id: string;
   name: string;
   theme: TrainingJourneyTheme;
   eyebrow: string;
   heading: Pair<string>;
-  steps: Four<Copy>;
-  opening: { kicker: string; heading: Pair<string>; text: string; verbs: Three<string>; image?: string };
-  study: { value: string; unit: string; heading: Pair<string>; panels: Pair<Panel>; skills: Four<string> };
-  practice: { heading: Pair<string>; eyebrow: string; rows: Three<PracticeRow>; note: string };
+  opening: { kicker: string; heading: Pair<string>; text: string; verbs?: Three<string>; image?: string };
   outcome: { heading: Pair<string>; code: string; role: string; milestones: Pair<Milestone>; note: string };
 };
+
+type FullJourney = JourneyOverview & {
+  steps: Four<Copy>;
+  study: { value: string; unit: string; heading: Pair<string>; panels: Pair<Panel>; skills: Four<string> };
+  practice: { heading: Pair<string>; eyebrow: string; rows: Three<PracticeRow>; note: string };
+};
+
+type ShortJourney = JourneyOverview & { steps: Pair<Copy>; study?: never; practice?: never };
+export type CourseJourneyConfig = FullJourney | ShortJourney;
 
 function copy(label: string, title: string, description: string, href: string, link: string): Copy {
   return { label, title, description, href, link };
 }
 
 // Editorial summaries of the existing course pages. Dates, prices and availability
-// remain in their administered sections, linked from these four-stage introductions.
+// remain in their administered sections, linked from these introductions.
 const professionalJourneys = {
   'a3p': {
     id: 'parcours-a3p', name: 'A3P', theme: 'green', eyebrow: 'PROTECTION RAPPROCHÉE · A3P',
-    heading: ['Votre ambition : protéger.', 'Votre parcours commence ici'],
+    heading: ['Votre parcours', 'de formation A3P'],
     steps: [
-      copy('Votre projet', 'La protection rapprochée commence par l’anticipation', 'Comprendre un environnement, préparer un déplacement et protéger avec discrétion : découvrez les exigences d’un métier où chaque détail compte. Notre équipe vérifie avec vous les conditions d’entrée en formation.', '#admission', 'Préparer mon entrée'),
-      copy('Votre formation', 'Un programme intensif. Des compétences concrètes', '328 heures hors examen pour travailler le cadre professionnel, la préparation de mission et les techniques de protection. Le parcours se déroule en présentiel à Puget-sur-Argens.', '#programme', 'Explorer le programme'),
-      copy('L’immersion terrain', 'Préparer, se coordonner et s’adapter', 'Reconnaissance de sites, déplacements et scénarios de protection : les exercices vous apprennent à agir en équipe. Briefings et débriefings permettent de comprendre vos choix et de progresser.', '#pedagogie', 'Découvrir les exercices'),
-      copy('Votre prochain chapitre', 'Préparez le TFP A3P et la suite de votre parcours', 'Vous vous préparez aux évaluations écrites, aux mises en situation et à la soutenance. Après la réussite, la demande de carte professionnelle A3P auprès du CNAPS constitue une étape distincte.', '#inscription', 'Préparer mon inscription'),
+      copy('Votre candidature', 'Pouvez-vous rejoindre la prochaine session ?', 'Un conseiller fait le point avec vous sur votre expérience et les pièces à réunir avant l’inscription.', '#admission', 'Voir les conditions d’entrée'),
+      copy('Votre certification', 'Quel titre préparez-vous ?', 'En fin de formation, vous présentez au jury un dossier sur une mission réalisée pendant votre parcours.', '#inscription', 'Préparer mon inscription'),
     ],
-    opening: { image: originalArtwork['a3p-parcours'].src, kicker: 'DISCRÉTION, PRÉCISION ET ACTION', heading: ['Une présence discrète.', 'Un rôle décisif'], text: 'Apprenez à anticiper les risques et à protéger les personnes, en équipe et sur le terrain.', verbs: ['Anticiper', 'Préparer', 'Protéger'] },
-    study: { value: '328', unit: 'HEURES · HORS EXAMEN', heading: ['Apprendre le métier.', 'Dans toute sa dimension'], panels: [
-      { label: 'LE SOCLE', value: '41', unit: 'heures', detail: 'Les fondamentaux de la sécurité privée' },
-      { label: 'LA SPÉCIALITÉ', value: '287', unit: 'heures', detail: 'La protection physique des personnes' },
-    ], skills: ['Préparation de mission', 'Analyse des risques', 'Protection en déplacement', 'Gestion de l’urgence'] },
-    practice: { heading: ['L’entraînement fait', 'la différence'], eyebrow: '92 H 50 DE PRATIQUE DANS LE PARCOURS', rows: [
-      { title: 'Reconnaître les lieux', text: 'Étudier les accès, itinéraires et solutions de repli.' },
-      { title: 'Travailler en équipe', text: 'Coordonner les déplacements et la communication.' },
-      { title: 'Préparer une mission', text: 'Analyser, organiser puis débriefer un scénario.' },
-    ], note: 'Des mises en situation encadrées, au plus près du métier.' },
-    outcome: { heading: ['Votre engagement.', 'Une nouvelle trajectoire'], code: 'A3P', role: 'Agent de protection physique des personnes', milestones: [
+    opening: { image: originalArtwork['a3p-parcours'].src, kicker: 'PUGET-SUR-ARGENS · VAR', heading: ['Votre formation', 'en présentiel'], text: 'L’école accueille jusqu’à 12 stagiaires par session A3P.' },
+    outcome: { heading: ['Après', 'la formation'], code: 'A3P', role: 'Agent de protection physique des personnes', milestones: [
       { label: '01 · CERTIFICATION', title: 'Le TFP A3P', text: 'Préparer et réussir les évaluations', href: '#examen' },
       { label: '02 · EXERCICE', title: 'La carte pro', text: 'Déposer votre demande au CNAPS', href: '#references-rncp' },
     ], note: 'Le titre et la carte professionnelle sont deux étapes distinctes.' },
@@ -240,7 +235,7 @@ type BtsJourneyProfile = {
   hasBenefitsSection?: boolean;
 };
 
-function btsJourney(profile: BtsJourneyProfile): CourseJourneyConfig {
+function btsJourney(profile: BtsJourneyProfile): FullJourney {
   const rhythm = btsRhythms[profile.code];
   return {
     id: `parcours-bts-${profile.code.toLowerCase()}`, name: `BTS ${profile.code}`, theme: 'bts', eyebrow: `VOTRE AVENIR EN ALTERNANCE · BTS ${profile.code}`,
