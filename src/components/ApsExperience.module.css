@@ -47,7 +47,7 @@
 .programTabs > button[aria-selected='true'] { background:var(--experience-tint,#e6eff8); border-bottom-color:transparent; }
 .programTabs > button[aria-selected='true'] > span:last-child { opacity:1; }
 .programDetail { display:grid; overflow:hidden; border-radius:18px; background:#eef3f8; }
-.programImage { display:block; width:100%; height:auto; aspect-ratio:3/2; object-fit:contain; border-radius:14px; }
+.programImage { display:block; width:100%; height:auto; aspect-ratio:3/2; object-fit:cover; border-radius:14px; }
 .programPanel { grid-area:1/1; display:flex; flex-direction:column; min-width:0; padding:24px; }
 /* Reserve the tallest panel so selecting a shorter unit never shifts the page.
    Inactive panels remain invisible, aria-hidden and inert. */

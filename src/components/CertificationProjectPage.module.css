@@ -34,7 +34,7 @@
 .program :global([class*='programHours']) > strong > span { margin-left:0; letter-spacing:-.02em; }
 .program :global([class*='programTabs']) > button[aria-selected='true'] { background:rgba(var(--course-rgb),.1); }
 .program :global([class*='programDetail']) { background:rgba(var(--course-rgb),.065); }
-.program :global([class*='programImage']) { aspect-ratio:1; width:190px; justify-self:center; background:white; padding:12px; }
+.program :global([class*='programImage']) { aspect-ratio:1; object-fit:contain; width:190px; justify-self:center; background:white; padding:12px; }
 .program :global([class*='panelNavigation']) button { background:var(--course-accent); color:#fff; padding:11px 17px; border-radius:999px; font-size:12px; }
 .program :global([class*='programTabs']) { max-height:none; }
 .evaluation h2 em { color:var(--course-pale); }
