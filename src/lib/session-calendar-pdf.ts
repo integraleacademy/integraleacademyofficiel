@@ -1,136 +1,231 @@
-import { PDFDocument, StandardFonts, rgb, type PDFFont, type PDFPage } from 'pdf-lib';
+import fontkit from '@pdf-lib/fontkit';
+import { PDFDocument, PageSizes, type PDFImage } from 'pdf-lib';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
-import { calendarDate, calendarMonthName, holidayDates, type SessionCalendar, type PhaseKind } from './session-calendar';
+import { CalendarPage, CONTENT, HEIGHT, MARGIN, WIDTH, palette, type PdfFonts } from './calendar-pdf-page';
+import { calendarMonths, calendarWeeks, capitalized, drawLegend, drawMonth, monthCardHeight, phaseAccent } from './calendar-pdf-months';
+import { calendarMonthName, type PhaseKind, type SessionCalendar } from './session-calendar';
+import type { DetailedCalendarCourse } from './detailed-calendar-eligibility';
 
-const W = 595.28, H = 841.89, M = 36;
-const color = (hex: number) => rgb((hex >> 16) / 255, ((hex >> 8) & 255) / 255, (hex & 255) / 255);
-const ink = color(0x13243c), muted = color(0x41556a), navy = color(0x102139), gold = color(0xe4b357), white = color(0xffffff);
-const styles: Record<PhaseKind, [string, number]> = {
-  formation: ['Formation', 0xd9eaf6], distance: ['À distance', 0xe7e0f6], centre: ['En centre', 0xcfeae2],
-  entreprise: ['Entreprise', 0xf5e8cb], examen: ['Examen', 0x182e50], inscription: ['Inscription', 0xf9d9cd],
+const courses: Record<DetailedCalendarCourse, { label: string; name: string }> = {
+  aps: { label: 'TFP APS', name: 'Agent de prévention et de sécurité' },
+  'ssiap-1': { label: 'SSIAP 1', name: 'Agent de sécurité incendie' },
+  'ssiap-3': { label: 'SSIAP 3', name: 'Chef de service de sécurité incendie' },
+  'desp-initial': { label: 'DESP initial', name: 'Dirigeant d’entreprise de sécurité privée' },
 };
-const clean = (s: string) => String(s).normalize('NFC').replace(/[\u00a0\u202f\t\r\n]/g, ' ').replace(/[→↗]/g, '-').replace(/[^\u0020-\u00ffŒœŠšŸŽž–—‘’“”•…€]/g, '');
-function lines(text: string, font: PDFFont, size: number, width: number) {
-  const out: string[] = []; let line = '';
-  for (const word of clean(text).split(/\s+/).filter(Boolean)) {
-    const proposed = line ? line + ' ' + word : word;
-    if (line && font.widthOfTextAtSize(proposed, size) > width) { out.push(line); line = word; }
-    else line = proposed;
+const dateRange = new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
+const fullDate = new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+const timeSlot = new Intl.DateTimeFormat('fr-FR', { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'UTC' });
+const bottom = HEIGHT - 70;
+const NOTICE = 'Dates et horaires sous réserve de modifications';
+
+type Stage = { label: string; date: string; kind: PhaseKind };
+type Fact = { name: string; value: string };
+
+function sessionOrganisation(model: SessionCalendar) {
+  // A dated recap from the public listing can also carry the duration of each stage.
+  // Omit it from the notes only when all four dates match the actual calendar.
+  const recap = /^(?:e-learning|distanciel) du (\d{2}\/\d{2}\/\d{4}) au (\d{2}\/\d{2}\/\d{4})(?: \(([^()]+)\))?\s*·\s*présentiel du (\d{2}\/\d{2}\/\d{4}) au (\d{2}\/\d{2}\/\d{4})(?: \(([^()]+)\))?\.?$/i.exec(model.publicNotes.trim());
+  const distance = model.phases.filter(p => p.kind === 'distance');
+  const centre = model.phases.filter(p => p.kind === 'centre');
+  const frenchDate = (key: string) => key.split('-').reverse().join('/');
+  const matches = recap && distance.length === 1 && centre.length === 1 &&
+    [distance[0].start, distance[0].end, centre[0].start, centre[0].end]
+      .every((key, i) => frenchDate(key) === [recap[1], recap[2], recap[4], recap[5]][i]);
+  const multiYear = model.firstMonth.slice(0, 4) !== model.lastMonth.slice(0, 4);
+  const shortDay = (key: string) => timeSlot.format(new Date(key)) + (multiYear ? ' ' + key.slice(0, 4) : '');
+  const stages: Stage[] = model.phases.map(phase => {
+    const hours = matches && (phase.kind === 'distance' ? recap[3] : phase.kind === 'centre' ? recap[6] : '');
+    return {
+      label: phase.label + (hours ? ' · ' + hours : ''),
+      date: capitalized(shortDay(phase.start)) + (phase.end === phase.start ? '' : ' au ' + shortDay(phase.end)),
+      kind: phase.kind,
+    };
+  });
+  if (model.monthSteps.length) {
+    for (const step of model.monthSteps) stages.push({ label: step.title + ' · ' + step.detail, date: step.date, kind: 'formation' });
   }
-  if (line) out.push(line);
-  return out;
+  const notes = matches ? '' : model.publicNotes.trim();
+  return { stages, notes };
 }
+
+function summary(model: SessionCalendar): Fact[] {
+  const period = model.monthOnly ? capitalized(calendarMonthName(model.start)) : dateRange.formatRange(new Date(model.start), new Date(model.end));
+  const facts = [{ name: model.monthOnly ? 'Rentrée' : 'Dates de formation', value: period }];
+  // Some imported SSIAP sessions have only an internal number in the duration field.
+  const duration = /^\d+$/.test(model.duration.trim()) ? '' : model.duration.replace(/\bheures?\b/i, 'h');
+  const sst = model.sessionTitle.match(/\b(avec|sans) SST\b/i)?.[0];
+  if (sst) facts.push({ name: 'Formule', value: [capitalized(sst), duration].filter(Boolean).join(' · ') });
+  else if (duration) facts.push({ name: 'Durée de formation', value: duration });
+  const exam = model.phases.find(p => p.kind === 'examen');
+  if (exam) facts.push({ name: 'Examen', value: capitalized(fullDate.format(new Date(exam.start))) });
+  return facts;
+}
+
+function masthead(page: CalendarPage, model: SessionCalendar, logo: PDFImage, picture: PDFImage | null, compact: boolean) {
+  const course = model.course ? courses[model.course] : null;
+  const label = course?.label || model.title;
+  if (compact) {
+    page.box(0, 0, WIDTH, 56, palette.navy);
+    page.image(logo, MARGIN, 12, 98, 98 * logo.height / logo.width);
+    const title = page.words(label + '  /  Calendrier détaillé', CONTENT - 115, 11, 'bold')[0];
+    page.right(title, WIDTH - MARGIN, 21, 11, 'bold', palette.paper);
+    return 80;
+  }
+  const artWidth = 202, artHeight = 131;
+  const textWidth = picture ? CONTENT - artWidth - 24 : CONTENT;
+  const titleSize = label.length > 18 ? 25 : 39;
+  const names = page.words(label, textWidth, titleSize, 'bold');
+  const description = course?.name || model.courseTitle;
+  const descriptionLines = page.words(description, textWidth, 11.5);
+  const titleTop = 70;
+  const descriptionTop = titleTop + names.length * titleSize * 1.15 + 3;
+  const height = Math.max(165, descriptionTop + descriptionLines.length * 16 + 17);
+  page.box(0, 0, WIDTH, height, palette.navy);
+  page.box(0, 0, WIDTH, 3.5, palette.gold);
+  page.image(logo, MARGIN, 15, 111, 111 * logo.height / logo.width);
+  page.text('CALENDRIER DÉTAILLÉ  /  ' + calendarMonthName(model.start).toLocaleUpperCase('fr-FR'), MARGIN, 55, 8.5, 'bold', palette.gold);
+  names.forEach((line, i) => page.text(line, MARGIN - 1, titleTop + i * titleSize * 1.15, titleSize, 'bold', palette.paper));
+  descriptionLines.forEach((line, i) => page.text(line, MARGIN, descriptionTop + i * 16, 11.5, 'body', palette.light));
+  if (picture) {
+    const x = WIDTH - MARGIN - artWidth, top = (height - artHeight) / 2 + 1;
+    page.box(x + 3, top + 3, artWidth, artHeight, palette.gold, 11);
+    page.image(picture, x, top, artWidth, artHeight, 11);
+  }
+  return height + 15;
+}
+
+function drawFacts(page: CalendarPage, facts: Fact[], y: number) {
+  const gap = 8;
+  const width = (CONTENT - (facts.length - 1) * gap) / facts.length;
+  const lines = facts.map(fact => page.words(fact.value, width - 22, 12, 'bold'));
+  const height = 36 + Math.max(...lines.map(text => text.length)) * 15;
+  facts.forEach((fact, i) => {
+    const x = MARGIN + i * (width + gap);
+    const isExam = fact.name === 'Examen';
+    page.box(x, y, width, height, isExam ? palette.cream : palette.pale, 7);
+    page.text(fact.name.toLocaleUpperCase('fr-FR'), x + 11, y + 8, 8, 'bold', isExam ? '#785415' : palette.muted);
+    lines[i].forEach((line, j) => page.text(line, x + 11, y + 24 + j * 15, 12, 'bold'));
+  });
+  return y + height;
+}
+
 export async function createCalendarPdf(model: SessionCalendar) {
+  const months = calendarMonths(model);
+  const { stages, notes } = sessionOrganisation(model);
   const doc = await PDFDocument.create();
-  const body = await doc.embedFont(StandardFonts.Helvetica), bold = await doc.embedFont(StandardFonts.HelveticaBold);
-  const logo = await doc.embedPng(await readFile(path.join(process.cwd(), 'public/images/sigle.png')));
-  doc.setTitle('Calendrier détaillé · ' + model.title); doc.setAuthor('Intégrale Academy');
-  const rect = (p: PDFPage, x: number, y: number, w: number, h: number, fill: ReturnType<typeof rgb>) =>
-    p.drawRectangle({ x, y: H - y - h, width: w, height: h, color: fill });
-  function text(p: PDFPage, str: string, x: number, top: number, size = 10, font = body, fill = ink) {
-    p.drawText(clean(str), { x, y: H - top - size, size, font, color: fill });
+  doc.registerFontkit(fontkit);
+  doc.setTitle('Calendrier détaillé · ' + (model.sessionTitle || model.title));
+  doc.setSubject([model.title, model.location, NOTICE].join(' · '));
+  doc.setAuthor('Intégrale Academy');
+  doc.setLanguage('fr-FR');
+  const asset = (filename: string) => readFile(path.join(process.cwd(), 'public', filename));
+  const [body, bold, logo, picture] = await Promise.all([
+    asset('fonts/entreprises/Poppins-Regular-latin.ttf').then(bytes => doc.embedFont(bytes, { subset: true })),
+    asset('fonts/entreprises/Poppins-SemiBold-latin.ttf').then(bytes => doc.embedFont(bytes, { subset: true })),
+    asset('documents/calendriers/integrale-academy.png').then(bytes => doc.embedPng(bytes)),
+    model.course ? asset('documents/calendriers/' + model.course + '.jpg').then(bytes => doc.embedJpg(bytes)) : null,
+  ]);
+  const fonts: PdfFonts = { body, bold };
+  const pages: CalendarPage[] = [];
+  function nextPage() {
+    const page = new CalendarPage(doc.addPage(PageSizes.A4), fonts);
+    const top = masthead(page, model, logo, picture, pages.length > 0);
+    pages.push(page);
+    return { page, top };
   }
-  function paragraph(p: PDFPage, str: string, x: number, y: number, width: number, size = 10, font = body, fill = ink) {
-    for (const line of lines(str, font, size, width)) { text(p, line, x, y, size, font, fill); y += size * 1.35; }
-    return y;
+  let { page, top } = nextPage();
+  const cohort = model.sessionTitle || model.title;
+  top = drawFacts(page, summary(model), top) + 20;
+
+  const kinds = [...new Set(model.phases.map(p => p.kind))];
+  const campus = model.address || model.location;
+  const additional = model.monthOnly ? model.note : notes;
+  const caption = 'Les couleurs indiquent les périodes. Votre convocation précise les jours et horaires de présence' +
+    (kinds.includes('examen') ? ' ainsi que le lieu d’examen.' : '.');
+  const boxPad = 13, infoSplit = CONTENT * .44;
+  const addressLines = campus.split(/ · |, (?=\d{5} )/).flatMap(s => page.words(s, infoSplit - boxPad * 2, 9.9, 'bold'));
+  const infoLines = [additional, model.monthOnly ? '' : caption].filter(Boolean).flatMap(s => page.words(s, CONTENT - infoSplit - boxPad * 2, 8.8));
+  const columns = Math.min(3, months.length);
+  const gap = 8, width = (CONTENT - (columns - 1) * gap) / columns;
+  const preferredDayHeight = stages.length >= 4 ? 22 : columns === 1 ? 31 : 29;
+  const infoHeight = 31 + Math.max(addressLines.length, infoLines.length) * 13;
+  const split = CONTENT * .55;
+  const agenda = stages.map(stage => {
+    const label = page.words(stage.label, split - 24, 11, 'bold');
+    const dates = page.words(stage.date, CONTENT - split - 9, 10.6);
+    const height = Math.max(stages.length >= 4 ? 35 : 41, 18 + Math.max(label.length, dates.length) * 15);
+    return { ...stage, label, dates, height };
+  });
+  const agendaHeight = (agenda.length ? 46 : 0) + agenda.reduce((total, row) => total + row.height, 0);
+  function calendarHeading() {
+    page.text('Calendrier mois par mois', MARGIN, top, 17.5, 'bold');
+    top = drawLegend(page, kinds, MARGIN, top + 29, CONTENT) + 8;
   }
-  function header(title: string, subtitle: string) {
-    const p = doc.addPage([W, H]);
-    const headline = lines(title, bold, 23, W - 2 * M);
-    const height = 85 + headline.length * 28;
-    rect(p, 0, 0, W, height, navy); rect(p, 0, 0, W, 4, gold);
-    const logoDim = logo.scaleToFit(28, 28);
-    p.drawImage(logo, { x: M, y: H - 43, width: logoDim.width, height: logoDim.height });
-    text(p, 'INTÉGRALE ACADEMY', M + 36, 24, 10, bold, white);
-    text(p, 'CALENDRIER DE FORMATION', W - 177, 25, 8, bold, gold);
-    headline.forEach((s, i) => text(p, s, M, 49 + i * 28, 23, bold, white));
-    text(p, subtitle, M, height - 24, 10, body, white);
-    return { p, y: height + 20 };
+  calendarHeading();
+  for (let i = 0; i < months.length; i += columns) {
+    const group = months.slice(i, i + columns);
+    const weeks = Math.max(...group.map(calendarWeeks));
+    // For short sessions, size the grid around the actual weeks and the space needed
+    // for the dated stages and notes. Longer schedules flow onto additional pages.
+    const free = bottom - top - monthCardHeight(0, weeks) - 9 - agendaHeight - 16 - infoHeight - 2;
+    const dayHeight = months.length <= 3 ? Math.max(16, Math.min(preferredDayHeight, Math.floor(free / weeks))) : 19;
+    const cardHeight = monthCardHeight(dayHeight, weeks);
+    if (top + cardHeight > bottom) { ({ page, top } = nextPage()); calendarHeading(); }
+    group.forEach((month, col) => drawMonth(page, model, month, MARGIN + col * (width + gap), top, width, dayHeight, weeks));
+    top += cardHeight + 9;
   }
-  const period = model.monthOnly ? 'Rentrée de ' + calendarMonthName(model.start) : 'Du ' + calendarDate(model.start) + ' au ' + calendarDate(model.end);
-  let { p, y } = header(model.title, period);
-  const extra = [model.sessionTitle, model.duration].filter(Boolean).join(' · ');
-  if (extra) y = paragraph(p, extra, M, y, W - 2*M, 12, bold) + 10;
-  y = paragraph(p, model.location, M, y, W - 2*M, 11, bold) + 2;
-  if (model.address && !model.location.includes(model.address)) y = paragraph(p, model.address, M, y, W - 2*M, 10, body, muted);
-  y += 18;
-  function tableHead() {
-    text(p, 'Déroulement de la session', M, y, 17, bold); y += 31;
-    rect(p, M, y, W - 2*M, 23, navy);
-    for (const [label, x] of [['DATES', M+8], ['ÉTAPE', 172], ['ORGANISATION', 337]] as const) text(p, label, x, y + 7, 8, bold, white);
-    y += 23;
+
+  function stageHeading() {
+    page.text('Déroulement de la session', MARGIN, top, 16.5, 'bold');
+    page.right('Dates incluses', WIDTH - MARGIN, top + 5, 8.5, 'body', palette.muted);
+    top += 34;
   }
-  tableHead();
-  const rows = model.monthSteps.length ? model.monthSteps.map(step => ({ date: step.date, label: step.title, detail: step.detail, kind: 'formation' as const }))
-    : model.monthOnly ? [{ date: calendarMonthName(model.start), label: 'Rentrée', detail: model.note, kind: 'formation' as const }]
-    : model.phases.map(phase => ({
-      date: (model.vtc && phase.kind === 'examen' ? 'Semaine du ' : '') + calendarDate(phase.start) + (phase.start !== phase.end ? ' au ' + calendarDate(phase.end) : ''),
-      label: phase.label, detail: phase.detail, kind: phase.kind,
-    }));
-  const rowFont = rows.length > 14 ? 8 : 9;
-  for (const [index, row] of rows.entries()) {
-    const columns = [[row.date, M+8, 116, bold], [row.label, 172, 152, bold], [row.detail, 337, W-M-347, body]] as const;
-    const height = Math.max(rowFont === 8 ? 21 : 29, 9 + Math.max(...columns.map(([s,, width, font]) => lines(s,font,rowFont,width).length)) * rowFont * 1.35);
-    if (y + height > H - 67) { ({p,y} = header('Déroulement de la session', period)); tableHead(); }
-    rect(p,M,y,W-2*M,height,index%2 ? color(0xf3f6f8) : white);
-    rect(p,M,y,3,height-1,color(styles[row.kind][1]));
-    for (const [s,x,width,font] of columns) paragraph(p,s,x,y+4,width,rowFont,font);
-    y += height;
+  if (stages.length) {
+    top += 12;
+    if (top + 72 > bottom) ({ page, top } = nextPage());
+    stageHeading();
   }
-  if (!model.monthOnly || model.monthSteps.length) {
-    if (y + 68 > H - 50) ({p,y} = header('Informations pratiques', period));
-    paragraph(p,model.note,M,y+13,W-2*M,9,body,muted);
+  for (const { label, dates, height, kind } of agenda) {
+    if (top + height > bottom) { ({ page, top } = nextPage()); stageHeading(); }
+    page.box(MARGIN, top, CONTENT, .7, palette.line);
+    page.box(MARGIN + 1, top + 10, 3, height - 20, phaseAccent(kind), 1.4);
+    label.forEach((line, i) => page.text(line, MARGIN + 13, top + (height - label.length * 15) / 2 + i * 15, 11, 'bold'));
+    dates.forEach((line, i) => page.right(line, WIDTH - MARGIN, top + (height - dates.length * 15) / 2 + i * 15, 10.6));
+    top += height;
   }
-  const months: Date[] = [];
-  const first = new Date(model.firstMonth), last = new Date(model.lastMonth);
-  if (!Number.isFinite(+first) || !Number.isFinite(+last)) throw new Error('Session sans date publique');
-  for (let cursor = Date.UTC(first.getUTCFullYear(), first.getUTCMonth(),1); cursor <= +last;) {
-    const date = new Date(cursor); months.push(date);
-    cursor = Date.UTC(date.getUTCFullYear(), date.getUTCMonth()+1,1);
+  if (stages.length) page.box(MARGIN, top, CONTENT, .7, palette.line);
+  top += 16;
+
+  let addressIndex = 0, infoIndex = 0;
+  while (addressIndex < addressLines.length || infoIndex < infoLines.length) {
+    const remaining = Math.max(addressLines.length - addressIndex, infoLines.length - infoIndex);
+    if (bottom - top < Math.min(70, 31 + remaining * 13)) ({ page, top } = nextPage());
+    const capacity = Math.floor((bottom - top - 31) / 13);
+    const address = addressLines.slice(addressIndex, addressIndex + capacity);
+    const info = infoLines.slice(infoIndex, infoIndex + capacity);
+    const height = 31 + Math.max(address.length, info.length) * 13;
+    const y = pages.length === 1 ? Math.max(top, bottom - height) : top;
+    page.box(MARGIN, y, CONTENT, height, '#F1F5F6', 8);
+    page.box(MARGIN + infoSplit, y + 11, .75, height - 22, '#D2DCE0');
+    page.text('LIEU DE FORMATION', MARGIN + boxPad, y + 7, 7.6, 'bold', palette.muted);
+    page.text('ORGANISATION', MARGIN + infoSplit + boxPad, y + 7, 7.6, 'bold', palette.muted);
+    address.forEach((s, i) => page.text(s, MARGIN + boxPad, y + 20 + i * 13, 9.9, 'bold'));
+    info.forEach((s, i) => page.text(s, MARGIN + infoSplit + boxPad, y + 20 + i * 13, 8.8));
+    addressIndex += address.length;
+    infoIndex += info.length;
+    top = y + height;
   }
-  const kinds = [...new Set(model.phases.map(s => s.kind))];
-  for (let offset=0; offset<months.length; offset+=12) {
-    const group = months.slice(offset, offset+12);
-    const { p: grid, y: top } = header('Calendrier mois par mois', period);
-    let lx=M, ly=top;
-    for (const kind of kinds) {
-      const label=model.vtc && kind==='examen' ? 'Semaine d’examen' : model.dms && kind==='formation' ? 'DESP' : model.dms && kind==='centre' ? 'SSIAP 3' : styles[kind][0];
-      const w = bold.widthOfTextAtSize(label,9)+31;
-      if (lx+w>W-M) { lx=M; ly+=17; }
-      rect(grid,lx,ly,10,10,color(styles[kind][1])); text(grid,label,lx+15,ly,9,bold); lx+=w;
-    }
-    ly+=kinds.length?21:0;
-    text(grid,model.monthOnly ? 'Rentrée annoncée sur le mois. Le jour exact reste à préciser.' : 'Les cases colorées correspondent aux périodes publiées.',M,ly,9,body,muted);
-    grid.drawCircle({x:M+3,y:H-ly-21,size:2,color:color(0xb44630)});text(grid,'Jour férié',M+10,ly+15,8,body,muted);
-    const columns = Math.min(3,group.length), gap=12, width=(W-2*M-(columns-1)*gap)/columns;
-    const dayWidth = width/7, dayHeight = group.length<=3 ? Math.min(32,dayWidth*.75) : 14;
-    const cellH = dayHeight*6+44;
-    group.forEach((month,i)=>{
-      const x=M+(i%columns)*(width+gap), top=ly+45+Math.floor(i/columns)*(cellH+12);
-      const monthKey=month.toISOString().slice(0,10); const name=calendarMonthName(monthKey);
-      text(grid,name[0].toLocaleUpperCase('fr-FR')+name.slice(1),x,top,13,bold);
-      rect(grid,x,top+20,width,1,color(0xc8d6e0));
-      ['Lu','Ma','Me','Je','Ve','Sa','Di'].forEach((day,j)=>text(grid,day,x+j*dayWidth+3,top+25,8,bold,muted));
-      const start=(month.getUTCDay()+6)%7, days=new Date(Date.UTC(month.getUTCFullYear(),month.getUTCMonth()+1,0)).getUTCDate();
-      const holidays=holidayDates(month.getUTCFullYear());
-      for (let d=1;d<=days;d++) {
-        const pos=start+d-1, xx=x+(pos%7)*dayWidth, yy=top+40+Math.floor(pos/7)*dayHeight;
-        const key=monthKey.slice(0,8)+String(d).padStart(2,'0');
-        const matching=model.phases.filter(phase=>phase.start<=key&&key<=phase.end);
-        const phase=matching.find(entry=>entry.kind==='examen')??matching[0];
-        const bg=phase?styles[phase.kind][1]:0xf0f3f5;
-        rect(grid,xx,yy,dayWidth-1.2,dayHeight-1.2,color(bg));
-        const fontSize=group.length<=3?10:8;
-        text(grid,String(d),xx+(dayWidth-body.widthOfTextAtSize(String(d),fontSize))/2,yy+(dayHeight-fontSize)/2-1,fontSize,body,phase?.kind==='examen'?white:ink);
-        if(holidays.has(key))grid.drawCircle({x:xx+dayWidth-4,y:H-yy-3,size:1.6,color:color(0xb44630)});
-      }
-    });
-  }
-  const pages=doc.getPages();
-  pages.forEach((page,index)=>{
-    rect(page,M,H-45,W-2*M,1,color(0xc8d6e0));text(page,'Intégrale Academy · 04 22 47 07 68',M,H-34,8,body,muted);
-    text(page,`${index+1} / ${pages.length}`,W-M-25,H-34,8,bold,muted);
+
+  pages.forEach((p, i) => {
+    const y = HEIGHT - 60;
+    p.box(MARGIN, y, CONTENT, 27, palette.cream, 6);
+    p.box(MARGIN + 8, y + 7, 3, 13, '#A77519', 1);
+    p.text(NOTICE, MARGIN + 17, y + 5.5, 11, 'bold');
+    p.right(String(i + 1) + ' / ' + pages.length, WIDTH - MARGIN - 10, y + 8, 8.2, 'bold', palette.muted);
+    const sessionName = p.words(cohort, CONTENT - 175, 7.7);
+    sessionName.slice(0, 2).forEach((line, j) => p.text(line, MARGIN, y + 33 + j * 10, 7.7, 'body', palette.muted));
+    p.right('Intégrale Academy · 04 22 47 07 68', WIDTH - MARGIN, y + 33, 7.7, 'body', palette.muted);
   });
   return doc.save();
 }

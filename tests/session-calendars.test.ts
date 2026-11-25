@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { spawnSync } from 'node:child_process';
 import { hasDetailedCalendar } from '../src/lib/detailed-calendar-eligibility';
 import test from 'node:test';
 import { PDFDocument } from 'pdf-lib';
@@ -31,15 +32,36 @@ test('un mois de rentrée reste sans jour de présence et occupe un seul mois da
   assert.match(bts.note, /entreprise/i);
 });
 
-test('les deux périodes de présentiel et l’examen sont conservés dans le PDF', async () => {
-  const model = sessionCalendar(toPublicSession({id:'exemple', title:'Session', startDate:'2027-02-01', endDate:'2027-02-26',
+test('le calendrier A4 réunit les deux périodes de présentiel et le mois de l’examen sur une page', async () => {
+  const model = sessionCalendar(toPublicSession({id:'exemple', title:'DESP Paris', training: { slug: 'desp-initial', name: 'DESP initial' }, startDate:'2027-02-01', endDate:'2027-02-26',
     remoteStartDate:'2027-02-01', remoteEndDate:'2027-02-05', inPersonStartDate:'2027-02-08', inPersonFirstEndDate:'2027-02-12',
     inPersonResumeDate:'2027-02-22', inPersonEndDate:'2027-02-26', examDate:'2027-03-01', location:'Paris'}));
   assert.deepEqual(model.phases.map(phase => phase.kind), ['distance','centre','centre','examen']);
   assert.equal(model.lastMonth, '2027-03-01');
   assert.match(model.address, /Grand Rex/);
-  const pdf=await PDFDocument.load(await createCalendarPdf(model));
-  assert.equal(pdf.getPageCount(), 2);
+  const pdf = await PDFDocument.load(await createCalendarPdf(model));
+  assert.equal(pdf.getPageCount(), 1);
+  assert.equal(pdf.getTitle(), 'Calendrier détaillé · DESP Paris');
+  assert.match(pdf.getSubject() ?? '', /sous réserve de modifications/);
+  const { width, height } = pdf.getPage(0).getSize();
+  assert.ok(Math.abs(width - 595.28) < 0.1 && Math.abs(height - 841.89) < 0.1);
+});
+
+test('la réserve de modifications est imprimée sur chaque page d’une session longue', {
+  skip: spawnSync('pdftotext', ['-v']).error?.message.includes('ENOENT') && 'pdftotext indisponible',
+}, async () => {
+  const model = sessionCalendar(toPublicSession({
+    id: 'session-longue', title: 'Session APS', training: { slug: 'aps', name: 'APS' },
+    startDate: '2027-01-11', endDate: '2027-12-17', examDate: '2027-12-20', location: 'Puget-sur-Argens',
+  }));
+  const bytes = await createCalendarPdf(model);
+  const document = await PDFDocument.load(bytes);
+  assert.ok(document.getPageCount() > 1);
+  const extracted = spawnSync('pdftotext', ['-enc', 'UTF-8', '-', '-'], { input: Buffer.from(bytes), encoding: 'utf8' });
+  assert.equal(extracted.status, 0, extracted.stderr);
+  const pages = extracted.stdout.split('\f').filter(page => page.trim());
+  assert.equal(pages.length, document.getPageCount());
+  for (const page of pages) assert.match(page, /Dates et horaires sous réserve de modifications/);
 });
 
 test('seules les formations initiales autorisées ont un calendrier détaillé', () => {

@@ -1,6 +1,7 @@
 import { alternanceSessions } from '@/data/employer-intakes';
 import { dmsExams, dmsPeriods } from '@/data/dms-periods';
 import { PARIS_ADDRESS, PARIS_LANDMARK, PUGET_ADDRESS } from '@/data/locations';
+import { detailedCalendarCourse } from './detailed-calendar-eligibility';
 import { inPersonPeriods, parisDateKey } from './public-sessions';
 import type { toPublicSession } from './public-session-data';
 
@@ -30,7 +31,7 @@ export function sessionCalendar(session: PublicCalendarSession) {
   const dms = session.id === 'rentree-2027-bachelor-dms';
   const vtc = session.scheduleKind === 'vtc-exam';
   const monthOnly = session.datePrecision === 'month';
-  const location = session.location || 'Lieu à préciser';
+  const location = String(session.location || 'Lieu à préciser');
   const address = /paris/i.test(location) ? `${PARIS_ADDRESS} · ${PARIS_LANDMARK}`
     : /puget|côte d.azur/i.test(location) ? PUGET_ADDRESS : '';
   if (dms) {
@@ -49,14 +50,15 @@ export function sessionCalendar(session: PublicCalendarSession) {
     add('examen', 'Examen', session.examDate, null, 'Horaires et lieu de passage sur convocation.');
   }
   phases.sort((a, b) => a.start.localeCompare(b.start));
-  const title = session.training?.name || session.title || 'Session de formation';
+  const title = String(session.training?.name || session.title || 'Session de formation');
   const monthSteps = session.id === 'parcours-securite-juin-2027' ? alternanceSessions[1].steps : [];
   const note = monthOnly ? [session.publicNotes, 'Le jour de rentrée, les dates de cours et les examens seront communiqués par l’école.'].filter(Boolean).join(' ')
     : vtc ? 'Les repères des épreuves indiquent la semaine annoncée. La convocation précise le jour de passage.'
     : [session.publicNotes, 'Les dates encadrent les périodes. Les jours et horaires de présence sont précisés sur la convocation ou par l’employeur.'].filter(Boolean).join(' ');
   return {
-    title, sessionTitle: session.title && session.title !== title ? session.title : '', location, address,
-    duration: session.durationLabel || '', start, end, monthOnly, monthSteps, note, phases, vtc, dms,
+    course: detailedCalendarCourse(session), courseTitle: String(session.training?.title || ''), publicNotes: String(session.publicNotes || ''),
+    title, sessionTitle: session.title && session.title !== title ? String(session.title) : '', location, address,
+    duration: String(session.durationLabel || ''), start, end, monthOnly, monthSteps, note, phases, vtc, dms,
     firstMonth: [start, ...phases.map(p => p.start)].filter(Boolean).sort()[0],
     lastMonth: [end, ...phases.map(p => p.end)].filter(Boolean).sort().at(-1)!,
   };
