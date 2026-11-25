@@ -99,7 +99,7 @@ export const despInitialFaq = [
   },
   {
     q: 'La formation est-elle entièrement à distance ?',
-    a: 'Le DESP initial associe 175 heures de cours à distance et 70 heures de présence obligatoire en centre. La partie en ligne permet de travailler les notions réglementaires, les études de cas et la préparation du projet professionnel depuis votre lieu de résidence.\n\n' +
+    a: 'Le DESP initial associe 175 heures de cours à distance et 70 heures de présence obligatoire au centre de formation. La partie en ligne permet de travailler les notions réglementaires, les études de cas et la préparation du projet professionnel depuis votre lieu de résidence.\n\n' +
       'Réservez ensuite les deux semaines de présentiel dans le centre de la session. Elles permettent de mettre votre projet à l’épreuve en groupe et de vous entraîner aux évaluations et aux soutenances. La fiche de session indique aussi la date d’examen à prendre en compte pour votre déplacement.',
   },
   {
@@ -120,11 +120,11 @@ export const despInitialFaq = [
   {
     q: 'Comment s’inscrire ?',
     a: 'Remplissez le formulaire de demande d’informations en précisant « DESP initial », votre projet et, si vous le savez, la session de Paris ou de Puget-sur-Argens qui vous intéresse. Un premier entretien permet d’examiner votre candidature et vos possibilités de financement.\n\n' +
-      'Préparez votre CV, les diplômes ou l’expérience qui appuient votre candidature, ainsi que vos disponibilités pour les 175 heures à distance et les 70 heures en centre. Après vérification des prérequis et du financement, l’école confirme l’inscription et vous communique les modalités d’accès à la plateforme.',
+      'Préparez votre CV, les diplômes ou l’expérience qui appuient votre candidature, ainsi que vos disponibilités pour les 175 heures à distance et les 70 heures au centre de formation. Après vérification des prérequis et du financement, l’école confirme l’inscription et vous communique les modalités d’accès à la plateforme.',
   },
   {
     q: 'Où se déroulent les formations ?',
-    a: 'Les cinq premières semaines du DESP initial se déroulent à distance. Les deux semaines de formation en centre ont lieu à Paris ou à Puget-sur-Argens, selon la session. Les journées consacrées aux exercices et aux soutenances imposent donc d’être disponible pour le déplacement.\n\n' +
+    a: 'Les cinq premières semaines du DESP initial se déroulent à distance. Les deux semaines au centre de formation ont lieu à Paris ou à Puget-sur-Argens, selon la session. Les journées consacrées aux exercices et aux soutenances imposent donc d’être disponible pour le déplacement.\n\n' +
       'Le planning est le meilleur point de repère si plusieurs dates s’offrent à vous. Ouvrez la session souhaitée et comparez le lieu, les dates de présence et le jour de l’examen avec vos contraintes personnelles ou professionnelles.',
   },
   {

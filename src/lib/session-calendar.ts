@@ -9,6 +9,7 @@ export type PublicCalendarSession = ReturnType<typeof toPublicSession>;
 export type PhaseKind = 'formation' | 'distance' | 'centre' | 'entreprise' | 'examen' | 'inscription';
 type Phase = { kind: PhaseKind; label: string; start: string; end: string; detail: string };
 export type SessionCalendar = ReturnType<typeof sessionCalendar>;
+export const onsiteCalendarLabel = 'Au centre de formation';
 
 function day(value: unknown) {
   if (!(typeof value === 'string' || value instanceof Date) || !Number.isFinite(+new Date(value))) return '';
@@ -28,6 +29,7 @@ export function sessionCalendar(session: PublicCalendarSession) {
   }
   const start = day(session.startDate);
   const end = day(session.endDate) || start;
+  const course = detailedCalendarCourse(session);
   const dms = session.id === 'rentree-2027-bachelor-dms';
   const vtc = session.scheduleKind === 'vtc-exam';
   const monthOnly = session.datePrecision === 'month';
@@ -45,8 +47,11 @@ export function sessionCalendar(session: PublicCalendarSession) {
   } else if (!monthOnly) {
     add('distance', 'Formation à distance', session.remoteStartDate, session.remoteEndDate, 'Travail à distance sur la période indiquée.');
     const onsite = inPersonPeriods(session);
-    onsite.forEach((period, index) => add('centre', onsite.length > 1 ? `En centre · période ${index + 1}` : 'Formation en centre', period.start, period.end, location));
-    if (!phases.length) add('formation', 'Période de formation', start, end, 'Les horaires de présence sont précisés par l’école.');
+    onsite.forEach((period, index) => add('centre', onsite.length > 1 ? `${onsiteCalendarLabel} · période ${index + 1}` : onsiteCalendarLabel, period.start, period.end, location));
+    if (!phases.length) {
+      if (course === 'ssiap-1' || course === 'ssiap-3') add('centre', onsiteCalendarLabel, start, end, location);
+      else add('formation', 'Période de formation', start, end, 'Les horaires de présence sont précisés par l’école.');
+    }
     add('examen', 'Examen', session.examDate, null, 'Horaires et lieu de passage sur convocation.');
   }
   phases.sort((a, b) => a.start.localeCompare(b.start));
@@ -56,7 +61,7 @@ export function sessionCalendar(session: PublicCalendarSession) {
     : vtc ? 'Les repères des épreuves indiquent la semaine annoncée. La convocation précise le jour de passage.'
     : [session.publicNotes, 'Les dates encadrent les périodes. Les jours et horaires de présence sont précisés sur la convocation ou par l’employeur.'].filter(Boolean).join(' ');
   return {
-    course: detailedCalendarCourse(session), courseTitle: String(session.training?.title || ''), publicNotes: String(session.publicNotes || ''),
+    course, courseTitle: String(session.training?.title || ''), publicNotes: String(session.publicNotes || ''),
     title, sessionTitle: session.title && session.title !== title ? String(session.title) : '', location, address,
     duration: String(session.durationLabel || ''), start, end, monthOnly, monthSteps, note, phases, vtc, dms,
     firstMonth: [start, ...phases.map(p => p.start)].filter(Boolean).sort()[0],

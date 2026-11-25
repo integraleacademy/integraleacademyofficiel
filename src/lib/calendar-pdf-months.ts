@@ -1,9 +1,9 @@
 import { CalendarPage, palette } from './calendar-pdf-page';
-import { holidayDates, type PhaseKind, type SessionCalendar } from './session-calendar';
+import { holidayDates, onsiteCalendarLabel, type PhaseKind, type SessionCalendar } from './session-calendar';
 
 const phaseColors = {
-  distance: { label: 'À distance', fill: '#DDECFA', ink: '#254F78' },
-  centre: { label: 'En centre', fill: '#CDEAE1', ink: '#175848' },
+  distance: { label: 'À distance', fill: '#C9E3FB', ink: '#234D73' },
+  centre: { label: onsiteCalendarLabel, fill: '#AC4A13', ink: '#FFFFFF' },
   formation: { label: 'Formation', fill: '#F6E5C2', ink: '#775119' },
   entreprise: { label: 'Entreprise', fill: '#EBE0F3', ink: '#67487F' },
   inscription: { label: 'Inscription', fill: '#F5DCCF', ink: '#8A4630' },
@@ -12,7 +12,8 @@ const phaseColors = {
 } as const;
 
 export function phaseAccent(kind: PhaseKind) {
-  return kind === 'examen' ? phaseColors.examen.fill : phaseColors[kind].ink;
+  const { fill, ink } = phaseColors[kind];
+  return ink === '#FFFFFF' ? fill : ink;
 }
 
 const monthName = new Intl.DateTimeFormat('fr-FR', { month: 'long', timeZone: 'UTC' });
@@ -83,7 +84,11 @@ export function drawMonth(page: CalendarPage, model: SessionCalendar, month: Dat
     const y = top + 52 + Math.floor(index / 7) * dayHeight;
     page.box(left + .6, y, cellWidth - 1.2, dayHeight - 1.6, style.fill, 2.5);
     page.centered(String(day), left + cellWidth / 2, y + (dayHeight - daySize) / 2 - 1.4,
-      daySize, phase?.kind === 'examen' ? 'bold' : 'body', style.ink);
-    if (holidays.has(key)) page.dot(left + cellWidth - 4, y + 3.5, 1.6, phase?.kind === 'examen' ? palette.gold : '#A04024');
+      daySize, style.ink === '#FFFFFF' ? 'bold' : 'body', style.ink);
+    if (holidays.has(key)) {
+      const markerX = left + cellWidth - 4, markerY = y + 3.5;
+      page.dot(markerX, markerY, 2.2, palette.paper);
+      page.dot(markerX, markerY, 1.5, '#A04024');
+    }
   }
 }
