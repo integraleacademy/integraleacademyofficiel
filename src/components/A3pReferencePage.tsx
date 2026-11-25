@@ -219,7 +219,7 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
               ))}
             </div>
           </Section>
-          <Section id="pedagogie" label="05 — Immersion & pédagogie" title={<>Comment se déroule <span className="text-emerald-300">un exercice&nbsp;?</span></>} intro="Entre Cannes et Saint-Tropez, les stagiaires s’entraînent en groupe avec leur formateur. Voici un exemple de séance." tone="dark">
+          <Section id="pedagogie" label="04 — Immersion & pédagogie" title={<>Comment se déroule <span className="text-emerald-300">un exercice&nbsp;?</span></>} intro="Entre Cannes et Saint-Tropez, les stagiaires s’entraînent en groupe avec leur formateur. Voici un exemple de séance." tone="dark">
             <article className={styles.exercise}>
               <div>
                 <h3>Accompagner un client à un rendez-vous</h3>
@@ -235,7 +235,7 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
       campus={<TrainingReferenceCampus editorialId="ecole-a3p" groupLabel="Par session A3P" />}
       brochure={<CourseBrochureCard course="a3p-apr" />}
       program={
-        <Section id="programme" label="04 — Programme" title={<>328 heures pour devenir <em>opérationnel</em></>} intro="Les neuf unités de valeur comprennent 41 h de socle de base et 287 h de spécialité A3P. Sur ces 328 heures hors examen, 92 h 50 sont consacrées à la pratique.">
+        <Section id="programme" label="05 — Programme" title={<>328 heures pour devenir <em>opérationnel</em></>} intro="Les neuf unités de valeur comprennent 41 h de socle de base et 287 h de spécialité A3P. Sur ces 328 heures hors examen, 92 h 50 sont consacrées à la pratique.">
           <TrainingProgramDownload href={a3pConfig.programPdfUrl} course="A3P" theme="green" detailLabel="(PDF) ↗" className="mb-6 w-full sm:w-auto" />
           <TrainingProgramExplorer idPrefix="a3p-uv" hours="328" overview="9 unités de valeur"
             subtitle="Formation réglementée · 100 % en présentiel · hors examen" illustration={programmeOverviews.a3p}
@@ -288,7 +288,7 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
           inPersonPeriodFallback="328 h à l’école · dates de présence à confirmer"
           priceYear={2027}
           id="dates-tarifs"
-          eyebrow="08 — Dates & tarifs"
+          eyebrow="07 — Dates & tarifs"
           sessions={sessions}
           theme="green"
           seatCapacity={12}
@@ -304,7 +304,7 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
         <>
           <section id="inscription-financement" className={editorial.enrollment}>
             <div id="inscription" className={editorial.wrap}>
-              <p className={editorial.kicker}>09 — Inscription &amp; financement</p>
+              <p className={editorial.kicker}>08 — Inscription &amp; financement</p>
               <header className={editorial.intro}><div>
                 <h2><span>Du premier appel à votre entrée en formation.</span><span>Nous vous accompagnons de A à Z</span></h2>
                 <p><strong>Un parcours vérifié avant la rentrée</strong><br />L’admission tient compte des délais de financement et d’instruction CNAPS. Il est recommandé d’engager les démarches dès que votre projet est confirmé.</p>
@@ -344,7 +344,7 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
         </>
       }
       outcomes={
-        <Section id="debouches" label="10 — Débouchés & emploi" title="Après le TFP A3P" intro="La certification ne garantit pas un emploi. Le recrutement dépend aussi de l’expérience, du réseau, de la mobilité et des compétences complémentaires." tone="paper">
+        <Section id="debouches" label="09 — Débouchés & emploi" title="Après le TFP A3P" intro="La certification ne garantit pas un emploi. Le recrutement dépend aussi de l’expérience, du réseau, de la mobilité et des compétences complémentaires." tone="paper">
           <div className="mb-8 grid gap-4 md:grid-cols-3">{[
             ['Les employeurs', 'Travailler en agence', 'Les agences de protection rapprochée et les entreprises de sécurité privée font partie des employeurs du secteur.', 'border-emerald-200 bg-emerald-50'],
             ['Les missions', 'Accompagner différents clients', 'Dirigeants, personnalités et clients privés peuvent solliciter un accompagnement lors de leurs déplacements.', 'border-sky-200 bg-sky-50'],
@@ -390,34 +390,22 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
         </Section>
       }
       references={
-        <>
-          <TrainingOfficialReferences course="a3p" number="07" alias="references-rncp"
-            title={<>Un titre reconnu.<br /><em>Des repères concrets</em></>}
-            intro="Certification, conditions d’exercice et données d’insertion"
-            certificateLabel="Identification" qualification="TFP A3P" level={a3pConfig.level} name="Agent de protection physique des personnes"
-            registryCode={a3pConfig.rncp} url={a3pConfig.rncpUrl}
-            facts={[['Répertoire', a3pConfig.rncp], ['Certificateurs', 'CPNE / ADEF'], ['Code ROME', 'K2503'], ['Code NSF', '344'], ['Formacode', '42812'], ['Échéance RNCP', a3pConfig.rncpExpiry]]}
-            conditionsLabel="Réalités du métier" profession="Des conditions qui varient selon la mission" conditions={a3pWorkConditions}
-            professionNote="Ces informations complètent la présentation commerciale avec les repères figurant dans la fiche RNCP38002 fournie."
-            statsTitle="Données historiques de la certification" statsNote="Statistiques nationales France compétences figurant dans la fiche de certification. Elles concernent la certification, pas les résultats propres à Intégrale Academy."
-            stats={a3pInsertionStats.map(row => [row.year, row.certified, row.global, row.targetJob, row.targetJobTwoYears])}
-            caption="Promotions 2020 à 2022 — source : fiche RNCP38002" detailsTitle="Autres informations de la fiche RNCP"
-            details={<><p><strong>Voies d’accès recensées</strong><br />Apprentissage, formation continue, contrat de professionnalisation, candidature individuelle et VAE.</p>
-              <p><strong>Blocs et correspondances</strong><br />{a3pConfig.certificationStructure}. Aucune correspondance déclarée avec une autre certification.</p>
-              <p><strong>Historique</strong><br />La certification RNCP38002 remplace la certification antérieure RNCP35098.</p>
-              <p>Ces voies sont celles de la certification nationale ; leur disponibilité chez Intégrale Academy doit être confirmée avec l’équipe admissions.</p></>}
-          />
-          <Section label="11 — Intégrale Academy" title="Un cadre sérieux pour un métier exigeant" intro="Des éléments concrets et vérifiables, directement liés au parcours A3P." tone="stone">
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{[
-              ['Agrément', 'Centre agréé ADEF A3P', `N° ${a3pConfig.adefApproval}`],
-              ['Intensité', a3pConfig.durationHours, a3pConfig.practiceHours],
-              ['Terrain', 'Environnements variés', 'Exercices et scénarios réalistes'],
-              ['Accompagnement', 'Dossier CNAPS expliqué', 'Prérequis vérifiés avant inscription'],
-              ['École', 'Hébergement possible', 'Solution collective sur réservation'],
-              ['Pédagogie', 'Formateurs expérimentés', 'Intervenants liés aux compétences enseignées'],
-            ].map(([key, title, body]) => <article key={key} className="rounded-[1.6rem] border border-academy-line bg-[#FFFDF8] p-6 shadow-soft"><Label>{key}</Label><h3 className="mt-6 text-lg font-black tracking-[-.03em]">{title}</h3><p className="mt-2 text-xs font-semibold leading-6 text-academy-muted">{body}</p></article>)}</div>
-          </Section>
-        </>
+        <TrainingOfficialReferences course="a3p" number="10" alias="references-rncp"
+          title={<>Un titre reconnu.<br /><em>Des repères concrets</em></>}
+          intro="Certification, conditions d’exercice et données d’insertion"
+          certificateLabel="Identification" qualification="TFP A3P" level={a3pConfig.level} name="Agent de protection physique des personnes"
+          registryCode={a3pConfig.rncp} url={a3pConfig.rncpUrl}
+          facts={[['Répertoire', a3pConfig.rncp], ['Certificateurs', 'CPNE / ADEF'], ['Code ROME', 'K2503'], ['Code NSF', '344'], ['Formacode', '42812'], ['Échéance RNCP', a3pConfig.rncpExpiry]]}
+          conditionsLabel="Réalités du métier" profession="Des conditions qui varient selon la mission" conditions={a3pWorkConditions}
+          professionNote="Ces informations complètent la présentation commerciale avec les repères figurant dans la fiche RNCP38002 fournie."
+          statsTitle="Données historiques de la certification" statsNote="Statistiques nationales France compétences figurant dans la fiche de certification. Elles concernent la certification, pas les résultats propres à Intégrale Academy."
+          stats={a3pInsertionStats.map(row => [row.year, row.certified, row.global, row.targetJob, row.targetJobTwoYears])}
+          caption="Promotions 2020 à 2022 — source : fiche RNCP38002" detailsTitle="Autres informations de la fiche RNCP"
+          details={<><p><strong>Voies d’accès recensées</strong><br />Apprentissage, formation continue, contrat de professionnalisation, candidature individuelle et VAE.</p>
+            <p><strong>Blocs et correspondances</strong><br />{a3pConfig.certificationStructure}. Aucune correspondance déclarée avec une autre certification.</p>
+            <p><strong>Historique</strong><br />La certification RNCP38002 remplace la certification antérieure RNCP35098.</p>
+            <p>Ces voies sont celles de la certification nationale ; leur disponibilité chez Intégrale Academy doit être confirmée avec l’équipe admissions.</p></>}
+        />
       }
     />
 

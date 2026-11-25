@@ -31,6 +31,10 @@ try {
     const stepCount = route === '/formations-securite/a3p-apr' ? 2 : 4;
     assert.equal(await journey.locator('nav button').count(), stepCount, route);
     if (route === '/formations-securite/a3p-apr') {
+      const sectionLabels = await page.locator('main p').filter({ hasText: /^\d{2} — / }).allTextContents();
+      assert.deepEqual(sectionLabels.map(label => label.slice(0, 2)),
+        ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10']);
+      assert.equal(await page.getByRole('heading', { name: 'Un cadre sérieux pour un métier exigeant' }).count(), 0);
       const skills = page.locator('#competences');
       const exercise = page.locator('#pedagogie article');
       assert.equal(await skills.getByRole('heading', { name: 'Évaluer les risques' }).count(), 1);
