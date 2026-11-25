@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
+import { readFileSync } from 'node:fs';
 import { hasDetailedCalendar } from '../src/lib/detailed-calendar-eligibility';
 import test from 'node:test';
 import { PDFDocument } from 'pdf-lib';
@@ -87,4 +88,13 @@ test('seules les formations initiales autorisées ont un calendrier détaillé',
   for (const session of scheduledIntakes) assert.equal(hasDetailedCalendar(session), false, session.id);
   assert.equal(visible('ssiap-1', 'RAN SSIAP 1'), false);
   assert.equal(visible('desp-dssp', 'Jury VAE'), false);
+});
+
+test('le lien ouvre le calendrier dans un nouvel onglet et le serveur autorise la lecture du PDF', () => {
+  const link = readFileSync('src/components/SessionCalendarLink.tsx', 'utf8');
+  assert.match(link, /<a\s[^>]*\btarget="_blank"/);
+  assert.doesNotMatch(link, /<a\s[^>]*\bdownload\b/);
+  const route = readFileSync('src/app/api/calendriers/[id]/route.ts', 'utf8');
+  assert.match(route, /'Content-Type': 'application\/pdf'/);
+  assert.match(route, /'Content-Disposition': `inline; filename=/);
 });

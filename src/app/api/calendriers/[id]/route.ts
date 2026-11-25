@@ -18,7 +18,7 @@ export async function GET(_request: Request, { params }: { params: Promise<{ id:
   const slug = (session.training?.slug || 'formation').replace(/[^a-z0-9-]/gi, '-');
   const date = calendar.monthOnly ? calendar.start.slice(0,7) : calendar.start;
   return new Response(Buffer.from(pdf), { headers: {
-    'Content-Type': 'application/pdf', 'Content-Disposition': `attachment; filename="Calendrier-${slug}-${date}.pdf"`,
+    'Content-Type': 'application/pdf', 'Content-Disposition': `inline; filename="Calendrier-${slug}-${date}.pdf"`,
     'Cache-Control': 'public, max-age=0, must-revalidate',
   } });
 }
