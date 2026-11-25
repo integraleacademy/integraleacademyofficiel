@@ -10,27 +10,27 @@ import styles from './ApsJourney.module.css';
 const steps = [
   {
     label: 'Votre projet',
-    title: 'Un nouveau départ. Un métier qui compte',
-    description: 'Vous souhaitez vous reconvertir ou découvrir la sécurité privée ? Apprenez à observer, prévenir les risques et protéger les personnes. Notre équipe vous accompagne pour préparer votre entrée en formation.',
-    link: 'Parlons de ma formation', href: '#inscription-financement',
+    title: 'Puis-je entrer en formation APS ?',
+    description: 'Avant de choisir une session, faites le point sur les conditions d’admission et les pièces à réunir pour votre dossier.',
+    link: 'Vérifier les prérequis', href: '#admission',
   },
   {
     label: 'Votre formation',
-    title: 'Les bases pour comprendre. La pratique pour agir',
-    description: '175 heures de formation : 51 heures à distance et 124 heures à l’école, à Puget-sur-Argens. Vous avancez avec un programme structuré et préparez aussi le certificat Sauveteur Secouriste du Travail.',
-    link: 'Découvrir l’organisation', href: '#hybride',
+    title: 'Comment organiser ma formation ?',
+    description: 'Le calendrier de chaque session précise les jours à réserver pour votre présence à l’école.',
+    link: 'Voir la répartition des heures', href: '#hybride',
   },
   {
     label: 'L’immersion terrain',
-    title: 'Entraînez-vous aux situations de votre futur quotidien',
-    description: 'Rondes, contrôle d’accès, palpation, inspection des bagages, gestion des incidents : vous répétez les gestes professionnels lors d’exercices encadrés. Le PC sécurité et le matériel pédagogique font partie de votre apprentissage.',
-    link: 'Explorer la pratique', href: '#pratique',
+    title: 'Comment se déroule un exercice ?',
+    description: 'Le formateur vous donne une consigne. Vous faites un premier essai, puis vous reprenez l’exercice en tenant compte de ses observations.',
+    link: 'Découvrir les mises en situation', href: '#pratique',
   },
   {
     label: 'Votre prochain chapitre',
-    title: 'Préparez le titre APS. Avancez vers votre futur métier',
-    description: 'La réussite à l’examen permet d’obtenir le TFP APS. Vous pouvez ensuite demander votre carte professionnelle auprès du CNAPS (ministère de l’Intérieur). Notre équipe vous aide à préparer votre parcours, votre dossier et votre financement.',
-    link: 'Préparer mon inscription', href: '#inscription-financement',
+    title: 'Et après l’examen ?',
+    description: 'Une fois votre titre obtenu, vous pouvez demander votre carte professionnelle auprès du Ministère de l’Intérieur (CNAPS).',
+    link: 'Découvrir les débouchés', href: '#debouches',
   },
 ] as const;
 
@@ -60,37 +60,32 @@ function JourneyVisual({ index, onNext }: { index: number; onNext: () => void })
     <div className={styles.coverOrbit} aria-hidden="true" />
     <CardHeader label="Le déclic" />
     <div className={styles.ambitionBody}>
-      <p className={styles.eyebrow}>ET SI C’ÉTAIT VOTRE TOUR ?</p>
-      <p className={styles.ambitionTitle}>Un métier de terrain,<br /><span>un rôle essentiel</span></p>
-      <p className={styles.subtitle}>Prévenir, protéger et rassurer<br />Votre vigilance peut faire la différence.</p>
+      <p className={styles.ambitionTitle}>Votre premier poste<br /><span>dans la sécurité privée</span></p>
+      <p className={styles.subtitle}>Vous pouvez intégrer la formation sans expérience préalable dans le secteur.</p>
       <span className={styles.openingArrow} aria-hidden="true"><Icon kind="rise" /></span>
     </div>
-    <div className={styles.verbs}><span><small>01</small>Observer</span><span><small>02</small>Alerter</span><span><small>03</small>Agir</span></div>
     <CardNextAction onNext={onNext} label={steps[1].label} />
   </div>;
 
   if (index === 1) return <div className={`${styles.card} ${styles.trainingCard}`}>
     <CardHeader label="Votre formation" />
-    <div className={styles.durationHeadline}><strong>5</strong><div><span className={styles.eyebrow}>SEMAINES · 175 HEURES</span><p>Un nouveau<br /><span>cap à prendre</span></p></div></div>
+    <p className={styles.durationHeadline}><strong>5</strong><span>semaines<br />de formation</span></p>
     <div className={styles.studyPlan}>
-      <div className={styles.remoteStudy}><div className={styles.studyTop}><span>À DISTANCE</span><Icon kind="screen" /></div><p><strong>51</strong><span>heures<small>pour les bases</small></span></p><div className={styles.studyBar} aria-hidden="true"><i /></div></div>
-      <div className={styles.schoolStudy}><div className={styles.studyTop}><span>À L’ÉCOLE</span><Icon kind="school" /></div><p><strong>124</strong><span>heures<small>pour progresser</small></span></p><div className={styles.studyBar} aria-hidden="true"><i /></div></div>
+      <div className={styles.remoteStudy}><div className={styles.studyTop}><span>À distance</span><Icon kind="screen" /></div><p>Des cours à suivre depuis votre espace personnel.</p></div>
+      <div className={styles.schoolStudy}><div className={styles.studyTop}><span>À l’école</span><Icon kind="school" /></div><p>Des séances en groupe avec vos formateurs.</p></div>
     </div>
-    <div className={styles.learningSkills}><p className={styles.eyebrow}>LES FONDAMENTAUX DU MÉTIER</p><div>{['Cadre professionnel', 'Prévention des risques', 'Gestion des conflits', 'Secourisme · SST inclus'].map((label, i) => <span key={label}><small>0{i + 1}</small>{label}</span>)}</div></div>
     <CardNextAction onNext={onNext} label={steps[2].label} />
   </div>;
 
   if (index === 2) return <div className={`${styles.card} ${styles.practiceCard}`}>
     <CardHeader label="Immersion terrain" />
     <div className={styles.practiceBody}>
-      <p className={styles.practiceTitle}>Les bons gestes<br /><span>et les bons réflexes</span></p>
+      <p className={styles.practiceTitle}>En binôme,<br /><span>à la radio</span></p>
       <figure className={styles.practicePhoto}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={originalArtwork['aps-atelier-radio'].src} alt={originalArtwork['aps-atelier-radio'].alt} width="1536" height="1024" loading="lazy" decoding="async" />
-        <figcaption><strong>63,5 h</strong><span>de pratique dans le parcours</span></figcaption>
       </figure>
-      <div className={styles.practiceSkills}><span>Rondes de sécurité</span><span>Contrôle d’accès</span><span>Gestion d’incidents</span></div>
-      <p className={styles.practiceNote}>Des exercices expliqués, répétés et débriefés.</p>
+      <p className={styles.practiceNote}>Votre collègue a-t-il compris votre message dès la première écoute ?</p>
     </div>
     <CardNextAction onNext={onNext} label={steps[3].label} />
   </div>;
@@ -98,13 +93,12 @@ function JourneyVisual({ index, onNext }: { index: number; onNext: () => void })
   return <div className={`${styles.card} ${styles.futureCard}`}>
     <div className={styles.futureOrbit} aria-hidden="true" />
     <CardHeader label="Votre prochain chapitre" />
-    <p className={styles.futureHeading}>Votre formation,<br /><span>un nouvel horizon</span></p>
+    <p className={styles.futureHeading}>Du titre<br /><span>au premier poste</span></p>
     <div className={styles.destination}><strong>APS<span><Icon kind="rise" /></span></strong><p>Agent de prévention<br />et de sécurité</p></div>
     <div className={styles.futureSteps}>
       <Link href="#examen"><span>01 · LE TITRE<Icon kind="rise" /></span><strong>Le TFP APS</strong><small>Réussir votre examen</small></Link>
-      <Link href="#debouches"><span>02 · LA CARTE<Icon kind="rise" /></span><strong>La carte professionnelle</strong><small>CNAPS (ministère de l’Intérieur)</small></Link>
+      <Link href="#debouches"><span>02 · LA CARTE<Icon kind="rise" /></span><strong>La carte professionnelle</strong><small>Ministère de l’Intérieur (CNAPS)</small></Link>
     </div>
-    <p className={styles.validationNote}>Le titre obtenu, la demande de carte est une démarche distincte.</p>
     <CardAction href="#inscription-financement">Préparer mon inscription</CardAction>
   </div>;
 }

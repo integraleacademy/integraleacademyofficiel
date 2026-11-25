@@ -33,57 +33,41 @@ test('les repères visuels propres à la page APS utilisent le bleu', () => {
   assert.doesNotMatch(programMarkup, /emerald|academy-gold|yellow-/);
 });
 
-test('la simulation animée de ronde reste visible dans le bloc pratique', () => {
-  assert.ok(apsPage.includes("['patrol', 'night']"));
-  assert.ok(apsPage.includes('Animation d’un agent effectuant une ronde autour d’un bâtiment'));
-  assert.match(apsStyles, /\.storyPatrolAgent[\s\S]*?animation: storyPatrolWalk/);
+test('le parcours animé renvoie aux rubriques sans répéter les listes de missions et d’horaires', () => {
+  const journey = read('src/components/ApsJourney.tsx');
+  const summary = read('src/components/ApsTrainingSummary.tsx');
+  const hybrid = read('src/components/ApsExperienceSections.tsx').split('export function ApsHybridExperience()')[1].split('export function TrainingExamExperience')[0];
+  assert.doesNotMatch(journey, /[Rr]ondes de sécurité|[Cc]ontrôle d’accès|[Pp]alpation|[Ii]nspection des bagages|[Gg]estion d’incidents/);
+  assert.doesNotMatch(journey + summary, /\b(?:51|124)\b/);
+  assert.match(summary, /175 heures/);
+  for (const duration of ['51 h', '124 h', '63,5 h', '60,5 h']) {
+    assert.equal(hybrid.split(duration).length - 1, 1, duration);
+  }
 });
 
-test('chaque carte immersion intègre ses propres illustrations', () => {
+test('l’immersion APS illustre trois situations reliées au poste de sécurité', () => {
   const exercises = apsPage.slice(apsPage.indexOf('const practicalExercises = ['), apsPage.indexOf('const enrollmentSteps = ['));
-  for (const [title, kinds] of [
-    ['Rondes de sécurité', ['patrol', 'night']],
-    ['Palpation de sécurité', ['patdown']],
-    ['Inspection visuelle des bagages', ['baggage']],
-    ['Contrôle d’accès et gestion des flux', ['access']],
-    ['Poste de sécurité', ['video', 'report']],
-    ['Incidents et conflits', ['alert']],
-    ['Prévention incendie', ['extinguisher']],
-    ['Secours aux personnes', ['cpr']],
-  ]) {
-    const card = exercises.split('\n').find(line => line.includes(title));
-    assert.ok(card, `carte manquante : ${title}`);
-    for (const kind of kinds) assert.ok(card.includes(`'${kind}'`), `visuel ${kind} manquant dans ${title}`);
+  for (const detail of ['sans badge', 'chariot de cartons', 'main courante']) {
+    assert.ok(exercises.includes(detail), detail);
   }
-  const immersionStart = apsPage.indexOf('<Section id="pratique"');
-  const immersionEnd = apsPage.indexOf('<Section id="programme"', immersionStart);
-  const immersion = apsPage.slice(immersionStart, immersionEnd);
-  const cardMarkup = immersion.slice(immersion.indexOf('<article key={title}'), immersion.indexOf('</article>'));
-  assert.ok(cardMarkup.includes('<ApsPracticalVisual kind={kind} />'));
-  assert.doesNotMatch(immersion, /visualStoriesBlock|Les réflexes métier, en images|apsVisualStories\.map/);
-  assert.ok(apsPage.includes('kind="extinguisher" theme="red"'));
-  assert.ok(apsPage.includes('kind="cpr"'));
-  assert.ok(apsPage.includes('role="img" aria-label={description}'));
-  assert.match(apsStyles, /@media \(prefers-reduced-motion: reduce\)[\s\S]*?\.storyBagCheck, \.storyPatdownAgent, \.storyPatdownZones \{ animation: none;/);
+  const images = [...exercises.matchAll(/illustration: \{ src: '([^']+)', alt: '([^']+)'/g)];
+  assert.equal(images.length, 3);
+  assert.equal(new Set(images.map(match => match[1])).size, 3);
+  const immersion = apsPage.slice(apsPage.indexOf('<Section id="pratique"'), apsPage.indexOf('<Section id="programme"'));
+  assert.match(immersion, /<TrainingPracticeCards columns=\{3\}/);
+  assert.match(immersion, /href="#pc-securite"/);
 });
 
 test('les six illustrations métier restent accessibles dans les cartes', () => {
-  const storiesBlock = apsPage.slice(
-    apsPage.indexOf('const apsVisualDescriptions = {'),
-    apsPage.indexOf('const audiences = ['),
-  );
-
-  for (const kind of ['patrol', 'night', 'access', 'video', 'report', 'alert']) {
-    assert.ok(storiesBlock.includes(`${kind}: 'Animation`), `description accessible manquante : ${kind}`);
+  const artwork = read('src/data/originalArtwork.ts');
+  const missionKeys = apsPage.match(/const apsMissionArtwork = \[(.*?)\]/)[1];
+  const keys = [...missionKeys.matchAll(/'(aps-mission-[\w-]+)'/g)].map(match => match[1]);
+  assert.equal(new Set(keys).size, 6);
+  for (const key of keys) {
+    const entry = artwork.split('\n').find(line => line.includes('"' + key + '"'));
+    assert.match(entry ?? '', /alt: "[^"]+"/);
   }
-
-  assert.ok(apsPage.includes('<ApsStoryIllustration kind={kind} />'));
-  assert.ok(apsPage.includes('role="img" aria-label={description}'));
-  const metier = apsPage.slice(apsPage.indexOf('<Section id="metier"'), apsPage.indexOf('<Section id="admission"'));
-  assert.doesNotMatch(metier, /apsVisualStories\.map|Les réflexes métier, en images/);
-  assert.match(apsStyles, /@keyframes storyNightSweep/);
-  assert.match(apsStyles, /@keyframes storyVideoSweep/);
-  assert.match(apsStyles, /@media \(prefers-reduced-motion: reduce\)[\s\S]*?\.storyNightBeam,[\s\S]*?\.storyVideoScan,/);
+  assert.match(apsPage, /<TrainingMissionCards items=\{missions\.map/);
 });
 
 test('la page APS trie les sessions et limite la vue initiale aux deux prochaines', () => {

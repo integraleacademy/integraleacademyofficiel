@@ -11,8 +11,8 @@ export function TrainingPracticeArtwork({ illustration, focus = '50% 45%' }: { i
   </div>;
 }
 
-export function TrainingPracticeCards({ items, iconClassName = 'bg-academy-gold text-academy-gold-text' }: { items: PracticeCard[]; iconClassName?: string }) {
-  return <div className="grid gap-5 md:grid-cols-2">
+export function TrainingPracticeCards({ items, columns = 2, iconClassName = 'bg-academy-gold text-academy-gold-text' }: { items: PracticeCard[]; columns?: 2 | 3; iconClassName?: string }) {
+  return <div className={`grid gap-5 ${columns === 3 ? 'lg:grid-cols-3' : 'md:grid-cols-2'}`}>
     {items.map(({ icon, title, text, visuals, afterVisuals }, index) => (
       <article key={title} className={`${styles.practicalCard} rounded-[1.5rem] border border-white/10 bg-white/7 p-5`}>
         <div className="relative z-10 flex min-w-0 flex-1 flex-col">

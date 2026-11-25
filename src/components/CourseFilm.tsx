@@ -13,7 +13,7 @@ const videos = {
   neo: { id: 'sGZbgi0unGY', duration: '1 min 14', credit: 'Néo · Sacrés Français' },
 } as const;
 
-type Props = { film: keyof typeof videos; title: string; titleAccent?: string; description: string; followPageSound?: boolean };
+type Props = { film: keyof typeof videos; title: string; titleAccent?: string; description?: string; followPageSound?: boolean };
 // Both films in a course share a visitor's choice for the lifetime of that page.
 const pageSound = new WeakMap<Element, { muted: boolean }>();
 let activePlayer: YouTubePlayer | null = null;
@@ -293,7 +293,7 @@ export function CourseFilm({ film, title, titleAccent, description, followPageSo
         <div className={reportage.copy}>
           <p className={reportage.byline}><strong>Reportage</strong><span>{video.credit}</span></p>
           <h3 id={`${anchor}-titre`} className={reportage.headline}>{title}{titleAccent && <> <em>{titleAccent}</em></>}</h3>
-          <p className={reportage.description}>{description}</p>
+          {description && <p className={reportage.description}>{description}</p>}
           <div className={`${styles.actions} ${reportage.actions}`}>
             {soundButton}
             {soundHint}
@@ -319,7 +319,7 @@ export function CourseFilm({ film, title, titleAccent, description, followPageSo
           <p className={styles.credit}>{video.credit}<span>{video.duration}</span></p>
           <h2 id={`${anchor}-titre`} className={styles.title}>{title}</h2>
           <div className={styles.summary}>
-            <p>{description}</p>
+            {description && <p>{description}</p>}
             <div className={styles.actions}>
               {soundButton}
             {soundHint}

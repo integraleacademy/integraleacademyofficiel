@@ -14,8 +14,7 @@ export function ApsTrainingSummary({ location }: { location: string }) {
       <dt>Durée et format</dt>
       <dd>
         <strong>175 heures</strong>
-        <span>51 h à distance</span>
-        <span>124 h en présentiel</span>
+        <span>À distance et en présentiel</span>
       </dd>
     </div>
     <div className={styles.fact}>
@@ -23,7 +22,6 @@ export function ApsTrainingSummary({ location }: { location: string }) {
       <dd>
         <strong>SST inclus</strong>
         <span>Sauveteur secouriste du travail</span>
-        <small>Intégré à votre parcours</small>
       </dd>
     </div>
     <div className={styles.fact}>

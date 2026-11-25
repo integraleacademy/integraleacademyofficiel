@@ -44,21 +44,6 @@ const missions = [
   ['✚', 'Secours aux personnes', 'Porter assistance dans le cadre des compétences du SST.', false],
 ];
 
-// Artwork extracted from the APS manual, with matching illustrations for supervised practice.
-const apsVisuals = {
-  patrol: ['vigilance', 'Un agent surveille les allées d’un site et observe son environnement'],
-  night: ['ronde', 'Un agent effectue une ronde de surveillance à la tombée de la nuit'],
-  access: ['acces', 'Contrôle d’accès des visiteurs à l’accueil d’un site'],
-  video: ['pc-securite', 'Une agente surveille les écrans au poste central de sécurité'],
-  report: ['transmission', 'Deux professionnels échangent des consignes sur le site'],
-  alert: ['conflit', 'Une agente garde une posture calme face à une situation de conflit'],
-  baggage: ['bagages', 'Un agent réalise une inspection visuelle des bagages à l’entrée d’un site'],
-  patdown: ['palpation', 'Exercice de palpation de sécurité avec un volontaire et un formateur'],
-  extinguisher: ['incendie', 'Un agent repère une anomalie devant une porte de sécurité incendie'],
-  cpr: ['sst', 'Une stagiaire s’exerce sur un mannequin de secourisme sous la supervision d’un formateur'],
-} as const;
-
-type ApsPracticalVisualKind = keyof typeof apsVisuals;
 const apsMissionArtwork = ['aps-mission-surveillance', 'aps-mission-acces', 'aps-mission-ronde', 'aps-mission-prevention', 'aps-mission-incident', 'aps-mission-secours'].map(key => originalArtwork[key as keyof typeof originalArtwork]);
 
 const audiences = ['Reconversion professionnelle', 'Demandeurs d’emploi', 'Salariés en évolution', 'Débutants motivés', 'Futurs agents de sécurité', 'Projet APS + SSIAP 1'];
@@ -97,22 +82,29 @@ const examSteps = [
 ];
 
 const practicalExercises = [
-  ['↻', 'Rondes de sécurité', 'Préparer une ronde, suivre un itinéraire, repérer les anomalies, effectuer une levée de doute et transmettre un compte rendu exploitable.', ['patrol']],
-  ['✋', 'Palpation de sécurité', 'Apprendre les gestes professionnels, le positionnement, le consentement et le cadre légal applicable, au travers d’exercices encadrés.', ['patdown']],
-  ['⌕', 'Inspection visuelle des bagages', 'Contrôler méthodiquement sacs et bagages dans le respect des droits des personnes et des consignes du site.', ['baggage']],
-  ['⇥', 'Contrôle d’accès et gestion des flux', 'Vérifier les accès, badges et autorisations, accueillir le public et gérer une file ou un refus d’accès avec professionnalisme.', ['access']],
-  ['⌁', 'Poste de sécurité', 'Utiliser la main courante, recevoir une alarme, appliquer les consignes, communiquer par radio et coordonner une intervention.', ['video']],
-  ['!', 'Incidents et conflits', 'Réagir face à une anomalie, un comportement agressif ou une situation dégradée en gardant calme, distance et proportion.', ['alert']],
-  ['♨', 'Prévention incendie', 'Identifier un risque, effectuer une levée de doute, donner l’alerte, participer à l’évacuation et accueillir les secours.', ['extinguisher']],
-  ['✚', 'Secours aux personnes', 'Mettre en œuvre les gestes appris pendant le SST lors de mises en situation proches du terrain.', ['cpr']],
-] as const satisfies ReadonlyArray<readonly [string, string, string, readonly ApsPracticalVisualKind[]]>;
+  {
+    icon: '⇥', title: 'Un visiteur arrive sans badge',
+    text: 'Un stagiaire joue le rôle d’un visiteur attendu pour un rendez-vous. À l’accueil, vous lui expliquez où patienter pendant la vérification. Le formateur revient avec vous sur les mots choisis.',
+    illustration: { src: '/images/aps/experience/atelier-acces.webp', alt: 'Une visiteuse échange avec un agent à l’accueil.' },
+  },
+  {
+    icon: '↻', title: 'Un passage encombré pendant la ronde',
+    text: 'Vous trouvez un chariot de cartons devant une porte. Vous appelez votre collègue au poste de sécurité. Peut-il situer le problème à partir de votre seul message ?',
+    illustration: { src: '/images/aps/experience/atelier-incendie.webp', alt: 'Dans un couloir, un agent repère des cartons et un chariot devant une double porte.' },
+  },
+  {
+    icon: '✎', title: 'Au poste, un appel à consigner',
+    text: 'Cette fois, vous recevez l’appel et rédigez une entrée dans la main courante. Un stagiaire qui n’était pas sur place lit votre texte et raconte ce qu’il a compris.',
+    illustration: { src: '/images/aps/experience/atelier-pc-securite.webp', alt: 'Une agente assise au poste de sécurité prend un appel devant ses écrans.' },
+  },
+];
 
 const enrollmentSteps = [
-  ['01', 'Planifiez votre premier rendez-vous téléphonique', 'Appelez-nous au 04 22 47 07 68 pour convenir d’un rendez-vous téléphonique. Lors de ce rendez-vous téléphonique, nous prendrons le temps de comprendre votre projet de formation et de vous guider dans les démarches à accomplir.'],
-  ['02', 'Échangeons sur votre projet', 'Lors de ce premier entretien, nous abordons ensemble tous les détails pratiques, le calendrier, l’organisation de la formation et les prérequis liés à votre situation.'],
+  ['01', 'Planifiez votre premier rendez-vous téléphonique'],
+  ['02', 'Échangeons sur votre projet', 'Avec un conseiller, vérifiez les prérequis, choisissez une session et identifiez les financements adaptés à votre situation.'],
   ['03', 'Créez votre Identité Numérique', 'Si vous souhaitez utiliser votre compte CPF ou demandez un financement à France Travail, vous devez créer votre Identité Numérique La Poste afin de sécuriser et valider vos démarches en ligne.'],
-  ['04', 'Finalisons votre inscription', 'Lors d’un second entretien téléphonique, nous finalisons ensemble votre inscription : mise en place du financement et démarches administratives.'],
-  ['05', 'Recevez votre convocation officielle', 'Dès que tout est finalisé, votre inscription est confirmée et nous vous envoyons votre convocation officielle en formation.'],
+  ['04', 'Finalisons votre inscription', 'Lors d’un second entretien téléphonique, votre conseiller fait le point avec vous sur le financement et les pièces du dossier.'],
+  ['05', 'Recevez votre convocation officielle', 'Vous y trouverez la date, l’horaire et le lieu où vous présenter.'],
 ];
 
 const financingOptions = [
@@ -205,11 +197,9 @@ function Eyebrow({ children, light = false }: { children: ReactNode; light?: boo
   return <p className={`text-[.66rem] font-black uppercase tracking-[.24em] ${light ? 'text-blue-300' : 'text-blue-700'}`}>{children}</p>;
 }
 
-function ApsPracticalVisual({ kind, illustration }: { kind: ApsPracticalVisualKind; illustration?: { src: string; alt: string } }) {
-  const [file, description] = apsVisuals[kind];
-  const adapted = ['vigilance', 'bagages', 'acces', 'pc-securite', 'conflit', 'incendie'].includes(file);
+function ApsPracticalVisual({ illustration }: { illustration: { src: string; alt: string } }) {
   return <ManualArtwork
-    illustration={illustration ?? { src: adapted ? `/images/aps/experience/atelier-${file}.webp` : `/images/aps/manuel/${file}.webp`, alt: description }}
+    illustration={illustration}
     natural className={`${styles.manualVisual} ${styles.naturalVisual}`}
     sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 560px" />;
 }
@@ -258,7 +248,7 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
       heading="Devenez agent de" accent="prévention et de sécurité"
       title="Formation agent de prévention et de sécurité"
       tagline="Apprenez le métier sur le terrain"
-      description={<p>Rondes, contrôle d’accès, palpation, inspection des bagages et gestion d’incidents : entraînez-vous aux situations que vous rencontrerez réellement en poste.</p>}
+      description={<p>Préparez le TFP APS à Puget-sur-Argens pour travailler dans un magasin, sur un site industriel ou lors d’événements.</p>}
       illustration={{ src: '/images/aps/manuel/equipe.webp', alt: 'Deux agents de sécurité préparent leur ronde, illustration du manuel APS Intégrale Academy' }}
       caption="Observer, prévenir et protéger"
       primaryAction={{ href: apsContact('démarrer mon projet'), label: 'Je démarre mon projet' }}
@@ -267,8 +257,7 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
     <ApsSectionNavigation registrationHref="#dates-tarifs" />
 
 
-    <CourseFilm film="aps" title="Devenir agent de sécurité"
-      description="Surveiller un site, contrôler les accès, prévenir les incidents… Découvrez le métier auquel prépare notre formation APS." />
+    <CourseFilm film="aps" title="Devenir agent de sécurité" />
 
     <ApsJourney>
       <Section id="metier" eyebrow="01 — Le métier" title={<>Un métier de terrain, de vigilance et de sang-froid</>} intro={<>L’agent APS prévient les risques, protège les personnes et les biens, applique les consignes et rend compte de chaque événement.</>}>
@@ -285,11 +274,12 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
         </Section>
       }
       immersion={
-        <Section id="pratique" eyebrow="03 — Immersion terrain" title={<>Vous ne regardez pas seulement&nbsp;: vous pratiquez</>} intro={<>La formation vous place dans des situations proches du réel. Chaque geste est expliqué, répété, observé puis débriefé avec le formateur.</>} tone="dark">
-          <TrainingPracticeCards items={practicalExercises.map(([icon, title, text, visuals]) => ({
-            icon, title, text, visuals: visuals.map(kind => ({ kind, illustration: <ApsPracticalVisual kind={kind} /> })),
+        <Section id="pratique" eyebrow="03 — Immersion terrain" title="Trois exemples de mises en situation" intro="En atelier, les stagiaires se donnent la réplique. En changeant de rôle, vous découvrez aussi comment votre interlocuteur comprend une consigne ou un message." tone="dark">
+          <TrainingPracticeCards columns={3} items={practicalExercises.map(({ icon, title, text, illustration }) => ({
+            icon, title, text, visuals: [{ kind: illustration.src, illustration: <ApsPracticalVisual illustration={illustration} /> }],
           }))} />
-          <div className="mt-7 grid gap-4 rounded-[1.7rem] border border-blue-300/25 bg-blue-400/10 p-6 lg:grid-cols-[auto_1fr] lg:items-center"><span className="grid h-14 w-14 place-items-center rounded-2xl bg-blue-300 text-2xl font-black text-blue-950">✓</span><div><p className="text-xl font-black text-blue-200">L’objectif : transformer les connaissances en réflexes professionnels.</p><p className="mt-2 max-w-4xl leading-7 text-white/68">Observation, positionnement, communication, respect du cadre légal, compte rendu et choix d’une réponse adaptée sont analysés après chaque scénario.</p></div></div></Section>
+          <a href="#pc-securite" className="mt-6 inline-flex items-center gap-2 font-bold text-blue-200 underline underline-offset-4 hover:text-white">Voir le poste de sécurité de l’école <span aria-hidden="true">↓</span></a>
+        </Section>
       }
       campus={<ApsFacilitiesSections />}
       brochure={<CourseBrochureCard course="aps" />}
@@ -300,7 +290,7 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
         </Section>
       }
       format={
-        <Section id="hybride" eyebrow="05 — Distanciel + Présentiel" title={<>La souplesse du distanciel, l’exigence du terrain</>} intro={<>Découvrez votre espace de cours en ligne, puis retrouvez votre groupe à l’école. 175 heures, deux façons complémentaires d’apprendre.</>} tone="paper">
+        <Section id="hybride" eyebrow="05 — Distanciel + Présentiel" title="Comment se répartissent vos heures de formation ?" tone="paper">
           <ApsHybridExperience />
         </Section>
       }
@@ -341,18 +331,15 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
             <p className={editorial.kicker}>08 — Inscriptions &amp; financement</p>
             <header className={editorial.intro}>
               <div>
-                <h2>
-                  <span>Du premier appel à votre entrée en formation.</span>
-                  <span>Nous vous accompagnons de A à Z</span>
-                </h2>
-                <p>Tout commence par un rendez-vous téléphonique avec un membre de notre équipe. Contactez-nous au 04 22 47 07 68 pour réserver votre rendez-vous téléphonique. Nous étudions votre projet en détails et nous vous accompagnons dans toutes vos démarches du financement, l’inscription, jusqu’à votre formation et l’obtention de votre diplôme.</p>
+                <h2>Du premier appel à votre entrée en formation</h2>
+                <p>Vous pouvez aussi commencer en ligne en laissant vos coordonnées à notre équipe.</p>
               </div>
               <CTA href={apsRegistrationFormUrl} variant="gold">Commencer mon inscription →</CTA>
             </header>
             <ol className={editorial.steps}>
               {enrollmentSteps.map(([number, title, text]) => (
                 <li key={number}><span className={editorial.stepNumber}>{number}</span>
-                  <div><h3>{title}</h3><p>{text}</p>
+                  <div><h3>{title}</h3>{text && <p>{text}</p>}
                     {number === '01' && <a href="tel:0422470768">Appeler le 04 22 47 07 68 →</a>}
                     {number === '03' && <a href={identityNumeriqueUrl} target="_blank" rel="noopener noreferrer">Créer mon Identité Numérique →</a>}
                   </div>
@@ -383,9 +370,9 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
             <h3>Deux expertises.<br /><span>Plus de possibilités</span></h3>
             <p className={styles.dualIntro}>Associez le TFP APS et le SSIAP 1 pour élargir vos missions dans la surveillance humaine et la sécurité incendie.</p>
             <div className={styles.dualPanels}>
-              <div className={styles.dualSecurity}><span className={styles.dualLabel}>TFP APS</span><ApsPracticalVisual kind="patrol" illustration={originalArtwork['aps-metier-site']} /><h4>Prévenir & surveiller</h4><p>Rondes, contrôle d’accès, protection des personnes et des biens.</p></div>
+              <div className={styles.dualSecurity}><span className={styles.dualLabel}>TFP APS</span><ApsPracticalVisual illustration={originalArtwork['aps-metier-site']} /><h4>Prévenir & surveiller</h4><p>Rondes, contrôle d’accès, protection des personnes et des biens.</p></div>
               <span className={styles.dualPlus} aria-hidden="true">+</span>
-              <div className={styles.dualFire}><span className={styles.dualLabel}>SSIAP 1</span><ApsPracticalVisual kind="extinguisher" illustration={ssiapArtwork.evacuation} /><h4>Alerter & protéger</h4><p>Prévention incendie, évacuation et assistance aux personnes.</p></div>
+              <div className={styles.dualFire}><span className={styles.dualLabel}>SSIAP 1</span><ApsPracticalVisual illustration={ssiapArtwork.evacuation} /><h4>Alerter & protéger</h4><p>Prévention incendie, évacuation et assistance aux personnes.</p></div>
             </div>
             <div className={styles.dualFooter}><span>Surveillance humaine <b>+</b> Sécurité incendie</span><CTA href="/formations-securite/ssiap-1" variant="dark" className="w-full">Découvrir le SSIAP 1 →</CTA><p>Deux qualifications complémentaires, chacune avec ses prérequis et son examen.</p></div>
           </article></div><ApsWorkplaces places={workplaces} /></Section>

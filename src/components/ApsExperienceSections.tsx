@@ -41,11 +41,11 @@ const demoUrl = 'https://gestionstagiaires-test-v2.onrender.com/e-learning/demo/
 export function ApsHybridExperience() {
   return <>
     <div className={styles.hybrid}>
-      <div className={styles.remoteCopy}><p className={styles.kicker}>Apprendre à distance</p><h3><strong>51 h</strong><br />Les bases, où que vous soyez</h3><p>Des cours illustrés, des vidéos et des exercices pour avancer étape par étape. Votre progression est suivie par l’équipe pédagogique.</p><ul><li>Plateforme accessible 24 h/24</li><li>Exercices et tests pour vous entraîner</li><li>Une équipe disponible pour vous accompagner</li></ul><a className={styles.primaryLink} href={demoUrl} target="_blank" rel="noopener noreferrer">Testez le e-learning <span aria-hidden="true">↗</span></a></div>
+      <div className={styles.remoteCopy}><p className={styles.kicker}>Apprendre à distance</p><h3><strong>51 h</strong><br />sur la plateforme de cours</h3><p>Votre espace est accessible 24 h/24. L’équipe pédagogique suit votre progression et répond à vos questions.</p><a className={styles.primaryLink} href={demoUrl} target="_blank" rel="noopener noreferrer">Essayer un cours en ligne <span aria-hidden="true">↗</span></a></div>
       <ApsElearningPreview />
     </div>
-    <div className={styles.inPerson}><div><p className={styles.kicker}>Puis, place au terrain</p><h3><strong>124 h</strong> à l’école</h3></div><p><strong>63,5 h de pratique</strong><span>Rondes, gestes professionnels, mises en situation.</span></p><p><strong>60,5 h de théorie</strong><span>Échanges avec le formateur et préparation à l’examen.</span></p><a href="#pratique">Voir les ateliers <span aria-hidden="true">↑</span></a></div>
-    <ol className={styles.hybridSteps}>{[['Accueil au centre','Présentation du parcours'],['51 h à distance','Notions autorisées en distanciel'],['124 h à l’école','Théorie et pratique encadrées'],['Examen en présentiel','Évaluation devant jury']].map(([title, text], index) => <li key={title}><span>0{index+1}</span><div><strong>{title}</strong><small>{text}</small></div></li>)}</ol>
+    <div className={styles.inPerson}><div><p className={styles.kicker}>À Puget-sur-Argens</p><h3><strong>124 h</strong> à l’école</h3></div><p><strong>63,5 h de pratique</strong><span>Ateliers en groupe.</span></p><p><strong>60,5 h de théorie</strong><span>Travail en salle avec le formateur.</span></p><a href="#pratique">Voir les ateliers <span aria-hidden="true">↑</span></a></div>
+    <ol className={styles.hybridSteps}>{[['Accueil au centre','Présentation du parcours'],['Cours en ligne','Depuis votre espace personnel'],['Retour à l’école','Avec votre promotion'],['Examen en présentiel','Évaluation devant jury']].map(([title, text], index) => <li key={title}><span>0{index+1}</span><div><strong>{title}</strong><small>{text}</small></div></li>)}</ol>
   </>;
 }
 
