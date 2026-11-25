@@ -61,7 +61,7 @@ export async function listStoredSessions() {
 }
 export async function listSessions() {
   const [stored, catalogue] = await Promise.all([listStoredSessions(), readManagedSessions()]);
-  const trainings = catalogue.some(row => row.visibility === 'public') ? await listTrainings() : [];
+  const trainings = catalogue?.some(row => row.visibility === 'public' || (row.edited && row.visibility === 'match')) ? await listTrainings() : [];
   return mergeManagedSessions(stored, trainings, catalogue);
 }
 export async function listLeads(){const p=await getPrisma(); return p? p.chatLead.findMany({orderBy:{createdAt:'desc'}}) : [];}

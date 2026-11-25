@@ -57,7 +57,11 @@ function capacityAndSales(base: any, row?: CatalogueRow) {
   return { seatsTotal, seatsLeft, showSeatsLeft: seatsLeft !== null };
 }
 
-export function mergeManagedSessions(stored: any[], trainings: any[], catalogue: CatalogueRow[]) {
+export function mergeManagedSessions(stored: any[], trainings: any[], catalogue: CatalogueRow[] | null) {
+  if (catalogue === null) {
+    // On a cold start, the CMS may still contain a withdrawn or private cohort.
+    return stored.filter(session => !Object.hasOwn(managedTitles, slug(session.training?.slug)));
+  }
   const used = new Set<string>();
   const previouslyPublished = new Set<string>();
   const existingFormulas = new Map<string, Set<string>>();
@@ -167,7 +171,7 @@ export function mergeManagedSessions(stored: any[], trainings: any[], catalogue:
 const endpoint = 'https://gestionstagiaires-r5no.onrender.com/api/integrations/session-availability';
 let snapshot: CatalogueRow[] = [], refreshed = 0, next = 0;
 let pending: Promise<void> | undefined;
-export async function readManagedSessions(): Promise<CatalogueRow[]> {
+export async function readManagedSessions(): Promise<CatalogueRow[] | null> {
   const token = process.env.SESSION_CATALOG_TOKEN;
   if (!token) return [];
   if (Date.now() >= next) {
@@ -184,5 +188,5 @@ export async function readManagedSessions(): Promise<CatalogueRow[]> {
     })().finally(() => { pending = undefined; });
     await pending;
   }
-  return Date.now() - refreshed <= 120_000 ? snapshot : snapshot.map(row => ({...row, sold: null}));
+  return refreshed && Date.now() - refreshed <= 120_000 ? snapshot : null;
 }

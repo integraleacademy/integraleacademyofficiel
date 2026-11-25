@@ -103,3 +103,10 @@ test('un changement de niveau SSIAP retire les anciennes cartes et publie le bon
     assert.deepEqual(projected.map(o=>[o.training.slug,o.title,o.id]),[['ssiap-3','SSIAP 3 Juin',row.id]]);
   }
 });
+
+
+test('sans lecture récente des règles de diffusion le CMS ne réaffiche aucune ancienne session gérée', () => {
+  const vtc = {...base,id:'vtc',training:{...training,slug:'vtc'}};
+  assert.deepEqual(mergeManagedSessions([base,vtc],[training],null),[vtc]);
+  assert.equal(mergeManagedSessions([base],[training],[]).length,1);
+});
