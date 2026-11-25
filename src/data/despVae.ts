@@ -149,7 +149,7 @@ export const despVaeFaq = [
   },
   {
     q: 'Où se déroulent les formations ?',
-    a: 'Vous pouvez suivre les rendez-vous d’accompagnement à distance et rédiger votre dossier depuis votre lieu de résidence. La VAE suit votre calendrier individuel et ne prévoit pas les deux semaines de cours en centre du DESP initial.\n\n' +
+    a: 'Vous pouvez suivre les rendez-vous d’accompagnement à distance et rédiger votre dossier depuis votre lieu de résidence. La VAE suit votre calendrier individuel et ne prévoit pas les deux semaines que les candidats au DESP initial passent au centre de formation.\n\n' +
       'Pour le jury, suivez la convocation du certificateur. Elle vous donnera le format retenu et, si une présence physique est prévue, l’adresse exacte. Signalez dès le premier entretien les contraintes de déplacement ou les besoins d’aménagement qui pourraient influer sur votre organisation.',
   },
   {

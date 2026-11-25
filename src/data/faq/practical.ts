@@ -22,7 +22,7 @@ export const businessFaq = [
   {
     q: 'Intervenez-vous hors de la Côte d’Azur ?',
     a: 'Oui, un recrutement situé hors de la Côte d’Azur peut être étudié. Indiquez la commune de chaque poste, l’effectif recherché, les horaires et la date d’embauche envisagée. Ces renseignements permettent d’organiser les périodes en entreprise et de déterminer les déplacements nécessaires pour la formation.\n\n' +
-      'Un BTS MOS avec des cours en visioconférence peut, selon la promotion, convenir à une entreprise éloignée du campus. Les parcours qui comprennent des exercices pratiques en centre nécessitent des déplacements aux dates prévues. Nous examinons avec vous ces contraintes avant d’arrêter un calendrier de recrutement.',
+      'Un BTS MOS avec des cours en visioconférence peut, selon la promotion, convenir à une entreprise éloignée du campus. Les parcours qui comprennent des exercices pratiques au centre de formation nécessitent des déplacements aux dates prévues. Nous examinons avec vous ces contraintes avant d’arrêter un calendrier de recrutement.',
   },
 ];
 

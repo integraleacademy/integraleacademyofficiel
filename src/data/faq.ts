@@ -11,7 +11,7 @@ export const globalFaq = [
   },
   {
     q: 'Quelle formation choisir pour devenir agent de sécurité privée ?',
-    a: 'Pour exercer des missions de surveillance et de gardiennage, choisissez le titre à finalité professionnelle d’agent de prévention et de sécurité, le TFP APS. À Puget-sur-Argens, le parcours comprend 175 heures réparties entre apprentissage à distance et formation en centre. Vous travaillez notamment l’accueil, le contrôle d’accès, la prévention des incidents et la rédaction de comptes rendus.\n\n' +
+    a: 'Pour exercer des missions de surveillance et de gardiennage, choisissez le titre à finalité professionnelle d’agent de prévention et de sécurité, le TFP APS. À Puget-sur-Argens, le parcours comprend 175 heures réparties entre apprentissage à distance et cours au centre de formation. Vous travaillez notamment l’accueil, le contrôle d’accès, la prévention des incidents et la rédaction de comptes rendus.\n\n' +
       'Avant de choisir une session, faites vérifier votre situation auprès du Conseil national des activités privées de sécurité (CNAPS). Selon votre dossier, une autorisation d’entrée en formation est à obtenir. Après la réussite au titre, la carte professionnelle correspondant à l’activité est nécessaire pour exercer.',
     links: [
       { href: '/formations-securite/aps', label: 'Découvrir la formation APS' },
@@ -37,7 +37,7 @@ export const globalFaq = [
   },
   {
     q: 'Comment préparer un projet de direction d’entreprise de sécurité ?',
-    a: 'Le DESP prépare à la création, à la reprise ou à la direction d’une entreprise de sécurité privée. La formation initiale compte 245 heures, dont 175 à distance et 70 en centre. Elle permet de travailler le pilotage de l’activité, la gestion, le suivi des équipes et la relation avec les clients.\n\n' +
+    a: 'Le DESP prépare à la création, à la reprise ou à la direction d’une entreprise de sécurité privée. La formation initiale compte 245 heures, dont 175 à distance et 70 au centre de formation. Elle permet de travailler le pilotage de l’activité, la gestion, le suivi des équipes et la relation avec les clients.\n\n' +
       'Si vous exercez déjà ces responsabilités, la validation des acquis de l’expérience (VAE) peut convenir. Pour comparer les deux voies, préparez quelques exemples de décisions que vous avez prises et de documents que vous avez produits, comme un planning, une proposition commerciale ou un tableau de suivi. L’école pourra apprécier avec vous leur lien avec les compétences du titre.',
     links: [
       { href: '/despvaeouinitial', label: 'Comparer les deux voies DESP' },
@@ -73,7 +73,7 @@ export const globalFaq = [
   {
     q: 'Où se déroulent les formations ?',
     a: 'Le campus de la Côte d’Azur se trouve au 54 chemin du Carreou, à Puget-sur-Argens (83480). Il accueille notamment les formations APS, A3P et SSIAP ainsi que des cours de BTS. Pour le VTC, la théorie est accessible en ligne et les temps de conduite sont organisés dans les secteurs de Nice, Cannes, Fréjus ou Toulon selon la session.\n\n' +
-      'Pour le DESP, le planning permet de choisir le lieu du présentiel parmi les sessions publiées à Puget-sur-Argens ou à Paris, au 34 rue Poissonnière (75002). Avant de réserver un trajet, repérez séparément les dates à distance, les journées en centre et le lieu indiqué pour votre examen.',
+      'Pour le DESP, le planning permet de choisir le lieu du présentiel parmi les sessions publiées à Puget-sur-Argens ou à Paris, au 34 rue Poissonnière (75002). Avant de réserver un trajet, repérez séparément les dates à distance, les journées au centre de formation et le lieu indiqué pour votre examen.',
     links: [
       { href: '/ecole', label: 'Découvrir notre école et nos implantations' },
       { href: '/planning', label: 'Voir les lieux des prochaines sessions' },
@@ -91,7 +91,7 @@ export const globalFaq = [
   },
   {
     q: 'Où trouver les prochaines dates, les durées et les tarifs ?',
-    a: 'Dans le planning, filtrez par formation et par lieu, puis ouvrez la session qui vous intéresse. La fiche permet de repérer la période à distance, les dates de présence en centre et la date d’examen lorsqu’elle est publiée. Pour le VTC, le calendrier indique des échéances d’examen, tandis que la préparation théorique peut commencer dès la finalisation de l’inscription.\n\n' +
+    a: 'Dans le planning, filtrez par formation et par lieu, puis ouvrez la session qui vous intéresse. La fiche permet de repérer la période à distance, les dates de présence au centre de formation et la date d’examen lorsqu’elle est publiée. Pour le VTC, le calendrier indique des échéances d’examen, tandis que la préparation théorique peut commencer dès la finalisation de l’inscription.\n\n' +
       'La page de formation précise le volume d’heures et le tarif présenté pour le parcours. Si vous hésitez entre deux sessions, communiquez-nous leurs dates et le lieu souhaité pour vérifier les disponibilités ou obtenir le devis correspondant à votre demande de financement.',
     links: [
       { href: '/planning', label: 'Consulter le planning des formations' },

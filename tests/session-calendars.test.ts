@@ -37,6 +37,9 @@ test('le calendrier A4 réunit les deux périodes de présentiel et le mois de l
     remoteStartDate:'2027-02-01', remoteEndDate:'2027-02-05', inPersonStartDate:'2027-02-08', inPersonFirstEndDate:'2027-02-12',
     inPersonResumeDate:'2027-02-22', inPersonEndDate:'2027-02-26', examDate:'2027-03-01', location:'Paris'}));
   assert.deepEqual(model.phases.map(phase => phase.kind), ['distance','centre','centre','examen']);
+  assert.deepEqual(model.phases.filter(phase => phase.kind === 'centre').map(phase => phase.label), [
+    'Au centre de formation · période 1', 'Au centre de formation · période 2',
+  ]);
   assert.equal(model.lastMonth, '2027-03-01');
   assert.match(model.address, /Grand Rex/);
   const pdf = await PDFDocument.load(await createCalendarPdf(model));
@@ -45,6 +48,18 @@ test('le calendrier A4 réunit les deux périodes de présentiel et le mois de l
   assert.match(pdf.getSubject() ?? '', /sous réserve de modifications/);
   const { width, height } = pdf.getPage(0).getSize();
   assert.ok(Math.abs(width - 595.28) < 0.1 && Math.abs(height - 841.89) < 0.1);
+});
+
+test('les périodes SSIAP entièrement présentielles utilisent le même libellé même sans découpage horaire', () => {
+  for (const slug of ['ssiap-1', 'ssiap-3']) {
+    const model = sessionCalendar(toPublicSession({
+      id: 'session-ssiap', title: 'Session SSIAP', training: { slug }, location: 'Puget-sur-Argens',
+      startDate: '2027-02-15', endDate: '2027-02-26', examDate: '2027-03-01',
+    }));
+    assert.equal(model.phases[0].kind, 'centre');
+    assert.equal(model.phases[0].label, 'Au centre de formation');
+    assert.equal(model.phases[1].kind, 'examen');
+  }
 });
 
 test('la réserve de modifications est imprimée sur chaque page d’une session longue', {
