@@ -66,7 +66,6 @@ test('le parcours reprend précisément les cinq étapes du support commercial',
     'Créez votre Identité Numérique',
     'Lors d’un second entretien téléphonique',
     'Recevez votre convocation officielle',
-    'nous vous envoyons votre convocation officielle en formation',
   ]) {
     assert.ok(apsPage.includes(wording), `étape commerciale manquante : ${wording}`);
   }
@@ -75,8 +74,10 @@ test('le parcours reprend précisément les cinq étapes du support commercial',
   assert.ok(enrollmentSection.includes('href={identityNumeriqueUrl}'));
   assert.ok(enrollmentSection.includes('Appeler le 04 22 47 07 68'));
   assert.ok(enrollmentSection.includes('CPF ou France Travail ? Anticipez votre Identité Numérique.'));
-  assert.ok(enrollmentSection.includes('Du premier appel à votre entrée en formation.'));
-  assert.ok(enrollmentSection.includes('jusqu’à votre formation et l’obtention de votre diplôme'));
+  const firstSteps = apsPage.slice(apsPage.indexOf('const enrollmentSteps = ['), apsPage.indexOf("['03', 'Créez votre Identité Numérique'"));
+  const intro = enrollmentSection.slice(0, enrollmentSection.indexOf('</header>'));
+  assert.equal((firstSteps + intro).match(/rendez-vous téléphonique/gi)?.length, 1);
+  assert.doesNotMatch(intro, /04 22 47 07 68/);
   assert.ok(!enrollmentSection.includes('La prise en charge dépend de votre situation'));
   assert.ok(!enrollmentSection.includes('Simple, claire, accompagnée.'));
 });
