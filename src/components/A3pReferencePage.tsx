@@ -1,7 +1,7 @@
 import { programmeIllustrations, programmeOverviews } from '@/data/programme-illustrations';
 import { CourseBrochureCard } from '@/components/CourseBrochureCard';
 import { CallNotification } from '@/components/CallNotification';
-import { TrainingCourseSections, TrainingReferencePage, TrainingReferenceHero, TrainingReferenceSection as Section, TrainingReferenceCampus, TrainingReferenceContact, TrainingReferenceMobileBar } from '@/components/TrainingReferenceLayout';
+import { TrainingCourseSections, TrainingReferencePage, TrainingReferenceHero, TrainingReferenceSection as Section, TrainingReferenceMissions, TrainingReferenceCampus, TrainingReferenceContact, TrainingReferenceMobileBar } from '@/components/TrainingReferenceLayout';
 import { TrainingCourseTestimonials } from '@/components/TrainingCourseTestimonials';
 
 import { originalArtwork } from '@/data/originalArtwork';
@@ -10,7 +10,6 @@ import { serializeCourseJsonLd } from '@/lib/seo';
 import { informationRequestHref } from '@/lib/contact-request';
 import Link from 'next/link';
 import { TrainingHeroSessionCard } from '@/components/TrainingHero';
-import { TrainingMissionCards } from './TrainingMissionCards';
 import { TrainingAdmission, TrainingExamExperience, TrainingOfficialReferences } from './ApsExperienceSections';
 import { TrainingFundingOptions } from './TrainingFundingOptions';
 import reference from './ApsReferencePage.module.css';
@@ -150,14 +149,32 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
       description="Découvrez la formation A3P d’Intégrale Academy à Puget-sur-Argens, sur la Côte d’Azur." />
 
     <CourseJourney course="a3p">
-      <Section id="metier" label="01 — Le métier" title={<>Le rôle de l’agent auprès de <em>son client</em></>} intro="Un dirigeant, une artiste ou un particulier peut faire appel à un agent de protection rapprochée pour sa sécurité personnelle, dans sa vie professionnelle comme dans sa vie privée."
+      <Section id="metier" label="01 — Le métier" title={<>Des exemples de missions <em>auprès du client</em></>} intro="La mission de l’agent de protection rapprochée est d’assurer la sécurité physique de son client. Dans chacune de ses interventions, il fait preuve de discrétion et respecte la vie privée de la personne qu’il accompagne."
         fullWidthFooter={
           <CourseFilm film="neo" followPageSound title="C’est quoi, le métier" titleAccent="de garde du corps ?"
             description="Après vingt ans en protection rapprochée, Véronique forme les futurs gardes du corps chez Intégrale Academy. Au micro de Néo, elle raconte son métier." />
         }>
-        <TrainingMissionCards items={[
-          { title: 'Accompagner le client au quotidien', description: 'Lors d’un rendez-vous ou d’un événement public, l’agent veille sur son client tout en lui laissant la liberté d’échanger avec son entourage.', illustration: originalArtwork['a3p-mission-ensemble'] },
-          { title: 'Respecter sa vie privée', description: 'Un agent partage parfois des moments personnels et entend des conversations confidentielles. La confiance du client repose sur sa discrétion.', illustration: originalArtwork['a3p-mission-relation'] },
+        <TrainingReferenceMissions label="Exemple de mission" items={[
+          {
+            title: 'Accompagner un dirigeant en déplacement professionnel',
+            description: 'Un chef d’entreprise visite plusieurs sites dans la journée. L’agent l’accompagne d’un rendez-vous à l’autre et reste à ses côtés pendant les visites.',
+            illustration: a3pArtwork.discretion, landscapeFocus: '50% 36%',
+          },
+          {
+            title: 'Protéger une personnalité lors d’un événement public',
+            description: 'Une artiste participe à un vernissage. L’agent veille sur elle pendant qu’elle rencontre les visiteurs et répond aux journalistes.',
+            illustration: originalArtwork['a3p-mission-ensemble'],
+          },
+          {
+            title: 'Veiller sur un client dans sa vie privée',
+            description: 'Un particulier peut demander la présence d’un agent à son domicile ou lors d’une sortie en famille, par exemple pour visiter une exposition.',
+            illustration: originalArtwork['a3p-mission-relation'],
+          },
+          {
+            title: 'Conduire le véhicule du client',
+            description: 'Lorsque le contrat prévoit la conduite, l’agent assure aussi le rôle de chauffeur de sécurité, par exemple entre l’aéroport et l’hôtel de son client.',
+            illustration: a3pArtwork.vehicule, landscapeFocus: '50% 46%',
+          },
         ]} />
         <article className={`${reference.liftCard} mt-8 grid gap-5 rounded-[2rem] border border-academy-line bg-white p-6 shadow-soft lg:grid-cols-[.7fr_1.3fr] lg:p-8`}>
           <div><Label>À qui s’adresse la formation ?</Label><h3 className="mt-3 text-3xl font-black">Un parcours ouvert à plusieurs profils</h3></div>
