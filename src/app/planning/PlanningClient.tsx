@@ -632,7 +632,7 @@ export function PlanningClient({ initialSessions, initialLocation = 'all', reque
               <em className="text-[#b9820a]">trouvez votre formation</em>
             </h1>
             <p className="mt-6 max-w-2xl text-base font-semibold leading-8 text-[#5f625f] sm:text-lg">
-              Retrouvez les sessions de sécurité, de secourisme et de VTC, le parcours sécurité en alternance et les rentrées des BTS, bachelors, mastères et titres professionnels. Chaque session propose son calendrier à télécharger.
+              Retrouvez les sessions de sécurité, de secourisme et de VTC, le parcours sécurité en alternance et les rentrées des BTS, bachelors, mastères et titres professionnels. Pour l’APS, le SSIAP 1, le SSIAP 3 et le DESP initial, le calendrier détaillé de la session s’ouvre dans un nouvel onglet.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <a href="#choisir-formation" className="inline-flex items-center justify-center gap-2 rounded-full bg-[#111b2a] px-6 py-4 text-sm font-black text-white transition hover:-translate-y-0.5">
