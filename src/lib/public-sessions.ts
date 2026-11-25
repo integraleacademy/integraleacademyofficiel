@@ -50,16 +50,7 @@ export function computedSeats(session: PublicSessionLike, referenceDate = new Da
   if (session.status === 'COMING_SOON' || session.showSeatsLeft === false) return null;
   const capacity = resolveSessionSeatCapacity(session);
   const storedCount = normalizeSeatCount(session.seatsLeft);
-  // Ignore legacy counts above the session capacity and keep the existing date-based rule.
-  if (storedCount !== null && storedCount <= capacity) return storedCount;
-  if (!session.startDate) return null;
-  if (Number.isNaN(new Date(session.startDate).getTime())) return null;
-  const days = daysUntilParis(session.startDate, referenceDate);
-  if (days <= 15) return Math.min(2, capacity);
-  if (days <= 30) return Math.min(4, capacity);
-  if (days <= 45) return Math.min(5, capacity);
-  if (days <= 60) return Math.min(6, capacity);
-  return capacity;
+  return storedCount !== null && storedCount <= capacity ? storedCount : null;
 }
 
 export function formatSessionDate(value?: string | Date) {

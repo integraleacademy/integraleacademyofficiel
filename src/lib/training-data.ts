@@ -3,6 +3,7 @@ import { formatVtcExamDate, vtcRegistrationMessage, vtcCourse } from '@/data/vtc
 import { getVtcPlanningSessions } from '@/lib/planning-data';
 import { PARIS_SESSION_LOCATION } from '@/data/locations';
 import 'server-only';
+import { mergeManagedSessions, readManagedSessions } from './managed-sessions';
 import { getSessionSeatAvailability, resolveSessionSeatCapacity } from '@/lib/session-seat-availability';
 import { getPrisma } from '@/lib/db';
 import { canonicalSiteHref } from '@/lib/site-urls';
@@ -49,7 +50,7 @@ export async function listTrainings() {
   return trainings.map(normalizeTrainingUrl);
 }
 
-export async function listSessions() {
+export async function listStoredSessions() {
   const p = await getPrisma();
   const sessions = p ? await p.trainingSession.findMany({ include: { training: true }, orderBy: [{ sortOrder: 'asc' }, { startDate: 'asc' }] }) : [...baseSessions, ...despFallbackSessions];
   return sessions.map((session) => ({
@@ -58,9 +59,14 @@ export async function listSessions() {
     registrationUrl: session.registrationUrl ? canonicalSiteHref(session.registrationUrl) : session.registrationUrl,
   }));
 }
+export async function listSessions() {
+  const [stored, catalogue] = await Promise.all([listStoredSessions(), readManagedSessions()]);
+  const trainings = catalogue.some(row => row.visibility === 'public') ? await listTrainings() : [];
+  return mergeManagedSessions(stored, trainings, catalogue);
+}
 export async function listLeads(){const p=await getPrisma(); return p? p.chatLead.findMany({orderBy:{createdAt:'desc'}}) : [];}
 export async function listPublicSessions() { return (await listSessions()).filter(isPublishedCampus).map(toPublicSession); }
-export async function dashboardStats(){const [t,s,l]=await Promise.all([listTrainings(),listSessions(),listLeads()]); return {activeTrainings:t.filter((x:any)=>x.isActive).length,openSessions:s.filter((x:any)=>x.status==='OPEN').length,leadCount:l.length,lastLead:l[0]||null};}
+export async function dashboardStats(){const [t,s,l]=await Promise.all([listTrainings(),listStoredSessions(),listLeads()]); return {activeTrainings:t.filter((x:any)=>x.isActive).length,openSessions:s.filter((x:any)=>x.status==='OPEN').length,leadCount:l.length,lastLead:l[0]||null};}
 export async function getRelevantDynamicTrainingData(question:string){
   const slugs=detectTrainingSlugs(question);
   const allSessions = await listSessions();

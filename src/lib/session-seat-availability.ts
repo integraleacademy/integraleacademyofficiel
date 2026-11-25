@@ -39,7 +39,7 @@ export function getSessionSeatAvailability(
   }
   const safeCapacity = resolveSessionSeatCapacity(session, capacity);
   if (session.showSeatsLeft === false && session.status !== 'FULL') {
-    return { count: null, label: 'Places limitées', tone: 'available', badgeClassName: badgeStyles.available };
+    return { count: null, label: 'Disponibilité à confirmer', tone: 'available', badgeClassName: badgeStyles.available };
   }
   const automaticCount = computedSeats({
     startDate: session.startDate ?? undefined,
@@ -48,7 +48,10 @@ export function getSessionSeatAvailability(
     status: session.status ?? undefined,
     showSeatsLeft: true,
   }, referenceDate);
-  const count = Math.min(automaticCount ?? safeCapacity, safeCapacity);
+  if (automaticCount === null) {
+    return { count: null, label: 'Disponibilité à confirmer', tone: 'available', badgeClassName: badgeStyles.available };
+  }
+  const count = Math.min(automaticCount, safeCapacity);
 
   if (session.status === 'FULL' || count === 0) {
     return { count: 0, label: 'COMPLET', tone: 'full', badgeClassName: badgeStyles.full };

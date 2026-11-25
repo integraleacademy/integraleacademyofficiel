@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { validateInPersonSplit } from '@/lib/public-sessions';
 import { requireAdmin } from '@/lib/admin/guard';
 import { getPrisma } from '@/lib/db';
-import { listSessions } from '@/lib/training-data';
+import { listStoredSessions } from '@/lib/training-data';
 import { validateSessionSeatCounts } from '@/lib/session-capacity';
 
 export const runtime = 'nodejs';
@@ -43,7 +43,7 @@ function sessionData(data: any) {
 export async function GET() {
   const denied = await requireAdmin();
   if (denied) return denied;
-  return NextResponse.json(await listSessions());
+  return NextResponse.json(await listStoredSessions());
 }
 
 export async function POST(request: NextRequest) {

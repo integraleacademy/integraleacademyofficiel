@@ -13,11 +13,8 @@ test('le badge affiche toujours le nombre exact de places restantes', () => {
   assert.equal(getSessionSeatAvailability({ seatsLeft: 4, status: 'FULL' }, 12).label, 'COMPLET');
 });
 
-test('une ancienne valeur supérieure à 12 laisse la règle automatique reprendre la main', () => {
-  const availability = getSessionSeatAvailability({ seatsLeft: 25, startDate: '2026-11-03T00:00:00.000Z' }, 12, referenceDate);
-  assert.equal(availability.label, '6 places restantes');
-  assert.equal(availability.count, 6);
-  assert.equal(availability.estimated, true);
+test('un décompte invalide reste inconnu', () => {
+  assert.equal(getSessionSeatAvailability({ seatsLeft: 25, startDate: '2026-11-03' }).label, 'Disponibilité à confirmer');
 });
 
 test('la couleur devient plus urgente à mesure que les places diminuent', () => {
@@ -29,20 +26,10 @@ test('la couleur devient plus urgente à mesure que les places diminuent', () =>
   assert.equal(getSessionSeatAvailability({ seatsLeft: 0 }, 12).tone, 'full');
 });
 
-test('une session à plus de 60 jours affiche la capacité maximale', () => {
-  const availability = getSessionSeatAvailability({ seatsLeft: null, startDate: '2027-01-04T00:00:00.000Z' }, 12, referenceDate);
-  assert.equal(availability.label, '12 places restantes');
-  assert.equal(availability.tone, 'available');
-});
-
-test('le nombre automatique diminue à l’approche de la date de début', () => {
-  const automaticSeats = (startDate: string) => getSessionSeatAvailability({ seatsLeft: null, startDate }, 12, referenceDate).count;
-
-  assert.equal(automaticSeats('2026-11-04T00:00:00.000Z'), 6);
-  assert.equal(automaticSeats('2026-10-20T00:00:00.000Z'), 5);
-  assert.equal(automaticSeats('2026-10-05T00:00:00.000Z'), 4);
-  assert.equal(automaticSeats('2026-09-20T00:00:00.000Z'), 2);
-  assert.equal(automaticSeats('2026-11-05T00:00:00.000Z'), 12);
+test('une date seule ne produit aucun décompte', () => {
+  for (const startDate of ['2026-09-20','2026-10-05','2027-01-04']) {
+    assert.equal(getSessionSeatAvailability({ seatsLeft: null, startDate }, 12, referenceDate).count, null);
+  }
 });
 
 test('une valeur administrée valide reste prioritaire sur le calcul automatique', () => {
@@ -63,7 +50,7 @@ test('les données de l’assistant suivent les mêmes règles que les cartes, y
       const session = { training: { slug }, seatsTotal: 46, seatsLeft, startDate: '2026-11-03' };
       const count = computedSeats(session, referenceDate);
       assert.equal(count, getSessionSeatAvailability(session, 20, referenceDate).count);
-      assert.ok(count !== null && count >= 0 && count <= 12);
+      assert.ok(count === null || (count >= 0 && count <= 12));
     }
   }
 });
@@ -72,7 +59,7 @@ test('les sessions complètes, masquées et à capacité réduite restent cohér
   assert.equal(computedSeats({ seatsLeft: 25, status: 'FULL' }), 0);
   assert.equal(getSessionSeatAvailability({ seatsLeft: 5, showSeatsLeft: false }).count, null);
   assert.equal(getSessionSeatAvailability({ seatsLeft: 25, status: 'FULL', showSeatsLeft: false }).label, 'COMPLET');
-  assert.equal(computedSeats({ seatsTotal: 3, seatsLeft: null, startDate: '2027-01-04' }, referenceDate), 3);
+  assert.equal(computedSeats({ seatsTotal: 3, seatsLeft: null, startDate: '2027-01-04' }, referenceDate), null);
   assert.equal(resolveSessionSeatCapacity({ seatsTotal: 12, training: { slug: 'sst' } }), 10);
 });
 

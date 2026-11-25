@@ -16,6 +16,8 @@ export type SecurityTrainingHighlight = {
   financing?: string;
   pathway?: string;
   nextSession: string;
+  places?: string;
+  sessionCentre?: string;
   visual: TrainingVisual;
   featured?: boolean;
 };
@@ -68,7 +70,7 @@ export function SecurityTrainingGrid({ items }: { items: SecurityTrainingHighlig
           <div className={styles.courseLocation}><dt className="sr-only">Lieu</dt><dd>{item.location}</dd></div>
         </dl>
       </>,
-      caption: <><span>Prochaine session</span><strong>{item.nextSession}</strong></>,
+      caption: <><span>Prochaine session</span><strong>{item.nextSession}</strong>{item.places && <span>{[item.sessionCentre, item.places].filter(Boolean).join(' · ')}</span>}</>,
     }))}
   />;
 }

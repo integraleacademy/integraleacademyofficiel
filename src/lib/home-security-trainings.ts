@@ -2,6 +2,9 @@ import type { SecurityTrainingHighlight } from '@/components/SecurityTrainingGri
 
 export type HomeTrainingSession = {
   startDate: string | Date;
+  location?: string | null;
+  seatsLeft?: number | null;
+  showSeatsLeft?: boolean | null;
   status?: string | null;
   training?: {
     slug?: string | null;
@@ -38,7 +41,7 @@ function formatFrenchDate(value: string | Date) {
   return `${day === '1' ? '1er' : day} ${month} ${year}`.trim();
 }
 
-function getNearestSessionLabel(
+function nearestSession(
   sessions: HomeTrainingSession[],
   slugs: ReadonlySet<string>,
   now: string | Date = new Date(),
@@ -55,14 +58,23 @@ function getNearestSessionLabel(
     })
     .sort((left, right) => +new Date(left.startDate) - +new Date(right.startDate))[0];
 
-  return nearest ? formatFrenchDate(nearest.startDate) : 'Dates à venir';
+  return nearest;
+}
+
+function nextDetails(sessions: HomeTrainingSession[], slugs: ReadonlySet<string>, now: string | Date, fallback = 'Dates à venir') {
+  const item = nearestSession(sessions, slugs, now);
+  const n = item?.seatsLeft;
+  const places = item?.status === 'FULL' || n === 0 ? 'Complet' : item?.showSeatsLeft && typeof n === 'number'
+    ? (n === 1 ? '1 place restante' : n + ' places restantes') : undefined;
+  const site = item?.location?.toLowerCase().includes('paris') ? 'Paris' : item?.location ? 'Puget-sur-Argens' : '';
+  return { nextSession: item ? formatFrenchDate(item.startDate) : fallback, places, sessionCentre: site };
 }
 
 export function getNearestDespSessionLabel(
   sessions: HomeTrainingSession[],
   now: string | Date = new Date(),
 ) {
-  return getNearestSessionLabel(sessions, despSlugs, now);
+  return nextDetails(sessions, despSlugs, now).nextSession;
 }
 
 export function createHomeSecurityHighlights(
@@ -78,7 +90,7 @@ export function createHomeSecurityHighlights(
       duration: '175 h',
       modality: 'Distanciel + Présentiel',
       location: 'Puget-sur-Argens',
-      nextSession: getNearestSessionLabel(sessions, apsSlugs, now),
+      ...nextDetails(sessions, apsSlugs, now),
       visual: 'aps',
       featured: true,
     },
@@ -91,7 +103,7 @@ export function createHomeSecurityHighlights(
       modality: 'Présentiel',
       location: 'Puget-sur-Argens',
       financing: 'Selon le parcours',
-      nextSession: 'Dates selon le parcours',
+      ...nextDetails(sessions, new Set(['ssiap-1', 'ssiap-2', 'ssiap-3']), now, 'Dates selon le parcours'),
       visual: 'ssiap',
     },
     {
@@ -103,7 +115,7 @@ export function createHomeSecurityHighlights(
       modality: 'Présentiel',
       location: 'Puget-sur-Argens',
       financing: 'Entreprise · Personnel',
-      nextSession: 'Dates sur demande',
+      ...nextDetails(sessions, new Set(['sst']), now, 'Dates sur demande'),
       visual: 'sst',
     },
     {
@@ -115,7 +127,7 @@ export function createHomeSecurityHighlights(
       modality: 'Présentiel',
       location: 'Puget-sur-Argens',
       financing: 'CPF · France Travail',
-      nextSession: getNearestSessionLabel(sessions, a3pSlugs, now),
+      ...nextDetails(sessions, a3pSlugs, now),
       visual: 'a3p',
     },
     {
@@ -128,7 +140,7 @@ export function createHomeSecurityHighlights(
       location: 'Paris ou Puget sur Argens',
       pathway: 'En initial ou VAE',
       financing: 'CPF · France Travail',
-      nextSession: getNearestDespSessionLabel(sessions, now),
+      ...nextDetails(sessions, despSlugs, now),
       visual: 'desp',
     },
   ];
