@@ -17,16 +17,16 @@ export function CallNotification({ href }: { href: string }) {
   return <ContactMotion className={styles.callFrame}>
     {dismissed ? <div className={styles.dismissed} role="status">
       <p>Proposition d’appel masquée.</p>
-      <button type="button" onClick={() => setDismissed(false)}>Afficher la proposition de Cassandre</button>
-    </div> : <div id="appel-cassandre" className={styles.call} data-contact-reveal role="group" aria-label="Rendez-vous téléphonique avec Cassandre">
+      <button type="button" onClick={() => setDismissed(false)}>Afficher la proposition de Cassandre MENARD</button>
+    </div> : <div id="appel-cassandre" className={styles.call} data-contact-reveal role="group" aria-label="Rendez-vous téléphonique avec Cassandre MENARD">
       <TeamPortrait className={styles.callerAvatar} person="cassandre" size={160} sizes="(max-width: 600px) 48px, 80px" />
       <div className={styles.caller}>
-        <p className={styles.callerName}>Cassandre</p>
+        <p className={styles.callerName}>Cassandre MENARD</p>
         <p className={styles.callText}>vous propose un appel pour parler de votre projet…</p>
       </div>
       <div className={styles.callActions}>
         <button type="button" className={styles.decline} onClick={() => setDismissed(true)} aria-label="Masquer la proposition d’appel" title="Masquer la proposition d’appel"><PhoneIcon /></button>
-        <a className={styles.accept} href={href} aria-label="Choisir un rendez-vous téléphonique avec Cassandre" title="Choisir un rendez-vous téléphonique"><PhoneIcon /></a>
+        <a className={styles.accept} href={href} aria-label="Choisir un rendez-vous téléphonique avec Cassandre MENARD" title="Choisir un rendez-vous téléphonique"><PhoneIcon /></a>
       </div>
     </div>}
   </ContactMotion>;

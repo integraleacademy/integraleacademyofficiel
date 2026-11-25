@@ -1,4 +1,4 @@
-export const applicationUrl = 'https://inscriptionsbts.onrender.com/parcoursalternance/candidature';
+export { ADMISSIONS_URL as applicationUrl } from './admissions';
 export const brochureUrl = 'https://www.integraleconnect.com/parcoursalternance/brochure';
 export const adviserPhone = 'tel:+33487830615';
 
@@ -39,36 +39,16 @@ export const qualifications = [
 ] as const;
 
 export const calendar = [
-  {
-    period: "Janvier → février 2027",
-    theme: "aps",
-    title: "Tu prépares l’APS",
-    description: "175 h de formation, examen puis demande de carte professionnelle CNAPS.",
-  },
-  {
-    period: "Mars → juin 2027",
-    theme: "work",
-    title: "Tu passes à l’action en entreprise",
-    description: "Tes premières missions de sécurité, après obtention des autorisations nécessaires.",
-  },
-  {
-    period: "Juin → juillet 2027",
-    theme: "a3p",
-    title: "Tu prépares l’A3P",
-    description: "328 h pour apprendre la protection physique des personnes et le travail en équipe.",
-  },
-  {
-    period: "Juillet → décembre 2027",
-    theme: "work",
-    title: "Tu développes ton expérience",
-    description: "Une nouvelle période en entreprise pour gagner en autonomie.",
-  },
-  {
-    period: "Décembre 2027",
-    theme: "ssiap",
-    title: "Tu complètes avec le SSIAP 1",
-    description: "70 h de formation en sécurité incendie, puis l’examen.",
-  },
+  { period: "8 janvier au 11 février 2027", theme: "aps", title: "Tu prépares l’APS", description: "175 h de formation à la prévention et à la sécurité." },
+  { period: "12 février 2027", theme: "aps", title: "Examen APS", description: "Après réussite, tu peux demander ta carte professionnelle." },
+  { period: "13 février au 7 juin 2027", theme: "work", title: "Entreprise · période 1", description: "Tu rejoins ton entreprise selon son planning." },
+  { period: "8 juin au 4 août 2027", theme: "a3p", title: "Tu prépares l’A3P", description: "328 h de formation à la protection physique des personnes." },
+  { period: "5 août au 30 novembre 2027", theme: "work", title: "Entreprise · période 2", description: "Tu développes ton expérience avec ton employeur." },
+  { period: "1er au 14 décembre 2027", theme: "ssiap", title: "Tu prépares le SSIAP 1", description: "70 h de formation à la sécurité incendie et à l’assistance aux personnes." },
+  { period: "15 décembre 2027", theme: "ssiap", title: "Examen SSIAP 1", description: "Tu passes les épreuves du diplôme SSIAP 1." },
+  { period: "16 au 20 décembre 2027", theme: "a3p", title: "Révisions A3P", description: "Les révisions préparent la dernière épreuve de protection rapprochée." },
+  { period: "21 décembre 2027", theme: "a3p", title: "Examen A3P", description: "Tu passes ton examen avant le retour en entreprise." },
+  { period: "22 décembre 2027 au 8 janvier 2028", theme: "work", title: "Entreprise · période 3", description: "Tu retrouves ton employeur jusqu’à la fin du contrat." },
 ] as const;
 
 export const workplaces = [
@@ -177,7 +157,7 @@ export const applicationSteps = [
   },
   {
     title: "On échange avec toi",
-    description: "Aurélie étudie ta candidature avec l’équipe et te contacte pour vérifier les prérequis, les pièces et ta disponibilité sur un an.",
+    description: "Aurélie BAYARD-CHAUSSEZ étudie ta candidature avec l’équipe et te contacte pour vérifier les prérequis, les pièces et ta disponibilité sur un an.",
   },
   {
     title: "Tu rencontres les entreprises",
@@ -192,7 +172,7 @@ export const applicationSteps = [
 export const alternanceFaq = [
   {
     q: "La formation est vraiment gratuite pour moi ?",
-    a: "Oui. Le tarif habituel du parcours est de 7 000 €. Dans le cadre du contrat d’apprentissage, tu as 0 € de frais pédagogiques à payer. La prise en charge est mise en œuvre par l’OPCO de ton employeur selon les règles applicables. Aurélie te précise aussi l’organisation des déplacements et des repas.",
+    a: "Oui. Le tarif habituel du parcours est de 7 000 €. Dans le cadre du contrat d’apprentissage, tu as 0 € de frais pédagogiques à payer. La prise en charge est mise en œuvre par l’OPCO de ton employeur selon les règles applicables. Aurélie BAYARD-CHAUSSEZ te précise aussi l’organisation des déplacements et des repas.",
   },
   {
     q: "Je n’ai pas encore d’entreprise. Je peux candidater ?",
@@ -208,7 +188,7 @@ export const alternanceFaq = [
   },
   {
     q: "Faut-il être disponible toute l’année 2027 ?",
-    a: "Oui, de janvier à décembre 2027. Tu t’engages pour les cours, les examens et les périodes en entreprise, avec présence, ponctualité et participation. Le calendrier est prévisionnel : les dates précises et les transitions sont confirmées à l’inscription.",
+    a: "Oui, du 8 janvier 2027 au 8 janvier 2028 inclus. Tu t’engages pour les cours, les examens et les périodes en entreprise, avec présence, ponctualité et participation. Le calendrier détaillé présente les cours, les examens et les périodes en entreprise.",
   },
   {
     q: "La carte professionnelle CNAPS est automatique ?",
@@ -220,7 +200,7 @@ export const alternanceFaq = [
   },
   {
     q: "Quelles pièces faudra-t-il préparer ?",
-    a: "Aurélie vérifie avec toi ton droit de travailler en France, les autorisations CNAPS et ta maîtrise du français. Un justificatif de niveau B1 est demandé aux ressortissants étrangers. Pour l’A3P : permis B et aptitude médicale. Pour le SSIAP 1 : certificat médical de moins de 3 mois et secourisme valide. Les pièces sont vérifiées avant chaque formation.",
+    a: "Aurélie BAYARD-CHAUSSEZ vérifie avec toi ton droit de travailler en France, les autorisations CNAPS et ta maîtrise du français. Un justificatif de niveau B1 est demandé aux ressortissants étrangers. Pour l’A3P : permis B et aptitude médicale. Pour le SSIAP 1 : certificat médical de moins de 3 mois et secourisme valide. Les pièces sont vérifiées avant chaque formation.",
   },
   {
     q: "Est-ce que ma candidature vaut inscription ?",
@@ -228,6 +208,6 @@ export const alternanceFaq = [
   },
   {
     q: "Et si j’ai un besoin lié au handicap ?",
-    a: "Parles-en à Aurélie avant l’entrée en formation pour étudier les aménagements possibles et les exigences des métiers. Aucun renseignement médical n’est à transmettre dans le formulaire public. Nous faisons le point avec toi sur les conditions d’accueil adaptées.",
+    a: "Parles-en à Aurélie BAYARD-CHAUSSEZ avant l’entrée en formation pour étudier les aménagements possibles et les exigences des métiers. Aucun renseignement médical n’est à transmettre dans le formulaire public. Nous faisons le point avec toi sur les conditions d’accueil adaptées.",
   },
 ] as const;

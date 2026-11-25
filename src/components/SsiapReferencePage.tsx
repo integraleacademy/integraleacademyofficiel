@@ -256,6 +256,6 @@ export function SsiapReferencePage({ sessions }: { sessions: any[] }) {
     />
     <SsiapTestimonials />
     <div id="faq-ssiap"><FaqDirectoryLink embedded theme="red" /></div>
-    <SsiapInitialContact href={contactHref('rendez-vous téléphonique avec Cassandre')} />
+    <SsiapInitialContact href={contactHref('rendez-vous téléphonique avec Cassandre MENARD')} />
   </TrainingReferencePage>;
 }

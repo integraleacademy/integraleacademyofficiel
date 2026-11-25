@@ -78,7 +78,7 @@ export function SsiapInitialSections({ course, label, capacity, ...sections }: C
 export function SsiapInitialContact({ href, mobileLabel = 'Réserver ma place' }: { href: string; mobileLabel?: string }) {
   return <>
     <div id="contact-ssiap"><TrainingReferenceContact schoolStyle
-      description="Cassandre, Responsable commerciale, vous aide à vérifier vos prérequis, choisir votre session et trouver la solution de financement adaptée."
+      description="Cassandre MENARD, Responsable commerciale, vous aide à vérifier vos prérequis, choisir votre session et trouver la solution de financement adaptée."
       href={href} /></div>
     <TrainingReferenceMobileBar href="#dates-tarifs" label={mobileLabel} />
   </>;

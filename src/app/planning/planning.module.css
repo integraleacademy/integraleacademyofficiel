@@ -473,3 +473,12 @@
   .sessionHeading h3 { font-size: 1rem; }
   .sessionHeading .seatStatus { padding: 4px 7px; font-size: .68rem; }
 }
+
+.intakeCard { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1.5rem; padding:clamp(1.3rem,3vw,2.2rem); border:1px solid #d8dce3; border-radius:1.5rem; background:#fffdf8; }
+.intakeCard h3,.intakePreview h3 { font-size:clamp(1.25rem,2vw,1.7rem); font-weight:750; line-height:1.2; margin:.45rem 0; color:#162239; }
+.intakeCard p,.intakePreview p { max-width:58ch; }
+.intakeCard small,.intakePreview small { display:block; margin-top:.4rem; color:#505d6b; }
+.intakeActions { display:grid; justify-items:start; gap:.5rem; }
+.intakeActions > a:first-child { background:#14233a; color:white; border-radius:2rem; padding:.7rem 1.2rem; font-weight:700; }
+.intakeActions > a:nth-child(2) { text-decoration:underline; text-underline-offset:3px; }
+.intakeMonth { position:absolute; top:calc(50% - 6px); height:12px; border:2px dashed #8c671a; border-radius:5px; background:#f9efd8; }

@@ -53,11 +53,12 @@ export default async function Home() {
                 ))}
               </nav>
               <h1 id="home-hero-title" data-home-hero-item>Votre futur métier mérite une formation <em>à la hauteur</em></h1>
-              <p data-home-hero-item>Des formations en sécurité, VTC et BTS, et une équipe à vos côtés pour construire la suite.</p>
+              <p data-home-hero-item>Formez-vous aux métiers de la sécurité ou du VTC, ou préparez un BTS, un bachelor, un mastère ou un titre professionnel avec notre équipe.</p>
               <div className={heroStyles.heroActions} data-home-hero-item>
                 <Link href="/formations-securite" className={heroStyles.primaryButton}>Sécurité</Link>
                 <Link href="/vtc" className={heroStyles.secondaryButton}>Chauffeur VTC</Link>
                 <Link href="/bts" className={heroStyles.secondaryButton}>BTS en alternance</Link>
+                {upcomingFamilies.map(family => <Link key={family.id} href={`#${family.id}`} className={heroStyles.secondaryButton}>{family.label}</Link>)}
 
               </div>
               <div className={heroStyles.heroProofs} data-home-hero-item aria-label="Points forts d’Intégrale Academy">

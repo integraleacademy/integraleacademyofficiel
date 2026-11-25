@@ -104,7 +104,7 @@ export const despInitialFaq = [
   },
   {
     q: 'Peut-on suivre la formation à Paris ou Puget-sur-Argens ?',
-    a: 'Les sessions de DESP initial sont proposées à Paris ou à Puget-sur-Argens selon le planning. Le centre parisien est situé au 34 rue Poissonnière, 75002 Paris. Le centre de la Côte d’Azur se trouve au 54 chemin du Carreou, 83480 Puget-sur-Argens.\n\n' +
+    a: 'Les sessions de DESP initial sont proposées à Paris ou à Puget-sur-Argens selon le planning. Le centre parisien est situé au 34 rue Poissonnière, 75002 Paris, à 50 mètres du Grand Rex. Le centre de la Côte d’Azur se trouve au 54 chemin du Carreou, 83480 Puget-sur-Argens.\n\n' +
       'Dans le planning, choisissez le lieu puis consultez le détail de la session. Vous pourrez distinguer les semaines à distance des jours à passer sur place et repérer l’examen avant de réserver vos transports ou un hébergement.',
   },
   {

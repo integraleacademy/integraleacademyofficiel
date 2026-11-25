@@ -223,7 +223,7 @@ export default async function DespInitialPage(){
     />
     <TrainingCourseTestimonials layout="home" copy={courseReviewCopy} category="DESP" />
     <div id="faq-desp-initial"><FaqDirectoryLink embedded theme="orange" /></div>
-    <TrainingReferenceContact schoolStyle description="Cassandre, Responsable commerciale, vous aide à préparer votre projet de création ou de reprise, vérifier les prérequis, choisir votre centre et étudier votre financement." href="/contact?formation=desp-initial&objet=rendez-vous" />
+    <TrainingReferenceContact schoolStyle description="Cassandre MENARD, Responsable commerciale, vous aide à préparer votre projet de création ou de reprise, vérifier les prérequis, choisir votre centre et étudier votre financement." href="/contact?formation=desp-initial&objet=rendez-vous" />
     <TrainingReferenceMobileBar label="Recevoir les dates" />
   </TrainingReferencePage>
 }

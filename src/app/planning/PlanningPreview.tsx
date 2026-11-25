@@ -10,7 +10,7 @@ import { DirectorLocationChoices } from './DirectorLocationChoices';
 import { SsiapCourseChoices } from './SsiapCourseChoices';
 import styles from './planning.module.css';
 
-export type PlanningFormationKey = 'aps' | 'a3p' | 'director' | 'ssiap' | 'vtc';
+export type PlanningFormationKey = 'aps' | 'a3p' | 'director' | 'ssiap' | 'vtc' | 'sst' | 'bts' | 'bachelors' | 'masteres' | 'titres-professionnels' | 'parcoursalternance' | 'poei' | 'cpsp';
 type PreviewSession = ReturnType<typeof toPublicSession>;
 type PreviewFormation = {
   key: PlanningFormationKey;

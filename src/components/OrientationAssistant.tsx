@@ -1,5 +1,7 @@
 'use client';
 
+import { upcomingFamilies, upcomingCourseName, type UpcomingFamily } from '@/data/upcoming-trainings';
+import { ADMISSIONS_URL } from '@/data/admissions';
 import { TrainingActionLink } from '@/components/TrainingActionLink';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -23,7 +25,7 @@ import { despVaeAdmin } from '@/data/despVae';
 import { createPortal } from 'react-dom';
 import styles from './OrientationAssistant.module.css';
 
-export type FormationKey = 'aps' | 'a3p' | 'desp' | 'desp-vae' | 'sst' | 'ssiap-1' | 'ssiap-2' | 'ssiap-3' | 'vtc' | 'bts';
+export type FormationKey = 'aps' | 'a3p' | 'desp' | 'desp-vae' | 'sst' | 'ssiap-1' | 'ssiap-2' | 'ssiap-3' | 'vtc' | 'bts' | 'bachelors' | 'masteres' | 'titres-professionnels' | 'parcoursalternance';
 type Step = 'formations' | 'formation-result' | 2 | 3 | 4;
 type AssistantSession = ReturnType<typeof toPublicSession>;
 
@@ -38,6 +40,7 @@ type AssistantFormation = {
 };
 
 function enrollmentHref(formation: AssistantFormation) {
+  if (['bts','bachelors','masteres','titres-professionnels','parcoursalternance'].includes(formation.key)) return ADMISSIONS_URL;
   if (formation.key === 'ssiap-2' || formation.key === 'ssiap-3') return `${formation.infoUrl}#dates-tarifs`;
   return INFORMATION_REQUEST_URL;
 }
@@ -51,6 +54,8 @@ const formations: AssistantFormation[] = [
   { key: 'desp', label: 'Dirigeant d’entreprise de sécurité (DESP)', artwork: '/images/planning-metiers/dirigeant.webp', infoUrl: '/despvaeouinitial', rdvUrl: '/contact?formation=desp&type=rdv', homeTitle: 'Dirigeant d’entreprise', homeSubtitle: 'Initial · VAE' },
   { key: 'vtc', label: vtcCourse.label, artwork: '/images/planning-metiers/vtc.webp', infoUrl: '/vtc', rdvUrl: '/contact?formation=vtc&type=rdv', homeTitle: vtcCourse.label, homeSubtitle: 'Théorie · pratique' },
   { key: 'bts', label: 'Un BTS en alternance', artwork: '/images/planning-metiers/bts.webp', infoUrl: '/bts', rdvUrl: '/contact?formation=bts&type=rdv', homeTitle: 'Étudiant en BTS', homeSubtitle: 'Alternance · diplôme' },
+  ...upcomingFamilies.map(family => ({ key: family.id, label: family.label, artwork: family.items[0].imageSrc, infoUrl: `/#${family.id}`, rdvUrl: `/contact?formation=${family.id}`, homeTitle: family.label, homeSubtitle: family.level ?? 'Alternance' })),
+  { key: 'parcoursalternance', label: 'Parcours sécurité en alternance', artwork: '/images/illustrations-2026/parcours-pratique.webp', infoUrl: '/parcoursalternance', rdvUrl: '/contact?formation=parcoursalternance', homeTitle: 'Sécurité en alternance', homeSubtitle: 'APS, A3P et SSIAP 1' },
 ];
 
 // Contextual choices for the course heroes; the home assistant keeps its existing menu.
@@ -76,7 +81,15 @@ function AssistantIcon({name}:{name:'assistant' | 'book' | 'calendar' | 'arrow' 
 
 type AssistantFormationDetails = { title: string; shortLabel: string; sessionSlugs: string[]; price: string; keyPoints: string[]; capacity?: number };
 
+function familyDetails(id: UpcomingFamily['id']): AssistantFormationDetails {
+  const family = upcomingFamilies.find(entry => entry.id === id)!;
+  return { title: family.label, shortLabel: family.label, sessionSlugs: family.items.map(course => course.anchorId), price: 'Consulter la fiche de formation',
+    keyPoints: ['Rentrée en septembre 2027', ...family.items.map(course => upcomingCourseName(family, course))] };
+}
+
 const formationDetails: Record<FormationKey, AssistantFormationDetails> = {
+  bachelors: familyDetails('bachelors'), masteres: familyDetails('masteres'), 'titres-professionnels': familyDetails('titres-professionnels'),
+  parcoursalternance: { title: 'Parcours sécurité en alternance', shortLabel: 'Parcours sécurité', sessionSlugs: ['parcoursalternance'], price: 'En apprentissage', keyPoints: ['Trois qualifications : APS, A3P, SSIAP 1', '12 mois en alternance à Puget-sur-Argens'] },
   'desp-vae': { title: 'DESP par la validation des acquis de l’expérience', shortLabel: 'DESP VAE', sessionSlugs: ['desp-vae'], price: despVaeAdmin.price, keyPoints: ['Accompagnement individualisé centré sur votre expérience et vos preuves', 'Durée et calendrier définis selon votre dossier et le jury', 'Accompagnement à distance ; jury selon la convocation du certificateur', `Certification : ${despVaeAdmin.rncp} · ${despVaeAdmin.level}`, 'Diagnostic, dossier de faisabilité, dossier de validation et préparation du jury', 'CPF, employeur / OPCO, France Travail ou financement personnel selon dossier'] },
   sst: { title: 'Formation Sauveteur secouriste du travail (SST)', shortLabel: 'SST', sessionSlugs: ['sst'], price: 'Sur devis', capacity: 10, keyPoints: ['Durée : 2 jours · 14 heures en présentiel', 'Lieu : Puget-sur-Argens · Var · Côte d’Azur', 'Aucun prérequis · groupes de 4 à 10 participants', 'Prévention des risques et gestes de premiers secours au travail', 'Certificat SST valable 24 mois', 'Financement employeur / OPCO ou personnel selon dossier'] },
   'ssiap-1': { title: 'Formation Agent de sécurité incendie (SSIAP 1)', shortLabel: 'SSIAP 1', sessionSlugs: ['ssiap-1'], price: '980 €', keyPoints: ['Durée : 67 heures hors examen et déplacements', 'Formation en présentiel à Puget-sur-Argens', 'Effectif : 12 stagiaires maximum', 'Prévention, surveillance des installations et assistance aux personnes', 'Diplôme SSIAP 1 · évaluations théorique et pratique', 'Prérequis et financement vérifiés avec notre équipe'] },
@@ -352,8 +365,8 @@ function FormationAssistantResult({ formation, sessions, hideInfoAction, onNavig
   }
   if (key === 'sst' || key === 'desp-vae') datesHref = `${formation.infoUrl}#dates-tarifs`;
   if (key === 'bts') {
-    datesHref = '/contact?formation=bts';
-    datesLabel = 'Me renseigner sur la rentrée';
+    datesHref = '/planning?formation=bts&dates=toutes#sessions';
+    datesLabel = 'Voir les rentrées de septembre 2027';
   }
   const price = key === 'bts' ? details.price : formatTrainingPrice(next, details.price);
   return <div className={styles.result}>

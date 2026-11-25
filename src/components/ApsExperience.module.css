@@ -147,7 +147,7 @@
 }
 @media(max-width:550px) {
   .requirement h3 { font-size:14px; }.requirement summary { gap:10px; }.requirement > p { padding-left:22px; padding-right:10px; }
-  .program { padding:18px; }.programOverview { grid-template-columns:1fr; gap:20px; }.programSummary { gap:20px; }.programHours { gap:15px; }.programImage { width:min(100%,300px); justify-self:center; }.programOverview dl { gap:10px; }.programOverview dd { font-size:17px; }.programPanel { padding:20px; }.unitHeading { align-items:start; }.unitHeading .kicker { font-size:9px; }
+  .program { padding:18px; }.programOverview { grid-template-columns:1fr; gap:20px; }.programSummary { gap:20px; }.programHours { gap:15px; }.programImage { width:100%; justify-self:stretch; }.programOverview dl { gap:10px; }.programOverview dd { font-size:17px; }.programPanel { padding:20px; }.unitHeading { align-items:start; }.unitHeading .kicker { font-size:9px; }
   .browserBar { padding:13px; gap:9px; }.browserBar > span:first-child { display:none; }.inPerson { padding:24px; gap:23px; }.inPerson > div { grid-column:1/-1; }.inPerson h3 strong { font-size:40px; }.inPerson a { grid-column:1/-1; }
   .hybridSteps { grid-template-columns:1fr 1fr; gap:18px; }.hybridSteps strong { font-size:11px; }.hybridSteps small { line-height:1.6; }
   .examPractice > div { padding:24px; }.examValidation { padding:24px; gap:14px; }.examValidation > div { flex:1; }.examValidation > strong { margin-left:59px; }.examMoreGrid { grid-template-columns:1fr; }.examSituations { gap:15px; }
@@ -252,7 +252,7 @@
 .program:is([data-program-explorer='aps-uv'],[data-program-explorer='a3p-uv']) .programDetail { display:block; align-self:start; }
 .program:is([data-program-explorer='aps-uv'],[data-program-explorer='a3p-uv']) .programPanel[hidden] { display:none; }
 .program:is([data-program-explorer='aps-uv'],[data-program-explorer='a3p-uv']) .panelNavigation { margin-top:0; }
-.unitArt { display:block; width:100%; height:clamp(120px,15vw,185px); object-fit:contain; background:#fff; border-radius:12px; margin-bottom:18px; }
+.unitArt { display:block; width:100%; height:auto; aspect-ratio:1.95; object-fit:cover; object-position:center 42%; border-radius:12px; margin-bottom:18px; }
 
 /* Animate only the content swap inside the already-existing UV explorer. */
 @keyframes academyProgramDetailIn {

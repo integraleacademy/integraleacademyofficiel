@@ -1,3 +1,5 @@
+import { upcomingFamilies } from './upcoming-trainings';
+import { ADMISSIONS_URL } from './admissions';
 import { btsFormations } from './bts';
 import { financements } from './financements';
 import { contactInfo, locations } from './locations';
@@ -11,7 +13,7 @@ export const academyKnowledge = {
   identity: {
     name: 'Intégrale Academy',
     positioning:
-      'Centre de formation professionnelle spécialisé en sécurité privée, sécurité incendie, VTC et BTS en alternance.',
+      'Centre de formation professionnelle spécialisé en sécurité privée, sécurité incendie et VTC, avec des BTS, bachelors, mastères, titres professionnels et le parcours sécurité en alternance.',
     tone:
       'Conseiller professionnel, clair, rassurant, orienté inscription ou prise de contact lorsque cela est pertinent.',
   },
@@ -19,6 +21,8 @@ export const academyKnowledge = {
     aps: securityFormations.find((formation) => formation.slug.includes('aps')),
     ssiap: securityFormations.filter((formation) => formation.title.toLowerCase().includes('ssiap')),
     bts: btsFormations,
+    diplomes: upcomingFamilies,
+    candidatureAlternance: ADMISSIONS_URL,
     vtc: vtcFormation,
     despDssp: securityFormations.find((formation) => formation.slug.includes('desp')),
     security: securityFormations,

@@ -37,7 +37,7 @@
 .button:hover { background: white; }
 .button:focus-visible { outline: 3px solid white; outline-offset: 4px; }
 .art { position: relative; isolation: isolate; align-self: stretch; display: grid; place-items: center; min-width: 0; }
-.art::before { content: ''; position: absolute; z-index: -1; inset: 0 -100vw 0 0; transform: skewX(-13deg); transform-origin: bottom left; background: linear-gradient(115deg, var(--brochure-accent), var(--brochure-pale) 34rem); }
+.art::before { content: ''; position: absolute; z-index: -1; inset: 0 -100vw 0 0; transform: skewX(-13deg); transform-origin: bottom left; background: var(--brochure-pale); border-left: 6px solid var(--brochure-accent); }
 .book {
   position: relative;
   width: clamp(7.2rem, 13vw, 11.75rem);
@@ -49,7 +49,7 @@
   box-shadow: 2px 1px #d3cbb9, 4px 2px #fffcf2, 6px 3px #b0aa9c, 8px 5px #f8f3e6, 13px 13px 22px #1c393e60;
 }
 .book img { display: block; width: 100%; height: 100%; border-radius: inherit; object-fit: cover; }
-.book::after { content: ''; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 3px 0 3px #15202150; background: linear-gradient(to right, transparent 2%, #ffffff29 3%, transparent 5%); }
+.book::after { content: ''; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 3px 0 3px #15202150; border-left: 2px solid #ffffff40; }
 @media (max-width: 660px) {
   .band { grid-template-columns: minmax(0, 1fr) 26%; }
   .copy { padding: 1.85rem .45rem 1.85rem 0; }

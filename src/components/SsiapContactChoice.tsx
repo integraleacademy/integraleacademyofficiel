@@ -25,18 +25,18 @@ export async function SsiapContactChoice({ params }: { params: Params }) {
   const selectedText = [formulaLabel, safePeriod].filter(Boolean).join(' — ');
   const subjects: Record<string, string> = {
     'prochaines dates': 'Prochaines dates', devis: 'Demande de devis', 'verification des prérequis': 'Vérification des prérequis',
-    'rendez-vous téléphonique avec Cassandre': 'Rendez-vous téléphonique', [`financement ${label}`]: 'Financement de la formation',
+    'rendez-vous téléphonique avec Cassandre MENARD': 'Rendez-vous téléphonique', [`financement ${label}`]: 'Financement de la formation',
   };
   const subject = course === 'ssiap-1' ? 'Inscription' : subjects[first(params.objet) || ''] ?? 'Inscription';
   const message = subject === 'Inscription' ? `Je souhaite préparer mon inscription : ${selectedText}.` : `Je vous contacte au sujet de la formation ${label} (${subject.toLowerCase()}).`;
-  const email = `mailto:ecole@integraleacademy.com?subject=${encodeURIComponent(`${subject} ${formulaLabel}`)}&body=${encodeURIComponent(`Bonjour Cassandre,\n\n${message}\n\nMerci de me recontacter pour vérifier mon dossier et mon financement.\n\nNom :\nTéléphone :`)}`;
+  const email = `mailto:ecole@integraleacademy.com?subject=${encodeURIComponent(`${subject} ${formulaLabel}`)}&body=${encodeURIComponent(`Bonjour Cassandre MENARD,\n\n${message}\n\nMerci de me recontacter pour vérifier mon dossier et mon financement.\n\nNom :\nTéléphone :`)}`;
   const secondary = 'inline-flex min-h-12 items-center justify-center rounded-full border border-academy-line px-5 py-3 text-center text-sm font-bold';
   return <section id="choix-ssiap" className="page-container scroll-mt-28 px-4 py-8" aria-labelledby="choix-ssiap-title">
     <div className="rounded-3xl border border-red-200 bg-academy-surface p-6 text-academy-ink sm:p-8">
       <p className="text-xs font-bold uppercase tracking-widest text-red-700 dark:text-red-300">Votre projet {label}</p>
       <h2 id="choix-ssiap-title" className="mt-3 text-2xl font-black">{formulaLabel}</h2>
       {safePeriod && <p className="mt-2 font-bold">{safePeriod}</p>}
-      <p className="mt-3 max-w-3xl text-sm leading-7 text-academy-muted">Votre choix est rappelé ici pour préparer votre échange avec Cassandre, Responsable commerciale. L’équipe vérifie les prérequis, les dates de présence et le financement avant de confirmer l’inscription.</p>
+      <p className="mt-3 max-w-3xl text-sm leading-7 text-academy-muted">Votre choix est rappelé ici pour préparer votre échange avec Cassandre MENARD, Responsable commerciale. L’équipe vérifie les prérequis, les dates de présence et le financement avant de confirmer l’inscription.</p>
       <div className="mt-5 flex flex-wrap gap-3">
         <a href={email} className="inline-flex min-h-12 items-center justify-center rounded-full bg-red-700 px-5 py-3 text-center text-sm font-bold text-white">{subject === 'Inscription' ? 'Transmettre ce choix par e-mail' : 'Écrire à notre équipe'} →</a>
         {session ? <PlanningRegistrationButton session={session} className={secondary} /> : course === 'ssiap-1'

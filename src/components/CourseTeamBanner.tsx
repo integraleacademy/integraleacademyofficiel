@@ -3,11 +3,11 @@ import { TeamPortrait, type TeamMemberId } from './TeamPortrait';
 import styles from './CourseTeamBanner.module.css';
 
 const team: ReadonlyArray<{ person: TeamMemberId; name: string; role: string }> = [
-  { person: 'clement', name: 'Clément', role: 'Directeur général' },
-  { person: 'elsa', name: 'Elsa', role: 'Assistante de direction' },
-  { person: 'cassandre', name: 'Cassandre', role: 'Responsable commerciale' },
-  { person: 'aurelie', name: 'Aurélie', role: 'Responsable des BTS' },
-  { person: 'yannice', name: 'Yannice', role: 'Coordinateur pédagogique' },
+  { person: 'clement', name: 'Clément VAILLANT', role: 'Directeur général' },
+  { person: 'elsa', name: 'Elsa DUQUESNE', role: 'Assistante de direction' },
+  { person: 'cassandre', name: 'Cassandre MENARD', role: 'Responsable commerciale' },
+  { person: 'aurelie', name: 'Aurélie BAYARD-CHAUSSEZ', role: 'Responsable des BTS' },
+  { person: 'yannice', name: 'Yannice LIBAULT', role: 'Coordinateur pédagogique' },
 ];
 
 export function CourseTeamBanner() {

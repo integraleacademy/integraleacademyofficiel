@@ -236,7 +236,7 @@ export default async function DespVaePage(){
     <TrainingCourseTestimonials layout="home" copy={courseReviewCopy} category="VAE DESP" />
     <div id="faq-desp-vae"><FaqDirectoryLink embedded theme="orange" /></div>
     <TrainingReferenceContact schoolStyle
-      description={<><p className="font-bold">Cassandre, Responsable commerciale, vous accompagne dans votre choix</p><p>Elle étudie votre expérience, vous aide à choisir entre le DESP initial et la VAE et vous présente les modalités d’accompagnement et de financement.</p></>}
+      description={<><p className="font-bold">Cassandre MENARD, Responsable commerciale, vous accompagne dans votre choix</p><p>Elle étudie votre expérience, vous aide à choisir entre le DESP initial et la VAE et vous présente les modalités d’accompagnement et de financement.</p></>}
       href="/contact?formation=desp-vae&objet=rendez-vous"
       additionalActions={<><VaeEligibilityModal label="Tester mon éligibilité"/><Button href="/contact?formation=desp-vae" variant="orange">Recevoir un devis VAE</Button></>}
     />

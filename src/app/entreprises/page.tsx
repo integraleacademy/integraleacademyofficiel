@@ -1,3 +1,5 @@
+import { SessionCalendarLink } from '@/components/SessionCalendarLink';
+import { alternanceSessions, poeiSessions } from '@/data/employer-intakes';
 import { CatalogueHero } from '@/components/CatalogueHero';
 import { PageSectionNavigation } from '@/components/PageSectionNavigation';
 import { FaqDirectoryLink } from '@/components/FaqDirectoryLink';
@@ -77,29 +79,6 @@ const solutions = [
   },
 ] as const;
 
-const alternanceSessions = [
-  {
-    name: 'Session 1', period: 'Janvier → décembre 2027', immersion: 1246, worked: 1106,
-    steps: [
-      { date: 'Janvier à février 2027', title: 'Formation APS', detail: '175 h · préparation à la carte professionnelle CNAPS' },
-      { date: 'Mars à juin 2027', title: 'Immersion en entreprise', detail: '588 h de terrain' },
-      { date: 'Juin à juillet 2027', title: 'Formation A3P', detail: '328 h · protection rapprochée' },
-      { date: 'Juillet à décembre 2027', title: 'Immersion en entreprise', detail: '658 h de terrain' },
-      { date: 'Décembre 2027', title: 'SSIAP 1', detail: 'Formation et examens finaux' },
-    ],
-  },
-  {
-    name: 'Session 2', period: 'Juin 2027 → juin 2028', immersion: 1239, worked: 1099,
-    steps: [
-      { date: 'Juin à juillet 2027', title: 'Formation APS', detail: '175 h · préparation à la carte professionnelle CNAPS' },
-      { date: 'Juillet à octobre 2027', title: 'Immersion en entreprise', detail: '413 h de terrain' },
-      { date: 'Octobre à novembre 2027', title: 'Formation A3P', detail: '328 h · protection rapprochée' },
-      { date: 'Novembre 2027 à mai 2028', title: 'Immersion en entreprise', detail: '826 h de terrain' },
-      { date: 'Mai à juin 2028', title: 'SSIAP 1', detail: 'Formation et examens finaux' },
-    ],
-  },
-];
-
 const expertise = [
   { count: '360', label: 'agents APS formés' },
   { count: '300', label: 'agents A3P formés' },
@@ -160,7 +139,7 @@ export default function EntreprisesPage() {
       artwork={{ src: '/images/aps/manuel/equipe.webp', alt: 'Deux agents de sécurité coordonnent le contrôle des accès à un site.' }}
       actions={[{ label: 'Comparer les trois solutions', href: '#solutions' }, { label: 'Parler de mon recrutement', href: '#contact-entreprises' }]}
     />
-    <PageSectionNavigation shortcutIds={['solutions', 'alternance', 'contact-entreprises']} label="Entreprises" ariaLabel="Les solutions entreprises" chapters={[
+    <PageSectionNavigation actionLabel="Contacter l’équipe" actionId="contact-entreprises" label="Entreprises" ariaLabel="Les solutions entreprises" chapters={[
       ['solutions', 'Les solutions'], ['alternance', 'Alternance'], ['poei', 'POEI'], ['bts-mos', 'BTS MOS'],
       ['accompagnement', 'Accompagnement'], ['brochure-entreprises', 'Brochure'], ['contact-entreprises', 'Vos contacts'],
     ]} />
@@ -198,7 +177,8 @@ export default function EntreprisesPage() {
         <div className={styles.sessionGrid}>{alternanceSessions.map((session) => <article key={session.name} className={styles.sessionCard}>
           <header><span>{session.name}</span><h4>{session.period}</h4></header>
           <ol className={styles.sessionTimeline}>{session.steps.map((step, index) => <li key={step.date}><span className={styles.timelineDot}>{String(index + 1).padStart(2, '0')}</span><div><small>{step.date}</small><strong>{step.title}</strong><p>{step.detail}</p></div></li>)}</ol>
-          <div className={styles.sessionFigures}><div><strong>{euro(session.immersion, 0)} h</strong><span>d’immersion professionnelle</span></div><div><strong>{euro(session.worked, 0)} h</strong><span>réellement travaillées</span></div><div><strong>4 499 €</strong><span>coût annuel employeur estimé</span></div><div><strong>{euro(4499 / session.worked)} €/h</strong><span>coût horaire estimé</span></div></div>
+          <SessionCalendarLink id={session.id} />
+          <div className={styles.sessionFigures}>{session.immersion && <div><strong>{euro(session.immersion, 0)} h</strong><span>d’immersion professionnelle</span></div>}<div><strong>{euro(session.worked, 0)} h</strong><span>prévisionnelles en entreprise</span></div><div><strong>4 499 €</strong><span>coût annuel employeur estimé</span></div><div><strong>{euro(4499 / session.worked)} €/h</strong><span>coût horaire estimé</span></div></div>
         </article>)}</div>
         <div className={styles.sessionNote}><Icon name="shield" /><p><strong>Un parcours adapté à vos missions.</strong> Événementiel, hôtels de luxe, sites sensibles, surveillance humaine, événements sportifs, festivals et protection rapprochée. Les missions sont confiées selon les qualifications obtenues et les autorisations CNAPS délivrées.</p><a href="#contact-entreprises">Étudier mon recrutement <Icon name="arrow" /></a></div>
       </div>
@@ -216,7 +196,7 @@ export default function EntreprisesPage() {
           <summary><span><Icon name="document" /><span><strong>Le programme complet</strong><small>10 modules · 450 heures de formation</small></span></span><b aria-hidden="true">+</b></summary>
           <div className={styles.programContent}><p>Un socle complet pour des agents directement employables, de la posture professionnelle aux techniques de sécurité.</p><div className={styles.programGrid}>{poeiProgram.map((module) => <article key={module.title}><div><Icon name={module.icon} /><strong>{module.hours}</strong></div><h4>{module.title}</h4><p>{module.text}</p></article>)}</div></div>
         </details>
-        <div className={styles.sessionsBar}><span><Icon name="calendar" />Les sessions</span><strong>11 janvier → 12 avril 2027</strong><strong>21 septembre → 22 décembre 2027</strong></div>
+        <div className={styles.sessionsBar}><span><Icon name="calendar" />Les sessions</span>{poeiSessions.map(session => <div key={session.id}><strong>{session.label}</strong><br /><SessionCalendarLink id={session.id} /></div>)}</div>
         <div className={styles.siteSkillsHeading}><span className={styles.ribbon}>Des compétences pour vos sites</span><h3>Des agents préparés<br />à vos réalités de terrain</h3><p>Chaque environnement a ses contraintes, ses publics et ses priorités. Nous préparons les candidats à appliquer les consignes et à adopter la bonne posture professionnelle.</p></div>
         <div className={styles.siteSkillsGrid}>{siteSkills.map((site) => <article key={site.title}><img src={site.image} alt={site.alt} width="1122" height="1402" loading="lazy" /><div><h4>{site.title}</h4><p>{site.text}</p></div></article>)}</div>
         <aside className={styles.fireComplement}><img src="/images/ssiap-1/manuel/prevention.webp" alt="Un agent explique les consignes et le plan de sécurité incendie." width="1200" height="800" loading="lazy" /><div><span>Une compétence complémentaire</span><h4>La sécurité incendie</h4><p>Le SSIAP 1 prépare à la prévention incendie, à la surveillance des installations de sécurité et à l’assistance aux personnes en ERP et IGH. Les missions confiées respectent les qualifications et les autorisations de chaque agent.</p></div></aside>

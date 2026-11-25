@@ -1,5 +1,10 @@
 'use client';
 
+import { SessionCalendarLink } from '@/components/SessionCalendarLink';
+import { ADMISSIONS_URL } from '@/data/admissions';
+import { scheduledIntakes } from '@/data/intakes';
+import { upcomingFamilies } from '@/data/upcoming-trainings';
+import { publicIntakePeriod } from '@/lib/planning-data';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
@@ -20,7 +25,7 @@ import { PlanningCalendar } from './PlanningCalendar';
 import { PlanningRegistration } from './PlanningRegistration';
 
 type Session = any;
-type CategoryKey = 'security' | 'fire' | 'vtc';
+type CategoryKey = 'security' | 'fire' | 'vtc' | 'alternance';
 type FormationFilterKey = 'all' | PlanningFormationKey;
 type ViewMode = 'list' | 'calendar';
 type PlanningAccent = 'blue' | 'green' | 'orange' | 'red' | 'violet' | 'gold';
@@ -102,6 +107,16 @@ const formationFilters: {
     slugs: ['vtc'],
     accent: 'violet',
   },
+  { key: 'poei', label: 'POEI sécurité privée', eyebrow: 'Entreprises', description: 'Préparation opérationnelle à l’emploi', category: 'security', accent: 'green', slugs: ['poei'], image: '/images/formation-scenes-manuel/aps-mission-incident.webp', filterImage: '/images/formation-scenes-manuel/aps-mission-incident.webp' },
+  { key: 'cpsp', label: 'Chef de poste', eyebrow: 'Sécurité privée', description: 'Chef de poste en sécurité privée (CPSP)', category: 'security', accent: 'blue', slugs: ['cpsp'], image: '/images/formation-scenes-manuel/aps-pc-pedagogique.webp', filterImage: '/images/formation-scenes-manuel/aps-pc-pedagogique.webp' },
+  { key: 'sst', label: 'SST', eyebrow: 'Secourisme', description: 'Sauveteur secouriste du travail', category: 'security', accent: 'green', slugs: ['sst'], image: '/images/sst/manuel/formation.webp', filterImage: '/images/formation-scenes-manuel/sst-pedagogie.webp' },
+  { key: 'parcoursalternance', label: 'Parcours sécurité en alternance', eyebrow: 'Apprentissage', description: 'APS, A3P et SSIAP 1 en un an', category: 'alternance', accent: 'blue', slugs: ['parcoursalternance'], image: '/images/illustrations-2026/parcours-pratique.webp', filterImage: '/images/illustrations-2026/parcours-pratique.webp' },
+  { key: 'bts', label: 'BTS', eyebrow: 'Bac +2', description: 'Six BTS en alternance', category: 'alternance', accent: 'violet', slugs: scheduledIntakes.filter(intake => intake.training.category === 'bts').map(intake => intake.training.slug), image: '/images/formation-scenes-manuel/bts-campus-mixte.webp', filterImage: '/images/formation-scenes-manuel/bts-campus-mixte.webp' },
+  ...upcomingFamilies.map(family => ({
+    key: family.id, label: family.label, eyebrow: family.level ?? 'Alternance', description: family.items.map(course => course.tabLabel).join(' · '),
+    category: 'alternance' as const, accent: 'gold' as const, slugs: family.items.map(course => course.anchorId),
+    image: family.items[0].imageSrc, filterImage: family.items[0].imageSrc,
+  })),
 ];
 
 const alertOptions: {
@@ -150,6 +165,7 @@ function planningAccentForSlug(value?: string): PlanningAccent {
 
 function formationMatchesSlug(formation: (typeof formationFilters)[number], slug?: string) {
   if (!slug) return false;
+  if (formation.key === 'bts' && (slug.startsWith('bts-') || formation.slugs.includes('bts-' + slug))) return true;
   if (formation.slugs.includes(slug)) return true;
   if (formation.key === 'director') return slug.startsWith('desp') || slug.startsWith('dssp');
   if (formation.key === 'ssiap') return slug.includes('ssiap');
@@ -276,6 +292,14 @@ function SessionCard({
   const isVtcExam = session.scheduleKind === 'vtc-exam';
   const themeClass = planningThemeForSession(session);
 
+  if (session.scheduleKind === 'admissions' || session.scheduleKind === 'employeur') return <article className={styles.intakeCard} data-selected={selected || undefined}>
+    <div><p className={styles.eyebrow}>{publicIntakePeriod(session)}</p><h3>{sessionTitle(session)}</h3>
+      <p>{session.location}{session.durationLabel && ` · ${session.durationLabel}`}</p>{session.publicNotes && <p>{session.publicNotes}</p>}
+      {session.datePrecision === 'month' && <small>Le jour de rentrée sera précisé par l’école.</small>}
+    </div><div className={styles.intakeActions}><a href={session.scheduleKind === 'employeur' ? '/entreprises#contact-entreprises' : ADMISSIONS_URL}>{session.scheduleKind === 'employeur' ? 'Parler de mon recrutement' : 'Déposer ma candidature'}</a>
+      <Link href={planningFormationHref(session)}>Découvrir la formation</Link><SessionCalendarLink id={session.id} /></div>
+  </article>;
+
   return (
     <article data-selected={selected || undefined} className={styles.sessionCard + ' ' + themeClass + ' group relative overflow-hidden rounded-[1.6rem] border bg-white p-4 shadow-[0_18px_55px_rgba(54,40,20,.08)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_70px_rgba(54,40,20,.14)] dark:bg-white/5 sm:p-5 ' + (isNext ? 'planning-accent-border' : 'border-academy-line/70 dark:border-white/10')}>
       <span aria-hidden="true" className="planning-accent-indicator absolute inset-y-0 left-0 w-1" />
@@ -359,6 +383,7 @@ function SessionCard({
         </div>
 
         <div className="flex flex-wrap gap-2 lg:flex-col">
+          <SessionCalendarLink id={session.id} />
           <Link
             href={planningFormationHref(session)}
             className="planning-neutral-action inline-flex flex-1 items-center justify-center gap-2 rounded-full px-5 py-3.5 text-sm font-black transition hover:-translate-y-0.5"
@@ -386,13 +411,14 @@ function SessionDetails({ session, onClose, onRequest }: { session: Session; onC
   return <dialog ref={dialog} onCancel={onClose} aria-labelledby="planning-session-title" className={`${styles.sessionDialog} ${planningThemeForSession(session)}`}>
     <div className={styles.dialogHeader}><p className={styles.eyebrow}>Votre session sélectionnée</p><button type="button" onClick={onClose} aria-label="Fermer le détail de la session">×</button></div>
     <h2 id="planning-session-title">{sessionTitle(session)}</h2>
-    {!isVtc ? <span className={'session-seats-badge mt-4 inline-block rounded-full border px-3 py-1 text-xs font-bold ' + availability.badgeClassName}>{availability.label}</span> : null}
+    {!isVtc && session.scheduleKind !== 'admissions' ? <span className={'session-seats-badge mt-4 inline-block rounded-full border px-3 py-1 text-xs font-bold ' + availability.badgeClassName}>{availability.label}</span> : null}
     <div className={styles.dialogDates}>
-      {isVtc ? <><p>{vtcRegistrationMessage(session.startDate, session.endDate)}</p><dl>{[['Examen théorique', formatVtcExamDate(session.endDate)], ['Examen pratique', formatVtcExamDate(session.examDate)]].map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl><p className={styles.examNotice}>{vtcCourse.examNotice}</p></> : <><p className={styles.dialogPeriod}>{formatSessionPeriod(session.startDate, session.endDate)}</p>{hasDetailedDeliveryPeriods(session) ? <dl>{deliveryPeriodRows(session).slice(1).map(period => <div key={period.label}><dt>{period.label}</dt><dd>{period.value}</dd></div>)}</dl> : null}{session.examDate ? <p>Examen le <strong>{formatSessionDate(session.examDate)}</strong></p> : null}</>}
+      {session.scheduleKind === 'admissions' ? <><p>{publicIntakePeriod(session)}</p>{session.datePrecision === 'month' && <p>Le jour de rentrée sera précisé par l’école.</p>}<p>{session.publicNotes}</p></> : isVtc ? <><p>{vtcRegistrationMessage(session.startDate, session.endDate)}</p><dl>{[['Examen théorique', formatVtcExamDate(session.endDate)], ['Examen pratique', formatVtcExamDate(session.examDate)]].map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl><p className={styles.examNotice}>{vtcCourse.examNotice}</p></> : <><p className={styles.dialogPeriod}>{formatSessionPeriod(session.startDate, session.endDate)}</p>{hasDetailedDeliveryPeriods(session) ? <dl>{deliveryPeriodRows(session).slice(1).map(period => <div key={period.label}><dt>{period.label}</dt><dd>{period.value}</dd></div>)}</dl> : null}{session.examDate ? <p>Examen le <strong>{formatSessionDate(session.examDate)}</strong></p> : null}</>}
     </div>
     <p className={styles.dialogLocation}><Icon name="location" />{session.location || 'Centre à confirmer'}</p>
     <dl className={styles.dialogFacts}><div><dt>Tarif</dt><dd>{displayPrice(session)}</dd></div><div><dt>Durée</dt><dd>{displayDuration(session)}</dd></div></dl>
-    <div className={styles.dialogActions}><button type="button" onClick={onRequest}>Parler de cette session <Icon name="arrow" /></button><Link href={planningFormationHref(session)}>Découvrir le programme <Icon name="arrow" /></Link></div>
+    <SessionCalendarLink id={session.id} />
+    <div className={styles.dialogActions}>{session.scheduleKind === 'admissions' ? <a href={session.scheduleKind === 'employeur' ? '/entreprises#contact-entreprises' : ADMISSIONS_URL}>{session.scheduleKind === 'employeur' ? 'Parler de mon recrutement' : 'Déposer ma candidature'}</a> : <button type="button" onClick={onRequest}>Parler de cette session <Icon name="arrow" /></button>}<Link href={planningFormationHref(session)}>Découvrir le programme <Icon name="arrow" /></Link></div>
     <p className={styles.dialogFootnote}>Votre choix est repris dans la demande. L’équipe vous accompagne pour les prérequis, le financement et l’inscription.</p>
   </dialog>;
 }
@@ -509,7 +535,7 @@ export function PlanningClient({ initialSessions, initialLocation = 'all', reque
   const isChoosingDetails = isChoosingSsiap || isChoosingDirector;
 
   const availableLocations = activeFormation === 'director' ? directorPlanningLocations
-    : activeFormation === 'all' ? sessionLocationFilters : sessionLocationFilters.filter(location => location.key !== 'paris');
+    : activeFormation === 'all' || activeFormation === 'masteres' || sortedSessions.some(session => selectedFormationDetails && formationMatchesSlug(selectedFormationDetails, session.training?.slug) && sessionMatchesLocation(session, 'paris')) ? sessionLocationFilters : sessionLocationFilters.filter(location => location.key !== 'paris');
 
   const filteredSessions = useMemo(() => {
     const selectedFormation = activeFormation === 'all' ? null : formationFilters.find((formation) => formation.key === activeFormation);
@@ -521,8 +547,8 @@ export function PlanningClient({ initialSessions, initialLocation = 'all', reque
     });
   }, [activeFormation, activeSsiapCourse, isChoosingDirector, locationFilter, sortedSessions]);
 
-  const nextOnly = activeFormation !== 'all' && !showAll;
-  const visibleSessions = showAll ? filteredSessions : filteredSessions.slice(0, nextOnly ? 1 : 6);
+  const nextOnly = activeFormation !== 'all' && selectedFormationDetails?.category !== 'alternance' && !showAll;
+  const visibleSessions = showAll || selectedFormationDetails?.category === 'alternance' ? filteredSessions : filteredSessions.slice(0, nextOnly ? 1 : 6);
   const selectedSession = filteredSessions.find(session => session.id === selectedSessionId) || null;
   const previewFormations = formationFilters.map(formation => ({ ...formation, sessions: sortedSessions.filter(session => formationMatchesSlug(formation, session.training?.slug)) }));
   const resultKey = `${activeFormation}-${activeSsiapCourse}-${locationFilter}-${view}`;
@@ -534,6 +560,7 @@ export function PlanningClient({ initialSessions, initialLocation = 'all', reque
   }
 
   function openRegistration(session: Session, fromDetails = false) {
+    if (session.scheduleKind === 'admissions' || session.scheduleKind === 'employeur') { window.location.assign(session.registrationUrl); return; }
     if (!fromDetails) sessionTrigger.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     setDetailSession(null);
     setRegistrationSession(session);
@@ -605,7 +632,7 @@ export function PlanningClient({ initialSessions, initialLocation = 'all', reque
               <em className="text-[#b9820a]">trouvez votre formation</em>
             </h1>
             <p className="mt-6 max-w-2xl text-base font-semibold leading-8 text-[#5f625f] sm:text-lg">
-              Retrouvez les prochaines formations en sécurité privée et en sécurité incendie, ainsi que les dates d’examen de chauffeur VTC. Choisissez votre centre et vérifiez les places disponibles.
+              Retrouvez les sessions de sécurité, de secourisme et de VTC, le parcours sécurité en alternance et les rentrées des BTS, bachelors, mastères et titres professionnels. Chaque session propose son calendrier à télécharger.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <a href="#choisir-formation" className="inline-flex items-center justify-center gap-2 rounded-full bg-[#111b2a] px-6 py-4 text-sm font-black text-white transition hover:-translate-y-0.5">
@@ -638,7 +665,7 @@ export function PlanningClient({ initialSessions, initialLocation = 'all', reque
           </div>
 
           <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-            {formationFilters.map((formation, index) => {
+            {formationFilters.map(formation => {
               const count = formationSessionCounts[formation.key];
               const selected = activeFormation === formation.key;
               return (
@@ -652,7 +679,7 @@ export function PlanningClient({ initialSessions, initialLocation = 'all', reque
                   <span className={styles.formationImage}><Image src={formation.filterImage} alt="" width={300} height={190} sizes="(max-width: 640px) 90vw, (max-width: 1280px) 33vw, 200px" /><span className={styles.formationCheck} aria-hidden="true"><Icon name="check" className="h-4 w-4" /></span></span>
                   <span className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[.14em] text-white/55">
                     <span aria-hidden="true" className="planning-accent-indicator h-2 w-2 shrink-0 rounded-full" />
-                    0{index + 1} · {formation.eyebrow}
+                    {formation.eyebrow}
                   </span>
                   <span className="mt-5 block text-xl font-black tracking-tight">{formation.label}</span>
                   <span className="mt-2 block text-xs font-semibold leading-5 text-white/48">{formation.description}</span>

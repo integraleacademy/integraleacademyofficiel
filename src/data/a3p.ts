@@ -33,7 +33,7 @@ export const a3pConfig = {
   heroImage: '/images/campus/salle-formation.webp',
   gallery: ['/images/campus/salle-formation.webp', '/images/campus/salle-lumineuse.webp', '/images/campus/accueil-centre.webp'],
   adefApproval: '8320111201',
-  advisor: { name: 'Cassandre', role: 'Responsable commerciale — Intégrale Academy', phone: '04 22 47 07 68', phoneHref: 'tel:0422470768' },
+  advisor: { name: 'Cassandre MENARD', role: 'Responsable commerciale — Intégrale Academy', phone: '04 22 47 07 68', phoneHref: 'tel:0422470768' },
   apsA3pOffer: { priceLabel: '5 300 €', oldPriceLabel: '5 950 € TTC', discountLabel: '650 € de réduction', href: '/contact?formation=aps-a3p&type=parcours-recommande' },
   indicators: [] as { label: string; value: string; period: string; updatedAt: string }[],
   testimonials: [] as { name: string; text: string; role?: string }[],

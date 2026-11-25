@@ -2,7 +2,14 @@
 
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
+import { upcomingFamilies } from '@/data/upcoming-trainings';
 import styles from './HomeHeroIllustrations.module.css';
+
+const familyScenes = {
+  bachelors: { image: '/images/bts/mos-unifie-2026/manager.webp', alt: 'Un responsable de sécurité organise le travail de son équipe.' },
+  masteres: { image: '/images/formation-scenes-manuel/masteres-presentation.webp', alt: 'Une étudiante présente son application à deux professionnels.' },
+  'titres-professionnels': { image: '/images/bts/tenues-2026/atelier-finances.webp', alt: 'Des apprenants étudient un dossier de gestion en atelier.' },
+};
 
 const scenes = [
   {
@@ -26,6 +33,13 @@ const scenes = [
     action: 'Découvrir nos BTS en alternance',
     image: '/images/formation-scenes-manuel/bts-campus-mixte.webp?v=manuel-aps-4', alt: 'Une étudiante et un étudiant en BTS préparent ensemble un projet en classe.',
   },
+  ...upcomingFamilies.map(family => ({
+    label: family.label, href: `#${family.id}`,
+    title: { bachelors: 'Enquêter ou diriger une équipe de sécurité', masteres: 'Concevoir des produits et des applications IA', 'titres-professionnels': 'Apprendre un métier en alternance' }[family.id],
+    description: { bachelors: 'Deux bachelors pour travailler dans le renseignement sur les cybermenaces ou le management de la sécurité.', masteres: 'Deux parcours à Paris, du pilotage de produit à l’ingénierie de l’IA générative.', 'titres-professionnels': 'Paie, ressources humaines, secrétariat médical, accueil et vidéoprotection.' }[family.id],
+    action: `Découvrir nos ${family.label.toLowerCase()}`,
+    ...familyScenes[family.id],
+  })),
 ];
 
 export function HomeHeroIllustrations() {
@@ -123,7 +137,7 @@ export function HomeHeroIllustrations() {
           ))}
         </div>
         <div className={styles.controls} aria-label="Parcourir les univers de formation" role="group">
-          <span className={styles.counter} aria-hidden="true">0{current + 1} / 03</span>
+          <span className={styles.counter} aria-hidden="true">{String(current + 1).padStart(2, '0')} / {String(scenes.length).padStart(2, '0')}</span>
           <button type="button" aria-label="Univers précédent" onClick={() => moveScene(-1)}><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg></button>
           <button type="button" aria-label="Univers suivant" onClick={() => moveScene(1)}><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg></button>
           {!quietMode && <button

@@ -2,7 +2,7 @@ import { CourseFilm } from '@/components/CourseFilm';
 import { CourseTeamBanner } from '@/components/CourseTeamBanner';
 import { AcademyNotification } from '@/components/AcademyNotification';
 import { CourseBrochureCard } from '@/components/CourseBrochureCard';
-import { PARIS_ADDRESS } from '@/data/locations';
+import { PARIS_ADDRESS, PARIS_LANDMARK } from '@/data/locations';
 import { OrientationAssistant } from '@/components/OrientationAssistant';
 import { DespJourney } from '@/components/DespJourney';
 import { TrainingDatesPricingSection, type TrainingDatesPricingSession } from '@/components/TrainingDatesPricingSection';
@@ -121,7 +121,7 @@ function DespPathCard({
 
 function DespLocationsNotice() {
   const locations = [
-    ['Paris', PARIS_ADDRESS],
+    ['Paris', `${PARIS_ADDRESS} · ${PARIS_LANDMARK}`],
     ['Côte d’Azur', 'Puget-sur-Argens · 54 chemin du Carreou, 83480 Puget-sur-Argens'],
   ];
 

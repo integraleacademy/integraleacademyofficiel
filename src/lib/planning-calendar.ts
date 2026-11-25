@@ -1,7 +1,7 @@
 import { parisDateKey } from './public-sessions';
 
 type DateValue = string | Date | null | undefined;
-export type CalendarSession = { startDate?: DateValue; endDate?: DateValue; examDate?: DateValue };
+export type CalendarSession = { datePrecision?: string | null; startDate?: DateValue; endDate?: DateValue; examDate?: DateValue };
 const DAY = 86_400_000;
 
 /** Work on Paris calendar days, so a DST change cannot move a session. */
@@ -17,7 +17,7 @@ export function calendarMonth(value: number, offset = 0) {
 }
 
 export function calendarExtent(sessions: CalendarSession[]) {
-  const dates = sessions.flatMap(session => [session.startDate, session.endDate, session.examDate])
+  const dates = sessions.flatMap(session => session.datePrecision === 'month' ? [session.startDate] : [session.startDate, session.endDate, session.examDate])
     .map(planningDay).filter((value): value is number => value !== null);
   if (!dates.length) return null;
   const start = calendarMonth(Math.min(...dates));
@@ -40,6 +40,11 @@ export function calendarPosition(startValue: DateValue, endValue: DateValue, win
 }
 
 export function sessionCalendarPosition(session: CalendarSession, start: number, end: number) {
+  if (session.datePrecision === 'month') {
+    const intake = planningDay(session.startDate);
+    if (intake === null) return null;
+    return calendarPosition(new Date(calendarMonth(intake)), new Date(calendarMonth(intake, 1) - DAY), start, end);
+  }
   const last = [session.endDate, session.examDate, session.startDate].map(planningDay)
     .filter((value): value is number => value !== null);
   return last.length ? calendarPosition(session.startDate, new Date(Math.max(...last)), start, end) : null;

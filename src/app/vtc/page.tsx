@@ -250,9 +250,9 @@ export default async function VtcPage() {
 
       enrollment={<>
         <TrainingEnrollmentSection number="08" title="De votre demande à votre entrée en formation." registrationAnchor={null} fundingSimulatorHref={vtcFundingHref}
-          intro="Choisissez votre examen et transmettez votre demande en ligne. Cassandre peut vous accompagner pour vérifier vos prérequis et préparer votre financement."
+          intro="Choisissez votre examen et transmettez votre demande en ligne. Cassandre MENARD peut vous accompagner pour vérifier vos prérequis et préparer votre financement."
           steps={[
-            { title: 'Choisissez votre examen', description: <>Envoyez votre demande pour la date souhaitée. Vous pouvez aussi <a href={vtcAppointmentHref}>réserver un appel avec Cassandre</a>.</> },
+            { title: 'Choisissez votre examen', description: <>Envoyez votre demande pour la date souhaitée. Vous pouvez aussi <a href={vtcAppointmentHref}>réserver un appel avec Cassandre MENARD</a>.</> },
             { title: 'Préparez votre projet', description: 'Avec votre conseillère, vérifiez votre permis, les pièces du dossier et la date limite d’inscription à l’examen.' },
             { title: 'Choisissez votre financement', description: <>Étudiez vos droits CPF, une demande auprès de France Travail ou un règlement personnel.<br /><a href={identityUrl} target="_blank" rel="noopener noreferrer">Préparer mon Identité Numérique →</a></> },
             { title: 'Finalisez votre inscription', description: 'Avec l’équipe, validez votre dossier et les modalités de règlement avec votre conseillère.' },
@@ -299,8 +299,8 @@ export default async function VtcPage() {
     <div id="faq-vtc"><FaqDirectoryLink embedded theme="violet" /></div>
     <TrainingReferenceContact schoolStyle
       title="Rendez-vous téléphonique avec votre conseillère"
-      description="Cassandre, Responsable commerciale, vérifie votre éligibilité, vous explique le calendrier et vous aide à choisir le financement adapté."
-      href={vtcAppointmentHref} appointmentLabel="Prendre rendez-vous avec Cassandre" />
+      description="Cassandre MENARD, Responsable commerciale, vérifie votre éligibilité, vous explique le calendrier et vous aide à choisir le financement adapté."
+      href={vtcAppointmentHref} appointmentLabel="Prendre rendez-vous avec Cassandre MENARD" />
     <TrainingReferenceMobileBar href={projectHref} label={sessions.length ? 'M’inscrire' : 'Demander les dates'} contactAction={appointmentAction} />
   </TrainingReferencePage>;
 }

@@ -22,7 +22,7 @@
   { "source": "/mentions-légales", "destination": "/mentions-legales" },
   { "source": "/mentions-l%C3%A9gales", "destination": "/mentions-legales" },
   { "source": "/formations-vtc", "destination": "/vtc" },
-  { "source": "/candidature", "destination": "https://inscriptionsbts.onrender.com/" },
+  { "source": "/candidature", "destination": "https://admissions.integraleconnect.com/" },
   { "source": "/assistance", "destination": "https://assistance-alw9.onrender.com/" },
   { "source": "/rdvteldirigeant", "destination": "https://assistance-alw9.onrender.com/demande-informations-formations?formation=DESP_INIT" },
   { "source": "/reservationrdvvtc", "destination": "https://assistance-alw9.onrender.com/demande-informations-formations?formation=VTC" },

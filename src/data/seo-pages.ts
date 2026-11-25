@@ -33,8 +33,8 @@ export const seoPages: Record<string, SeoPage> = {
     return [path, { title, description, label: title, courseName: title }];
   })),
   '/': {
-    title: 'Formations sécurité, VTC et BTS',
-    description: 'Préparez votre métier avec Intégrale Academy : formations sécurité privée, incendie, VTC et BTS en alternance, à Puget-sur-Argens et à distance selon le parcours.',
+    title: 'Formations sécurité, VTC, BTS, bachelors, mastères et titres professionnels',
+    description: 'Préparez votre métier avec Intégrale Academy : sécurité, VTC, BTS, bachelors, mastères et titres professionnels à Puget-sur-Argens, à Paris ou à distance selon le parcours.',
     label: 'Accueil',
   },
   '/ecole': {

@@ -12,6 +12,8 @@ import { SchoolGallery } from './SchoolGallery';
 import { GoogleReviewsSection } from '@/components/GoogleReviewsSection';
 import { listPublicGoogleReviews } from '@/lib/google-reviews-data';
 
+import { upcomingFamilies } from '@/data/upcoming-trainings';
+
 export const metadata = createPageMetadata('/ecole');
 export const dynamic = 'force-dynamic';
 
@@ -35,7 +37,7 @@ export default async function Page() {
         <div className={styles.heroCopy}>
           <p className={styles.eyebrow}><span className={styles.smallLine} /> Notre école · Depuis 2018</p>
           <h1 id="school-title">Un lieu pour<br /> apprendre,<br /><em>une équipe<br /> pour avancer</em></h1>
-          <p className={styles.intro}>Des métiers concrets. Des personnes engagées. À Puget-sur-Argens, Intégrale Academy vous accompagne dans la suite de votre parcours professionnel.</p>
+          <p className={styles.intro}>Des métiers concrets. Des personnes engagées. À Puget-sur-Argens et à Paris, Intégrale Academy vous accompagne dans la suite de votre parcours professionnel.</p>
           <div className={styles.heroActions}>
             <a href="#campus" className={styles.button}>Explorer l’école <Arrow /></a>
             <a href="#equipe" className={styles.textLink}>Rencontrer l’équipe <Arrow diagonal /></a>
@@ -126,12 +128,14 @@ export default async function Page() {
         <p className={styles.eyebrow}>Plusieurs voies, la même exigence</p>
         <div className={styles.domainGrid}>
           {[
-            ['Sécurité privée', '/formations-securite', 'aps-atelier-radio.webp', 'Illustration d’un atelier de communication radio en formation à la sécurité privée'],
-            ['Sécurité incendie', '/formations-securite/ssiap', 'ssiap-1-galerie-ssi.webp', 'Illustration d’un exercice sur un système de sécurité incendie en formation SSIAP'],
-            ['Chauffeur VTC', '/vtc', 'vtc-parcours.webp', 'Illustration du parcours de formation au métier de chauffeur VTC'],
-            ['BTS en alternance', '/bts', 'bts-campus-mixte.webp?v=manuel-aps-4', 'Une étudiante et un étudiant en BTS travaillent ensemble sur leur projet'],
+            ['Sécurité privée', '/formations-securite', '/images/formation-scenes-manuel/aps-atelier-radio.webp', 'Illustration d’un atelier de communication radio en formation à la sécurité privée'],
+            ['Sécurité incendie', '/formations-securite/ssiap', '/images/formation-scenes-manuel/ssiap-1-galerie-ssi.webp', 'Illustration d’un exercice sur un système de sécurité incendie en formation SSIAP'],
+            ['Chauffeur VTC', '/vtc', '/images/formation-scenes-manuel/vtc-parcours.webp', 'Illustration du parcours de formation au métier de chauffeur VTC'],
+            ['BTS en alternance', '/bts', '/images/formation-scenes-manuel/bts-campus-mixte.webp?v=manuel-aps-4', 'Une étudiante et un étudiant en BTS travaillent ensemble sur leur projet'],
+            ['Parcours sécurité en alternance', '/parcoursalternance', '/images/illustrations-2026/parcours-pratique.webp', 'Des apprentis en sécurité étudient un site avec leur formateur.'],
+            ...upcomingFamilies.map(family => [family.label, `/#${family.id}`, family.items[0].imageSrc, family.items[0].imageAlt]),
           ].map(([label, href, image, alt]) => <Link key={label} href={href} className={styles.domainCard}>
-            <Image src={`/images/formation-scenes-manuel/${image}`} alt={alt} width={1536} height={1024} sizes="(max-width: 480px) 100vw, (max-width: 800px) 50vw, 25vw" />
+            <Image src={image} alt={alt} width={1536} height={1024} sizes="(max-width: 480px) 100vw, (max-width: 800px) 50vw, 25vw" />
             <span className={styles.domainCardBody}><span>{label}</span><Arrow diagonal /></span>
           </Link>)}
         </div>
@@ -145,14 +149,14 @@ export default async function Page() {
           <h2 id="founder-title">Le terrain comme point de départ.<br /><em>L’humain comme fil conducteur</em></h2>
           <div className={experience.founderSignature}><TeamPortrait person="clement" size={72} /><div><p>Clément VAILLANT</p><span>Fondateur & directeur général</span></div></div>
           <details className={experience.biography}><summary>Découvrir le parcours du fondateur <span className={styles.plus} aria-hidden="true">+</span></summary>
-          <p>Entrepreneur engagé dans la formation professionnelle, Clément VAILLANT a construit son parcours au croisement de la sécurité privée, de la gestion d’équipes, de la communication et de la formation. Son expérience, acquise dans des environnements exigeants et réglementés, l’a conduit des fonctions opérationnelles à la coordination puis à la direction de projets et d’équipes.</p>
+          <p>Entrepreneur engagé dans la formation professionnelle, Clément VAILLANT a construit son parcours dans l’événementiel, la communication, la sécurité privée et la formation. Avec Agence Intégrale, il a travaillé dans le spectacle vivant, où la coordination des équipes et la préparation en amont conditionnent le déroulement de chaque événement. Son expérience, acquise dans des environnements exigeants et réglementés, l’a conduit des fonctions opérationnelles à la coordination puis à la direction de projets et d’équipes.</p>
           <p>Titulaire d’un Master 2 en communication et stratégies d’image, il associe culture du terrain, pilotage d’entreprise et amélioration continue des parcours proposés par Intégrale Academy. Sa conviction : faire grandir l’école en conservant l’exigence, la proximité et un cadre clair pour chaque apprenant.</p>
             <a href="https://fr.linkedin.com/in/vaillantclement" target="_blank" rel="noopener noreferrer" className={styles.textLink}>Découvrir son parcours sur LinkedIn <Arrow diagonal /></a>
           </details>
         </div>
         <article id="mot-du-directeur" className={experience.welcomeLetter} aria-labelledby="welcome-title">
           <h3 id="welcome-title" className="sr-only">Le mot du directeur</h3>
-          <Image src="/images/welcome-pack/mot-du-directeur.svg" alt="La page de bienvenue du carnet, manuscrite et signée par Clément Vaillant." width={1092} height={1531} unoptimized className={experience.letterPage} />
+          <Image src="/images/welcome-pack/mot-du-directeur.svg" alt="La page de bienvenue du carnet, manuscrite et signée par Clément VAILLANT." width={1092} height={1531} unoptimized className={experience.letterPage} />
           <details className={experience.letterTranscript}>
             <summary>Lire la transcription</summary>
             <blockquote>
@@ -160,7 +164,7 @@ export default async function Page() {
               <p>Je vous souhaite une très belle formation au sein d’Intégrale Academy, riche en découvertes, en échanges et en réussites.</p>
               <p>Osez poser vos questions, essayer et progresser. Toute l’équipe est à vos côtés pour vous accompagner.</p>
               <p>Que ce carnet accueille vos idées et garde la trace de vos progrès.</p>
-              <p>Clément Vaillant<br />Directeur Intégrale Academy</p>
+              <p>Clément VAILLANT<br />Directeur Intégrale Academy</p>
             </blockquote>
           </details>
         </article>
@@ -168,7 +172,7 @@ export default async function Page() {
       <div id="histoire" className={`${styles.container} ${experience.history}`}>
         <p className={styles.eyebrow}>Une école qui grandit, une conviction qui reste</p>
         <ol className={styles.timeline}>
-          <li><span>2018</span><h3>Le début de l’aventure</h3><p>La création d’une école de formation professionnelle issue du terrain.</p></li><li><span>Au fil des années</span><h3>De nouvelles perspectives</h3><p>Sécurité, incendie, VTC et alternance enrichissent les parcours proposés.</p></li><li><span>Aujourd’hui</span><h3>La même proximité</h3><p>L’école vous accueille à Puget-sur-Argens et à Paris.</p></li>
+          <li><span>2018</span><h3>Le début de l’aventure</h3><p>La création d’une école de formation professionnelle issue du terrain.</p></li><li><span>Au fil des années</span><h3>De nouvelles perspectives</h3><p>Aux formations en sécurité et en VTC s’ajoutent les BTS, les bachelors, les mastères, les titres professionnels et le parcours sécurité en alternance.</p></li><li><span>Aujourd’hui</span><h3>La même proximité</h3><p>L’école vous accueille à Puget-sur-Argens et à Paris.</p></li>
         </ol>
       </div>
     </section>

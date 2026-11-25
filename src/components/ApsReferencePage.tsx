@@ -34,11 +34,6 @@ const identityNumeriqueUrl = 'https://lidentitenumerique.laposte.fr/';
 const apsRegistrationFormUrl = 'https://assistance-alw9.onrender.com/demande-informations-formations';
 const apsContact = (subject = 'inscription') => `/contact?formation=aps&objet=${encodeURIComponent(subject)}`;
 
-const fallbackSessions = [
-  { id: 'aps-septembre-2026', startDate: '2026-09-07T00:00:00.000Z', endDate: '2026-10-09T00:00:00.000Z', examDate: '2026-10-12T00:00:00.000Z', status: 'OPEN', seatsLeft: 3, showSeatsLeft: true, location: 'Puget-sur-Argens', priceLabel: '1 650 €' },
-  { id: 'aps-novembre-2026', startDate: '2026-11-03T00:00:00.000Z', endDate: '2026-12-08T00:00:00.000Z', examDate: '2026-12-09T00:00:00.000Z', status: 'OPEN', seatsLeft: 6, showSeatsLeft: true, location: 'Puget-sur-Argens', priceLabel: '1 650 €' },
-];
-
 const missions = [
   ['◉', 'Surveillance générale', 'Observer, prévenir et sécuriser les personnes, les biens et les espaces.', true],
   ['⇥', 'Contrôle d’accès', 'Filtrer les entrées, orienter le public et appliquer les consignes du site.', false],
@@ -248,7 +243,7 @@ function HeroSession({ session }: { session: any }) {
 }
 
 export function ApsReferencePage({ sessions }: { sessions: any[] }) {
-  const visibleSessions = sortSessionsChronologically(sessions.length ? sessions : fallbackSessions);
+  const visibleSessions = sortSessionsChronologically(sessions);
   const next = visibleSessions[0];
   return <TrainingReferencePage theme="blue">
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeCourseJsonLd({ '@context': 'https://schema.org', '@graph': [
@@ -402,7 +397,7 @@ export function ApsReferencePage({ sessions }: { sessions: any[] }) {
 
     <TrainingReferenceContact
       schoolStyle
-      description="Cassandre, Responsable commerciale, vérifie votre éligibilité, votre dossier CNAPS (ministère de l’Intérieur) et votre financement. Vous repartez avec des réponses claires et les prochaines étapes adaptées à votre situation."
+      description="Cassandre MENARD, Responsable commerciale, vérifie votre éligibilité, votre dossier CNAPS (ministère de l’Intérieur) et votre financement. Vous repartez avec des réponses claires et les prochaines étapes adaptées à votre situation."
       href={apsRegistrationFormUrl}
       assurances={['Sans engagement', 'Étude personnalisée', 'Réponse sur le CNAPS (ministère de l’Intérieur) et le financement']}
     />

@@ -24,6 +24,7 @@ export function toPublicSession(session: any) {
     fundingNotes: session.fundingNotes,
     registrationUrl: session.registrationUrl,
     isHighlighted: session.isHighlighted,
+    datePrecision: session.datePrecision,
     scheduleKind: session.scheduleKind,
     vtcDates: session.vtcDates ? {
       deadline: session.vtcDates.deadline,

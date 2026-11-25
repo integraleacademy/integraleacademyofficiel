@@ -1,5 +1,7 @@
 'use client';
 
+import { ADMISSIONS_URL } from '@/data/admissions';
+import { upcomingFamilies } from '@/data/upcoming-trainings';
 import { TrainingActionLink } from '@/components/TrainingActionLink';
 import { contactInfo } from '@/data/locations';
 import { TeamPortrait } from '@/components/TeamPortrait';
@@ -9,18 +11,28 @@ import { useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
 import school from '@/app/ecole/ecole.module.css';
 import styles from './ContactExperience.module.css';
 
-export type ContactInterest = 'security' | 'vtc' | 'bts' | 'undecided';
+export type ContactInterest = 'security' | 'vtc' | 'bts' | 'bachelors' | 'masteres' | 'titres-professionnels' | 'parcoursalternance' | 'undecided';
 
 const interests = [
   { id: 'security', label: 'Sécurité', detail: 'Sécurité privée & incendie', icon: 'shield', image: '/images/formation-scenes-manuel/aps-arrivee.webp', imageAlt: 'Illustration d’un échange autour d’une formation en sécurité', message: 'Je souhaite me reconvertir dans la sécurité. Par où commencer ?', response: 'Parlons du métier qui vous attire, des prérequis et des formations possibles.', topics: ['Votre métier', 'Les prérequis', 'Le financement'], next: 'Trouvons la formation qui vous correspond', description: 'Faites le point sur les métiers de la sécurité, les conditions d’entrée et les formations qui correspondent à votre profil.' },
   { id: 'vtc', label: 'VTC', detail: 'Votre projet de chauffeur', icon: 'car', image: '/images/formation-scenes-manuel/vtc-parcours.webp', imageAlt: 'Illustration du parcours de formation de chauffeur VTC', message: 'J’aimerais devenir chauffeur VTC. Comment préparer mon projet ?', response: 'Regardons ensemble la formation, la préparation à l’examen et les possibilités de financement.', topics: ['La formation', 'L’examen', 'Le financement'], next: 'Donnons une direction à votre projet VTC', description: 'Échangez sur la préparation à l’examen, les heures de conduite et les possibilités de financement.' },
   { id: 'bts', label: 'BTS', detail: 'Études & alternance', icon: 'book', image: '/images/bts/mixite-2026/mco-ventes.webp', imageAlt: 'Illustration d’étudiants en BTS en situation professionnelle', message: 'Je cherche un BTS en alternance. Pouvez-vous m’accompagner ?', response: 'Échangeons sur le BTS qui vous intéresse, votre candidature et votre recherche d’entreprise.', topics: ['Votre BTS', 'La candidature', 'L’alternance'], next: 'Construisons votre projet d’alternance', description: 'Précisez le BTS qui vous intéresse et les prochaines étapes de votre candidature et de votre recherche d’entreprise.' },
+  ...upcomingFamilies.map(family => ({
+    id: family.id, label: family.label, detail: family.level ?? 'Formation en alternance', icon: 'book',
+    image: family.items[0].imageSrc, imageAlt: family.items[0].imageAlt, message: `Je souhaite découvrir vos ${family.label.toLowerCase()}.`,
+    response: 'Notre équipe vous accompagne du choix de la formation au dépôt du dossier.', topics: ['La rentrée', 'Les prérequis', 'La candidature'],
+    next: 'Préparons votre candidature', description: 'Retrouvez la formation qui vous intéresse sur le portail des admissions.',
+  })),
+  { id: 'parcoursalternance', label: 'Parcours sécurité en alternance', detail: 'APS, A3P et SSIAP 1', icon: 'shield',
+    image: '/images/illustrations-2026/parcours-pratique.webp', imageAlt: 'Un groupe étudie le plan d’un site avec son formateur.',
+    message: 'Je souhaite préparer les métiers de la sécurité en alternance.', response: 'Nous vous accompagnons dans le choix de la session et la préparation du contrat.',
+    topics: ['La session', 'La candidature', 'L’entreprise'], next: 'Préparons votre parcours sécurité', description: 'Déposez votre dossier pour le parcours sécurité en alternance.' },
   { id: 'undecided', label: 'Je ne sais pas encore', detail: 'Commençons par en parler', icon: 'compass', image: '/images/illustrations-2026/campus-accompagnement.webp', imageAlt: 'Illustration de l’accueil et de l’accompagnement des futurs apprenants', message: 'J’ai envie de changer de métier, mais je ne sais pas par où commencer.', response: 'Vos envies, votre expérience, votre situation : prenons le temps d’en parler pour vous orienter.', topics: ['Vos envies', 'Votre situation', 'Vos possibilités'], next: 'Un premier échange pour y voir plus clair', description: 'Partez de votre expérience et de vos envies pour identifier les métiers et les formations qui pourraient vous convenir.' },
 ] as const;
 
 const advisers = {
-  security: { name: 'Cassandre', role: 'Responsable commerciale' },
-  bts: { name: 'Aurélie', role: 'Responsable des BTS' },
+  security: { name: 'Cassandre MENARD', role: 'Responsable commerciale' },
+  bts: { name: 'Aurélie BAYARD-CHAUSSEZ', role: 'Responsable des BTS' },
 } as const;
 
 const steps = [
@@ -59,8 +71,8 @@ export function ContactExperience({ initialInterest = 'undecided', requestLinks,
   const [step, setStep] = useState(0);
   const interestRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const stepRefs = useRef<(HTMLButtonElement | null)[]>([]);
-  const selected = interests.find(item => item.id === interest) ?? interests[3];
-  const isBts = interest === 'bts';
+  const selected = interests.find(item => item.id === interest) ?? interests[interests.length - 1];
+  const isBts = !['security', 'vtc', 'undecided'].includes(interest);
   const adviser = isBts ? advisers.bts : advisers.security;
   const visibleAdvisers = interest === 'undecided' ? [advisers.security, advisers.bts] : [adviser];
   const schoolEmailHref = 'mailto:ecole@integraleacademy.com?subject=Mon%20projet%20de%20formation';
@@ -158,8 +170,8 @@ export function ContactExperience({ initialInterest = 'undecided', requestLinks,
             <span className={styles.projectBadge}><Icon name={selected.icon} />{selected.label}</span>
             <h3>{selected.next}</h3>
             <p>{selected.description}</p>
-            <TrainingActionLink href={isBts ? contactInfo.phoneHref : requestHref} className={`${school.button} ${styles.primaryAction}`}>
-              {isBts ? 'Parler avec Aurélie, Responsable des BTS' : 'Parler de mon projet'}<Icon name="arrow" />
+            <TrainingActionLink href={isBts ? ADMISSIONS_URL : requestHref} className={`${school.button} ${styles.primaryAction}`}>
+              {isBts ? 'Déposer ma candidature' : 'Parler de mon projet'}<Icon name="arrow" />
             </TrainingActionLink>
             <div className={styles.directContact}>
               <a href={contactInfo.phoneHref} aria-label={`Appeler le standard au ${contactInfo.phone}`}>

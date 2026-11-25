@@ -1,5 +1,6 @@
 'use client';
 
+import { publicIntakePeriod } from '@/lib/planning-data';
 import { useState } from 'react';
 import { calendarExtent, calendarMonth, calendarPosition, sessionCalendarPosition, sessionInCalendarWindow } from '@/lib/planning-calendar';
 import { formatSessionDate, formatSessionPeriod, inPersonPeriods } from '@/lib/public-sessions';
@@ -47,6 +48,8 @@ export function PlanningCalendar({ sessions, onSelect, selectedId, themeForSessi
       {visible.map(session => {
         const title = session.title || session.training?.name || 'Formation';
         const isVtc = session.scheduleKind === 'vtc-exam';
+        const monthOnly = session.datePrecision === 'month';
+        const period = monthOnly ? publicIntakePeriod(session) : formatSessionPeriod(session.startDate, session.endDate);
         const whole = sessionCalendarPosition(session, start, end)!;
         const phases = isVtc ? [] : [
           { label: 'À distance', from: session.remoteStartDate, to: session.remoteEndDate, className: styles.remotePhase },
@@ -59,11 +62,11 @@ export function PlanningCalendar({ sessions, onSelect, selectedId, themeForSessi
           { code: 'T', date: session.endDate, label: 'Examen théorique · ' + formatVtcExamDate(session.endDate) },
           { code: 'P', date: session.examDate, label: 'Examen pratique · ' + formatVtcExamDate(session.examDate) },
         ] : [{ code: 'E', date: session.examDate, label: 'Examen le ' + formatSessionDate(session.examDate) }];
-        return <button key={session.id} type="button" onClick={() => onSelect(session)} className={`${styles.calendarRow} ${themeForSession(session)}`} data-selected={selectedId === session.id || undefined} aria-label={`Voir la session ${title}, ${isVtc ? vtcRegistrationMessage(session.startDate, session.endDate) : formatSessionPeriod(session.startDate, session.endDate)}`} aria-haspopup="dialog">
-          <span className={styles.calendarLabel}><strong><i />{title}</strong><small>{isVtc ? 'Inscription en formation · ' + formatVtcDeadline(session.startDate) : formatSessionPeriod(session.startDate, session.endDate)}</small></span>
+        return <button key={session.id} type="button" onClick={() => onSelect(session)} className={`${styles.calendarRow} ${themeForSession(session)}`} data-selected={selectedId === session.id || undefined} aria-label={`Voir la session ${title}, ${isVtc ? vtcRegistrationMessage(session.startDate, session.endDate) : period}`} aria-haspopup="dialog">
+          <span className={styles.calendarLabel}><strong><i />{title}</strong><small>{isVtc ? 'Inscription en formation · ' + formatVtcDeadline(session.startDate) : period}</small></span>
           <span className={styles.calendarTrack}>
             {months.map(month => <i key={month.date} className={styles.monthLine} style={{ left: month.left + '%' }} />)}
-            {!isVtc && <span className={styles.courseBar} style={positionStyle(whole)} />}
+            {!isVtc && <span className={monthOnly ? styles.intakeMonth : styles.courseBar} style={positionStyle(whole)} title={monthOnly ? 'Mois de rentrée · jour à préciser' : period} />}
             {phases.map(phase => {
               const position = calendarPosition(phase.from, phase.to, start, end);
               return position ? <span key={phase.label + String(phase.from)} title={`${phase.label} · ${formatSessionPeriod(phase.from, phase.to)}`} className={`${styles.phase} ${phase.className}`} style={positionStyle(position)} /> : null;

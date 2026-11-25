@@ -12,7 +12,7 @@ export const btsMosFaq = [
   {
     q: 'Comment m’inscrire en BTS MOS ?',
     a: 'Deux voies sont possibles. Vous pouvez remplir le dossier de pré-inscription accessible depuis la fiche BTS MOS ou formuler un vœu sur Parcoursup pendant la période de candidature. Sur Parcoursup, choisissez la fiche du campus de Puget-sur-Argens pour les cours en salle ou celle du parcours à distance pour les cours en direct sur Zoom.\n\n' +
-      'Pour une candidature en cours d’année, utilisez le dossier en ligne. Indiquez où en sont votre recherche d’entreprise et vos démarches de carte professionnelle du CNAPS afin qu’Aurélie, Responsable des BTS, puisse examiner avec vous les prochaines étapes.',
+      'Pour une candidature en cours d’année, utilisez le dossier en ligne. Indiquez où en sont votre recherche d’entreprise et vos démarches de carte professionnelle du CNAPS afin qu’Aurélie BAYARD-CHAUSSEZ, Responsable des BTS, puisse examiner avec vous les prochaines étapes.',
   },
   {
     q: 'Faut-il une carte professionnelle CNAPS pour intégrer le BTS MOS ?',
@@ -85,7 +85,7 @@ export const btsMcoFaq = [
   },
   {
     q: 'Qui contacter pour parler du BTS ?',
-    a: 'Pour parler du BTS MCO, demandez Aurélie, Responsable des BTS, au standard de l’école, le 04 22 47 07 68, du lundi au vendredi de 9 h à 17 h. Vous pouvez aussi choisir « BTS » sur la page Contact.\n\n' +
+    a: 'Pour parler du BTS MCO, demandez Aurélie BAYARD-CHAUSSEZ, Responsable des BTS, au standard de l’école, le 04 22 47 07 68, du lundi au vendredi de 9 h à 17 h. Vous pouvez aussi choisir « BTS » sur la page Contact.\n\n' +
       'Si vous avez déjà une piste d’alternance, préparez le nom de l’enseigne et quelques exemples de missions. Si vous hésitez encore avec le BTS NDRC, expliquez si vous préférez gérer l’activité d’un point de vente ou aller chercher et développer une clientèle.',
   },
 ];
@@ -136,7 +136,7 @@ export const btsNdrcFaq = [
   },
   {
     q: 'Qui contacter pour parler du BTS ?',
-    a: 'Demandez à échanger avec Aurélie, Responsable des BTS, au standard d’Intégrale Academy, le 04 22 47 07 68. L’équipe est joignable du lundi au vendredi de 9 h à 17 h. Vous pouvez également choisir le parcours « BTS » sur la page Contact.\n\n' +
+    a: 'Demandez à échanger avec Aurélie BAYARD-CHAUSSEZ, Responsable des BTS, au standard d’Intégrale Academy, le 04 22 47 07 68. L’équipe est joignable du lundi au vendredi de 9 h à 17 h. Vous pouvez également choisir le parcours « BTS » sur la page Contact.\n\n' +
       'Pour préparer votre échange, précisez la rentrée visée et le type de poste qui vous attire, par exemple commercial terrain ou conseiller à distance. Si vous avez déjà une offre d’alternance, les missions décrites permettront de vérifier son intérêt pour le BTS NDRC.',
   },
 ];
@@ -145,7 +145,7 @@ export const btsCiFaq = [
   {
     q: 'Puis-je candidater juste après le bac ?',
     a: 'Le BTS Commerce international est accessible après le bac ou avec un titre équivalent. Il s’adresse aux candidats qui souhaitent travailler avec des clients, des fournisseurs et des prestataires de différents pays. La pratique de l’anglais et d’une seconde langue vivante fait partie du parcours.\n\n' +
-      'Pour envisager une candidature à Intégrale Academy, indiquez à l’école la rentrée souhaitée et les langues que vous étudiez. Aurélie, Responsable des BTS, pourra vous préciser les possibilités d’admission pour cette rentrée et examiner votre projet d’alternance.',
+      'Pour envisager une candidature à Intégrale Academy, indiquez à l’école la rentrée souhaitée et les langues que vous étudiez. Aurélie BAYARD-CHAUSSEZ, Responsable des BTS, pourra vous préciser les possibilités d’admission pour cette rentrée et examiner votre projet d’alternance.',
   },
   {
     q: 'Le BTS peut-il être suivi à distance ?',
@@ -182,7 +182,7 @@ export const btsCiFaq = [
   },
   {
     q: 'Qui contacter pour parler du BTS ?',
-    a: 'Pour connaître les possibilités sur une rentrée donnée, contactez Aurélie, Responsable des BTS, par le standard au 04 22 47 07 68, du lundi au vendredi de 9 h à 17 h. Vous pouvez également sélectionner « BTS » sur la page Contact.\n\n' +
+    a: 'Pour connaître les possibilités sur une rentrée donnée, contactez Aurélie BAYARD-CHAUSSEZ, Responsable des BTS, par le standard au 04 22 47 07 68, du lundi au vendredi de 9 h à 17 h. Vous pouvez également sélectionner « BTS » sur la page Contact.\n\n' +
       'Précisez les langues que vous étudiez, le format envisagé et la rentrée souhaitée. Si vous possédez déjà une proposition d’alternance, indiquez si l’entreprise intervient en import, en export, dans les transports ou dans les achats internationaux.',
   },
 ];
@@ -233,7 +233,7 @@ export const btsPiFaq = [
   },
   {
     q: 'Qui contacter pour parler du BTS ?',
-    a: 'Aurélie, Responsable des BTS, peut vous renseigner sur le BTS Professions immobilières. Appelez le standard de l’école au 04 22 47 07 68, du lundi au vendredi de 9 h à 17 h, ou sélectionnez « BTS » sur la page Contact.\n\n' +
+    a: 'Aurélie BAYARD-CHAUSSEZ, Responsable des BTS, peut vous renseigner sur le BTS Professions immobilières. Appelez le standard de l’école au 04 22 47 07 68, du lundi au vendredi de 9 h à 17 h, ou sélectionnez « BTS » sur la page Contact.\n\n' +
       'Si une agence vous propose un contrat, précisez son activité principale et vos futures missions. Pour une première orientation, indiquez plutôt ce qui vous intéresse entre la vente, la gestion des locations et le travail de syndic, ainsi que votre préférence entre campus et visioconférence.',
   },
 ];
@@ -284,7 +284,7 @@ export const btsCgFaq = [
   },
   {
     q: 'Qui contacter pour parler du BTS ?',
-    a: 'Pour toute question sur le BTS CG, demandez Aurélie, Responsable des BTS, au standard d’Intégrale Academy, le 04 22 47 07 68. Le standard est ouvert du lundi au vendredi de 9 h à 17 h. Vous pouvez également passer par le choix « BTS » sur la page Contact.\n\n' +
+    a: 'Pour toute question sur le BTS CG, demandez Aurélie BAYARD-CHAUSSEZ, Responsable des BTS, au standard d’Intégrale Academy, le 04 22 47 07 68. Le standard est ouvert du lundi au vendredi de 9 h à 17 h. Vous pouvez également passer par le choix « BTS » sur la page Contact.\n\n' +
       'Précisez votre formation actuelle et l’environnement de travail que vous recherchez, par exemple un cabinet comptable ou le service financier d’une entreprise. Si vous avez déjà trouvé un employeur, préparez aussi un descriptif des tâches qu’il envisage de vous confier.',
   },
 ];

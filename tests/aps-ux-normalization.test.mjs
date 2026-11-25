@@ -87,7 +87,7 @@ test('les six illustrations métier restent accessibles dans les cartes', () => 
 });
 
 test('la page APS trie les sessions et limite la vue initiale aux deux prochaines', () => {
-  assert.ok(apsPage.includes('sortSessionsChronologically(sessions.length ? sessions : fallbackSessions)'));
+  assert.ok(apsPage.includes('sortSessionsChronologically(sessions)'));
   assert.ok(apsPage.includes('initialSessionLimit={2}'));
   assert.ok(apsPage.includes('theme="blue"'));
   assert.ok(sessionsSection.includes('const initiallyVisibleSessions = filteredSessions.slice(0, normalizedInitialLimit)'));
