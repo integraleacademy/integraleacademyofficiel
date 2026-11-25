@@ -72,3 +72,23 @@ test('une seule formule existante est complétée et une formule volontairement 
   assert.deepEqual(visible.map(s=>s.title),[avec.title]);
   assert.equal(mergeManagedSessions([{...base,status:'FULL'}],[training],[])[0].status,'OPEN');
 });
+
+test('le report, le nom, le lieu et le retrait remplacent la fiche du planning public', () => {
+  const former = {...base, title: 'Ancienne promotion', remoteStartDate: row.start};
+  const scheduled = {...row, managed:true, edited:true, visibility:'match' as const, name:'Promotion Atlas',
+    start:'2098-05-05',end:'2098-06-01',exam:'',venue:'Salle Atlas',aliases:[row]};
+  const [session] = mergeManagedSessions([former],[training],[scheduled]);
+  assert.equal(session.title,'Promotion Atlas');
+  assert.equal(session.location,'Puget-sur-Argens · Salle Atlas');
+  assert.equal(session.startDate.toISOString().slice(0,10),scheduled.start);
+  assert.equal(session.examDate,null); assert.equal(session.remoteStartDate,null);
+  const hidden = {...scheduled,visibility:'closed' as const};
+  const local = {...row,managed:false,id:'gestion-ancien',visibility:'match' as const};
+  assert.deepEqual(mergeManagedSessions([former],[training],[local,hidden]),[]);
+  const replacement = {...row,managed:true,edited:true,name:'Nouvelle promotion',id:'platform-nouveau',sold:2};
+  for (const withdrawn of [hidden,{...hidden,deleted:true}]) {
+    const [offer,...others] = mergeManagedSessions([former],[training],[withdrawn,local,replacement]);
+    assert.deepEqual(others,[]);
+    assert.deepEqual([offer.id,offer.title,offer.seatsLeft],[replacement.id,replacement.name,10]);
+  }
+});

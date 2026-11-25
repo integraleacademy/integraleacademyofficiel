@@ -5,6 +5,7 @@ type Key = {slug: string; centre: string; start: string; end: string; exam: stri
 export type CatalogueRow = Key & {
   id: string; aliases: Key[]; visibility: 'public' | 'match' | 'internal' | 'closed';
   capacity: number | null; sold: number | null;
+  name?: string; venue?: string; managed?: boolean; edited?: boolean; deleted?: boolean;
   group_periods?: Pick<Key,'centre'|'start'|'end'>[];
   remote_start?: string; remote_end?: string; onsite_start?: string; onsite_end?: string;
 };
@@ -32,6 +33,24 @@ function score(key: Key, candidate: Key) {
     !!key.exam && key.exam === candidate.exam];
   return anchors.filter(Boolean).length;
 }
+function publicLocation(row: CatalogueRow, base?: {location?: string}) {
+  const city = row.centre === 'paris' ? 'Paris' : 'Puget-sur-Argens';
+  if (row.venue) {
+    return centre({location: row.venue}) === row.centre ? row.venue : city + ' · ' + row.venue;
+  }
+  return base && centre(base) === row.centre ? base.location : row.centre === 'paris' ? city : 'Puget-sur-Argens / Côte d’Azur';
+}
+
+function publicTitle(row: CatalogueRow, original: string, variant?: string) {
+  if (!row.name || row.group_periods) return original;
+  return variant && !new RegExp('\\b' + variant + '\\b', 'i').test(row.name) ? row.name + ' · ' + variant : row.name;
+}
+
+function groupPeriod(key: Key, row: CatalogueRow) {
+  return key.slug === row.slug && row.group_periods?.some(group => key.centre === group.centre &&
+    key.start >= group.start && key.end <= group.end);
+}
+
 function capacityAndSales(base: any, row?: CatalogueRow) {
   const seatsTotal = row?.capacity ?? resolveSessionSeatCapacity(base);
   const seatsLeft = row?.sold != null ? Math.max(0, seatsTotal - row.sold) : null;
@@ -46,9 +65,19 @@ export function mergeManagedSessions(stored: any[], trainings: any[], catalogue:
     const code = slug(base.training?.slug);
     if (!courses.has(code)) { combined.push(base); continue; }
     const key = {slug: code, centre: centre(base), start: iso(base.startDate), end: iso(base.endDate), exam: iso(base.examDate)};
-    const hits = catalogue.filter(row => [row, ...row.aliases].some(alias => score(key, alias) >= 2) ||
-      key.slug === row.slug && row.group_periods?.some(group => key.centre === group.centre &&
-        key.start >= group.start && key.end <= group.end));
+    const direct = catalogue.filter(row => base.id === row.id || row.slug === 'ssiap-1' && base.id === row.id + '-sans-sst');
+    const matches = direct.length ? direct : catalogue.filter(row =>
+      [row, ...row.aliases].some(alias => score(key, alias) >= 2) || groupPeriod(key, row));
+    const authoritative = matches.filter(row => row.managed);
+    let hits = authoritative.length ? authoritative : matches;
+    if (!direct.length && hits.length > 1 && hits.some(row => row.managed || row.deleted)) {
+      // A stored CMS ID and its enrolment link belong to the old group. When the dates
+      // have been reused, expose the currently published groups under their own IDs.
+      const active = hits.filter(row => !row.deleted && row.visibility === 'public');
+      if (active.length) continue;
+      const current = hits.filter(row => !row.deleted && score(key, row) >= 2);
+      if (current.length) hits = current;
+    }
     for (const row of hits) used.add(row.id);
     if (hits.some(row => row.visibility === 'internal' || row.visibility === 'closed')) continue;
     if (hits.length !== 1) {
@@ -67,12 +96,12 @@ export function mergeManagedSessions(stored: any[], trainings: any[], catalogue:
     const sales = capacityAndSales(base, row);
     const status = sales.seatsLeft === null ? (base.status === 'FULL' ? 'OPEN' : base.status)
       : sales.seatsLeft === 0 ? 'FULL' : 'OPEN';
-    if (row.visibility === 'match') {
+    if (row.visibility === 'match' && !row.edited) {
       combined.push({...base, ...sales, status});
       continue;
     }
     const alias = [row, ...row.aliases].filter(a => score(key, a) >= 2).sort((a,b) =>
-      score(key,b) - score(key,a) || Math.abs(+day(key.start)! - +day(a.start)!) - Math.abs(+day(key.start)! - +day(b.start)!))[0];
+      score(key,b) - score(key,a) || Math.abs(+day(key.start)! - +day(a.start)!) - Math.abs(+day(key.start)! - +day(b.start)!))[0] ?? row;
     const move = (value: string, from: string, to: string) => {
       if (!value || !from || !to) return day(to);
       return new Date(+day(to)! + (+day(value)! - +day(from)!));
@@ -83,13 +112,15 @@ export function mergeManagedSessions(stored: any[], trainings: any[], catalogue:
       : variant ? move(key.start, alias.start, row.start) : day(row.start);
     const endDate = variant ? move(key.end, alias.end, row.end) : day(row.end);
     const moved = iso(startDate) !== key.start || iso(endDate) !== key.end;
-    combined.push({...base, startDate, endDate, examDate: day(row.exam),
-      location: centre(base) === row.centre ? base.location : row.centre === 'paris' ? 'Paris' : 'Puget-sur-Argens / Côte d’Azur',
-      remoteStartDate: day(row.remote_start) ?? (moved ? null : base.remoteStartDate),
-      remoteEndDate: day(row.remote_end) ?? (moved ? null : base.remoteEndDate),
+    const preservePeriods = !moved && !row.edited;
+    const variantName = variant ? (withoutSst ? 'sans SST' : 'avec SST') : undefined;
+    combined.push({...base, title: publicTitle(row, base.title, variantName), startDate, endDate, examDate: day(row.exam),
+      location: publicLocation(row, base),
+      remoteStartDate: day(row.remote_start) ?? (preservePeriods ? base.remoteStartDate : null),
+      remoteEndDate: day(row.remote_end) ?? (preservePeriods ? base.remoteEndDate : null),
       inPersonStartDate: withoutSst && row.standard_start && row.onsite_start ? startDate
-        : day(row.onsite_start) ?? (moved ? null : base.inPersonStartDate),
-      inPersonEndDate: day(row.onsite_end) ?? (moved ? null : base.inPersonEndDate),
+        : day(row.onsite_start) ?? (preservePeriods ? base.inPersonStartDate : null),
+      inPersonEndDate: day(row.onsite_end) ?? (preservePeriods ? base.inPersonEndDate : null),
       inPersonFirstEndDate: moved ? null : base.inPersonFirstEndDate,
       inPersonResumeDate: moved ? null : base.inPersonResumeDate, ...sales, status});
   }
@@ -105,11 +136,11 @@ export function mergeManagedSessions(stored: any[], trainings: any[], catalogue:
     const template = stored.filter(s => slug(s.training?.slug) === row.slug && iso(s.startDate).slice(0,4) === row.start.slice(0,4))
       .sort((a,b) => Math.abs(+new Date(a.startDate) - +day(row.start)!) - Math.abs(+new Date(b.startDate) - +day(row.start)!))[0];
     const sales = capacityAndSales({training}, row);
-    const session = {id: row.id, training, trainingId: training.id, title: training.name || training.title,
+    const session = {id: row.id, training, trainingId: training.id, title: publicTitle(row, training.name || training.title),
       startDate: day(row.start), endDate: day(row.end), examDate: day(row.exam),
       remoteStartDate: day(row.remote_start), remoteEndDate: day(row.remote_end),
       inPersonStartDate: day(row.onsite_start), inPersonEndDate: day(row.onsite_end),
-      location: row.centre === 'paris' ? 'Paris' : 'Puget-sur-Argens / Côte d’Azur',
+      location: publicLocation(row),
       priceCents: template?.priceCents ?? null, priceLabel: template?.priceLabel ?? '', durationLabel: template?.durationLabel ?? '',
       fundingNotes: template?.fundingNotes ?? '', registrationUrl: template?.registrationUrl || training.pageUrl,
       publicNotes: '', isHighlighted: false, status: sales.seatsLeft === 0 ? 'FULL' : 'OPEN', ...sales};
@@ -118,8 +149,8 @@ export function mergeManagedSessions(stored: any[], trainings: any[], catalogue:
         const offer = stored.find(s => slug(s.training?.slug) === row.slug && iso(s.startDate).slice(0,4) === row.start.slice(0,4) && formula.test(s.title || ''));
         return {priceCents: offer?.priceCents ?? null, priceLabel: offer?.priceLabel ?? ''};
       };
-      if (!covered?.has('avec')) combined.push({...session, ...priceFor(/\bavec SST\b/i), title: 'SSIAP 1 avec SST'});
-      if (!covered?.has('sans')) combined.push({...session, ...priceFor(/\bsans SST\b/i), id: row.id + '-sans-sst', title: 'SSIAP 1 sans SST',
+      if (!covered?.has('avec')) combined.push({...session, ...priceFor(/\bavec SST\b/i), title: publicTitle(row, 'SSIAP 1 avec SST', 'avec SST')});
+      if (!covered?.has('sans')) combined.push({...session, ...priceFor(/\bsans SST\b/i), id: row.id + '-sans-sst', title: publicTitle(row, 'SSIAP 1 sans SST', 'sans SST'),
         startDate: day(row.standard_start), inPersonStartDate: session.inPersonStartDate ? day(row.standard_start) : null});
     } else {
       combined.push(session);
