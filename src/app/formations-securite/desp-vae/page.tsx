@@ -1,3 +1,4 @@
+import { programmeIllustrations } from '@/data/programme-illustrations';
 import Image from 'next/image';
 import { TrainingAdmission, TrainingExamExperience } from '@/components/ApsExperienceSections';
 import { TrainingProgramExplorer } from '@/components/TrainingProgramExplorer';
@@ -176,7 +177,7 @@ export default async function DespVaePage(){
           <TrainingProgramExplorer idPrefix="vae-preuves" menuTitle="Les familles de preuves" tabListLabel="Preuves du dossier VAE"
             nextLabel="Famille suivante" restartLabel="Revenir à la première famille" hours="5" unitLabel="" overview="Domaines du référentiel" subtitle="Dossier de validation"
             facts={[['Démarche', 'Expériences réelles'], ['Accompagnement', 'Individualisé'], ['Évaluation', 'Jury de certification']]}
-            units={proofs.map(([title, items], index) => ({ number: String(index + 1).padStart(2, '0'), title, items, delivery: 'Dossier de validation' }))} />
+            units={proofs.map(([title, items], index) => ({ number: String(index + 1).padStart(2, '0'), title, items, illustration: programmeIllustrations['desp-vae'][index], delivery: 'Dossier de validation' }))} />
           <Note>Les preuves doivent être authentiques, compréhensibles et directement liées aux activités décrites.</Note>
           <Note>Les données personnelles, informations sensibles, noms de clients, tarifs confidentiels et éléments relevant du secret des affaires doivent être anonymisés lorsque cela est nécessaire.</Note>
         </TrainingReferenceSection>

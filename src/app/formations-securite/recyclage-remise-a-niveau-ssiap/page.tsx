@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { SessionCalendarLink } from '@/components/SessionCalendarLink';
 import { createPageMetadata } from '@/lib/seo';
 import { SsiapCoursePage } from '@/components/SsiapCoursePage';
 import { ssiapMaintenanceConfig } from '@/data/ssiap-catalogue';
@@ -42,7 +41,6 @@ export default async function SsiapMaintenancePage() {
               <ul className="mt-4 divide-y divide-[#dfd5c2] border-y border-[#dfd5c2]">
                 {course.sessions.map(session => <li key={session.id} className="flex flex-wrap items-center justify-between gap-x-4 py-2 font-semibold">
                   <span>{sessionDates.formatRange(new Date(session.startDate), new Date(session.endDate))}</span>
-                  <SessionCalendarLink id={session.id} />
                 </li>)}
               </ul>
               <Link href={`/planning?formation=ssiap&parcours=${course.key}&dates=toutes#sessions`} aria-label={`Choisir une session – ${course.label}`} className="mt-4 inline-flex min-h-11 items-center font-bold text-red-800 underline underline-offset-4">

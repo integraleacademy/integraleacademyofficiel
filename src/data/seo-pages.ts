@@ -13,8 +13,8 @@ export type SeoPage = {
 
 const projectSummaries: Record<string, string> = {
   'bachelor-eirc': 'Bachelor EIRC, investigation numérique et cybermenaces.',
-  'mastere-chef-de-produit-ia': 'Mastère en pilotage de produits IA et automatisation à Paris.',
-  'mastere-ingenierie-ia-generative': 'Mastère en conception d’applications d’IA générative à Paris.',
+  'mastere-chef-de-produit-ia': 'Mastère en pilotage de produits IA et automatisation à Paris et à Puget-sur-Argens.',
+  'mastere-ingenierie-ia-generative': 'Mastère en conception d’applications d’IA générative à Paris et à Puget-sur-Argens.',
 };
 
 /** Editorial metadata for canonical pages. Historic addresses stay in url-redirects.json. */
@@ -44,7 +44,7 @@ export const seoPages: Record<string, SeoPage> = {
   },
   '/centres': {
     title: 'Nos écoles et lieux de formation',
-    description: 'Retrouvez les adresses de nos centres de Puget-sur-Argens et de Paris. À Paris, découvrez le DESP et les deux mastères en intelligence artificielle à venir.',
+    description: 'Retrouvez les adresses de nos centres de Puget-sur-Argens et de Paris. Le DESP et les deux mastères en intelligence artificielle sont proposés dans les deux centres.',
     label: 'Lieux de formation', type: 'CollectionPage',
   },
   '/formations-securite': {

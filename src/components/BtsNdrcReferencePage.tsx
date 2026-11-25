@@ -1,5 +1,4 @@
-import { SessionCalendarLink } from './SessionCalendarLink';
-import { septemberId } from '@/data/admissions';
+import { BtsProgramme } from '@/components/BtsProgramme';
 import { ADMISSIONS_URL } from '@/data/admissions';
 import { CourseTeamBanner } from '@/components/CourseTeamBanner';
 import { CourseBrochureCard } from '@/components/CourseBrochureCard';
@@ -434,7 +433,7 @@ export function BtsNdrcReferencePage() {
         </article>
       </Section>
 
-      <div className="page-container flex flex-wrap items-center justify-between gap-3 py-4"><strong>Prochaine rentrée · Septembre 2027</strong><SessionCalendarLink id={septemberId('bts-ndrc')} /></div>
+      <div className="page-container flex flex-wrap items-center justify-between gap-3 py-4"><strong>Prochaine rentrée · Septembre 2027</strong></div>
       <CourseBrochureCard course="ndrc" />
       <Section
         id="programme"
@@ -442,18 +441,7 @@ export function BtsNdrcReferencePage() {
         title={<>Du terrain, du digital et une vraie culture commerciale</>}
         intro={<>Le programme officiel combine enseignements généraux, négociation-vente, relation client à distance, e-commerce et animation de réseaux.</>}
       >
-        <div className="grid gap-3 lg:grid-cols-2">
-          {program.map(([number, title, text], index) => (
-            <details key={number} open={index === 0} className="group rounded-[1.5rem] border border-academy-line bg-[#FFFDF8] p-5 shadow-soft">
-              <summary className="flex cursor-pointer list-none items-center gap-3">
-                <span className={`grid h-10 w-10 shrink-0 place-items-center rounded-full text-xs font-black ${index >= 3 ? 'bg-[#0D1725] text-bts-200' : 'bg-academy-bg text-academy-ink'}`}>{number}</span>
-                <strong className="min-w-0 flex-1">{title}</strong>
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-bts-200 font-black transition group-open:rotate-45">+</span>
-              </summary>
-              <p className="ml-[3.25rem] mt-4 text-sm leading-6 text-academy-muted">{text}</p>
-            </details>
-          ))}
-        </div>
+        <BtsProgramme course="ndrc" subjects={program} />
         <div className="mt-7 grid gap-5 rounded-[2rem] bg-[#0D1725] p-6 text-white lg:grid-cols-[.72fr_1.28fr] lg:p-8">
           <div><Eyebrow light>Validation</Eyebrow><h3 className="mt-4 text-3xl font-black">Un diplôme national de niveau 5</h3><p className="mt-4 leading-7 text-white/62">Le diplôme est obtenu avec une moyenne supérieure ou égale à 10/20 sur l’ensemble des épreuves nationales, dossiers professionnels et évaluations prévues par le référentiel.</p></div>
           <div className="grid gap-3 sm:grid-cols-3">

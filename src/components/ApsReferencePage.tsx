@@ -26,6 +26,7 @@ import { FaqDirectoryLink } from '@/components/FaqDirectoryLink';
 import { TrainingDatesPricingSection } from '@/components/TrainingDatesPricingSection';
 import { TrainingMissionCards } from '@/components/TrainingMissionCards';
 import { ManualArtwork } from '@/components/ManualArtwork';
+import { SessionCalendarLink } from '@/components/SessionCalendarLink';
 import { getSessionSeatAvailability } from '@/lib/session-seat-availability';
 import styles from './ApsReferencePage.module.css';
 
@@ -219,22 +220,23 @@ function CompactAssistant() {
 
 function HeroSession({ session }: { session: any }) {
   const full = isSessionFull(session);
-  const seatAvailability = getSessionSeatAvailability(session, 12);
+  const seatAvailability = session ? getSessionSeatAvailability(session, 12) : null;
   return <aside data-aps-session aria-label="Prochaine session APS" className={`${styles.sessionCard} rounded-[2rem] border border-white/80 bg-[#FFFDF8] p-5 text-academy-ink sm:p-6 lg:p-7`}>
     <div data-session-grid className="grid gap-5">
       <div data-session-overview>
         <div className="flex flex-wrap items-center gap-2">
           <span className="rounded-full bg-blue-50 px-3 py-1.5 text-[.62rem] font-black uppercase tracking-[.16em] text-blue-800 ring-1 ring-blue-200">Prochaine session</span>
-          <span className={`rounded-full border px-3 py-1.5 text-[.68rem] font-black ${seatAvailability.badgeClassName}`}>{seatAvailability.label}</span>
+          {seatAvailability && <span className={`rounded-full border px-3 py-1.5 text-[.68rem] font-black ${seatAvailability.badgeClassName}`}>{seatAvailability.label}</span>}
         </div>
-        <h2 className={`${styles.sessionDate} mt-4 text-3xl font-black tracking-[-.04em] sm:text-4xl`}>{formatDate(session?.startDate, true)} <span className="text-yellow-600">→</span><br />{formatDate(session?.endDate, true)}</h2>
-        <p className="mt-2 text-sm font-extrabold text-academy-muted">Examen final le {formatDate(session?.examDate, true)}</p>
+        <h2 className={`${styles.sessionDate} mt-4 text-3xl font-black tracking-[-.04em] sm:text-4xl`}>{session ? <>{formatDate(session.startDate, true)} <span className="text-yellow-600">→</span><br />{formatDate(session.endDate, true)}</> : 'Dates à venir'}</h2>
+        {session?.examDate && <p className="mt-2 text-sm font-extrabold text-academy-muted">Examen final le {formatDate(session.examDate, true)}</p>}
         <p className={styles.sessionApproval}>Agrément ADEF n° 8320032701</p>
       </div>
       <ApsTrainingSummary location={String(session?.location || 'Puget-sur-Argens').replace(/\s*\/\s*(?=Côte d[’']Azur)/g, ' · ')} />
       <div data-session-actions>
         <p className={styles.sessionPrice}><span>Tarif de la session</span><strong>{priceLabel(session?.priceLabel)}</strong></p>
-        <CTA href={sessionHref()} variant={full ? 'light' : 'blue'} className="w-full">{full ? 'Être alerté de la prochaine session' : 'Réserver ma place →'}</CTA>
+        <CTA href={session ? sessionHref() : '/contact?formation=aps'} variant={full ? 'light' : 'blue'} className="w-full">{!session ? 'Me renseigner sur les prochaines dates' : full ? 'Être alerté de la prochaine session' : 'Réserver ma place →'}</CTA>
+        {session && <SessionCalendarLink session={session} />}
         <p className="mt-3 text-center text-xs font-bold text-academy-muted">Un conseiller vérifie votre dossier avant validation.</p>
         <CompactAssistant />
       </div>

@@ -1,3 +1,4 @@
+import { programmeIllustrations } from '@/data/programme-illustrations';
 import { TrainingPracticeCards, TrainingPracticeArtwork } from '@/components/TrainingPracticeCards';
 import { despArtwork } from '@/data/manualIllustrations';
 import Image from 'next/image';
@@ -169,7 +170,7 @@ export default async function DespInitialPage(){
           <TrainingProgramExplorer idPrefix="desp-programme" menuTitle="Les cinq axes du programme" tabListLabel="Axes du DESP initial"
             nextLabel="Axe suivant" restartLabel="Revenir au premier axe" hours="245" overview="Une formation hybride" subtitle="7 semaines"
             facts={[['À distance', '175 heures'], ['En présentiel', '70 heures'], ['Certification', despInitialAdminData.rncpCode]]}
-            units={programAxes.map(([title, items], index) => ({ number: String(index + 1).padStart(2, '0'), title, items, delivery: 'Parcours DESP initial' }))} />
+            units={programAxes.map(([title, items], index) => ({ number: String(index + 1).padStart(2, '0'), title, items, illustration: programmeIllustrations['desp-initial'][index], delivery: 'Parcours DESP initial' }))} />
         </TrainingReferenceSection>
       }
       format={

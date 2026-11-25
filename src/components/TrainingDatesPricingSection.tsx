@@ -6,6 +6,7 @@ import { formatTrainingPrice } from '@/lib/training-price';
 
 export type TrainingDatesPricingSession = {
   id?: string | number | null;
+  training?: { slug?: string; name?: string } | null;
   title?: string | null;
   startDate?: string | Date | null;
   endDate?: string | Date | null;
@@ -176,6 +177,7 @@ function serializeSession(
 ): TrainingSessionCardItem {
   return {
     id: session.id,
+    training: session.training,
     title: session.title,
     startDate: serializeDate(session.startDate),
     endDate: serializeDate(session.endDate),

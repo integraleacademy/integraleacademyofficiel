@@ -20,6 +20,26 @@ type PreviewFormation = {
   sessions: PreviewSession[];
 };
 
+const mainFormations = new Set<PlanningFormationKey>(['aps', 'a3p', 'director', 'ssiap', 'vtc']);
+
+export function isMainPlanningFormation(formation: { key: PlanningFormationKey }) {
+  return mainFormations.has(formation.key);
+}
+
+export function OtherPlanningFormations({ formations, onChoose }: {
+  formations: readonly { key: PlanningFormationKey; label: string }[];
+  onChoose: (key: PlanningFormationKey) => void;
+}) {
+  return <details className={styles.otherFormations}>
+    <summary>Autres formations</summary>
+    <div>{formations.filter(formation => !isMainPlanningFormation(formation)).map(formation =>
+      <a key={formation.key} href={`/planning?formation=${formation.key}&dates=toutes#sessions`}
+        onClick={event => { if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return; event.preventDefault(); onChoose(formation.key); }}>
+        {formation.label}
+      </a>)}</div>
+  </details>;
+}
+
 function Arrow({ diagonal = false }: { diagonal?: boolean }) {
   return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={diagonal ? 'M6 18 18 6M6 6h12v12' : 'M5 12h14m-6-6 6 6-6 6'} /></svg>;
 }
@@ -81,15 +101,16 @@ export function PlanningPreview({ formations, initialFormation, initialSsiapCour
         </form>}
       </div>
       <div className={styles.previewPanel}>
-        {!formation ? (
+        {!formation ? (<>
           <form className={styles.previewChoices} action="/planning#prochaine-session" method="get">
-            {formations.map(item => <button key={item.key} type="submit" name="formation" value={item.key} onClick={event => { event.preventDefault(); setFormationKey(item.key); focusHeading(); }}>
+            {formations.filter(isMainPlanningFormation).map(item => <button key={item.key} type="submit" name="formation" value={item.key} onClick={event => { event.preventDefault(); setFormationKey(item.key); focusHeading(); }}>
               <span><Image src={item.image} alt="" width={600} height={400} style={{ objectPosition: item.key === 'director' ? 'right center' : undefined }} sizes="(min-width: 1200px) 18vw, (min-width: 600px) 210px, 45vw" priority /></span>
               <strong>{item.label}{item.previewDetail && <small>{item.previewDetail}</small>}</strong>
               <i><Arrow diagonal /></i>
             </button>)}
           </form>
-        ) : needsLocation ? (
+          <OtherPlanningFormations formations={formations} onChoose={key => { setFormationKey(key); focusHeading(); }} />
+        </>) : needsLocation ? (
           <form action="/planning#prochaine-session" method="get">
             <input type="hidden" name="formation" value="director" />
             <DirectorLocationChoices compact sessions={formation.sessions} onChoose={key => { setLocationKey(key); focusHeading(); }} />

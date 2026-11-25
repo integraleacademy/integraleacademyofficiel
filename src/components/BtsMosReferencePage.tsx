@@ -1,5 +1,4 @@
-import { SessionCalendarLink } from './SessionCalendarLink';
-import { septemberId } from '@/data/admissions';
+import { btsProgrammeIllustrations } from '@/data/programme-illustrations';
 import { ADMISSIONS_URL } from '@/data/admissions';
 import { CourseBrochureCard } from '@/components/CourseBrochureCard';
 import Image from 'next/image';
@@ -183,7 +182,7 @@ export function BtsMosReferencePage() {
       </div>
     </ApsFacilitiesSections>
 
-    <div className="page-container flex flex-wrap items-center justify-between gap-3 py-4"><strong>Prochaine rentrée · Septembre 2027</strong><SessionCalendarLink id={septemberId('bts-mos')} /></div>
+    <div className="page-container flex flex-wrap items-center justify-between gap-3 py-4"><strong>Prochaine rentrée · Septembre 2027</strong></div>
       <CourseBrochureCard course="mos" />
     <section id="programme" className={`${styles.section} ${styles.program}`}>
       <div id="guide-complet" className={styles.container}>
@@ -195,8 +194,8 @@ export function BtsMosReferencePage() {
           menuTitle="Explorez le programme" tabListLabel="Les enseignements du programme BTS MOS"
           illustration={btsMosArtwork.equipment}
           units={[
-            ...course.competencyBlocks.map((block, index) => ({ number: `Bloc ${index + 1}`, title: block.title, items: block.items, delivery: 'Enseignement professionnel · cours, cas pratiques et expérience en entreprise' })),
-            ...generalSubjects.map((subject, index) => ({ number: `Gén. ${index + 1}`, title: subject.title, items: subject.items, delivery: 'Enseignement général · en présentiel ou en live à distance' })),
+            ...course.competencyBlocks.map((block, index) => ({ number: `Bloc ${index + 1}`, illustration: btsProgrammeIllustrations.mos[index], title: block.title, items: block.items, delivery: 'Enseignement professionnel · cours, cas pratiques et expérience en entreprise' })),
+            ...generalSubjects.map((subject, index) => ({ number: `Gén. ${index + 1}`, illustration: btsProgrammeIllustrations.mos[course.competencyBlocks.length + index], title: subject.title, items: subject.items, delivery: 'Enseignement général · en présentiel ou en live à distance' })),
           ]}
           nextLabel="Enseignement suivant" restartLabel="Revenir au premier bloc"
         />

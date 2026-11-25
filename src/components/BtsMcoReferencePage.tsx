@@ -1,5 +1,4 @@
-import { SessionCalendarLink } from './SessionCalendarLink';
-import { septemberId } from '@/data/admissions';
+import { BtsProgramme } from '@/components/BtsProgramme';
 import { ADMISSIONS_URL } from '@/data/admissions';
 import { CourseTeamBanner } from '@/components/CourseTeamBanner';
 import { CourseBrochureCard } from '@/components/CourseBrochureCard';
@@ -436,7 +435,7 @@ export function BtsMcoReferencePage() {
         </article>
       </Section>
 
-      <div className="page-container flex flex-wrap items-center justify-between gap-3 py-4"><strong>Prochaine rentrée · Septembre 2027</strong><SessionCalendarLink id={septemberId('bts-mco')} /></div>
+      <div className="page-container flex flex-wrap items-center justify-between gap-3 py-4"><strong>Prochaine rentrée · Septembre 2027</strong></div>
       <CourseBrochureCard course="mco" />
       <Section
         id="programme"
@@ -444,18 +443,7 @@ export function BtsMcoReferencePage() {
         title={<>Un programme solide. Des compétences utiles dès demain</>}
         intro={<>Des matières générales pour prendre de la hauteur et quatre blocs professionnels directement liés au commerce, à la gestion et au management.</>}
       >
-        <div className="grid gap-3 lg:grid-cols-2">
-          {program.map(([number, title, text], index) => (
-            <details key={number} open={index === 0} className="group rounded-[1.5rem] border border-academy-line bg-[#FFFDF8] p-5 shadow-soft">
-              <summary className="flex cursor-pointer list-none items-center gap-3">
-                <span className={`grid h-10 w-10 shrink-0 place-items-center rounded-full text-xs font-black ${index >= 3 ? 'bg-[#0D1725] text-bts-200' : 'bg-academy-bg text-academy-ink'}`}>{number}</span>
-                <strong className="min-w-0 flex-1">{title}</strong>
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-bts-200 font-black transition group-open:rotate-45">+</span>
-              </summary>
-              <p className="ml-[3.25rem] mt-4 text-sm leading-6 text-academy-muted">{text}</p>
-            </details>
-          ))}
-        </div>
+        <BtsProgramme course="mco" subjects={program} />
         <div className="mt-7 grid gap-5 rounded-[2rem] bg-[#0D1725] p-6 text-white lg:grid-cols-[.72fr_1.28fr] lg:p-8">
           <div><Eyebrow light>Validation</Eyebrow><h3 className="mt-4 text-3xl font-black">Un diplôme national de niveau 5</h3><p className="mt-4 leading-7 text-white/62">Le diplôme est obtenu avec une moyenne supérieure ou égale à 10/20 sur l’ensemble des épreuves nationales, dossiers professionnels et évaluations prévues par le référentiel.</p></div>
           <div className="grid gap-3 sm:grid-cols-3">

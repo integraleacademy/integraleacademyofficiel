@@ -1,3 +1,4 @@
+import { programmeIllustrations, programmeOverviews } from '@/data/programme-illustrations';
 import { CourseBrochureCard } from '@/components/CourseBrochureCard';
 import { CallNotification } from '@/components/CallNotification';
 import { TrainingCourseSections, TrainingReferencePage, TrainingReferenceHero, TrainingReferenceSection as Section, TrainingReferenceCampus, TrainingReferenceContact, TrainingReferenceMobileBar } from '@/components/TrainingReferenceLayout';
@@ -236,31 +237,23 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
       campus={<TrainingReferenceCampus editorialId="ecole-a3p" groupLabel="Par session A3P" />}
       brochure={<CourseBrochureCard course="a3p-apr" />}
       program={
-        <Section id="programme" label="04 — Programme" title={<>328 heures pour devenir <em>opérationnel</em></>} intro="Le programme réglementaire comporte neuf unités de valeur : 41 heures de socle de base et 287 heures de spécialité A3P, soit 328 heures hors examen dont 92 heures et 50 minutes de pratique.">
+        <Section id="programme" label="04 — Programme" title={<>328 heures pour devenir <em>opérationnel</em></>} intro="Les neuf unités de valeur comprennent 41 h de socle de base et 287 h de spécialité A3P. Sur ces 328 heures hors examen, 92 h 50 sont consacrées à la pratique.">
           <TrainingProgramDownload href={a3pConfig.programPdfUrl} course="A3P" theme="green" detailLabel="(PDF) ↗" className="mb-6 w-full sm:w-auto" />
-          <TrainingProgramExplorer
-            idPrefix="a3p-uv"
-            units={a3pProgram.map(item => ({ number: item.code, title: item.title, duration: item.duration, delivery: item.practice, description: item.description, items: item.items }))}
-            menuTitle="Voir le détail des 9 unités de valeur réglementaires"
-            tabListLabel="Voir le détail des 9 unités de valeur réglementaires"
-          >
-            <div className={experience.programOverview}>
-              <div className={experience.programSummary}>
-                <Label>Formation réglementée</Label>
-                <div className={experience.programHours}><strong>328 <span>h</span></strong><p>Hors examen<br /><span>100 % en présentiel</span></p></div>
-                <ul className={styles.programFacts}>
-                  <li>✓ 41 h de socle de base</li><li>✓ 287 h de spécialité A3P</li>
-                  <li>✓ 92 h 50 de pratique</li><li>✓ 9 unités de valeur</li><li>✓ Mission complète et jury</li>
-                </ul>
-              </div>
-              <ManualArtwork illustration={{ src: '/images/a3p/manuel/couverture-a3p.webp', alt: 'Couverture du manuel A3P' }} natural sizes="(max-width: 550px) 80vw, 260px" />
-            </div>
+          <TrainingProgramExplorer idPrefix="a3p-uv" hours="328" overview="9 unités de valeur"
+            subtitle="Formation réglementée · 100 % en présentiel · hors examen" illustration={programmeOverviews.a3p}
+            facts={[[ 'Socle de base', '41 h' ], [ 'Spécialité A3P', '287 h' ], [ 'Pratique au total', '92 h 50' ]]}
+            menuTitle="Explorez les 9 UV" tabListLabel="Les 9 UV du programme A3P"
+            nextLabel="UV suivante" restartLabel="Revenir à la première UV"
+            units={a3pProgram.map((item, index) => ({
+              number: item.code, title: item.title, duration: item.duration, delivery: item.practice,
+              description: item.description, items: item.items, illustration: programmeIllustrations.a3p[index],
+            }))} />
             <ol className={styles.phases}>
               {programPhases.map(([number, title, body]) => <li key={number}>
                 <span>{number}</span><h3>{title}</h3><p>{body}</p>
               </li>)}
             </ol>
-          </TrainingProgramExplorer>
+
         </Section>
       }
       pack={<IntegraleWelcomePack course="a3p" />}
@@ -294,7 +287,7 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
         <TrainingDatesPricingSection
           compact showDeliveryPeriods deliveryMode="in-person" initialSessionLimit={2}
           showSessionTitle showSessionPrice={false} underlineDisclosure={false}
-          inPersonPeriodFallback="328 h à l’école · calendrier détaillé à confirmer"
+          inPersonPeriodFallback="328 h à l’école · dates de présence à confirmer"
           priceYear={2027}
           id="dates-tarifs"
           eyebrow="08 — Dates & tarifs"

@@ -482,3 +482,9 @@
 .intakeActions > a:first-child { background:#14233a; color:white; border-radius:2rem; padding:.7rem 1.2rem; font-weight:700; }
 .intakeActions > a:nth-child(2) { text-decoration:underline; text-underline-offset:3px; }
 .intakeMonth { position:absolute; top:calc(50% - 6px); height:12px; border:2px dashed #8c671a; border-radius:5px; background:#f9efd8; }
+
+.otherFormations { margin-top: .9rem; font-size: .85rem; }
+.otherFormations summary { width: fit-content; padding: .6rem 0; cursor: pointer; font-weight: 700; }
+.otherFormations > div { display: flex; flex-wrap: wrap; gap: .45rem .7rem; padding-block: .45rem; }
+.otherFormations a { display: inline-flex; align-items: center; min-height: 42px; padding: .45rem .85rem; border: 1px solid currentColor; border-radius: 999px; text-decoration: none; }
+.otherFormations a:hover, .otherFormations a:focus-visible { text-decoration: underline; }

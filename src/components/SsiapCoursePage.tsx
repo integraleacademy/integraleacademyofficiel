@@ -1,3 +1,5 @@
+import { TrainingProgramExplorer } from './TrainingProgramExplorer';
+import { programmeIllustrations } from '@/data/programme-illustrations';
 import { SsiapLeadershipPage } from './SsiapLeadershipPage';
 import { CourseBrochureCard } from '@/components/CourseBrochureCard';
 import type { ReactNode } from 'react';
@@ -258,18 +260,15 @@ export function SsiapCoursePage({ config, sessions = [], datesSection }: {
 
       <CourseBrochureCard course={config.slug} />
       <Section id="programme" eyebrow="Programme réglementaire" title={`${config.duration} pour maîtriser votre fonction`} intro={config.durationDetail}>
-        <div className="space-y-3">
-          {config.program.map((item, index) => (
-            <details key={item.title} open={index === 0} className="group rounded-[1.6rem] border border-academy-line bg-[#FFFDF8] p-5 shadow-soft">
-              <summary className="flex cursor-pointer list-none items-center gap-4">
-                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-[#0D1725] font-black text-red-300">{String(index + 1).padStart(2, '0')}</span>
-                <span className="min-w-0 flex-1"><strong className="block text-lg font-black sm:text-xl">{item.title}</strong><small className="font-bold text-academy-muted">{item.duration}</small></span>
-                <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-red-600 font-black text-white transition group-open:rotate-45">+</span>
-              </summary>
-              <p className="mt-5 border-t border-academy-line pt-5 leading-7 text-academy-muted sm:ml-16">{item.text}</p>
-            </details>
-          ))}
-        </div>
+        <TrainingProgramExplorer idPrefix="ssiap-maintien" hours={String(config.program.length)} unitLabel=""
+          overview="parcours de formation continue" subtitle="Maintien et actualisation des compétences"
+          facts={[[ 'Niveaux', 'SSIAP 1 à 3' ], [ 'Organisation', 'En présentiel' ]]}
+          menuTitle="Choisir un parcours" tabListLabel="Programmes de recyclage et remise à niveau SSIAP"
+          nextLabel="Parcours suivant" restartLabel="Revenir au premier parcours"
+          units={config.program.map((item, index) => ({ number: String(index + 1).padStart(2, '0'),
+            title: item.title, description: item.text, duration: item.duration, delivery: 'Formation continue',
+            illustration: programmeIllustrations['ssiap-maintien'][index],
+          }))} />
         <div className="mt-8 rounded-[1.7rem] border border-academy-line bg-[#EFE7D9] p-5">
           <p className="font-black">Référentiel officiel</p>
           <p className="mt-2 text-sm font-semibold leading-6 text-academy-muted">Programme présenté conformément à l’arrêté du 2 mai 2005 modifié relatif aux services de sécurité incendie des ERP et des IGH.</p>

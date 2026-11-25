@@ -1,3 +1,4 @@
+import { programmeIllustrations, programmeOverviews } from '@/data/programme-illustrations';
 import { CourseBrochureCard } from '@/components/CourseBrochureCard';
 import type { ReactNode } from 'react';
 import { TrainingCourseSections, TrainingReferencePage, TrainingReferenceHero, TrainingReferenceSection as Section, TrainingReferenceMissions, TrainingReferenceCampus, TrainingReferenceContact, TrainingReferenceMobileBar } from '@/components/TrainingReferenceLayout';
@@ -200,7 +201,7 @@ export function SstReferencePage({ sessions }: { sessions: TrainingDatesPricingS
           <TrainingProgramExplorer idPrefix="sst-programme" menuTitle="Programme des deux jours" tabListLabel="Jours de formation SST"
             nextLabel="Jour suivant" restartLabel="Revenir au premier jour" hours="14" overview="Deux jours de formation" subtitle="100 % présentiel"
             facts={[['Groupe', '4 à 10'], ['Format', 'Mises en situation'], ['Centre', 'Puget-sur-Argens']]}
-            units={days.map(day => ({ number: day.number, title: day.title, items: day.items, delivery: 'Formation en présentiel' }))} />
+            illustration={programmeOverviews.sst} units={days.map((day, index) => ({ illustration: programmeIllustrations.sst[index], number: day.number, title: day.title, items: day.items, delivery: 'Formation en présentiel' }))} />
         </Section>
       }
       format={

@@ -1,3 +1,4 @@
+import { MASTER_CAMPUSES } from './locations';
 import { certificationProjects, type CertificationProject } from './certification-projects';
 import type { TrainingProgramUnit } from '@/components/TrainingProgramExplorer';
 
@@ -8,7 +9,7 @@ export type CourseContent = {
   mark: string;
   tagline: string;
   level: string;
-  venue?: 'Paris' | 'Puget-sur-Argens';
+  venue?: typeof MASTER_CAMPUSES | 'Puget-sur-Argens';
   missions: readonly Entry[];
   practice: readonly CaseStudy[];
 
@@ -33,6 +34,8 @@ const eirc: CourseContent = {
   missions: [
     ['Vérifier un signalement', 'L’analyste distingue les faits observés, la qualité de leurs sources et les points qui demandent encore une vérification.'],
     ['Éclairer l’équipe de défense', 'Il remet les événements dans l’ordre et explique leur portée aux personnes chargées de protéger l’organisation.'],
+    ['Organiser la veille', 'Définir les sujets à suivre avec les équipes de sécurité, choisir les sources pertinentes et tenir la veille à jour.'],
+    ['Rédiger une note de situation', 'Présenter aux responsables les faits établis, les incertitudes et les points à surveiller pour éclairer leurs décisions.'],
   ],
   practice: [
     example('Recouper deux sources', 'Deux signalements décrivent le même événement. Quelles informations permettent de les rapprocher ?', 'Fiche de veille', ['Source A', 'Alerte horodatée'], ['Source B', 'Compte rendu interne'], ['Conclusion', 'Faits corroborés']),
@@ -54,6 +57,8 @@ const dms: CourseContent = {
   missions: [
     ['Diriger une prestation de sécurité privée', 'Dimensionner l’équipe, calculer le coût des heures et du matériel, puis défendre une offre compatible avec le budget du client.'],
     ['Conseiller l’exploitant en sécurité incendie', 'Lire un plan, étudier les risques et organiser le travail du service de sécurité dans un ERP ou un IGH.'],
+    ['Organiser le travail des équipes', 'Répartir les postes, planifier les remplacements et transmettre aux responsables de site les consignes propres à la prestation.'],
+    ['Suivre la qualité d’une prestation', 'Examiner les comptes rendus avec le client, identifier les écarts au contrat et suivre les actions correctives.'],
   ],
   practice: [
     example('Chiffrer une ronde de nuit', 'Le client ajoute une ronde au contrat. Comment calculer les heures supplémentaires et protéger la marge de la prestation ?', 'Révision du devis', ['Demande', 'Une ronde de nuit'], ['Calcul', 'Heures et coût de revient'], ['Livrable', 'Devis ajusté']),
@@ -77,14 +82,18 @@ const dms: CourseContent = {
 function master(project: CertificationProject): CourseContent {
   const product = project.slug === 'cpiaa';
   return {
-    theme: product ? 'turquoise' : 'violet', mark: project.acronym, level: 'Niveau 7 visé', venue: 'Paris', project,
+    theme: product ? 'turquoise' : 'violet', mark: project.acronym, level: 'Niveau 7 visé', venue: MASTER_CAMPUSES, project,
     tagline: product ? 'Du besoin utilisateur à la feuille de route produit' : 'Du premier essai au suivi d’une application en production',
     missions: product ? [
       ['Comprendre les usages', 'Observer le travail des utilisateurs et déterminer où l’automatisation peut réellement leur faire gagner du temps.'],
       ['Piloter les choix produit', 'Arbitrer entre valeur, faisabilité, risques et effort de réalisation avec les équipes métier et techniques.'],
+    ['Valider un prototype', 'Faire essayer la solution à des utilisateurs, relever les difficultés et traduire leurs retours en améliorations concrètes.'],
+    ['Mesurer l’adoption du produit', 'Définir des indicateurs d’usage et de satisfaction, puis décider des prochaines évolutions avec les équipes.'],
     ] : [
       ['Concevoir une application générative', 'Traduire les besoins du métier en architecture, choisir les composants et documenter les données nécessaires.'],
       ['Tester la fiabilité des réponses', 'Comparer les résultats à une référence, étudier les erreurs puis suivre la qualité après la mise en service.'],
+    ['Préparer les données du projet', 'Sélectionner avec les métiers les documents de référence, vérifier leur qualité et documenter les conditions de leur utilisation.'],
+    ['Suivre l’application en production', 'Observer la qualité des réponses, les délais et les coûts au fil des versions pour planifier les ajustements nécessaires.'],
     ],
     practice: product ? [
       example('Tester un prototype avec un utilisateur', 'Un service client veut trier ses demandes. Qu’observer pendant le test pour savoir si le prototype l’aide vraiment ?', 'Protocole de test', ['Tâche', 'Classer une demande'], ['Observation', 'Temps et erreurs'], ['Décision', 'Adapter le prototype']),
@@ -110,7 +119,12 @@ function titleExam(time: string, written: Entry, oral: Entry): CourseContent['ex
 
 const payroll = professionalTitle({
   theme: 'green', mark: 'PAIE', level: 'Niveau 5', rncp: '37948', tagline: 'Des heures travaillées au bulletin de salaire',
-  missions: [['Collecter les variables du mois', 'Réunir les relevés d’heures, les absences et les primes avant la clôture.'], ['Contrôler la paie', 'Rapprocher les pièces, expliquer les écarts et vérifier les montants à transmettre.']],
+  missions: [
+    ['Collecter les variables du mois', 'Réunir les relevés d’heures, les absences et les primes avant la clôture.'],
+    ['Contrôler la paie', 'Rapprocher les pièces, expliquer les écarts et vérifier les montants à transmettre.'],
+    ['Préparer les déclarations sociales', 'Vérifier la cohérence des données issues de la paie et préparer les éléments déclaratifs dans les délais du mois.'],
+    ['Expliquer un bulletin de salaire', 'Répondre aux questions sur les heures, les congés et les retenues en s’appuyant sur les pièces du dossier.'],
+  ],
   practice: [
     example('Intégrer une absence', 'Un relevé d’heures et une absence arrivent avant la clôture. Identifiez le justificatif et la période concernés.', 'Variables du mois', ['Pièce', 'Relevé de présence'], ['Événement', 'Absence à justifier'], ['Contrôle', 'Période de paie']),
     example('Expliquer un écart de net', 'Un salarié constate un écart entre deux bulletins. Repérez la ligne et le justificatif qui l’expliquent.', 'Contrôle du bulletin', ['Comparer', 'Deux périodes'], ['Identifier', 'Rubrique modifiée'], ['Répondre', 'Explication au salarié']),
@@ -123,7 +137,12 @@ const payroll = professionalTitle({
 
 const hr = professionalTitle({
   theme: 'violet', mark: 'RH', level: 'Niveau 5', rncp: '41366', tagline: 'Accompagner les salariés tout au long de leur parcours',
-  missions: [['Suivre les dossiers du personnel', 'Fiabiliser les informations, les échéances et les éléments transmis au service paie.'], ['Accompagner les équipes', 'Préparer l’accueil, suivre les formations et contribuer au recrutement.']],
+  missions: [
+    ['Suivre les dossiers du personnel', 'Fiabiliser les informations, les échéances et les éléments transmis au service paie.'],
+    ['Accompagner les équipes', 'Préparer l’accueil, suivre les formations et contribuer au recrutement.'],
+    ['Organiser les entretiens de recrutement', 'Programmer les échanges, transmettre les convocations et assurer le suivi administratif des candidatures.'],
+    ['Suivre les actions de formation', 'Organiser les inscriptions, recueillir les justificatifs de présence et mettre à jour le suivi des compétences.'],
+  ],
   practice: [
     example('Préparer une arrivée', 'Une salariée rejoint le service lundi. Coordonnez les pièces, les interlocuteurs et le premier rendez-vous.', 'Parcours d’intégration', ['Avant', 'Vérifier les pièces'], ['Jour J', 'Accueil de l’équipe'], ['Suivi', 'Entretien de prise de poste']),
     example('Suivre un besoin de formation', 'Une équipe demande une formation. Organisez le suivi de la demande jusqu’au retour du salarié.', 'Suivi des compétences', ['Demande', 'Besoin du service'], ['Action', 'Inscription et dates'], ['Bilan', 'Retour du salarié']),
@@ -136,7 +155,12 @@ const hr = professionalTitle({
 
 const medical = professionalTitle({
   theme: 'turquoise', mark: 'SAMA', level: 'Niveau 4', rncp: '40800', tagline: 'Accueillir le patient et coordonner son parcours administratif',
-  missions: [['Accueillir et orienter', 'Écouter la demande du patient, vérifier son rendez-vous et l’adresser au professionnel concerné.'], ['Coordonner les dossiers et les agendas', 'Organiser les rendez-vous, les documents et les transmissions en respectant le secret professionnel.']],
+  missions: [
+    ['Accueillir et orienter', 'Écouter la demande du patient, vérifier son rendez-vous et l’adresser au professionnel concerné.'],
+    ['Coordonner les dossiers et les agendas', 'Organiser les rendez-vous, les documents et les transmissions en respectant le secret professionnel.'],
+    ['Mettre en forme les comptes rendus', 'Transcrire et présenter les documents médicaux selon les consignes du service avant leur validation par le professionnel de santé.'],
+    ['Assurer une transmission confidentielle', 'Vérifier le destinataire et transmettre les informations nécessaires à la continuité du parcours du patient.'],
+  ],
   practice: [
     example('Réorganiser un rendez-vous', 'Une consultation est déplacée. Retrouvez le créneau disponible et transmettez les informations pratiques au patient.', 'Agenda de consultation', ['Demande', 'Déplacement de rendez-vous'], ['Vérification', 'Disponibilité du service'], ['Suivi', 'Confirmation au patient']),
     example('Préparer un dossier patient', 'Le praticien attend un document avant la consultation. Vérifiez son rattachement et le destinataire de la transmission.', 'Suivi du dossier', ['Identité', 'Vérification'], ['Pièce', 'Document attendu'], ['Transmission', 'Canal autorisé']),
@@ -149,7 +173,12 @@ const medical = professionalTitle({
 
 const reception = professionalTitle({
   theme: 'orange', mark: 'CAGA', level: 'Niveau 4', rncp: '41239', tagline: 'Le premier contact des visiteurs, le relais de l’équipe',
-  missions: [['Orienter une demande', 'Identifier le besoin en face à face ou au téléphone et trouver le bon interlocuteur.'], ['Assurer le suivi administratif', 'Tracer les demandes et préparer les documents utiles à leur traitement.']],
+  missions: [
+    ['Orienter une demande', 'Identifier le besoin en face à face ou au téléphone et trouver le bon interlocuteur.'],
+    ['Assurer le suivi administratif', 'Tracer les demandes et préparer les documents utiles à leur traitement.'],
+    ['Organiser les rendez-vous', 'Vérifier les disponibilités du service, coordonner les créneaux et confirmer les modalités de venue aux visiteurs.'],
+    ['Distribuer le courrier', 'Enregistrer les plis et les documents entrants, les orienter vers les services concernés et suivre leur réception.'],
+  ],
   practice: [
     example('Accueillir deux demandes', 'Un visiteur se présente pendant un appel. Comment traiter chaque demande et préserver la confidentialité ?', 'Registre d’accueil', ['Visiteur', 'Rendez-vous à vérifier'], ['Appel', 'Demande à noter'], ['Relais', 'Service compétent']),
     example('Suivre un courrier', 'Un document doit être transmis et traité avant une échéance. Organisez son parcours jusqu’à la réponse.', 'Suivi du courrier', ['Réception', 'Date de remise'], ['Attribution', 'Destinataire'], ['Clôture', 'Réponse consignée']),
@@ -162,7 +191,12 @@ const reception = professionalTitle({
 
 const monitoring = professionalTitle({
   theme: 'blue', mark: 'OVT', level: 'Niveau 4', rncp: '37879', tagline: 'Observer, vérifier et transmettre depuis le poste de surveillance',
-  missions: [['Observer les images', 'Qualifier une situation visible à l’écran et consigner les faits utiles.'], ['Coordonner la réponse à une alerte', 'Appliquer les consignes, informer l’interlocuteur habilité et assurer une traçabilité précise.']],
+  missions: [
+    ['Observer les images', 'Qualifier une situation visible à l’écran et consigner les faits utiles.'],
+    ['Coordonner la réponse à une alerte', 'Appliquer les consignes, informer l’interlocuteur habilité et assurer une traçabilité précise.'],
+    ['Préparer la relève', 'Consigner les événements dans la main courante et transmettre au collègue de relève les observations à suivre.'],
+    ['Signaler une anomalie technique', 'Repérer un défaut d’image ou de transmission et informer le service habilité pour que le matériel soit vérifié.'],
+  ],
   practice: [
     example('Rédiger une main courante', 'Une situation inhabituelle apparaît à l’écran. Décrivez ce qui est observé et horodatez la transmission.', 'Main courante', ['Heure', 'Observation datée'], ['Faits', 'Description objective'], ['Transmission', 'Interlocuteur informé']),
     example('Passer une consigne', 'Une alerte est toujours en cours à la relève. Préparez les informations indispensables à la continuité du suivi.', 'Fiche de relève', ['État', 'Alerte en cours'], ['Action', 'Vérification consignée'], ['Relève', 'Suivi à poursuivre']),

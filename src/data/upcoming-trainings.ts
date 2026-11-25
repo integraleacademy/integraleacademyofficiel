@@ -1,3 +1,4 @@
+import { MASTER_CAMPUSES } from './locations';
 import { RNCP_REVIEW_STATUS } from './certification-status';
 
 export const PROFESSIONAL_TITLE_INTAKE = 'À partir de septembre 2027';
@@ -53,7 +54,7 @@ export const upcomingFamilies: UpcomingFamily[] = [
     ],
   },
   {
-    id: 'masteres', label: 'Mastères', singular: 'Mastère', level: 'Bac +5', location: 'Paris',
+    id: 'masteres', label: 'Mastères', singular: 'Mastère', level: 'Bac +5', location: MASTER_CAMPUSES,
     items: [
       {
         anchorId: 'mastere-chef-de-produit-ia', shortTitle: 'Chef de produit', title: 'en intelligence artificielle et automatisation', tabLabel: 'Produit IA',

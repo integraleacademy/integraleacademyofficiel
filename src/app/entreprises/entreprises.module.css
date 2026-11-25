@@ -171,13 +171,6 @@
 .programBlock summary > b, .faqList summary > b { flex-shrink: 0; display: grid; place-items: center; width: 33px; height: 33px; border-radius: 50%; font-size: 23px; font-weight: 400; color: var(--device,var(--gold)); background: var(--paper); transition: transform .2s ease; }
 .programBlock[open] summary > b, .faqList details[open] summary > b { transform: rotate(45deg); }
 .programContent { border-top: 1px solid var(--line); padding: 26px; }
-.programContent > p { color: var(--muted); font-size: 14px; }
-.programGrid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 18px; margin-top: 23px; }
-.programGrid article { padding: 22px; border-radius: 10px; background: var(--green-bg); }
-.programGrid article > div { display: flex; justify-content: space-between; align-items: center; color: var(--device); }
-.programGrid article > div > strong { font-size: 15px; }
-.programGrid h4 { font-size: 15px; font-weight: 600; margin-top: 14px; }
-.programGrid p { color: var(--muted); margin-top: 9px; font-size: 13px; line-height: 1.75; }
 .sessionsBar { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
 .sessionsBar > span { display: inline-flex; gap: 10px; align-items: center; font-size: 13px; font-weight: 600; margin-right: 10px; }
 .sessionsBar > span svg { color: var(--device); }
@@ -280,7 +273,7 @@
   .qualificationGrid { grid-template-columns: 1fr; }.qualificationGrid article { padding: 20px; }.qualificationGrid strong { font-size: 15px; }
   .timeline { gap: 15px; }.timeline strong { font-size: 14px; }.timeline small,.timeline p { font-size: 11px; }
   .employerJourney { padding-left: 20px; }.employerJourney li { font-size: 12px; }
-  .programGrid { grid-template-columns: repeat(2,minmax(0,1fr)); }.sectionBottom { align-items: flex-start; flex-direction: column; gap: 20px; }
+  .sectionBottom { align-items: flex-start; flex-direction: column; gap: 20px; }
   .supportGrid { grid-template-columns: repeat(2,minmax(0,1fr)); }.catalogGrid { grid-template-columns: repeat(2,minmax(0,1fr)); }.partnerCard { padding: 30px; gap: 30px; }
   .faqLayout { grid-template-columns: 1fr 1fr; gap: 28px; }.diagnosticCard { padding: 25px; }.diagnosticCard h3 { font-size: 33px; }
   .btsMetrics strong { font-size: 29px; }
@@ -317,7 +310,7 @@
   .sessionNote { align-items: flex-start; gap: 12px; }.sessionNote > svg { margin-top: 3px; }.sessionNote p { font-size: 12px; }.sessionNote a { margin-left: 0; font-size: 13px; }
   .employerJourney { border-left: 0; padding: 0; }.employerJourney li { font-size: 14px; }.employerJourney ul { gap: 15px; }
   .poeiMetrics,.btsMetrics { grid-template-columns: 1fr 1fr; gap: 26px 0; padding: 25px 0; margin-top: 30px; }.poeiMetrics div,.btsMetrics div { padding: 0 10px; }.poeiMetrics div:nth-child(3),.btsMetrics div:nth-child(3) { border-left: 0; }.poeiMetrics strong,.btsMetrics strong { font-size: 33px; }.poeiMetrics span,.btsMetrics span { font-size: 11px; }
-  .programBlock > summary { padding: 19px 17px; gap: 8px; }.programBlock summary > span { gap: 10px; }.programBlock summary strong { font-size: 14px; }.programBlock summary small { font-size: 11px; }.programBlock summary > b { width: 28px; height: 28px; }.programBlock summary svg { width: 20px; height: 20px; }.programContent { padding: 20px 16px; }.programContent > p { font-size: 13px; }.programGrid { grid-template-columns: 1fr; gap: 13px; }.programGrid article { padding: 20px; }
+  .programBlock > summary { padding: 19px 17px; gap: 8px; }.programBlock summary > span { gap: 10px; }.programBlock summary strong { font-size: 14px; }.programBlock summary small { font-size: 11px; }.programBlock summary > b { width: 28px; height: 28px; }.programBlock summary svg { width: 20px; height: 20px; }.programContent { padding: 20px 16px; }
   .sessionsBar { display: grid; gap: 10px; }.sessionsBar > span { margin: 0 0 4px; }.sessionsBar strong { font-size: 13px; padding: 12px 15px; }
   .sectionBottom { gap: 21px; margin-top: 20px; }.deviceButton { width: 100%; font-size: 13px; padding: 13px 15px; }
   .yearsGrid { grid-template-columns: 1fr; gap: 17px; }.yearsGrid article { padding: 24px; }.yearsGrid h3 { font-size: 33px; }.costHypotheses { grid-template-columns: 1fr; gap: 23px; }

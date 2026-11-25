@@ -47,16 +47,16 @@
 .journeyCard ul { display: grid; }
 .journeyCard li { padding: .65rem 0; border-top: 1px solid #dfd6c8; font-size: 1rem; line-height: 1.45; }
 .journeyCard a { justify-self: start; color: var(--course-accent); font-weight: 750; text-decoration: underline; text-underline-offset: .22em; }
-.journeyCard a:focus-visible, .paris a:focus-visible, .sheetHead:focus-visible, .calendar summary:focus-visible { outline: 3px solid currentColor; outline-offset: 3px; border-radius: .25rem; }
-.paris, .outcomes { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: clamp(1.2rem,3vw,3rem); }
-.paris { align-items: center; overflow: hidden; border: 1px solid #dbd3c5; border-radius: 1.6rem; background: #fffdf9; }
-.paris address { display: grid; align-content: center; gap: .55rem; min-height: 100%; padding: clamp(1.5rem,3.2vw,2.75rem); background: #172b3a; color: #fffaf0; font-style: normal; }
-.paris address .kicker { color: var(--course-pale); }
-.paris address strong { font-size: clamp(1.8rem,3.2vw,3rem); line-height: 1.08; font-weight: 750; letter-spacing: -.045em; }
-.paris > div { padding: 1.5rem; }
-.paris h3, .outcomes h3, .calendar h3 { font-size: clamp(1.35rem,2vw,2rem); font-weight: 800; letter-spacing: -.045em; line-height: 1.15; }
-.paris p, .outcomes p, .calendar p { margin-top: .8rem; line-height: 1.65; }
-.paris a, .outcomes a { display: inline-block; margin-top: 1rem; color: var(--course-accent); font-weight: 700; text-decoration: underline; text-underline-offset: .2em; }
+.journeyCard a:focus-visible, .campuses a:focus-visible, .sheetHead:focus-visible, .calendar summary:focus-visible { outline: 3px solid currentColor; outline-offset: 3px; border-radius: .25rem; }
+.campuses, .outcomes { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: clamp(1.2rem,3vw,3rem); }
+.campuses { gap: 1px; align-items: stretch; overflow: hidden; border: 1px solid #dbd3c5; border-radius: 1.6rem; background: #fffdf9; }
+.campuses address { display: grid; align-content: center; gap: .55rem; min-height: 100%; padding: clamp(1.5rem,3.2vw,2.75rem); background: #172b3a; color: #fffaf0; font-style: normal; }
+.campuses address .kicker { color: var(--course-pale); }
+.campuses address strong { font-size: clamp(1.8rem,3.2vw,3rem); line-height: 1.08; font-weight: 750; letter-spacing: -.045em; }
+.campuses h3, .outcomes h3, .calendar h3 { font-size: clamp(1.35rem,2vw,2rem); font-weight: 800; letter-spacing: -.045em; line-height: 1.15; }
+.campuses p, .outcomes p, .calendar p { margin-top: .8rem; line-height: 1.65; }
+.campuses a, .outcomes a { display: inline-block; margin-top: 1rem; color: var(--course-accent); font-weight: 700; text-decoration: underline; text-underline-offset: .2em; }
+.campuses address a { color: var(--course-pale); }
 .caseSheet { width: 100%; margin-top: .85rem; padding: .4rem 1rem; border-radius: .8rem; color: #1f2c36; background: #fffaf1; }
 .sheetHead { display: flex; align-items: center; justify-content: space-between; gap: .6rem; padding: .6rem 0; font-size: 1rem; font-weight: 750; cursor: pointer; }
 .caseSheet[open] .sheetHead span { transform: rotate(45deg); }
@@ -89,10 +89,10 @@
   .summaryAction { grid-column: 1/-1; justify-content: start; text-align: left; }
 }
 @media (max-width: 650px) {
-  .course .summary, .paris, .outcomes, .calendar li { grid-template-columns: minmax(0,1fr); }
+  .course .summary, .campuses, .outcomes, .calendar li { grid-template-columns: minmax(0,1fr); }
   .summaryAction { justify-content: stretch; }
   .calendar li { gap: .2rem; }
-  .paris { gap: 0; }
+  .campuses { gap: 1px; }
 }
 
 @media (max-width: 380px) {

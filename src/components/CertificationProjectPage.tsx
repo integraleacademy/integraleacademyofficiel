@@ -1,3 +1,4 @@
+import { programmeIllustrations } from '@/data/programme-illustrations';
 import { RNCP_REVIEW_STATUS } from '@/data/certification-status';
 import type { Metadata } from 'next';
 import Image from 'next/image';
@@ -55,6 +56,7 @@ const presentation = {
     missions: [
       ['Comprendre les usages', 'Analyser les besoins et les processus pour choisir les cas d’usage pertinents.'],
       ['Donner une direction', 'Construire la proposition de valeur, le modèle économique et la feuille de route.'],
+      ['Tester un prototype', 'Faire essayer une première version aux utilisateurs et traduire leurs retours en améliorations.'],
       ['Mesurer les résultats', 'Suivre l’adoption, la qualité et la valeur du produit pour décider de ses évolutions.'],
     ],
     audiences: ['Professionnels du numérique', 'Chefs de projet', 'Profils marketing et produit', 'Managers en évolution'],
@@ -70,6 +72,7 @@ const presentation = {
     missions: [
       ['Concevoir le système', 'Traduire le besoin métier en architecture et préparer les données nécessaires.'],
       ['Développer et tester', 'Intégrer les modèles, les composants et les interfaces, puis produire des essais reproductibles.'],
+      ['Évaluer les réponses', 'Comparer les réponses produites à des exemples attendus et documenter les limites observées.'],
       ['Maîtriser l’exploitation', 'Surveiller la qualité, résoudre les incidents et organiser les évolutions du système.'],
     ],
     audiences: ['Développeurs', 'Professionnels de la donnée', 'Profils informatique', 'Experts techniques en évolution'],
@@ -82,6 +85,7 @@ export function CertificationProjectPage({ project }: { project: CertificationPr
   const illustration = { src: `/images/certifications/${project.slug}-hero.webp?v=manuel-aps-2`, alt: copy.heroAlt };
   const emailHref = `mailto:ecole@integraleacademy.com?subject=${encodeURIComponent(`Information sur le projet ${project.acronym}`)}`;
   const units = project.blocks.map((block, index) => ({
+    illustration: programmeIllustrations[project.slug === 'cpiaa' ? 'mastere-chef-de-produit-ia' : 'mastere-ingenierie-ia-generative'][index],
     number: block.code,
     title: block.title,
     description: block.summary,
@@ -151,7 +155,7 @@ export function CertificationProjectPage({ project }: { project: CertificationPr
         <div className={styles.accessibility}><span aria-hidden="true">↗</span><div><h3>Accessibilité et handicap</h3><p>Les besoins d’aménagement seront étudiés avec le référent handicap pour adapter les conditions d’accès et d’évaluation, en préservant les compétences et les critères exigés.</p></div><a href={emailHref}>Préparer cet échange →</a></div>
       </Section>
 
-      <TrainingReferenceCampus title="Une école, une équipe, des lieux" description="Découvrez les espaces d’Intégrale Academy à Puget-sur-Argens. L’organisation propre à chaque futur parcours sera précisée avant contractualisation." />
+      <TrainingReferenceCampus title="Une école, une équipe, des lieux" description="Le mastère est proposé à Puget-sur-Argens et à Paris dès septembre 2027. Les photos présentent le campus de Puget-sur-Argens. À Paris, le centre se trouve au 34 rue Poissonnière, à 50 mètres du Grand Rex." />
 
       <Section id="debouches" eyebrow="Les perspectives professionnelles" title={<>Des compétences pour<br /><em>des métiers concrets</em></>} tone="stone" intro="Les responsabilités confiées dépendent de l’expérience, du contexte d’emploi et de l’organisation.">
         <div className={styles.careers}><div><h3>Les emplois visés</h3><ul className={styles.jobs}>{project.jobs.map(job => <li key={job}><span aria-hidden="true">↗</span>{job}</li>)}</ul>{project.employmentNote && <p className={styles.employmentNote}>{project.employmentNote}</p>}</div><aside className={styles.sectors}><p className={styles.kicker}>Les environnements de travail</p><h3>Où exercer ?</h3><p>Dans les organisations qui conçoivent, intègrent ou exploitent des produits et services fondés sur l’IA.</p><ul><li>Éditeurs de logiciels et plateformes numériques</li><li>ESN et cabinets de conseil</li><li>Industrie, services et commerce</li><li>Finance et santé, selon les exigences du secteur</li><li>Administrations et organisations publiques</li></ul></aside></div>

@@ -194,7 +194,7 @@ export function SsiapReferencePage({ sessions }: { sessions: any[] }) {
       </Section>
     }
     dates={<SsiapBooking sessions={sessions.map(session => ({
-      id: session.id, title: session.title, startDate: session.startDate, endDate: session.endDate,
+      id: session.id, training: session.training, title: session.title, startDate: session.startDate, endDate: session.endDate,
       inPersonStartDate: session.inPersonStartDate ?? session.startDate, inPersonEndDate: session.inPersonEndDate ?? session.endDate,
       inPersonFirstEndDate: session.inPersonFirstEndDate, inPersonResumeDate: session.inPersonResumeDate,
       examDate: session.examDate, status: session.status, location: session.location,
