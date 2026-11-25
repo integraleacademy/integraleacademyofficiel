@@ -92,3 +92,14 @@ test('le report, le nom, le lieu et le retrait remplacent la fiche du planning p
     assert.deepEqual([offer.id,offer.title,offer.seatsLeft],[replacement.id,replacement.name,10]);
   }
 });
+
+test('un changement de niveau SSIAP retire les anciennes cartes et publie le bon programme', () => {
+  const initial = {...row,slug:'ssiap-1'};
+  const next = {...row,slug:'ssiap-3',name:'SSIAP 3 Juin',managed:true,edited:true,aliases:[initial]};
+  const course1={...training,slug:'ssiap-1'}, course3={...training,id:'t3',slug:'ssiap-3',name:'SSIAP 3'};
+  const card={...base,training:course1,title:'SSIAP 1 avec SST'};
+  for(const visibility of ['public','match'] as const){
+    const projected = mergeManagedSessions([card],[course1,course3],[{...next,visibility}]);
+    assert.deepEqual(projected.map(o=>[o.training.slug,o.title,o.id]),[['ssiap-3','SSIAP 3 Juin',row.id]]);
+  }
+});

@@ -59,6 +59,7 @@ function capacityAndSales(base: any, row?: CatalogueRow) {
 
 export function mergeManagedSessions(stored: any[], trainings: any[], catalogue: CatalogueRow[]) {
   const used = new Set<string>();
+  const previouslyPublished = new Set<string>();
   const existingFormulas = new Map<string, Set<string>>();
   const combined = [];
   for (const base of stored) {
@@ -77,6 +78,10 @@ export function mergeManagedSessions(stored: any[], trainings: any[], catalogue:
       if (active.length) continue;
       const current = hits.filter(row => !row.deleted && score(key, row) >= 2);
       if (current.length) hits = current;
+    }
+    if (hits.length === 1 && hits[0].slug !== code) {
+      if (base.status !== 'HIDDEN' && hits[0].visibility === 'match') previouslyPublished.add(hits[0].id);
+      continue;
     }
     for (const row of hits) used.add(row.id);
     if (hits.some(row => row.visibility === 'internal' || row.visibility === 'closed')) continue;
@@ -126,7 +131,7 @@ export function mergeManagedSessions(stored: any[], trainings: any[], catalogue:
   }
   for (const row of catalogue) {
     const covered = existingFormulas.get(row.id);
-    if (row.visibility !== 'public' || !courses.has(row.slug) || (used.has(row.id) && covered?.size !== 1)) continue;
+    if ((row.visibility !== 'public' && !previouslyPublished.has(row.id)) || !courses.has(row.slug) || (used.has(row.id) && covered?.size !== 1)) continue;
     const existing = trainings.find(t => slug(t.slug) === row.slug);
     if (existing && !existing.isActive) continue;
     const name = managedTitles[row.slug];
