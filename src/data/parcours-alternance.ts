@@ -188,7 +188,7 @@ export const alternanceFaq = [
   },
   {
     q: "Faut-il être disponible toute l’année 2027 ?",
-    a: "Oui, du 8 janvier 2027 au 8 janvier 2028 inclus. Tu t’engages pour les cours, les examens et les périodes en entreprise, avec présence, ponctualité et participation. Le calendrier détaillé présente les cours, les examens et les périodes en entreprise.",
+    a: "Oui, du 8 janvier 2027 au 8 janvier 2028 inclus. Tu t’engages pour les cours, les examens et les périodes en entreprise, avec présence, ponctualité et participation. La rubrique « Ton année » indique les périodes de cours, d’examen et d’entreprise pour cette promotion.",
   },
   {
     q: "La carte professionnelle CNAPS est automatique ?",

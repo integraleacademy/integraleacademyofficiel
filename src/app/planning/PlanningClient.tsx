@@ -18,7 +18,7 @@ import { SsiapCourseChoices } from './SsiapCourseChoices';
 import { DirectorLocationChoices } from './DirectorLocationChoices';
 import { formatVtcExamDate, vtcCourse, vtcRegistrationMessage } from '@/data/vtc';
 import styles from './planning.module.css';
-import { PlanningPreview, type PlanningFormationKey } from './PlanningPreview';
+import { PlanningPreview, OtherPlanningFormations, isMainPlanningFormation, type PlanningFormationKey } from './PlanningPreview';
 import { NextSessionSummary } from '@/components/NextSessionSummary';
 import { PlanningIcon as Icon, type PlanningIconName as IconName } from '@/components/PlanningIcon';
 import { PlanningCalendar } from './PlanningCalendar';
@@ -297,7 +297,7 @@ function SessionCard({
       <p>{session.location}{session.durationLabel && ` · ${session.durationLabel}`}</p>{session.publicNotes && <p>{session.publicNotes}</p>}
       {session.datePrecision === 'month' && <small>Le jour de rentrée sera précisé par l’école.</small>}
     </div><div className={styles.intakeActions}><a href={session.scheduleKind === 'employeur' ? '/entreprises#contact-entreprises' : ADMISSIONS_URL}>{session.scheduleKind === 'employeur' ? 'Parler de mon recrutement' : 'Déposer ma candidature'}</a>
-      <Link href={planningFormationHref(session)}>Découvrir la formation</Link><SessionCalendarLink id={session.id} /></div>
+      <Link href={planningFormationHref(session)}>Découvrir la formation</Link></div>
   </article>;
 
   return (
@@ -383,7 +383,7 @@ function SessionCard({
         </div>
 
         <div className="flex flex-wrap gap-2 lg:flex-col">
-          <SessionCalendarLink id={session.id} />
+          <SessionCalendarLink session={session} />
           <Link
             href={planningFormationHref(session)}
             className="planning-neutral-action inline-flex flex-1 items-center justify-center gap-2 rounded-full px-5 py-3.5 text-sm font-black transition hover:-translate-y-0.5"
@@ -417,7 +417,7 @@ function SessionDetails({ session, onClose, onRequest }: { session: Session; onC
     </div>
     <p className={styles.dialogLocation}><Icon name="location" />{session.location || 'Centre à confirmer'}</p>
     <dl className={styles.dialogFacts}><div><dt>Tarif</dt><dd>{displayPrice(session)}</dd></div><div><dt>Durée</dt><dd>{displayDuration(session)}</dd></div></dl>
-    <SessionCalendarLink id={session.id} />
+    <SessionCalendarLink session={session} />
     <div className={styles.dialogActions}>{session.scheduleKind === 'admissions' ? <a href={session.scheduleKind === 'employeur' ? '/entreprises#contact-entreprises' : ADMISSIONS_URL}>{session.scheduleKind === 'employeur' ? 'Parler de mon recrutement' : 'Déposer ma candidature'}</a> : <button type="button" onClick={onRequest}>Parler de cette session <Icon name="arrow" /></button>}<Link href={planningFormationHref(session)}>Découvrir le programme <Icon name="arrow" /></Link></div>
     <p className={styles.dialogFootnote}>Votre choix est repris dans la demande. L’équipe vous accompagne pour les prérequis, le financement et l’inscription.</p>
   </dialog>;
@@ -535,7 +535,7 @@ export function PlanningClient({ initialSessions, initialLocation = 'all', reque
   const isChoosingDetails = isChoosingSsiap || isChoosingDirector;
 
   const availableLocations = activeFormation === 'director' ? directorPlanningLocations
-    : activeFormation === 'all' || activeFormation === 'masteres' || sortedSessions.some(session => selectedFormationDetails && formationMatchesSlug(selectedFormationDetails, session.training?.slug) && sessionMatchesLocation(session, 'paris')) ? sessionLocationFilters : sessionLocationFilters.filter(location => location.key !== 'paris');
+    : activeFormation === 'all' || sortedSessions.some(session => selectedFormationDetails && formationMatchesSlug(selectedFormationDetails, session.training?.slug) && sessionMatchesLocation(session, 'paris')) ? sessionLocationFilters : sessionLocationFilters.filter(location => location.key !== 'paris');
 
   const filteredSessions = useMemo(() => {
     const selectedFormation = activeFormation === 'all' ? null : formationFilters.find((formation) => formation.key === activeFormation);
@@ -665,7 +665,7 @@ export function PlanningClient({ initialSessions, initialLocation = 'all', reque
           </div>
 
           <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-            {formationFilters.map(formation => {
+            {formationFilters.filter(isMainPlanningFormation).map(formation => {
               const count = formationSessionCounts[formation.key];
               const selected = activeFormation === formation.key;
               return (
@@ -693,6 +693,7 @@ export function PlanningClient({ initialSessions, initialLocation = 'all', reque
               );
             })}
           </div>
+          <OtherPlanningFormations formations={formationFilters} onChoose={chooseFormation} />
         </div>
       </section>
 

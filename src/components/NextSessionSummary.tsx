@@ -46,7 +46,7 @@ export function NextSessionSummary({ session, price, availability }: {
   if (session.scheduleKind === 'admissions') return <div className={styles.intakePreview}>
     <p className={styles.eyebrow}>Prochaine rentrée</p><h3>{publicIntakePeriod(session)}</h3><strong>{session.title}</strong>
     <p>{session.location}</p>{session.datePrecision === 'month' && <small>Jour de rentrée à préciser.</small>}
-    <SessionCalendarLink id={session.id} />
+    <SessionCalendarLink session={session} />
   </div>;
   const isVtc = session.scheduleKind === 'vtc-exam';
   const start = new Date(session.startDate);
@@ -94,6 +94,6 @@ export function NextSessionSummary({ session, price, availability }: {
     <dl className={styles.sessionOffer}>
       <div><dt>Tarif</dt><dd>{price}</dd></div>
     </dl>
-    <SessionCalendarLink id={session.id} />
+    <SessionCalendarLink session={session} />
   </>;
 }

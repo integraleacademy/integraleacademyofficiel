@@ -7,8 +7,8 @@ import styles from './HomeHeroIllustrations.module.css';
 
 const familyScenes = {
   bachelors: { image: '/images/bts/mos-unifie-2026/manager.webp', alt: 'Un responsable de sécurité organise le travail de son équipe.' },
-  masteres: { image: '/images/formation-scenes-manuel/masteres-presentation.webp', alt: 'Une étudiante présente son application à deux professionnels.' },
-  'titres-professionnels': { image: '/images/bts/tenues-2026/atelier-finances.webp', alt: 'Des apprenants étudient un dossier de gestion en atelier.' },
+  masteres: { image: '/images/accueil-formations/masteres-ia.webp', alt: 'Deux spécialistes testent un assistant documentaire dans un atelier d’intelligence artificielle.' },
+  'titres-professionnels': { image: '/images/accueil-formations/titres-professionnels.webp', alt: 'Une chargée d’accueil reçoit un visiteur pendant qu’une collègue traite les dossiers du service.' },
 };
 
 const scenes = [
@@ -36,7 +36,7 @@ const scenes = [
   ...upcomingFamilies.map(family => ({
     label: family.label, href: `#${family.id}`,
     title: { bachelors: 'Enquêter ou diriger une équipe de sécurité', masteres: 'Concevoir des produits et des applications IA', 'titres-professionnels': 'Apprendre un métier en alternance' }[family.id],
-    description: { bachelors: 'Deux bachelors pour travailler dans le renseignement sur les cybermenaces ou le management de la sécurité.', masteres: 'Deux parcours à Paris, du pilotage de produit à l’ingénierie de l’IA générative.', 'titres-professionnels': 'Paie, ressources humaines, secrétariat médical, accueil et vidéoprotection.' }[family.id],
+    description: { bachelors: 'Deux bachelors pour travailler dans le renseignement sur les cybermenaces ou le management de la sécurité.', masteres: 'Deux parcours à Paris et à Puget-sur-Argens, du pilotage de produit à l’ingénierie de l’IA générative.', 'titres-professionnels': 'Paie, ressources humaines, secrétariat médical, accueil et vidéoprotection.' }[family.id],
     action: `Découvrir nos ${family.label.toLowerCase()}`,
     ...familyScenes[family.id],
   })),

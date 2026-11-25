@@ -123,7 +123,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<Rec
             </div>
           </div>
           <div className={styles.otherLocations}>
-            <p>Vous pouvez préparer le DESP à Paris. Le centre se trouve à 50 mètres du Grand Rex et accueillera aussi nos deux mastères en intelligence artificielle dès septembre 2027.</p>
+            <p>Vous pouvez préparer le DESP à Paris. Le centre se trouve à 50 mètres du Grand Rex et accueillera aussi nos deux mastères en intelligence artificielle dès septembre 2027. Ces mastères seront également proposés au centre de Puget-sur-Argens.</p>
             <div className={school.locationGrid}>
               {otherLocations.map(location => <article key={location.id}>
                 <p className={styles.locationLabel}>Centre de formation</p><h3>{location.name}</h3><CampusFormationTags tags={location.tags} /><address>{location.address}</address><p>{location.detail}</p>

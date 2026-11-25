@@ -1,8 +1,8 @@
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { hasDetailedCalendar } from '../src/lib/detailed-calendar-eligibility';
 import test from 'node:test';
 import { PDFDocument } from 'pdf-lib';
-import { ADMISSIONS_URL, SECURITY_PATHWAY_PDF } from '../src/data/admissions';
+import { ADMISSIONS_URL } from '../src/data/admissions';
 import { scheduledIntakes } from '../src/data/intakes';
 import { sessionCalendarPosition } from '../src/lib/planning-calendar';
 import { toPublicSession } from '../src/lib/public-session-data';
@@ -42,10 +42,12 @@ test('les deux périodes de présentiel et l’examen sont conservés dans le PD
   assert.equal(pdf.getPageCount(), 2);
 });
 
-test('le PDF de janvier et les deux examens DMS accompagnent les promotions publiées', async () => {
-  const original = await PDFDocument.load(readFileSync('public' + SECURITY_PATHWAY_PDF));
-  assert.equal(original.getPageCount(),2);
-  const model=sessionCalendar(toPublicSession(scheduledIntakes.find(session=>session.id==='rentree-2027-bachelor-dms')));
-  assert.deepEqual(model.phases.filter(phase=>phase.kind==='examen').map(phase=>phase.label), ['Examen DESP','Examen SSIAP 3']);
-  assert.ok(model.phases.some(phase=>phase.kind==='entreprise'));
+test('seules les formations initiales autorisées ont un calendrier détaillé', () => {
+  const visible = (slug: string, title = '') => hasDetailedCalendar({ id: 'session', title, training: { slug } });
+  for (const slug of ['aps', 'ssiap-1', 'ssiap-3', 'desp-initial', 'desp-dssp']) assert.ok(visible(slug), slug);
+  assert.ok(visible('ssiap-1', 'SSIAP 1 avec SST'));
+  for (const slug of ['ssiap-2', 'recyclage-ssiap-1', 'remise-a-niveau-ssiap-3', 'desp-vae', 'a3p-apr', 'vtc', 'bts-mos', 'parcoursalternance']) assert.equal(visible(slug), false, slug);
+  for (const session of scheduledIntakes) assert.equal(hasDetailedCalendar(session), false, session.id);
+  assert.equal(visible('ssiap-1', 'RAN SSIAP 1'), false);
+  assert.equal(visible('desp-dssp', 'Jury VAE'), false);
 });

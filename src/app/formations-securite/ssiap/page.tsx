@@ -129,7 +129,9 @@ export default function SsiapCataloguePage() {
 
       <CourseBrochureCard course="ssiap" />
       <section id="programme" className="bg-[#0D1725] px-4 py-14 text-white sm:py-16">
-        <div className="page-container grid gap-7 lg:grid-cols-[1fr_auto] lg:items-center"><div><p className="text-xs font-black uppercase tracking-[.24em] text-red-300">Cadre réglementaire</p><h2 className="mt-3 text-3xl font-black sm:text-4xl">Des programmes conformes au référentiel SSIAP</h2><p className="mt-4 max-w-3xl leading-7 text-white/65">Les durées, prérequis, programmes et modalités de maintien des connaissances présentés sur ces pages reposent sur l’arrêté du 2 mai 2005 modifié.</p></div><a href={ssiapOfficialReference} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center justify-center rounded-full border border-red-300/40 bg-red-400/10 px-6 py-3 text-center text-sm font-black text-red-200">Consulter Légifrance ↗</a></div>
+        <div className="page-container grid gap-7 lg:grid-cols-[1fr_auto] lg:items-center"><div><p className="text-xs font-black uppercase tracking-[.24em] text-red-300">Cadre réglementaire</p><h2 className="mt-3 text-3xl font-black sm:text-4xl">Des programmes conformes au référentiel SSIAP</h2><p className="mt-4 max-w-3xl leading-7 text-white/65">Les durées, prérequis, programmes et modalités de maintien des connaissances présentés sur ces pages reposent sur l’arrêté du 2 mai 2005 modifié.</p>
+          <ul className="mt-5 flex flex-wrap gap-x-5 gap-y-3">{courses.map(course => <li key={course.href}><Link className="font-bold text-red-200 underline underline-offset-4" href={course.href + '#programme'}>{course.label}</Link></li>)}</ul>
+          </div><a href={ssiapOfficialReference} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center justify-center rounded-full border border-red-300/40 bg-red-400/10 px-6 py-3 text-center text-sm font-black text-red-200">Consulter Légifrance ↗</a></div>
       </section>
 
       <TrainingReferenceCampus compact />

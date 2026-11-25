@@ -1,5 +1,6 @@
-import { SessionCalendarLink } from '@/components/SessionCalendarLink';
 import { alternanceSessions, poeiSessions } from '@/data/employer-intakes';
+import { TrainingProgramExplorer } from '@/components/TrainingProgramExplorer';
+import { originalArtwork } from '@/data/originalArtwork';
 import { CatalogueHero } from '@/components/CatalogueHero';
 import { PageSectionNavigation } from '@/components/PageSectionNavigation';
 import { FaqDirectoryLink } from '@/components/FaqDirectoryLink';
@@ -101,16 +102,16 @@ const contacts = [
 ];
 
 const poeiProgram = [
-  { title: 'Accueil & intégration', hours: '7 h', icon: 'people' as const, text: 'Posture professionnelle, règles métier et découverte du secteur.' },
-  { title: 'TFP APS', hours: '175 h', icon: 'shield' as const, text: 'Titre Agent de prévention et de sécurité et préparation à la certification.' },
-  { title: 'Examen TFP APS', hours: '7 h', icon: 'document' as const, text: 'Épreuve de certification du titre à finalité professionnelle.' },
-  { title: 'SSIAP 1', hours: '70 h', icon: 'fire' as const, text: 'Sécurité incendie en ERP et IGH, évacuation et premiers secours.' },
-  { title: 'Examen SSIAP 1', hours: '7 h', icon: 'document' as const, text: 'Épreuve de certification Agent de sécurité incendie.' },
-  { title: 'Sécurité événementielle', hours: '42 h', icon: 'people' as const, text: 'Gestion de foule, filtrage, manifestations sportives et prévention du risque terroriste.' },
-  { title: 'Surveillance par drone', hours: '21 h', icon: 'drone' as const, text: 'Cadre légal, surveillance périmétrique et levée de doute à distance.' },
-  { title: 'Techniques professionnelles', hours: '56 h', icon: 'camera' as const, text: 'Vidéoprotection, télésurveillance, radio et gestion de crise.' },
-  { title: 'Préparation à l’emploi', hours: '58 h', icon: 'briefcase' as const, text: 'Coaching, simulations, ateliers métier et rencontres employeurs.' },
-  { title: 'Bilan de fin de formation', hours: '7 h', icon: 'target' as const, text: 'Évaluation globale, synthèse des acquis et préparation à l’insertion.' },
+  { title: 'Accueil & intégration', hours: '7 h', illustration: { src: '/images/programmes-metiers/poei/accueil.webp', alt: 'La formatrice accueille les nouveaux stagiaires à l’entrée du centre.' }, text: 'Posture professionnelle, règles métier et découverte du secteur.' },
+  { title: 'TFP APS', hours: '175 h', illustration: originalArtwork['aps-mission-surveillance'], text: 'Titre Agent de prévention et de sécurité et préparation à la certification.' },
+  { title: 'Examen TFP APS', hours: '7 h', illustration: { src: '/images/programmes-metiers/poei/examen-aps.webp', alt: 'Une candidate se présente devant les évaluateurs de l’examen APS.' }, text: 'Épreuve de certification du titre à finalité professionnelle.' },
+  { title: 'SSIAP 1', hours: '70 h', illustration: originalArtwork['ssiap-1-galerie-ssi'], text: 'Sécurité incendie en ERP et IGH, évacuation et premiers secours.' },
+  { title: 'Examen SSIAP 1', hours: '7 h', illustration: { src: '/images/programmes-metiers/poei/examen-ssiap.webp', alt: 'Un candidat explique un plan d’évacuation au jury de sécurité incendie.' }, text: 'Épreuve de certification Agent de sécurité incendie.' },
+  { title: 'Sécurité événementielle', hours: '42 h', illustration: originalArtwork['aps-mission-acces'], text: 'Gestion de foule, filtrage, manifestations sportives et prévention du risque terroriste.' },
+  { title: 'Surveillance par drone', hours: '21 h', illustration: { src: '/images/programmes-metiers/poei/drone.webp', alt: 'Une formatrice présente un drone civil et les documents à examiner avant son utilisation.' }, text: 'Cadre légal, surveillance périmétrique et levée de doute à distance.' },
+  { title: 'Techniques professionnelles', hours: '56 h', illustration: originalArtwork['aps-pc-pedagogique'], text: 'Vidéoprotection, télésurveillance, radio et gestion de crise.' },
+  { title: 'Préparation à l’emploi', hours: '58 h', illustration: { src: '/images/programmes-metiers/poei/emploi.webp', alt: 'Une candidate présente son CV à une recruteuse lors d’un forum de l’emploi.' }, text: 'Coaching, simulations, ateliers métier et rencontres employeurs.' },
+  { title: 'Bilan de fin de formation', hours: '7 h', illustration: { src: '/images/programmes-metiers/poei/bilan.webp', alt: 'Un stagiaire et sa conseillère relisent ensemble le bilan de formation.' }, text: 'Évaluation globale, synthèse des acquis et préparation à l’insertion.' },
 ];
 
 const supportSteps = [
@@ -177,7 +178,6 @@ export default function EntreprisesPage() {
         <div className={styles.sessionGrid}>{alternanceSessions.map((session) => <article key={session.name} className={styles.sessionCard}>
           <header><span>{session.name}</span><h4>{session.period}</h4></header>
           <ol className={styles.sessionTimeline}>{session.steps.map((step, index) => <li key={step.date}><span className={styles.timelineDot}>{String(index + 1).padStart(2, '0')}</span><div><small>{step.date}</small><strong>{step.title}</strong><p>{step.detail}</p></div></li>)}</ol>
-          <SessionCalendarLink id={session.id} />
           <div className={styles.sessionFigures}>{session.immersion && <div><strong>{euro(session.immersion, 0)} h</strong><span>d’immersion professionnelle</span></div>}<div><strong>{euro(session.worked, 0)} h</strong><span>prévisionnelles en entreprise</span></div><div><strong>4 499 €</strong><span>coût annuel employeur estimé</span></div><div><strong>{euro(4499 / session.worked)} €/h</strong><span>coût horaire estimé</span></div></div>
         </article>)}</div>
         <div className={styles.sessionNote}><Icon name="shield" /><p><strong>Un parcours adapté à vos missions.</strong> Événementiel, hôtels de luxe, sites sensibles, surveillance humaine, événements sportifs, festivals et protection rapprochée. Les missions sont confiées selon les qualifications obtenues et les autorisations CNAPS délivrées.</p><a href="#contact-entreprises">Étudier mon recrutement <Icon name="arrow" /></a></div>
@@ -194,9 +194,17 @@ export default function EntreprisesPage() {
         <div className={styles.poeiMetrics}><div><strong>450 h</strong><span>de formation intensive</span></div><div><strong>100 %</strong><span>formation financée*</span></div><div><strong>6 mois</strong><span>d’engagement d’embauche</span></div><div><strong>12 places</strong><span>maximum par session</span></div></div>
         <details className={styles.programBlock} open>
           <summary><span><Icon name="document" /><span><strong>Le programme complet</strong><small>10 modules · 450 heures de formation</small></span></span><b aria-hidden="true">+</b></summary>
-          <div className={styles.programContent}><p>Un socle complet pour des agents directement employables, de la posture professionnelle aux techniques de sécurité.</p><div className={styles.programGrid}>{poeiProgram.map((module) => <article key={module.title}><div><Icon name={module.icon} /><strong>{module.hours}</strong></div><h4>{module.title}</h4><p>{module.text}</p></article>)}</div></div>
+          <div className={styles.programContent}>
+            <TrainingProgramExplorer idPrefix="poei-programme" hours="450" overview="10 modules de formation"
+              subtitle="Préparation opérationnelle à l’emploi" illustration={originalArtwork['aps-atelier-radio']}
+              facts={[[ 'Certification', 'TFP APS' ], [ 'Diplôme', 'SSIAP 1' ]]}
+              menuTitle="Explorer les modules" tabListLabel="Les dix modules de la POEI"
+              nextLabel="Module suivant" restartLabel="Revenir au premier module"
+              units={poeiProgram.map((module, index) => ({ number: String(index + 1).padStart(2, '0'), title: module.title,
+                duration: module.hours, description: module.text, delivery: 'POEI sécurité privée', illustration: module.illustration }))} />
+          </div>
         </details>
-        <div className={styles.sessionsBar}><span><Icon name="calendar" />Les sessions</span>{poeiSessions.map(session => <div key={session.id}><strong>{session.label}</strong><br /><SessionCalendarLink id={session.id} /></div>)}</div>
+        <div className={styles.sessionsBar}><span><Icon name="calendar" />Les sessions</span>{poeiSessions.map(session => <div key={session.id}><strong>{session.label}</strong></div>)}</div>
         <div className={styles.siteSkillsHeading}><span className={styles.ribbon}>Des compétences pour vos sites</span><h3>Des agents préparés<br />à vos réalités de terrain</h3><p>Chaque environnement a ses contraintes, ses publics et ses priorités. Nous préparons les candidats à appliquer les consignes et à adopter la bonne posture professionnelle.</p></div>
         <div className={styles.siteSkillsGrid}>{siteSkills.map((site) => <article key={site.title}><img src={site.image} alt={site.alt} width="1122" height="1402" loading="lazy" /><div><h4>{site.title}</h4><p>{site.text}</p></div></article>)}</div>
         <aside className={styles.fireComplement}><img src="/images/ssiap-1/manuel/prevention.webp" alt="Un agent explique les consignes et le plan de sécurité incendie." width="1200" height="800" loading="lazy" /><div><span>Une compétence complémentaire</span><h4>La sécurité incendie</h4><p>Le SSIAP 1 prépare à la prévention incendie, à la surveillance des installations de sécurité et à l’assistance aux personnes en ERP et IGH. Les missions confiées respectent les qualifications et les autorisations de chaque agent.</p></div></aside>

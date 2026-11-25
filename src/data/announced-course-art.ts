@@ -4,7 +4,7 @@ import { titleCourseArt } from './title-course-art';
 
 export type AnnouncedCourseArt = {
   hero: ManualIllustration;
-  missions: readonly [ManualIllustration, ManualIllustration];
+  missions: readonly [ManualIllustration, ManualIllustration, ManualIllustration, ManualIllustration];
   practice: readonly [ManualIllustration, ManualIllustration];
   exam: ManualIllustration;
 };

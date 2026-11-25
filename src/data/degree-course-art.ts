@@ -1,3 +1,4 @@
+import { additionalMissionIllustrations } from './programme-illustrations';
 import type { AnnouncedCourseArt } from './announced-course-art';
 
 function scene(slug: string, role: string, alt: string) {
@@ -10,6 +11,7 @@ export const degreeCourseArt = {
     missions: [
       scene('eirc', 'mission-1', 'Un analyste compare un signalement à un relevé pour en vérifier la source.'),
       scene('eirc', 'mission-2', 'Une analyste présente la chronologie d’un incident à l’équipe de défense.'),
+      ...additionalMissionIllustrations['bachelor-eirc'],
     ],
     practice: [
       scene('eirc', 'pratique-1', 'Des documents et une tablette sont rapprochés pour recouper deux observations.'),
@@ -22,6 +24,7 @@ export const degreeCourseArt = {
     missions: [
       { src: '/images/formations-annoncees/dms-prestation.webp', alt: 'Le responsable d’une agence examine le planning d’une prestation avec une agente et un client.' },
       { src: '/images/formations-annoncees/dms-prevention.webp', alt: 'Un responsable présente le système de sécurité incendie à son équipe, plan du site en main.' },
+      ...additionalMissionIllustrations['bachelor-dms'],
     ],
     practice: [
       scene('dms', 'pratique-1', 'Un apprenti vérifie le coût d’une ronde supplémentaire avec son responsable.'),
@@ -34,6 +37,7 @@ export const degreeCourseArt = {
     missions: [
       scene('cpiaa', 'mission-1', 'Une professionnelle écoute les besoins d’un utilisateur à son poste de travail.'),
       scene('cpiaa', 'mission-2', 'L’équipe produit organise les priorités de développement autour d’une table de travail.'),
+      ...additionalMissionIllustrations['mastere-chef-de-produit-ia'],
     ],
     practice: [
       scene('cpiaa', 'pratique-1', 'Un utilisateur teste un prototype sur tablette pendant que la professionnelle observe ses gestes.'),
@@ -46,6 +50,7 @@ export const degreeCourseArt = {
     missions: [
       scene('eiag', 'mission-1', 'Un ingénieur représente les composants d’une application sur un tableau transparent.'),
       scene('eiag', 'mission-2', 'Une professionnelle vérifie la réponse d’un modèle en la rapprochant d’un document de référence.'),
+      ...additionalMissionIllustrations['mastere-ingenierie-ia-generative'],
     ],
     practice: [
       scene('eiag', 'pratique-1', 'Deux apprenants vérifient une réponse de l’assistant à partir d’un document annoté.'),

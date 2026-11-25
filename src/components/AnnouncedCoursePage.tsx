@@ -1,8 +1,8 @@
+import { programmeIllustrations } from '@/data/programme-illustrations';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ADMISSIONS_URL, SEPTEMBER_INTAKE, septemberId } from '@/data/admissions';
-import { SessionCalendarLink } from './SessionCalendarLink';
-import { PARIS_ADDRESS, PARIS_LANDMARK } from '@/data/locations';
+import { ADMISSIONS_URL, SEPTEMBER_INTAKE } from '@/data/admissions';
+import { MASTER_CAMPUSES, PARIS_ADDRESS, PARIS_LANDMARK, PUGET_ADDRESS } from '@/data/locations';
 import { upcomingCourseName, type UpcomingCourse, type UpcomingFamily } from '@/data/upcoming-trainings';
 import { announcedCourseContent, type CourseContent } from '@/data/announced-course-content';
 import { announcedCourseArt } from '@/data/announced-course-art';
@@ -23,7 +23,6 @@ import { CourseBrochureCard } from './CourseBrochureCard';
 import { CourseTeamBanner } from './CourseTeamBanner';
 import { GoogleReviewsSection } from './GoogleReviewsSection';
 import { FaqDirectoryLink } from './FaqDirectoryLink';
-import { DmsCalendar } from './DmsCalendar';
 import styles from './AnnouncedCoursePage.module.css';
 import experience from './ApsExperience.module.css';
 
@@ -42,14 +41,13 @@ const fireRegulation = 'https://www.legifrance.gouv.fr/loda/article_lc/LEGIARTI0
 const academicReviews = { headingId: 'avis-ecole-titre', eyebrow: 'Avis Google sur l’école', title: 'Leur expérience chez Intégrale Academy', sourceLabel: 'Consulter les avis de l’école sur Google', empty: 'Découvrez les témoignages des stagiaires sur la fiche Google de l’école.' };
 
 function Campus({ detail }: { detail: CourseContent }) {
-  if (detail.venue === 'Paris') return <>
+  if (detail.venue === MASTER_CAMPUSES) return <>
     <CourseTeamBanner />
-    <Section id="ecole" eyebrow="Votre école à Paris" title={<>Bienvenue chez <em>Intégrale Academy</em></>} tone="paper"
-      intro="Les deux mastères en intelligence artificielle sont proposés au 34 rue Poissonnière, dans le 2e arrondissement, à 50 mètres du Grand Rex.">
-      <div className={styles.paris}>
-        <address><span className={styles.kicker}>Centre de formation</span><strong>34 rue Poissonnière</strong>75002 Paris<br />{PARIS_LANDMARK}</address>
-        <div><h3>Préparer votre venue</h3><p>Retrouvez les informations pratiques pour rejoindre l’école ou contactez l’équipe avant votre déplacement.</p>
-          <Link href="/centres#centre-paris">Découvrir le centre de Paris ↗</Link></div>
+    <Section id="ecole" eyebrow="Vos deux campus" title={<>Bienvenue chez <em>Intégrale Academy</em></>} tone="paper"
+      intro="Les deux mastères en intelligence artificielle sont proposés à Paris et à Puget-sur-Argens dès septembre 2027. Choisissez le campus où vous souhaitez étudier.">
+      <div className={styles.campuses}>
+        <address><span className={styles.kicker}>Centre de Paris</span><strong>{PARIS_ADDRESS}</strong><span>{PARIS_LANDMARK}</span><Link href="/centres#centre-paris">Découvrir le centre de Paris ↗</Link></address>
+        <address><span className={styles.kicker}>Centre de la Côte d’Azur</span><strong>{PUGET_ADDRESS}</strong><span>Campus de Puget-sur-Argens</span><Link href="/centres#centre-cote-azur">Découvrir le centre de Puget-sur-Argens ↗</Link></address>
       </div>
     </Section>
   </>;
@@ -92,6 +90,7 @@ function References({ family, course, detail, email }: { family: UpcomingFamily;
 
 export async function AnnouncedCoursePage({ family, course }: { family: UpcomingFamily; course: UpcomingCourse }) {
   const detail = announcedCourseContent[course.anchorId];
+  const unitArt = programmeIllustrations[course.anchorId as keyof typeof programmeIllustrations];
   const dms = course.anchorId === 'bachelor-dms';
   const name = upcomingCourseName(family, course);
   const venue = detail.venue ?? 'Lieu à préciser';
@@ -123,11 +122,11 @@ export async function AnnouncedCoursePage({ family, course }: { family: Upcoming
         {course.certificationStatus && <p className={styles.instruction}>{course.certificationStatus}</p>}</>}
       illustration={images.hero} caption={detail.missions[0][0]}
       primaryAction={{ href: registrationHref, label: registrationLabel }}
-      secondaryAction={{ href: dms ? '#dates-tarifs' : '#programme', label: dms ? 'Voir le calendrier d’alternance' : 'Découvrir le programme' }}>
+      secondaryAction={{ href: dms ? '#dates-tarifs' : '#programme', label: dms ? 'Voir la rentrée et le rythme' : 'Découvrir le programme' }}>
       <aside className={styles.summary} aria-label="Informations pratiques">
         <div className={styles.intake}><p className={styles.kicker}>Prochaine rentrée</p><h2>{dateText}</h2>
           {dms && <p>Promotion 2027–2028</p>}</div>
-        <TrainingSessionSummary location={venue} locationNote={detail.venue === 'Paris' ? `${PARIS_ADDRESS} · ${PARIS_LANDMARK}` : detail.venue ? 'Côte d’Azur' : undefined}
+        <TrainingSessionSummary location={venue} locationNote={detail.venue === MASTER_CAMPUSES ? 'Au choix · Paris 2e ou Côte d’Azur' : detail.venue ? 'Côte d’Azur' : undefined}
           facts={[{ label: 'Qualification', value: detail.level, details: dms ? ['DESP et SSIAP 3'] : detail.rncp ? [`RNCP${detail.rncp}`] : [] },
             { label: dms ? 'Durée' : 'Parcours', value: dms ? '461 heures' : tp ? 'En alternance' : family.singular, details: dms ? ['245 h de DESP · 216 h de SSIAP 3'] : [] },
             { label: dms ? 'Rythme' : 'Programme', value: dms ? '1 an en alternance' : `${detail.units.length} ${project || detail.rncp ? 'blocs' : 'axes'}` }]} />
@@ -155,7 +154,7 @@ export async function AnnouncedCoursePage({ family, course }: { family: Upcoming
       campus={<Campus detail={detail} />}
       brochure={dms ? <CourseBrochureCard course="bachelor-dms" /> : null}
       program={<Section id="programme" eyebrow="04 — Compétences & programme" title={dms ? '461 heures pour préparer deux diplômes' : 'Ce que vous apprendrez'} intro={project?.objective ?? (dms ? 'Les volumes de cours sont indiqués hors examens et déplacements. Votre maître d’apprentissage assure le relais pendant les semaines en entreprise.' : 'Explorez chaque partie du programme et ses applications professionnelles.')} tone="paper">
-        <TrainingProgramExplorer idPrefix={course.anchorId} units={detail.units} menuTitle="Explorer le programme" tabListLabel={`Programme · ${detail.mark}`} nextLabel="Partie suivante" restartLabel="Revenir au début"
+        <TrainingProgramExplorer idPrefix={course.anchorId} units={detail.units.map((unit, index) => ({ ...unit, illustration: unitArt[index] }))} illustration={{ src: course.imageSrc, alt: course.imageAlt }} menuTitle="Explorer le programme" tabListLabel={`Programme · ${detail.mark}`} nextLabel="Partie suivante" restartLabel="Revenir au début"
           hours={dms ? '461' : String(detail.units.length)} unitLabel={dms ? ' h' : ''} overview={dms ? 'heures de cours' : project || detail.rncp ? 'blocs de compétences' : 'axes de formation'} subtitle={dms ? 'En contrat d’apprentissage' : name}
           facts={dms ? [['DESP', '245 heures'], ['SSIAP 3', '216 heures']] : [['Qualification', detail.level], ['Lieu', venue]]} />
       </Section>}
@@ -179,7 +178,7 @@ export async function AnnouncedCoursePage({ family, course }: { family: Upcoming
       dates={<TrainingDatesPricingSection compact showFundingSimulator={false} theme={themes[detail.theme]} eyebrow="06 — Dates & tarifs" title={dms ? 'Votre année d’alternance' : 'La prochaine session'} intro={dms ? 'Retrouvez les périodes en entreprise, les semaines de cours et les dates prévisionnelles des examens.' : tp ? 'Ces titres professionnels sont proposés en alternance, en présentiel à Puget-sur-Argens.' : 'La rentrée est prévue en septembre 2027.'}
         sessions={[]} defaultPrice={price} summaryPrice={price} registrationHref={() => registrationHref} priceAction={fundingAction}
         priceDescription={dms ? 'Valeur habituelle des deux formations : 8 100 € (4 300 € pour le DESP et 3 800 € pour le SSIAP 3).' : 'Le tarif sera communiqué avant toute inscription.'}
-        calendar={<div>{dms ? <DmsCalendar /> : <div className={styles.calendar}><p className={styles.kicker}>Prochaine rentrée</p><h3>{SEPTEMBER_INTAKE}</h3><p>Le jour de rentrée, le détail des cours et les dates d’examen seront précisés par l’école.</p></div>}<SessionCalendarLink id={septemberId(course.anchorId)} /></div>} />}
+        calendar={<div>{dms ? <div className={styles.calendar}><p className={styles.kicker}>Promotion 2027–2028</p><h3>Du 1er septembre 2027 au 31 août 2028</h3><p>Les périodes de cours durent deux semaines. Vous passez le reste du temps dans votre entreprise.</p></div> : <div className={styles.calendar}><p className={styles.kicker}>Prochaine rentrée</p><h3>{SEPTEMBER_INTAKE}</h3><p>Le jour de rentrée, le détail des cours et les dates d’examen seront précisés par l’école.</p></div>}</div>} />}
       enrollment={<TrainingEnrollmentSection number="07" showFundingSimulator={false} textOnlyOptions title={dms ? 'Du premier contact au contrat d’apprentissage.' : 'Préparer votre entrée en formation.'}
         intro={dms ? 'Indiquez votre parcours à Aurélie BAYARD-CHAUSSEZ. Si vous avez déjà une entreprise d’accueil, transmettez-lui ses coordonnées pour préparer le contrat.' : tp ? 'Sur le portail des admissions, sélectionnez votre titre professionnel pour préparer votre candidature à la rentrée de septembre 2027.' : 'Choisissez votre formation sur le portail des admissions et déposez votre dossier pour la rentrée de septembre 2027.'}
         steps={dms ? ['Préciser son projet', 'Préparer son CV', 'Contacter les employeurs', 'Préparer l’entretien et le contrat'] : tp ? ['Choisir le titre professionnel', 'Préparer sa candidature', 'Suivre son dossier avec l’école'] : ['Choisir sa formation', 'Déposer sa candidature en ligne', 'Suivre son dossier avec l’école']}
