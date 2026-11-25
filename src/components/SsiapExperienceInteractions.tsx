@@ -65,7 +65,7 @@ export function SsiapProgramExplorer({ parts, course = 'ssiap-1', label = 'SSIAP
     nextLabel="Partie suivante" restartLabel="Revenir au début" hourDistribution
     hours={hours} overview={`${parts.length} parties complémentaires`} subtitle="Hors examen et déplacements"
     facts={[['Progression', progression], ['Format', '100 % présentiel']]}
-    illustration={{ src: `/images/${course}/manuel/couverture-${course}.webp`, alt: `Couverture du manuel de formation ${label} d’Intégrale Academy` }}
+    illustration={course === 'ssiap-2' ? ssiapEditorialArtwork.reporting : course === 'ssiap-3' ? ssiapEditorialArtwork.building : ssiapArtwork.alerte}
     units={parts.map(([number, title, duration, description], index) => ({
       number, title, duration, description, delivery: `Partie ${number} / ${String(parts.length).padStart(2, '0')}`, illustration: scenes[index],
     }))}

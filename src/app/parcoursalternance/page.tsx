@@ -283,8 +283,11 @@ export default function ParcoursSecuriteAlternance() {
             Ce parcours demande ta disponibilité <strong>du 8 janvier 2027 au 8 janvier 2028</strong>, pour les cours, les
             examens et les périodes en entreprise.
           </p>
-          <SessionCalendarLink id="parcours-securite-janvier-2027" />
-          <p><a href="/planning?formation=parcoursalternance&dates=toutes#sessions">Voir aussi la promotion de juin 2027</a></p>
+          <div className="mt-3 grid justify-items-start">
+            <SessionCalendarLink id="parcours-securite-janvier-2027" label="Télécharger le calendrier de janvier 2027 (PDF)" />
+            <SessionCalendarLink id="parcours-securite-juin-2027" label="Télécharger le calendrier de juin 2027 (PDF)" />
+          </div>
+          <p><a href="/planning?formation=parcoursalternance&dates=toutes#sessions">Comparer les deux promotions</a></p>
           <div className="commitment">
             <span aria-hidden="true">↗</span>
             <p>
