@@ -38,9 +38,9 @@
   .journey[data-visual-format='landscape'] .step,
   .journey[data-visual-format='landscape'][data-enhanced='true'] .stage { grid-template-columns: minmax(0, 40fr) minmax(0, 60fr); }
   .journey[data-enhanced='true'] { overflow-anchor: none; }
-  /* The distance needed for the four steps is reserved after the sticky group.
+  /* The distance needed for the steps is reserved after the sticky group.
      The next section stays directly below the cards during the full sequence. */
-  .journey[data-enhanced='true']::after { content: ''; display: block; height: 160svh; }
+  .journey[data-enhanced='true']::after { content: ''; display: block; height: calc(var(--journey-step-count) * 40svh); }
   .journey[data-enhanced='true'] .trackContent { position: sticky; top: calc(var(--site-header-height) + var(--site-section-nav-height)); }
   .journey[data-enhanced='true'] .stage { display: grid; grid-template-rows: auto 1fr; padding: 0; }
   .journey[data-enhanced='true'] .intro { grid-column: 1; grid-row: 1; align-self: end; padding: clamp(28px, 4vh, 52px) clamp(24px, 4.5vw, 88px) 0; }

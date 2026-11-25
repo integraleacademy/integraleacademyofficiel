@@ -24,7 +24,7 @@ function CardNextAction({ onNext, label }: { onNext: () => void; label: string }
 
 function JourneyCard({ config, index, onNext }: { config: CourseJourneyConfig; index: number; onNext: () => void }) {
   const step = config.steps[index];
-  const action = index < config.steps.length - 1
+  const action = config.steps.length > 2 && index < config.steps.length - 1
     ? <CardNextAction onNext={onNext} label={config.steps[index + 1].label} />
     : <CardAction href={step.href} label={step.link} />;
   if (index === 0) {
@@ -43,11 +43,11 @@ function JourneyCard({ config, index, onNext }: { config: CourseJourneyConfig; i
         <p className={styles.subtitle}>{card.text}</p>
         <span className={styles.openingArrow} aria-hidden="true"><Arrow rise /></span>
       </div>
-      <div className={styles.verbs}>{card.verbs.map((verb, i) => <span key={verb}><small>0{i + 1}</small>{verb}</span>)}</div>
+      {card.verbs && <div className={styles.verbs}>{card.verbs.map((verb, i) => <span key={verb}><small>0{i + 1}</small>{verb}</span>)}</div>}
       {action}
     </div>;
   }
-  if (index === 1) {
+  if (index === 1 && config.study) {
     const card = config.study;
     return <div className={`${styles.card} ${styles.studyCard}`}>
       <CardHeader label={step.label} />
@@ -64,7 +64,7 @@ function JourneyCard({ config, index, onNext }: { config: CourseJourneyConfig; i
       {action}
     </div>;
   }
-  if (index === 2) {
+  if (index === 2 && config.practice) {
     const card = config.practice;
     return <div className={`${styles.card} ${styles.practiceCard}`}>
       <CardHeader label={step.label} />
