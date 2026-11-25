@@ -36,10 +36,10 @@ test('un report du seul début SSIAP conserve le décalage propre à la formule'
 
 test('les deux formules SSIAP partagent les places et conservent leurs dates individuelles', () => {
   const course = {...training,slug:'ssiap-1'};
-  const cohort = {...row,slug:'ssiap-1',standard_start:'2098-02-09',sold:11};
+  const cohort = {...row,slug:'ssiap-1',standard_start:'2098-02-09',exam:'',sold:11};
   for (const stored of [[],[
-    {...base,training:course,title:'SSIAP 1 avec SST'},
-    {...base,id:'sans',training:course,title:'SSIAP 1 sans SST',startDate:cohort.standard_start},
+    {...base,examDate:null,training:course,title:'SSIAP 1 avec SST'},
+    {...base,id:'sans',examDate:null,training:course,title:'SSIAP 1 sans SST',startDate:cohort.standard_start},
   ]]) {
     const sessions = mergeManagedSessions(stored,[course],[cohort]);
     assert.deepEqual(sessions.map(s => [s.startDate.toISOString().slice(0,10),s.seatsLeft]),[[row.start,1],[cohort.standard_start,1]]);
@@ -56,4 +56,19 @@ test('un recyclage reporté reste rattaché au groupe SSIAP et reprend son compt
   assert.equal(session.seatsLeft,1);
   assert.equal(session.startDate.toISOString().slice(0,10),cohort.start);
   assert.deepEqual(mergeManagedSessions([original],[course],[{...cohort,visibility:'closed'}]),[]);
+});
+
+test('une seule formule existante est complétée et une formule volontairement masquée reste masquée', () => {
+  const course = {...training,slug:'ssiap-1'};
+  const cohort = {...row,slug:'ssiap-1',exam:'',standard_start:'2098-02-09',sold:11};
+  const avec = {...base,training:course,examDate:null,title:'SSIAP 1 avec SST'};
+  const sans = {...base,id:'sans',training:course,examDate:null,title:'SSIAP 1 sans SST',startDate:cohort.standard_start};
+  for (const one of [avec,sans]) {
+    const result = mergeManagedSessions([one],[course],[cohort]);
+    assert.deepEqual(result.map(s=>s.title).sort(),[avec.title,sans.title]);
+    assert.ok(result.every(s=>s.seatsLeft===1));
+  }
+  const visible = mergeManagedSessions([avec,{...sans,status:'HIDDEN'}],[course],[cohort]);
+  assert.deepEqual(visible.map(s=>s.title),[avec.title]);
+  assert.equal(mergeManagedSessions([{...base,status:'FULL'}],[training],[])[0].status,'OPEN');
 });

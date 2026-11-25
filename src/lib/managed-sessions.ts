@@ -1,12 +1,12 @@
 import { sessionMatchesLocation } from './session-location-filter';
 import { resolveSessionSeatCapacity } from './session-capacity';
 
-type Key = {slug: string; centre: string; start: string; end: string; exam: string};
+type Key = {slug: string; centre: string; start: string; end: string; exam: string; standard_start?: string};
 export type CatalogueRow = Key & {
   id: string; aliases: Key[]; visibility: 'public' | 'match' | 'internal' | 'closed';
   capacity: number | null; sold: number | null;
   group_periods?: Pick<Key,'centre'|'start'|'end'>[];
-  standard_start?: string; remote_start?: string; remote_end?: string; onsite_start?: string; onsite_end?: string;
+  remote_start?: string; remote_end?: string; onsite_start?: string; onsite_end?: string;
 };
 const slugs: Record<string, string> = {a3p: 'a3p-apr', desp: 'desp-dssp', 'desp-initial': 'desp-dssp'};
 const managedTitles: Record<string, string> = {
@@ -28,7 +28,7 @@ function centre(session: {location?: string}) {
 }
 function score(key: Key, candidate: Key) {
   if (!key.centre || key.centre !== candidate.centre || key.slug !== candidate.slug) return 0;
-  const anchors = [key.start === candidate.start && !!key.start, key.end === candidate.end && !!key.end,
+  const anchors = [!!key.start && (key.start === candidate.start || key.slug === 'ssiap-1' && key.start === candidate.standard_start), key.end === candidate.end && !!key.end,
     !!key.exam && key.exam === candidate.exam];
   return anchors.filter(Boolean).length;
 }
@@ -40,6 +40,7 @@ function capacityAndSales(base: any, row?: CatalogueRow) {
 
 export function mergeManagedSessions(stored: any[], trainings: any[], catalogue: CatalogueRow[]) {
   const used = new Set<string>();
+  const existingFormulas = new Map<string, Set<string>>();
   const combined = [];
   for (const base of stored) {
     const code = slug(base.training?.slug);
@@ -51,10 +52,17 @@ export function mergeManagedSessions(stored: any[], trainings: any[], catalogue:
     for (const row of hits) used.add(row.id);
     if (hits.some(row => row.visibility === 'internal' || row.visibility === 'closed')) continue;
     if (hits.length !== 1) {
-      combined.push({...base, ...capacityAndSales(base)});
+      combined.push({...base, status: base.status === 'FULL' ? 'OPEN' : base.status, ...capacityAndSales(base)});
       continue;
     }
     const row = hits[0];
+    if (row.visibility === 'public' && code === 'ssiap-1' && row.standard_start) {
+      const formula = /\b(avec|sans) SST\b/i.exec(base.title || '')?.[1]?.toLowerCase();
+      const found = existingFormulas.get(row.id) ?? new Set<string>();
+      if (formula) found.add(formula);
+      else { found.add('avec'); found.add('sans'); }
+      existingFormulas.set(row.id, found);
+    }
     if (base.status === 'HIDDEN') continue;
     const sales = capacityAndSales(base, row);
     const status = sales.seatsLeft === null ? (base.status === 'FULL' ? 'OPEN' : base.status)
@@ -86,7 +94,8 @@ export function mergeManagedSessions(stored: any[], trainings: any[], catalogue:
       inPersonResumeDate: moved ? null : base.inPersonResumeDate, ...sales, status});
   }
   for (const row of catalogue) {
-    if (row.visibility !== 'public' || used.has(row.id) || !courses.has(row.slug)) continue;
+    const covered = existingFormulas.get(row.id);
+    if (row.visibility !== 'public' || !courses.has(row.slug) || (used.has(row.id) && covered?.size !== 1)) continue;
     const existing = trainings.find(t => slug(t.slug) === row.slug);
     if (existing && !existing.isActive) continue;
     const name = managedTitles[row.slug];
@@ -109,8 +118,8 @@ export function mergeManagedSessions(stored: any[], trainings: any[], catalogue:
         const offer = stored.find(s => slug(s.training?.slug) === row.slug && iso(s.startDate).slice(0,4) === row.start.slice(0,4) && formula.test(s.title || ''));
         return {priceCents: offer?.priceCents ?? null, priceLabel: offer?.priceLabel ?? ''};
       };
-      combined.push({...session, ...priceFor(/\bavec SST\b/i), title: 'SSIAP 1 avec SST'},
-        {...session, ...priceFor(/\bsans SST\b/i), id: row.id + '-sans-sst', title: 'SSIAP 1 sans SST',
+      if (!covered?.has('avec')) combined.push({...session, ...priceFor(/\bavec SST\b/i), title: 'SSIAP 1 avec SST'});
+      if (!covered?.has('sans')) combined.push({...session, ...priceFor(/\bsans SST\b/i), id: row.id + '-sans-sst', title: 'SSIAP 1 sans SST',
         startDate: day(row.standard_start), inPersonStartDate: session.inPersonStartDate ? day(row.standard_start) : null});
     } else {
       combined.push(session);
