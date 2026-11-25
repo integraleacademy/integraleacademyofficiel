@@ -1,3 +1,4 @@
+import { ADMISSIONS_URL } from '@/data/admissions';
 import { createPageMetadata } from '@/lib/seo';
 import { seoPages } from '@/data/seo-pages';
 import { notFound } from "next/navigation";
@@ -21,7 +22,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return createPageMetadata(path);
 }
 
-const btsApplicationUrl = "https://admissions.integraleconnect.com/";
+
 
 function btsContactSlug(slug: string) {
   return slug.replace(/[^a-z0-9-]/gi, "-");
@@ -68,7 +69,7 @@ function btsExamTitles(f: (typeof bts)[number]) {
 
 const btsAdmissionSteps = [
   {
-    title: "Dossier de pré-inscription 2026",
+    title: "Dossier de pré-inscription 2027",
     text: "Complétez votre dossier de pré-inscription en ligne. Vous pouvez aussi candidater directement sur Parcoursup lorsque le parcours concerné y est ouvert.",
     accent: "Lien de candidature BTS",
   },
@@ -154,7 +155,7 @@ function BtsAdmissionShowcase() {
         <div className="mb-8 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
           <div>
             <span className="inline-flex rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-black text-academy-gold shadow-soft backdrop-blur">
-              Candidature & admission BTS 2026
+              Candidature & admission BTS 2027
             </span>
             <h2 className="mt-4 text-3xl font-black tracking-tight md:text-5xl">
               Votre candidature BTS en <Highlight>5 étapes</Highlight>
@@ -162,12 +163,12 @@ function BtsAdmissionShowcase() {
             <p className="mt-4 max-w-3xl text-base leading-8 text-stone-200 md:text-lg">
               Nous recevons chaque année de nombreuses candidatures : nous vous
               conseillons de candidater dès maintenant via le dossier de
-              pré-inscription 2026.
+              pré-inscription 2027.
             </p>
           </div>
           <div className="flex shrink-0 flex-wrap gap-3">
             <a
-              href={btsApplicationUrl}
+              href={ADMISSIONS_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center rounded-full bg-academy-gold px-5 py-3 text-center text-sm font-black text-academy-ink shadow-gold transition hover:-translate-y-0.5"
@@ -290,7 +291,7 @@ export default async function Page({
               </div>
               <div className="mt-6 flex flex-col gap-3 sm:flex-row">
                 <a
-                  href={btsApplicationUrl}
+                  href={ADMISSIONS_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center rounded-full bg-academy-gold px-5 py-3 text-sm font-black text-academy-ink transition hover:-translate-y-0.5 hover:brightness-95"
@@ -317,7 +318,7 @@ export default async function Page({
             </div>
             <div className="reveal rounded-[2rem] border border-white/10 bg-white/8 p-6 shadow-card backdrop-blur">
               <p className="text-sm font-black uppercase tracking-[.2em] text-academy-gold">
-                Admissions BTS 2026
+                Admissions BTS 2027
               </p>
               <h2 className="mt-4 text-3xl font-black">
                 Un dossier clair, suivi par l’école
@@ -333,10 +334,10 @@ export default async function Page({
                   Plateforme BTS
                 </p>
                 <p className="mt-2 break-words text-lg font-black text-academy-gold">
-                  inscriptionsbts.onrender.com
+                  admissions.integraleconnect.com
                 </p>
                 <p className="mt-2 text-sm leading-6 text-white/70">
-                  Candidatures et pré-inscriptions BTS 2026.
+                  Candidatures et pré-inscriptions BTS 2027.
                 </p>
               </div>
             </div>

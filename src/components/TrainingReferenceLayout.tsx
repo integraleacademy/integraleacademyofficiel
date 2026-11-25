@@ -159,7 +159,7 @@ export function TrainingReferenceCampus({
 }
 
 type CourseAdviser = { person: TeamMemberId; name: string; role: string; phone: string; phoneHref: string };
-const defaultAdviser: CourseAdviser = { person: 'cassandre', name: 'Cassandre', role: 'Responsable commerciale', phone: '04 22 47 07 68', phoneHref: 'tel:0422470768' };
+const defaultAdviser: CourseAdviser = { person: 'cassandre', name: 'Cassandre MENARD', role: 'Responsable commerciale', phone: '04 22 47 07 68', phoneHref: 'tel:0422470768' };
 
 export function TrainingReferenceContact({ description, title, href, headingEnd = 'vers votre futur métier', appointmentLabel = 'Réserver un rendez-vous téléphonique →', additionalActions, assurances = [], portraitMedallion = false, schoolStyle = false, adviser = defaultAdviser }: { description: ReactNode; title?: string; href: string; headingEnd?: string; appointmentLabel?: string; additionalActions?: ReactNode; assurances?: readonly string[]; portraitMedallion?: boolean; schoolStyle?: boolean; adviser?: CourseAdviser }) {
   const heading = <>

@@ -436,7 +436,7 @@ export function A3pReferencePage({ sessions }: { sessions: any[] }) {
 
     <TrainingReferenceContact
       schoolStyle
-      description="Cassandre, Responsable commerciale, vérifie vos prérequis, vous présente les prochaines dates et étudie les solutions de financement adaptées à votre situation."
+      description="Cassandre MENARD, Responsable commerciale, vérifie vos prérequis, vous présente les prochaines dates et étudie les solutions de financement adaptées à votre situation."
       href={a3pContact('rdv-telephonique')}
     />
     <TrainingReferenceMobileBar href={a3pContact('mobile-dossier-a3p')} label="Recevoir le dossier" />

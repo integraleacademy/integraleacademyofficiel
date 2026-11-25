@@ -15,11 +15,12 @@
     "predev": "node scripts/build-image-variants.mjs"
   },
   "dependencies": {
-    "next": "15.3.3",
-    "react": "19.0.0",
-    "react-dom": "19.0.0",
     "@prisma/client": "6",
     "gsap": "^3.13.0",
+    "next": "15.3.3",
+    "pdf-lib": "^1.17.1",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
     "server-only": "^0.0.1",
     "sharp": "^0.34.5"
   },
@@ -27,14 +28,14 @@
     "@types/node": "22.15.30",
     "@types/react": "19.0.12",
     "@types/react-dom": "19.0.4",
-    "typescript": "5.8.3",
-    "tailwindcss": "3.4.17",
-    "postcss": "8.5.6",
     "autoprefixer": "10.4.21",
     "eslint": "9.28.0",
     "eslint-config-next": "15.3.3",
+    "postcss": "8.5.6",
     "prisma": "6",
-    "tsx": "latest"
+    "tailwindcss": "3.4.17",
+    "tsx": "latest",
+    "typescript": "5.8.3"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

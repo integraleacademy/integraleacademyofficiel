@@ -16,8 +16,8 @@ export function ContactRequestCard({ href }: { href: string }) {
       </p>
       <div className="mt-8 border-t border-academy-line/70 pt-6">
         <h3 className="text-base font-black text-academy-ink dark:text-white">Votre projet concerne un BTS ?</h3>
-        <p className="mt-2 text-sm font-semibold leading-6 text-academy-muted">Aurélie, Responsable des BTS, vous accompagne pour votre candidature et votre recherche d’alternance.</p>
-        <a href="mailto:aurelie@integraleacademy.com?subject=Question%20sur%20un%20BTS" className="mt-4 inline-flex min-h-12 items-center rounded-full border border-academy-line px-5 py-3 text-sm font-black text-academy-ink transition hover:border-academy-gold dark:text-white">Écrire à Aurélie, Responsable des BTS</a>
+        <p className="mt-2 text-sm font-semibold leading-6 text-academy-muted">Aurélie BAYARD-CHAUSSEZ, Responsable des BTS, vous accompagne pour votre candidature et votre recherche d’alternance.</p>
+        <a href="mailto:aurelie@integraleacademy.com?subject=Question%20sur%20un%20BTS" className="mt-4 inline-flex min-h-12 items-center rounded-full border border-academy-line px-5 py-3 text-sm font-black text-academy-ink transition hover:border-academy-gold dark:text-white">Écrire à Aurélie BAYARD-CHAUSSEZ, Responsable des BTS</a>
       </div>
       <p className="mt-6 text-sm font-semibold leading-6 text-academy-muted">
         Pour une autre formation ou une question particulière, <a href="mailto:ecole@integraleacademy.com?subject=Contact%20site%20internet" className="font-black text-academy-ink underline underline-offset-4 dark:text-white">écrivez à notre équipe</a>.

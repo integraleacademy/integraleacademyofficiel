@@ -25,7 +25,7 @@ const contactChapters = [
 ] as const;
 
 const projectLinks = [
-  { title: 'Les formations', text: 'Sécurité, incendie, VTC et BTS.', href: '/#formations' },
+  { title: 'Les formations', text: 'Sécurité, VTC, BTS, bachelors, mastères et titres professionnels.', href: '/#formations' },
   { title: 'Les prochaines dates', text: 'Sessions, lieux et disponibilités.', href: '/planning' },
   { title: 'Les financements', text: 'Les solutions selon votre situation.', href: '/financements' },
   { title: 'Les entreprises', text: 'Recrutement, alternance et formation.', href: '/entreprises' },
@@ -50,7 +50,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<Rec
   const formation = (Array.isArray(params.formation) ? params.formation[0] : params.formation)?.toLowerCase();
   const generalHref = informationRequestHref({ ...params, formation: undefined });
   const hasSecurityFormation = formation === 'ssiap-2' || formation === 'ssiap-3' || (new URL(requestHref).searchParams.has('formation') && formation !== 'vtc');
-  const initialInterest: ContactInterest = formation === 'vtc' ? 'vtc' : formation?.startsWith('bts') ? 'bts' : hasSecurityFormation ? 'security' : 'undecided';
+  const initialInterest: ContactInterest = formation?.startsWith('bachelor') ? 'bachelors' : formation?.startsWith('mastere') ? 'masteres' : formation?.startsWith('tp-') || formation === 'titres-professionnels' ? 'titres-professionnels' : formation === 'parcoursalternance' ? 'parcoursalternance' : formation === 'vtc' ? 'vtc' : formation?.startsWith('bts') ? 'bts' : hasSecurityFormation ? 'security' : 'undecided';
   const mainLocation = contact.locations.find(location => location.id === 'puget');
   const otherLocations = contact.locations.filter(location => location.id !== 'puget');
 
@@ -77,7 +77,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<Rec
 
       </section>
 
-      <PageSectionNavigation shortcutIds={['coordonnees', 'demande', 'venir']} chapters={contactChapters} label="Faisons le premier pas" ariaLabel="Les rubriques de la page Contact" />
+      <PageSectionNavigation actionLabel="Nous écrire" actionId="demande" chapters={contactChapters} label="Contact" ariaLabel="Les rubriques de la page Contact" />
 
       <section id="coordonnees" className={styles.channels} aria-label="Nos coordonnées">
         <div className={`${school.container} ${styles.channelGrid}`}>
@@ -123,7 +123,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<Rec
             </div>
           </div>
           <div className={styles.otherLocations}>
-            <p>Vous pouvez préparer le DESP à Paris. Nos deux mastères en intelligence artificielle y ouvriront prochainement.</p>
+            <p>Vous pouvez préparer le DESP à Paris. Le centre se trouve à 50 mètres du Grand Rex et accueillera aussi nos deux mastères en intelligence artificielle dès septembre 2027.</p>
             <div className={school.locationGrid}>
               {otherLocations.map(location => <article key={location.id}>
                 <p className={styles.locationLabel}>Centre de formation</p><h3>{location.name}</h3><CampusFormationTags tags={location.tags} /><address>{location.address}</address><p>{location.detail}</p>

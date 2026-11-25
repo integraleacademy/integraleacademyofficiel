@@ -45,7 +45,7 @@ test('les applications externes gardent leur domaine et leur chemin', () => {
     'mailto:ecole@integraleacademy.com',
     '#programme',
   ]) assert.equal(canonicalSiteHref(href), href);
-  assert.equal(canonicalSiteHref('/candidature'), 'https://inscriptionsbts.onrender.com/');
+  assert.equal(canonicalSiteHref('/candidature'), 'https://admissions.integraleconnect.com/');
 });
 
 test('aucune redirection ne reboucle ni ne passe par une autre redirection', () => {

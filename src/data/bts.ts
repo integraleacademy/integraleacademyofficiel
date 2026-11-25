@@ -38,7 +38,7 @@ export const commonBtsFaq = [
   {
     q: 'Comment candidater ?',
     a: 'Depuis la fiche du BTS qui vous intéresse, ouvrez le dossier de pré-inscription et indiquez votre parcours, la rentrée souhaitée et le format de cours que vous recherchez. Vous pouvez commencer vos démarches même si vous cherchez encore une entreprise.\n\n' +
-      'Si vous hésitez entre deux spécialités, demandez à échanger avec Aurélie, Responsable des BTS, au 04 22 47 07 68. Un exemple de mission que vous aimeriez exercer aide à vous orienter, comme accueillir des clients en magasin, suivre des comptes ou organiser le travail d’une équipe de sécurité.',
+      'Si vous hésitez entre deux spécialités, demandez à échanger avec Aurélie BAYARD-CHAUSSEZ, Responsable des BTS, au 04 22 47 07 68. Un exemple de mission que vous aimeriez exercer aide à vous orienter, comme accueillir des clients en magasin, suivre des comptes ou organiser le travail d’une équipe de sécurité.',
   },
 ];
 

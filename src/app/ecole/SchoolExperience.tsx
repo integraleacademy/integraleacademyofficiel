@@ -21,7 +21,7 @@ const chapters = [
 ] as const;
 
 export function SchoolNavigation() {
-  return <PageSectionNavigation shortcutIds={['campus', 'equipe', 'pedagogie']} chapters={chapters} label="Faisons connaissance" ariaLabel="Découvrir notre école" />;
+  return <PageSectionNavigation actionLabel="Préparer ma visite" actionId="visite" chapters={chapters} label="Notre école" ariaLabel="Découvrir notre école" />;
 }
 
 const approaches = [
@@ -83,7 +83,7 @@ export function SchoolCampuses() {
           <h3>{schoolVisitCampuses[selected]}<span>{isPuget ? 'Var · 83' : 'Paris · 75'}</span></h3>
           <div className={styles.campusTags}>{location.tags.map(tag => <span key={tag}>{tag}</span>)}</div>
           <address>{location.address}</address>
-          {isPuget && <p className={styles.campusDescription}>400 m² pour apprendre, pratiquer et échanger avec l’équipe.</p>}
+          <p className={styles.campusDescription}>{isPuget ? '400 m² pour apprendre, pratiquer et échanger avec l’équipe.' : location.detail}</p>
           <Link href={`/planning?lieu=${isPuget ? 'cote-azur' : 'paris'}#sessions`} className={`${school.button} ${styles.campusDates}`}>{isPuget ? 'Voir les dates dans ce centre' : 'Voir les sessions programmées à Paris'} <Arrow /></Link>
           <SchoolVisitButton campus={selected} className={school.textLink} label={isPuget ? 'Organiser ma visite' : 'Préparer ma venue'} />
           <div className={school.access}>{(isPuget ? ['À 500 m de l’A8', 'Parking gratuit', 'Bus 4 · Général de Gaulle'] : ['Accueil selon les sessions', 'Venue à convenir avec l’équipe']).map(item => <span key={item}>{item}</span>)}</div>

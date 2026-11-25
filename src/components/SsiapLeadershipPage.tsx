@@ -149,6 +149,6 @@ export function SsiapLeadershipPage({ level, config, sessions, relatedCourses }:
       </Section>} />
     <SsiapTestimonials category={label} />
     <div id="faq-ssiap"><FaqDirectoryLink embedded theme="red" /></div>
-    <SsiapInitialContact href={contact('rendez-vous téléphonique avec Cassandre')} mobileLabel={next ? 'Réserver ma place' : 'Recevoir les dates'} />
+    <SsiapInitialContact href={contact('rendez-vous téléphonique avec Cassandre MENARD')} mobileLabel={next ? 'Réserver ma place' : 'Recevoir les dates'} />
   </TrainingReferencePage>;
 }

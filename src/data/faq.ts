@@ -56,7 +56,7 @@ export const globalFaq = [
   {
     q: 'Quels BTS peut-on préparer en alternance ?',
     a: 'Le catalogue présente six spécialités. Le BTS Management opérationnel de la sécurité (MOS) prépare à l’encadrement en sécurité, le BTS Management commercial opérationnel (MCO) à l’activité d’un point de vente et le BTS Négociation et digitalisation de la relation client (NDRC) à la vente et au suivi commercial sur plusieurs canaux.\n\n' +
-      'Le BTS Commerce international (CI) porte sur les échanges avec l’étranger, le BTS Professions immobilières (PI) sur la transaction et la gestion immobilières, et le BTS Comptabilité et gestion (CG) sur le suivi comptable. Consultez la fiche du diplôme puis vérifiez auprès d’Aurélie, Responsable des BTS, les promotions et modalités proposées pour votre rentrée.',
+      'Le BTS Commerce international (CI) porte sur les échanges avec l’étranger, le BTS Professions immobilières (PI) sur la transaction et la gestion immobilières, et le BTS Comptabilité et gestion (CG) sur le suivi comptable. Consultez la fiche du diplôme puis vérifiez auprès d’Aurélie BAYARD-CHAUSSEZ, Responsable des BTS, les promotions et modalités proposées pour votre rentrée.',
     links: [
       { href: '/bts#formations-bts', label: 'Découvrir et comparer nos six BTS' },
     ],
@@ -119,7 +119,7 @@ export const globalFaq = [
   {
     q: 'Je ne sais pas quelle formation choisir : pouvez-vous m’aider ?',
     a: 'Oui. L’assistant formation de l’accueil permet d’explorer les métiers et de comparer leurs prochaines sessions. Si deux parcours vous intéressent, partez de ce que vous aimeriez faire au quotidien. Accueillir et surveiller un site, accompagner un client en déplacement ou coordonner une équipe correspondent par exemple à des formations différentes.\n\n' +
-      'Pour un avis sur votre situation, préparez votre objectif, votre expérience, la région où vous pouvez suivre les cours et vos disponibilités. Le premier échange est gratuit et sans engagement. Le standard au 04 22 47 07 68 vous oriente vers Aurélie, Responsable des BTS, ou Cassandre, Responsable commerciale, selon votre projet.',
+      'Pour un avis sur votre situation, préparez votre objectif, votre expérience, la région où vous pouvez suivre les cours et vos disponibilités. Le premier échange est gratuit et sans engagement. Le standard au 04 22 47 07 68 vous oriente vers Aurélie BAYARD-CHAUSSEZ, Responsable des BTS, ou Cassandre MENARD, Responsable commerciale, selon votre projet.',
     links: [
       { href: '/#assistant-orientation', label: 'Utiliser l’assistant d’orientation' },
       { href: '/contact', label: 'Parler de mon projet avec un conseiller' },

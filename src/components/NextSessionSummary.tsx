@@ -1,3 +1,5 @@
+import { publicIntakePeriod } from '@/lib/planning-data';
+import { SessionCalendarLink } from './SessionCalendarLink';
 import { formatSessionDate, formatSessionPeriod, hasDetailedDeliveryPeriods, inPersonPeriods, parisDateKey } from '@/lib/public-sessions';
 import type { toPublicSession } from '@/lib/public-session-data';
 import type { SessionSeatAvailability } from '@/lib/session-seat-availability';
@@ -41,6 +43,11 @@ export function NextSessionSummary({ session, price, availability }: {
   price: string;
   availability: SessionSeatAvailability;
 }) {
+  if (session.scheduleKind === 'admissions') return <div className={styles.intakePreview}>
+    <p className={styles.eyebrow}>Prochaine rentrée</p><h3>{publicIntakePeriod(session)}</h3><strong>{session.title}</strong>
+    <p>{session.location}</p>{session.datePrecision === 'month' && <small>Jour de rentrée à préciser.</small>}
+    <SessionCalendarLink id={session.id} />
+  </div>;
   const isVtc = session.scheduleKind === 'vtc-exam';
   const start = new Date(session.startDate);
   const end = !isVtc && session.endDate ? new Date(session.endDate) : null;
@@ -87,5 +94,6 @@ export function NextSessionSummary({ session, price, availability }: {
     <dl className={styles.sessionOffer}>
       <div><dt>Tarif</dt><dd>{price}</dd></div>
     </dl>
+    <SessionCalendarLink id={session.id} />
   </>;
 }

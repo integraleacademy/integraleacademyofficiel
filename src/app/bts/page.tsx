@@ -1,3 +1,4 @@
+import { ADMISSIONS_URL } from '@/data/admissions';
 import Image from 'next/image';
 import Link from 'next/link';
 import { BtsTrainingComparisonModal } from '@/components/BtsTrainingComparisonModal';
@@ -13,7 +14,7 @@ import identity from '@/components/BtsIdentity.module.css';
 import styles from './bts.module.css';
 
 export const metadata = createPageMetadata('/bts');
-const admissionsUrl = 'https://admissions.integraleconnect.com/';
+
 
 export default function BtsPage() {
   return <>
@@ -22,7 +23,7 @@ export default function BtsPage() {
       title={<>Choisissez votre BTS <em>en alternance</em></>}
       description="De la sécurité au commerce, de l’immobilier à la comptabilité, préparez un diplôme d’État de niveau bac +2 en deux ans. Suivez les cours à Puget-sur-Argens ou en visioconférence selon le parcours."
       artwork={originalArtwork['bts-ndrc-parcours']}
-      actions={[{ label: 'Découvrir les six BTS', href: '#formations-bts' }, { label: 'Déposer ma candidature', href: admissionsUrl }]}
+      actions={[{ label: 'Découvrir les six BTS', href: '#formations-bts' }, { label: 'Déposer ma candidature', href: ADMISSIONS_URL }]}
     />
     <section id="formations-bts" aria-labelledby="catalogue-bts-title" className={styles.catalogue}>
       <header className={styles.catalogueHeading}>
@@ -62,7 +63,7 @@ export default function BtsPage() {
           <div className={styles.rhythms}>
             <article><h3>BTS MOS</h3><p>{btsRhythms.MOS.description}</p></article>
             <article><h3>BTS MCO, NDRC, CI, PI et CG</h3><p>{btsRhythms.MCO.description}</p></article>
-            <article><h3>Votre candidature</h3><p>L’équipe admissions étudie votre dossier et vous accompagne dans la recherche d’une entreprise et la préparation du contrat.</p><Link href={admissionsUrl}>Commencer mon dossier <span aria-hidden="true">→</span></Link></article>
+            <article><h3>Votre candidature</h3><p>L’équipe admissions étudie votre dossier et vous accompagne dans la recherche d’une entreprise et la préparation du contrat.</p><Link href={ADMISSIONS_URL}>Commencer mon dossier <span aria-hidden="true">→</span></Link></article>
           </div>
           <Link className={styles.funding} href="/financements#alternance">Financer mon BTS <span aria-hidden="true">→</span></Link>
         </div>

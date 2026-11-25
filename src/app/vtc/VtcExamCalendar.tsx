@@ -1,3 +1,4 @@
+import { SessionCalendarLink } from '@/components/SessionCalendarLink';
 import { formatVtcExamDate, vtcRegistrationHref } from '@/data/vtc';
 import { formatSessionNumericDate } from '@/lib/public-sessions';
 import styles from './vtc.module.css';
@@ -17,6 +18,7 @@ function ExamCard({ dates, next }: { dates: ExamDates; next: boolean }) {
       <div><dt>Inscription avant le</dt><dd>{formatSessionNumericDate(dates.deadline)} à 12 h</dd></div>
       <div><dt>Examen pratique</dt><dd>{formatVtcExamDate(dates.practical)}</dd></div>
     </dl>
+    <SessionCalendarLink id={dates.sessionId} /><br />
     <a className={styles.textLink} href={vtcRegistrationHref(dates.sessionId)}>Choisir cet examen</a>
   </article>;
 }

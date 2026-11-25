@@ -72,7 +72,7 @@ export default async function FinancementsPage({ searchParams }: { searchParams:
       </div>
     </section>
 
-    <PageSectionNavigation shortcutIds={['solutions', 'simulateur', 'contact-financement']} chapters={financingChapters} label="Financer votre projet" ariaLabel="Les rubriques de la page Financements" />
+    <PageSectionNavigation actionLabel="Simuler mon financement" actionId="simulateur" chapters={financingChapters} label="Financements" ariaLabel="Les rubriques de la page Financements" />
 
     <section id="solutions" className={styles.solutionsSection} aria-labelledby="solutions-title">
       <div className={styles.container}>
@@ -132,9 +132,9 @@ export default async function FinancementsPage({ searchParams }: { searchParams:
     <section id="contact-financement" className={styles.contactSection} aria-labelledby="contact-title">
       <div className={styles.container}>
         <div className={styles.contactPanel}>
-          <div><span className={styles.eyebrow}>Le prochain pas, ensemble</span><h2 id="contact-title">Votre projet mérite<br /><em>une conversation</em></h2><p>Expliquez-nous votre situation. Cassandre, Responsable commerciale, vous accompagne pour faire le point sur les possibilités de financement.</p></div>
+          <div><span className={styles.eyebrow}>Le prochain pas, ensemble</span><h2 id="contact-title">Votre projet mérite<br /><em>une conversation</em></h2><p>Expliquez-nous votre situation. Cassandre MENARD, Responsable commerciale, vous accompagne pour faire le point sur les possibilités de financement.</p></div>
           <div className={styles.contactDetails}>
-            <div className={styles.contactPerson}><span className={styles.contactInitial} aria-hidden="true"><TeamPortrait person="cassandre" size={48} /></span><div><strong>Cassandre</strong><span>Responsable commerciale</span></div></div>
+            <div className={styles.contactPerson}><span className={styles.contactInitial} aria-hidden="true"><TeamPortrait person="cassandre" size={48} /></span><div><strong>Cassandre MENARD</strong><span>Responsable commerciale</span></div></div>
             <TrainingActionLink href={appointmentFormUrl} className={styles.primaryButton}>Parler de mon financement <Icon name="arrow" /></TrainingActionLink>
             <a href="tel:+33422470768" className={styles.phone}>04 22 47 07 68</a>
             <p>Échange gratuit et sans engagement</p>

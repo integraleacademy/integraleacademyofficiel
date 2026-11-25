@@ -14,7 +14,7 @@ export function ProjectTrainingPopup() {
   const pathname = usePathname();
   const isFinancingPage = pathname?.replace(/\/+$/, '') === '/financements';
   const isBts = pathname?.startsWith('/bts');
-  const contactName = isBts ? 'Aurélie, Responsable des BTS' : 'Cassandre, Responsable commerciale';
+  const contactName = isBts ? 'Aurélie BAYARD-CHAUSSEZ, Responsable des BTS' : 'Cassandre MENARD, Responsable commerciale';
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -59,13 +59,13 @@ export function ProjectTrainingPopup() {
         <div className="flex items-start gap-4 pr-10">
           <div
             className="relative grid h-16 w-16 shrink-0 place-items-center overflow-hidden rounded-full bg-gradient-to-br from-academy-gold via-yellow-200 to-white text-xl font-black text-academy-gold-text shadow-gold ring-4 ring-white"
-            aria-label={isBts ? 'Aurélie BAYARD-CHAUSSEZ, Responsable des BTS' : 'Cassandre M., Responsable commerciale d’Intégrale Academy'}
+            aria-label={isBts ? 'Aurélie BAYARD-CHAUSSEZ, Responsable des BTS' : 'Cassandre MENARD, Responsable commerciale d’Intégrale Academy'}
           >
             <TeamPortrait person={isBts ? 'aurelie' : 'cassandre'} size={64} className="h-full w-full" />
           </div>
           <div>
             <p className="text-xs font-black uppercase tracking-[.18em] text-yellow-700">
-              {isBts ? 'Aurélie · Responsable des BTS' : 'Cassandre · Responsable commerciale'}
+              {isBts ? 'Aurélie BAYARD-CHAUSSEZ · Responsable des BTS' : 'Cassandre MENARD · Responsable commerciale'}
             </p>
             <h2 id="project-popup-title" className="mt-2 text-2xl font-black tracking-tight text-academy-ink">
               {isBts ? 'Parlons de votre projet BTS' : 'Parlez-nous de votre projet de formation'}
@@ -76,7 +76,7 @@ export function ProjectTrainingPopup() {
         <p className="mt-4 text-sm leading-6 text-stone-600">
           {isBts
             ? 'Aurélie BAYARD-CHAUSSEZ, chargée des relations clients et Responsable des BTS, répond à vos questions sur la candidature et l’alternance.'
-            : 'Réservez un rendez-vous téléphonique avec Cassandre, Responsable commerciale d’Intégrale Academy.'}
+            : 'Réservez un rendez-vous téléphonique avec Cassandre MENARD, Responsable commerciale d’Intégrale Academy.'}
         </p>
 
         {isBts && (

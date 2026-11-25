@@ -1,6 +1,5 @@
 import { RNCP_REVIEW_STATUS } from './certification-status';
 
-export const PROFESSIONAL_TITLE_ADMISSIONS_URL = 'https://admissions.integraleconnect.com/';
 export const PROFESSIONAL_TITLE_INTAKE = 'À partir de septembre 2027';
 
 export type TrainingStatus = 'PROCHAINEMENT' | 'SEPTEMBRE 2027';
@@ -37,7 +36,7 @@ export const upcomingFamilies: UpcomingFamily[] = [
         description: 'Recouper des indices numériques, retracer un incident et transmettre aux équipes de sécurité les informations qui les aideront à réagir.',
         imageSrc: '/images/formations-annoncees/bachelor-eirc.webp',
         imageAlt: 'Un analyste reconstitue la chronologie d’un incident au tableau avec une collègue munie d’une tablette.',
-        status: 'PROCHAINEMENT',
+        status: 'SEPTEMBRE 2027',
         topics: ['Évaluer la fiabilité des sources qui signalent une menace.', 'Reconstituer la chronologie d’un incident à partir des traces disponibles.', 'Rédiger une synthèse pour les équipes chargées de protéger l’organisation.'],
         jobs: ['Analyste en renseignement sur les cybermenaces', 'Chargé de veille en cybersécurité', 'Analyste d’investigation numérique'],
         certificationStatus: `Niveau 6 visé. ${RNCP_REVIEW_STATUS}`,
@@ -61,7 +60,7 @@ export const upcomingFamilies: UpcomingFamily[] = [
         description: 'Partir d’un besoin utilisateur, choisir ce qui peut être automatisé et guider l’équipe qui transforme le prototype en produit.',
         imageSrc: '/images/formations-annoncees/mastere-produit-ia.webp',
         imageAlt: 'Une utilisatrice teste un prototype de tri des demandes sur une tablette pendant que la cheffe de produit prend des notes.',
-        status: 'PROCHAINEMENT',
+        status: 'SEPTEMBRE 2027',
         topics: ['Choisir un usage de l’IA à partir des difficultés rencontrées par les utilisateurs.', 'Tester un prototype et arbitrer les fonctionnalités à développer.', 'Mesurer l’adoption du produit et décider des améliorations prioritaires.'],
         jobs: ['Chef de produit en IA', 'Product owner de solutions IA', 'Chef de projet automatisation'],
         certificationStatus: `Niveau 7 visé. ${RNCP_REVIEW_STATUS}`,
@@ -71,7 +70,7 @@ export const upcomingFamilies: UpcomingFamily[] = [
         description: 'Concevoir une application qui utilise des modèles génératifs, tester la qualité de ses réponses et suivre son fonctionnement après la mise en service.',
         imageSrc: '/images/formations-annoncees/mastere-ingenierie-ia-generative.webp?v=assistant-ia',
         imageAlt: 'Deux ingénieurs vérifient la réponse d’un assistant IA en la comparant au document source.',
-        status: 'PROCHAINEMENT',
+        status: 'SEPTEMBRE 2027',
         topics: ['Choisir un modèle et préparer les données adaptées à l’usage visé.', 'Intégrer les composants et tester la fiabilité des résultats.', 'Déployer le système et suivre sa qualité en conditions réelles.'],
         jobs: ['Ingénieur en IA générative', 'Développeur d’applications IA', 'Architecte de solutions IA'],
         certificationStatus: `Niveau 7 visé. ${RNCP_REVIEW_STATUS}`,

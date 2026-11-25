@@ -10,7 +10,7 @@ type AcademyNotificationProps = {
 };
 
 export function AcademyNotification({ id, person, children }: AcademyNotificationProps) {
-  const name = person === 'cassandre' ? 'Cassandre' : 'Aurélie';
+  const name = person === 'cassandre' ? 'Cassandre MENARD' : 'Aurélie BAYARD-CHAUSSEZ';
 
   return <ContactMotion className={styles.messageFrame}>
     <aside id={id} className={styles.message} data-contact-reveal aria-label={`Un message de ${name}`}>

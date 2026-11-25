@@ -1,7 +1,7 @@
 import { FooterFundingLink } from './FooterFundingLink';
 import { TrainingActionLink } from '@/components/TrainingActionLink';
 import { CampusFormationTags } from './CampusFormationTags';
-import { PARIS_ADDRESS } from '@/data/locations';
+import { PARIS_ADDRESS, PUGET_ADDRESS, PARIS_LANDMARK } from '@/data/locations';
 import { premiumFaqThemes } from '@/components/FAQ';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -220,7 +220,7 @@ export function Header(){
 }
 export function Footer(){
   const footerLinks=[
-    {title:'Formations',links:[['Agent de sécurité','/formations-securite/aps'],['Sécurité incendie','/formations-securite/ssiap'],['Protection rapprochée','/formations-securite/a3p-apr'],['Dirigeant d’entreprise de sécurité privée','/despvaeouinitial'],['Chauffeur VTC','/vtc'],['BTS en alternance','/bts'],['Parcours sécurité en alternance','/parcoursalternance']]},
+    {title:'Formations',links:[['Agent de sécurité','/formations-securite/aps'],['Sécurité incendie','/formations-securite/ssiap'],['Protection rapprochée','/formations-securite/a3p-apr'],['Dirigeant d’entreprise de sécurité privée','/despvaeouinitial'],['Chauffeur VTC','/vtc'],['BTS en alternance','/bts'],['Bachelors','/#bachelors'],['Mastères','/#masteres'],['Titres professionnels','/#titres-professionnels'],['Parcours sécurité en alternance','/parcoursalternance']]},
     {title:'Financements',links:[['Financer ma formation','/financements'],['Estimer mon reste à charge','/financements#simulateur']]},
     {title:'L’école',links:[['Notre école','/ecole'],['Nos centres','/centres'],['Planning','/planning'],['Entreprises','/entreprises'],['Questions fréquentes','/faq']]},
   ];
@@ -233,7 +233,7 @@ export function Footer(){
             <BrandSigle placement="footer"/>
             <span className={footerStyles.wordmark}><span>INTÉGRALE</span><span>ACADEMY</span></span>
           </Link>
-          <p className={footerStyles.expertise}>Centre de formation agréé Métiers de la sécurité privée, Formations professionnelles et BTS en alternance.</p>
+          <p className={footerStyles.expertise}>Centre de formation agréé Métiers de la sécurité privée, Formations professionnelles et Formations en alternance.</p>
           <SocialLinks tone="dark"/>
         </div>
 
@@ -285,12 +285,12 @@ export function Footer(){
           <a href="https://annuaire-entreprises.data.gouv.fr/etablissement/84089988400026" target="_blank" rel="noopener noreferrer" className={footerStyles.verifyCompany}>Vérifier l’entreprise <span aria-hidden="true">↗</span></a>
         </div>
         <ul className={footerStyles.locations}>
-          <li><strong>Intégrale Academy Côte d'Azur :</strong> 54 chemin du Carreou 83480 PUGET SUR ARGENS</li>
-          <li><strong>Intégrale Academy Paris</strong><br /> {PARIS_ADDRESS}</li>
+          <li><strong>Intégrale Academy Côte d’Azur</strong><br />{PUGET_ADDRESS}</li>
+          <li><strong>Intégrale Academy Paris</strong><br />{PARIS_ADDRESS}<br />{PARIS_LANDMARK}</li>
         </ul>
       </section>
       <div className={footerStyles.bottom}>
-        <p>Site créé par SAS Intégrale Group — Clément VAILLANT.</p>
+        <p>Site créé avec ❤️ par Clément VAILLANT</p>
         <nav aria-label="Informations légales"><Link href="/mentions-legales">Mentions légales</Link><Link href="/politique-confidentialite">Confidentialité</Link><Link href="/admin/ia">Administration</Link></nav>
       </div>
     </div>

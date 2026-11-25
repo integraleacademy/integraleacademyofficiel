@@ -1,3 +1,4 @@
+import { SessionCalendarLink } from '@/components/SessionCalendarLink';
 import type { Metadata } from 'next';
 import { Fragment } from 'react';
 import {
@@ -279,9 +280,11 @@ export default function ParcoursSecuriteAlternance() {
             <em>Un vrai départ.</em>
           </h2>
           <p>
-            Ce parcours demande ta disponibilité <strong>de janvier à décembre 2027</strong>, pour les cours, les
+            Ce parcours demande ta disponibilité <strong>du 8 janvier 2027 au 8 janvier 2028</strong>, pour les cours, les
             examens et les périodes en entreprise.
           </p>
+          <SessionCalendarLink id="parcours-securite-janvier-2027" />
+          <p><a href="/planning?formation=parcoursalternance&dates=toutes#sessions">Voir aussi la promotion de juin 2027</a></p>
           <div className="commitment">
             <span aria-hidden="true">↗</span>
             <p>
@@ -290,7 +293,7 @@ export default function ParcoursSecuriteAlternance() {
             </p>
           </div>
           <div className="experience">
-            <strong>+ de 1 100 h</strong>
+            <strong>1 106 h</strong>
             <span>prévues en entreprise sur le parcours</span>
           </div>
         </div>
@@ -308,9 +311,7 @@ export default function ParcoursSecuriteAlternance() {
             ))}
           </ol>
           <p className="fineprint">
-            Calendrier prévisionnel : les dates précises, les examens et les transitions entre école et entreprise
-            seront confirmés lors de l’inscription. Les formations A3P et SSIAP 1 interrompent les périodes en
-            entreprise indiquées. Les missions dépendent des qualifications et autorisations obtenues.
+            Les périodes sont indiquées dates incluses. Les jours travaillés en entreprise suivent le planning de l’employeur. Les missions dépendent des qualifications et autorisations obtenues.
           </p>
         </div>
       </section>
@@ -370,7 +371,7 @@ export default function ParcoursSecuriteAlternance() {
               sécurité. Nous pouvons te mettre en relation selon ton profil et leurs besoins de recrutement.
             </p>
             <a className="button button-light" href="#contact">
-              Je prépare mon projet avec Aurélie ↗
+              Je prépare mon projet avec Aurélie BAYARD-CHAUSSEZ ↗
             </a>
           </div>
           <div className="partner-support">
@@ -415,7 +416,7 @@ export default function ParcoursSecuriteAlternance() {
                 <br />
                 <em>On t’explique les démarches.</em>
               </h3>
-              <p>Aurélie fait le point avec toi avant l’entrée en formation.</p>
+              <p>Aurélie BAYARD-CHAUSSEZ fait le point avec toi avant l’entrée en formation.</p>
             </div>
             <ul>
               {documents.map((item) => (
@@ -429,7 +430,7 @@ export default function ParcoursSecuriteAlternance() {
           <div className="accessibility-note">
             <span aria-hidden="true">↗</span>
             <p>
-              <strong>Un besoin lié au handicap ?</strong> <a href="#contact">Contacte Aurélie</a> pour étudier les
+              <strong>Un besoin lié au handicap ?</strong> <a href="#contact">Contacte Aurélie BAYARD-CHAUSSEZ</a> pour étudier les
               aménagements possibles et les exigences des métiers.
             </p>
           </div>
@@ -521,7 +522,7 @@ export default function ParcoursSecuriteAlternance() {
                 <span className="adviser-avatar adviser-avatar-small">
                   <img
                     src="/parcours-alternance/aurelie.webp"
-                    alt="Mémoji d’Aurélie"
+                    alt="Mémoji d’Aurélie BAYARD-CHAUSSEZ"
                     width="384"
                     height="384"
                     loading="lazy"
@@ -529,12 +530,12 @@ export default function ParcoursSecuriteAlternance() {
                 </span>
                 <div>
                   <h3>Une autre question ?</h3>
-                  <p>Aurélie t’accompagne avant ta candidature et pendant les démarches.</p>
+                  <p>Aurélie BAYARD-CHAUSSEZ t’accompagne avant ta candidature et pendant les démarches.</p>
                 </div>
               </div>
               <div className="faq-help-actions">
                 <a className="button" href={adviserPhone}>
-                  Appeler Aurélie
+                  Appeler Aurélie BAYARD-CHAUSSEZ
                 </a>
                 <a className="button button-outline" href="mailto:aurelie@integraleacademy.com">
                   Lui écrire ↗
@@ -575,7 +576,7 @@ export default function ParcoursSecuriteAlternance() {
           </h2>
           <p>
             Une question, un doute, envie de te lancer ?{' '}
-            <strong>Aurélie s’occupe du parcours sécurité en alternance.</strong> Elle t’aide à préparer ta
+            <strong>Aurélie BAYARD-CHAUSSEZ s’occupe du parcours sécurité en alternance.</strong> Elle t’aide à préparer ta
             candidature, tes démarches et ton entrée en formation.
           </p>
           <div className="hero-actions">

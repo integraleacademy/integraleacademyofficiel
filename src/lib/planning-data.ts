@@ -1,3 +1,4 @@
+import { formatSessionPeriod } from './public-sessions';
 import { getUpcomingVtcExamSessions, isVtcRegistrationOpen, vtcCourse, vtcSessionTitle } from '@/data/vtc';
 import { canonicalSiteHref } from '@/lib/site-urls';
 
@@ -52,3 +53,9 @@ export function getVtcPlanningSessions(referenceDate = new Date(), managedSessio
   }));
 }
 
+
+const monthYear = new Intl.DateTimeFormat('fr-FR', { month: 'long', year: 'numeric', timeZone: 'Europe/Paris' });
+export function publicIntakePeriod(session: { startDate: string | Date; endDate?: string | Date; datePrecision?: string }) {
+  if (session.datePrecision === 'month') return 'Rentrée de ' + monthYear.format(new Date(session.startDate));
+  return formatSessionPeriod(session.startDate, session.endDate);
+}
