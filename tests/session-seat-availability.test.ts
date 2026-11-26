@@ -10,7 +10,8 @@ test('le badge affiche toujours le nombre exact de places restantes', () => {
   assert.equal(getSessionSeatAvailability({ seatsLeft: 12 }, 12).label, '12 places restantes');
   assert.equal(getSessionSeatAvailability({ seatsLeft: 1 }, 12).label, '1 place restante');
   assert.equal(getSessionSeatAvailability({ seatsLeft: 1 }, 12).estimated, false);
-  assert.equal(getSessionSeatAvailability({ seatsLeft: 4, status: 'FULL' }, 12).label, 'COMPLET');
+  assert.equal(getSessionSeatAvailability({ seatsLeft: 4, status: 'FULL' }, 12).label, "Complet, sur liste d'attente");
+  assert.equal(getSessionSeatAvailability({ seatsLeft: 0, status: 'OPEN' }, 12).label, "Complet, sur liste d'attente");
 });
 
 test('un décompte invalide reste inconnu', () => {
@@ -58,7 +59,7 @@ test('les données de l’assistant suivent les mêmes règles que les cartes, y
 test('les sessions complètes, masquées et à capacité réduite restent cohérentes', () => {
   assert.equal(computedSeats({ seatsLeft: 25, status: 'FULL' }), 0);
   assert.equal(getSessionSeatAvailability({ seatsLeft: 5, showSeatsLeft: false }).count, null);
-  assert.equal(getSessionSeatAvailability({ seatsLeft: 25, status: 'FULL', showSeatsLeft: false }).label, 'COMPLET');
+  assert.equal(getSessionSeatAvailability({ seatsLeft: 25, status: 'FULL', showSeatsLeft: false }).label, "Complet, sur liste d'attente");
   assert.equal(computedSeats({ seatsTotal: 3, seatsLeft: null, startDate: '2027-01-04' }, referenceDate), null);
   assert.equal(resolveSessionSeatCapacity({ seatsTotal: 12, training: { slug: 'sst' } }), 10);
 });

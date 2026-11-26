@@ -54,7 +54,7 @@ export function getSessionSeatAvailability(
   const count = Math.min(automaticCount, safeCapacity);
 
   if (session.status === 'FULL' || count === 0) {
-    return { count: 0, label: 'COMPLET', tone: 'full', badgeClassName: badgeStyles.full };
+    return { count: 0, label: "Complet, sur liste d'attente", tone: 'full', badgeClassName: badgeStyles.full };
   }
 
   const recordedCount = normalizeSeatCount(session.seatsLeft);
